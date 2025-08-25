@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,14 @@ type DmWSOperationConformancePolicy struct {
 	ConformancePolicyWsdlComponentValue types.String `tfsdk:"conformance_policy_wsdl_component_value"`
 	ConformancePolicySubscription       types.String `tfsdk:"conformance_policy_subscription"`
 	ConformancePolicyFragmentId         types.String `tfsdk:"conformance_policy_fragment_id"`
+}
+
+var DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "conformance_policy_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
 }
 
 var DmWSOperationConformancePolicyObjectType = map[string]attr.Type{
@@ -57,58 +66,68 @@ var DmWSOperationConformancePolicyObjectDefault = map[string]attr.Value{
 	"conformance_policy_subscription":         types.StringNull(),
 	"conformance_policy_fragment_id":          types.StringNull(),
 }
-var DmWSOperationConformancePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"conformance_policy": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Conformance Policy", "", "conformance_policy").String,
-			Computed:            true,
-		},
-		"conformance_policy_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-		},
-		"conformance_policy_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Computed:            true,
-		},
-		"conformance_policy_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Computed:            true,
-		},
-		"conformance_policy_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmWSOperationConformancePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"conformance_policy": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Conformance Policy", "", "conformance_policy").String,
-			Required:            true,
-		},
-		"conformance_policy_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+
+func GetDmWSOperationConformancePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSOperationConformancePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"conformance_policy": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Conformance Policy", "", "conformance_policy").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("all"),
+			"conformance_policy_wsdl_component_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+			},
+			"conformance_policy_wsdl_component_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Computed:            true,
+			},
+			"conformance_policy_subscription": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Computed:            true,
+			},
+			"conformance_policy_fragment_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Computed:            true,
+			},
 		},
-		"conformance_policy_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Optional:            true,
+	}
+	return DmWSOperationConformancePolicyDataSourceSchema
+}
+func GetDmWSOperationConformancePolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSOperationConformancePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"conformance_policy": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Conformance Policy", "", "conformance_policy").String,
+				Required:            true,
+			},
+			"conformance_policy_wsdl_component_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+				},
+				Default: stringdefault.StaticString("all"),
+			},
+			"conformance_policy_wsdl_component_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Optional:            true,
+			},
+			"conformance_policy_subscription": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"conformance_policy_fragment_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Optional:            true,
+			},
 		},
-		"conformance_policy_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Optional:            true,
-		},
-		"conformance_policy_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSOperationConformancePolicyResourceSchema
 }
 
 func (data DmWSOperationConformancePolicy) IsNull() bool {
@@ -135,6 +154,7 @@ func (data DmWSOperationConformancePolicy) ToBody(ctx context.Context, pathRoot 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ConformancePolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ConformancePolicy`, data.ConformancePolicy.ValueString())
 	}

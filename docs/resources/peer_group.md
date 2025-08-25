@@ -37,6 +37,7 @@ resource "datapower_peer_group" "test" {
 - `ip_multicast` (String) IP multicast
   - CLI Alias: `ip-multicast`
   - Reference to: `datapower_ip_multicast:id`
+  - Required When: `type`=`slm-multicast`
 - `type` (String) Type
   - CLI Alias: `type`
   - Choices: `slm`, `slm-multicast`
@@ -45,6 +46,7 @@ resource "datapower_peer_group" "test" {
   - CLI Alias: `update-interval`
   - Range: `1`-`10000`
   - Default value: `10`
+  - Required When: `type`=`slm-multicast`
 - `url` (List of String) Specify the URL of each peer in the <tt>protocol://address:port</tt> format for an Ethernet interface or a VLAN interface. For unicast peering, peers exchange SLM data over the XML management interface as SOAP over HTTPS. Multicast peering shares the initial SLM state using SOAP over HTTPS; the data transfers are done using multicast. <p>The default port for the XML Management Interface is 5550. If this port is changed on any peer, the URL must reflect the correct port.</p><p>Define all peers, which includes the local system.</p>
   - CLI Alias: `url`
 - `user_summary` (String) Comments

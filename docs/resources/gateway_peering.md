@@ -42,9 +42,11 @@ resource "datapower_gateway_peering" "test" {
   - Default value: `false`
 - `local_address` (String) Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.
   - CLI Alias: `local-address`
+  - Required When: (`enable_peer_group`=`true` OR (`enable_peer_group`=`false` AND `peer_group`=``))
 - `local_directory` (String) Specify the directory to store data. For example, <tt>local:///group1</tt> .
   - CLI Alias: `local-directory`
   - Default value: `local:///`
+  - Required When: `persistence_location`=`local`
 - `local_port` (Number) Specify the port that the gateway service listens on. The default value is 16380. Ensure that all peers use the same port.
   - CLI Alias: `local-port`
   - Default value: `16380`

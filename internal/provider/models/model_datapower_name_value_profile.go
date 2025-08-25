@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -47,6 +48,14 @@ type NameValueProfile struct {
 	DefaultXss             types.Bool                  `tfsdk:"default_xss"`
 	NoMatchXssPatternsFile types.String                `tfsdk:"no_match_xss_patterns_file"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var NameValueProfileNoMatchXSSPatternsFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "default_xss",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var NameValueProfileObjectType = map[string]attr.Type{
@@ -117,6 +126,7 @@ func (data NameValueProfile) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -136,9 +146,9 @@ func (data NameValueProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`MaxValueSize`, data.MaxValueSize.ValueInt64())
 	}
 	if !data.ValidationList.IsNull() {
-		var values []DmValidationType
-		data.ValidationList.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmValidationType
+		data.ValidationList.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ValidationList`+".-1", val.ToBody(ctx, ""))
 		}
 	}

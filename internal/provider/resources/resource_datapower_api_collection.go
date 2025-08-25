@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &APICollectionResource{}
@@ -114,23 +115,29 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 				Computed:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
+			"enable_cache": schema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable subscriber caching", "", "").AddDefaultValue("true").String,
+				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 			"dev_portal_endpoint": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.", "dev-portal-endpoint", "").String,
 				Optional:            true,
 			},
 			"cache_capacity": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of subscriber entries to cache. Enter a value in the range 8 - 51200. The default value is 128. When the limit is exceeded, the least recently used (LRU) entry is removed.", "cache-capacity", "").AddIntegerRange(8, 51200).AddDefaultValue("128").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of subscriber entries to cache. Enter a value in the range 8 - 51200. The default value is 128. When the limit is exceeded, the least recently used (LRU) entry is removed.", "cache-capacity", "").AddIntegerRange(8, 51200).AddDefaultValue("128").AddRequiredWhen(models.APICollectionCacheCapacityCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(8, 51200),
+					validators.ConditionalRequiredInt64(models.APICollectionCacheCapacityCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(128),
 			},
 			"routing_prefix": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix to determine which API collection to route the request. You can use routing prefixes to organize your APIs and plans into collections and subcollections. For example, if you have a collection of APIs serving for a certain purpose, and the APIs are to be used by two segments of your organization, you might create two API collections with the organization name, purpose name, and segment name in the routing prefix. If the organization name is <tt>myorg</tt> , the APIs serve for purpose <tt>purpose1</tt> , and the two segments under the organization is <tt>section1</tt> and <tt>section2</tt> , the resulting URL routing prefixes are <tt>/myorg/purpose1/section1</tt> and <tt>/myorg/purpose1/section2</tt> . The resulting hostname routing prefixes are <tt>section1.purpose1.myorg</tt> and <tt>section2.purpose1.myorg</tt> . <p>The API gateway uses the routing prefix to form the complete URI <tt>routing_prefix/base_path/operation_path</tt> and accepts only the incoming requests with this URI. In the complete URI, <tt>base_path</tt> is the base path on which the API is served, and <tt>operation_path</tt> is the relative path to the base path where the operations are available.</p><p>The default routing prefix is slash (/) when the type is URI and blank when the type is hostname. An API collection becomes the default API collection in the API Gateway when the API collection has a default routing prefix. The API gateway routes a request to the default API collection when other API collections do not match. An API gateway can have only one default API collection. Therefore, regardless of the prefix type, only one API collection can be configured with the default routing prefix.</p>", "routing-prefix", "").String,
-				NestedObject:        models.DmRoutingPrefixResourceSchema,
+				NestedObject:        models.GetDmRoutingPrefixResourceSchema(),
 				Required:            true,
 			},
 			"use_rate_limit_group": schema.BoolAttribute{
@@ -141,7 +148,7 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"default_rate_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default rate limit scheme for API requests without API keys for client identification. When not defined, requests without API keys are rejected.", "default-rate-limit", "").String,
-				NestedObject:        models.DmAPIRateLimitResourceSchema,
+				NestedObject:        models.GetDmAPIRateLimitResourceSchema(),
 				Optional:            true,
 			},
 			"rate_limit_group": schema.StringAttribute{
@@ -150,17 +157,17 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"assembly_burst_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Assembly burst limit", "assembly-burst-limit", "").String,
-				NestedObject:        models.DmAPIBurstLimitResourceSchema,
+				NestedObject:        models.GetDmAPIBurstLimitResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_rate_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Assembly rate limit", "assembly-rate-limit", "").String,
-				NestedObject:        models.DmAPIRateLimitResourceSchema,
+				NestedObject:        models.GetDmAPIRateLimitResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_count_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Assembly count limit", "assembly-count-limit", "").String,
-				NestedObject:        models.DmAPICountLimitResourceSchema,
+				NestedObject:        models.GetDmAPICountLimitResourceSchema(),
 				Optional:            true,
 			},
 			"enforce_pre_assembly_rate_limits": schema.BoolAttribute{

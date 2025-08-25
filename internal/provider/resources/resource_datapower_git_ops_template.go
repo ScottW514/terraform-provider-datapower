@@ -84,7 +84,7 @@ func (r *GitOpsTemplateResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"templates": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the GitOps templates to modify the DataPower configuration. Template processing is in the order of the read or write GitOps operation.", "template", "").String,
-				NestedObject:        models.DmGitOpsTemplateEntryResourceSchema,
+				NestedObject:        models.GetDmGitOpsTemplateEntryResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

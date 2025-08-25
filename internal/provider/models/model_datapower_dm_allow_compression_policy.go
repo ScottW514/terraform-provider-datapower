@@ -46,31 +46,38 @@ var DmAllowCompressionPolicyObjectDefault = map[string]attr.Value{
 	"reg_exp":           types.StringNull(),
 	"allow_compression": types.BoolValue(false),
 }
-var DmAllowCompressionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmAllowCompressionPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAllowCompressionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"allow_compression": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow compression.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"allow_compression": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow compression.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAllowCompressionPolicyDataSourceSchema
 }
-var DmAllowCompressionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
+func GetDmAllowCompressionPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAllowCompressionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"allow_compression": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow compression.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"allow_compression": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow compression.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	return DmAllowCompressionPolicyResourceSchema
 }
 
 func (data DmAllowCompressionPolicy) IsNull() bool {
@@ -88,6 +95,7 @@ func (data DmAllowCompressionPolicy) ToBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

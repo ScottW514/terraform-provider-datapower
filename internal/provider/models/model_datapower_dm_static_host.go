@@ -48,37 +48,44 @@ var DmStaticHostObjectDefault = map[string]attr.Value{
 	"ip_address":   types.StringNull(),
 	"user_summary": types.StringNull(),
 }
-var DmStaticHostDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname of the target host.", "", "").String,
-			Computed:            true,
+
+func GetDmStaticHostDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmStaticHostDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"hostname": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname of the target host.", "", "").String,
+				Computed:            true,
+			},
+			"ip_address": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address for the target host.", "", "").String,
+				Computed:            true,
+			},
+			"user_summary": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a brief, descriptive summary for the configuration.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"ip_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address for the target host.", "", "").String,
-			Computed:            true,
-		},
-		"user_summary": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a brief, descriptive summary for the configuration.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmStaticHostDataSourceSchema
 }
-var DmStaticHostResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname of the target host.", "", "").String,
-			Required:            true,
+func GetDmStaticHostResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmStaticHostResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"hostname": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname of the target host.", "", "").String,
+				Required:            true,
+			},
+			"ip_address": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address for the target host.", "", "").String,
+				Required:            true,
+			},
+			"user_summary": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a brief, descriptive summary for the configuration.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"ip_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address for the target host.", "", "").String,
-			Required:            true,
-		},
-		"user_summary": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a brief, descriptive summary for the configuration.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmStaticHostResourceSchema
 }
 
 func (data DmStaticHost) IsNull() bool {
@@ -99,6 +106,7 @@ func (data DmStaticHost) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Hostname.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Hostname`, data.Hostname.ValueString())
 	}

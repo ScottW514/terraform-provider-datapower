@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WebAppResponseResource{}
@@ -131,8 +132,11 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.", "response-xml-rule", "style_policy_rule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.", "response-xml-rule", "style_policy_rule").AddRequiredWhen(models.WebAppResponseXMLRuleCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebAppResponseXMLRuleCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"non_xml_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles responses that do not contain an XML MIME type.", "response-nonxml-policy", "").AddStringEnum("nothing", "side", "binary").AddDefaultValue("nothing").String,
@@ -144,8 +148,11 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"non_xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.", "response-nonxml-rule", "style_policy_rule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.", "response-nonxml-rule", "style_policy_rule").AddRequiredWhen(models.WebAppResponseNonXMLRuleCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebAppResponseNonXMLRuleCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"error_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If this response policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.", "error-policy-override", "web_app_error_handling_policy").String,

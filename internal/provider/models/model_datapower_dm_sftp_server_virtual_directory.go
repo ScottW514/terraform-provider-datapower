@@ -45,24 +45,31 @@ var DmSFTPServerVirtualDirectoryObjectType = map[string]attr.Type{
 var DmSFTPServerVirtualDirectoryObjectDefault = map[string]attr.Value{
 	"virtual_path": types.StringNull(),
 }
-var DmSFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"virtual_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system of the SFTP server.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmSFTPServerVirtualDirectoryResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"virtual_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system of the SFTP server.", "", "").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.RegexMatches(regexp.MustCompile("^/[^/]+(/[^/]+)*$"), "Must match :"+"^/[^/]+(/[^/]+)*$"),
+
+func GetDmSFTPServerVirtualDirectoryDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"virtual_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system of the SFTP server.", "", "").String,
+				Computed:            true,
 			},
 		},
-	},
+	}
+	return DmSFTPServerVirtualDirectoryDataSourceSchema
+}
+func GetDmSFTPServerVirtualDirectoryResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSFTPServerVirtualDirectoryResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"virtual_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system of the SFTP server.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^/[^/]+(/[^/]+)*$"), "Must match :"+"^/[^/]+(/[^/]+)*$"),
+				},
+			},
+		},
+	}
+	return DmSFTPServerVirtualDirectoryResourceSchema
 }
 
 func (data DmSFTPServerVirtualDirectory) IsNull() bool {
@@ -77,6 +84,7 @@ func (data DmSFTPServerVirtualDirectory) ToBody(ctx context.Context, pathRoot st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.VirtualPath.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`VirtualPath`, data.VirtualPath.ValueString())
 	}

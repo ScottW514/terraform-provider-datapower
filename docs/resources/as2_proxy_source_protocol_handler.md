@@ -68,6 +68,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
 - `hmac_passphrase_alias` (String) Specifies the password alias of the passphrase used to calculate the HMAC token for message authentication and integrity checking in the Multi-Enterprise Integration Gateway server.
   - CLI Alias: `hmac-passphrase-alias`
   - Reference to: `datapower_password_alias:id`
+  - Required When: (`enable_visibility_event`=`true` AND `enable_hmac_authentication`=`true`)
 - `http_version` (String) Specify the HTTP version for client connections. The default value is HTTP/1.1.
   - CLI Alias: `http-client-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`
@@ -129,6 +130,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
   - CLI Alias: `summary`
 - `visibility_event_endpoint` (String) Specifies the URL of the MEIG visibility event endpoint. Enter the URL in the format of static IBM MQ URL that provides the information about the IBM MQ server name, queue manager name, and name of the channel configured in the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT
   - CLI Alias: `visibility-event-endpoint`
+  - Required When: `enable_visibility_event`=`true`
 - `xml_manager` (String) Specifies an existing XML manager. An XML manager obtains and manages XML documents, stylesheets, and other document resources on behalf of one or more services.
   - CLI Alias: `xml-manager`
   - Reference to: `datapower_xml_manager:id`

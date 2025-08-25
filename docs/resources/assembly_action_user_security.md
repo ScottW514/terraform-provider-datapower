@@ -42,6 +42,7 @@ resource "datapower_assembly_action_user_security" "test" {
 - `au_stop_on_error` (Boolean) Specify whether to stop processing if authentication fails. If failed, stops the assembly and return an error.
   - CLI Alias: `au-stop-on-error`
   - Default value: `true`
+  - Required When: `user_auth_method`!=`disabled`
 - `auth_response_credential_header` (String) Specify the response header that contains the authenticated credentials. The default value is <tt>X-API-Authenticated-Credential</tt> . The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `auth-response-header-credential`
   - Default value: `X-API-Authenticated-Credential`
@@ -50,6 +51,7 @@ resource "datapower_assembly_action_user_security" "test" {
   - Default value: `(?i)x-api*`
 - `az_custom_form` (String) Specify the URL fragment of the custom authorization page. This page obtains permission from the end user. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `az-custom-form`
+  - Required When: (`user_az_method`=`html-form` AND `az_default_form`=`false`)
 - `az_custom_form_client_profile` (String) Custom form TLS client profile
   - CLI Alias: `az-custom-form-tls-client-profile`
   - Reference to: `datapower_ssl_client_profile:id`
@@ -59,13 +61,16 @@ resource "datapower_assembly_action_user_security" "test" {
 - `az_default_form` (Boolean) Specify whether to use the default form or a custom form. When enabled, returns the default authorization page to obtain authorization. When disabled, define the configuration to return the custom authorization page.
   - CLI Alias: `az-default-form`
   - Default value: `true`
+  - Required When: `user_az_method`=`html-form`
 - `az_form_time_limit` (Number) Specify the duration in seconds for a transaction to complete before the authorization request fails. Enter a value in the range 10 - 600. The default value is 300.
   - CLI Alias: `az-form-time-limit`
   - Range: `10`-`600`
   - Default value: `300`
+  - Required When: `user_az_method`=`html-form`
 - `az_stop_on_error` (Boolean) Specify whether to stop processing if authorization fails. If failed, stops the assembly and return an error.
   - CLI Alias: `az-stop-on-error`
   - Default value: `true`
+  - Required When: `user_az_method`!=`disabled`
 - `az_table_default_entry` (Attributes List) Default table entry
   - CLI Alias: `az-table-default-entry` (see [below for nested schema](#nestedatt--az_table_default_entry))
 - `az_table_display_checkboxes` (Boolean) Display table check boxes
@@ -79,6 +84,7 @@ resource "datapower_assembly_action_user_security" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `ei_custom_form` (String) Specify the URL fragment of the custom login page. This page collects user name and password information. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `ei-custom-form`
+  - Required When: (`extract_identity_method`=`html-form` AND `ei_default_form`=`false`)
 - `ei_custom_form_client_profile` (String) Custom form TLS client profile
   - CLI Alias: `ei-custom-form-tls-client-profile`
   - Reference to: `datapower_ssl_client_profile:id`
@@ -88,13 +94,16 @@ resource "datapower_assembly_action_user_security" "test" {
 - `ei_default_form` (Boolean) Specify whether to use the default form or a custom form. When enabled, returns the default login page to obtain credentials. When disabled, define the configuration to return the custom login page.
   - CLI Alias: `ei-default-form`
   - Default value: `true`
+  - Required When: `extract_identity_method`=`html-form`
 - `ei_form_time_limit` (Number) Specify the duration in seconds for a transaction to complete before the identity extraction request fails. Enter a value in the range 10 - 600. The default value is 300.
   - CLI Alias: `ei-form-time-limit`
   - Range: `10`-`600`
   - Default value: `300`
+  - Required When: `extract_identity_method`=`html-form`
 - `ei_stop_on_error` (Boolean) Specify whether to stop processing if identity extraction fails. If failed, stops the assembly and return an error.
   - CLI Alias: `ei-stop-on-error`
   - Default value: `true`
+  - Required When: `extract_identity_method`!=`disabled`
 - `extract_identity_method` (String) Identity extraction method
   - CLI Alias: `extract-identity-method`
   - Choices: `disabled`, `basic`, `context-var`, `html-form`, `redirect`
@@ -106,14 +115,17 @@ resource "datapower_assembly_action_user_security" "test" {
   - CLI Alias: `hostname`
 - `pass_context_variable` (String) Password context variable
   - CLI Alias: `pass-context-var`
+  - Required When: `extract_identity_method`=`context-var`
 - `query_parameters` (String) Query parameters
   - CLI Alias: `query-parameters`
 - `redirect_time_limit` (Number) Specify the duration in seconds for a transaction to complete before the redirect fails. Enter a value in the range 10 - 6000. The default value is 300.
   - CLI Alias: `redirect-time-limit`
   - Range: `10`-`6000`
   - Default value: `300`
+  - Required When: `extract_identity_method`=`redirect`
 - `redirect_url` (String) Specify the URL fragment to redirect the request to obtain user credentials. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `redirect-url`
+  - Required When: `extract_identity_method`=`redirect`
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_auth_method` (String) Authentication method
@@ -126,8 +138,10 @@ resource "datapower_assembly_action_user_security" "test" {
   - Default value: `authenticated`
 - `user_context_variable` (String) Username context variable
   - CLI Alias: `user-context-var`
+  - Required When: `extract_identity_method`=`context-var`
 - `user_registry` (String) Specify the API user registry to authenticate incoming API requests. The supported registries are API authentication URL and API LDAP.
   - CLI Alias: `user-registry`
+  - Required When: `user_auth_method`!=`disabled`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

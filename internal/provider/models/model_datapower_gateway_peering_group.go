@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -46,6 +47,42 @@ type GatewayPeeringGroup struct {
 	Idcred              types.String                `tfsdk:"idcred"`
 	Valcred             types.String                `tfsdk:"valcred"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var GatewayPeeringGroupPeerNodesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "peer",
+	Value:       []string{"peer"},
+}
+var GatewayPeeringGroupClusterPrimaryCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "peer",
+	Value:       []string{"cluster"},
+}
+var GatewayPeeringGroupClusterNodesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "peer",
+	Value:       []string{"cluster"},
+}
+var GatewayPeeringGroupClusterAutoConfigCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "peer",
+	Value:       []string{"cluster"},
+}
+var GatewayPeeringGroupIdcredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_ssl",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
 }
 
 var GatewayPeeringGroupObjectType = map[string]attr.Type{
@@ -112,6 +149,7 @@ func (data GatewayPeeringGroup) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -122,9 +160,9 @@ func (data GatewayPeeringGroup) ToBody(ctx context.Context, pathRoot string) str
 		body, _ = sjson.Set(body, pathRoot+`Mode`, data.Mode.ValueString())
 	}
 	if !data.PeerNodes.IsNull() {
-		var values []DmGatewayPeeringGroupPeerNode
-		data.PeerNodes.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmGatewayPeeringGroupPeerNode
+		data.PeerNodes.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`PeerNodes`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -132,9 +170,9 @@ func (data GatewayPeeringGroup) ToBody(ctx context.Context, pathRoot string) str
 		body, _ = sjson.Set(body, pathRoot+`ClusterPrimaryCount`, data.ClusterPrimaryCount.ValueString())
 	}
 	if !data.ClusterNodes.IsNull() {
-		var values []DmGatewayPeeringGroupClusterNode
-		data.ClusterNodes.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmGatewayPeeringGroupClusterNode
+		data.ClusterNodes.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ClusterNodes`+".-1", val.ToBody(ctx, ""))
 		}
 	}

@@ -82,7 +82,7 @@ func (d *SchemaExceptionMapDataSource) Schema(ctx context.Context, req datasourc
 						},
 						"schema_exception_rules": schema.ListNestedAttribute{
 							MarkdownDescription: "Rules describe what elements may be excepted from the schema validation when the Original Schema is used for Schema Validation.",
-							NestedObject:        models.DmSchemaExceptionRuleDataSourceSchema,
+							NestedObject:        models.GetDmSchemaExceptionRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

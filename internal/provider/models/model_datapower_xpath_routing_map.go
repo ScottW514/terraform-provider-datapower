@@ -82,20 +82,21 @@ func (data XPathRoutingMap) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
 	if !data.XPathRoutingRules.IsNull() {
-		var values []DmXPathRoutingRule
-		data.XPathRoutingRules.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmXPathRoutingRule
+		data.XPathRoutingRules.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`XPathRoutingRules`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.NameSpaceMappings.IsNull() {
-		var values []DmNamespaceMapping
-		data.NameSpaceMappings.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmNamespaceMapping
+		data.NameSpaceMappings.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`+".-1", val.ToBody(ctx, ""))
 		}
 	}

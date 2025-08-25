@@ -48,37 +48,44 @@ var DmAddHeaderPolicyObjectDefault = map[string]attr.Value{
 	"add_header": types.StringNull(),
 	"add_value":  types.StringNull(),
 }
-var DmAddHeaderPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmAddHeaderPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAddHeaderPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"add_header": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the header.", "", "").String,
+				Computed:            true,
+			},
+			"add_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the header as a string.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"add_header": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the header.", "", "").String,
-			Computed:            true,
-		},
-		"add_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the header as a string.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAddHeaderPolicyDataSourceSchema
 }
-var DmAddHeaderPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
+func GetDmAddHeaderPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAddHeaderPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"add_header": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the header.", "", "").String,
+				Required:            true,
+			},
+			"add_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the header as a string.", "", "").String,
+				Required:            true,
+			},
 		},
-		"add_header": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the header.", "", "").String,
-			Required:            true,
-		},
-		"add_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the header as a string.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmAddHeaderPolicyResourceSchema
 }
 
 func (data DmAddHeaderPolicy) IsNull() bool {
@@ -99,6 +106,7 @@ func (data DmAddHeaderPolicy) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

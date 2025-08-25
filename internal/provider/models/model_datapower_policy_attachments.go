@@ -97,6 +97,7 @@ func (data PolicyAttachments) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -110,16 +111,16 @@ func (data PolicyAttachments) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PolicyReferences`, tfutils.StringFromBool(data.PolicyReferences, ""))
 	}
 	if !data.IgnoredPolicyAttachmentPoints.IsNull() {
-		var values []DmPolicyAttachmentPoint
-		data.IgnoredPolicyAttachmentPoints.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmPolicyAttachmentPoint
+		data.IgnoredPolicyAttachmentPoints.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`IgnoredPolicyAttachmentPoints`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.ExternalPolicy.IsNull() {
-		var values []DmExternalAttachedPolicy
-		data.ExternalPolicy.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmExternalAttachedPolicy
+		data.ExternalPolicy.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ExternalPolicy`+".-1", val.ToBody(ctx, ""))
 		}
 	}

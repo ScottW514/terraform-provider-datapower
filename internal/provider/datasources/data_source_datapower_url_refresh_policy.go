@@ -82,7 +82,7 @@ func (d *URLRefreshPolicyDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"url_refresh_rule": schema.ListNestedAttribute{
 							MarkdownDescription: "Add, edit or delete a refresh rule",
-							NestedObject:        models.DmURLRefreshRuleDataSourceSchema,
+							NestedObject:        models.GetDmURLRefreshRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

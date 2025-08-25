@@ -99,7 +99,6 @@ func (r *MQv9PlusMFTSourceProtocolHandlerResource) Schema(ctx context.Context, r
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4294967295),
 				},
 				Default: int64default.StaticInt64(32769),
@@ -109,7 +108,6 @@ func (r *MQv9PlusMFTSourceProtocolHandlerResource) Schema(ctx context.Context, r
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(1),
@@ -119,7 +117,6 @@ func (r *MQv9PlusMFTSourceProtocolHandlerResource) Schema(ctx context.Context, r
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(30),

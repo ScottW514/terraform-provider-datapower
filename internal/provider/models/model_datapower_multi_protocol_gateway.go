@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -157,6 +158,160 @@ type MultiProtocolGateway struct {
 	DelayErrors                              types.Bool                  `tfsdk:"delay_errors"`
 	DelayErrorsDuration                      types.Int64                 `tfsdk:"delay_errors_duration"`
 	DependencyActions                        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var MultiProtocolGatewayRequestAttachmentsFlowControlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "request_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"unprocessed"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "request_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"unprocessed"},
+		},
+	},
+}
+var MultiProtocolGatewayResponseAttachmentsFlowControlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "response_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"unprocessed"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "response_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"unprocessed"},
+		},
+	},
+}
+var MultiProtocolGatewayParserLimitsElementDepthCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayParserLimitsAttributeCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayParserLimitsMaxNodeSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayParserLimitsExternalReferencesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayParserLimitsMaxPrefixesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayParserLimitsMaxNamespacesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayParserLimitsMaxLocalNamesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayParserLimitsAttachmentByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayParserLimitsAttachmentPackageByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayWSAHTTPAsyncResponseCodeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "wsa_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+}
+var MultiProtocolGatewayWSABackProtocolCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "wsa_gen_style",
+			AttrType:    "String",
+			AttrDefault: "sync",
+			Value:       []string{"async"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "wsa_mode",
+			AttrType:    "String",
+			AttrDefault: "sync2sync",
+			Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+		},
+	},
+}
+var MultiProtocolGatewayDelayErrorsDurationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "delay_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rewrite_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
 }
 
 var MultiProtocolGatewayObjectType = map[string]attr.Type{
@@ -669,6 +824,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -706,16 +862,16 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`AllowCacheControlHeader`, tfutils.StringFromBool(data.AllowCacheControlHeader, ""))
 	}
 	if !data.WsrrSavedSearchSubscriptions.IsNull() {
-		var values []DmWSRRSavedSearchWSDLSource
-		data.WsrrSavedSearchSubscriptions.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSRRSavedSearchWSDLSource
+		data.WsrrSavedSearchSubscriptions.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSRRSavedSearchSubscriptions`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.WsrrSubscriptions.IsNull() {
-		var values []DmWSRRWSDLSource
-		data.WsrrSubscriptions.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSRRWSDLSource
+		data.WsrrSubscriptions.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSRRSubscriptions`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -723,9 +879,9 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`PolicyAttachments`, data.PolicyAttachments.ValueString())
 	}
 	if !data.PolicyParameter.IsNull() {
-		var values []DmWSPolicyParameters
-		data.PolicyParameter.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSPolicyParameters
+		data.PolicyParameter.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`PolicyParameter`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -751,9 +907,9 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`Priority`, data.Priority.ValueString())
 	}
 	if !data.FrontProtocol.IsNull() {
-		var values []string
-		data.FrontProtocol.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.FrontProtocol.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`FrontProtocol`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -773,23 +929,23 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`FWCred`, data.FwCred.ValueString())
 	}
 	if !data.HeaderInjection.IsNull() {
-		var values []DmHeaderInjection
-		data.HeaderInjection.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmHeaderInjection
+		data.HeaderInjection.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.HeaderSuppression.IsNull() {
-		var values []DmHeaderSuppression
-		data.HeaderSuppression.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmHeaderSuppression
+		data.HeaderSuppression.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.StylesheetParameters.IsNull() {
-		var values []DmStylesheetParameter
-		data.StylesheetParameters.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmStylesheetParameter
+		data.StylesheetParameters.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -806,23 +962,23 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`PropagateURI`, tfutils.StringFromBool(data.PropagateUri, ""))
 	}
 	if !data.ServiceMonitors.IsNull() {
-		var values []string
-		data.ServiceMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.ServiceMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`ServiceMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.CountMonitors.IsNull() {
-		var values []string
-		data.CountMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.CountMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`CountMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.DurationMonitors.IsNull() {
-		var values []string
-		data.DurationMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.DurationMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`DurationMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -902,9 +1058,9 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`DebugHistory`, data.DebugHistory.ValueInt64())
 	}
 	if !data.DebugTrigger.IsNull() {
-		var values []DmMSDebugTriggerType
-		data.DebugTrigger.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmMSDebugTriggerType
+		data.DebugTrigger.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
 		}
 	}

@@ -59,79 +59,94 @@ var DmSourceAS2FeatureTypeObjectDefault = map[string]attr.Value{
 	"dot_dot":              types.BoolValue(false),
 	"cmd_exe":              types.BoolValue(false),
 }
-var DmSourceAS2FeatureTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"http_1_0": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.0 requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmSourceAS2FeatureTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSourceAS2FeatureTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"http_1_0": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.0 requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_1_1": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.1 requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"query_string": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a ? (query string)", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"fragment_identifiers": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("UAllows requests when the URL contains a # (fragment identifier)", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"dot_dot": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a .. (dotdot)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"cmd_exe": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"http_1_1": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.1 requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"query_string": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a ? (query string)", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"fragment_identifiers": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("UAllows requests when the URL contains a # (fragment identifier)", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"dot_dot": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a .. (dotdot)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"cmd_exe": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSourceAS2FeatureTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSourceAS2FeatureTypeDataSourceSchema
 }
-var DmSourceAS2FeatureTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSourceAS2FeatureTypeObjectType,
-			DmSourceAS2FeatureTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"http_1_0": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.0 requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmSourceAS2FeatureTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSourceAS2FeatureTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSourceAS2FeatureTypeObjectType,
+				DmSourceAS2FeatureTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"http_1_0": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.0 requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_1_1": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.1 requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"query_string": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a ? (query string)", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"fragment_identifiers": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("UAllows requests when the URL contains a # (fragment identifier)", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"dot_dot": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a .. (dotdot)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"cmd_exe": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"http_1_1": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.1 requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"query_string": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a ? (query string)", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"fragment_identifiers": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("UAllows requests when the URL contains a # (fragment identifier)", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"dot_dot": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a .. (dotdot)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"cmd_exe": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmSourceAS2FeatureTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSourceAS2FeatureTypeResourceSchema.Required = true
+	} else {
+		DmSourceAS2FeatureTypeResourceSchema.Optional = true
+		DmSourceAS2FeatureTypeResourceSchema.Computed = true
+	}
+	return DmSourceAS2FeatureTypeResourceSchema
 }
 
 func (data DmSourceAS2FeatureType) IsNull() bool {
@@ -155,27 +170,13 @@ func (data DmSourceAS2FeatureType) IsNull() bool {
 	}
 	return true
 }
-func GetDmSourceAS2FeatureTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSourceAS2FeatureTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSourceAS2FeatureTypeDataSourceSchema
-}
-
-func GetDmSourceAS2FeatureTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSourceAS2FeatureTypeResourceSchema.Required = true
-	} else {
-		DmSourceAS2FeatureTypeResourceSchema.Optional = true
-		DmSourceAS2FeatureTypeResourceSchema.Computed = true
-	}
-	DmSourceAS2FeatureTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSourceAS2FeatureTypeResourceSchema
-}
 
 func (data DmSourceAS2FeatureType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Http10.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.0`, tfutils.StringFromBool(data.Http10, ""))
 	}

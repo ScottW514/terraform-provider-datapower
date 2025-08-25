@@ -64,93 +64,100 @@ var DmSnmpCredMaskedObjectDefault = map[string]attr.Value{
 	"priv_secret_type": types.StringValue("password"),
 	"priv_secret":      types.StringNull(),
 }
-var DmSnmpCredMaskedDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"engine_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
-			Computed:            true,
+
+func GetDmSnmpCredMaskedDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSnmpCredMaskedDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"engine_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				Computed:            true,
+			},
+			"auth_protocol": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "md5", "sha").AddDefaultValue("sha").String,
+				Computed:            true,
+			},
+			"auth_secret_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
+				Computed:            true,
+			},
+			"auth_secret": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				Computed:            true,
+			},
+			"priv_protocol": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "des", "aes").AddDefaultValue("des").String,
+				Computed:            true,
+			},
+			"priv_secret_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
+				Computed:            true,
+			},
+			"priv_secret": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				Computed:            true,
+			},
 		},
-		"auth_protocol": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "md5", "sha").AddDefaultValue("sha").String,
-			Computed:            true,
-		},
-		"auth_secret_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
-			Computed:            true,
-		},
-		"auth_secret": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
-			Computed:            true,
-		},
-		"priv_protocol": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "des", "aes").AddDefaultValue("des").String,
-			Computed:            true,
-		},
-		"priv_secret_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
-			Computed:            true,
-		},
-		"priv_secret": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmSnmpCredMaskedDataSourceSchema
 }
-var DmSnmpCredMaskedResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"engine_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(1, 64),
-				stringvalidator.RegexMatches(regexp.MustCompile("^(0|[0-9a-fA-F]{10,64})$"), "Must match :"+"^(0|[0-9a-fA-F]{10,64})$"),
+func GetDmSnmpCredMaskedResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSnmpCredMaskedResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"engine_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 64),
+					stringvalidator.RegexMatches(regexp.MustCompile("^(0|[0-9a-fA-F]{10,64})$"), "Must match :"+"^(0|[0-9a-fA-F]{10,64})$"),
+				},
+			},
+			"auth_protocol": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "md5", "sha").AddDefaultValue("sha").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("none", "md5", "sha"),
+				},
+				Default: stringdefault.StaticString("sha"),
+			},
+			"auth_secret_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("password", "key"),
+				},
+				Default: stringdefault.StaticString("password"),
+			},
+			"auth_secret": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				Optional:            true,
+			},
+			"priv_protocol": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "des", "aes").AddDefaultValue("des").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("none", "des", "aes"),
+				},
+				Default: stringdefault.StaticString("des"),
+			},
+			"priv_secret_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("password", "key"),
+				},
+				Default: stringdefault.StaticString("password"),
+			},
+			"priv_secret": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				Optional:            true,
 			},
 		},
-		"auth_protocol": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "md5", "sha").AddDefaultValue("sha").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("none", "md5", "sha"),
-			},
-			Default: stringdefault.StaticString("sha"),
-		},
-		"auth_secret_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("password", "key"),
-			},
-			Default: stringdefault.StaticString("password"),
-		},
-		"auth_secret": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
-			Optional:            true,
-		},
-		"priv_protocol": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "des", "aes").AddDefaultValue("des").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("none", "des", "aes"),
-			},
-			Default: stringdefault.StaticString("des"),
-		},
-		"priv_secret_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("password", "key"),
-			},
-			Default: stringdefault.StaticString("password"),
-		},
-		"priv_secret": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmSnmpCredMaskedResourceSchema
 }
 
 func (data DmSnmpCredMasked) IsNull() bool {
@@ -183,6 +190,7 @@ func (data DmSnmpCredMasked) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.EngineId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EngineID`, data.EngineId.ValueString())
 	}

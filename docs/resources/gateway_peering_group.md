@@ -36,12 +36,15 @@ resource "datapower_gateway_peering_group" "test" {
 - `cluster_auto_config` (Boolean) Specify whether the cluster configuration is managed automatically. By default, cluster configuration is managed automatically. Unless directed by IBM Support, do not change this setting.
   - CLI Alias: `cluster-auto-config`
   - Default value: `true`
+  - Required When: `mode`=`cluster`
 - `cluster_nodes` (Attributes List) Specify nodes for the cluster group. To add a node, enter its local IP address or host alias and the comma-separated list of local IP addresses or host aliases of the other nodes that are in the same data center. <p>Because the primary count is 3, the configuration requires a minimum of 6 nodes that are generally in 2 data centers. Each node is defined on a different DataPower Gateway. The minimal configuration is 3 primary-secondary pairs. Each pair is a shard that manages a subset of slots.</p><p>Each primary node can have more than one secondary node, but each primary node requires the same number of secondary nodes. In other words, you can define an environment of 9 nodes, which is a configuration of 3 primary nodes and 6 secondary nodes. In this configuration, each primary node has 2 secondary nodes.</p>
-  - CLI Alias: `cluster-node` (see [below for nested schema](#nestedatt--cluster_nodes))
+  - CLI Alias: `cluster-node`
+  - Required When: `mode`=`cluster` (see [below for nested schema](#nestedatt--cluster_nodes))
 - `cluster_primary_count` (String) Primary count
   - CLI Alias: `cluster-primary-count`
   - Choices: `3`
   - Default value: `3`
+  - Required When: `mode`=`cluster`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enable_ssl` (Boolean) Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. When enabled, ensure that all members use the same TLS configuration.
   - CLI Alias: `enable-ssl`
@@ -49,12 +52,14 @@ resource "datapower_gateway_peering_group" "test" {
 - `idcred` (String) Specify the identification credentials that contains the credentials that the current member uses to identify itself to other peers. Client authentication uses mutual TLS.
   - CLI Alias: `idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: `enable_ssl`=`true`
 - `mode` (String) Mode
   - CLI Alias: `mode`
   - Choices: `peer`, `cluster`
   - Default value: `peer`
 - `peer_nodes` (Attributes List) Specify peers for the the group. To add a peer, enter its local IP address or host alias and its priority.
-  - CLI Alias: `peer-node` (see [below for nested schema](#nestedatt--peer_nodes))
+  - CLI Alias: `peer-node`
+  - Required When: `mode`=`peer` (see [below for nested schema](#nestedatt--peer_nodes))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `valcred` (String) Validation credentials

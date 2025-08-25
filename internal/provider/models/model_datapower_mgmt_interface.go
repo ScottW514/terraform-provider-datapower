@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,21 @@ type MgmtInterface struct {
 	SslsniServer      types.String                `tfsdk:"sslsni_server"`
 	LocalAddress      types.String                `tfsdk:"local_address"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var MgmtInterfaceSLMPeeringCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "DmXMLMgmtModes",
+	AttrDefault: "",
+	Value:       []string{"slm"},
+}
+var MgmtInterfaceSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
 }
 
 var MgmtInterfaceObjectType = map[string]attr.Type{
@@ -112,6 +128,7 @@ func (data MgmtInterface) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "MgmtInterface.name", path.Base("/mgmt/config/default/MgmtInterface/XMLMgmt-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

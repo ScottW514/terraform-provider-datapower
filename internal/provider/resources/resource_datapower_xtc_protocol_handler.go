@@ -98,7 +98,6 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(3000),
@@ -112,7 +111,6 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(12000),

@@ -48,37 +48,44 @@ var DmBasicAuthPolicyObjectDefault = map[string]attr.Value{
 	"user_name":      types.StringNull(),
 	"password_alias": types.StringNull(),
 }
-var DmBasicAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmBasicAuthPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmBasicAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"user_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for basic authentication.", "", "").String,
+				Computed:            true,
+			},
+			"password_alias": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias that maps to the password for the username.", "", "password_alias").String,
+				Computed:            true,
+			},
 		},
-		"user_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for basic authentication.", "", "").String,
-			Computed:            true,
-		},
-		"password_alias": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias that maps to the password for the username.", "", "password_alias").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmBasicAuthPolicyDataSourceSchema
 }
-var DmBasicAuthPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
+func GetDmBasicAuthPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmBasicAuthPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"user_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for basic authentication.", "", "").String,
+				Required:            true,
+			},
+			"password_alias": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias that maps to the password for the username.", "", "password_alias").String,
+				Optional:            true,
+			},
 		},
-		"user_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for basic authentication.", "", "").String,
-			Required:            true,
-		},
-		"password_alias": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias that maps to the password for the username.", "", "password_alias").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmBasicAuthPolicyResourceSchema
 }
 
 func (data DmBasicAuthPolicy) IsNull() bool {
@@ -99,6 +106,7 @@ func (data DmBasicAuthPolicy) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

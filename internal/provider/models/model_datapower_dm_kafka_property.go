@@ -45,29 +45,36 @@ var DmKafkaPropertyObjectDefault = map[string]attr.Value{
 	"name":  types.StringNull(),
 	"value": types.StringNull(),
 }
-var DmKafkaPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the property.", "", "").String,
-			Computed:            true,
+
+func GetDmKafkaPropertyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmKafkaPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the property.", "", "").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the property.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the property.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmKafkaPropertyDataSourceSchema
 }
-var DmKafkaPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the property.", "", "").String,
-			Required:            true,
+func GetDmKafkaPropertyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmKafkaPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the property.", "", "").String,
+				Required:            true,
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the property.", "", "").String,
+				Required:            true,
+			},
 		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the property.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmKafkaPropertyResourceSchema
 }
 
 func (data DmKafkaProperty) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmKafkaProperty) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

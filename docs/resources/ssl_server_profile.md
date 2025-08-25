@@ -104,6 +104,7 @@ resource "datapower_ssl_server_profile" "test" {
 - `valcred` (String) Validation credentials
   - CLI Alias: `valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Required When: (`request_client_auth`=`true` AND `validate_client_cert`=`true`)
 - `validate_client_cert` (Boolean) Validate client certificate
   - CLI Alias: `validate-client-cert`
   - Default value: `true`

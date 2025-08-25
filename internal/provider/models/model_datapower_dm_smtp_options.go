@@ -47,39 +47,54 @@ var DmSMTPOptionsObjectDefault = map[string]attr.Value{
 	"start_tls": types.BoolValue(false),
 	"auth":      types.BoolValue(false),
 }
-var DmSMTPOptionsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"start_tls": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("STARTTLS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmSMTPOptionsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSMTPOptionsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"start_tls": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("STARTTLS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"auth": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authentication", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"auth": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authentication", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSMTPOptionsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSMTPOptionsDataSourceSchema
 }
-var DmSMTPOptionsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSMTPOptionsObjectType,
-			DmSMTPOptionsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"start_tls": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("STARTTLS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmSMTPOptionsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSMTPOptionsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSMTPOptionsObjectType,
+				DmSMTPOptionsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"start_tls": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("STARTTLS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"auth": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authentication", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"auth": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authentication", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmSMTPOptionsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSMTPOptionsResourceSchema.Required = true
+	} else {
+		DmSMTPOptionsResourceSchema.Optional = true
+		DmSMTPOptionsResourceSchema.Computed = true
+	}
+	return DmSMTPOptionsResourceSchema
 }
 
 func (data DmSMTPOptions) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmSMTPOptions) IsNull() bool {
 	}
 	return true
 }
-func GetDmSMTPOptionsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSMTPOptionsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSMTPOptionsDataSourceSchema
-}
-
-func GetDmSMTPOptionsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSMTPOptionsResourceSchema.Required = true
-	} else {
-		DmSMTPOptionsResourceSchema.Optional = true
-		DmSMTPOptionsResourceSchema.Computed = true
-	}
-	DmSMTPOptionsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSMTPOptionsResourceSchema
-}
 
 func (data DmSMTPOptions) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.StartTls.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`StartTLS`, tfutils.StringFromBool(data.StartTls, ""))
 	}

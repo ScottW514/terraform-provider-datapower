@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &MQManagerResource{}
@@ -99,7 +100,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(819),
@@ -114,18 +114,20 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: stringdefault.StaticString("SYSTEM.DEF.SVRCONN"),
 			},
 			"csp_user_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the user ID value of the MQCSP connection security parameter when the MQCSP structure is used for authorization service.</p><p>MQCSP support enables the authorization service to authenticate a user ID and password. You can specify the MQCSP connection security parameters structure on an MQCONNX call. Before you use MQCSP support, you must define a security exit in the queue manager on the IBM MQ server. Ensure that your MQCSP user ID and password in the security exit are consistent with what you define for the local queue manager. Either an inconsistent MQCSP user ID or an inconsistent password causes a connection failure with the IBM MQ server.</p><p><b>Notes:</b><ul><li>If neither user ID or password is defined, connects to the IBM MQ server without MQCSP settings.</li><li>If only one is defined, a warning occurs and the local queue manager is not up.</li><li>If both are defined but one is inconsistent with the value on the IBM MQ server, the connection fails and the local queue manager is not up.</li></ul></p>", "mqcsp-userid", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the user ID value of the MQCSP connection security parameter when the MQCSP structure is used for authorization service.</p><p>MQCSP support enables the authorization service to authenticate a user ID and password. You can specify the MQCSP connection security parameters structure on an MQCONNX call. Before you use MQCSP support, you must define a security exit in the queue manager on the IBM MQ server. Ensure that your MQCSP user ID and password in the security exit are consistent with what you define for the local queue manager. Either an inconsistent MQCSP user ID or an inconsistent password causes a connection failure with the IBM MQ server.</p><p><b>Notes:</b><ul><li>If neither user ID or password is defined, connects to the IBM MQ server without MQCSP settings.</li><li>If only one is defined, a warning occurs and the local queue manager is not up.</li><li>If both are defined but one is inconsistent with the value on the IBM MQ server, the connection fails and the local queue manager is not up.</li></ul></p>", "mqcsp-userid", "").AddRequiredWhen(models.MQManagerCSPUserIdCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 1024),
 					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+					validators.ConditionalRequiredString(models.MQManagerCSPUserIdCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"csp_password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the password alias of the password value of the MQCSP connection security parameter when the MQCSP structure is used for authorization service.</p><p>MQCSP support enables the authorization service to authenticate a user ID and password. You can specify the MQCSP connection security parameters structure on an MQCONNX call. Before you use MQCSP support, you must define a security exit in the queue manager on the IBM MQ server. Ensure that your MQCSP user ID and password in the security exit are consistent with what you define for the local queue manager. Either an inconsistent MQCSP user ID or an inconsistent password causes a connection failure with the IBM MQ server.</p><p><b>Notes:</b><ul><li>If neither user ID or password is defined, connects to the IBM MQ server without MQCSP settings.</li><li>If only one is defined, a warning occurs and the local queue manager is not up.</li><li>If both are defined but one is inconsistent with the value on the IBM MQ server, the connection fails and the local queue manager is not up.</li></ul></p>", "mqcsp-password-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the password alias of the password value of the MQCSP connection security parameter when the MQCSP structure is used for authorization service.</p><p>MQCSP support enables the authorization service to authenticate a user ID and password. You can specify the MQCSP connection security parameters structure on an MQCONNX call. Before you use MQCSP support, you must define a security exit in the queue manager on the IBM MQ server. Ensure that your MQCSP user ID and password in the security exit are consistent with what you define for the local queue manager. Either an inconsistent MQCSP user ID or an inconsistent password causes a connection failure with the IBM MQ server.</p><p><b>Notes:</b><ul><li>If neither user ID or password is defined, connects to the IBM MQ server without MQCSP settings.</li><li>If only one is defined, a warning occurs and the local queue manager is not up.</li><li>If both are defined but one is inconsistent with the value on the IBM MQ server, the connection fails and the local queue manager is not up.</li></ul></p>", "mqcsp-password-alias", "password_alias").AddRequiredWhen(models.MQManagerCSPPasswordAliasCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 127),
+					validators.ConditionalRequiredString(models.MQManagerCSPPasswordAliasCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"heartbeat": schema.Int64Attribute{
@@ -133,7 +135,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 999999),
 				},
 				Default: int64default.StaticInt64(300),
@@ -143,7 +144,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1024, 104857600),
 				},
 				Default: int64default.StaticInt64(1048576),
@@ -153,7 +153,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(60),
@@ -163,7 +162,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(100, 50000),
 				},
 				Default: int64default.StaticInt64(500),
@@ -173,7 +171,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(3, 5),
 				},
 				Default: int64default.StaticInt64(3),
@@ -183,7 +180,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1),
 				},
 				Default: int64default.StaticInt64(0),
@@ -198,7 +194,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the total number of processing attempts. After all attempts fail, the following actions occur. <ul><li>The poison message is moved to the backout queue.</li><li>The unit of work that contains this message is committed.</li></ul><p>Enter a value that is equal to or greater than 1.</p>", "backout-threshold", "").AddIntegerRange(1, 65535).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
@@ -214,7 +209,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 10000),
 				},
 				Default: int64default.StaticInt64(250),
@@ -224,7 +218,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 10000),
 				},
 				Default: int64default.StaticInt64(1),
@@ -234,7 +227,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 5000),
 				},
 				Default: int64default.StaticInt64(1),
@@ -282,7 +274,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(10),
@@ -292,7 +283,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(6),
@@ -302,7 +292,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(600),
@@ -312,7 +301,6 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(10),

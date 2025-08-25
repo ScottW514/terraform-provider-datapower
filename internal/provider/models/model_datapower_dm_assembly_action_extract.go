@@ -45,29 +45,36 @@ var DmAssemblyActionExtractObjectDefault = map[string]attr.Value{
 	"capture":   types.StringNull(),
 	"transform": types.StringNull(),
 }
-var DmAssemblyActionExtractDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"capture": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the path expression that identifies the field.", "capture", "").String,
-			Computed:            true,
+
+func GetDmAssemblyActionExtractDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAssemblyActionExtractDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"capture": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path expression that identifies the field.", "capture", "").String,
+				Computed:            true,
+			},
+			"transform": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expression that defines how to transform the content.", "transform", "").String,
+				Computed:            true,
+			},
 		},
-		"transform": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the expression that defines how to transform the content.", "transform", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAssemblyActionExtractDataSourceSchema
 }
-var DmAssemblyActionExtractResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"capture": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the path expression that identifies the field.", "capture", "").String,
-			Required:            true,
+func GetDmAssemblyActionExtractResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAssemblyActionExtractResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"capture": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path expression that identifies the field.", "capture", "").String,
+				Required:            true,
+			},
+			"transform": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expression that defines how to transform the content.", "transform", "").String,
+				Optional:            true,
+			},
 		},
-		"transform": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the expression that defines how to transform the content.", "transform", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmAssemblyActionExtractResourceSchema
 }
 
 func (data DmAssemblyActionExtract) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmAssemblyActionExtract) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Capture.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Capture`, data.Capture.ValueString())
 	}

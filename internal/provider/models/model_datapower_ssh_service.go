@@ -80,6 +80,7 @@ func (data SSHService) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "SSHService.name", path.Base("/mgmt/config/default/SSHService/SSH Service"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

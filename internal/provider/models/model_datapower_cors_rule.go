@@ -89,6 +89,7 @@ func (data CORSRule) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -96,9 +97,9 @@ func (data CORSRule) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.AllowOrigin.IsNull() {
-		var values []string
-		data.AllowOrigin.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.AllowOrigin.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`AllowOrigin`+".-1", map[string]string{"value": val})
 		}
 	}

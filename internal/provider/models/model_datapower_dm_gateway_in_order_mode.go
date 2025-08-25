@@ -50,49 +50,64 @@ var DmGatewayInOrderModeObjectDefault = map[string]attr.Value{
 	"backend":  types.BoolValue(false),
 	"response": types.BoolValue(false),
 }
-var DmGatewayInOrderModeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"request": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Request rule in order", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmGatewayInOrderModeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmGatewayInOrderModeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"request": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Request rule in order", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"backend": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Backend in order", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"response": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Response rule in order", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"backend": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Backend in order", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"response": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response rule in order", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmGatewayInOrderModeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmGatewayInOrderModeDataSourceSchema
 }
-var DmGatewayInOrderModeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmGatewayInOrderModeObjectType,
-			DmGatewayInOrderModeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"request": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Request rule in order", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmGatewayInOrderModeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmGatewayInOrderModeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmGatewayInOrderModeObjectType,
+				DmGatewayInOrderModeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"request": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Request rule in order", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"backend": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Backend in order", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"response": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Response rule in order", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"backend": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Backend in order", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"response": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response rule in order", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmGatewayInOrderModeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmGatewayInOrderModeResourceSchema.Required = true
+	} else {
+		DmGatewayInOrderModeResourceSchema.Optional = true
+		DmGatewayInOrderModeResourceSchema.Computed = true
+	}
+	return DmGatewayInOrderModeResourceSchema
 }
 
 func (data DmGatewayInOrderMode) IsNull() bool {
@@ -107,27 +122,13 @@ func (data DmGatewayInOrderMode) IsNull() bool {
 	}
 	return true
 }
-func GetDmGatewayInOrderModeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmGatewayInOrderModeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmGatewayInOrderModeDataSourceSchema
-}
-
-func GetDmGatewayInOrderModeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmGatewayInOrderModeResourceSchema.Required = true
-	} else {
-		DmGatewayInOrderModeResourceSchema.Optional = true
-		DmGatewayInOrderModeResourceSchema.Computed = true
-	}
-	DmGatewayInOrderModeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmGatewayInOrderModeResourceSchema
-}
 
 func (data DmGatewayInOrderMode) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Request.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Request`, tfutils.StringFromBool(data.Request, ""))
 	}

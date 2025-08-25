@@ -46,9 +46,11 @@ resource "datapower_b2b_cpa_receiver_setting" "test" {
 - `decrypt_id_cred` (String) Decryption identification credentials
   - CLI Alias: `decrypt-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: `encryption_required`=`true`
 - `default_signer_cert` (String) Specify the default certificate to verify the signature. This certificate is used when either the <tt>keyInfo</tt> element is missing or the signature method is not supported.
   - CLI Alias: `default-signer-cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: `signature_required`=`true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `encryption_required` (Boolean) Require encryption
   - CLI Alias: `encrypt-required`
@@ -70,6 +72,7 @@ resource "datapower_b2b_cpa_receiver_setting" "test" {
 - `verify_val_cred` (String) Signature validation credentials
   - CLI Alias: `verify-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Required When: `signature_required`=`true`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

@@ -89,15 +89,15 @@ attributes:
     When not specified, the input file location is used.
   cli_alias: output-location
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseOutputLocation
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseOutputLocation
     value:
-    - 'off'
+    - false
   file_locations:
   - logtemp
   - local

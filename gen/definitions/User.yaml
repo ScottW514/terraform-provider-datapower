@@ -7,6 +7,7 @@ cli_alias: user
 cmd_group: usergroup
 rest_endpoint: /mgmt/config/default/User
 default_domain_only: true
+write_only_attrs: true
 attributes:
 - name: Id
   tf_name: id
@@ -36,8 +37,6 @@ attributes:
   cli_alias: password
   example: Password$123
   write_only: true
-  required_when:
-  - evaluation: is-edit-new-object
   string_max_length: 128
   string_min_length: 1
 - name: AccessLevel
@@ -63,7 +62,7 @@ attributes:
   test_value: '"AccTest_UserGroup"'
   test_bed_value: datapower_user_group.acc_test.id
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AccessLevel
     value:
     - group-defined
@@ -72,6 +71,7 @@ attributes:
 - name: SnmpCreds
   type: List
   element_type: DmSnmpCred
+  write_only_attrs: true
   description: Specify SNMP V3 credentials for the user account. SNMP V3 users are
     a type of user account with SNMP V3 credentials. This type of user account creates
     an account and adds SNMP V3 credentials. Each account can have multiple SNMP V3

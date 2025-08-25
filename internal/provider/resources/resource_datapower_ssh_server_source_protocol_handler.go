@@ -99,7 +99,6 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65534),
 				},
 				Default: int64default.StaticInt64(22),
@@ -177,7 +176,6 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -187,14 +185,13 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 43200),
 				},
 				Default: int64default.StaticInt64(600),
 			},
 			"virtual_directories": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("In virtual mode, create a directory in the virtual file system that is presented by this SFTP server. The SFTP client can use all of these directories to write file to be processed. The root directory (/) is always present and cannot be created.", "virtual-directory", "").String,
-				NestedObject:        models.DmSFTPServerVirtualDirectoryResourceSchema,
+				NestedObject:        models.GetDmSFTPServerVirtualDirectoryResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

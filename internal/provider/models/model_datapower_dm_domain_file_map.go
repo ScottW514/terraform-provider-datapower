@@ -59,79 +59,94 @@ var DmDomainFileMapObjectDefault = map[string]attr.Value{
 	"exec":      types.BoolValue(true),
 	"subdir":    types.BoolValue(true),
 }
-var DmDomainFileMapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"copy_from": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied from", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmDomainFileMapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmDomainFileMapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"copy_from": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied from", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"copy_to": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied to", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"delete": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be deleted", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"display": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow file content to be displayed", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"exec": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be run as scripts", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"subdir": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow subdirectories to be created", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"copy_to": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied to", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"delete": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be deleted", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"display": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow file content to be displayed", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"exec": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be run as scripts", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"subdir": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow subdirectories to be created", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmDomainFileMapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmDomainFileMapDataSourceSchema
 }
-var DmDomainFileMapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmDomainFileMapObjectType,
-			DmDomainFileMapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"copy_from": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied from", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmDomainFileMapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmDomainFileMapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmDomainFileMapObjectType,
+				DmDomainFileMapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"copy_from": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied from", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"copy_to": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied to", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"delete": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be deleted", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"display": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow file content to be displayed", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"exec": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be run as scripts", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"subdir": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow subdirectories to be created", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"copy_to": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied to", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"delete": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be deleted", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"display": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow file content to be displayed", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"exec": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be run as scripts", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"subdir": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow subdirectories to be created", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmDomainFileMapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmDomainFileMapResourceSchema.Required = true
+	} else {
+		DmDomainFileMapResourceSchema.Optional = true
+		DmDomainFileMapResourceSchema.Computed = true
+	}
+	return DmDomainFileMapResourceSchema
 }
 
 func (data DmDomainFileMap) IsNull() bool {
@@ -155,27 +170,13 @@ func (data DmDomainFileMap) IsNull() bool {
 	}
 	return true
 }
-func GetDmDomainFileMapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmDomainFileMapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmDomainFileMapDataSourceSchema
-}
-
-func GetDmDomainFileMapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmDomainFileMapResourceSchema.Required = true
-	} else {
-		DmDomainFileMapResourceSchema.Optional = true
-		DmDomainFileMapResourceSchema.Computed = true
-	}
-	DmDomainFileMapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmDomainFileMapResourceSchema
-}
 
 func (data DmDomainFileMap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.CopyFrom.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CopyFrom`, tfutils.StringFromBool(data.CopyFrom, ""))
 	}

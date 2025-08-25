@@ -5,6 +5,7 @@ cli_alias: domain-settings
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/DomainSettings/default
 update_only: true
+write_only_attrs: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

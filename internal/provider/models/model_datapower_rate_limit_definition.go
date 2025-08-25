@@ -167,6 +167,7 @@ func (data RateLimitDefinition) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -228,9 +229,9 @@ func (data RateLimitDefinition) ToBody(ctx context.Context, pathRoot string) str
 		body, _ = sjson.Set(body, pathRoot+`UseCache`, tfutils.StringFromBool(data.UseCache, ""))
 	}
 	if !data.Parameters.IsNull() {
-		var values []DmRateLimitDefinitionNameValuePair
-		data.Parameters.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmRateLimitDefinitionNameValuePair
+		data.Parameters.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Parameters`+".-1", val.ToBody(ctx, ""))
 		}
 	}

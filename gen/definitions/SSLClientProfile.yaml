@@ -137,10 +137,10 @@ attributes:
   description: Validation credentials
   cli_alias: valcred
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ValidateServerCert
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: Caching
@@ -158,10 +158,10 @@ attributes:
     value is 300.
   cli_alias: cache-timeout
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Caching
     value:
-    - 'off'
+    - false
 - name: CacheSize
   type: Int64
   minimum: 1
@@ -171,10 +171,10 @@ attributes:
     value in the range 1 - 500000. The default value is 100.
   cli_alias: cache-size
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Caching
     value:
-    - 'off'
+    - false
 - name: SSLClientFeatures
   dm_type: DmSSLClientFeatures
   description: Features
@@ -240,10 +240,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseCustomSNIHostname
       value:
-      - 'yes'
+      - true
     - evaluation: property-value-in-list
       attribute: SSLClientFeatures
       value:
@@ -262,10 +262,10 @@ attributes:
     Alternative Name</tt> (SAN) extension contains no DNS name.
   cli_alias: hostname-validation-flags
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ValidateHostname
     value:
-    - 'off'
+    - false
 - name: HostnameValidationFailOnError
   type: Bool
   default: false
@@ -275,10 +275,10 @@ attributes:
     with any configured server certificate validation.
   cli_alias: hostname-validation-fail
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ValidateHostname
     value:
-    - 'off'
+    - false
 - name: EnableTLS13Compat
   type: Bool
   default: true

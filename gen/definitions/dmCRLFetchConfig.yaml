@@ -38,7 +38,7 @@ attributes:
   description: A URL that specifies the location of the CRL.
   cli_alias: fetch-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: FetchType
     value:
     - http
@@ -52,7 +52,7 @@ attributes:
     CRL.
   cli_alias: remote-address
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: FetchType
     value:
     - ldap
@@ -64,7 +64,7 @@ attributes:
   description: The remote LDAP port. Enter a value in the range 1 - 65535. The default
     value is 389. For LDAP over TLS, the standard port is 636.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: FetchType
     value:
     - ldap
@@ -75,7 +75,7 @@ attributes:
   description: A string containing the DN of the CA that issued the target CRL.
   cli_alias: read-dn
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: FetchType
     value:
     - ldap
@@ -86,7 +86,7 @@ attributes:
   description: A string containing the DN to login to the LDAP server.
   cli_alias: bind-dn
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: FetchType
     value:
     - http
@@ -97,7 +97,7 @@ attributes:
     the LDAP server.
   cli_alias: bind-pass-alias
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: FetchType
     value:
     - http
@@ -110,7 +110,7 @@ attributes:
   description: The LDAP server version.
   cli_alias: ldap-version
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: FetchType
     value:
     - http
@@ -124,7 +124,7 @@ attributes:
     times out.
   cli_alias: ldap-readtimeout
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: FetchType
     value:
     - http
@@ -143,7 +143,7 @@ attributes:
     Gateway and its targets.
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLClientConfigType
     value:
     - client

@@ -47,32 +47,39 @@ var DmHeaderSuppressionObjectDefault = map[string]attr.Value{
 	"direction":  types.StringNull(),
 	"header_tag": types.StringNull(),
 }
-var DmHeaderSuppressionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"direction": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
-			Computed:            true,
-		},
-		"header_tag": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmHeaderSuppressionResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"direction": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("front", "back"),
+
+func GetDmHeaderSuppressionDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmHeaderSuppressionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"direction": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
+				Computed:            true,
+			},
+			"header_tag": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.", "", "").String,
+				Computed:            true,
 			},
 		},
-		"header_tag": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.", "", "").String,
-			Optional:            true,
+	}
+	return DmHeaderSuppressionDataSourceSchema
+}
+func GetDmHeaderSuppressionResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmHeaderSuppressionResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"direction": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("front", "back"),
+				},
+			},
+			"header_tag": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.", "", "").String,
+				Optional:            true,
+			},
 		},
-	},
+	}
+	return DmHeaderSuppressionResourceSchema
 }
 
 func (data DmHeaderSuppression) IsNull() bool {
@@ -90,6 +97,7 @@ func (data DmHeaderSuppression) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Direction.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Direction`, data.Direction.ValueString())
 	}

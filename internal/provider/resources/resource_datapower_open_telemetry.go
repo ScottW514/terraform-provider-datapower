@@ -92,7 +92,7 @@ func (r *OpenTelemetryResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"resource_attribute": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Resource attributes", "resource-attribute", "").String,
-				NestedObject:        models.DmOpenTelemetryResourceAttributeResourceSchema,
+				NestedObject:        models.GetDmOpenTelemetryResourceAttributeResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

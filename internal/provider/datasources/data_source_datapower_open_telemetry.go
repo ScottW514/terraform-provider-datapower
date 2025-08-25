@@ -90,7 +90,7 @@ func (d *OpenTelemetryDataSource) Schema(ctx context.Context, req datasource.Sch
 						},
 						"resource_attribute": schema.ListNestedAttribute{
 							MarkdownDescription: "Resource attributes",
-							NestedObject:        models.DmOpenTelemetryResourceAttributeDataSourceSchema,
+							NestedObject:        models.GetDmOpenTelemetryResourceAttributeDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

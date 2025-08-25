@@ -62,71 +62,78 @@ var DmLBGroupMemberObjectDefault = map[string]attr.Value{
 	"health_port":     types.Int64Null(),
 	"lb_member_state": types.StringValue("enabled"),
 }
-var DmLBGroupMemberDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"server": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the host name or IP address of the real server.", "server", "").String,
-			Computed:            true,
+
+func GetDmLBGroupMemberDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmLBGroupMemberDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"server": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the host name or IP address of the real server.", "server", "").String,
+				Computed:            true,
+			},
+			"weight": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>When balancing with Weighted Round Robin, the weight property indicates the relative priority of this server versus the other members of the group. The greater the weight indicates the higher the preference. Use an integer between 1 and 65000.</p><p>For example, assume three server pool members, A, B, and C, with assigned weights of 5, 3, and 2 respectively. As a result of this weighting, server A can expect to receive approximately 50% of client requests, server B can expect to receive approximately 30% of client requests, with server C receiving the remaining 20%.</p>", "weight", "").AddIntegerRange(1, 65000).AddDefaultValue("1").String,
+				Computed:            true,
+			},
+			"mapped_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>", "", "").String,
+				Computed:            true,
+			},
+			"activity": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").String,
+				Computed:            true,
+			},
+			"health_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TCP Port number to test.", "", "").String,
+				Computed:            true,
+			},
+			"lb_member_state": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable or Disable the Load Balancer Member. If the Administrative State is disabled, the member are not used in health or forwarding checks.", "admin-state", "").AddStringEnum("enabled", "disabled").AddDefaultValue("enabled").String,
+				Computed:            true,
+			},
 		},
-		"weight": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>When balancing with Weighted Round Robin, the weight property indicates the relative priority of this server versus the other members of the group. The greater the weight indicates the higher the preference. Use an integer between 1 and 65000.</p><p>For example, assume three server pool members, A, B, and C, with assigned weights of 5, 3, and 2 respectively. As a result of this weighting, server A can expect to receive approximately 50% of client requests, server B can expect to receive approximately 30% of client requests, with server C receiving the remaining 20%.</p>", "weight", "").AddIntegerRange(1, 65000).AddDefaultValue("1").String,
-			Computed:            true,
-		},
-		"mapped_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>", "", "").String,
-			Computed:            true,
-		},
-		"activity": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").String,
-			Computed:            true,
-		},
-		"health_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TCP Port number to test.", "", "").String,
-			Computed:            true,
-		},
-		"lb_member_state": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable or Disable the Load Balancer Member. If the Administrative State is disabled, the member are not used in health or forwarding checks.", "admin-state", "").AddStringEnum("enabled", "disabled").AddDefaultValue("enabled").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmLBGroupMemberDataSourceSchema
 }
-var DmLBGroupMemberResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"server": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the host name or IP address of the real server.", "server", "").String,
-			Required:            true,
-		},
-		"weight": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>When balancing with Weighted Round Robin, the weight property indicates the relative priority of this server versus the other members of the group. The greater the weight indicates the higher the preference. Use an integer between 1 and 65000.</p><p>For example, assume three server pool members, A, B, and C, with assigned weights of 5, 3, and 2 respectively. As a result of this weighting, server A can expect to receive approximately 50% of client requests, server B can expect to receive approximately 30% of client requests, with server C receiving the remaining 20%.</p>", "weight", "").AddIntegerRange(1, 65000).AddDefaultValue("1").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 65000),
+func GetDmLBGroupMemberResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmLBGroupMemberResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"server": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the host name or IP address of the real server.", "server", "").String,
+				Required:            true,
 			},
-			Default: int64default.StaticInt64(1),
-		},
-		"mapped_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>", "", "").String,
-			Optional:            true,
-		},
-		"activity": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").String,
-			Optional:            true,
-		},
-		"health_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TCP Port number to test.", "", "").String,
-			Optional:            true,
-		},
-		"lb_member_state": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable or Disable the Load Balancer Member. If the Administrative State is disabled, the member are not used in health or forwarding checks.", "admin-state", "").AddStringEnum("enabled", "disabled").AddDefaultValue("enabled").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("enabled", "disabled"),
+			"weight": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>When balancing with Weighted Round Robin, the weight property indicates the relative priority of this server versus the other members of the group. The greater the weight indicates the higher the preference. Use an integer between 1 and 65000.</p><p>For example, assume three server pool members, A, B, and C, with assigned weights of 5, 3, and 2 respectively. As a result of this weighting, server A can expect to receive approximately 50% of client requests, server B can expect to receive approximately 30% of client requests, with server C receiving the remaining 20%.</p>", "weight", "").AddIntegerRange(1, 65000).AddDefaultValue("1").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65000),
+				},
+				Default: int64default.StaticInt64(1),
 			},
-			Default: stringdefault.StaticString("enabled"),
+			"mapped_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>", "", "").String,
+				Optional:            true,
+			},
+			"activity": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").String,
+				Optional:            true,
+			},
+			"health_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TCP Port number to test.", "", "").String,
+				Optional:            true,
+			},
+			"lb_member_state": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable or Disable the Load Balancer Member. If the Administrative State is disabled, the member are not used in health or forwarding checks.", "admin-state", "").AddStringEnum("enabled", "disabled").AddDefaultValue("enabled").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("enabled", "disabled"),
+				},
+				Default: stringdefault.StaticString("enabled"),
+			},
 		},
-	},
+	}
+	return DmLBGroupMemberResourceSchema
 }
 
 func (data DmLBGroupMember) IsNull() bool {
@@ -156,6 +163,7 @@ func (data DmLBGroupMember) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Server.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Server`, data.Server.ValueString())
 	}

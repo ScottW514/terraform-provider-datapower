@@ -116,7 +116,7 @@ attributes:
   description: Inbound signature validation credentials
   cli_alias: verify-valcred
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -127,7 +127,7 @@ attributes:
     is off.
   cli_alias: require-signed
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -138,7 +138,7 @@ attributes:
     behavior is off.
   cli_alias: require-encrypted
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -150,16 +150,16 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: InboundRequireEncrypted
       value:
-      - 'on'
+      - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -175,7 +175,7 @@ attributes:
     the outbound MDN is signed if this partner has a configured identification credentials.</p>
   cli_alias: sign
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -189,16 +189,16 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: OutboundSign
       value:
-      - 'on'
+      - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -216,14 +216,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: OutboundSign
       value:
-      - 'off'
+      - false
 - name: OutboundSignMICAlgVersion
   type: String
   enum:
@@ -240,7 +240,7 @@ attributes:
     Version 3.2, the micalg parameter value has micalg=[md5|sha-1|sha-256|sha-384|sha-512].</li></ul>'
   cli_alias: sign-micalg-version
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -270,7 +270,7 @@ attributes:
     The default behavior is never. This option does not apply to MDN.
   cli_alias: as-allow-dup-msg
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -286,7 +286,7 @@ attributes:
     file to its backend system with the received file name.
   cli_alias: preserve-filename
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -306,7 +306,7 @@ attributes:
     the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
   cli_alias: ebms-persist-duration
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -318,7 +318,7 @@ attributes:
     where to send the acknowledgment.
   cli_alias: ebms-ack-url
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -336,12 +336,12 @@ attributes:
     of the problem. Error URL cannot be empty when the acknowledgment URL is specified.
   cli_alias: ebms-error-url
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EBMSAckURL
     value:
     - ''
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -357,7 +357,7 @@ attributes:
     the received ebMS messages. The default behavior is off.
   cli_alias: ebms-inbound-send-receipt
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -370,14 +370,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSInboundSendReceipt
       value:
-      - 'off'
+      - false
 - name: EBMSInboundReceiptReplyPattern
   type: String
   enum:
@@ -390,14 +390,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSInboundSendReceipt
       value:
-      - 'off'
+      - false
 - name: EBMSReceiptURL
   type: String
   description: When the receipt reply pattern is callback, specify the URL to send
@@ -406,33 +406,33 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSInboundSendReceipt
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: EBMSInboundReceiptReplyPattern
       value:
       - Callback
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSInboundReceiptReplyPattern
       value:
       - Response
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSInboundSendReceipt
       value:
-      - 'off'
+      - false
   protocols:
   - http
   - https
@@ -446,20 +446,20 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSInboundSendReceipt
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: EBMSInboundReceiptReplyPattern
       value:
       - Callback
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -476,7 +476,7 @@ attributes:
     signature methods are supported.
   cli_alias: ebms-verify-valcred
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -489,7 +489,7 @@ attributes:
     method is unsupported.
   cli_alias: ebms-default-signer-cert
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -500,7 +500,7 @@ attributes:
     behavior is off.
   cli_alias: ebms-require-signed
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -511,7 +511,7 @@ attributes:
     behavior is off.
   cli_alias: ebms-require-encrypted
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -523,16 +523,16 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSInboundRequireEncrypted
       value:
-      - 'on'
+      - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -549,7 +549,7 @@ attributes:
     is signed if this partner has a configured identification credentials.</p>
   cli_alias: ebms-sign
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -564,16 +564,16 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundSign
       value:
-      - 'on'
+      - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -601,14 +601,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundSign
       value:
-      - 'off'
+      - false
 - name: EBMSOutboundSignatureC14NAlg
   type: String
   enum:
@@ -626,14 +626,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundSign
       value:
-      - 'off'
+      - false
 - name: EBMSOutboundSignDigestAlg
   type: String
   enum:
@@ -651,14 +651,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundSign
       value:
-      - 'off'
+      - false
 - name: EBMSEnableCPABinding
   type: Bool
   default: false
@@ -668,7 +668,7 @@ attributes:
     profile. The CPA binding is matched by the internal partner profile.
   cli_alias: ebms-enable-cpa-bindings
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -685,21 +685,21 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSEnableCPABinding
       value:
-      - 'off'
+      - false
 - name: EBMSCpaId
   type: String
   description: Specify the CPA ID to package in the outbound ebMS2 message header.
     This value is used when the B2B gateway is CPA-enforced.
   cli_alias: ebms-cpa-id
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -709,7 +709,7 @@ attributes:
     This value is used when when the B2B gateway is CPA-enforced.
   cli_alias: ebms-service
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -719,7 +719,7 @@ attributes:
     This value is used when the B2B gateway is CPA-enforced.
   cli_alias: ebms-action
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -742,7 +742,7 @@ attributes:
     The default behavior is never. This option does not apply to acknowledgments.
   cli_alias: ebms-allow-dup-msg
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -754,7 +754,7 @@ attributes:
   description: MDN TLS client type
   cli_alias: mdn-ssl-client-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -766,11 +766,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MDNSSLClientConfigType
       value:
       - client
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
@@ -782,7 +782,7 @@ attributes:
   description: Acknowledgment/Error TLS client type
   cli_alias: ebmsack-ssl-client-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -794,11 +794,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EBMSAckSSLClientConfigType
       value:
       - client
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
@@ -816,7 +816,7 @@ attributes:
     identification credentials.</p>
   cli_alias: ebms3-sign
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -830,16 +830,16 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMS3OutboundSign
       value:
-      - 'on'
+      - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -860,14 +860,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMS3OutboundSign
       value:
-      - 'off'
+      - false
 - name: EBMS3OutboundSignatureAlg
   type: String
   enum:
@@ -892,14 +892,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMS3OutboundSign
       value:
-      - 'off'
+      - false
 - name: EBMS3OutboundSignatureC14NAlg
   type: String
   enum:
@@ -916,21 +916,21 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMS3OutboundSign
       value:
-      - 'off'
+      - false
 - name: EBMS3InboundVerifyValCred
   type: String
   reference_to: CryptoValCred
   description: Inbound signature validation credentials
   cli_alias: ebms3-verify-valcred
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -942,7 +942,7 @@ attributes:
     element is missing or the signature method is unsupported.
   cli_alias: ebms3-default-signer-cert
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -953,7 +953,7 @@ attributes:
     behavior is off.
   cli_alias: ebms3-require-signed
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -964,7 +964,7 @@ attributes:
     behavior is off.
   cli_alias: ebms3-require-encrypted
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -976,16 +976,16 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMS3InboundRequireEncrypted
       value:
-      - 'on'
+      - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -996,7 +996,7 @@ attributes:
     messages. The default behavior is not to require compression.
   cli_alias: ebms3-require-compressed
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -1008,7 +1008,7 @@ attributes:
   description: Receipt/Error TLS client type
   cli_alias: ebms3-receipt-ssl-client-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -1020,7 +1020,7 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMS3ReceiptSSLClientConfigType
       value:
       - client
@@ -1034,26 +1034,26 @@ attributes:
         attribute: EBMSInboundErrorURL
         value:
         - https
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSInboundSendReceipt
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: EBMSInboundReceiptReplyPattern
       value:
       - Callback
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EBMS3ReceiptSSLClientConfigType
       value:
       - client
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
@@ -1065,7 +1065,7 @@ attributes:
     behavior is off.
   cli_alias: ebms-notification
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -1074,12 +1074,12 @@ attributes:
   description: Notification URL
   cli_alias: ebms-notification-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EBMSNotification
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - external
@@ -1098,7 +1098,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
@@ -1114,7 +1114,7 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSNotificationSSLClientConfigType
       value:
       - client
@@ -1122,22 +1122,22 @@ attributes:
       attribute: EBMSNotificationURL
       value:
       - https
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - internal
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSNotification
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EBMSNotificationSSLClientConfigType
       value:
       - client
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileType
       value:
       - external
@@ -1157,7 +1157,7 @@ attributes:
     messages.
   cli_alias: ebms3-allow-dup-msg
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -1169,7 +1169,7 @@ attributes:
     The default behavior is disabled.
   cli_alias: ebms3-duplicate-detection-notification
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal
@@ -1181,7 +1181,7 @@ attributes:
     between partners.
   cli_alias: ebms-messageproperties
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileType
     value:
     - internal

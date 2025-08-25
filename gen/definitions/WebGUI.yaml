@@ -74,7 +74,7 @@ attributes:
   description: Custom TLS server profile
   cli_alias: ssl-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLServerConfigType
     value:
     - server
@@ -84,7 +84,7 @@ attributes:
   description: Custom TLS SNI server profile
   cli_alias: ssl-sni-server
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLServerConfigType
     value:
     - sni

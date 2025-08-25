@@ -51,45 +51,52 @@ var DmB2BCPAEntryObjectDefault = map[string]attr.Value{
 	"internal_partner": types.StringNull(),
 	"external_partner": types.StringNull(),
 }
-var DmB2BCPAEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"cpa": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA.", "cpa", "b2b_cpa").String,
-			Computed:            true,
+
+func GetDmB2BCPAEntryDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmB2BCPAEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"cpa": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA.", "cpa", "b2b_cpa").String,
+				Computed:            true,
+			},
+			"collaboration": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the service to attach. A service is either a business collaboration service for exchanging business messages or an MSH signal service for exchanging MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping, and Pong. The value of an MSH signal service is <tt>urn:oasis:names:tc:ebxml-msg:service</tt> . Another value represents a business collaboration service.", "collaboration", "b2b_cpa_collaboration").String,
+				Computed:            true,
+			},
+			"internal_partner": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the internal partner.", "internal-partner", "b2b_profile").String,
+				Computed:            true,
+			},
+			"external_partner": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the external partner.", "external-partner", "b2b_profile").String,
+				Computed:            true,
+			},
 		},
-		"collaboration": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the service to attach. A service is either a business collaboration service for exchanging business messages or an MSH signal service for exchanging MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping, and Pong. The value of an MSH signal service is <tt>urn:oasis:names:tc:ebxml-msg:service</tt> . Another value represents a business collaboration service.", "collaboration", "b2b_cpa_collaboration").String,
-			Computed:            true,
-		},
-		"internal_partner": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the internal partner.", "internal-partner", "b2b_profile").String,
-			Computed:            true,
-		},
-		"external_partner": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the external partner.", "external-partner", "b2b_profile").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmB2BCPAEntryDataSourceSchema
 }
-var DmB2BCPAEntryResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"cpa": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA.", "cpa", "b2b_cpa").String,
-			Required:            true,
+func GetDmB2BCPAEntryResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmB2BCPAEntryResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"cpa": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA.", "cpa", "b2b_cpa").String,
+				Required:            true,
+			},
+			"collaboration": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the service to attach. A service is either a business collaboration service for exchanging business messages or an MSH signal service for exchanging MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping, and Pong. The value of an MSH signal service is <tt>urn:oasis:names:tc:ebxml-msg:service</tt> . Another value represents a business collaboration service.", "collaboration", "b2b_cpa_collaboration").String,
+				Required:            true,
+			},
+			"internal_partner": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the internal partner.", "internal-partner", "b2b_profile").String,
+				Required:            true,
+			},
+			"external_partner": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the external partner.", "external-partner", "b2b_profile").String,
+				Required:            true,
+			},
 		},
-		"collaboration": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the service to attach. A service is either a business collaboration service for exchanging business messages or an MSH signal service for exchanging MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping, and Pong. The value of an MSH signal service is <tt>urn:oasis:names:tc:ebxml-msg:service</tt> . Another value represents a business collaboration service.", "collaboration", "b2b_cpa_collaboration").String,
-			Required:            true,
-		},
-		"internal_partner": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the internal partner.", "internal-partner", "b2b_profile").String,
-			Required:            true,
-		},
-		"external_partner": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the external partner.", "external-partner", "b2b_profile").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmB2BCPAEntryResourceSchema
 }
 
 func (data DmB2BCPAEntry) IsNull() bool {
@@ -113,6 +120,7 @@ func (data DmB2BCPAEntry) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Cpa.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CPA`, data.Cpa.ValueString())
 	}

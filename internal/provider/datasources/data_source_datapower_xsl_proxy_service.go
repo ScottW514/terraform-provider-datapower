@@ -199,17 +199,17 @@ func (d *XSLProxyServiceDataSource) Schema(ctx context.Context, req datasource.S
 						},
 						"header_injection": schema.ListNestedAttribute{
 							MarkdownDescription: "HTTP Header Injection",
-							NestedObject:        models.DmHeaderInjectionDataSourceSchema,
+							NestedObject:        models.GetDmHeaderInjectionDataSourceSchema(),
 							Computed:            true,
 						},
 						"header_suppression": schema.ListNestedAttribute{
 							MarkdownDescription: "HTTP Headers can be suppressed (removed) from the message flow using this property. For example, the Via: header, which contains the name of the DataPower service handling the message, may be suppressed from messages sent by the DataPower device back to the client.",
-							NestedObject:        models.DmHeaderSuppressionDataSourceSchema,
+							NestedObject:        models.GetDmHeaderSuppressionDataSourceSchema(),
 							Computed:            true,
 						},
 						"stylesheet_parameters": schema.ListNestedAttribute{
 							MarkdownDescription: "Stylesheets used in Processing Policies can take stylesheet parameters. These parameters can be passed in by this object. More than one parameter can be defined.",
-							NestedObject:        models.DmStylesheetParameterDataSourceSchema,
+							NestedObject:        models.GetDmStylesheetParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"default_param_namespace": schema.StringAttribute{
@@ -248,7 +248,7 @@ func (d *XSLProxyServiceDataSource) Schema(ctx context.Context, req datasource.S
 						},
 						"debug_trigger": schema.ListNestedAttribute{
 							MarkdownDescription: "The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.",
-							NestedObject:        models.DmMSDebugTriggerTypeDataSourceSchema,
+							NestedObject:        models.GetDmMSDebugTriggerTypeDataSourceSchema(),
 							Computed:            true,
 						},
 						"local_address": schema.StringAttribute{

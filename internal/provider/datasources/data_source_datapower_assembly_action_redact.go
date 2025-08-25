@@ -82,7 +82,7 @@ func (d *AssemblyActionRedactDataSource) Schema(ctx context.Context, req datasou
 						},
 						"redact": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify how to handle sensitive data by path expression and action. When the action is redact, content is obfuscated with asterisks. If the redacted content is numeric data, the type is changed to <tt>string</tt> .",
-							NestedObject:        models.DmAssemblyActionRedactDataSourceSchema,
+							NestedObject:        models.GetDmAssemblyActionRedactDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

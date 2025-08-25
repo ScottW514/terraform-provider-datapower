@@ -196,6 +196,7 @@ resource "datapower_as1_poller_source_protocol_handler" "acc_test" {
   port                  = 25
   conn_security         = "none"
   account               = "account"
+  password_alias        = datapower_password_alias.acc_test.id
   delay_between_polls   = 300
   max_messages_per_poll = 5
 }
@@ -411,8 +412,9 @@ resource "datapower_b2b_cpa_sender_setting" "acc_test" {
 resource "datapower_b2b_gateway" "acc_test" {
   id                            = "AccTest_B2BGateway"
   app_domain                    = datapower_domain.acc_test.app_domain
+  b2b_profiles                  = [{ partner_profile = datapower_b2b_profile.acc_test.id }]
   document_routing_preprocessor = "store:///b2b-routing.xsl"
-  archive_mode                  = "archpurge"
+  archive_mode                  = "purgeonly"
   xml_manager                   = "default"
 }
 resource "datapower_b2b_profile" "acc_test" {
@@ -420,8 +422,9 @@ resource "datapower_b2b_profile" "acc_test" {
   app_domain    = datapower_domain.acc_test.app_domain
   business_i_ds = ["businessid"]
   destinations = [{
-    dest_name = "b2bdestinationname"
-    dest_url  = "https://localhost"
+    dest_name  = "b2bdestinationname"
+    dest_url   = "https://localhost"
+    ssl_client = datapower_ssl_client_profile.acc_test.id
   }]
 }
 resource "datapower_b2b_profile_group" "acc_test" {
@@ -581,6 +584,7 @@ resource "datapower_ftp_file_poller_source_protocol_handler" "acc_test" {
   target_directory         = "ftp://user:password@host:port/path/"
   delay_between_polls      = 60000
   input_file_match_pattern = ".*"
+  result_name_pattern      = "../result/$1"
   processing_seize_timeout = 0
   xml_manager              = "default"
 }
@@ -702,6 +706,7 @@ resource "datapower_log_target" "acc_test" {
   id         = "AccTest_LogTarget"
   app_domain = datapower_domain.acc_test.app_domain
   type       = "file"
+  local_file = "logtemp:///AccTest_LogTarget.log"
 }
 resource "datapower_matching" "acc_test" {
   id         = "AccTest_Matching"
@@ -783,6 +788,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "acc_test" {
   id            = "AccTest_MQv9PlusSourceProtocolHandler"
   app_domain    = datapower_domain.acc_test.app_domain
   queue_manager = datapower_mq_manager.acc_test.id
+  get_queue     = "queue"
 }
 resource "datapower_mtom_policy" "acc_test" {
   id         = "AccTest_MTOMPolicy"
@@ -825,17 +831,21 @@ resource "datapower_oauth_provider_settings" "acc_test" {
   apic_token_secret = datapower_crypto_sskey.acc_test.id
 }
 resource "datapower_oauth_supported_client" "acc_test" {
-  id                     = "AccTest_OAuthSupportedClient"
-  app_domain             = datapower_domain.acc_test.app_domain
-  o_auth_role            = { "azsvr" : true }
-  az_grant               = { "code" : true }
-  generate_client_secret = false
-  client_secret          = "secret"
-  token_secret           = datapower_crypto_sskey.acc_test.id
+  id                       = "AccTest_OAuthSupportedClient"
+  app_domain               = datapower_domain.acc_test.app_domain
+  o_auth_role              = { "azsvr" : true }
+  az_grant                 = { "code" : true }
+  generate_client_secret   = false
+  client_secret_wo         = "secret"
+  client_secret_wo_version = 1
+  redirect_uri             = ["^https://example.com/redirect$"]
+  scope                    = "*"
+  token_secret             = datapower_crypto_sskey.acc_test.id
 }
 resource "datapower_oauth_supported_client_group" "acc_test" {
   id         = "AccTest_OAuthSupportedClientGroup"
   app_domain = datapower_domain.acc_test.app_domain
+  client     = [datapower_oauth_supported_client.acc_test.id]
 }
 resource "datapower_odr_connector_group" "acc_test" {
   id          = "AccTest_ODRConnectorGroup"
@@ -865,15 +875,17 @@ resource "datapower_operation_rate_limit" "acc_test" {
   id         = "AccTest_OperationRateLimit"
   app_domain = datapower_domain.acc_test.app_domain
   operation  = datapower_api_operation.acc_test.id
+  rate_limit = [{ "name" : "RateLimit", "rate" : "1000" }]
 }
 resource "datapower_parse_settings" "acc_test" {
   id         = "AccTest_ParseSettings"
   app_domain = datapower_domain.acc_test.app_domain
 }
 resource "datapower_password_alias" "acc_test" {
-  id         = "AccTest_PasswordAlias"
-  app_domain = datapower_domain.acc_test.app_domain
-  password   = "password"
+  id                  = "AccTest_PasswordAlias"
+  app_domain          = datapower_domain.acc_test.app_domain
+  password_wo         = "password"
+  password_wo_version = 1
 }
 resource "datapower_peer_group" "acc_test" {
   id         = "AccTest_PeerGroup"
@@ -899,6 +911,7 @@ resource "datapower_pop_poller_source_protocol_handler" "acc_test" {
   port                  = 8888
   conn_security         = "none"
   account               = "account"
+  password_alias        = datapower_password_alias.acc_test.id
   delay_between_polls   = 300
   max_messages_per_poll = 5
 }
@@ -1102,12 +1115,13 @@ resource "datapower_url_rewrite_policy" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
 }
 resource "datapower_user" "acc_test" {
-  id                = "AccTest_User"
-  password          = "Password$123"
-  access_level      = "group-defined"
-  group_name        = datapower_user_group.acc_test.id
-  snmp_creds        = null
-  hashed_snmp_creds = null
+  id                  = "AccTest_User"
+  password_wo         = "Password$123"
+  password_wo_version = 1
+  access_level        = "group-defined"
+  group_name          = datapower_user_group.acc_test.id
+  snmp_creds          = null
+  hashed_snmp_creds   = null
 }
 resource "datapower_user_group" "acc_test" {
   id              = "AccTest_UserGroup"
@@ -1289,5 +1303,6 @@ resource "datapower_zos_nss_client" "acc_test" {
   client_id      = "client_id"
   system_name    = "sysname"
   user_name      = "username"
+  password_alias = datapower_password_alias.acc_test.id
   ssl_client     = datapower_ssl_client_profile.acc_test.id
 }

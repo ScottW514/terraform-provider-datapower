@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -52,6 +53,21 @@ type FTPFilePollerSourceProtocolHandler struct {
 	XmlManager              types.String                `tfsdk:"xml_manager"`
 	MaxTransfersPerPoll     types.Int64                 `tfsdk:"max_transfers_per_poll"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var FTPFilePollerSourceProtocolHandlerResultNamePatternCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "generate_result_file",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var FTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "processing_seize_timeout",
+	AttrType:    "Int64",
+	AttrDefault: "0",
+	Value:       []string{"0"},
 }
 
 var FTPFilePollerSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -142,6 +158,7 @@ func (data FTPFilePollerSourceProtocolHandler) ToBody(ctx context.Context, pathR
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

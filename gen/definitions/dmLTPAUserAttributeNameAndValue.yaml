@@ -20,7 +20,7 @@ attributes:
     : %</tt> characters, they are escaped.'
   test_value: '"test"'
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LTPAUserAttributeType
     value:
     - static
@@ -30,7 +30,7 @@ attributes:
     expression is evaluated against the input message at run time. The result is the
     value of the attribute.
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LTPAUserAttributeType
     value:
     - xpath

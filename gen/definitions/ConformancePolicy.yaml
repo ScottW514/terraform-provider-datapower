@@ -60,7 +60,7 @@ attributes:
     that don't conform to BP 1.0.
   cli_alias: assert-bp10-conformance
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Profiles
     value:
     - BP10
@@ -80,7 +80,7 @@ attributes:
   description: Target URL to which conformance reports will be sent
   cli_alias: report-target
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ReportLevel
     value:
     - never
@@ -103,7 +103,7 @@ attributes:
     action to include summary information about the conformance errors found.
   cli_alias: reject-include-summary
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: RejectLevel
     value:
     - never
@@ -141,29 +141,29 @@ attributes:
     a conformance report to be recorded.
   cli_alias: response-report-level
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ResponsePropertiesEnabled
     value:
-    - 'off'
+    - false
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ResponsePropertiesEnabled
     value:
-    - 'off'
+    - false
 - name: ResponseLogTarget
   type: String
   description: Target URL to which response conformance reports will be sent
   cli_alias: response-report-target
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ResponseReportLevel
     value:
     - never
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ResponsePropertiesEnabled
     value:
-    - 'off'
+    - false
 - name: ResponseRejectLevel
   type: String
   enum:
@@ -175,15 +175,15 @@ attributes:
     be rejected.
   cli_alias: response-reject-level
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ResponsePropertiesEnabled
     value:
-    - 'off'
+    - false
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ResponsePropertiesEnabled
     value:
-    - 'off'
+    - false
 - name: ResponseRejectIncludeSummary
   type: Bool
   default: false
@@ -195,12 +195,12 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseRejectLevel
       value:
       - never
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ResponsePropertiesEnabled
     value:
-    - 'off'
+    - false

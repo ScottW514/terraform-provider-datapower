@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WXSGridResource{}
@@ -113,7 +114,6 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 86400000),
 				},
 				Default: int64default.StaticInt64(1000),
@@ -129,15 +129,19 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default:             booldefault.StaticBool(false),
 			},
 			"encrypt_ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-sskey", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-sskey", "crypto_sskey").AddRequiredWhen(models.WXSGridEncryptSSKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WXSGridEncryptSSKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"encrypt_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PKCS #7 algorithm for encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-alg", "").AddStringEnum("tripledes-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "rc2-40-cbc", "rc2-64-cbc", "rc2-cbc").AddDefaultValue("tripledes-cbc").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PKCS #7 algorithm for encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-alg", "").AddStringEnum("tripledes-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "rc2-40-cbc", "rc2-64-cbc", "rc2-cbc").AddDefaultValue("tripledes-cbc").AddRequiredWhen(models.WXSGridEncryptAlgCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("tripledes-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "rc2-40-cbc", "rc2-64-cbc", "rc2-cbc"),
+					validators.ConditionalRequiredString(models.WXSGridEncryptAlgCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("tripledes-cbc"),
 			},
@@ -148,11 +152,12 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default:             booldefault.StaticBool(false),
 			},
 			"key_obfuscation_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.", "key-obfuscation-alg", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.", "key-obfuscation-alg", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha256").AddRequiredWhen(models.WXSGridKeyObfuscationAlgCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5"),
+					validators.ConditionalRequiredString(models.WXSGridKeyObfuscationAlgCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("sha256"),
 			},

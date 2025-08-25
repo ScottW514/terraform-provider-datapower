@@ -55,55 +55,55 @@ attributes:
   description: Alternate host
   cli_alias: ha-other-hosts
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
     value:
-    - 'off'
+    - false
 - name: HALocalIP
   type: String
   description: Replication address
   cli_alias: ha-local-ip
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
     value:
-    - 'off'
+    - false
 - name: HALocalPort
   type: Int64
   default: 1320
   description: Replication port
   cli_alias: ha-local-port
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
     value:
-    - 'off'
+    - false
 - name: HAVirtualIP
   type: String
   description: Virtual IP address
   cli_alias: ha-virtual-ip
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
     value:
-    - 'off'
+    - false

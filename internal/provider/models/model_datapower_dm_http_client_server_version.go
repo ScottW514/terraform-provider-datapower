@@ -49,45 +49,60 @@ var DmHTTPClientServerVersionObjectDefault = map[string]attr.Value{
 	"front": types.StringValue("HTTP/1.1"),
 	"back":  types.StringValue("HTTP/1.1"),
 }
-var DmHTTPClientServerVersionDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"front": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-			Computed:            true,
+
+func GetDmHTTPClientServerVersionDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmHTTPClientServerVersionDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"front": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+				Computed:            true,
+			},
+			"back": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+				Computed:            true,
+			},
 		},
-		"back": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmHTTPClientServerVersionDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmHTTPClientServerVersionDataSourceSchema
 }
-var DmHTTPClientServerVersionResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmHTTPClientServerVersionObjectType,
-			DmHTTPClientServerVersionObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"front": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
+func GetDmHTTPClientServerVersionResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmHTTPClientServerVersionResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmHTTPClientServerVersionObjectType,
+				DmHTTPClientServerVersionObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"front": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
+				},
+				Default: stringdefault.StaticString("HTTP/1.1"),
 			},
-			Default: stringdefault.StaticString("HTTP/1.1"),
-		},
-		"back": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
+			"back": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
+				},
+				Default: stringdefault.StaticString("HTTP/1.1"),
 			},
-			Default: stringdefault.StaticString("HTTP/1.1"),
 		},
-	},
+	}
+	DmHTTPClientServerVersionResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmHTTPClientServerVersionResourceSchema.Required = true
+	} else {
+		DmHTTPClientServerVersionResourceSchema.Optional = true
+		DmHTTPClientServerVersionResourceSchema.Computed = true
+	}
+	return DmHTTPClientServerVersionResourceSchema
 }
 
 func (data DmHTTPClientServerVersion) IsNull() bool {
@@ -99,27 +114,13 @@ func (data DmHTTPClientServerVersion) IsNull() bool {
 	}
 	return true
 }
-func GetDmHTTPClientServerVersionDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmHTTPClientServerVersionDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmHTTPClientServerVersionDataSourceSchema
-}
-
-func GetDmHTTPClientServerVersionResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmHTTPClientServerVersionResourceSchema.Required = true
-	} else {
-		DmHTTPClientServerVersionResourceSchema.Optional = true
-		DmHTTPClientServerVersionResourceSchema.Computed = true
-	}
-	DmHTTPClientServerVersionResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmHTTPClientServerVersionResourceSchema
-}
 
 func (data DmHTTPClientServerVersion) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Front.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Front`, data.Front.ValueString())
 	}

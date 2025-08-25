@@ -104,7 +104,6 @@ func (r *OpenTelemetrySamplerResource) Schema(ctx context.Context, req resource.
 				MarkdownDescription: tfutils.NewAttributeDescription("Ratio", "ratio", "").AddIntegerRange(0, 100).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 100),
 				},
 			},

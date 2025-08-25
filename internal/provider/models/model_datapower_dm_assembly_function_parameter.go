@@ -64,76 +64,83 @@ var DmAssemblyFunctionParameterObjectDefault = map[string]attr.Value{
 	"value_type":  types.StringValue("string"),
 	"required":    types.BoolValue(true),
 }
-var DmAssemblyFunctionParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
-			Computed:            true,
-		},
-		"label": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the label to explain the parameter to API developers.", "label", "").String,
-			Computed:            true,
-		},
-		"description": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a description of the parameter to advertise the parameter to API developers.", "description", "").String,
-			Computed:            true,
-		},
-		"schema": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to verify the parameter type.", "schema", "api_schema").String,
-			Computed:            true,
-		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value to pass to the assembly function as a string. The default value is used when no value is passed in the request. The default parameter value is required if the assembly function is called in an assembly function call action and no parameter value is defined in the action. <ul><li>If the default value is a JSON payload, enter the value as a JSON string.</li><li>If the default value is an empty string, it is treated as not specified.</li><li>If the assembly function parameter specifies an API schema, the default parameter value overrides the default value defined in the schema.</li></ul>", "value", "").String,
-			Computed:            true,
-		},
-		"value_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the parameter value.", "value-type", "").AddStringEnum("string", "payload", "message").AddDefaultValue("string").String,
-			Computed:            true,
-		},
-		"required": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether this parameter requires a value in an assembly function call.", "required", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
-}
-var DmAssemblyFunctionParameterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
-			Required:            true,
-		},
-		"label": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the label to explain the parameter to API developers.", "label", "").String,
-			Optional:            true,
-		},
-		"description": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a description of the parameter to advertise the parameter to API developers.", "description", "").String,
-			Optional:            true,
-		},
-		"schema": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to verify the parameter type.", "schema", "api_schema").String,
-			Optional:            true,
-		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value to pass to the assembly function as a string. The default value is used when no value is passed in the request. The default parameter value is required if the assembly function is called in an assembly function call action and no parameter value is defined in the action. <ul><li>If the default value is a JSON payload, enter the value as a JSON string.</li><li>If the default value is an empty string, it is treated as not specified.</li><li>If the assembly function parameter specifies an API schema, the default parameter value overrides the default value defined in the schema.</li></ul>", "value", "").String,
-			Optional:            true,
-		},
-		"value_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the parameter value.", "value-type", "").AddStringEnum("string", "payload", "message").AddDefaultValue("string").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("string", "payload", "message"),
+
+func GetDmAssemblyFunctionParameterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAssemblyFunctionParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("string"),
+			"label": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the label to explain the parameter to API developers.", "label", "").String,
+				Computed:            true,
+			},
+			"description": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a description of the parameter to advertise the parameter to API developers.", "description", "").String,
+				Computed:            true,
+			},
+			"schema": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to verify the parameter type.", "schema", "api_schema").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value to pass to the assembly function as a string. The default value is used when no value is passed in the request. The default parameter value is required if the assembly function is called in an assembly function call action and no parameter value is defined in the action. <ul><li>If the default value is a JSON payload, enter the value as a JSON string.</li><li>If the default value is an empty string, it is treated as not specified.</li><li>If the assembly function parameter specifies an API schema, the default parameter value overrides the default value defined in the schema.</li></ul>", "value", "").String,
+				Computed:            true,
+			},
+			"value_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the parameter value.", "value-type", "").AddStringEnum("string", "payload", "message").AddDefaultValue("string").String,
+				Computed:            true,
+			},
+			"required": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether this parameter requires a value in an assembly function call.", "required", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"required": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether this parameter requires a value in an assembly function call.", "required", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+	}
+	return DmAssemblyFunctionParameterDataSourceSchema
+}
+func GetDmAssemblyFunctionParameterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAssemblyFunctionParameterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
+				Required:            true,
+			},
+			"label": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the label to explain the parameter to API developers.", "label", "").String,
+				Optional:            true,
+			},
+			"description": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a description of the parameter to advertise the parameter to API developers.", "description", "").String,
+				Optional:            true,
+			},
+			"schema": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to verify the parameter type.", "schema", "api_schema").String,
+				Optional:            true,
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value to pass to the assembly function as a string. The default value is used when no value is passed in the request. The default parameter value is required if the assembly function is called in an assembly function call action and no parameter value is defined in the action. <ul><li>If the default value is a JSON payload, enter the value as a JSON string.</li><li>If the default value is an empty string, it is treated as not specified.</li><li>If the assembly function parameter specifies an API schema, the default parameter value overrides the default value defined in the schema.</li></ul>", "value", "").String,
+				Optional:            true,
+			},
+			"value_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the parameter value.", "value-type", "").AddStringEnum("string", "payload", "message").AddDefaultValue("string").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("string", "payload", "message"),
+				},
+				Default: stringdefault.StaticString("string"),
+			},
+			"required": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether this parameter requires a value in an assembly function call.", "required", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-	},
+	}
+	return DmAssemblyFunctionParameterResourceSchema
 }
 
 func (data DmAssemblyFunctionParameter) IsNull() bool {
@@ -166,6 +173,7 @@ func (data DmAssemblyFunctionParameter) ToBody(ctx context.Context, pathRoot str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

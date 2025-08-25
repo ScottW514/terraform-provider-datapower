@@ -110,7 +110,6 @@ func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req re
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(60, 4294967),
 				},
 				Default: int64default.StaticInt64(86400),

@@ -82,6 +82,7 @@ func (data MessageContentFilters) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -89,16 +90,16 @@ func (data MessageContentFilters) ToBody(ctx context.Context, pathRoot string) s
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.FilterRefs.IsNull() {
-		var values []string
-		data.FilterRefs.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.FilterRefs.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`FilterRefs`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.Filters.IsNull() {
-		var values []DmMCFilter
-		data.Filters.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmMCFilter
+		data.Filters.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Filters`+".-1", val.ToBody(ctx, ""))
 		}
 	}

@@ -52,42 +52,49 @@ var DmAPIPropertyObjectDefault = map[string]attr.Value{
 	"catalog":       types.StringValue("*"),
 	"value":         types.StringNull(),
 }
-var DmAPIPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"property_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property name.", "", "").String,
-			Computed:            true,
-		},
-		"catalog": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.", "", "").AddDefaultValue("*").String,
-			Computed:            true,
-		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property value.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmAPIPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"property_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property name.", "", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_$]( *[a-zA-Z0-9_$-])*$"), "Must match :"+"^[a-zA-Z0-9_$]( *[a-zA-Z0-9_$-])*$"),
+
+func GetDmAPIPropertyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAPIPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"property_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the property name.", "", "").String,
+				Computed:            true,
+			},
+			"catalog": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.", "", "").AddDefaultValue("*").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the property value.", "", "").String,
+				Computed:            true,
 			},
 		},
-		"catalog": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.", "", "").AddDefaultValue("*").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("*"),
+	}
+	return DmAPIPropertyDataSourceSchema
+}
+func GetDmAPIPropertyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAPIPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"property_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the property name.", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_$]( *[a-zA-Z0-9_$-])*$"), "Must match :"+"^[a-zA-Z0-9_$]( *[a-zA-Z0-9_$-])*$"),
+				},
+			},
+			"catalog": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.", "", "").AddDefaultValue("*").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("*"),
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the property value.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property value.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmAPIPropertyResourceSchema
 }
 
 func (data DmAPIProperty) IsNull() bool {
@@ -108,6 +115,7 @@ func (data DmAPIProperty) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.PropertyName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PropertyName`, data.PropertyName.ValueString())
 	}

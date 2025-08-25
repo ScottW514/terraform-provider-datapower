@@ -81,7 +81,7 @@ func (r *AssemblyLogicOperationSwitchResource) Schema(ctx context.Context, req r
 			},
 			"case": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the condition to evaluate and the API rule to run when the condition matches. Conditions are evaluated in order. The API rule of the first condition that evaluates to true is run. If an error occurs during the processing, the transaction fails.", "case", "").String,
-				NestedObject:        models.DmAssemblyLogicOperationSwitchCaseResourceSchema,
+				NestedObject:        models.GetDmAssemblyLogicOperationSwitchCaseResourceSchema(),
 				Required:            true,
 			},
 			"otherwise": schema.StringAttribute{

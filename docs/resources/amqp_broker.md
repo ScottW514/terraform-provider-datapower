@@ -58,6 +58,7 @@ resource "datapower_amqp_broker" "test" {
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
+  - Required When: `authorization`=`plain`
 - `port` (Number) Port
   - CLI Alias: `port`
   - Range: `1`-`65535`
@@ -78,6 +79,7 @@ resource "datapower_amqp_broker" "test" {
   - Reference to: `datapower_ssl_client_profile:id`
 - `user_name` (String) Username
   - CLI Alias: `user`
+  - Required When: `authorization`=`plain`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `xml_manager` (String) Specify the XML manager to control access to the remote AMQP server. The XML manager obtains and manages documents.

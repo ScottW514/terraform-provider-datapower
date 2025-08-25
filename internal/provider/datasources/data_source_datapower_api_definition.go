@@ -159,12 +159,12 @@ func (d *APIDefinitionDataSource) Schema(ctx context.Context, req datasource.Sch
 						},
 						"properties": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify custom entries for API properties. An API property is a type of context variable whose value is dependent on the collection that the API is provisioned in. Collection-specific API properties allow you to use the same API definition in different collections when a property in a collection requires a unique or different value. A custom property entry defines a property and its value for one collection. For each custom property or property that needs a different value for another collection, add another entry.",
-							NestedObject:        models.DmAPIPropertyDataSourceSchema,
+							NestedObject:        models.GetDmAPIPropertyDataSourceSchema(),
 							Computed:            true,
 						},
 						"schemas": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the API schemas that define data types for request or message validation. An API data type consists of a name and its API schema.",
-							NestedObject:        models.DmAPIDataTypeDefinitionDataSourceSchema,
+							NestedObject:        models.GetDmAPIDataTypeDefinitionDataSourceSchema(),
 							Computed:            true,
 						},
 						"cors_toggle": schema.BoolAttribute{

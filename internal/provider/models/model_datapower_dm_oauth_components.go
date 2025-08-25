@@ -68,109 +68,124 @@ var DmOAuthComponentsObjectDefault = map[string]attr.Value{
 	"o_auth_introspect_token":      types.BoolValue(false),
 	"o_auth_revoke_token":          types.BoolValue(false),
 }
-var DmOAuthComponentsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"none": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmOAuthComponentsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmOAuthComponentsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"none": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"o_auth_validate_request": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Validate request", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"o_auth_generate_az_code": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Generate authorization code", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"o_auth_verify_az_code": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Verify authorization code", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"o_auth_verify_refresh_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Verify refresh token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"o_auth_collect_metadata": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Collect Metadata", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"o_auth_generate_access_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Generate access token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"o_auth_introspect_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Introspect token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"o_auth_revoke_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Revoke token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"o_auth_validate_request": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Validate request", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"o_auth_generate_az_code": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Generate authorization code", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"o_auth_verify_az_code": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Verify authorization code", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"o_auth_verify_refresh_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Verify refresh token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"o_auth_collect_metadata": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Collect Metadata", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"o_auth_generate_access_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Generate access token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"o_auth_introspect_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Introspect token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"o_auth_revoke_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Revoke token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmOAuthComponentsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmOAuthComponentsDataSourceSchema
 }
-var DmOAuthComponentsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmOAuthComponentsObjectType,
-			DmOAuthComponentsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"none": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmOAuthComponentsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmOAuthComponentsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmOAuthComponentsObjectType,
+				DmOAuthComponentsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"none": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"o_auth_validate_request": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Validate request", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"o_auth_generate_az_code": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Generate authorization code", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"o_auth_verify_az_code": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Verify authorization code", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"o_auth_verify_refresh_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Verify refresh token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"o_auth_collect_metadata": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Collect Metadata", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"o_auth_generate_access_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Generate access token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"o_auth_introspect_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Introspect token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"o_auth_revoke_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Revoke token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"o_auth_validate_request": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Validate request", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"o_auth_generate_az_code": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Generate authorization code", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"o_auth_verify_az_code": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Verify authorization code", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"o_auth_verify_refresh_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Verify refresh token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"o_auth_collect_metadata": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Collect Metadata", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"o_auth_generate_access_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Generate access token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"o_auth_introspect_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Introspect token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"o_auth_revoke_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Revoke token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmOAuthComponentsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmOAuthComponentsResourceSchema.Required = true
+	} else {
+		DmOAuthComponentsResourceSchema.Optional = true
+		DmOAuthComponentsResourceSchema.Computed = true
+	}
+	return DmOAuthComponentsResourceSchema
 }
 
 func (data DmOAuthComponents) IsNull() bool {
@@ -203,27 +218,13 @@ func (data DmOAuthComponents) IsNull() bool {
 	}
 	return true
 }
-func GetDmOAuthComponentsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmOAuthComponentsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmOAuthComponentsDataSourceSchema
-}
-
-func GetDmOAuthComponentsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmOAuthComponentsResourceSchema.Required = true
-	} else {
-		DmOAuthComponentsResourceSchema.Optional = true
-		DmOAuthComponentsResourceSchema.Computed = true
-	}
-	DmOAuthComponentsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmOAuthComponentsResourceSchema
-}
 
 func (data DmOAuthComponents) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.None.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`none`, tfutils.StringFromBool(data.None, ""))
 	}

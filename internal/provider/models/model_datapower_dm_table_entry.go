@@ -45,29 +45,36 @@ var DmTableEntryObjectDefault = map[string]attr.Value{
 	"name":        types.StringNull(),
 	"description": types.StringNull(),
 }
-var DmTableEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the display name of the entry.", "", "").String,
-			Computed:            true,
+
+func GetDmTableEntryDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmTableEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the display name of the entry.", "", "").String,
+				Computed:            true,
+			},
+			"description": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the description of the entry.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"description": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the description of the entry.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmTableEntryDataSourceSchema
 }
-var DmTableEntryResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the display name of the entry.", "", "").String,
-			Required:            true,
+func GetDmTableEntryResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmTableEntryResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the display name of the entry.", "", "").String,
+				Required:            true,
+			},
+			"description": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the description of the entry.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"description": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the description of the entry.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmTableEntryResourceSchema
 }
 
 func (data DmTableEntry) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmTableEntry) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

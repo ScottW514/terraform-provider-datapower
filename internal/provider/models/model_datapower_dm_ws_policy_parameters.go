@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,14 @@ type DmWSPolicyParameters struct {
 	PolicyParamWsdlComponentValue types.String `tfsdk:"policy_param_wsdl_component_value"`
 	PolicyParamSubscription       types.String `tfsdk:"policy_param_subscription"`
 	PolicyParamFragmentId         types.String `tfsdk:"policy_param_fragment_id"`
+}
+
+var DmWSPolicyParametersPolicyParamSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "policy_param_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
 }
 
 var DmWSPolicyParametersObjectType = map[string]attr.Type{
@@ -57,58 +66,68 @@ var DmWSPolicyParametersObjectDefault = map[string]attr.Value{
 	"policy_param_subscription":         types.StringNull(),
 	"policy_param_fragment_id":          types.StringNull(),
 }
-var DmWSPolicyParametersDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"policy_param_parameters": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reference to policy parameter object.", "", "policy_parameters").String,
-			Computed:            true,
-		},
-		"policy_param_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-		},
-		"policy_param_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Computed:            true,
-		},
-		"policy_param_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Computed:            true,
-		},
-		"policy_param_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmWSPolicyParametersResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"policy_param_parameters": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reference to policy parameter object.", "", "policy_parameters").String,
-			Required:            true,
-		},
-		"policy_param_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+
+func GetDmWSPolicyParametersDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSPolicyParametersDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"policy_param_parameters": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Reference to policy parameter object.", "", "policy_parameters").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("all"),
+			"policy_param_wsdl_component_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+			},
+			"policy_param_wsdl_component_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Computed:            true,
+			},
+			"policy_param_subscription": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Computed:            true,
+			},
+			"policy_param_fragment_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Computed:            true,
+			},
 		},
-		"policy_param_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Optional:            true,
+	}
+	return DmWSPolicyParametersDataSourceSchema
+}
+func GetDmWSPolicyParametersResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSPolicyParametersResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"policy_param_parameters": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Reference to policy parameter object.", "", "policy_parameters").String,
+				Required:            true,
+			},
+			"policy_param_wsdl_component_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+				},
+				Default: stringdefault.StaticString("all"),
+			},
+			"policy_param_wsdl_component_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Optional:            true,
+			},
+			"policy_param_subscription": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSPolicyParametersPolicyParamSubscriptionCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"policy_param_fragment_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Optional:            true,
+			},
 		},
-		"policy_param_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Optional:            true,
-		},
-		"policy_param_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSPolicyParametersResourceSchema
 }
 
 func (data DmWSPolicyParameters) IsNull() bool {
@@ -135,6 +154,7 @@ func (data DmWSPolicyParameters) ToBody(ctx context.Context, pathRoot string) st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.PolicyParamParameters.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PolicyParamParameters`, data.PolicyParamParameters.ValueString())
 	}

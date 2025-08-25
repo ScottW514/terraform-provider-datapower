@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -52,6 +53,125 @@ type AAAJWTGenerator struct {
 	EncryptCertificate types.String                `tfsdk:"encrypt_certificate"`
 	EncryptSsKey       types.String                `tfsdk:"encrypt_ss_key"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AAAJWTGeneratorAudienceCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "additional_claims",
+	AttrType:    "DmJWTClaims",
+	AttrDefault: "",
+	Value:       []string{"aud"},
+}
+var AAAJWTGeneratorNotBeforeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "additional_claims",
+	AttrType:    "DmJWTClaims",
+	AttrDefault: "",
+	Value:       []string{"nbf"},
+}
+var AAAJWTGeneratorCustomClaimsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "additional_claims",
+	AttrType:    "DmJWTClaims",
+	AttrDefault: "",
+	Value:       []string{"custom"},
+}
+var AAAJWTGeneratorSignAlgorithmCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gen_method",
+	AttrType:    "DmJWTGenMethod",
+	AttrDefault: "",
+	Value:       []string{"sign"},
+}
+var AAAJWTGeneratorSignKeyCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gen_method",
+			AttrType:    "DmJWTGenMethod",
+			AttrDefault: "",
+			Value:       []string{"sign"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "sign_algorithm",
+			AttrType:    "String",
+			AttrDefault: "RS256",
+			Value:       []string{"RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512"},
+		},
+	},
+}
+var AAAJWTGeneratorSignSSKeyCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gen_method",
+			AttrType:    "DmJWTGenMethod",
+			AttrDefault: "",
+			Value:       []string{"sign"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "sign_algorithm",
+			AttrType:    "String",
+			AttrDefault: "RS256",
+			Value:       []string{"HS256", "HS384", "HS512"},
+		},
+	},
+}
+var AAAJWTGeneratorEncAlgorithmCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gen_method",
+	AttrType:    "DmJWTGenMethod",
+	AttrDefault: "",
+	Value:       []string{"encrypt"},
+}
+var AAAJWTGeneratorEncryptAlgorithmCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gen_method",
+	AttrType:    "DmJWTGenMethod",
+	AttrDefault: "",
+	Value:       []string{"encrypt"},
+}
+var AAAJWTGeneratorEncryptCertificateCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gen_method",
+			AttrType:    "DmJWTGenMethod",
+			AttrDefault: "",
+			Value:       []string{"encrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "encrypt_algorithm",
+			AttrType:    "String",
+			AttrDefault: "RSA1_5",
+			Value:       []string{"RSA1_5", "RSA-OAEP", "RSA-OAEP-256"},
+		},
+	},
+}
+var AAAJWTGeneratorEncryptSSKeyCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gen_method",
+			AttrType:    "DmJWTGenMethod",
+			AttrDefault: "",
+			Value:       []string{"encrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "encrypt_algorithm",
+			AttrType:    "String",
+			AttrDefault: "RSA1_5",
+			Value:       []string{"A128KW", "A192KW", "A256KW", "dir"},
+		},
+	},
 }
 
 var AAAJWTGeneratorObjectType = map[string]attr.Type{
@@ -146,6 +266,7 @@ func (data AAAJWTGenerator) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -164,9 +285,9 @@ func (data AAAJWTGenerator) ToBody(ctx context.Context, pathRoot string) string 
 		}
 	}
 	if !data.Audience.IsNull() {
-		var values []string
-		data.Audience.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Audience.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Audience`+".-1", map[string]string{"value": val})
 		}
 	}

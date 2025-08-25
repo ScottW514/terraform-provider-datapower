@@ -48,32 +48,39 @@ var DmAPIResponseSchemaObjectDefault = map[string]attr.Value{
 	"status_code":     types.StringNull(),
 	"response_schema": types.StringNull(),
 }
-var DmAPIResponseSchemaDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"status_code": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>", "", "").String,
-			Computed:            true,
-		},
-		"response_schema": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to describe the response message.", "", "api_schema").String,
-			Computed:            true,
-		},
-	},
-}
-var DmAPIResponseSchemaResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"status_code": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>", "", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.RegexMatches(regexp.MustCompile("^(default|[1-9][0-9]{2}|[1-5]XX)$"), "Must match :"+"^(default|[1-9][0-9]{2}|[1-5]XX)$"),
+
+func GetDmAPIResponseSchemaDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAPIResponseSchemaDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"status_code": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>", "", "").String,
+				Computed:            true,
+			},
+			"response_schema": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to describe the response message.", "", "api_schema").String,
+				Computed:            true,
 			},
 		},
-		"response_schema": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to describe the response message.", "", "api_schema").String,
-			Optional:            true,
+	}
+	return DmAPIResponseSchemaDataSourceSchema
+}
+func GetDmAPIResponseSchemaResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAPIResponseSchemaResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"status_code": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^(default|[1-9][0-9]{2}|[1-5]XX)$"), "Must match :"+"^(default|[1-9][0-9]{2}|[1-5]XX)$"),
+				},
+			},
+			"response_schema": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to describe the response message.", "", "api_schema").String,
+				Optional:            true,
+			},
 		},
-	},
+	}
+	return DmAPIResponseSchemaResourceSchema
 }
 
 func (data DmAPIResponseSchema) IsNull() bool {
@@ -91,6 +98,7 @@ func (data DmAPIResponseSchema) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.StatusCode.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`StatusCode`, data.StatusCode.ValueString())
 	}

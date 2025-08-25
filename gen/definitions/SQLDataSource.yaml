@@ -64,7 +64,6 @@ attributes:
   cli_alias: username
 - name: PasswordAlias
   type: String
-  required: true
   reference_to: PasswordAlias
   test_value: '"AccTest_PasswordAlias"'
   test_bed_value: datapower_password_alias.acc_test.id
@@ -73,40 +72,34 @@ attributes:
     The server maintains the password.
   cli_alias: password-alias
   required_when:
-  - evaluation: logical-and
+  - evaluation: logical-not
     conditions:
-    - evaluation: property-equals
-      attribute: Password
-      value:
-      - ''
-    - evaluation: logical-not
+    - evaluation: logical-and
       conditions:
-      - evaluation: logical-and
-        conditions:
-        - evaluation: property-equals
-          attribute: Database
-          value:
-          - DB2
-        - evaluation: property-does-not-equal
-          attribute: EncryptionMethodDB2
-          value:
-          - NoEncryption
-        - evaluation: property-does-not-equal
-          attribute: KeystoreRef
-          value:
-          - ''
+      - evaluation: property-value-in-list
+        attribute: Database
+        value:
+        - DB2
+      - evaluation: property-value-not-in-list
+        attribute: EncryptionMethodDB2
+        value:
+        - NoEncryption
+      - evaluation: property-value-not-in-list
+        attribute: KeystoreRef
+        value:
+        - ''
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Database
       value:
       - DB2
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EncryptionMethodDB2
       value:
       - NoEncryption
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: KeystoreRef
       value:
       - ''
@@ -148,10 +141,10 @@ attributes:
     The default value is 128.
   cli_alias: limit-size
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LimitReturnedData
     value:
-    - 'on'
+    - true
 - name: SQLDataSourceConfigNVPairs
   type: List
   element_type: DmSQLDataSourceConfigNVPair
@@ -178,12 +171,12 @@ attributes:
   description: Data source type - Oracle
   cli_alias: oracle-datasource-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Database
     value:
     - Oracle
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Database
     value:
     - Oracle
@@ -228,7 +221,7 @@ attributes:
     source host.</p>
   cli_alias: load-balancing
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Database
     value:
     - DB2
@@ -245,12 +238,12 @@ attributes:
     fails.
   cli_alias: mssql-encryption-method
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Database
     value:
     - MSSQLServer
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Database
     value:
     - MSSQLServer
@@ -265,12 +258,12 @@ attributes:
     The default behavior is to not encrypt or decrypt data.
   cli_alias: oracle-encryption-method
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Database
     value:
     - Oracle
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Database
     value:
     - Oracle
@@ -285,12 +278,12 @@ attributes:
     The default behavior is to not encrypt or decrypt data.
   cli_alias: db2-encryption-method
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Database
     value:
     - DB2
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Database
     value:
     - DB2
@@ -304,31 +297,31 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Database
         value:
         - Oracle
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: EncryptionMethodOracle
         value:
         - NoEncryption
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Database
         value:
         - MSSQLServer
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: EncryptionMethodMSSQL
         value:
         - NoEncryption
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Database
         value:
         - DB2
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: EncryptionMethodDB2
         value:
         - NoEncryption
@@ -337,31 +330,31 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - Oracle
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodOracle
         value:
         - NoEncryption
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - MSSQLServer
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodMSSQL
         value:
         - NoEncryption
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - DB2
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodDB2
         value:
         - NoEncryption
@@ -378,31 +371,31 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - Oracle
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodOracle
         value:
         - NoEncryption
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - MSSQLServer
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodMSSQL
         value:
         - NoEncryption
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - DB2
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodDB2
         value:
         - NoEncryption
@@ -417,21 +410,21 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - Oracle
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodOracle
         value:
         - NoEncryption
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - MSSQLServer
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodMSSQL
         value:
         - NoEncryption
@@ -446,11 +439,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Database
       value:
       - DB2
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EncryptionMethodDB2
       value:
       - NoEncryption
@@ -464,31 +457,31 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - Oracle
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodOracle
         value:
         - NoEncryption
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - MSSQLServer
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodMSSQL
         value:
         - NoEncryption
     - evaluation: logical-or
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Database
         value:
         - DB2
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EncryptionMethodDB2
         value:
         - NoEncryption

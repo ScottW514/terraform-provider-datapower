@@ -42,13 +42,16 @@ resource "datapower_b2b_persistence" "test" {
   - Default value: `false`
 - `ha_local_ip` (String) Replication address
   - CLI Alias: `ha-local-ip`
+  - Required When: `ha_enabled`=`true`
 - `ha_local_port` (Number) Replication port
   - CLI Alias: `ha-local-port`
   - Default value: `1320`
+  - Required When: `ha_enabled`=`true`
 - `ha_other_hosts` (Attributes) Alternate host
   - CLI Alias: `ha-other-hosts` (see [below for nested schema](#nestedatt--ha_other_hosts))
 - `ha_virtual_ip` (String) Virtual IP address
   - CLI Alias: `ha-virtual-ip`
+  - Required When: `ha_enabled`=`true`
 - `storage_size` (Number) Specify the maximum size for the data store in MB. Enter a value in the range 1024 - 65536. The default is 1024. <p>This data store is for all B2B gateway services. These services store transaction metadata on the unencrypted partition of the RAID volume. These services store copies of the messages on the encrypted portion of the RAID volume.</p><p>The storage location for messages is defined on a service-by-service basis during the configuration of the B2B gateway.</p><p><b>Attention:</b> The maximum size for the persistent data store cannot be changed to a smaller value. Changing to a larger value might interrupt transactions that are in flight.</p>
   - CLI Alias: `storage-size`
   - Range: `1024`-`65536`

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -73,6 +74,33 @@ type WebAppFW struct {
 	SslsniServer            types.String                `tfsdk:"sslsni_server"`
 	SslClient               types.String                `tfsdk:"ssl_client"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WebAppFWDelayErrorsDurationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "delay_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rewrite_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var WebAppFWDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
 }
 
 var WebAppFWObjectType = map[string]attr.Type{
@@ -247,6 +275,7 @@ func (data WebAppFW) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -257,9 +286,9 @@ func (data WebAppFW) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Priority`, data.Priority.ValueString())
 	}
 	if !data.FrontSide.IsNull() {
-		var values []DmFrontSide
-		data.FrontSide.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmFrontSide
+		data.FrontSide.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`FrontSide`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -342,9 +371,9 @@ func (data WebAppFW) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DebugHistory`, data.DebugHistory.ValueInt64())
 	}
 	if !data.DebugTrigger.IsNull() {
-		var values []DmMSDebugTriggerType
-		data.DebugTrigger.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmMSDebugTriggerType
+		data.DebugTrigger.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
 		}
 	}

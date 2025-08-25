@@ -135,7 +135,7 @@ attributes:
   test_bed_value: datapower_ssl_server_profile.acc_test.id
   cli_alias: ssl-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLConfigType
     value:
     - server
@@ -145,7 +145,7 @@ attributes:
   description: TLS SNI server profile
   cli_alias: ssl-sni-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLConfigType
     value:
     - sni
@@ -155,7 +155,7 @@ attributes:
   description: TLS client profile
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLConfigType
     value:
     - proxy

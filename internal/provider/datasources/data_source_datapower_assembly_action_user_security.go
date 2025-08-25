@@ -186,7 +186,7 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 						},
 						"az_table_default_entry": schema.ListNestedAttribute{
 							MarkdownDescription: "Default table entry",
-							NestedObject:        models.DmTableEntryDataSourceSchema,
+							NestedObject:        models.GetDmTableEntryDataSourceSchema(),
 							Computed:            true,
 						},
 						"hostname": schema.StringAttribute{

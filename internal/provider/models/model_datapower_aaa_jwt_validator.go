@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -59,6 +60,268 @@ type AAAJWTValidator struct {
 	Claims                          types.List                  `tfsdk:"claims"`
 	UsernameClaim                   types.String                `tfsdk:"username_claim"`
 	DependencyActions               []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AAAJWTValidatorCustomizedScriptCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "val_method",
+	AttrType:    "DmJWTValMethod",
+	AttrDefault: "",
+	Value:       []string{"customized"},
+}
+var AAAJWTValidatorDecryptCredentialTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "val_method",
+	AttrType:    "DmJWTValMethod",
+	AttrDefault: "",
+	Value:       []string{"decrypt"},
+}
+var AAAJWTValidatorDecryptKeyCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"decrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "decrypt_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"pkix"},
+		},
+	},
+}
+var AAAJWTValidatorDecryptSSecretCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"decrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "decrypt_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ssecret"},
+		},
+	},
+}
+var AAAJWTValidatorDecryptJWKCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"decrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "decrypt_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"jwk"},
+		},
+	},
+}
+var AAAJWTValidatorDecryptFetchCredURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"decrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "decrypt_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"jwk-remote"},
+		},
+	},
+}
+var AAAJWTValidatorValidateCustomCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "val_method",
+					AttrType:    "DmJWTValMethod",
+					AttrDefault: "",
+					Value:       []string{"verify"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "verify_credential_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"custom"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "val_method",
+					AttrType:    "DmJWTValMethod",
+					AttrDefault: "",
+					Value:       []string{"decrypt"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "decrypt_credential_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"custom"},
+				},
+			},
+		},
+	},
+}
+var AAAJWTValidatorVerifyCredentialTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "val_method",
+	AttrType:    "DmJWTValMethod",
+	AttrDefault: "",
+	Value:       []string{"verify"},
+}
+var AAAJWTValidatorVerifyCertificateCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"verify"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "verify_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"pkix"},
+		},
+	},
+}
+var AAAJWTValidatorVerifyCertificateAgainstValCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"verify"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "verify_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"pkix"},
+		},
+	},
+}
+var AAAJWTValidatorVerifyValCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"verify"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "verify_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"pkix"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "verify_certificate_against_val_cred",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AAAJWTValidatorVerifySSecretCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"verify"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "verify_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ssecret"},
+		},
+	},
+}
+var AAAJWTValidatorVerifyJWKCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"verify"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "verify_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"jwk"},
+		},
+	},
+}
+var AAAJWTValidatorVerifyFetchCredURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "val_method",
+			AttrType:    "DmJWTValMethod",
+			AttrDefault: "",
+			Value:       []string{"verify"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "verify_credential_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"jwk-remote"},
+		},
+	},
 }
 
 var AAAJWTValidatorObjectType = map[string]attr.Type{
@@ -179,6 +442,7 @@ func (data AAAJWTValidator) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -245,9 +509,9 @@ func (data AAAJWTValidator) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`VerifyFetchCredSSLProfile`, data.VerifyFetchCredSslProfile.ValueString())
 	}
 	if !data.Claims.IsNull() {
-		var values []DmClaim
-		data.Claims.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmClaim
+		data.Claims.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Claims`+".-1", val.ToBody(ctx, ""))
 		}
 	}

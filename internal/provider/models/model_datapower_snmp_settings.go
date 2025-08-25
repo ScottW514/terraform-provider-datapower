@@ -155,6 +155,7 @@ func (data SNMPSettings) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "SNMPSettings.name", path.Base("/mgmt/config/default/SNMPSettings/SNMP-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -168,37 +169,37 @@ func (data SNMPSettings) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`LocalPort`, data.LocalPort.ValueInt64())
 	}
 	if !data.Policies.IsNull() {
-		var values []DmSnmpPolicy
-		data.Policies.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSnmpPolicy
+		data.Policies.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Policies`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.PoliciesMq.IsNull() {
-		var values []DmSnmpPolicyMQ
-		data.PoliciesMq.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSnmpPolicyMQ
+		data.PoliciesMq.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`PoliciesMQ`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.Targets.IsNull() {
-		var values []DmSnmpTarget
-		data.Targets.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSnmpTarget
+		data.Targets.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Targets`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.Users.IsNull() {
-		var values []string
-		data.Users.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Users.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Users`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.Contexts.IsNull() {
-		var values []DmSnmpContext
-		data.Contexts.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSnmpContext
+		data.Contexts.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Contexts`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -215,9 +216,9 @@ func (data SNMPSettings) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`TrapPriority`, data.TrapPriority.ValueString())
 	}
 	if !data.TrapEventCode.IsNull() {
-		var values []string
-		data.TrapEventCode.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.TrapEventCode.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`TrapEventCode`+".-1", map[string]string{"value": val})
 		}
 	}

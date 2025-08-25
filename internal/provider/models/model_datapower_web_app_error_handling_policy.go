@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,6 +43,21 @@ type WebAppErrorHandlingPolicy struct {
 	ErrorStylePolicyRule types.String                `tfsdk:"error_style_policy_rule"`
 	ErrorMonitor         types.String                `tfsdk:"error_monitor"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WebAppErrorHandlingPolicyURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "standard",
+	Value:       []string{"redirect", "proxy"},
+}
+var WebAppErrorHandlingPolicyErrorStylePolicyRuleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "standard",
+	Value:       []string{"error-rule"},
 }
 
 var WebAppErrorHandlingPolicyObjectType = map[string]attr.Type{
@@ -92,6 +108,7 @@ func (data WebAppErrorHandlingPolicy) ToBody(ctx context.Context, pathRoot strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

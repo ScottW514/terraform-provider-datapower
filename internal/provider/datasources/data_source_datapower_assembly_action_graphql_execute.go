@@ -90,7 +90,7 @@ func (d *AssemblyActionGraphQLExecuteDataSource) Schema(ctx context.Context, req
 						},
 						"target_map_rule": schema.ListNestedAttribute{
 							MarkdownDescription: "Target rules",
-							NestedObject:        models.DmTargetMapRuleDataSourceSchema,
+							NestedObject:        models.GetDmTargetMapRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"allow_cost_introspection": schema.BoolAttribute{

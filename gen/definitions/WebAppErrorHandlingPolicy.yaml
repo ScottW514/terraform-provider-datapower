@@ -62,7 +62,7 @@ attributes:
   description: Error rule
   cli_alias: error-rule
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - error-rule

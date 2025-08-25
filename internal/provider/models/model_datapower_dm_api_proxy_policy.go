@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,21 @@ type DmAPIProxyPolicy struct {
 	RemotePort    types.Int64  `tfsdk:"remote_port"`
 	UserName      types.String `tfsdk:"user_name"`
 	Password      types.String `tfsdk:"password"`
+}
+
+var DmAPIProxyPolicyRemoteAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "skip",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAPIProxyPolicyRemotePortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "skip",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
 }
 
 var DmAPIProxyPolicyObjectType = map[string]attr.Type{
@@ -62,69 +78,80 @@ var DmAPIProxyPolicyObjectDefault = map[string]attr.Value{
 	"user_name":      types.StringNull(),
 	"password":       types.StringNull(),
 }
-var DmAPIProxyPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.", "", "").String,
-			Computed:            true,
+
+func GetDmAPIProxyPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAPIProxyPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.", "", "").String,
+				Computed:            true,
+			},
+			"skip": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"remote_address": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").String,
+				Computed:            true,
+			},
+			"remote_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).String,
+				Computed:            true,
+			},
+			"user_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").String,
+				Computed:            true,
+			},
+			"password": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").String,
+				Computed:            true,
+			},
 		},
-		"skip": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"remote_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").String,
-			Computed:            true,
-		},
-		"remote_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).String,
-			Computed:            true,
-		},
-		"user_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").String,
-			Computed:            true,
-		},
-		"password": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAPIProxyPolicyDataSourceSchema
 }
-var DmAPIProxyPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.", "", "").String,
-			Required:            true,
-		},
-		"skip": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"remote_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").String,
-			Optional:            true,
-		},
-		"remote_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).String,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 65535),
+func GetDmAPIProxyPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAPIProxyPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.", "", "").String,
+				Required:            true,
+			},
+			"skip": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"remote_address": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAPIProxyPolicyRemoteAddressCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"remote_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(DmAPIProxyPolicyRemotePortCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"user_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+				},
+			},
+			"password": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").String,
+				Optional:            true,
 			},
 		},
-		"user_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
-			},
-		},
-		"password": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmAPIProxyPolicyResourceSchema
 }
 
 func (data DmAPIProxyPolicy) IsNull() bool {
@@ -154,6 +181,7 @@ func (data DmAPIProxyPolicy) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

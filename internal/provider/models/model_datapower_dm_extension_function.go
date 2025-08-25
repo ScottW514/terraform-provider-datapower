@@ -52,47 +52,54 @@ var DmExtensionFunctionObjectDefault = map[string]attr.Value{
 	"local_function_namespace":     types.StringValue("http://www.datapower.com/extensions"),
 	"local_function":               types.StringNull(),
 }
-var DmExtensionFunctionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"extension_function_namespace": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter namespace of the extension functions used in the custom stylesheets. For example, \"http://www.fredspace/extensions\".", "", "").String,
-			Computed:            true,
+
+func GetDmExtensionFunctionDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmExtensionFunctionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"extension_function_namespace": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter namespace of the extension functions used in the custom stylesheets. For example, \"http://www.fredspace/extensions\".", "", "").String,
+				Computed:            true,
+			},
+			"extension_function": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the extension function within the namespace to map. For example, \"nodeset()\".", "", "").String,
+				Computed:            true,
+			},
+			"local_function_namespace": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the local namespace if it is other than the DataPower default (shown in the box).", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
+				Computed:            true,
+			},
+			"local_function": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the local function to use in place of the extension function identified above. For example, \"node-set()\".", "", "").String,
+				Computed:            true,
+			},
 		},
-		"extension_function": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the extension function within the namespace to map. For example, \"nodeset()\".", "", "").String,
-			Computed:            true,
-		},
-		"local_function_namespace": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the local namespace if it is other than the DataPower default (shown in the box).", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
-			Computed:            true,
-		},
-		"local_function": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the local function to use in place of the extension function identified above. For example, \"node-set()\".", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmExtensionFunctionDataSourceSchema
 }
-var DmExtensionFunctionResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"extension_function_namespace": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter namespace of the extension functions used in the custom stylesheets. For example, \"http://www.fredspace/extensions\".", "", "").String,
-			Required:            true,
+func GetDmExtensionFunctionResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmExtensionFunctionResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"extension_function_namespace": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter namespace of the extension functions used in the custom stylesheets. For example, \"http://www.fredspace/extensions\".", "", "").String,
+				Required:            true,
+			},
+			"extension_function": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the extension function within the namespace to map. For example, \"nodeset()\".", "", "").String,
+				Required:            true,
+			},
+			"local_function_namespace": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the local namespace if it is other than the DataPower default (shown in the box).", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("http://www.datapower.com/extensions"),
+			},
+			"local_function": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the local function to use in place of the extension function identified above. For example, \"node-set()\".", "", "").String,
+				Required:            true,
+			},
 		},
-		"extension_function": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the extension function within the namespace to map. For example, \"nodeset()\".", "", "").String,
-			Required:            true,
-		},
-		"local_function_namespace": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the local namespace if it is other than the DataPower default (shown in the box).", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("http://www.datapower.com/extensions"),
-		},
-		"local_function": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the local function to use in place of the extension function identified above. For example, \"node-set()\".", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmExtensionFunctionResourceSchema
 }
 
 func (data DmExtensionFunction) IsNull() bool {
@@ -116,6 +123,7 @@ func (data DmExtensionFunction) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ExtensionFunctionNamespace.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ExtensionFunctionNamespace`, data.ExtensionFunctionNamespace.ValueString())
 	}

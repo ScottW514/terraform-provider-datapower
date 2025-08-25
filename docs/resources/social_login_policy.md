@@ -66,6 +66,7 @@ resource "datapower_social_login_policy" "test" {
 - `jwt_validator` (String) Specify the JWT Validator configuration that defines how to validate and verify the ID token.
   - CLI Alias: `jwt-validator`
   - Reference to: `datapower_aaa_jwt_validator:id`
+  - Required When: `validate_jwt_token`=`true`
 - `user_summary` (String) Enter a descriptive summary for the configuration.
   - CLI Alias: `summary`
 - `validate_jwt_token` (Boolean) <p>Controls whether to validate the JWT token (ID token)from the provider. If yes, it is recommended that you validate the ID token that is obtained from Google by defining the following settings in the JWT Validator configuration.</p><p><ol><li>Verify the signature by fetching the certs from https://www.googleapis.com/oauth2/v3/certs</li><li>Verify that the <tt>aud</tt> claim matches the client ID of DataPower.</li><li>Verify that the <tt>iss</tt> claim matches accounts.google.com or https://accounts.google.com</li></ol></p><p>For other recommendations on validating the ID token from Google, see https://developers.google.com/identity/protocols/OpenIDConnect.</p>

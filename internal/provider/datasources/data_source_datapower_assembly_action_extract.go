@@ -82,7 +82,7 @@ func (d *AssemblyActionExtractDataSource) Schema(ctx context.Context, req dataso
 						},
 						"extract": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify fields in the API context and how to transform the content of the fields. You use a subset of JSONata notation to specify the fields and how to transform the content. For more information, see \"JSONata and assembly actions\" in IBM Documentation.",
-							NestedObject:        models.DmAssemblyActionExtractDataSourceSchema,
+							NestedObject:        models.GetDmAssemblyActionExtractDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

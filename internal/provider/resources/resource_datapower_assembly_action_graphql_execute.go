@@ -96,7 +96,7 @@ func (r *AssemblyActionGraphQLExecuteResource) Schema(ctx context.Context, req r
 			},
 			"target_map_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Target rules", "targets", "").String,
-				NestedObject:        models.DmTargetMapRuleResourceSchema,
+				NestedObject:        models.GetDmTargetMapRuleResourceSchema(),
 				Optional:            true,
 			},
 			"allow_cost_introspection": schema.BoolAttribute{

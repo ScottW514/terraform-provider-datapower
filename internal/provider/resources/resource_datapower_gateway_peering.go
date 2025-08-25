@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &GatewayPeeringResource{}
@@ -91,10 +92,11 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.", "local-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.", "local-address", "").AddRequiredWhen(models.GatewayPeeringLocalAddressCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+					validators.ConditionalRequiredString(models.GatewayPeeringLocalAddressCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"local_port": schema.Int64Attribute{
@@ -135,11 +137,12 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("memory"),
 			},
 			"local_directory": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store data. For example, <tt>local:///group1</tt> .", "local-directory", "").AddDefaultValue("local:///").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store data. For example, <tt>local:///group1</tt> .", "local-directory", "").AddDefaultValue("local:///").AddRequiredWhen(models.GatewayPeeringLocalDirectoryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^(local):"), "Must match :"+"^(local):"),
+					validators.ConditionalRequiredString(models.GatewayPeeringLocalDirectoryCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("local:///"),
 			},
@@ -147,7 +150,6 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.", "max-memory", "").AddIntegerRange(0, 1048576).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1048576),
 				},
 			},

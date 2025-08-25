@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &CountMonitorResource{}
@@ -99,14 +100,17 @@ func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("all"),
 			},
 			"header": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The name of the HTTP header to read to determine the value of the source IP address.", "header", "").AddDefaultValue("X-Client-IP").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name of the HTTP header to read to determine the value of the source IP address.", "header", "").AddDefaultValue("X-Client-IP").AddRequiredWhen(models.CountMonitorHeaderCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("X-Client-IP"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.CountMonitorHeaderCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("X-Client-IP"),
 			},
 			"filter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Click this tab to define a message-count monitor threshold and assign an action (Message Filter Action) that is taken when the threshold is reached.", "filter", "").String,
-				NestedObject:        models.DmCountMonitorFilterResourceSchema,
+				NestedObject:        models.GetDmCountMonitorFilterResourceSchema(),
 				Optional:            true,
 			},
 			"max_sources": schema.Int64Attribute{

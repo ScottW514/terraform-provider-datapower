@@ -53,48 +53,55 @@ var DmLTPAUserAttributeNameAndValueObjectDefault = map[string]attr.Value{
 	"ltpa_user_attribute_static_value": types.StringNull(),
 	"ltpa_user_attribute_x_path_value": types.StringNull(),
 }
-var DmLTPAUserAttributeNameAndValueDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"ltpa_user_attribute_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the attribute.", "", "").String,
-			Computed:            true,
-		},
-		"ltpa_user_attribute_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of attribute.", "", "").AddStringEnum("static", "xpath").String,
-			Computed:            true,
-		},
-		"ltpa_user_attribute_static_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").String,
-			Computed:            true,
-		},
-		"ltpa_user_attribute_x_path_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmLTPAUserAttributeNameAndValueResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"ltpa_user_attribute_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the attribute.", "", "").String,
-			Required:            true,
-		},
-		"ltpa_user_attribute_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of attribute.", "", "").AddStringEnum("static", "xpath").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("static", "xpath"),
+
+func GetDmLTPAUserAttributeNameAndValueDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmLTPAUserAttributeNameAndValueDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"ltpa_user_attribute_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the attribute.", "", "").String,
+				Computed:            true,
+			},
+			"ltpa_user_attribute_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of attribute.", "", "").AddStringEnum("static", "xpath").String,
+				Computed:            true,
+			},
+			"ltpa_user_attribute_static_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").String,
+				Computed:            true,
+			},
+			"ltpa_user_attribute_x_path_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").String,
+				Computed:            true,
 			},
 		},
-		"ltpa_user_attribute_static_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").String,
-			Optional:            true,
+	}
+	return DmLTPAUserAttributeNameAndValueDataSourceSchema
+}
+func GetDmLTPAUserAttributeNameAndValueResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmLTPAUserAttributeNameAndValueResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"ltpa_user_attribute_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the attribute.", "", "").String,
+				Required:            true,
+			},
+			"ltpa_user_attribute_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of attribute.", "", "").AddStringEnum("static", "xpath").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("static", "xpath"),
+				},
+			},
+			"ltpa_user_attribute_static_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").String,
+				Optional:            true,
+			},
+			"ltpa_user_attribute_x_path_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"ltpa_user_attribute_x_path_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmLTPAUserAttributeNameAndValueResourceSchema
 }
 
 func (data DmLTPAUserAttributeNameAndValue) IsNull() bool {
@@ -118,6 +125,7 @@ func (data DmLTPAUserAttributeNameAndValue) ToBody(ctx context.Context, pathRoot
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.LtpaUserAttributeName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LTPAUserAttributeName`, data.LtpaUserAttributeName.ValueString())
 	}

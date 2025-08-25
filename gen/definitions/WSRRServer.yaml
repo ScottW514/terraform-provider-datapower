@@ -71,7 +71,7 @@ attributes:
   description: TLS client profile
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLClientConfigType
     value:
     - client

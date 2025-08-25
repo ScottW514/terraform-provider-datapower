@@ -84,7 +84,7 @@ func (r *MPGWErrorHandlingPolicyResource) Schema(ctx context.Context, req resour
 			},
 			"policy_maps": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The policy maps contain a list of error response action rules and their corresponding matching rules. When the policy evaluates the matching rules and finds a match, it runs the corresponding error response action. The policy runs the first error response action with a successful match.", "match", "").String,
-				NestedObject:        models.DmWebGWErrorPolicyMapResourceSchema,
+				NestedObject:        models.GetDmWebGWErrorPolicyMapResourceSchema(),
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

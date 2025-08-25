@@ -106,6 +106,7 @@ resource "datapower_https_source_protocol_handler" "test" {
 - `ssl_server` (String) Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Required When: `ssl_server_config_type`=`server`
 - `ssl_server_config_type` (String) TLS server type
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
@@ -113,11 +114,13 @@ resource "datapower_https_source_protocol_handler" "test" {
 - `sslsni_server` (String) Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Required When: `ssl_server_config_type`=`sni`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `web_socket_idle_timeout` (Number) Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.
   - CLI Alias: `websocket-idle-timeout`
   - Range: `0`-`86400`
+  - Required When: (`allow_web_socket_upgrade`=`true` AND `http_version`!=`HTTP/1.0`)
 
 <a id="nestedatt--allowed_features"></a>
 ### Nested Schema for `allowed_features`

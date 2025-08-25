@@ -52,6 +52,7 @@ func TestAccDataSourceOAuthSupportedClient(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_oauth_supported_client.test", "result.0.dp_state_life_time", "300"),
 					resource.TestCheckResourceAttr("data.datapower_oauth_supported_client.test", "result.0.au_code_life_time", "300"),
 					resource.TestCheckResourceAttr("data.datapower_oauth_supported_client.test", "result.0.access_token_life_time", "3600"),
+					resource.TestCheckResourceAttr("data.datapower_oauth_supported_client.test", "result.0.refresh_token_allowed", "0"),
 					resource.TestCheckResourceAttr("data.datapower_oauth_supported_client.test", "result.0.refresh_token_life_time", "5400"),
 					resource.TestCheckResourceAttr("data.datapower_oauth_supported_client.test", "result.0.custom_resource_owner", "false"),
 					resource.TestCheckResourceAttr("data.datapower_oauth_supported_client.test", "result.0.validation_urlssl_client_type", "client"),

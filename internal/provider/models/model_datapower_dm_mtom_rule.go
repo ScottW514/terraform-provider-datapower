@@ -48,37 +48,44 @@ var DmMtomRuleObjectDefault = map[string]attr.Value{
 	"content_type": types.StringNull(),
 	"content_id":   types.StringNull(),
 }
-var DmMtomRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"x_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("An XPath expression that defines which schema element or schema elements are subject to this rule. Click XPath Tool to launch the XPath expression builder. To use this tool, upload an example document. After the example document is loaded, the tool allows you to select the elements to construct the corresponding XPath expression. After selecting the elements, click Done to return to the MTOM Rules Properties window.", "select", "").String,
-			Computed:            true,
+
+func GetDmMtomRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmMtomRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"x_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("An XPath expression that defines which schema element or schema elements are subject to this rule. Click XPath Tool to launch the XPath expression builder. To use this tool, upload an example document. After the example document is loaded, the tool allows you to select the elements to construct the corresponding XPath expression. After selecting the elements, click Done to return to the MTOM Rules Properties window.", "select", "").String,
+				Computed:            true,
+			},
+			"content_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The Content Type for the extracted element data. This option overrides the value that is attained from the xmlmime:contentType attribute. If the provided XPath matches more than one element, each corresponding MIME attachment part will contain a content-type header with this value. If different content-type values are required, selective XPath expressions are required.", "content-type", "").String,
+				Computed:            true,
+			},
+			"content_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("If not explicitly configured, content IDs are automatically generated. Using this property allows for the explicit configuration of content-id headers and their associated href values. Rules that match multiple data elements result in one attachment part for all matched elements. The resulting attachment part contains data from the last match only.", "content-id", "").String,
+				Computed:            true,
+			},
 		},
-		"content_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The Content Type for the extracted element data. This option overrides the value that is attained from the xmlmime:contentType attribute. If the provided XPath matches more than one element, each corresponding MIME attachment part will contain a content-type header with this value. If different content-type values are required, selective XPath expressions are required.", "content-type", "").String,
-			Computed:            true,
-		},
-		"content_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("If not explicitly configured, content IDs are automatically generated. Using this property allows for the explicit configuration of content-id headers and their associated href values. Rules that match multiple data elements result in one attachment part for all matched elements. The resulting attachment part contains data from the last match only.", "content-id", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmMtomRuleDataSourceSchema
 }
-var DmMtomRuleResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"x_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("An XPath expression that defines which schema element or schema elements are subject to this rule. Click XPath Tool to launch the XPath expression builder. To use this tool, upload an example document. After the example document is loaded, the tool allows you to select the elements to construct the corresponding XPath expression. After selecting the elements, click Done to return to the MTOM Rules Properties window.", "select", "").String,
-			Required:            true,
+func GetDmMtomRuleResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmMtomRuleResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"x_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("An XPath expression that defines which schema element or schema elements are subject to this rule. Click XPath Tool to launch the XPath expression builder. To use this tool, upload an example document. After the example document is loaded, the tool allows you to select the elements to construct the corresponding XPath expression. After selecting the elements, click Done to return to the MTOM Rules Properties window.", "select", "").String,
+				Required:            true,
+			},
+			"content_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The Content Type for the extracted element data. This option overrides the value that is attained from the xmlmime:contentType attribute. If the provided XPath matches more than one element, each corresponding MIME attachment part will contain a content-type header with this value. If different content-type values are required, selective XPath expressions are required.", "content-type", "").String,
+				Optional:            true,
+			},
+			"content_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("If not explicitly configured, content IDs are automatically generated. Using this property allows for the explicit configuration of content-id headers and their associated href values. Rules that match multiple data elements result in one attachment part for all matched elements. The resulting attachment part contains data from the last match only.", "content-id", "").String,
+				Optional:            true,
+			},
 		},
-		"content_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The Content Type for the extracted element data. This option overrides the value that is attained from the xmlmime:contentType attribute. If the provided XPath matches more than one element, each corresponding MIME attachment part will contain a content-type header with this value. If different content-type values are required, selective XPath expressions are required.", "content-type", "").String,
-			Optional:            true,
-		},
-		"content_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("If not explicitly configured, content IDs are automatically generated. Using this property allows for the explicit configuration of content-id headers and their associated href values. Rules that match multiple data elements result in one attachment part for all matched elements. The resulting attachment part contains data from the last match only.", "content-id", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmMtomRuleResourceSchema
 }
 
 func (data DmMtomRule) IsNull() bool {
@@ -99,6 +106,7 @@ func (data DmMtomRule) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.XPath.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
 	}

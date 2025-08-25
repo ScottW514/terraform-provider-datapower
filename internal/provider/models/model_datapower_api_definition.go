@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -79,6 +80,21 @@ type APIDefinition struct {
 	EnforceFormDataParameter         types.Bool                  `tfsdk:"enforce_form_data_parameter"`
 	ForceHttp500ForSoap11            types.Bool                  `tfsdk:"force_http500_for_soap11"`
 	DependencyActions                []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var APIDefinitionGraphQLSchemaCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "standard",
+	Value:       []string{"graphql"},
+}
+var APIDefinitionAPIMutualTLSSourceCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "require_api_mutual_tls",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var APIDefinitionObjectType = map[string]attr.Type{
@@ -279,6 +295,7 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -307,23 +324,23 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Assembly`, data.Assembly.ValueString())
 	}
 	if !data.Path.IsNull() {
-		var values []string
-		data.Path.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Path.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Path`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.Consume.IsNull() {
-		var values []string
-		data.Consume.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Consume.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Consume`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.Produce.IsNull() {
-		var values []string
-		data.Produce.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Produce.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Produce`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -340,9 +357,9 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`WsdlValidationSchema`, data.WsdlValidationSchema.ValueString())
 	}
 	if !data.SecurityRequirement.IsNull() {
-		var values []string
-		data.SecurityRequirement.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.SecurityRequirement.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`SecurityRequirement`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -350,9 +367,9 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`RequireAPIMutualTLS`, tfutils.StringFromBool(data.RequireApiMutualTls, ""))
 	}
 	if !data.ApiMutualTlsSource.IsNull() {
-		var values []string
-		data.ApiMutualTlsSource.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.ApiMutualTlsSource.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`APIMutualTLSSource`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -360,16 +377,16 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`APIMutualTLSHeaderName`, data.ApiMutualTlsHeaderName.ValueString())
 	}
 	if !data.Properties.IsNull() {
-		var values []DmAPIProperty
-		data.Properties.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIProperty
+		data.Properties.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Properties`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.Schemas.IsNull() {
-		var values []DmAPIDataTypeDefinition
-		data.Schemas.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIDataTypeDefinition
+		data.Schemas.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Schemas`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -389,16 +406,16 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`ErrorContent`, data.ErrorContent.ValueString())
 	}
 	if !data.PreservedRequestHeader.IsNull() {
-		var values []string
-		data.PreservedRequestHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.PreservedRequestHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`PreservedRequestHeader`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.PreservedResponseHeader.IsNull() {
-		var values []string
-		data.PreservedResponseHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.PreservedResponseHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`PreservedResponseHeader`+".-1", map[string]string{"value": val})
 		}
 	}

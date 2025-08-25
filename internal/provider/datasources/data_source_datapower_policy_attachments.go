@@ -90,12 +90,12 @@ func (d *PolicyAttachmentsDataSource) Schema(ctx context.Context, req datasource
 						},
 						"ignored_policy_attachment_points": schema.ListNestedAttribute{
 							MarkdownDescription: "Disable all policies attached by policy references at a configured attachment point leaving other policy references intact.",
-							NestedObject:        models.DmPolicyAttachmentPointDataSourceSchema,
+							NestedObject:        models.GetDmPolicyAttachmentPointDataSourceSchema(),
 							Computed:            true,
 						},
 						"external_policy": schema.ListNestedAttribute{
 							MarkdownDescription: "Associate an external policy with a service.",
-							NestedObject:        models.DmExternalAttachedPolicyDataSourceSchema,
+							NestedObject:        models.GetDmExternalAttachedPolicyDataSourceSchema(),
 							Computed:            true,
 						},
 						"sla_enforcement_mode": schema.StringAttribute{

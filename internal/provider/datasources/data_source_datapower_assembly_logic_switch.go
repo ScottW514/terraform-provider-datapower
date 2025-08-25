@@ -78,7 +78,7 @@ func (d *AssemblyLogicSwitchDataSource) Schema(ctx context.Context, req datasour
 						},
 						"case": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the condition to evaluate and the API rule to run when the condition matches. Conditions are evaluated in order. The API rule of the first condition that evaluates to true is run. If an error occurs during the processing, the transaction fails.",
-							NestedObject:        models.DmAssemblyLogicExecuteDataSourceSchema,
+							NestedObject:        models.GetDmAssemblyLogicExecuteDataSourceSchema(),
 							Computed:            true,
 						},
 						"otherwise": schema.StringAttribute{

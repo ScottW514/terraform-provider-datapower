@@ -78,7 +78,7 @@ func (d *AssemblyActionSetVarDataSource) Schema(ctx context.Context, req datasou
 						},
 						"variable": schema.ListNestedAttribute{
 							MarkdownDescription: "Variables",
-							NestedObject:        models.DmAssemblyActionSetVarDataSourceSchema,
+							NestedObject:        models.GetDmAssemblyActionSetVarDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

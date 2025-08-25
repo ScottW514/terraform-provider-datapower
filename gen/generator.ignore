@@ -5,3 +5,4 @@ modifiers/
 resources/resource_datapower_file.go
 resources/resource_datapower_file_test.go
 tfutils/
+validators/

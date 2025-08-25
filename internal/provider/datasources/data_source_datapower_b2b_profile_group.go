@@ -82,7 +82,7 @@ func (d *B2BProfileGroupDataSource) Schema(ctx context.Context, req datasource.S
 						},
 						"b2b_profiles": schema.ListNestedAttribute{
 							MarkdownDescription: "Partner profiles",
-							NestedObject:        models.DmB2BGroupedProfileDataSourceSchema,
+							NestedObject:        models.GetDmB2BGroupedProfileDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

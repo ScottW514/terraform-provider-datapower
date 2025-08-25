@@ -37,6 +37,7 @@ func TestAccResourceSLMCredClass(t *testing.T) {
 		Config: testutils.SLMCredClassTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_slm_cred_class.test", "cred_type", "aaa-mapped-credential"),
+			resource.TestCheckResourceAttr("datapower_slm_cred_class.test", "cred_match_type", "per-extracted-value"),
 		}...),
 	})
 

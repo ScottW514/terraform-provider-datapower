@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AAAPolicyResource{}
@@ -98,7 +99,7 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"namespace_mapping": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Define XML namespace maps. Each map is a prefix with its URI.", "namespace-mapping", "").String,
-				NestedObject:        models.DmNamespaceMappingResourceSchema,
+				NestedObject:        models.GetDmNamespaceMappingResourceSchema(),
 				Optional:            true,
 			},
 			"extract_identity": models.GetDmAAAPExtractIdentityResourceSchema("Specify the methods to extract the identity of the service requester. For some methods, you must define more properties.", "extract-identity", "", false),
@@ -110,17 +111,17 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			"post_process":     models.GetDmAAAPPostProcessResourceSchema("Specify postprocessing activities. For some methods, you must define more properties.", "post-process", "", false),
 			"saml_attribute": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify SAML attributes. Each attribute consists of its namespace URI, local name, and expected value.", "saml-attribute", "").String,
-				NestedObject:        models.DmSAMLAttributeNameAndValueResourceSchema,
+				NestedObject:        models.GetDmSAMLAttributeNameAndValueResourceSchema(),
 				Optional:            true,
 			},
 			"ltpa_attributes": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify user attributes to include in the LTPA token. Attributes are relevant for only WebSphere tokens.</p><p>For each attribute, its value can be static or resolved at run time. <ul><li>When static, its value is a fixed value.</li><li>When resolved at run time, its value is resolved at run time with an XPath expression.</li></ul></p>", "ltpa-attribute", "").String,
-				NestedObject:        models.DmLTPAUserAttributeNameAndValueResourceSchema,
+				NestedObject:        models.GetDmLTPAUserAttributeNameAndValueResourceSchema(),
 				Optional:            true,
 			},
 			"transaction_priority": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Define the transactional priority for users. For each user, you must specify the name of the output credentials, their priority for scheduling or resource allocation, and whether authorization is required.", "transaction-priority", "").String,
-				NestedObject:        models.DmAAATransactionPriorityResourceSchema,
+				NestedObject:        models.GetDmAAATransactionPriorityResourceSchema(),
 				Optional:            true,
 			},
 			"saml_valcred": schema.StringAttribute{
@@ -160,11 +161,12 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(false),
 			},
 			"log_allowed_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for successful AAA operations. The default level is informational.", "log-allowed-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("info").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for successful AAA operations. The default level is informational.", "log-allowed-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("info").AddRequiredWhen(models.AAAPolicyLogAllowedLevelCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
+					validators.ConditionalRequiredString(models.AAAPolicyLogAllowedLevelCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("info"),
 			},
@@ -175,11 +177,12 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(true),
 			},
 			"log_rejected_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for unsuccessful AAA operations. The default level is warning.", "log-rejected-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for unsuccessful AAA operations. The default level is warning.", "log-rejected-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").AddRequiredWhen(models.AAAPolicyLogRejectedLevelCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
+					validators.ConditionalRequiredString(models.AAAPolicyLogRejectedLevelCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("warn"),
 			},
@@ -206,7 +209,6 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 1000),
 				},
 				Default: int64default.StaticInt64(3),
@@ -250,12 +252,18 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: stringdefault.StaticString("none"),
 			},
 			"external_aaa_template": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify another AAA policy to use as the template. When specified, this AAA policy overwrites the current AAA policy.", "external-aaa-template", "aaa_policy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify another AAA policy to use as the template. When specified, this AAA policy overwrites the current AAA policy.", "external-aaa-template", "aaa_policy").AddRequiredWhen(models.AAAPolicyExternalAAATemplateCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAPolicyExternalAAATemplateCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dyn_config_custom_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>", "dyn-config-custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>", "dyn-config-custom-url", "").AddRequiredWhen(models.AAAPolicyDynConfigCustomURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAPolicyDynConfigCustomURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

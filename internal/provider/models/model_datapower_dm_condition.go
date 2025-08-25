@@ -45,29 +45,36 @@ var DmConditionObjectDefault = map[string]attr.Value{
 	"expression":       types.StringNull(),
 	"condition_action": types.StringNull(),
 }
-var DmConditionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"expression": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The expression to check for the condition.", "", "").String,
-			Computed:            true,
+
+func GetDmConditionDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmConditionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"expression": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The expression to check for the condition.", "", "").String,
+				Computed:            true,
+			},
+			"condition_action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The action to run when the expression is matched.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"condition_action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The action to run when the expression is matched.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmConditionDataSourceSchema
 }
-var DmConditionResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"expression": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The expression to check for the condition.", "", "").String,
-			Required:            true,
+func GetDmConditionResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmConditionResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"expression": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The expression to check for the condition.", "", "").String,
+				Required:            true,
+			},
+			"condition_action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The action to run when the expression is matched.", "", "").String,
+				Required:            true,
+			},
 		},
-		"condition_action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The action to run when the expression is matched.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmConditionResourceSchema
 }
 
 func (data DmCondition) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmCondition) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Expression.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Expression`, data.Expression.ValueString())
 	}

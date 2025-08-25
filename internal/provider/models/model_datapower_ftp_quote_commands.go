@@ -77,6 +77,7 @@ func (data FTPQuoteCommands) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -84,9 +85,9 @@ func (data FTPQuoteCommands) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.FtpQuotedCommands.IsNull() {
-		var values []DmFTPQuotedCommand
-		data.FtpQuotedCommands.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmFTPQuotedCommand
+		data.FtpQuotedCommands.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`FTPQuotedCommands`+".-1", val.ToBody(ctx, ""))
 		}
 	}

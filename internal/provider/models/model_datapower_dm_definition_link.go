@@ -45,29 +45,36 @@ var DmDefinitionLinkObjectDefault = map[string]attr.Value{
 	"short_name": types.StringNull(),
 	"definition": types.StringNull(),
 }
-var DmDefinitionLinkDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"short_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a short name for the rate limit definition.", "name", "").String,
-			Computed:            true,
+
+func GetDmDefinitionLinkDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmDefinitionLinkDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"short_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a short name for the rate limit definition.", "name", "").String,
+				Computed:            true,
+			},
+			"definition": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit definition.", "definition", "rate_limit_definition").String,
+				Computed:            true,
+			},
 		},
-		"definition": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit definition.", "definition", "rate_limit_definition").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmDefinitionLinkDataSourceSchema
 }
-var DmDefinitionLinkResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"short_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a short name for the rate limit definition.", "name", "").String,
-			Required:            true,
+func GetDmDefinitionLinkResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmDefinitionLinkResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"short_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a short name for the rate limit definition.", "name", "").String,
+				Required:            true,
+			},
+			"definition": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit definition.", "definition", "rate_limit_definition").String,
+				Required:            true,
+			},
 		},
-		"definition": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit definition.", "definition", "rate_limit_definition").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmDefinitionLinkResourceSchema
 }
 
 func (data DmDefinitionLink) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmDefinitionLink) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ShortName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ShortName`, data.ShortName.ValueString())
 	}

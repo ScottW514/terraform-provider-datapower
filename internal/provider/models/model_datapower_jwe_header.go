@@ -87,6 +87,7 @@ func (data JWEHeader) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -94,16 +95,16 @@ func (data JWEHeader) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.JweProtectedHeader.IsNull() {
-		var values []DmJOSEHeader
-		data.JweProtectedHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmJOSEHeader
+		data.JweProtectedHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`JWEProtectedHeader`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.JweSharedUnprotectedHeader.IsNull() {
-		var values []DmJOSEHeader
-		data.JweSharedUnprotectedHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmJOSEHeader
+		data.JweSharedUnprotectedHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`JWESharedUnprotectedHeader`+".-1", val.ToBody(ctx, ""))
 		}
 	}

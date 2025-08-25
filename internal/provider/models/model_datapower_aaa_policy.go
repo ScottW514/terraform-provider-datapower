@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -74,6 +75,35 @@ type AAAPolicy struct {
 	ExternalAaaTemplate           types.String                `tfsdk:"external_aaa_template"`
 	DynConfigCustomUrl            types.String                `tfsdk:"dyn_config_custom_url"`
 	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AAAPolicyLogAllowedLevelCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "log_allowed",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var AAAPolicyLogRejectedLevelCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "log_rejected",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var AAAPolicyExternalAAATemplateCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "dyn_config",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"external-aaa"},
+}
+var AAAPolicyDynConfigCustomURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "dyn_config",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"current-aaa", "external-aaa"},
 }
 
 var AAAPolicyObjectType = map[string]attr.Type{
@@ -266,6 +296,7 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -279,9 +310,9 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`RejectedCounter`, data.RejectedCounter.ValueString())
 	}
 	if !data.NamespaceMapping.IsNull() {
-		var values []DmNamespaceMapping
-		data.NamespaceMapping.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmNamespaceMapping
+		data.NamespaceMapping.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`NamespaceMapping`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -321,23 +352,23 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.SamlAttribute.IsNull() {
-		var values []DmSAMLAttributeNameAndValue
-		data.SamlAttribute.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSAMLAttributeNameAndValue
+		data.SamlAttribute.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`SAMLAttribute`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.LtpaAttributes.IsNull() {
-		var values []DmLTPAUserAttributeNameAndValue
-		data.LtpaAttributes.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmLTPAUserAttributeNameAndValue
+		data.LtpaAttributes.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`LTPAAttributes`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.TransactionPriority.IsNull() {
-		var values []DmAAATransactionPriority
-		data.TransactionPriority.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAAATransactionPriority
+		data.TransactionPriority.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`TransactionPriority`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -396,16 +427,16 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`WSSecActorRoleID`, data.WsSecActorRoleId.ValueString())
 	}
 	if !data.AusmhttpHeader.IsNull() {
-		var values []string
-		data.AusmhttpHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.AusmhttpHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`AUSMHTTPHeader`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.AzsmhttpHeader.IsNull() {
-		var values []string
-		data.AzsmhttpHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.AzsmhttpHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`AZSMHTTPHeader`+".-1", map[string]string{"value": val})
 		}
 	}

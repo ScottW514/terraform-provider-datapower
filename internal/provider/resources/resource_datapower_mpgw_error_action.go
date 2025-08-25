@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &MPGWErrorActionResource{}
@@ -94,22 +95,30 @@ func (r *MPGWErrorActionResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("static"),
 			},
 			"remote_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the remote error page.", "remote-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the remote error page.", "remote-url", "").AddRequiredWhen(models.MPGWErrorActionRemoteURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.MPGWErrorActionRemoteURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"local_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the local error page.", "local-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the local error page.", "local-url", "").AddRequiredWhen(models.MPGWErrorActionLocalURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.MPGWErrorActionLocalURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"error_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the custom error rule that the appliance runs to handle errors.", "rule", "style_policy_rule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the custom error rule that the appliance runs to handle errors.", "rule", "style_policy_rule").AddRequiredWhen(models.MPGWErrorActionErrorRuleCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.MPGWErrorActionErrorRuleCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"status_code": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.", "status-code", "").AddIntegerRange(100, 999).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(100, 999),
 				},
 			},
@@ -119,7 +128,7 @@ func (r *MPGWErrorActionResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"header_injection": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name and the value for the HTTP header that the appliance injects.", "header-inject", "").String,
-				NestedObject:        models.DmWebGWErrorRespHeaderInjectionResourceSchema,
+				NestedObject:        models.GetDmWebGWErrorRespHeaderInjectionResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

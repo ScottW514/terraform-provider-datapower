@@ -98,209 +98,224 @@ var DmSourceHTTPFeatureTypeObjectDefault = map[string]attr.Value{
 	"dot_dot_in_query_string": types.BoolValue(false),
 	"cmd_exe":                 types.BoolValue(false),
 }
-var DmSourceHTTPFeatureTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"http_1d0": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/1.0 requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmSourceHTTPFeatureTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSourceHTTPFeatureTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"http_1d0": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/1.0 requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_1d1": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/1.1 requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_2d0": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/2 requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"post": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow POST methods in requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"get": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow GET methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"put": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow PUT methods in requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"patch": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow PATCH methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"head": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow HEAD methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"options": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow OPTIONS methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"trace": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow TRACE methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"delete": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow DELETE methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"connect": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"custom_methods": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests with any other method, which supports protocol extensions", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"query_string": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a ?", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"fragment_identifiers": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a #", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"dot_dot": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a ..", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"dot_dot_in_path": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL path contains a ..", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"dot_dot_in_query_string": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the query string contains a ..", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"cmd_exe": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"http_1d1": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/1.1 requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_2d0": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/2 requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"post": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow POST methods in requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"get": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow GET methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"put": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow PUT methods in requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"patch": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow PATCH methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"head": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow HEAD methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"options": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow OPTIONS methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"trace": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow TRACE methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"delete": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow DELETE methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"connect": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"custom_methods": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests with any other method, which supports protocol extensions", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"query_string": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a ?", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"fragment_identifiers": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a #", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"dot_dot": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a ..", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"dot_dot_in_path": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL path contains a ..", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"dot_dot_in_query_string": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the query string contains a ..", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"cmd_exe": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSourceHTTPFeatureTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSourceHTTPFeatureTypeDataSourceSchema
 }
-var DmSourceHTTPFeatureTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSourceHTTPFeatureTypeObjectType,
-			DmSourceHTTPFeatureTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"http_1d0": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/1.0 requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmSourceHTTPFeatureTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSourceHTTPFeatureTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSourceHTTPFeatureTypeObjectType,
+				DmSourceHTTPFeatureTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"http_1d0": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/1.0 requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_1d1": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/1.1 requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_2d0": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/2 requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"post": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow POST methods in requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"get": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow GET methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"put": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow PUT methods in requests", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"patch": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow PATCH methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"head": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow HEAD methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"options": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow OPTIONS methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"trace": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow TRACE methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"delete": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow DELETE methods in requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"connect": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"custom_methods": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests with any other method, which supports protocol extensions", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"query_string": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a ?", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"fragment_identifiers": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a #", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"dot_dot": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a ..", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"dot_dot_in_path": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL path contains a ..", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"dot_dot_in_query_string": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the query string contains a ..", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"cmd_exe": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"http_1d1": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/1.1 requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_2d0": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Support HTTP/2 requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"post": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow POST methods in requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"get": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow GET methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"put": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow PUT methods in requests", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"patch": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow PATCH methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"head": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow HEAD methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"options": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow OPTIONS methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"trace": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow TRACE methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"delete": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow DELETE methods in requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"connect": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"custom_methods": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests with any other method, which supports protocol extensions", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"query_string": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a ?", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"fragment_identifiers": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a #", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"dot_dot": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains a ..", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"dot_dot_in_path": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL path contains a ..", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"dot_dot_in_query_string": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the query string contains a ..", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"cmd_exe": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmSourceHTTPFeatureTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSourceHTTPFeatureTypeResourceSchema.Required = true
+	} else {
+		DmSourceHTTPFeatureTypeResourceSchema.Optional = true
+		DmSourceHTTPFeatureTypeResourceSchema.Computed = true
+	}
+	return DmSourceHTTPFeatureTypeResourceSchema
 }
 
 func (data DmSourceHTTPFeatureType) IsNull() bool {
@@ -363,27 +378,13 @@ func (data DmSourceHTTPFeatureType) IsNull() bool {
 	}
 	return true
 }
-func GetDmSourceHTTPFeatureTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSourceHTTPFeatureTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSourceHTTPFeatureTypeDataSourceSchema
-}
-
-func GetDmSourceHTTPFeatureTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSourceHTTPFeatureTypeResourceSchema.Required = true
-	} else {
-		DmSourceHTTPFeatureTypeResourceSchema.Optional = true
-		DmSourceHTTPFeatureTypeResourceSchema.Computed = true
-	}
-	DmSourceHTTPFeatureTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSourceHTTPFeatureTypeResourceSchema
-}
 
 func (data DmSourceHTTPFeatureType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Http1D0.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.0`, tfutils.StringFromBool(data.Http1D0, ""))
 	}

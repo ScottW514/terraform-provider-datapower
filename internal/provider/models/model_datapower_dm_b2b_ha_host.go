@@ -32,6 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -39,6 +40,23 @@ import (
 type DmB2BHAHost struct {
 	Hostname types.String `tfsdk:"hostname"`
 	Port     types.Int64  `tfsdk:"port"`
+}
+
+var DmB2BHAHostHostnameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ha_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	AttrPath:    "../",
+	Value:       []string{"true"},
+}
+var DmB2BHAHostPortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ha_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	AttrPath:    "../",
+	Value:       []string{"true"},
 }
 
 var DmB2BHAHostObjectType = map[string]attr.Type{
@@ -49,40 +67,59 @@ var DmB2BHAHostObjectDefault = map[string]attr.Value{
 	"hostname": types.StringNull(),
 	"port":     types.Int64Value(1320),
 }
-var DmB2BHAHostDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").String,
-			Computed:            true,
-		},
-		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
-			Computed:            true,
-		},
-	},
-}
-var DmB2BHAHostResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmB2BHAHostObjectType,
-			DmB2BHAHostObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").String,
-			Optional:            true,
-		},
-		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 65535),
+
+func GetDmB2BHAHostDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmB2BHAHostDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"hostname": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").String,
+				Computed:            true,
 			},
-			Default: int64default.StaticInt64(1320),
+			"port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	DmB2BHAHostDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmB2BHAHostDataSourceSchema
+}
+func GetDmB2BHAHostResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmB2BHAHostResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmB2BHAHostObjectType,
+				DmB2BHAHostObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"hostname": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmB2BHAHostHostnameCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(DmB2BHAHostPortCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(1320),
+			},
+		},
+	}
+	DmB2BHAHostResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmB2BHAHostResourceSchema.Required = true
+	} else {
+		DmB2BHAHostResourceSchema.Optional = true
+		DmB2BHAHostResourceSchema.Computed = true
+	}
+	return DmB2BHAHostResourceSchema
 }
 
 func (data DmB2BHAHost) IsNull() bool {
@@ -94,27 +131,13 @@ func (data DmB2BHAHost) IsNull() bool {
 	}
 	return true
 }
-func GetDmB2BHAHostDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmB2BHAHostDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmB2BHAHostDataSourceSchema
-}
-
-func GetDmB2BHAHostResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmB2BHAHostResourceSchema.Required = true
-	} else {
-		DmB2BHAHostResourceSchema.Optional = true
-		DmB2BHAHostResourceSchema.Computed = true
-	}
-	DmB2BHAHostResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmB2BHAHostResourceSchema
-}
 
 func (data DmB2BHAHost) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Hostname.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Hostname`, data.Hostname.ValueString())
 	}

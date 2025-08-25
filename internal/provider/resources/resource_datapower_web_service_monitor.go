@@ -84,7 +84,7 @@ func (r *WebServiceMonitorResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"operations": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Operations to monitor", "operation", "").String,
-				NestedObject:        models.DmWSSLMOpsResourceSchema,
+				NestedObject:        models.GetDmWSSLMOpsResourceSchema(),
 				Optional:            true,
 			},
 			"endpoint_name": schema.StringAttribute{

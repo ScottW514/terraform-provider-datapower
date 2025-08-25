@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,83 @@ type OAuthSupportedClientGroup struct {
 	TemplateProcessUrl types.String                `tfsdk:"template_process_url"`
 	ClientTemplate     types.String                `tfsdk:"client_template"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var OAuthSupportedClientGroupOAuthRoleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "customized",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var OAuthSupportedClientGroupClientCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized_type",
+					AttrType:    "String",
+					AttrDefault: "custom",
+					Value:       []string{"custom"},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientGroupTemplateProcessUrlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized_type",
+			AttrType:    "String",
+			AttrDefault: "custom",
+			Value:       []string{"template"},
+		},
+	},
+}
+var OAuthSupportedClientGroupClientTemplateCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized_type",
+			AttrType:    "String",
+			AttrDefault: "custom",
+			Value:       []string{"template"},
+		},
+	},
 }
 
 var OAuthSupportedClientGroupObjectType = map[string]attr.Type{
@@ -104,6 +182,7 @@ func (data OAuthSupportedClientGroup) ToBody(ctx context.Context, pathRoot strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -122,9 +201,9 @@ func (data OAuthSupportedClientGroup) ToBody(ctx context.Context, pathRoot strin
 		}
 	}
 	if !data.Client.IsNull() {
-		var values []string
-		data.Client.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Client.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Client`+".-1", map[string]string{"value": val})
 		}
 	}

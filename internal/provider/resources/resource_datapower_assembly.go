@@ -88,7 +88,7 @@ func (r *AssemblyResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"catch": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies how to handle a specific error when it occurs during the assembly execution.", "catch", "").String,
-				NestedObject:        models.DmAssemblyCatchResourceSchema,
+				NestedObject:        models.GetDmAssemblyCatchResourceSchema(),
 				Optional:            true,
 			},
 			"default_catch": schema.StringAttribute{

@@ -73,6 +73,7 @@ func (data DomainAvailability) ToBody(ctx context.Context, pathRoot string) stri
 	}
 	body := ""
 	body, _ = sjson.Set(body, "DomainAvailability.name", path.Base("/mgmt/config/{domain}/DomainAvailability/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

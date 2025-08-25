@@ -98,7 +98,7 @@ func (d *AS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req dat
 						},
 						"virtual_directories": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the directories to create in virtual file system that the FTP server presents. The FTP client can use all of these directories to write file to be processed. The root directory (/) is always present, cannot be created, and is its own response directory.",
-							NestedObject:        models.DmFTPServerVirtualDirectoryDataSourceSchema,
+							NestedObject:        models.GetDmFTPServerVirtualDirectoryDataSourceSchema(),
 							Computed:            true,
 						},
 						"default_directory": schema.StringAttribute{

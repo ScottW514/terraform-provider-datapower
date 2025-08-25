@@ -35,6 +35,8 @@ resource "datapower_slm_cred_class" "test" {
 - `cred_match_type` (String) Match Type
   - CLI Alias: `match-type`
   - Choices: `per-extracted-value`, `exact-match`, `regexp-match`
+  - Default value: `per-extracted-value`
+  - Required When: `cred_type`!=`custom-stylesheet`
 - `cred_type` (String) Specify the manner to obtain the credentials (user identity) for each transaction. The default value is mapped credentials from an AAA action.
   - CLI Alias: `type`
   - Choices: `aaa-mapped-credential`, `aaa-username`, `mq-application`, `client-ip`, `request-header`, `ip-from-header`, `custom-stylesheet`
@@ -44,8 +46,10 @@ resource "datapower_slm_cred_class" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `header` (String) Request header
   - CLI Alias: `header`
+  - Required When: `cred_type`=`ip-from-header`|`request-header`
 - `stylesheet` (String) Custom stylesheet
   - CLI Alias: `stylesheet`
+  - Required When: `cred_type`=`custom-stylesheet`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

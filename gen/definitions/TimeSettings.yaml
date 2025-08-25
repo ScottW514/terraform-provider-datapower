@@ -59,7 +59,7 @@ attributes:
     any other characters, the time zone becomes UTC.
   cli_alias: custom
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LocalTimeZone
     value:
     - Custom
@@ -77,7 +77,7 @@ attributes:
     is east. North America is west. The default value is East.
   cli_alias: direction
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LocalTimeZone
     value:
     - Custom
@@ -88,7 +88,7 @@ attributes:
     hours and 30 minutes from UTC, enter 2.
   cli_alias: offset-hours
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LocalTimeZone
     value:
     - Custom
@@ -99,7 +99,7 @@ attributes:
     and 30 minutes from UTC, enter 30.
   cli_alias: offset-minutes
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LocalTimeZone
     value:
     - Custom
@@ -111,7 +111,7 @@ attributes:
     Generally, the offset is 1 hour. The default value is 1.
   cli_alias: daylight-offset
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LocalTimeZone
     value:
     - Custom
@@ -125,22 +125,22 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -166,11 +166,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -185,11 +185,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -210,11 +210,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -228,11 +228,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -245,11 +245,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -275,11 +275,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -294,11 +294,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -319,11 +319,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -337,11 +337,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'
@@ -354,11 +354,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LocalTimeZone
       value:
       - Custom
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DaylightOffsetHours
       value:
       - '0'

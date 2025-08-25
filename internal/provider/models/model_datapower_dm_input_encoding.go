@@ -47,32 +47,39 @@ var DmInputEncodingObjectDefault = map[string]attr.Value{
 	"input_match": types.StringNull(),
 	"encoding":    types.StringNull(),
 }
-var DmInputEncodingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"input_match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The PCRE pattern that will be matched against the name of an HTTP form field. If the name matches this PCRE, the associated value will be processed by the rules of the Encoding. If a form field has no name, an empty string is used for the pattern matching.", "input-name", "").String,
-			Computed:            true,
-		},
-		"encoding": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select how to translate the value of a form field to the contents of the &lt;arg> element in the generated XML.", "encoding", "").AddStringEnum("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json").String,
-			Computed:            true,
-		},
-	},
-}
-var DmInputEncodingResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"input_match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The PCRE pattern that will be matched against the name of an HTTP form field. If the name matches this PCRE, the associated value will be processed by the rules of the Encoding. If a form field has no name, an empty string is used for the pattern matching.", "input-name", "").String,
-			Optional:            true,
-		},
-		"encoding": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select how to translate the value of a form field to the contents of the &lt;arg> element in the generated XML.", "encoding", "").AddStringEnum("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json"),
+
+func GetDmInputEncodingDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmInputEncodingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"input_match": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The PCRE pattern that will be matched against the name of an HTTP form field. If the name matches this PCRE, the associated value will be processed by the rules of the Encoding. If a form field has no name, an empty string is used for the pattern matching.", "input-name", "").String,
+				Computed:            true,
+			},
+			"encoding": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select how to translate the value of a form field to the contents of the &lt;arg> element in the generated XML.", "encoding", "").AddStringEnum("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json").String,
+				Computed:            true,
 			},
 		},
-	},
+	}
+	return DmInputEncodingDataSourceSchema
+}
+func GetDmInputEncodingResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmInputEncodingResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"input_match": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The PCRE pattern that will be matched against the name of an HTTP form field. If the name matches this PCRE, the associated value will be processed by the rules of the Encoding. If a form field has no name, an empty string is used for the pattern matching.", "input-name", "").String,
+				Optional:            true,
+			},
+			"encoding": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select how to translate the value of a form field to the contents of the &lt;arg> element in the generated XML.", "encoding", "").AddStringEnum("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json"),
+				},
+			},
+		},
+	}
+	return DmInputEncodingResourceSchema
 }
 
 func (data DmInputEncoding) IsNull() bool {
@@ -90,6 +97,7 @@ func (data DmInputEncoding) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.InputMatch.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`InputMatch`, data.InputMatch.ValueString())
 	}

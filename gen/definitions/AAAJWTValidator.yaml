@@ -105,7 +105,7 @@ attributes:
       attribute: ValMethod
       value:
       - decrypt
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DecryptCredentialType
       value:
       - pkix
@@ -126,7 +126,7 @@ attributes:
       attribute: ValMethod
       value:
       - decrypt
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DecryptCredentialType
       value:
       - ssecret
@@ -146,7 +146,7 @@ attributes:
       attribute: ValMethod
       value:
       - decrypt
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DecryptCredentialType
       value:
       - jwk
@@ -172,7 +172,7 @@ attributes:
       attribute: ValMethod
       value:
       - decrypt
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DecryptCredentialType
       value:
       - jwk-remote
@@ -196,7 +196,7 @@ attributes:
         attribute: ValMethod
         value:
         - decrypt
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: DecryptCredentialType
         value:
         - jwk-remote
@@ -215,7 +215,7 @@ attributes:
         attribute: ValMethod
         value:
         - verify
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: VerifyCredentialType
         value:
         - custom
@@ -225,7 +225,7 @@ attributes:
         attribute: ValMethod
         value:
         - decrypt
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: DecryptCredentialType
         value:
         - custom
@@ -269,7 +269,7 @@ attributes:
       attribute: ValMethod
       value:
       - verify
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: VerifyCredentialType
       value:
       - pkix
@@ -289,7 +289,7 @@ attributes:
       attribute: ValMethod
       value:
       - verify
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: VerifyCredentialType
       value:
       - pkix
@@ -310,14 +310,14 @@ attributes:
       attribute: ValMethod
       value:
       - verify
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: VerifyCredentialType
       value:
       - pkix
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: VerifyCertificateAgainstValCred
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: VerifySSecret
@@ -334,7 +334,7 @@ attributes:
       attribute: ValMethod
       value:
       - verify
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: VerifyCredentialType
       value:
       - ssecret
@@ -354,7 +354,7 @@ attributes:
       attribute: ValMethod
       value:
       - verify
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: VerifyCredentialType
       value:
       - jwk
@@ -380,7 +380,7 @@ attributes:
       attribute: ValMethod
       value:
       - verify
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: VerifyCredentialType
       value:
       - jwk-remote
@@ -404,7 +404,7 @@ attributes:
         attribute: ValMethod
         value:
         - verify
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: VerifyCredentialType
         value:
         - jwk-remote

@@ -41,7 +41,7 @@ func TestAccResourceB2BGateway(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_b2b_gateway.test", "document_routing_preprocessor_type", "stylesheet"),
 			resource.TestCheckResourceAttr("datapower_b2b_gateway.test", "document_routing_preprocessor", "store:///b2b-routing.xsl"),
 			resource.TestCheckResourceAttr("datapower_b2b_gateway.test", "document_routing_preprocessor_debug", "false"),
-			resource.TestCheckResourceAttr("datapower_b2b_gateway.test", "archive_mode", "archpurge"),
+			resource.TestCheckResourceAttr("datapower_b2b_gateway.test", "archive_mode", "purgeonly"),
 			resource.TestCheckResourceAttr("datapower_b2b_gateway.test", "archive_minimum_size", "1024"),
 			resource.TestCheckResourceAttr("datapower_b2b_gateway.test", "archive_document_age", "90"),
 			resource.TestCheckResourceAttr("datapower_b2b_gateway.test", "archive_minimum_documents", "100"),

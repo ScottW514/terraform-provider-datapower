@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &TAMResource{}
@@ -88,7 +89,7 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Optional:            true,
 			},
 			"ad_use_ad": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether the Access Manager client uses Microsoft Active Directory instead of LDAP as the registry. The default registry for an Access Manager deployment is LDAP. This selection will cause this client to use Microsoft Active Directory. Active Directory type is not supported after ISAM 7.0 .</p><p><b>Note:</b> The type of registry that an Access Manager deployment supports is determined by the configuration of the Access Manager server. The registry that you define in this configuration is for a client and must match the registry of the server.</p>", "ad-use-ad", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether the Access Manager client uses Microsoft Active Directory instead of LDAP as the registry. The default registry for an Access Manager deployment is LDAP. This selection will cause this client to use Microsoft Active Directory. Active Directory type is not supported after ISAM 7.0 .</p><p><b>Note:</b> The type of registry that an Access Manager deployment supports is determined by the configuration of the Access Manager server. The registry that you define in this configuration is for a client and must match the registry of the server.</p>", "ad-use-ad", "").AddDefaultValue("false").AddRequiredWhen(models.TAMADUseADCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -105,8 +106,11 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Required:            true,
 			},
 			"ad_configuration_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the location of the configuration file for user directories. To be available for selection, files must have .conf or .cfg as their file extension.", "reg_file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the location of the configuration file for user directories. To be available for selection, files must have .conf or .cfg as their file extension.", "reg_file", "").AddRequiredWhen(models.TAMADConfigurationFileCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.TAMADConfigurationFileCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ssl_key_file": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the location of the key file for TLS communication. To be available for selection, files must have .kdb as their file extension. Generally, these files are in the cert: directory or the sharedcert: directory.", "ssl-key", "").String,
@@ -123,13 +127,16 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Default:             booldefault.StaticBool(false),
 			},
 			"poll_interval": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the interval between requests to update the local policy database from the remote policy server. <ul><li><b>default</b> - Uses the default value, which is 600 seconds.</li><li><b>disable</b> - Disables requests to the policy database for requests.</li><li><i>seconds</i> - Specifies the time interval in seconds.</li></ul>", "cache-refresh-interval", "").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the interval between requests to update the local policy database from the remote policy server. <ul><li><b>default</b> - Uses the default value, which is 600 seconds.</li><li><b>disable</b> - Disables requests to the policy database for requests.</li><li><i>seconds</i> - Specifies the time interval in seconds.</li></ul>", "cache-refresh-interval", "").AddDefaultValue("default").AddRequiredWhen(models.TAMPollIntervalCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("default"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.TAMPollIntervalCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("default"),
 			},
 			"listen_mode": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select whether to accept notifications to update the local policy database from the policy server. When you set this property, it overrides the behavior defined in configuration files for the Access Manager client.", "listen-mode", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select whether to accept notifications to update the local policy database from the policy server. When you set this property, it overrides the behavior defined in configuration files for the Access Manager client.", "listen-mode", "").AddDefaultValue("false").AddRequiredWhen(models.TAMListenModeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -157,8 +164,11 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Default:             int64default.StaticInt64(636),
 			},
 			"ldapssl_key_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select the location of the key file that contains the certificates for TLS communication with the registry server.</p><ul><li>For server-only authentication, the key file must contain the signer certificate for the registry server.</li><li>For mutual authentication, the key file must also contain a personal certificate that the registry server can validate. If the personal certificate is not the default personal certificate in the key file, you must enter the label of the personal certificate.</li></ul><p>This file must be in the cert: or the sharedcert: directory.</p>", "ldap-ssl-key-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select the location of the key file that contains the certificates for TLS communication with the registry server.</p><ul><li>For server-only authentication, the key file must contain the signer certificate for the registry server.</li><li>For mutual authentication, the key file must also contain a personal certificate that the registry server can validate. If the personal certificate is not the default personal certificate in the key file, you must enter the label of the personal certificate.</li></ul><p>This file must be in the cert: or the sharedcert: directory.</p>", "ldap-ssl-key-file", "").AddRequiredWhen(models.TAMLDAPSSLKeyFileCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.TAMLDAPSSLKeyFileCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ldapssl_key_file_password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.", "ldap-ssl-key-file-password-alias", "password_alias").String,
@@ -188,10 +198,13 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_principal_attribute": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute that identifies the basic user in the LDAP user entry. The default value is uid.", "user-principal-attribute", "").AddDefaultValue("uid").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute that identifies the basic user in the LDAP user entry. The default value is uid.", "user-principal-attribute", "").AddDefaultValue("uid").AddRequiredWhen(models.TAMUserPrincipalAttributeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("uid"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.TAMUserPrincipalAttributeCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("uid"),
 			},
 			"user_no_duplicates": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Control whether to allow duplicate principals.</p><ul><li>When enabled, the search for basic users covers all suffixes to ensure that no users with the same name are found. If duplicate principals are found in this client, the system returns an error.</li><li>When disabled, the search for basic users ignores possible duplicates. By default, duplicate principals are not allowed.</li></ul>", "user-no-duplicates", "").AddDefaultValue("true").String,
@@ -212,12 +225,12 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"tam_fed_dirs": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a list of federated directories. Each entry describes a unique set of LDAP suffixes and LDAP server. Federated directories define all the suffixes that can be searched for user identities.", "federated-directory", "").String,
-				NestedObject:        models.DmTAMFedDirResourceSchema,
+				NestedObject:        models.GetDmTAMFedDirResourceSchema(),
 				Optional:            true,
 			},
 			"tamaz_replicas": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Replicas indicate the network location of remote authorization servers. You must configure at least one replica. You can configure additional replicas for failover purposes.</p><p><b>Note:</b> If you uploaded a file that was created previously, it must define at least one replica.</p>", "replica", "").String,
-				NestedObject:        models.DmTAMAZReplicaResourceSchema,
+				NestedObject:        models.GetDmTAMAZReplicaResourceSchema(),
 				Optional:            true,
 			},
 			"tamras_trace": models.GetDmTAMRASTraceResourceSchema("<p>Trace logging is a useful debugging tool. By default, trace logging is not enabled. Trace logging collects large amounts of data in a short amount of time and might result in a significant performance degradation. Enable trace logging only at the direction of IBM Support.</p><p>When enabled, the DataPower Gateway creates two trace files for each library. The DataPower Gateway writes the files cyclically. Double the size of the files to obtain the total allowable file size.</p>", "tam-ras-trace", "", false),
@@ -232,7 +245,6 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 3600),
 				},
 				Default: int64default.StaticInt64(180),
@@ -248,7 +260,6 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 3600),
 				},
 				Default: int64default.StaticInt64(900),

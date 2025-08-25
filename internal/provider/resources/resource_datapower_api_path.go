@@ -104,7 +104,7 @@ func (r *APIPathResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"parameter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the applicable parameters for all operations. The setting can be overridden for the same parameter by the setting in the API operation configuration.", "parameter", "").String,
-				NestedObject:        models.DmAPIParameterResourceSchema,
+				NestedObject:        models.GetDmAPIParameterResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

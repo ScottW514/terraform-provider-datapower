@@ -56,69 +56,84 @@ var DmSSLProtoVersionsBitmapObjectDefault = map[string]attr.Value{
 	"tls_v1d2": types.BoolValue(true),
 	"tls_v1d3": types.BoolValue(true),
 }
-var DmSSLProtoVersionsBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"ssl_v3": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable SSL version 3", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmSSLProtoVersionsBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSSLProtoVersionsBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"ssl_v3": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable SSL version 3", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"tls_v1d0": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.0", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"tls_v1d1": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.1", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"tls_v1d2": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.2", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"tls_v1d3": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.3", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"tls_v1d0": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.0", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"tls_v1d1": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.1", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"tls_v1d2": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.2", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"tls_v1d3": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.3", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSSLProtoVersionsBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSSLProtoVersionsBitmapDataSourceSchema
 }
-var DmSSLProtoVersionsBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSSLProtoVersionsBitmapObjectType,
-			DmSSLProtoVersionsBitmapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"ssl_v3": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable SSL version 3", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmSSLProtoVersionsBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSSLProtoVersionsBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSSLProtoVersionsBitmapObjectType,
+				DmSSLProtoVersionsBitmapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"ssl_v3": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable SSL version 3", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"tls_v1d0": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.0", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"tls_v1d1": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.1", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"tls_v1d2": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.2", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"tls_v1d3": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.3", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"tls_v1d0": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.0", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"tls_v1d1": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.1", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"tls_v1d2": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.2", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"tls_v1d3": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.3", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmSSLProtoVersionsBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSSLProtoVersionsBitmapResourceSchema.Required = true
+	} else {
+		DmSSLProtoVersionsBitmapResourceSchema.Optional = true
+		DmSSLProtoVersionsBitmapResourceSchema.Computed = true
+	}
+	return DmSSLProtoVersionsBitmapResourceSchema
 }
 
 func (data DmSSLProtoVersionsBitmap) IsNull() bool {
@@ -139,27 +154,13 @@ func (data DmSSLProtoVersionsBitmap) IsNull() bool {
 	}
 	return true
 }
-func GetDmSSLProtoVersionsBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSSLProtoVersionsBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSSLProtoVersionsBitmapDataSourceSchema
-}
-
-func GetDmSSLProtoVersionsBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSSLProtoVersionsBitmapResourceSchema.Required = true
-	} else {
-		DmSSLProtoVersionsBitmapResourceSchema.Optional = true
-		DmSSLProtoVersionsBitmapResourceSchema.Computed = true
-	}
-	DmSSLProtoVersionsBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSSLProtoVersionsBitmapResourceSchema
-}
 
 func (data DmSSLProtoVersionsBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.SslV3.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLv3`, tfutils.StringFromBool(data.SslV3, ""))
 	}

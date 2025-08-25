@@ -42,21 +42,28 @@ var DmFTPQuotedCommandObjectType = map[string]attr.Type{
 var DmFTPQuotedCommandObjectDefault = map[string]attr.Value{
 	"quoted_command": types.StringNull(),
 }
-var DmFTPQuotedCommandDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"quoted_command": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The command to send to the remote FTP server. The command must not be one that would create an FTP data connection. Normally this will be a SITE command. This command must return a result code in the 200 series.", "", "").String,
-			Computed:            true,
+
+func GetDmFTPQuotedCommandDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmFTPQuotedCommandDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"quoted_command": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The command to send to the remote FTP server. The command must not be one that would create an FTP data connection. Normally this will be a SITE command. This command must return a result code in the 200 series.", "", "").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmFTPQuotedCommandDataSourceSchema
 }
-var DmFTPQuotedCommandResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"quoted_command": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The command to send to the remote FTP server. The command must not be one that would create an FTP data connection. Normally this will be a SITE command. This command must return a result code in the 200 series.", "", "").String,
-			Required:            true,
+func GetDmFTPQuotedCommandResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmFTPQuotedCommandResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"quoted_command": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The command to send to the remote FTP server. The command must not be one that would create an FTP data connection. Normally this will be a SITE command. This command must return a result code in the 200 series.", "", "").String,
+				Required:            true,
+			},
 		},
-	},
+	}
+	return DmFTPQuotedCommandResourceSchema
 }
 
 func (data DmFTPQuotedCommand) IsNull() bool {
@@ -71,6 +78,7 @@ func (data DmFTPQuotedCommand) ToBody(ctx context.Context, pathRoot string) stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.QuotedCommand.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`QuotedCommand`, data.QuotedCommand.ValueString())
 	}

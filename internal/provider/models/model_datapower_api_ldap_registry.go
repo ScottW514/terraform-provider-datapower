@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -54,6 +55,90 @@ type APILDAPRegistry struct {
 	LdapGroupFilterSuffix  types.String                `tfsdk:"ldap_group_filter_suffix"`
 	LdapGroupDynamicFilter types.String                `tfsdk:"ldap_group_dynamic_filter"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var APILDAPRegistryLDAPGroupAuthTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_group_auth_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var APILDAPRegistryLDAPGroupBaseDNCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"static"},
+		},
+	},
+}
+var APILDAPRegistryLDAPGroupFilterPrefixCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"static"},
+		},
+	},
+}
+var APILDAPRegistryLDAPGroupFilterSuffixCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"static"},
+		},
+	},
+}
+var APILDAPRegistryLDAPGroupDynamicFilterCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"dynamic"},
+		},
+	},
 }
 
 var APILDAPRegistryObjectType = map[string]attr.Type{
@@ -152,6 +237,7 @@ func (data APILDAPRegistry) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

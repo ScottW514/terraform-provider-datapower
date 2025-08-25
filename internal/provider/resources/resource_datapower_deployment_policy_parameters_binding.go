@@ -84,7 +84,7 @@ func (r *DeploymentPolicyParametersBindingResource) Schema(ctx context.Context, 
 			},
 			"deployment_policy_parameter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A list of name-value pairs. The name specifies a variable in a deployment policy, which will be replaced by its associated value before applying the policy to a configuration import.", "variable", "").String,
-				NestedObject:        models.DmDeploymentPolicyParameterResourceSchema,
+				NestedObject:        models.GetDmDeploymentPolicyParameterResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

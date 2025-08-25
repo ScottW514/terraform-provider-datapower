@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,14 @@ type APIRule struct {
 	DynamicActions     types.List                  `tfsdk:"dynamic_actions"`
 	UserSummary        types.String                `tfsdk:"user_summary"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var APIRuleDynamicActionsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "dynamic_actions_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var APIRuleObjectType = map[string]attr.Type{
@@ -87,6 +96,7 @@ func (data APIRule) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -94,16 +104,16 @@ func (data APIRule) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DynamicActionsMode`, tfutils.StringFromBool(data.DynamicActionsMode, ""))
 	}
 	if !data.Actions.IsNull() {
-		var values []string
-		data.Actions.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Actions.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Actions`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.DynamicActions.IsNull() {
-		var values []DmDynamicStylePolicyActionBaseReference
-		data.DynamicActions.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmDynamicStylePolicyActionBaseReference
+		data.DynamicActions.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DynamicActions`+".-1", val.ToBody(ctx, ""))
 		}
 	}

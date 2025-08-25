@@ -81,10 +81,10 @@ attributes:
     default value is 0, which means unlimited reuse.'
   cli_alias: max-persistent-reuse
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PersistentConnections
     value:
-    - 'off'
+    - false
 - name: AllowCompression
   type: Bool
   default: false
@@ -251,15 +251,15 @@ attributes:
     the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT
   cli_alias: visibility-event-endpoint
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnableVisibilityEvent
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EnableVisibilityEvent
     value:
-    - 'on'
+    - true
 - name: EnableHmacAuthentication
   type: Bool
   default: true
@@ -269,10 +269,10 @@ attributes:
     HMAC authentication in the AS2 proxy handler to avoid message rejection.
   cli_alias: enable-hmac-authentication
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EnableVisibilityEvent
     value:
-    - 'on'
+    - true
 - name: HmacPassphraseAlias
   type: String
   reference_to: PasswordAlias
@@ -283,31 +283,25 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-equals
-        attribute: EnableVisibilityEvent
-        value:
-        - 'on'
-      - evaluation: property-equals
-        attribute: EnableHmacAuthentication
-        value:
-        - 'on'
-    - evaluation: property-equals
-      attribute: HmacPassphrase
+    - evaluation: property-value-in-list
+      attribute: EnableVisibilityEvent
       value:
-      - ''
+      - true
+    - evaluation: property-value-in-list
+      attribute: EnableHmacAuthentication
+      value:
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableVisibilityEvent
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: EnableHmacAuthentication
       value:
-      - 'on'
+      - true
 - name: SSLServerConfigType
   type: String
   enum:
@@ -324,7 +318,7 @@ attributes:
     DataPower Gateway.
   cli_alias: ssl-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLServerConfigType
     value:
     - server
@@ -335,7 +329,7 @@ attributes:
     the DataPower Gateway.
   cli_alias: ssl-sni-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLServerConfigType
     value:
     - sni
@@ -359,7 +353,7 @@ attributes:
   description: TLS client profile
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLClientConfigType
     value:
     - client

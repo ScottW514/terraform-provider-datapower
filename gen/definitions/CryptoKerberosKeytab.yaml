@@ -65,7 +65,7 @@ attributes:
     with this keytab. Refer to RFC 4121 for the flag definitions.
   cli_alias: gss-checksum-flags
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GenerateGssChecksum
     value:
-    - 'off'
+    - false

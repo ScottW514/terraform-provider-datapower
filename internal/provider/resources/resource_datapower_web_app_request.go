@@ -26,6 +26,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -42,6 +43,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WebAppRequestResource{}
@@ -144,8 +146,11 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the request contains an XML MIME type and the XML processing policy is set to XML or SOAP.", "request-xml-rule", "style_policy_rule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the request contains an XML MIME type and the XML processing policy is set to XML or SOAP.", "request-xml-rule", "style_policy_rule").AddRequiredWhen(models.WebAppRequestXMLRuleCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebAppRequestXMLRuleCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"non_xml_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles requests that do not contain an XML MIME type.", "request-nonxml-policy", "").AddStringEnum("nothing", "side", "binary").AddDefaultValue("nothing").String,
@@ -157,8 +162,11 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"non_xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the request does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.", "request-nonxml-rule", "style_policy_rule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the request does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.", "request-nonxml-rule", "style_policy_rule").AddRequiredWhen(models.WebAppRequestNonXMLRuleCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebAppRequestNonXMLRuleCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"error_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If this request policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.", "error-policy-override", "web_app_error_handling_policy").String,
@@ -186,8 +194,11 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("allow"),
 			},
 			"query_string_gnvc": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.", "request-qs-profile", "name_value_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.", "request-qs-profile", "name_value_profile").AddRequiredWhen(models.WebAppRequestQueryStringGNVCCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebAppRequestQueryStringGNVCCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"sql_injection": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Data parameters from the query string, application/www-urlencoded requests, and multipart/form-data requests will be passed through the standard SQL Injection filter if this property is enabled.", "request-sql-policy", "").AddDefaultValue("false").String,
@@ -246,15 +257,22 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(true),
 			},
 			"cookie_name_vector": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The list of cookies, by name, that the process signs and encrypts.", "cookie-namelist", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The list of cookies, by name, that the process signs and encrypts.", "cookie-namelist", "").AddRequiredWhen(models.WebAppRequestCookieNameVectorCondVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(),
+					validators.ConditionalRequiredList(models.WebAppRequestCookieNameVectorCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"sql_injection_patterns_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The patterns file that the SQL injection filter uses.", "sql-injection-patterns-file", "").AddDefaultValue("store:///SQL-Injection-Patterns.xml").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The patterns file that the SQL injection filter uses.", "sql-injection-patterns-file", "").AddDefaultValue("store:///SQL-Injection-Patterns.xml").AddRequiredWhen(models.WebAppRequestSQLInjectionPatternsFileCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("store:///SQL-Injection-Patterns.xml"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebAppRequestSQLInjectionPatternsFileCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("store:///SQL-Injection-Patterns.xml"),
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

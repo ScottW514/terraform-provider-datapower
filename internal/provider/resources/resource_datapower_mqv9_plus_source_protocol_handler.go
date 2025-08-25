@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &MQv9PlusSourceProtocolHandlerResource{}
@@ -92,12 +93,18 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Required:            true,
 			},
 			"get_queue": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the get queue associated with the queue manager. The handler gets messages from this queue.", "get-queue", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the get queue associated with the queue manager. The handler gets messages from this queue.", "get-queue", "").AddRequiredWhen(models.MQv9PlusSourceProtocolHandlerGetQueueCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.MQv9PlusSourceProtocolHandlerGetQueueCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"subscribe_topic_string": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the the topic string associated with the queue manager. The handler subscribes to this topic string and gets messages from it.", "subscribe-topic-string", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the the topic string associated with the queue manager. The handler subscribes to this topic string and gets messages from it.", "subscribe-topic-string", "").AddRequiredWhen(models.MQv9PlusSourceProtocolHandlerSubscribeTopicStringCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.MQv9PlusSourceProtocolHandlerSubscribeTopicStringCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"subscription_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the subscription name of a durable subscription associated with the queue manager. This name identifies the subscription after reestablishing a lost connection.", "sub-name", "").String,
@@ -116,7 +123,6 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4294967295),
 				},
 				Default: int64default.StaticInt64(0),
@@ -126,7 +132,6 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4294967295),
 				},
 				Default: int64default.StaticInt64(1),
@@ -153,7 +158,6 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(1),
@@ -163,7 +167,6 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(30),
@@ -173,7 +176,6 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -188,8 +190,11 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Default: stringdefault.StaticString("None"),
 			},
 			"content_type_x_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression to extract Content-Type from IBM MQ header", "content-type-xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression to extract Content-Type from IBM MQ header", "content-type-xpath", "").AddRequiredWhen(models.MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"retrieve_backout_settings": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>", "retrieve-backout-settings", "").AddDefaultValue("false").String,

@@ -53,12 +53,14 @@ resource "datapower_aaa_policy" "test" {
   - Default value: `none`
 - `dyn_config_custom_url` (String) <p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>
   - CLI Alias: `dyn-config-custom-url`
+  - Required When: `dyn_config`=`current-aaa`|`external-aaa`
 - `enforce_soap_actor` (Boolean) Whether to enforce the <tt>S11:actor</tt> or <tt>S12:role</tt> on WS-Security messages. In general, a WS-Security message has a <tt>S11:actor</tt> or <tt>S12:role</tt> attribute for its <tt>Security</tt> header. Processing can enforce these attributes when the AAA policy tries to use the <tt>Security</tt> header. For example, the <tt>Security</tt> element has only one actor or role. In this case, the AAA policy processes only the <tt>Security</tt> header for this actor or role identifier. This setting applies to all AAA phases, except postprocessing. For postprocessing, the activity generally generates a new message for next SOAP node.
   - CLI Alias: `enforce-actor-role`
   - Default value: `true`
 - `external_aaa_template` (String) Specify another AAA policy to use as the template. When specified, this AAA policy overwrites the current AAA policy.
   - CLI Alias: `external-aaa-template`
   - Reference to: `datapower_aaa_policy:id`
+  - Required When: `dyn_config`=`external-aaa`
 - `extract_identity` (Attributes) Specify the methods to extract the identity of the service requester. For some methods, you must define more properties.
   - CLI Alias: `extract-identity` (see [below for nested schema](#nestedatt--extract_identity))
 - `extract_resource` (Attributes) Specify the methods to extract the identity of a requested resource. For some methods, you must define more properties.
@@ -76,6 +78,7 @@ resource "datapower_aaa_policy" "test" {
   - CLI Alias: `log-allowed-level`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `info`
+  - Required When: `log_allowed`=`true`
 - `log_rejected` (Boolean) Whether to log unsuccessful AAA operations. When enabled and if needed, modify the default logging level from warning.
   - CLI Alias: `log-rejected`
   - Default value: `true`
@@ -83,6 +86,7 @@ resource "datapower_aaa_policy" "test" {
   - CLI Alias: `log-rejected-level`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `warn`
+  - Required When: `log_rejected`=`true`
 - `ltpa_attributes` (Attributes List) <p>Specify user attributes to include in the LTPA token. Attributes are relevant for only WebSphere tokens.</p><p>For each attribute, its value can be static or resolved at run time. <ul><li>When static, its value is a fixed value.</li><li>When resolved at run time, its value is resolved at run time with an XPath expression.</li></ul></p>
   - CLI Alias: `ltpa-attribute` (see [below for nested schema](#nestedatt--ltpa_attributes))
 - `map_credentials` (Attributes) Specify the method to map credentials for authorization. For some methods, you must define more properties.

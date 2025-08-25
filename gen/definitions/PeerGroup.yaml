@@ -61,7 +61,7 @@ attributes:
   description: IP multicast
   cli_alias: ip-multicast
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - slm-multicast
@@ -76,7 +76,7 @@ attributes:
     among peers.
   cli_alias: update-interval
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - slm-multicast

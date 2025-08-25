@@ -40,12 +40,12 @@ attributes:
   test_value: '"internal"'
   cli_alias: internal-role
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Service
     value:
     - urn:oasis:names:tc:ebxml-msg:service
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Service
     value:
     - urn:oasis:names:tc:ebxml-msg:service
@@ -57,12 +57,12 @@ attributes:
   test_value: '"external"'
   cli_alias: external-role
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Service
     value:
     - urn:oasis:names:tc:ebxml-msg:service
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Service
     value:
     - urn:oasis:names:tc:ebxml-msg:service
@@ -92,7 +92,7 @@ attributes:
     element must be a URI.
   cli_alias: service-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Service
     value:
     - urn:oasis:names:tc:ebxml-msg:service
@@ -105,7 +105,7 @@ attributes:
     .
   cli_alias: sender-msh-setting
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Service
     value:
     - urn:oasis:names:tc:ebxml-msg:service
@@ -120,7 +120,7 @@ attributes:
     , and <tt>Pong</tt> .
   cli_alias: receiver-msh-setting
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Service
     value:
     - urn:oasis:names:tc:ebxml-msg:service
@@ -136,7 +136,7 @@ attributes:
     the default sender setting or default receiver setting.
   cli_alias: action
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Service
     value:
     - urn:oasis:names:tc:ebxml-msg:service

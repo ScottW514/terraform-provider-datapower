@@ -114,7 +114,7 @@ func (d *LoadBalancerGroupDataSource) Schema(ctx context.Context, req datasource
 						},
 						"lb_group_members": schema.ListNestedAttribute{
 							MarkdownDescription: "Members",
-							NestedObject:        models.DmLBGroupMemberDataSourceSchema,
+							NestedObject:        models.GetDmLBGroupMemberDataSourceSchema(),
 							Computed:            true,
 						},
 						"try_every_server_before_failing": schema.BoolAttribute{

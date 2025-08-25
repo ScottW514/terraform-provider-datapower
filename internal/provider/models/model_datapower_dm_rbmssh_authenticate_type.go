@@ -47,39 +47,54 @@ var DmRBMSSHAuthenticateTypeObjectDefault = map[string]attr.Value{
 	"certificate": types.BoolValue(false),
 	"password":    types.BoolValue(false),
 }
-var DmRBMSSHAuthenticateTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"certificate": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CA-signed user certificate", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmRBMSSHAuthenticateTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmRBMSSHAuthenticateTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"certificate": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("CA-signed user certificate", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"password": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"password": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmRBMSSHAuthenticateTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmRBMSSHAuthenticateTypeDataSourceSchema
 }
-var DmRBMSSHAuthenticateTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmRBMSSHAuthenticateTypeObjectType,
-			DmRBMSSHAuthenticateTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"certificate": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CA-signed user certificate", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmRBMSSHAuthenticateTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmRBMSSHAuthenticateTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmRBMSSHAuthenticateTypeObjectType,
+				DmRBMSSHAuthenticateTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"certificate": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("CA-signed user certificate", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"password": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"password": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmRBMSSHAuthenticateTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmRBMSSHAuthenticateTypeResourceSchema.Required = true
+	} else {
+		DmRBMSSHAuthenticateTypeResourceSchema.Optional = true
+		DmRBMSSHAuthenticateTypeResourceSchema.Computed = true
+	}
+	return DmRBMSSHAuthenticateTypeResourceSchema
 }
 
 func (data DmRBMSSHAuthenticateType) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmRBMSSHAuthenticateType) IsNull() bool {
 	}
 	return true
 }
-func GetDmRBMSSHAuthenticateTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmRBMSSHAuthenticateTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmRBMSSHAuthenticateTypeDataSourceSchema
-}
-
-func GetDmRBMSSHAuthenticateTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmRBMSSHAuthenticateTypeResourceSchema.Required = true
-	} else {
-		DmRBMSSHAuthenticateTypeResourceSchema.Optional = true
-		DmRBMSSHAuthenticateTypeResourceSchema.Computed = true
-	}
-	DmRBMSSHAuthenticateTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmRBMSSHAuthenticateTypeResourceSchema
-}
 
 func (data DmRBMSSHAuthenticateType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Certificate.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`certificate`, tfutils.StringFromBool(data.Certificate, ""))
 	}

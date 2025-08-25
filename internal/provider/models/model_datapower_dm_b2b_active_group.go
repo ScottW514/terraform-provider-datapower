@@ -46,31 +46,38 @@ var DmB2BActiveGroupObjectDefault = map[string]attr.Value{
 	"profile_group": types.StringNull(),
 	"group_enabled": types.BoolValue(true),
 }
-var DmB2BActiveGroupDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"profile_group": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile group.", "group", "b2b_profile_group").String,
-			Computed:            true,
+
+func GetDmB2BActiveGroupDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmB2BActiveGroupDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"profile_group": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile group.", "group", "b2b_profile_group").String,
+				Computed:            true,
+			},
+			"group_enabled": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.", "enabled", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"group_enabled": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.", "enabled", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmB2BActiveGroupDataSourceSchema
 }
-var DmB2BActiveGroupResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"profile_group": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile group.", "group", "b2b_profile_group").String,
-			Optional:            true,
+func GetDmB2BActiveGroupResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmB2BActiveGroupResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"profile_group": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile group.", "group", "b2b_profile_group").String,
+				Optional:            true,
+			},
+			"group_enabled": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.", "enabled", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"group_enabled": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.", "enabled", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	return DmB2BActiveGroupResourceSchema
 }
 
 func (data DmB2BActiveGroup) IsNull() bool {
@@ -88,6 +95,7 @@ func (data DmB2BActiveGroup) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ProfileGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ProfileGroup`, data.ProfileGroup.ValueString())
 	}

@@ -108,10 +108,10 @@ attributes:
     Scale data grid, decrypts the data.'
   cli_alias: encrypt-sskey
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Encrypt
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: EncryptAlg
@@ -130,10 +130,10 @@ attributes:
     Scale data grid, decrypts the data.'
   cli_alias: encrypt-alg
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Encrypt
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: KeyObfuscation
@@ -157,9 +157,9 @@ attributes:
     or writing data to the eXtreme Scale data grid.
   cli_alias: key-obfuscation-alg
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: KeyObfuscation
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true

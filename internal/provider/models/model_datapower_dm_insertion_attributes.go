@@ -47,39 +47,54 @@ var DmInsertionAttributesObjectDefault = map[string]attr.Value{
 	"secure":   types.BoolValue(false),
 	"httponly": types.BoolValue(false),
 }
-var DmInsertionAttributesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"secure": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmInsertionAttributesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmInsertionAttributesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"secure": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"httponly": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HttpOnly", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"httponly": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HttpOnly", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmInsertionAttributesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmInsertionAttributesDataSourceSchema
 }
-var DmInsertionAttributesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmInsertionAttributesObjectType,
-			DmInsertionAttributesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"secure": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmInsertionAttributesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmInsertionAttributesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmInsertionAttributesObjectType,
+				DmInsertionAttributesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"secure": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"httponly": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HttpOnly", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"httponly": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HttpOnly", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmInsertionAttributesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmInsertionAttributesResourceSchema.Required = true
+	} else {
+		DmInsertionAttributesResourceSchema.Optional = true
+		DmInsertionAttributesResourceSchema.Computed = true
+	}
+	return DmInsertionAttributesResourceSchema
 }
 
 func (data DmInsertionAttributes) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmInsertionAttributes) IsNull() bool {
 	}
 	return true
 }
-func GetDmInsertionAttributesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmInsertionAttributesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmInsertionAttributesDataSourceSchema
-}
-
-func GetDmInsertionAttributesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmInsertionAttributesResourceSchema.Required = true
-	} else {
-		DmInsertionAttributesResourceSchema.Optional = true
-		DmInsertionAttributesResourceSchema.Computed = true
-	}
-	DmInsertionAttributesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmInsertionAttributesResourceSchema
-}
 
 func (data DmInsertionAttributes) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Secure.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`secure`, tfutils.StringFromBool(data.Secure, ""))
 	}

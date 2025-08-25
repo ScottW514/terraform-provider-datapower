@@ -42,6 +42,7 @@ resource "datapower_assembly_action_validate" "test" {
   - CLI Alias: `correlation-path`
 - `definition` (String) Specify the path to a schema in the API definition. Use the format <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined schema.
   - CLI Alias: `definition`
+  - Required When: `validate_against`=`definition`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `error_policy` (String) GraphQL error policy
   - CLI Alias: `error-policy`
@@ -55,6 +56,7 @@ resource "datapower_assembly_action_validate" "test" {
 - `schema` (String) Schema
   - CLI Alias: `schema`
   - Reference to: `datapower_api_schema:id`
+  - Required When: `validate_against`=`url`
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

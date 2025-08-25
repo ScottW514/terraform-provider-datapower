@@ -47,39 +47,54 @@ var DmOAuthRoleObjectDefault = map[string]attr.Value{
 	"azsvr": types.BoolValue(false),
 	"rssvr": types.BoolValue(false),
 }
-var DmOAuthRoleDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"azsvr": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authorization and Token Endpoints", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmOAuthRoleDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmOAuthRoleDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"azsvr": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authorization and Token Endpoints", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"rssvr": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enforcement Point for Resource Server", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"rssvr": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enforcement Point for Resource Server", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmOAuthRoleDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmOAuthRoleDataSourceSchema
 }
-var DmOAuthRoleResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmOAuthRoleObjectType,
-			DmOAuthRoleObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"azsvr": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authorization and Token Endpoints", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmOAuthRoleResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmOAuthRoleResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmOAuthRoleObjectType,
+				DmOAuthRoleObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"azsvr": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authorization and Token Endpoints", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"rssvr": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enforcement Point for Resource Server", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"rssvr": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enforcement Point for Resource Server", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmOAuthRoleResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmOAuthRoleResourceSchema.Required = true
+	} else {
+		DmOAuthRoleResourceSchema.Optional = true
+		DmOAuthRoleResourceSchema.Computed = true
+	}
+	return DmOAuthRoleResourceSchema
 }
 
 func (data DmOAuthRole) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmOAuthRole) IsNull() bool {
 	}
 	return true
 }
-func GetDmOAuthRoleDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmOAuthRoleDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmOAuthRoleDataSourceSchema
-}
-
-func GetDmOAuthRoleResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmOAuthRoleResourceSchema.Required = true
-	} else {
-		DmOAuthRoleResourceSchema.Optional = true
-		DmOAuthRoleResourceSchema.Computed = true
-	}
-	DmOAuthRoleResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmOAuthRoleResourceSchema
-}
 
 func (data DmOAuthRole) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Azsvr.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`azsvr`, tfutils.StringFromBool(data.Azsvr, ""))
 	}

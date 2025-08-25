@@ -80,6 +80,7 @@ func (data ODR) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "ODR.name", path.Base("/mgmt/config/default/ODR/ODRInstance"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -90,16 +91,16 @@ func (data ODR) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`OdrServerName`, data.OdrServerName.ValueString())
 	}
 	if !data.OdrConnectorGroups.IsNull() {
-		var values []string
-		data.OdrConnectorGroups.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.OdrConnectorGroups.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`ODRConnectorGroups`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.OdrCustomProperties.IsNull() {
-		var values []DmODRProperty
-		data.OdrCustomProperties.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmODRProperty
+		data.OdrCustomProperties.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ODRCustomProperties`+".-1", val.ToBody(ctx, ""))
 		}
 	}

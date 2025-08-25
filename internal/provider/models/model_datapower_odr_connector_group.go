@@ -96,6 +96,7 @@ func (data ODRConnectorGroup) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -103,9 +104,9 @@ func (data ODRConnectorGroup) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.OdrGroupConnectors.IsNull() {
-		var values []DmODRConnector
-		data.OdrGroupConnectors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmODRConnector
+		data.OdrGroupConnectors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ODRGroupConnectors`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -116,9 +117,9 @@ func (data ODRConnectorGroup) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`XMLManager`, data.XmlManager.ValueString())
 	}
 	if !data.OdrConnGroupProperties.IsNull() {
-		var values []DmODRConnProperty
-		data.OdrConnGroupProperties.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmODRConnProperty
+		data.OdrConnGroupProperties.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ODRConnGroupProperties`+".-1", val.ToBody(ctx, ""))
 		}
 	}

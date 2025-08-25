@@ -10,7 +10,10 @@ description: |-
 ## UNRELEASED
 
 - Added validation criteria to definitions
-- Fixed `DomainSettings` `passphrase`, sensitive and write-only
+- BREAKING CHANGE: Refactored `write-only` handling to align with common provider practice
+- BREAKING CHANGE: `sensitive` and `write-only` properties in `DomainSettings:Passphrase`, `dmRadiusServer:Secret`, `dmSnmpCred:AuthSecret`, `dmSnmpCred:PrivSecret`, `LogTarget:RemotePassword` definitions
+- Bump github.com/hashicorp/terraform-plugin-testing from 1.13.2 to 1.13.3 in the terraform-plugin group (PR8)
+- Added `required_when` logic and attribute validators for conditionally requiring attributes
 
 ## v0.9.1
 

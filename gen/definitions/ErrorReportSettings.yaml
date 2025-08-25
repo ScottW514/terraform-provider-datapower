@@ -45,10 +45,10 @@ attributes:
     one report overwriting another</li></ul>
   cli_alias: upload-report
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseSmtp
     value:
-    - 'on'
+    - true
 - name: UseSmtp
   type: Bool
   default: false
@@ -57,10 +57,10 @@ attributes:
     report property instead of this property.
   cli_alias: use-smtp
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UploadReport
     value:
-    - 'on'
+    - true
 - name: InternalState
   type: Bool
   default: false
@@ -80,10 +80,10 @@ attributes:
     the problem.</p>
   cli_alias: ffdc packet-capture
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UploadReport
     value:
-    - 'off'
+    - false
 - name: FFDCEventLogCapture
   type: Bool
   default: false
@@ -95,10 +95,10 @@ attributes:
     messages are independent of messages written to log and trace targets.</p>
   cli_alias: ffdc event-log
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UploadReport
     value:
-    - 'off'
+    - false
 - name: FFDCMemoryLeakCapture
   type: Bool
   default: false
@@ -113,10 +113,10 @@ attributes:
     threshold.</p>
   cli_alias: ffdc memory-trace
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UploadReport
     value:
-    - 'off'
+    - false
 - name: AlwaysOnStartup
   type: Bool
   default: true
@@ -153,15 +153,15 @@ attributes:
     selection you will see depends on your device features and licenses.
   cli_alias: protocol
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UploadReport
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UploadReport
     value:
-    - 'off'
+    - false
 - name: LocationIdentifier
   type: String
   description: Specify text to include in the subject of an e-mail notification. In
@@ -171,10 +171,10 @@ attributes:
     timestamp of the error report.
   cli_alias: location-id
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseSmtp
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: SmtpServer
@@ -186,17 +186,17 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseSmtp
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UploadReport
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: Protocol
         value:
         - smtp
@@ -212,17 +212,17 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseSmtp
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UploadReport
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: Protocol
         value:
         - smtp
@@ -238,25 +238,25 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UseSmtp
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: UploadReport
         value:
-        - 'off'
+        - false
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UseSmtp
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: UploadReport
         value:
-        - 'on'
-      - evaluation: property-does-not-equal
+        - true
+      - evaluation: property-value-not-in-list
         attribute: Protocol
         value:
         - smtp
@@ -269,11 +269,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UploadReport
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - ftp
@@ -292,11 +292,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UploadReport
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: Protocol
       value:
       - ftp
@@ -313,11 +313,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UploadReport
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - ftp
@@ -331,11 +331,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UploadReport
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - nfs
@@ -348,11 +348,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UploadReport
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: Protocol
       value:
       - nfs
@@ -364,11 +364,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UploadReport
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - raid
@@ -382,11 +382,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UploadReport
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: Protocol
       value:
       - raid
@@ -403,7 +403,7 @@ attributes:
     Notification status provider.</p>
   cli_alias: report-history
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UploadReport
     value:
-    - 'off'
+    - false

@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &SocialLoginPolicyResource{}
@@ -151,8 +152,11 @@ func (r *SocialLoginPolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default:             booldefault.StaticBool(true),
 			},
 			"jwt_validator": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT Validator configuration that defines how to validate and verify the ID token.", "jwt-validator", "aaa_jwt_validator").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT Validator configuration that defines how to validate and verify the ID token.", "jwt-validator", "aaa_jwt_validator").AddRequiredWhen(models.SocialLoginPolicyJWTValidatorCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SocialLoginPolicyJWTValidatorCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

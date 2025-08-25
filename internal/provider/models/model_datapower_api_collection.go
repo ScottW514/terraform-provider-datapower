@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,6 +43,7 @@ type APICollection struct {
 	OrgName                      types.String                     `tfsdk:"org_name"`
 	CatalogId                    types.String                     `tfsdk:"catalog_id"`
 	CatalogName                  types.String                     `tfsdk:"catalog_name"`
+	EnableCache                  types.Bool                       `tfsdk:"enable_cache"`
 	DevPortalEndpoint            types.String                     `tfsdk:"dev_portal_endpoint"`
 	CacheCapacity                types.Int64                      `tfsdk:"cache_capacity"`
 	RoutingPrefix                types.List                       `tfsdk:"routing_prefix"`
@@ -63,6 +65,14 @@ type APICollection struct {
 	DependencyActions            []*actions.DependencyAction      `tfsdk:"dependency_actions"`
 }
 
+var APICollectionCacheCapacityCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_cache",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var APICollectionObjectType = map[string]attr.Type{
 	"id":                               types.StringType,
 	"app_domain":                       types.StringType,
@@ -72,6 +82,7 @@ var APICollectionObjectType = map[string]attr.Type{
 	"org_name":                         types.StringType,
 	"catalog_id":                       types.StringType,
 	"catalog_name":                     types.StringType,
+	"enable_cache":                     types.BoolType,
 	"dev_portal_endpoint":              types.StringType,
 	"cache_capacity":                   types.Int64Type,
 	"routing_prefix":                   types.ListType{ElemType: types.ObjectType{AttrTypes: DmRoutingPrefixObjectType}},
@@ -123,6 +134,9 @@ func (data APICollection) IsNull() bool {
 		return false
 	}
 	if !data.CatalogName.IsNull() {
+		return false
+	}
+	if !data.EnableCache.IsNull() {
 		return false
 	}
 	if !data.DevPortalEndpoint.IsNull() {
@@ -189,6 +203,7 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -210,6 +225,9 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.CatalogName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CatalogName`, data.CatalogName.ValueString())
 	}
+	if !data.EnableCache.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`EnableCache`, tfutils.StringFromBool(data.EnableCache, ""))
+	}
 	if !data.DevPortalEndpoint.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DevPortalEndpoint`, data.DevPortalEndpoint.ValueString())
 	}
@@ -217,9 +235,9 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`CacheCapacity`, data.CacheCapacity.ValueInt64())
 	}
 	if !data.RoutingPrefix.IsNull() {
-		var values []DmRoutingPrefix
-		data.RoutingPrefix.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmRoutingPrefix
+		data.RoutingPrefix.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`RoutingPrefix`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -227,9 +245,9 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UseRateLimitGroup`, tfutils.StringFromBool(data.UseRateLimitGroup, ""))
 	}
 	if !data.DefaultRateLimit.IsNull() {
-		var values []DmAPIRateLimit
-		data.DefaultRateLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIRateLimit
+		data.DefaultRateLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DefaultRateLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -237,23 +255,23 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`RateLimitGroup`, data.RateLimitGroup.ValueString())
 	}
 	if !data.AssemblyBurstLimit.IsNull() {
-		var values []DmAPIBurstLimit
-		data.AssemblyBurstLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIBurstLimit
+		data.AssemblyBurstLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.AssemblyRateLimit.IsNull() {
-		var values []DmAPIRateLimit
-		data.AssemblyRateLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIRateLimit
+		data.AssemblyRateLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.AssemblyCountLimit.IsNull() {
-		var values []DmAPICountLimit
-		data.AssemblyCountLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPICountLimit
+		data.AssemblyCountLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -273,9 +291,9 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`AssemblyPostflow`, data.AssemblyPostflow.ValueString())
 	}
 	if !data.Plan.IsNull() {
-		var values []string
-		data.Plan.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Plan.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Plan`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -283,9 +301,9 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`AnalyticsEndpoint`, data.AnalyticsEndpoint.ValueString())
 	}
 	if !data.ApplicationType.IsNull() {
-		var values []string
-		data.ApplicationType.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.ApplicationType.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`ApplicationType`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -335,6 +353,11 @@ func (data *APICollection) FromBody(ctx context.Context, pathRoot string, res gj
 		data.CatalogName = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.CatalogName = types.StringValue("default")
+	}
+	if value := res.Get(pathRoot + `EnableCache`); value.Exists() {
+		data.EnableCache = tfutils.BoolFromString(value.String())
+	} else {
+		data.EnableCache = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `DevPortalEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.DevPortalEndpoint = tfutils.ParseStringFromGJSON(value)
@@ -537,6 +560,11 @@ func (data *APICollection) UpdateFromBody(ctx context.Context, pathRoot string, 
 		data.CatalogName = tfutils.ParseStringFromGJSON(value)
 	} else if data.CatalogName.ValueString() != "default" {
 		data.CatalogName = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `EnableCache`); value.Exists() && !data.EnableCache.IsNull() {
+		data.EnableCache = tfutils.BoolFromString(value.String())
+	} else if !data.EnableCache.ValueBool() {
+		data.EnableCache = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `DevPortalEndpoint`); value.Exists() && !data.DevPortalEndpoint.IsNull() {
 		data.DevPortalEndpoint = tfutils.ParseStringFromGJSON(value)

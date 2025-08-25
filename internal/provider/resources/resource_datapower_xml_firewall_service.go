@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &XMLFirewallServiceResource{}
@@ -114,7 +115,6 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 2097151),
 				},
 				Default: int64default.StaticInt64(0),
@@ -210,12 +210,12 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").AddRequiredWhen(models.XMLFirewallServiceDelayErrorsDurationCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(250, 300000),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceDelayErrorsDurationCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(1000),
 			},
@@ -245,87 +245,97 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				Default:             booldefault.StaticBool(false),
 			},
 			"parser_limits_bytes_scanned": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes scanned by the XML parser. This applies to any XML document that is parsed. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. If this value is 0, no limit is enforced.", "bytes-scanned", "").AddDefaultValue("4194304").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             int64default.StaticInt64(4194304),
-			},
-			"parser_limits_element_depth": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum depth of element nesting in XML parser. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager.", "element-depth", "").AddIntegerRange(0, 65535).AddDefaultValue("512").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes scanned by the XML parser. This applies to any XML document that is parsed. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. If this value is 0, no limit is enforced.", "bytes-scanned", "").AddDefaultValue("4194304").AddRequiredWhen(models.XMLFirewallServiceParserLimitsBytesScannedCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsBytesScannedCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(4194304),
+			},
+			"parser_limits_element_depth": schema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum depth of element nesting in XML parser. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager.", "element-depth", "").AddIntegerRange(0, 65535).AddDefaultValue("512").AddRequiredWhen(models.XMLFirewallServiceParserLimitsElementDepthCondVal.String()).String,
+				Optional:            true,
+				Computed:            true,
+				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsElementDepthCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(512),
 			},
 			"parser_limits_attribute_count": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of attributes of a given element. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager.", "attribute-count", "").AddIntegerRange(0, 65535).AddDefaultValue("128").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of attributes of a given element. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager.", "attribute-count", "").AddIntegerRange(0, 65535).AddDefaultValue("128").AddRequiredWhen(models.XMLFirewallServiceParserLimitsAttributeCountCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsAttributeCountCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(128),
 			},
 			"parser_limits_max_node_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum size any one node may consume. The default is 32 MB. Sizes which are powers of two result in the best performance. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. Although you set an explicit value, the DataPower Gateway uses a value that is the rounded-down, largest power of two that is smaller than the defined value.", "max-node-size", "").AddIntegerRange(1024, 4294967295).AddDefaultValue("33554432").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum size any one node may consume. The default is 32 MB. Sizes which are powers of two result in the best performance. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. Although you set an explicit value, the DataPower Gateway uses a value that is the rounded-down, largest power of two that is smaller than the defined value.", "max-node-size", "").AddIntegerRange(1024, 4294967295).AddDefaultValue("33554432").AddRequiredWhen(models.XMLFirewallServiceParserLimitsMaxNodeSizeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1024, 4294967295),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsMaxNodeSizeCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(33554432),
 			},
 			"parser_limits_max_prefixes": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the rage 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-prefixes", "").AddIntegerRange(0, 4294967295).AddDefaultValue("1024").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the rage 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-prefixes", "").AddIntegerRange(0, 4294967295).AddDefaultValue("1024").AddRequiredWhen(models.XMLFirewallServiceParserLimitsMaxPrefixesCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4294967295),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsMaxPrefixesCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(1024),
 			},
 			"parser_limits_max_namespaces": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-namespaces", "").AddDefaultValue("1024").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             int64default.StaticInt64(1024),
-			},
-			"parser_limits_max_local_names": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.", "max-local-names", "").AddIntegerRange(0, 4294967295).AddDefaultValue("60000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-namespaces", "").AddDefaultValue("1024").AddRequiredWhen(models.XMLFirewallServiceParserLimitsMaxNamespacesCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsMaxNamespacesCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(1024),
+			},
+			"parser_limits_max_local_names": schema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.", "max-local-names", "").AddIntegerRange(0, 4294967295).AddDefaultValue("60000").AddRequiredWhen(models.XMLFirewallServiceParserLimitsMaxLocalNamesCondVal.String()).String,
+				Optional:            true,
+				Computed:            true,
+				Validators: []validator.Int64{
 					int64validator.Between(0, 4294967295),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsMaxLocalNamesCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(60000),
 			},
 			"parser_limits_attachment_byte_count": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes allowed in any single attachment. Attachments that exceed this size will result in a failure of the whole transaction. If this value is 0, no limit is enforced.", "attachment-byte-count", "").AddIntegerRange(0, 4294967295).AddDefaultValue("2000000000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes allowed in any single attachment. Attachments that exceed this size will result in a failure of the whole transaction. If this value is 0, no limit is enforced.", "attachment-byte-count", "").AddIntegerRange(0, 4294967295).AddDefaultValue("2000000000").AddRequiredWhen(models.XMLFirewallServiceParserLimitsAttachmentByteCountCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4294967295),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsAttachmentByteCountCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(2000000000),
 			},
 			"parser_limits_attachment_package_byte_count": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes allowed for all parts of an attachment package, including the root part. Attachment packages that exceed this size will result in a failure of the transaction. If this value is 0, no limit is enforced.", "attachment-package-byte-count", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes allowed for all parts of an attachment package, including the root part. Attachment packages that exceed this size will result in a failure of the transaction. If this value is 0, no limit is enforced.", "attachment-package-byte-count", "").AddRequiredWhen(models.XMLFirewallServiceParserLimitsAttachmentPackageByteCountCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceParserLimitsAttachmentPackageByteCountCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"parser_limits_external_references": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.", "external-references", "").AddStringEnum("forbid", "ignore", "allow").AddDefaultValue("forbid").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.", "external-references", "").AddStringEnum("forbid", "ignore", "allow").AddDefaultValue("forbid").AddRequiredWhen(models.XMLFirewallServiceParserLimitsExternalReferencesCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("forbid", "ignore", "allow"),
+					validators.ConditionalRequiredString(models.XMLFirewallServiceParserLimitsExternalReferencesCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("forbid"),
 			},
@@ -376,20 +386,22 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port to monitor for incoming client requests.", "port", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
 			"remote_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.", "remote-ip-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.", "remote-ip-address", "").AddRequiredWhen(models.XMLFirewallServiceRemoteAddressCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.XMLFirewallServiceRemoteAddressCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"remote_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number to monitor. Used only when Type is static-backend.", "remote-port", "").AddIntegerRange(1, 65535).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number to monitor. Used only when Type is static-backend.", "remote-port", "").AddIntegerRange(1, 65535).AddRequiredWhen(models.XMLFirewallServiceRemotePortCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceRemotePortCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"acl": schema.StringAttribute{
@@ -401,7 +413,6 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -411,7 +422,6 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 7200),
 				},
 				Default: int64default.StaticInt64(180),
@@ -485,7 +495,6 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(800),
@@ -499,17 +508,17 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"header_injection": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Header Injection", "inject", "").String,
-				NestedObject:        models.DmHeaderInjectionResourceSchema,
+				NestedObject:        models.GetDmHeaderInjectionResourceSchema(),
 				Optional:            true,
 			},
 			"header_suppression": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Headers can be suppressed (removed) from the message flow using this property. For example, the Via: header, which contains the name of the DataPower service handling the message, may be suppressed from messages sent by the DataPower device back to the client.", "suppress", "").String,
-				NestedObject:        models.DmHeaderSuppressionResourceSchema,
+				NestedObject:        models.GetDmHeaderSuppressionResourceSchema(),
 				Optional:            true,
 			},
 			"stylesheet_parameters": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Stylesheets used in Processing Policies can take stylesheet parameters. These parameters can be passed in by this object. More than one parameter can be defined.", "parameter", "").String,
-				NestedObject:        models.DmStylesheetParameterResourceSchema,
+				NestedObject:        models.GetDmStylesheetParameterResourceSchema(),
 				Optional:            true,
 			},
 			"default_param_namespace": schema.StringAttribute{
@@ -559,18 +568,18 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.XMLFirewallServiceDebugHistoryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 250),
+					validators.ConditionalRequiredInt64(models.XMLFirewallServiceDebugHistoryCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.", "debug-trigger", "").String,
-				NestedObject:        models.DmMSDebugTriggerTypeResourceSchema,
+				NestedObject:        models.GetDmMSDebugTriggerTypeResourceSchema(),
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{

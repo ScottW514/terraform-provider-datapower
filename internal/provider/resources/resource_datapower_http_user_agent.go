@@ -93,7 +93,6 @@ func (r *HTTPUserAgentResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 128),
 				},
 				Default: int64default.StaticInt64(8),
@@ -103,74 +102,73 @@ func (r *HTTPUserAgentResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(300),
 			},
 			"proxy_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the proxy policy that associates a set of URLs with a specific HTTP proxy.", "proxy", "").String,
-				NestedObject:        models.DmProxyPolicyResourceSchema,
+				NestedObject:        models.GetDmProxyPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"ssl_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLs with a specific TLS profile. When a URL matches the expression, the agent uses the corresponding TLS profile to secure connections with the resource.", "ssl", "").String,
-				NestedObject:        models.DmSSLPolicyResourceSchema,
+				NestedObject:        models.GetDmSSLPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"basic_auth_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLs with a specific username and password for basic authentication.", "basicauth", "").String,
-				NestedObject:        models.DmBasicAuthPolicyResourceSchema,
+				NestedObject:        models.GetDmBasicAuthPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"soap_action_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLs with a specific HTTP SOAPAction header.", "soapaction", "").String,
-				NestedObject:        models.DmSoapActionPolicyResourceSchema,
+				NestedObject:        models.GetDmSoapActionPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"pubkey_auth_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLs with a specific private key for public key authentication. The remote host must possess and reference the corresponding public key (certificate) to connect successfully.", "pubkeyauth", "").String,
-				NestedObject:        models.DmPubkeyAuthPolicyResourceSchema,
+				NestedObject:        models.GetDmPubkeyAuthPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"allow_compression_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLS that allow compression.", "compression-policy", "").String,
-				NestedObject:        models.DmAllowCompressionPolicyResourceSchema,
+				NestedObject:        models.GetDmAllowCompressionPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"header_retention_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLS to retain specific heads in messages.", "headerretention-policy", "").String,
-				NestedObject:        models.DmHeaderRetentionPolicyResourceSchema,
+				NestedObject:        models.GetDmHeaderRetentionPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"http_version_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLs to specific HTTP versions. This policy is cumulative. If any transaction, URL match, or gateway have an HTTP version policy, that transaction is processed at the requested HTTP version.", "http-version-policy", "").String,
-				NestedObject:        models.DmHTTPVersionPolicyResourceSchema,
+				NestedObject:        models.GetDmHTTPVersionPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"add_header_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLS to inject HTTP headers into the message.", "add-header-policy", "").String,
-				NestedObject:        models.DmAddHeaderPolicyResourceSchema,
+				NestedObject:        models.GetDmAddHeaderPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"upload_chunked_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URL to control whether to send chunked-encoded documents. With HTTP/1.1, the body of the document can be delimited by <tt>Content-Length</tt> or chunked encoding. All servers understand <tt>Content-Length</tt> but many applications fail to understand chunked encoding. Therefore, <tt>Content-Length</tt> is used. However, the use of <tt>Content-Length</tt> interferes with the ability of the service to fully stream. <p>Unlike all other HTTP/1.1 features that can be negotiated down at run time, you must know beforehand that the target server is RFC 2616 compatible.</p>", "chunked-uploads-policy", "").String,
-				NestedObject:        models.DmUploadChunkedPolicyResourceSchema,
+				NestedObject:        models.GetDmUploadChunkedPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"ftp_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associate a set of URLs to control FTP client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that initiates the file transfer.", "ftp-policy", "").String,
-				NestedObject:        models.DmFTPPolicyResourceSchema,
+				NestedObject:        models.GetDmFTPPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"smtp_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associates a set of URLS to control SMTP client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that sends the e-mail message.", "smtp-policy", "").String,
-				NestedObject:        models.DmSMTPPolicyResourceSchema,
+				NestedObject:        models.GetDmSMTPPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"sftp_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy that associate a set of URLs to control SSH client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that initiates the file transfer.", "sftp-policy", "").String,
-				NestedObject:        models.DmSFTPPolicyResourceSchema,
+				NestedObject:        models.GetDmSFTPPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &XSLCoprocServiceResource{}
@@ -100,7 +101,6 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
@@ -123,7 +123,6 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(3, 7200),
 				},
 				Default: int64default.StaticInt64(60),
@@ -133,7 +132,6 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 600),
 				},
 				Default: int64default.StaticInt64(20),
@@ -172,18 +170,18 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.XSLCoprocServiceDebugHistoryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 250),
+					validators.ConditionalRequiredInt64(models.XSLCoprocServiceDebugHistoryCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-trigger", "").String,
-				NestedObject:        models.DmMSDebugTriggerTypeResourceSchema,
+				NestedObject:        models.GetDmMSDebugTriggerTypeResourceSchema(),
 				Optional:            true,
 			},
 			"ssl_server_config_type": schema.StringAttribute{

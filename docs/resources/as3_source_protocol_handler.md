@@ -57,6 +57,7 @@ resource "datapower_as3_source_protocol_handler" "test" {
   - Default value: `false`
 - `alternate_pasv_addr` (String) Specify the IP address to return to the FTP client in response to a <tt>PASV</tt> command. This setting does not change the IP address that the FTP server listens, which is always the IP address for the FTP data connection. This value is used when the FTP server is behind a firewall that is not FTP-aware.
   - CLI Alias: `passive-addr`
+  - Required When: `use_alternate_pasv_addr`=`true`
 - `certificate_aaa_policy` (String) Specify the AAA policy to determine whether a password is required. This AAA policy provides secondary authentication of the information in the presented TLS certificate during TLS negotiation. Primary authentication is done by the TLS profile, which can reject the certificate. This authentication stage controls whether an FTP password is demanded or not. If authentication succeeds, the FTP client can use the <tt>USER</tt> command to login after the <tt>AUTH TLS</tt> command. If authentication fails, the FTP client must use both the <tt>USER</tt> and <b>PASS</b> commands to complete the login process. Without this AAA policy, the FTP client must use the <tt>USER</tt> and <tt>PASS</tt> commands.
   - CLI Alias: `certificate-aaa-policy`
   - Reference to: `datapower_aaa_policy:id`
@@ -140,13 +141,16 @@ resource "datapower_as3_source_protocol_handler" "test" {
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Required When: (`require_tls`=`explicit`|`implicit` AND `ssl_server_config_type`=`server`)
 - `ssl_server_config_type` (String) Specify the type of TLS profile type to secure connections from clients. When a TLS profile is assigned, the FTP <tt>AUTH TLS</tt> command is enabled and clients can encrypt FTP control connection.
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
+  - Required When: `require_tls`=`explicit`|`implicit`
 - `sslsni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Required When: (`require_tls`=`explicit`|`implicit` AND `ssl_server_config_type`=`sni`)
 - `temporary_storage_size` (Number) Temporary storage size
   - CLI Alias: `filesystem-size`
   - Range: `1`-`2048`

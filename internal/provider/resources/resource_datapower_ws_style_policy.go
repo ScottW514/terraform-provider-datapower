@@ -97,7 +97,7 @@ func (r *WSStylePolicyResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"policy_maps": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A list of Policy Rules and corresponding Matching Rules that this policy will execute. If a Match is found, the corresponding Rule runs. The policy executes the first Rule with a successful Match. The order in this list is therefore important.", "match", "").String,
-				NestedObject:        models.DmWSMPolicyMapResourceSchema,
+				NestedObject:        models.GetDmWSMPolicyMapResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,14 @@ type WebB2BViewer struct {
 	SslsniServer        types.String                `tfsdk:"sslsni_server"`
 	LocalAddress        types.String                `tfsdk:"local_address"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WebB2BViewerSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
 }
 
 var WebB2BViewerObjectType = map[string]attr.Type{
@@ -105,6 +114,7 @@ func (data WebB2BViewer) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "WebB2BViewer.name", path.Base("/mgmt/config/default/WebB2BViewer/WebB2BViewer-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

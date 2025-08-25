@@ -30,6 +30,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -54,6 +55,66 @@ type APIConnectGatewayService struct {
 	Jwturl                types.String                `tfsdk:"jwturl"`
 	ProxyPolicy           *DmAPICGSProxyPolicy        `tfsdk:"proxy_policy"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var APIConnectGatewayServiceGatewayPeeringCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "v5_compatibility_mode",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var APIConnectGatewayServiceGatewayPeeringManagerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "v5_compatibility_mode",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var APIConnectGatewayServiceV5CSlmModeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "v5_compatibility_mode",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var APIConnectGatewayServiceIPMulticastCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "v5c_slm_mode",
+			AttrType:    "String",
+			AttrDefault: "autounicast",
+			Value:       []string{"multicast"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "v5_compatibility_mode",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var APIConnectGatewayServiceIPUnicastCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "v5c_slm_mode",
+			AttrType:    "String",
+			AttrDefault: "autounicast",
+			Value:       []string{"unicast"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "v5_compatibility_mode",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
 }
 
 var APIConnectGatewayServiceObjectType = map[string]attr.Type{
@@ -150,6 +211,7 @@ func (data APIConnectGatewayService) ToBody(ctx context.Context, pathRoot string
 	}
 	body := ""
 	body, _ = sjson.Set(body, "APIConnectGatewayService.name", path.Base("/mgmt/config/{domain}/APIConnectGatewayService/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -181,9 +243,9 @@ func (data APIConnectGatewayService) ToBody(ctx context.Context, pathRoot string
 		body, _ = sjson.Set(body, pathRoot+`V5CompatibilityMode`, tfutils.StringFromBool(data.V5CompatibilityMode, ""))
 	}
 	if !data.UserDefinedPolicies.IsNull() {
-		var values []string
-		data.UserDefinedPolicies.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.UserDefinedPolicies.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`UserDefinedPolicies`+".-1", map[string]string{"value": val})
 		}
 	}

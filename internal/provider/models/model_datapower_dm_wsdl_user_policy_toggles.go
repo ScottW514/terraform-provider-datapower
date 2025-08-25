@@ -71,119 +71,134 @@ var DmWSDLUserPolicyTogglesObjectDefault = map[string]attr.Value{
 	"no_wsrm":           types.BoolValue(false),
 	"allow_xop_include": types.BoolValue(true),
 }
-var DmWSDLUserPolicyTogglesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"enable": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable this component", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmWSDLUserPolicyTogglesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmWSDLUserPolicyTogglesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"enable": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable this component", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"publish": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Publish in WSDL", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"verify_faults": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Schema validate faults messages", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"verify_headers": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Schema validate SOAP headers", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"no_request_validation": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("No Request Validation", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"no_response_validation": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("No Response Validation", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"suppress_faults_elements_for_rpc_wrappers": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Strict Fault Document Style", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"no_wsa": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-Addressing", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"no_wsrm": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-ReliableMessaging", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"allow_xop_include": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Accept MTOM/XOP Optimized Messages", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"publish": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Publish in WSDL", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"verify_faults": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema validate faults messages", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"verify_headers": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema validate SOAP headers", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"no_request_validation": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("No Request Validation", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"no_response_validation": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("No Response Validation", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"suppress_faults_elements_for_rpc_wrappers": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Strict Fault Document Style", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"no_wsa": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-Addressing", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"no_wsrm": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-ReliableMessaging", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"allow_xop_include": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Accept MTOM/XOP Optimized Messages", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmWSDLUserPolicyTogglesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmWSDLUserPolicyTogglesDataSourceSchema
 }
-var DmWSDLUserPolicyTogglesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmWSDLUserPolicyTogglesObjectType,
-			DmWSDLUserPolicyTogglesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"enable": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable this component", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmWSDLUserPolicyTogglesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmWSDLUserPolicyTogglesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmWSDLUserPolicyTogglesObjectType,
+				DmWSDLUserPolicyTogglesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"enable": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable this component", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"publish": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Publish in WSDL", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"verify_faults": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Schema validate faults messages", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"verify_headers": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Schema validate SOAP headers", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"no_request_validation": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("No Request Validation", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"no_response_validation": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("No Response Validation", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"suppress_faults_elements_for_rpc_wrappers": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Strict Fault Document Style", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"no_wsa": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-Addressing", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"no_wsrm": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-ReliableMessaging", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"allow_xop_include": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Accept MTOM/XOP Optimized Messages", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"publish": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Publish in WSDL", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"verify_faults": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema validate faults messages", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"verify_headers": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema validate SOAP headers", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"no_request_validation": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("No Request Validation", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"no_response_validation": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("No Response Validation", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"suppress_faults_elements_for_rpc_wrappers": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Strict Fault Document Style", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"no_wsa": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-Addressing", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"no_wsrm": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-ReliableMessaging", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"allow_xop_include": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Accept MTOM/XOP Optimized Messages", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmWSDLUserPolicyTogglesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmWSDLUserPolicyTogglesResourceSchema.Required = true
+	} else {
+		DmWSDLUserPolicyTogglesResourceSchema.Optional = true
+		DmWSDLUserPolicyTogglesResourceSchema.Computed = true
+	}
+	return DmWSDLUserPolicyTogglesResourceSchema
 }
 
 func (data DmWSDLUserPolicyToggles) IsNull() bool {
@@ -219,27 +234,13 @@ func (data DmWSDLUserPolicyToggles) IsNull() bool {
 	}
 	return true
 }
-func GetDmWSDLUserPolicyTogglesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmWSDLUserPolicyTogglesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmWSDLUserPolicyTogglesDataSourceSchema
-}
-
-func GetDmWSDLUserPolicyTogglesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmWSDLUserPolicyTogglesResourceSchema.Required = true
-	} else {
-		DmWSDLUserPolicyTogglesResourceSchema.Optional = true
-		DmWSDLUserPolicyTogglesResourceSchema.Computed = true
-	}
-	DmWSDLUserPolicyTogglesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmWSDLUserPolicyTogglesResourceSchema
-}
 
 func (data DmWSDLUserPolicyToggles) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Enable.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Enable`, tfutils.StringFromBool(data.Enable, ""))
 	}

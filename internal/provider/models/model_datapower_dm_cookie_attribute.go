@@ -62,89 +62,104 @@ var DmCookieAttributeObjectDefault = map[string]attr.Value{
 	"expires":  types.BoolValue(false),
 	"custom":   types.BoolValue(false),
 }
-var DmCookieAttributeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"domain": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Domain", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmCookieAttributeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmCookieAttributeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"domain": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Domain", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"path": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Path", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"secure": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"httponly": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTPOnly", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"max_age": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Max-Age", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"expires": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Expires", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"custom": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom attributes", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"path": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Path", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"secure": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"httponly": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTPOnly", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"max_age": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Max-Age", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"expires": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Expires", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"custom": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom attributes", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmCookieAttributeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmCookieAttributeDataSourceSchema
 }
-var DmCookieAttributeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmCookieAttributeObjectType,
-			DmCookieAttributeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"domain": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Domain", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmCookieAttributeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmCookieAttributeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmCookieAttributeObjectType,
+				DmCookieAttributeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"domain": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Domain", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"path": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Path", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"secure": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"httponly": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTPOnly", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"max_age": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Max-Age", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"expires": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Expires", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"custom": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom attributes", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"path": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Path", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"secure": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"httponly": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTPOnly", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"max_age": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Max-Age", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"expires": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Expires", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"custom": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom attributes", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmCookieAttributeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmCookieAttributeResourceSchema.Required = true
+	} else {
+		DmCookieAttributeResourceSchema.Optional = true
+		DmCookieAttributeResourceSchema.Computed = true
+	}
+	return DmCookieAttributeResourceSchema
 }
 
 func (data DmCookieAttribute) IsNull() bool {
@@ -171,27 +186,13 @@ func (data DmCookieAttribute) IsNull() bool {
 	}
 	return true
 }
-func GetDmCookieAttributeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmCookieAttributeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmCookieAttributeDataSourceSchema
-}
-
-func GetDmCookieAttributeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmCookieAttributeResourceSchema.Required = true
-	} else {
-		DmCookieAttributeResourceSchema.Optional = true
-		DmCookieAttributeResourceSchema.Computed = true
-	}
-	DmCookieAttributeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmCookieAttributeResourceSchema
-}
 
 func (data DmCookieAttribute) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Domain.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`domain`, tfutils.StringFromBool(data.Domain, ""))
 	}

@@ -111,7 +111,7 @@ attributes:
   description: ''
   cli_alias: ssl-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLConfigType
     value:
     - server
@@ -121,7 +121,7 @@ attributes:
   description: ''
   cli_alias: ssl-sni-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLConfigType
     value:
     - sni
@@ -131,7 +131,7 @@ attributes:
   description: ''
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLConfigType
     value:
     - proxy
@@ -174,7 +174,7 @@ attributes:
   example: 10.10.10.10
   cli_alias: remote-ip-address
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - static-backend
@@ -189,7 +189,7 @@ attributes:
   description: Specify the port number to monitor. Used only when Type is static-backend.
   cli_alias: remote-port
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - static-backend
@@ -410,10 +410,10 @@ attributes:
     Enter a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DebugMode
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: DebugTrigger
@@ -426,10 +426,10 @@ attributes:
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: DebugMode
     value:
-    - 'on'
+    - true
 - name: LocalAddress
   type: String
   required: true

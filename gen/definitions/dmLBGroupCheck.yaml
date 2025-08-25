@@ -66,10 +66,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'on'
+      - true
 - name: Input
   type: String
   default: store:///healthcheck.xml
@@ -80,14 +80,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Post
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'on'
+      - true
     - evaluation: property-value-in-list
       attribute: SSL
       value:
@@ -129,10 +129,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'on'
+      - true
 - name: Filter
   type: String
   default: store:///healthcheck.xsl
@@ -149,10 +149,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'on'
+      - true
 - name: EnforceTimeout
   type: Bool
   default: false
@@ -217,10 +217,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'off'
+      - false
 - name: GatewayScriptCustomReqMethod
   type: String
   description: The name of the custom method to use for Standard health check requests
@@ -229,15 +229,15 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SSL
       value:
       - Standard
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: GatewayScriptReqMethod
       value:
       - Custom
@@ -250,10 +250,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: GatewayScriptReqMethod
       value:
@@ -273,14 +273,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SSL
       value:
       - Standard
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'on'
+      - true
     - evaluation: property-value-in-list
       attribute: GatewayScriptReqMethod
       value:
@@ -295,10 +295,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: GatewayScriptReqMethod
       value:
@@ -319,10 +319,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: GatewayScriptReqMethod
       value:
@@ -342,10 +342,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'off'
+      - false
 - name: GatewayScriptRspHandler
   type: String
   default: store:///healthcheck.js
@@ -356,11 +356,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: SSL
       value:
       - Standard
@@ -373,10 +373,10 @@ attributes:
       - LDAP
       - IMSConnect
       - TCPConnection
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GatewayScriptChecks
       value:
-      - 'off'
+      - false
   file_locations:
   - local
   - store
@@ -393,7 +393,7 @@ attributes:
     to establish a connection will not be completed for partial connection types.
   cli_alias: tcp-conn-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSL
     value:
     - TCPConnection
@@ -413,7 +413,7 @@ attributes:
     and its targets.
   cli_alias: ssl-client-type
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSL
     value:
     - Standard
@@ -426,11 +426,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: SSLClientConfigType
       value:
       - client
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: SSL
       value:
       - Standard

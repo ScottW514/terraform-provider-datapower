@@ -36,6 +36,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &APISecurityHTTPSchemeResource{}
@@ -94,15 +95,19 @@ func (r *APISecurityHTTPSchemeResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"bearer_validation_method": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Bearer validation method", "bearer-validation-method", "").AddStringEnum("external-url", "udp", "none").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Bearer validation method", "bearer-validation-method", "").AddStringEnum("external-url", "udp", "none").AddRequiredWhen(models.APISecurityHTTPSchemeBearerValidationMethodCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("external-url", "udp", "none"),
+					validators.ConditionalRequiredString(models.APISecurityHTTPSchemeBearerValidationMethodCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"bearer_validation_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.", "bearer-validation-endpoint", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.", "bearer-validation-endpoint", "").AddRequiredWhen(models.APISecurityHTTPSchemeBearerValidationEndpointCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APISecurityHTTPSchemeBearerValidationEndpointCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"bearer_validation_tls_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.", "bearer-validation-tls-profile", "ssl_client_profile").String,

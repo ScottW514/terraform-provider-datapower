@@ -71,10 +71,10 @@ attributes:
     is exceeded.
   cli_alias: rate-limit
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseRateLimitGroup
     value:
-    - 'on'
+    - true
 - name: BurstLimit
   type: List
   element_type: DmAPIBurstLimit
@@ -86,20 +86,20 @@ attributes:
     the rate limit scheme.
   cli_alias: burst-limit
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseRateLimitGroup
     value:
-    - 'on'
+    - true
 - name: RateLimitGroup
   type: String
   reference_to: RateLimitDefinitionGroup
   description: Rate limit group
   cli_alias: rate-limit-group
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseRateLimitGroup
     value:
-    - 'off'
+    - false
 - name: UseLimitDefinitions
   type: Bool
   default: false
@@ -116,10 +116,10 @@ attributes:
     scheme and then against the rate limit scheme.
   cli_alias: assembly-burst-limit
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseLimitDefinitions
     value:
-    - 'on'
+    - true
 - name: AssemblyBurstLimitDefinition
   type: List
   element_type: DmDefinitionLink
@@ -131,10 +131,10 @@ attributes:
     then against the rate limit scheme.
   cli_alias: assembly-burst-limit-def
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseLimitDefinitions
     value:
-    - 'off'
+    - false
 - name: AssemblyRateLimit
   type: List
   element_type: DmAPIRateLimit
@@ -143,10 +143,10 @@ attributes:
     the actions to take when the limit is exceeded.
   cli_alias: assembly-rate-limit
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseLimitDefinitions
     value:
-    - 'on'
+    - true
 - name: AssemblyRateLimitDefinition
   type: List
   element_type: DmDefinitionLink
@@ -155,10 +155,10 @@ attributes:
     a specified interval and the actions to take when the limit is exceeded.
   cli_alias: assembly-rate-limit-def
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseLimitDefinitions
     value:
-    - 'off'
+    - false
 - name: AssemblyCountLimit
   type: List
   element_type: DmAPICountLimit
@@ -167,10 +167,10 @@ attributes:
     when the limit is exceeded.
   cli_alias: assembly-count-limit
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseLimitDefinitions
     value:
-    - 'on'
+    - true
 - name: AssemblyCountLimitDefinition
   type: List
   element_type: DmDefinitionLink
@@ -179,10 +179,10 @@ attributes:
     the actions to take when the limit is exceeded.
   cli_alias: assembly-count-limit-def
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseLimitDefinitions
     value:
-    - 'off'
+    - false
 - name: SpaceID
   type: String
   description: Specify the space ID for the product in the catalog. When space is

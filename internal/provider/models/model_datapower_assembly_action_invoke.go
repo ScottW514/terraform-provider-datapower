@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -69,6 +70,40 @@ type AssemblyActionInvoke struct {
 	CorrelationPath       types.String                `tfsdk:"correlation_path"`
 	ActionDebug           types.Bool                  `tfsdk:"action_debug"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AssemblyActionInvokeGraphQLSendTypeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "method",
+			AttrType:    "String",
+			AttrDefault: "Keep",
+			Value:       []string{"Keep", "POST"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "backend_type",
+			AttrType:    "String",
+			AttrDefault: "detect",
+			Value:       []string{"detect", "graphql"},
+		},
+	},
+}
+var AssemblyActionInvokeTimeToLiveCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cache_type",
+	AttrType:    "String",
+	AttrDefault: "Protocol",
+	Value:       []string{"TimeToLive"},
+}
+var AssemblyActionInvokeErrorTypesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "stop_on_error",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var AssemblyActionInvokeObjectType = map[string]attr.Type{
@@ -229,6 +264,7 @@ func (data AssemblyActionInvoke) ToBody(ctx context.Context, pathRoot string) st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -380,7 +416,7 @@ func (data *AssemblyActionInvoke) FromBody(ctx context.Context, pathRoot string,
 	if value := res.Get(pathRoot + `GraphQLSendType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.GraphQlSendType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.GraphQlSendType = types.StringNull()
+		data.GraphQlSendType = types.StringValue("detect")
 	}
 	if value := res.Get(pathRoot + `Compression`); value.Exists() {
 		data.Compression = tfutils.BoolFromString(value.String())
@@ -551,7 +587,7 @@ func (data *AssemblyActionInvoke) UpdateFromBody(ctx context.Context, pathRoot s
 	}
 	if value := res.Get(pathRoot + `GraphQLSendType`); value.Exists() && !data.GraphQlSendType.IsNull() {
 		data.GraphQlSendType = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.GraphQlSendType.ValueString() != "detect" {
 		data.GraphQlSendType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Compression`); value.Exists() && !data.Compression.IsNull() {

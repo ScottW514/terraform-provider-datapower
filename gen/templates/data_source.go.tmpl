@@ -42,7 +42,7 @@ import (
 )
 
 {{- if not .UpdateOnly}}
-type {{.Name}}{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}List struct {
+type {{.Name}}{{if .WriteOnlyAttrs}}WO{{end}}List struct {
 	{{- if and (ne .Name "Domain") (hasDomainAttribute .Attributes)}}
 	AppDomain types.String       `tfsdk:"app_domain"`
 	{{- end}}
@@ -64,7 +64,7 @@ type {{.Name}}DataSource struct {
 }
 
 func (d *{{.Name}}DataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_{{snakeCase .Name}}"
+	resp.TypeName = req.ProviderTypeName + "_{{toTfName .Name}}"
 }
 
 func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
@@ -93,7 +93,7 @@ func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaR
 			{{- if or (eq .ElementType "String") (eq .ElementType "Int64") (eq .ElementType "Bool")}}
 							ElementType:         types.{{.ElementType}}Type,
 			{{- else}}
-							NestedObject:        models.{{.ElementType}}DataSourceSchema,
+							NestedObject:        models.Get{{.ElementType}}DataSourceSchema(),
 			{{- end}}
 		{{- end}}
 		{{- if and $updateOnly (eq .Name "AppDomain")}}
@@ -106,7 +106,7 @@ func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaR
 		{{- end}}
 						},
 	{{- else if and .DmType (not .WriteOnly)}}
-						"{{.TfName}}": models.Get{{.DmType}}DataSourceSchema({{quote .Description}}, {{quote .CliAlias}}, {{quote (snakeCase .ReferenceTo)}}),
+						"{{.TfName}}": models.Get{{.DmType}}DataSourceSchema({{quote .Description}}, {{quote .CliAlias}}, {{quote (toTfName .ReferenceTo)}}),
 	{{- end}}
 {{- end}}
 						"dependency_actions": actions.ActionsSchema,
@@ -131,14 +131,14 @@ func (d *{{.Name}}DataSource) Read(ctx context.Context, req datasource.ReadReque
 	d.pData.Mu.Lock()
 	defer d.pData.Mu.Unlock()
 
-	var data {{if .UpdateOnly}}models.{{end}}{{.Name}}{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}{{if not .UpdateOnly}}List{{end}}
+	var data {{if .UpdateOnly}}models.{{end}}{{.Name}}{{if .WriteOnlyAttrs}}WO{{end}}{{if not .UpdateOnly}}List{{end}}
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 {{- if not .UpdateOnly}}
-	o := models.{{.Name}}{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}{
+	o := models.{{.Name}}{{if .WriteOnlyAttrs}}WO{{end}}{
 		{{- if and (hasDomainAttribute .Attributes) (ne .Name "Domain")}}
 		AppDomain: data.AppDomain,
 		{{- end}}
@@ -154,10 +154,10 @@ func (d *{{.Name}}DataSource) Read(ctx context.Context, req datasource.ReadReque
 {{- if .UpdateOnly}}
 	data.FromBody(ctx, `{{.Name}}`, res)
 {{- else}}
-	l := []models.{{.Name}}{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}{}
+	l := []models.{{.Name}}{{if .WriteOnlyAttrs}}WO{{end}}{}
 	if value := res.Get(`{{.Name}}`); value.Exists() {
 		for _, v := range value.Array() {
-			item := models.{{.Name}}{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}{}
+			item := models.{{.Name}}{{if .WriteOnlyAttrs}}WO{{end}}{}
 			item.FromBody(ctx, "", v)
 			if !item.IsNull() {
 				l = append(l, item)
@@ -166,13 +166,13 @@ func (d *{{.Name}}DataSource) Read(ctx context.Context, req datasource.ReadReque
 	}
 	if len(l) > 0 {
 		var diag diag.Diagnostics
-		data.Result, diag = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: models.{{.Name}}ObjectType{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}}, l)
+		data.Result, diag = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: models.{{.Name}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}}, l)
 		resp.Diagnostics.Append(diag...)
 		if resp.Diagnostics.HasError() {
 			return
 		}
 	} else {
-		data.Result = types.ListNull(types.ObjectType{AttrTypes: models.{{.Name}}ObjectType{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}})
+		data.Result = types.ListNull(types.ObjectType{AttrTypes: models.{{.Name}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}})
 	}
 {{- end}}
 

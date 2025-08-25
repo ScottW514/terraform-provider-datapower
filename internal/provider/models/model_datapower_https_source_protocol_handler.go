@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -64,6 +65,40 @@ type HTTPSSourceProtocolHandler struct {
 	HeaderTimeout                 types.Int64                 `tfsdk:"header_timeout"`
 	Http2IdleTimeout              types.Int64                 `tfsdk:"http2_idle_timeout"`
 	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var HTTPSSourceProtocolHandlerWebSocketIdleTimeoutCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "allow_web_socket_upgrade",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "http_version",
+			AttrType:    "String",
+			AttrDefault: "HTTP/1.1",
+			Value:       []string{"HTTP/1.0"},
+		},
+	},
+}
+var HTTPSSourceProtocolHandlerSSLServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var HTTPSSourceProtocolHandlerSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
 }
 
 var HTTPSSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -204,6 +239,7 @@ func (data HTTPSSourceProtocolHandler) ToBody(ctx context.Context, pathRoot stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

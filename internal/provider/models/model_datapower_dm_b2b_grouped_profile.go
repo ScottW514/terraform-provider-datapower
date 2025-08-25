@@ -45,29 +45,36 @@ var DmB2BGroupedProfileObjectDefault = map[string]attr.Value{
 	"partner_profile": types.StringNull(),
 	"profile_dest":    types.StringNull(),
 }
-var DmB2BGroupedProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"partner_profile": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the partner profile.", "profile", "b2b_profile").String,
-			Computed:            true,
+
+func GetDmB2BGroupedProfileDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmB2BGroupedProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"partner_profile": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the partner profile.", "profile", "b2b_profile").String,
+				Computed:            true,
+			},
+			"profile_dest": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for this partner. Without this property, the first destination is used.", "destination", "").String,
+				Computed:            true,
+			},
 		},
-		"profile_dest": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for this partner. Without this property, the first destination is used.", "destination", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmB2BGroupedProfileDataSourceSchema
 }
-var DmB2BGroupedProfileResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"partner_profile": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the partner profile.", "profile", "b2b_profile").String,
-			Required:            true,
+func GetDmB2BGroupedProfileResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmB2BGroupedProfileResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"partner_profile": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the partner profile.", "profile", "b2b_profile").String,
+				Required:            true,
+			},
+			"profile_dest": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for this partner. Without this property, the first destination is used.", "destination", "").String,
+				Optional:            true,
+			},
 		},
-		"profile_dest": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for this partner. Without this property, the first destination is used.", "destination", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmB2BGroupedProfileResourceSchema
 }
 
 func (data DmB2BGroupedProfile) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmB2BGroupedProfile) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.PartnerProfile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PartnerProfile`, data.PartnerProfile.ValueString())
 	}

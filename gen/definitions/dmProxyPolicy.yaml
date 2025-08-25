@@ -18,10 +18,10 @@ attributes:
   description: Specify the hostname or IP address of the remote HTTP server.
   example: remote.host
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Skip
     value:
-    - 'off'
+    - false
   ignored_when:
   - evaluation: logical-true
 - name: RemotePort
@@ -30,9 +30,9 @@ attributes:
   example: 443
   description: Specify the port on the remote HTTP server.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Skip
     value:
-    - 'off'
+    - false
   ignored_when:
   - evaluation: logical-true

@@ -47,39 +47,54 @@ var DmValidationFeaturesObjectDefault = map[string]attr.Value{
 	"noauthen":   types.BoolValue(false),
 	"introspect": types.BoolValue(false),
 }
-var DmValidationFeaturesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"noauthen": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Unprotected", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmValidationFeaturesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmValidationFeaturesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"noauthen": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Unprotected", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"introspect": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Introspection Format", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"introspect": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Introspection Format", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmValidationFeaturesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmValidationFeaturesDataSourceSchema
 }
-var DmValidationFeaturesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmValidationFeaturesObjectType,
-			DmValidationFeaturesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"noauthen": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Unprotected", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmValidationFeaturesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmValidationFeaturesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmValidationFeaturesObjectType,
+				DmValidationFeaturesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"noauthen": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Unprotected", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"introspect": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Introspection Format", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"introspect": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Introspection Format", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmValidationFeaturesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmValidationFeaturesResourceSchema.Required = true
+	} else {
+		DmValidationFeaturesResourceSchema.Optional = true
+		DmValidationFeaturesResourceSchema.Computed = true
+	}
+	return DmValidationFeaturesResourceSchema
 }
 
 func (data DmValidationFeatures) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmValidationFeatures) IsNull() bool {
 	}
 	return true
 }
-func GetDmValidationFeaturesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmValidationFeaturesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmValidationFeaturesDataSourceSchema
-}
-
-func GetDmValidationFeaturesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmValidationFeaturesResourceSchema.Required = true
-	} else {
-		DmValidationFeaturesResourceSchema.Optional = true
-		DmValidationFeaturesResourceSchema.Computed = true
-	}
-	DmValidationFeaturesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmValidationFeaturesResourceSchema
-}
 
 func (data DmValidationFeatures) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Noauthen.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`noauthen`, tfutils.StringFromBool(data.Noauthen, ""))
 	}

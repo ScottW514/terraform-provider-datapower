@@ -36,6 +36,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WebGUIResource{}
@@ -71,7 +72,6 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(9090),
@@ -91,7 +91,6 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(600),
@@ -116,8 +115,11 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"sslsni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.WebGUISSLSNIServerCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebGUISSLSNIServerCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"enable_sts": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable HTTP Strict Transport Security headers. When enabled, responses inject HTTP Strict Transport Security headers.", "enable-sts", "").AddDefaultValue("true").String,

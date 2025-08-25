@@ -84,7 +84,7 @@ func (r *URLMapResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"url_map_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit or delete a URL map match pattern", "match", "").String,
-				NestedObject:        models.DmURLMapRuleResourceSchema,
+				NestedObject:        models.GetDmURLMapRuleResourceSchema(),
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

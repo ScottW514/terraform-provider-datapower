@@ -53,59 +53,74 @@ var DmWSRMPolicyBitmapObjectDefault = map[string]attr.Value{
 	"in_order":                    types.BoolValue(false),
 	"two_way":                     types.BoolValue(false),
 }
-var DmWSRMPolicyBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"optional": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging is optional", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmWSRMPolicyBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmWSRMPolicyBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"optional": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging is optional", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"sequence_transport_security": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("RM Sequence must be bound to underlying transport-level security protocol", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"in_order": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("RM messages must be delivered in the same order as they have been sent by the source", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"two_way": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Response messages require RM Sequence headers", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"sequence_transport_security": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("RM Sequence must be bound to underlying transport-level security protocol", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"in_order": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("RM messages must be delivered in the same order as they have been sent by the source", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"two_way": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response messages require RM Sequence headers", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmWSRMPolicyBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmWSRMPolicyBitmapDataSourceSchema
 }
-var DmWSRMPolicyBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmWSRMPolicyBitmapObjectType,
-			DmWSRMPolicyBitmapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"optional": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging is optional", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmWSRMPolicyBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmWSRMPolicyBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmWSRMPolicyBitmapObjectType,
+				DmWSRMPolicyBitmapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"optional": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging is optional", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"sequence_transport_security": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("RM Sequence must be bound to underlying transport-level security protocol", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"in_order": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("RM messages must be delivered in the same order as they have been sent by the source", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"two_way": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Response messages require RM Sequence headers", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"sequence_transport_security": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("RM Sequence must be bound to underlying transport-level security protocol", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"in_order": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("RM messages must be delivered in the same order as they have been sent by the source", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"two_way": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response messages require RM Sequence headers", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmWSRMPolicyBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmWSRMPolicyBitmapResourceSchema.Required = true
+	} else {
+		DmWSRMPolicyBitmapResourceSchema.Optional = true
+		DmWSRMPolicyBitmapResourceSchema.Computed = true
+	}
+	return DmWSRMPolicyBitmapResourceSchema
 }
 
 func (data DmWSRMPolicyBitmap) IsNull() bool {
@@ -123,27 +138,13 @@ func (data DmWSRMPolicyBitmap) IsNull() bool {
 	}
 	return true
 }
-func GetDmWSRMPolicyBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmWSRMPolicyBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmWSRMPolicyBitmapDataSourceSchema
-}
-
-func GetDmWSRMPolicyBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmWSRMPolicyBitmapResourceSchema.Required = true
-	} else {
-		DmWSRMPolicyBitmapResourceSchema.Optional = true
-		DmWSRMPolicyBitmapResourceSchema.Computed = true
-	}
-	DmWSRMPolicyBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmWSRMPolicyBitmapResourceSchema
-}
 
 func (data DmWSRMPolicyBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Optional.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Optional`, tfutils.StringFromBool(data.Optional, ""))
 	}

@@ -94,12 +94,12 @@ func (d *JWSSignatureDataSource) Schema(ctx context.Context, req datasource.Sche
 						},
 						"protected_header": schema.ListNestedAttribute{
 							MarkdownDescription: "Add a protected header to the JWS Sign action.",
-							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
+							NestedObject:        models.GetDmJOSEHeaderDataSourceSchema(),
 							Computed:            true,
 						},
 						"unprotected_header": schema.ListNestedAttribute{
 							MarkdownDescription: "Add an unprotected header to the JWS Sign action.",
-							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
+							NestedObject:        models.GetDmJOSEHeaderDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

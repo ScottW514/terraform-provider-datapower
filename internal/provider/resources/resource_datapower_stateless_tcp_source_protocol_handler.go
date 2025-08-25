@@ -98,7 +98,6 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(4000),

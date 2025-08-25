@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AAAJWTValidatorResource{}
@@ -100,34 +101,48 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"val_method": models.GetDmJWTValMethodResourceSchema("Various methods can be used to validate the JWT. You can decrypt the JWT, verify the JWT signature, and process a custom GatewayScript or XSLT file for further processing.", "validate-method", "", false),
 			"customized_script": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("A custom GatewayScript or XSLT file is processed to validate the JWT. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> (the default) or <tt>store:</tt> directory. This field is meaningful when you select <tt>Custom processing</tt> in the Validation method field.", "customized-script", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A custom GatewayScript or XSLT file is processed to validate the JWT. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> (the default) or <tt>store:</tt> directory. This field is meaningful when you select <tt>Custom processing</tt> in the Validation method field.", "customized-script", "").AddRequiredWhen(models.AAAJWTValidatorCustomizedScriptCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorCustomizedScriptCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"decrypt_credential_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Various decryption methods (such as PKIX, shared secret key, JSON Web Key (JWK), custom processing, remotely retrieve JWK) can be used to decrypt the JWT. The default method is PKIX. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field.", "decrypt-type", "").AddStringEnum("pkix", "ssecret", "jwk", "jwk-remote", "custom").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Various decryption methods (such as PKIX, shared secret key, JSON Web Key (JWK), custom processing, remotely retrieve JWK) can be used to decrypt the JWT. The default method is PKIX. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field.", "decrypt-type", "").AddStringEnum("pkix", "ssecret", "jwk", "jwk-remote", "custom").AddRequiredWhen(models.AAAJWTValidatorDecryptCredentialTypeCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("pkix", "ssecret", "jwk", "jwk-remote", "custom"),
+					validators.ConditionalRequiredString(models.AAAJWTValidatorDecryptCredentialTypeCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"decrypt_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The private key can be used to decrypt the JWT. You can get the key alias by configuring the Crypto Key. This field is meaningful when you select <tt>Decrypt</tt> in the Validation Method field and choose <tt>PKIX</tt> from the Decrypt method list.", "decrypt-key", "crypto_key").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The private key can be used to decrypt the JWT. You can get the key alias by configuring the Crypto Key. This field is meaningful when you select <tt>Decrypt</tt> in the Validation Method field and choose <tt>PKIX</tt> from the Decrypt method list.", "decrypt-key", "crypto_key").AddRequiredWhen(models.AAAJWTValidatorDecryptKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorDecryptKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"decrypt_s_secret": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key can be used to decrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>Shared secret</tt> from the Decrypt method list.", "decrypt-ssecret", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key can be used to decrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>Shared secret</tt> from the Decrypt method list.", "decrypt-ssecret", "crypto_sskey").AddRequiredWhen(models.AAAJWTValidatorDecryptSSecretCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorDecryptSSecretCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"decrypt_jwk": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The file containing the JWK or key set is fetched to decrypt the JWT. The file must be stored in the local: or store: directory. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>JWK</tt> from the Decrypt method list.", "decrypt-jwk", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The file containing the JWK or key set is fetched to decrypt the JWT. The file must be stored in the local: or store: directory. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>JWK</tt> from the Decrypt method list.", "decrypt-jwk", "").AddRequiredWhen(models.AAAJWTValidatorDecryptJWKCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorDecryptJWKCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"decrypt_fetch_cred_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The URL indicates the source location where the decryption credentials can be fetched for decrypting the JWT. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/key. This field is meaningful when you choose <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.", "decrypt-fetch-cred-url", "").AddDefaultValue("http://example.com/v3/key").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The URL indicates the source location where the decryption credentials can be fetched for decrypting the JWT. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/key. This field is meaningful when you choose <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.", "decrypt-fetch-cred-url", "").AddDefaultValue("http://example.com/v3/key").AddRequiredWhen(models.AAAJWTValidatorDecryptFetchCredURLCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(7, 255),
+					validators.ConditionalRequiredString(models.AAAJWTValidatorDecryptFetchCredURLCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("http://example.com/v3/key"),
 			},
@@ -136,44 +151,61 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 			},
 			"validate_custom": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("A custom GatewayScript or XSLT file provides the key material information to decrypt or verify the JWT. This field is meaningful when you select <tt>Custom</tt> for the Decrypt method or Verify method list.", "validate-custom", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A custom GatewayScript or XSLT file provides the key material information to decrypt or verify the JWT. This field is meaningful when you select <tt>Custom</tt> for the Decrypt method or Verify method list.", "validate-custom", "").AddRequiredWhen(models.AAAJWTValidatorValidateCustomCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorValidateCustomCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"verify_credential_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Various methods (such as PKIX, shared secret key, JWK, custom processing, remotely retrieve JWK) can be used to verify the JWT signature. The default method is PKIX. This field is meaningful when you select <tt>Verify</tt> in the Validation method field.", "verify-type", "").AddStringEnum("pkix", "ssecret", "jwk", "jwk-remote", "custom").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Various methods (such as PKIX, shared secret key, JWK, custom processing, remotely retrieve JWK) can be used to verify the JWT signature. The default method is PKIX. This field is meaningful when you select <tt>Verify</tt> in the Validation method field.", "verify-type", "").AddStringEnum("pkix", "ssecret", "jwk", "jwk-remote", "custom").AddRequiredWhen(models.AAAJWTValidatorVerifyCredentialTypeCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("pkix", "ssecret", "jwk", "jwk-remote", "custom"),
+					validators.ConditionalRequiredString(models.AAAJWTValidatorVerifyCredentialTypeCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"verify_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The certificate can be used to verify the JWT signature. You can get the certificate by configuring the Crypto Certificate. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt> from the Verify method field.", "verify-certificate", "crypto_certificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The certificate can be used to verify the JWT signature. You can get the certificate by configuring the Crypto Certificate. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt> from the Verify method field.", "verify-certificate", "crypto_certificate").AddRequiredWhen(models.AAAJWTValidatorVerifyCertificateCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorVerifyCertificateCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"verify_certificate_against_val_cred": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("You decide whether to use validation credentials to verify the JWT signature. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt> from the Verify method list.", "verify-certificate-against-valcred", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("You decide whether to use validation credentials to verify the JWT signature. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt> from the Verify method list.", "verify-certificate-against-valcred", "").AddDefaultValue("false").AddRequiredWhen(models.AAAJWTValidatorVerifyCertificateAgainstValCredCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"verify_val_cred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The validation credentials can be used to verify the signers' certificate for the JWT. You can get credentials by configuring the Crypto Validation Credentials. This field is meaningful when you select <tt>on</tt> in the Signature validation credentials field.", "valcred", "crypto_val_cred").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The validation credentials can be used to verify the signers' certificate for the JWT. You can get credentials by configuring the Crypto Validation Credentials. This field is meaningful when you select <tt>on</tt> in the Signature validation credentials field.", "valcred", "crypto_val_cred").AddRequiredWhen(models.AAAJWTValidatorVerifyValCredCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorVerifyValCredCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"verify_s_secret": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key can be used to verify the JWT signature. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Shared secret</tt> from the Verify method list.", "verify-ssecret", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key can be used to verify the JWT signature. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Shared secret</tt> from the Verify method list.", "verify-ssecret", "crypto_sskey").AddRequiredWhen(models.AAAJWTValidatorVerifySSecretCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorVerifySSecretCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"verify_jwk": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The file containing the JWK or key set is fetched to verify the JWT signature. The file must be stored in the local: or store: directory. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>JWK</tt> from the Verify method list.", "verify-jwk", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The file containing the JWK or key set is fetched to verify the JWT signature. The file must be stored in the local: or store: directory. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>JWK</tt> from the Verify method list.", "verify-jwk", "").AddRequiredWhen(models.AAAJWTValidatorVerifyJWKCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTValidatorVerifyJWKCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"verify_fetch_cred_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The URL indicates the source location where the verification credentials can be fetched for verifying the JWT signature. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/certs. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.", "verify-fetch-cred-url", "").AddDefaultValue("http://example.com/v3/certs").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The URL indicates the source location where the verification credentials can be fetched for verifying the JWT signature. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/certs. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.", "verify-fetch-cred-url", "").AddDefaultValue("http://example.com/v3/certs").AddRequiredWhen(models.AAAJWTValidatorVerifyFetchCredURLCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(7, 255),
+					validators.ConditionalRequiredString(models.AAAJWTValidatorVerifyFetchCredURLCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("http://example.com/v3/certs"),
 			},
@@ -183,7 +215,7 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"claims": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("JWT claims need to be validated. You must enter the claim name, value, and data type. If the data type is string, specify the PCRE regular expression to verify the claim value.", "claims", "").String,
-				NestedObject:        models.DmClaimResourceSchema,
+				NestedObject:        models.GetDmClaimResourceSchema(),
 				Optional:            true,
 			},
 			"username_claim": schema.StringAttribute{

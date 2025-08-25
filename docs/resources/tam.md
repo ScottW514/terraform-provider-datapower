@@ -43,9 +43,11 @@ resource "datapower_tam" "test" {
 
 - `ad_configuration_file` (String) Select the location of the configuration file for user directories. To be available for selection, files must have .conf or .cfg as their file extension.
   - CLI Alias: `reg_file`
+  - Required When: `ad_use_ad`=`true`
 - `ad_use_ad` (Boolean) <p>Select whether the Access Manager client uses Microsoft Active Directory instead of LDAP as the registry. The default registry for an Access Manager deployment is LDAP. This selection will cause this client to use Microsoft Active Directory. Active Directory type is not supported after ISAM 7.0 .</p><p><b>Note:</b> The type of registry that an Access Manager deployment supports is determined by the configuration of the Access Manager server. The registry that you define in this configuration is for a client and must match the registry of the server.</p>
   - CLI Alias: `ad-use-ad`
   - Default value: `false`
+  - Required When: (`tam_version`!=`v801` AND `tam_version`!=`v901` AND `tam_version`!=`v903` AND `tam_version`!=`v1005`)
 - `auto_retry` (Boolean) <p>Select whether to attempt starting the Access Manager client after an initial failure. The DataPower Gateway automatically attempts to start the client after a critical error. This property controls the behavior after the initial attempt to restart.</p><ul><li>When enabled, the DataPower Gateway attempts to start the client with the defined configuration.</li><li>When disabled, the client is marked as <tt>down</tt> .</li></ul><p>The default behavior is to not attempt to start the client after an initial failure.</p>
   - CLI Alias: `auto-retry`
   - Default value: `false`
@@ -55,6 +57,7 @@ resource "datapower_tam" "test" {
   - Default value: `false`
 - `ldapssl_key_file` (String) <p>Select the location of the key file that contains the certificates for TLS communication with the registry server.</p><ul><li>For server-only authentication, the key file must contain the signer certificate for the registry server.</li><li>For mutual authentication, the key file must also contain a personal certificate that the registry server can validate. If the personal certificate is not the default personal certificate in the key file, you must enter the label of the personal certificate.</li></ul><p>This file must be in the cert: or the sharedcert: directory.</p>
   - CLI Alias: `ldap-ssl-key-file`
+  - Required When: `ldap_use_ssl`=`true`
 - `ldapssl_key_file_label` (String) <p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>
   - CLI Alias: `ldap-ssl-key-file-dn`
 - `ldapssl_key_file_password_alias` (String) Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.
@@ -66,6 +69,7 @@ resource "datapower_tam" "test" {
 - `listen_mode` (Boolean) Select whether to accept notifications to update the local policy database from the policy server. When you set this property, it overrides the behavior defined in configuration files for the Access Manager client.
   - CLI Alias: `listen-mode`
   - Default value: `false`
+  - Required When: `use_local_mode`=`true`
 - `listen_port` (Number) Enter the listening port on the DataPower Gateway to receive update notifications from the remote policy server.
   - CLI Alias: `listen-port`
 - `long_retry_interval` (Number) Specifies the number of seconds to wait after reaching the number of retry attempts. Enter a value in the range 1 - 65535. The default value is 900.
@@ -75,6 +79,7 @@ resource "datapower_tam" "test" {
 - `poll_interval` (String) Enter the interval between requests to update the local policy database from the remote policy server. <ul><li><b>default</b> - Uses the default value, which is 600 seconds.</li><li><b>disable</b> - Disables requests to the policy database for requests.</li><li><i>seconds</i> - Specifies the time interval in seconds.</li></ul>
   - CLI Alias: `cache-refresh-interval`
   - Default value: `default`
+  - Required When: `use_local_mode`=`true`
 - `retry_attempts` (Number) Enter the number of attempts to perform for the Access Manager client. After performing these attempts and the client did not start, each additional attempt waits the number of seconds defined by the long interval. Enter a value in the range 0 - 65535. A value of 0 disables the long interval. The default value is 3.
   - CLI Alias: `retry-attempts`
   - Default value: `3`
@@ -112,6 +117,7 @@ resource "datapower_tam" "test" {
 - `user_principal_attribute` (String) Specify the attribute that identifies the basic user in the LDAP user entry. The default value is uid.
   - CLI Alias: `user-principal-attribute`
   - Default value: `uid`
+  - Required When: `tam_use_basic_user`=`true`
 - `user_search_suffixes` (List of String) <p>Specify the ordered list of LDAP suffixes to be searched for principals. When specified and suffix optimization is disabled, the suffixes are searched in entry order. If suffix optimization is enabled, this order is overridden by the suffix optimization order.</p><p>If you do not specify any suffixes, the system searches all available suffixes.</p>
   - CLI Alias: `user-search-suffixes`
 - `user_suffix_optimiser` (Boolean) <p>Control whether to search the suffixes in an optimized order.</p><ul><li>When enabled and uplicate principals are allowed, the suffixes are searched in an optimized order based on hit count, with the most hit of the suffix at the head of the search suffix list. This can help reduce the number of suffixes searched. If duplicate principals are not allowed, the suffix optimization setting is disregarded and all suffixes are searched to check for duplicates.</li><li>When disabled, the search order is provided by the order that is defined by the search suffixes property.</li></ul>

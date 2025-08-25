@@ -99,13 +99,11 @@ attributes:
     to the NSS server.</p><p>The associated password is used in conjunction with the
     value provided by the User Name.</p>
   cli_alias: password-alias
-  required_when:
-  - evaluation: property-equals
-    attribute: Password
-    value:
-    - ''
+  required: true
   string_max_length: 127
   string_min_length: 1
+  test_value: '"AccTest_PasswordAlias"'
+  test_bed_value: datapower_password_alias.acc_test.id
 - name: SSLClientConfigType
   type: String
   enum:
@@ -123,7 +121,7 @@ attributes:
     Gateway and the NSS server.
   cli_alias: ssl-client
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLClientConfigType
     value:
     - client

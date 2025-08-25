@@ -41,6 +41,7 @@ resource "datapower_web_app_request" "test" {
   - CLI Alias: `request-content-type`
 - `cookie_name_vector` (List of String) The list of cookies, by name, that the process signs and encrypts.
   - CLI Alias: `cookie-namelist`
+  - Required When: `process_all_cookie`=`false`
 - `cookie_profile` (Attributes) The cookie management profile allows you to specify validation profiles for incoming cookies, whether cookies should be allowed at all, and the signature and encryption policies for cookies.
   - CLI Alias: `cookie-policy` (see [below for nested schema](#nestedatt--cookie_profile))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
@@ -67,6 +68,7 @@ resource "datapower_web_app_request" "test" {
 - `non_xml_rule` (String) This is the transformation rule that is run when the request does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.
   - CLI Alias: `request-nonxml-rule`
   - Reference to: `datapower_style_policy_rule:id`
+  - Required When: `non_xml_policy`=`side`|`binary`
 - `ok_methods` (Attributes) Specify which HTTP methods are acceptable from the client acceptable.
   - CLI Alias: `request-methods` (see [below for nested schema](#nestedatt--ok_methods))
 - `ok_versions` (Attributes) Specify which HTTP versions are acceptable from the client.
@@ -81,6 +83,7 @@ resource "datapower_web_app_request" "test" {
 - `query_string_gnvc` (String) The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.
   - CLI Alias: `request-qs-profile`
   - Reference to: `datapower_name_value_profile:id`
+  - Required When: `query_string_policy`=`require`
 - `query_string_policy` (String) Select how the client URL handles query strings. The default is Allow.
   - CLI Alias: `request-qs-policy`
   - Choices: `allow`, `require`, `deny`
@@ -97,6 +100,7 @@ resource "datapower_web_app_request" "test" {
 - `sql_injection_patterns_file` (String) The patterns file that the SQL injection filter uses.
   - CLI Alias: `sql-injection-patterns-file`
   - Default value: `store:///SQL-Injection-Patterns.xml`
+  - Required When: `sql_injection`=`true`
 - `ss_key` (String) Select the Shared Secret Key for both signing or encrypting.
   - CLI Alias: `ss-key`
   - Reference to: `datapower_crypto_sskey:id`
@@ -129,6 +133,7 @@ resource "datapower_web_app_request" "test" {
 - `xml_rule` (String) This is the transformation rule that is run when the request contains an XML MIME type and the XML processing policy is set to XML or SOAP.
   - CLI Alias: `request-xml-rule`
   - Reference to: `datapower_style_policy_rule:id`
+  - Required When: `xml_policy`=`xml`|`soap`
 
 <a id="nestedatt--cookie_profile"></a>
 ### Nested Schema for `cookie_profile`

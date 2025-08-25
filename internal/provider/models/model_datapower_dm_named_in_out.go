@@ -45,29 +45,36 @@ var DmNamedInOutObjectDefault = map[string]attr.Value{
 	"name":    types.StringNull(),
 	"context": types.StringNull(),
 }
-var DmNamedInOutDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.", "", "").String,
-			Computed:            true,
+
+func GetDmNamedInOutDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmNamedInOutDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.", "", "").String,
+				Computed:            true,
+			},
+			"context": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"context": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmNamedInOutDataSourceSchema
 }
-var DmNamedInOutResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.", "", "").String,
-			Optional:            true,
+func GetDmNamedInOutResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmNamedInOutResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.", "", "").String,
+				Optional:            true,
+			},
+			"context": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.", "", "").String,
+				Required:            true,
+			},
 		},
-		"context": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmNamedInOutResourceSchema
 }
 
 func (data DmNamedInOut) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmNamedInOut) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

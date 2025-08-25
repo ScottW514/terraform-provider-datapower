@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,35 @@ type CookieAttributePolicy struct {
 	Interval          types.Int64                 `tfsdk:"interval"`
 	CustomAttribute   types.String                `tfsdk:"custom_attribute"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var CookieAttributePolicyDomainCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cookie_attribute",
+	AttrType:    "DmCookieAttribute",
+	AttrDefault: "",
+	Value:       []string{"domain"},
+}
+var CookieAttributePolicyPathCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cookie_attribute",
+	AttrType:    "DmCookieAttribute",
+	AttrDefault: "",
+	Value:       []string{"path"},
+}
+var CookieAttributePolicyIntervalCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cookie_attribute",
+	AttrType:    "DmCookieAttribute",
+	AttrDefault: "",
+	Value:       []string{"max-age", "expires"},
+}
+var CookieAttributePolicyCustomAttributeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cookie_attribute",
+	AttrType:    "DmCookieAttribute",
+	AttrDefault: "",
+	Value:       []string{"custom"},
 }
 
 var CookieAttributePolicyObjectType = map[string]attr.Type{
@@ -99,6 +129,7 @@ func (data CookieAttributePolicy) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

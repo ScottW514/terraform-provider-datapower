@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -49,6 +50,28 @@ type WXSGrid struct {
 	KeyObfuscation    types.Bool                  `tfsdk:"key_obfuscation"`
 	KeyObfuscationAlg types.String                `tfsdk:"key_obfuscation_alg"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WXSGridEncryptSSKeyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "encrypt",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WXSGridEncryptAlgCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "encrypt",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WXSGridKeyObfuscationAlgCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "key_obfuscation",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var WXSGridObjectType = map[string]attr.Type{
@@ -127,6 +150,7 @@ func (data WXSGrid) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

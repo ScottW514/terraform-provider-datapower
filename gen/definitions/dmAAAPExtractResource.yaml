@@ -10,7 +10,7 @@ attributes:
   description: Specify the XPath expression to apply to the incoming message.
   cli_alias: xpath
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ERBitmap
     value:
     - XPath
@@ -22,7 +22,7 @@ attributes:
   description: Specify the name of the configuration for processing metadata.
   cli_alias: metadata
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ERBitmap
     value:
     - metadata

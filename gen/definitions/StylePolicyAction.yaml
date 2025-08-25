@@ -112,11 +112,11 @@ attributes:
       - cryptobin
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - xformng
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: TransformLanguage
         value:
         - none
@@ -125,11 +125,11 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - xformng
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: TransformLanguage
         value:
         - none
@@ -470,7 +470,7 @@ attributes:
     appropriate for your Transformation Extender configuration.
   cli_alias: named-inouts
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - xformbin
@@ -483,11 +483,11 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: NamedInOutLocationType
       value:
       - explicit
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Type
       value:
       - xformbin
@@ -500,11 +500,11 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: NamedInOutLocationType
       value:
       - explicit
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Type
       value:
       - xformbin
@@ -537,7 +537,7 @@ attributes:
     . The context runs as a schema validation.</li></ul>
   cli_alias: schema-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - validate
@@ -550,7 +550,7 @@ attributes:
     . The context runs as a JSON schema validation.</li></ul>
   cli_alias: json-schema-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - validate
@@ -567,7 +567,7 @@ attributes:
     context runs as a WSDL validation.</li></ul>
   cli_alias: wsdl-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - validate
@@ -577,7 +577,7 @@ attributes:
   description: URL rewrite policy
   cli_alias: urlrewrite-policy
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - rewrite
@@ -596,7 +596,7 @@ attributes:
   description: AAA policy
   cli_alias: aaa-policy
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - aaa
@@ -607,7 +607,7 @@ attributes:
   description: Dynamic schema
   cli_alias: dynamic-schema
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - validate
@@ -631,7 +631,7 @@ attributes:
   description: Input conversion
   cli_alias: input-conversion
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - convert-http
@@ -642,7 +642,7 @@ attributes:
     expands to an XPath expression.
   cli_alias: xpath
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - extract
@@ -672,11 +672,11 @@ attributes:
       - sql
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - sql
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: SQLSourceType
         value:
         - variable
@@ -688,7 +688,7 @@ attributes:
     another variable URL.
   cli_alias: value
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - setvar
@@ -701,7 +701,7 @@ attributes:
   description: TLS client type
   cli_alias: ssl-client-type
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - route-set
@@ -713,11 +713,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Type
       value:
       - route-set
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: SSLClientConfigType
       value:
       - client
@@ -727,7 +727,7 @@ attributes:
     stripped from the context.
   cli_alias: attachment-uri
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - strip-attachments
@@ -757,7 +757,7 @@ attributes:
   description: Error mode
   cli_alias: error-mode
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - on-error
@@ -768,7 +768,7 @@ attributes:
   description: Error input
   cli_alias: error-input
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - on-error
@@ -777,7 +777,7 @@ attributes:
   description: Error output
   cli_alias: error-output
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - on-error
@@ -786,12 +786,12 @@ attributes:
   description: Processing rule
   cli_alias: rule
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - call
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - on-error
@@ -828,7 +828,7 @@ attributes:
   description: Log level
   cli_alias: log-level
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - log
@@ -840,7 +840,7 @@ attributes:
   description: Log type
   cli_alias: log-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - log
@@ -867,7 +867,7 @@ attributes:
   description: Event
   cli_alias: event
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - checkpoint
@@ -878,7 +878,7 @@ attributes:
   description: SLM policy
   cli_alias: slm
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - slm
@@ -890,7 +890,7 @@ attributes:
   description: SQL Data Source
   cli_alias: sql-source
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - sql
@@ -903,18 +903,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SQLSourceType
       value:
       - static
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Type
       value:
       - sql
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Type
       value:
       - sql
@@ -937,11 +937,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Type
       value:
       - validate
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: WsdlURL
       value:
       - ''
@@ -956,12 +956,12 @@ attributes:
   description: SQL input method
   cli_alias: sql-source-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - sql
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - sql
@@ -1276,11 +1276,11 @@ attributes:
       - for-each
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - results
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Destination
         value:
         - ''
@@ -1397,7 +1397,7 @@ attributes:
     that are defined for the named port are considered valid.
   cli_alias: wsdl-port
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - validate
@@ -1409,7 +1409,7 @@ attributes:
     defined for operations that match the specified name are considered valid.
   cli_alias: wsdl-operation
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - validate
@@ -1428,7 +1428,7 @@ attributes:
     are considered valid. Faults are considered valid for the response direction.</p>
   cli_alias: wsdl-message-direction-or-name
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - validate
@@ -1442,7 +1442,7 @@ attributes:
     .
   cli_alias: wsdl-attachment-part
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - validate
@@ -1485,17 +1485,17 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Type
       value:
       - results-async
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - results
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: Destination
         value:
         - ''
@@ -1509,11 +1509,11 @@ attributes:
       - results-async
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - results
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Destination
         value:
         - ''

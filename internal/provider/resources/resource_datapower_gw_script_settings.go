@@ -89,7 +89,6 @@ func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.Sche
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds that a GatewayScript action can continuously use CPU without yielding back to the system event loop. When the processing of a GatewayScript action exceeds the duration, processing is stopped and an error is logged. Enter a value in the range 1 - 300. The default value is 0, which indicates unlimited.", "max-processing-duration", "").AddIntegerRange(0, 300).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 300),
 				},
 			},

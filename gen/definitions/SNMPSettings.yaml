@@ -106,10 +106,10 @@ attributes:
     The lowest is listed last. Set to the minimum that is required for your trap events.
   cli_alias: trap-priority
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EnableDefaultTrapSubscriptions
     value:
-    - 'on'
+    - true
 - name: TrapEventCode
   type: List
   element_type: String
@@ -117,10 +117,10 @@ attributes:
     will be triggering traps send to the configured trap targets.
   cli_alias: trap-code
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EnableDefaultTrapSubscriptions
     value:
-    - 'on'
+    - true
 - name: ConfigMib
   type: String
   default: /drConfigMIB.txt

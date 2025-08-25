@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,35 @@ type B2BPersistence struct {
 	HaLocalPort       types.Int64                 `tfsdk:"ha_local_port"`
 	HaVirtualIp       types.String                `tfsdk:"ha_virtual_ip"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var B2BPersistenceHAOtherHostsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ha_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BPersistenceHALocalIPCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ha_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BPersistenceHALocalPortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ha_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BPersistenceHAVirtualIPCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ha_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var B2BPersistenceObjectType = map[string]attr.Type{
@@ -102,6 +132,7 @@ func (data B2BPersistence) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "B2BPersistence.name", path.Base("/mgmt/config/default/B2BPersistence/B2BPersistence"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

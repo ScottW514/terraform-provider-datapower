@@ -42,21 +42,28 @@ var DmSearchDomainObjectType = map[string]attr.Type{
 var DmSearchDomainObjectDefault = map[string]attr.Value{
 	"search_domain": types.StringNull(),
 }
-var DmSearchDomainDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"search_domain": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the domain name.", "", "").String,
-			Computed:            true,
+
+func GetDmSearchDomainDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSearchDomainDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"search_domain": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the domain name.", "", "").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmSearchDomainDataSourceSchema
 }
-var DmSearchDomainResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"search_domain": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the domain name.", "", "").String,
-			Required:            true,
+func GetDmSearchDomainResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSearchDomainResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"search_domain": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the domain name.", "", "").String,
+				Required:            true,
+			},
 		},
-	},
+	}
+	return DmSearchDomainResourceSchema
 }
 
 func (data DmSearchDomain) IsNull() bool {
@@ -71,6 +78,7 @@ func (data DmSearchDomain) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.SearchDomain.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SearchDomain`, data.SearchDomain.ValueString())
 	}

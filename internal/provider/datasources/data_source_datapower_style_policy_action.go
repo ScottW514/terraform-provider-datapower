@@ -163,12 +163,12 @@ func (d *StylePolicyActionDataSource) Schema(ctx context.Context, req datasource
 						},
 						"named_inputs": schema.ListNestedAttribute{
 							MarkdownDescription: "Named inputs",
-							NestedObject:        models.DmNamedInOutDataSourceSchema,
+							NestedObject:        models.GetDmNamedInOutDataSourceSchema(),
 							Computed:            true,
 						},
 						"named_outputs": schema.ListNestedAttribute{
 							MarkdownDescription: "Named outputs",
-							NestedObject:        models.DmNamedInOutDataSourceSchema,
+							NestedObject:        models.GetDmNamedInOutDataSourceSchema(),
 							Computed:            true,
 						},
 						"destination": schema.StringAttribute{
@@ -233,7 +233,7 @@ func (d *StylePolicyActionDataSource) Schema(ctx context.Context, req datasource
 						},
 						"stylesheet_parameters": schema.ListNestedAttribute{
 							MarkdownDescription: "Stylesheet parameters",
-							NestedObject:        models.DmStylesheetParameterDataSourceSchema,
+							NestedObject:        models.GetDmStylesheetParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"error_mode": schema.StringAttribute{
@@ -352,7 +352,7 @@ func (d *StylePolicyActionDataSource) Schema(ctx context.Context, req datasource
 						},
 						"condition": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the conditions to check and action to run when a match is found A single condition maps an XPath expression to search for in the input context to an action to run when the condition is found. When no match is found, other conditions can be checked.",
-							NestedObject:        models.DmConditionDataSourceSchema,
+							NestedObject:        models.GetDmConditionDataSourceSchema(),
 							Computed:            true,
 						},
 						"results_mode": schema.StringAttribute{

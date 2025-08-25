@@ -174,7 +174,7 @@ attributes:
     a value in the range 3 - 7200. The default value is 300.
   cli_alias: timeout
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EBMSMessageExchangePattern
     value:
     - one-way-pull
@@ -254,7 +254,7 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSMessageExchangePattern
       value:
       - one-way-push
@@ -273,11 +273,11 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EBMSMPCAuthMethod
         value:
         - cert
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EBMSMessageExchangePattern
         value:
         - one-way-pull
@@ -301,11 +301,11 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EBMSMPCAuthMethod
         value:
         - cert
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EBMSMessageExchangePattern
         value:
         - one-way-pull
@@ -330,11 +330,11 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSMPCAuthMethod
       value:
       - username-token
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSMessageExchangePattern
       value:
       - one-way-push
@@ -355,10 +355,10 @@ attributes:
       value:
       - ftp
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableFTPSettings
       value:
-      - 'on'
+      - true
 - name: AuthTLS
   type: String
   enum:
@@ -378,10 +378,10 @@ attributes:
       value:
       - ftp
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableFTPSettings
       value:
-      - 'on'
+      - true
 - name: UseCCC
   type: String
   enum:
@@ -400,11 +400,11 @@ attributes:
       value:
       - ftp
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableFTPSettings
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: AuthTLS
       value:
       - auth-off
@@ -426,11 +426,11 @@ attributes:
       value:
       - ftp
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableFTPSettings
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: AuthTLS
       value:
       - auth-off
@@ -450,10 +450,10 @@ attributes:
       value:
       - ftp
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableFTPSettings
       value:
-      - 'on'
+      - true
 - name: SlashSTOU
   type: String
   enum:
@@ -472,10 +472,10 @@ attributes:
       value:
       - ftp
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableFTPSettings
       value:
-      - 'on'
+      - true
 - name: QuotedCommands
   type: String
   reference_to: FTPQuoteCommands
@@ -491,10 +491,10 @@ attributes:
       value:
       - ftp
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableFTPSettings
       value:
-      - 'on'
+      - true
 - name: SizeCheck
   type: String
   enum:
@@ -514,10 +514,10 @@ attributes:
       value:
       - ftp
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableFTPSettings
       value:
-      - 'on'
+      - true
 - name: BinaryTransferMode
   type: String
   enum:
@@ -566,10 +566,10 @@ attributes:
       - as2
       - as2s
       - as3
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ASCompress
       value:
-      - 'off'
+      - false
 - name: ASSendUnsigned
   type: Bool
   default: false
@@ -617,10 +617,10 @@ attributes:
       - as2
       - as2s
       - as3
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ASEncrypt
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: ASMDNRequest
@@ -652,10 +652,10 @@ attributes:
       value:
       - as2
       - as2s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ASMDNRequest
       value:
-      - 'off'
+      - false
 - name: AS1MDNRedirectEmail
   type: String
   description: Specify the redirection email address for the MDN to outbound AS1 messages.
@@ -670,10 +670,10 @@ attributes:
       attribute: DestURL
       value:
       - as1
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ASMDNRequest
       value:
-      - 'on'
+      - true
 - name: AS2MDNRedirectURL
   type: String
   description: Specify the redirection URL for the MDN to outbound AS2 messages.
@@ -686,14 +686,14 @@ attributes:
       value:
       - as2
       - as2s
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ASMDNRequest
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: ASMDNRequestAsync
       value:
-      - 'on'
+      - true
   protocols:
   - http
   - https
@@ -710,10 +710,10 @@ attributes:
       attribute: DestURL
       value:
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ASMDNRequest
       value:
-      - 'on'
+      - true
   protocols:
   - ftp
   file_locations:
@@ -734,10 +734,10 @@ attributes:
       - as2
       - as2s
       - as3
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ASMDNRequest
       value:
-      - 'off'
+      - false
 - name: Retransmit
   type: Bool
   default: false
@@ -753,10 +753,10 @@ attributes:
       - as2
       - as2s
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ASMDNRequest
       value:
-      - 'on'
+      - true
 - name: ACKTime
   type: Int64
   minimum: 1
@@ -776,10 +776,10 @@ attributes:
       - as2
       - as2s
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ASMDNRequest
       value:
-      - 'on'
+      - true
 - name: MaxResends
   type: Int64
   minimum: 1
@@ -798,14 +798,14 @@ attributes:
       - as2
       - as2s
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ASMDNRequest
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: Retransmit
       value:
-      - 'on'
+      - true
 - name: ASEncryptAlg
   type: String
   enum:
@@ -830,10 +830,10 @@ attributes:
       - as2
       - as2s
       - as3
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ASEncrypt
       value:
-      - 'on'
+      - true
 - name: ASMDNRequestSignedAlgs
   type: String
   default: sha1,md5
@@ -852,14 +852,14 @@ attributes:
       - as2
       - as2s
       - as3
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ASMDNRequest
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: ASMDNRequestSigned
       value:
-      - 'off'
+      - false
   string_patterns:
   - ^((sha1|sha-1|md5|sha256|sha-256|sha384|sha-384|sha512|sha-512),)*(sha1|sha-1|md5|sha256|sha-256|sha384|sha-384|sha512|sha-512)$
 - name: EBMSCpaId
@@ -956,10 +956,10 @@ attributes:
       - ebms2s
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSEncrypt
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: EBMSEncryptAlg
@@ -985,10 +985,10 @@ attributes:
       - ebms2s
       - ebms3
       - ebms3s
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EBMSEncrypt
       value:
-      - 'on'
+      - true
 - name: EBMSKeyEncryptAlg
   type: String
   enum:
@@ -1007,10 +1007,10 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EBMSEncrypt
       value:
-      - 'on'
+      - true
 - name: EBMSDuplicateEliminationRequest
   type: Bool
   default: true
@@ -1050,10 +1050,10 @@ attributes:
       value:
       - ebms2
       - ebms2s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSAckRequest
       value:
-      - 'off'
+      - false
 - name: EBMSSyncReplyMode
   type: String
   enum:
@@ -1086,10 +1086,10 @@ attributes:
       value:
       - ebms2
       - ebms2s
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EBMSAckRequest
       value:
-      - 'on'
+      - true
 - name: EBMSMaxRetries
   type: Int64
   minimum: 1
@@ -1106,14 +1106,14 @@ attributes:
       value:
       - ebms2
       - ebms2s
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EBMSAckRequest
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: EBMSRetry
       value:
-      - 'off'
+      - false
 - name: EBMSRetryInterval
   type: Int64
   minimum: 1
@@ -1130,10 +1130,10 @@ attributes:
       value:
       - ebms2
       - ebms2s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSRetry
       value:
-      - 'off'
+      - false
 - name: EBMSIncludeTimeToLive
   type: Bool
   default: true
@@ -1152,10 +1152,10 @@ attributes:
       value:
       - ebms2
       - ebms2s
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EBMSRetry
       value:
-      - 'on'
+      - true
 - name: SSLClientConfigType
   type: String
   enum:
@@ -1181,10 +1181,12 @@ attributes:
   reference_to: SSLClientProfile
   description: Specify the TLS client profile to secure connections with targets.
   cli_alias: ssl-client
+  test_value: '"AccTest_SSLClientProfile"'
+  test_bed_value: datapower_ssl_client_profile.acc_test.id
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SSLClientConfigType
       value:
       - client
@@ -1199,7 +1201,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: SSLClientConfigType
       value:
       - client
@@ -1250,7 +1252,7 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSMessageExchangePattern
       value:
       - one-way-push
@@ -1309,10 +1311,10 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundRequestReceipt
       value:
-      - 'off'
+      - false
 - name: EBMSOutboundReceiptReplyPattern
   type: String
   enum:
@@ -1330,11 +1332,11 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundRequestReceipt
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: EBMSMessageExchangePattern
       value:
       - one-way-pull
@@ -1354,10 +1356,10 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundRequestReceipt
       value:
-      - 'off'
+      - false
 - name: EBMSOutboundReceptionAwarenessTimeout
   type: Int64
   minimum: 3
@@ -1376,21 +1378,21 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundRequestReceipt
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: EBMSOutboundReceptionAwarenessNotification
       value:
-      - 'off'
+      - false
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EBMSOutboundReceiptReplyPattern
         value:
         - Response
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EBMSMessageExchangePattern
         value:
         - one-way-push
@@ -1420,7 +1422,7 @@ attributes:
       value:
       - ebms3
       - ebms3s
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EBMSCompress
       value:
-      - 'on'
+      - true

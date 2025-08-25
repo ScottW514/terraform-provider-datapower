@@ -53,59 +53,74 @@ var DmConformanceProfilesObjectDefault = map[string]attr.Value{
 	"ap10":  types.BoolValue(true),
 	"bsp10": types.BoolValue(true),
 }
-var DmConformanceProfilesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"bp10": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.0", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmConformanceProfilesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmConformanceProfilesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"bp10": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.0", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"bp11": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.1", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"ap10": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-I AP 1.0", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"bsp10": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BSP 1.0", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"bp11": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.1", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"ap10": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-I AP 1.0", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"bsp10": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-I BSP 1.0", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmConformanceProfilesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmConformanceProfilesDataSourceSchema
 }
-var DmConformanceProfilesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmConformanceProfilesObjectType,
-			DmConformanceProfilesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"bp10": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.0", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmConformanceProfilesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmConformanceProfilesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmConformanceProfilesObjectType,
+				DmConformanceProfilesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"bp10": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.0", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"bp11": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.1", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"ap10": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-I AP 1.0", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"bsp10": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BSP 1.0", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"bp11": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.1", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"ap10": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-I AP 1.0", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"bsp10": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-I BSP 1.0", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmConformanceProfilesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmConformanceProfilesResourceSchema.Required = true
+	} else {
+		DmConformanceProfilesResourceSchema.Optional = true
+		DmConformanceProfilesResourceSchema.Computed = true
+	}
+	return DmConformanceProfilesResourceSchema
 }
 
 func (data DmConformanceProfiles) IsNull() bool {
@@ -123,27 +138,13 @@ func (data DmConformanceProfiles) IsNull() bool {
 	}
 	return true
 }
-func GetDmConformanceProfilesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmConformanceProfilesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmConformanceProfilesDataSourceSchema
-}
-
-func GetDmConformanceProfilesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmConformanceProfilesResourceSchema.Required = true
-	} else {
-		DmConformanceProfilesResourceSchema.Optional = true
-		DmConformanceProfilesResourceSchema.Computed = true
-	}
-	DmConformanceProfilesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmConformanceProfilesResourceSchema
-}
 
 func (data DmConformanceProfiles) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Bp10.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`BP10`, tfutils.StringFromBool(data.Bp10, ""))
 	}

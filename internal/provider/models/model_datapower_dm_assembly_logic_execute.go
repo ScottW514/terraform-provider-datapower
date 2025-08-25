@@ -45,29 +45,36 @@ var DmAssemblyLogicExecuteObjectDefault = map[string]attr.Value{
 	"condition": types.StringNull(),
 	"execute":   types.StringNull(),
 }
-var DmAssemblyLogicExecuteDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"condition": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata expression to match against the input.", "", "").String,
-			Computed:            true,
+
+func GetDmAssemblyLogicExecuteDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAssemblyLogicExecuteDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"condition": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata expression to match against the input.", "", "").String,
+				Computed:            true,
+			},
+			"execute": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the API rule to run when the JSONata expression evaluates to true. The specified API rule can define further switch assembly actions.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"execute": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the API rule to run when the JSONata expression evaluates to true. The specified API rule can define further switch assembly actions.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAssemblyLogicExecuteDataSourceSchema
 }
-var DmAssemblyLogicExecuteResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"condition": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata expression to match against the input.", "", "").String,
-			Required:            true,
+func GetDmAssemblyLogicExecuteResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAssemblyLogicExecuteResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"condition": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata expression to match against the input.", "", "").String,
+				Required:            true,
+			},
+			"execute": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the API rule to run when the JSONata expression evaluates to true. The specified API rule can define further switch assembly actions.", "", "").String,
+				Required:            true,
+			},
 		},
-		"execute": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the API rule to run when the JSONata expression evaluates to true. The specified API rule can define further switch assembly actions.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmAssemblyLogicExecuteResourceSchema
 }
 
 func (data DmAssemblyLogicExecute) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmAssemblyLogicExecute) ToBody(ctx context.Context, pathRoot string) 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Condition.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Condition`, data.Condition.ValueString())
 	}

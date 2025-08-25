@@ -99,10 +99,10 @@ attributes:
     at 4096 characters.
   cli_alias: preauth-msg
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SendPreAuthMsg
     value:
-    - 'no'
+    - false
 - name: HostKeyAlg
   dm_type: DmHostKeyAlgorithms
   description: Host key algorithms

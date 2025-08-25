@@ -67,7 +67,6 @@ func (r *AuditLogResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(250, 500000),
 				},
 				Default: int64default.StaticInt64(1000),
@@ -77,7 +76,6 @@ func (r *AuditLogResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 100),
 				},
 				Default: int64default.StaticInt64(3),

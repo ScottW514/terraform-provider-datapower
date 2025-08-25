@@ -91,7 +91,7 @@ attributes:
     or SFTP server.
   cli_alias: allow-backend-listings
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - transparent
@@ -103,7 +103,7 @@ attributes:
     server.
   cli_alias: allow-backend-delete
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - transparent
@@ -118,7 +118,7 @@ attributes:
     SFTP server.
   cli_alias: allow-backend-stat
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - transparent
@@ -129,7 +129,7 @@ attributes:
     (SSH_FXP_MKDIR) on remote servers are allowed. Requires a remote FTP or SFTP server.
   cli_alias: allow-backend-mkdir
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - transparent
@@ -141,7 +141,7 @@ attributes:
     server.
   cli_alias: allow-backend-rmdir
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - transparent
@@ -153,7 +153,7 @@ attributes:
     FTP or SFTP server.
   cli_alias: allow-backend-rename
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - transparent
@@ -199,7 +199,7 @@ attributes:
     destroyed. Enter a value in the range 1- 43200. The default value is 600.
   cli_alias: persistent-filesystem-timeout
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - virtual-persistent

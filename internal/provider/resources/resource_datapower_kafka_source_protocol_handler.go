@@ -106,7 +106,6 @@ func (r *KafkaSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(1),

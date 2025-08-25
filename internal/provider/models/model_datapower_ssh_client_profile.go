@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -49,6 +50,97 @@ type SSHClientProfile struct {
 	KexAlg                      types.List                      `tfsdk:"kex_alg"`
 	MacAlg                      types.List                      `tfsdk:"mac_alg"`
 	DependencyActions           []*actions.DependencyAction     `tfsdk:"dependency_actions"`
+}
+
+var SSHClientProfileSSHUserAuthenticationCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_usage",
+	AttrType:    "String",
+	AttrDefault: "sftp",
+	Value:       []string{"sftp"},
+}
+var SSHClientProfileUserPrivateKeyCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "profile_usage",
+					AttrType:    "String",
+					AttrDefault: "sftp",
+					Value:       []string{"sftp"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ssh_user_authentication",
+					AttrType:    "DmSSHUserAuthenticationMethods",
+					AttrDefault: "publickey+password",
+					Value:       []string{"publickey"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_usage",
+			AttrType:    "String",
+			AttrDefault: "sftp",
+			Value:       []string{"scc"},
+		},
+	},
+}
+var SSHClientProfilePasswordAliasCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_usage",
+			AttrType:    "String",
+			AttrDefault: "sftp",
+			Value:       []string{"sftp"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssh_user_authentication",
+			AttrType:    "DmSSHUserAuthenticationMethods",
+			AttrDefault: "publickey+password",
+			Value:       []string{"password"},
+		},
+	},
+}
+var SSHClientProfilePersistentConnectionsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_usage",
+	AttrType:    "String",
+	AttrDefault: "sftp",
+	Value:       []string{"sftp"},
+}
+var SSHClientProfilePersistentConnectionTimeoutCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_usage",
+			AttrType:    "String",
+			AttrDefault: "sftp",
+			Value:       []string{"sftp"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "persistent_connections",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var SSHClientProfileStrictHostKeyCheckingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_usage",
+	AttrType:    "String",
+	AttrDefault: "sftp",
+	Value:       []string{"sftp"},
 }
 
 var SSHClientProfileObjectType = map[string]attr.Type{
@@ -129,6 +221,7 @@ func (data SSHClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -162,23 +255,23 @@ func (data SSHClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`StrictHostKeyChecking`, tfutils.StringFromBool(data.StrictHostKeyChecking, ""))
 	}
 	if !data.Ciphers.IsNull() {
-		var values []string
-		data.Ciphers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Ciphers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Ciphers`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.KexAlg.IsNull() {
-		var values []string
-		data.KexAlg.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.KexAlg.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`KEXAlg`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.MacAlg.IsNull() {
-		var values []string
-		data.MacAlg.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.MacAlg.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`MACAlg`+".-1", map[string]string{"value": val})
 		}
 	}

@@ -98,7 +98,7 @@ func (d *NameValueProfileDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"validation_list": schema.ListNestedAttribute{
 							MarkdownDescription: "Each pair submitted to this profile consults this validation list, looking for the first regular expression match of the name against the name expression in the list. When that is found, the corresponding value constraint is matched against the value portion of the name-value pair. If that does not match, the policy applies the 'fixup' attribute to the submitted value. That may result in no change, the pair being removed, an error being generated, or the value being mapped to a known constant.",
-							NestedObject:        models.DmValidationTypeDataSourceSchema,
+							NestedObject:        models.GetDmValidationTypeDataSourceSchema(),
 							Computed:            true,
 						},
 						"default_fixup": schema.StringAttribute{

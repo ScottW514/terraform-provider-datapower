@@ -94,7 +94,7 @@ func (d *JOSERecipientIdentifierDataSource) Schema(ctx context.Context, req data
 						},
 						"header_param": schema.ListNestedAttribute{
 							MarkdownDescription: "The JOSE header parameters used to identify the recipient.",
-							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
+							NestedObject:        models.GetDmJOSEHeaderDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

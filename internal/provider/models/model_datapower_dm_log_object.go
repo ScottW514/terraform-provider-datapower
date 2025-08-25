@@ -27,8 +27,10 @@ import (
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -37,6 +39,10 @@ type DmLogObject struct {
 	Class            types.String `tfsdk:"class"`
 	Object           types.String `tfsdk:"object"`
 	FollowReferences types.Bool   `tfsdk:"follow_references"`
+}
+
+var DmLogObjectObjectCondVal = validators.Evaluation{
+	Evaluation: "logical-false",
 }
 
 var DmLogObjectObjectType = map[string]attr.Type{
@@ -49,39 +55,49 @@ var DmLogObjectObjectDefault = map[string]attr.Value{
 	"object":            types.StringNull(),
 	"follow_references": types.BoolValue(false),
 }
-var DmLogObjectDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"class": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").String,
-			Computed:            true,
+
+func GetDmLogObjectDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmLogObjectDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"class": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").String,
+				Computed:            true,
+			},
+			"object": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>", "", "").String,
+				Computed:            true,
+			},
+			"follow_references": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include log messages for objects that the specified object instance references. <ul><li>When enabled, include referenced objects.</li><li>When disabled, exclude referenced objects.</li></ul><p><b>Note:</b> Included objects are a static snapshot when you apply the object filter. If referenced objects are added after you apply the object filter, messages for these referenced objects are not logged.</p>", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"object": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>", "", "").String,
-			Computed:            true,
-		},
-		"follow_references": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include log messages for objects that the specified object instance references. <ul><li>When enabled, include referenced objects.</li><li>When disabled, exclude referenced objects.</li></ul><p><b>Note:</b> Included objects are a static snapshot when you apply the object filter. If referenced objects are added after you apply the object filter, messages for these referenced objects are not logged.</p>", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmLogObjectDataSourceSchema
 }
-var DmLogObjectResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"class": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").String,
-			Optional:            true,
+func GetDmLogObjectResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmLogObjectResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"class": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").String,
+				Optional:            true,
+			},
+			"object": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmLogObjectObjectCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"follow_references": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include log messages for objects that the specified object instance references. <ul><li>When enabled, include referenced objects.</li><li>When disabled, exclude referenced objects.</li></ul><p><b>Note:</b> Included objects are a static snapshot when you apply the object filter. If referenced objects are added after you apply the object filter, messages for these referenced objects are not logged.</p>", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"object": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>", "", "").String,
-			Optional:            true,
-		},
-		"follow_references": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include log messages for objects that the specified object instance references. <ul><li>When enabled, include referenced objects.</li><li>When disabled, exclude referenced objects.</li></ul><p><b>Note:</b> Included objects are a static snapshot when you apply the object filter. If referenced objects are added after you apply the object filter, messages for these referenced objects are not logged.</p>", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	return DmLogObjectResourceSchema
 }
 
 func (data DmLogObject) IsNull() bool {
@@ -102,6 +118,7 @@ func (data DmLogObject) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Class.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Class`, data.Class.ValueString())
 	}

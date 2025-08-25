@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -49,6 +50,80 @@ type InteropService struct {
 	SslServer           types.String                `tfsdk:"ssl_server"`
 	SslsniServer        types.String                `tfsdk:"sslsni_server"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var InteropServiceLocalAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "http_service",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var InteropServiceLocalPortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "http_service",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var InteropServiceHttpsLocalAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "https_service",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var InteropServiceHttpsLocalPortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "https_service",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var InteropServiceSSLServerConfigTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "https_service",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var InteropServiceSSLServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "https_service",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"server"},
+		},
+	},
+}
+var InteropServiceSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "https_service",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"sni"},
+		},
+	},
 }
 
 var InteropServiceObjectType = map[string]attr.Type{
@@ -130,6 +205,7 @@ func (data InteropService) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "InteropService.name", path.Base("/mgmt/config/default/InteropService/IOP-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

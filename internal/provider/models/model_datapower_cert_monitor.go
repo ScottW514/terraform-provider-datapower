@@ -85,6 +85,7 @@ func (data CertMonitor) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "CertMonitor.name", path.Base("/mgmt/config/default/CertMonitor/Certificate Monitor"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

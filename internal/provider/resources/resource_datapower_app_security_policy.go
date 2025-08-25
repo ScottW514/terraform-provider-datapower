@@ -84,17 +84,17 @@ func (r *AppSecurityPolicyResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"request_maps": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A list of Web Request Profile objects and their matching criteria. If the client request meets the matching criteria, its Web Request Profile runs.", "request-match", "").String,
-				NestedObject:        models.DmWebAppRequestPolicyMapResourceSchema,
+				NestedObject:        models.GetDmWebAppRequestPolicyMapResourceSchema(),
 				Required:            true,
 			},
 			"response_maps": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A list of Web Response Profile objects and their matching criteria. If the server response meets the matching criteria, its Web Response Profile runs.", "response-match", "").String,
-				NestedObject:        models.DmWebAppResponsePolicyMapResourceSchema,
+				NestedObject:        models.GetDmWebAppResponsePolicyMapResourceSchema(),
 				Required:            true,
 			},
 			"error_maps": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A list of Error Policy objects (Processing Rules) and their matching criteria. If an error meets the matching criteria, its Error Policy runs.", "error-match", "").String,
-				NestedObject:        models.DmPolicyMapResourceSchema,
+				NestedObject:        models.GetDmPolicyMapResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

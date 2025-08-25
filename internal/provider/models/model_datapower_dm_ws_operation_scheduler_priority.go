@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,14 @@ type DmWSOperationSchedulerPriority struct {
 	SchedulerPriorityWsdlComponentValue types.String `tfsdk:"scheduler_priority_wsdl_component_value"`
 	SchedulerPrioritySubscription       types.String `tfsdk:"scheduler_priority_subscription"`
 	SchedulerPriorityFragmentId         types.String `tfsdk:"scheduler_priority_fragment_id"`
+}
+
+var DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "scheduler_priority_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
 }
 
 var DmWSOperationSchedulerPriorityObjectType = map[string]attr.Type{
@@ -57,63 +66,73 @@ var DmWSOperationSchedulerPriorityObjectDefault = map[string]attr.Value{
 	"scheduler_priority_subscription":         types.StringNull(),
 	"scheduler_priority_fragment_id":          types.StringNull(),
 }
-var DmWSOperationSchedulerPriorityDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"scheduler_priority": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Service Priority", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
-			Computed:            true,
+
+func GetDmWSOperationSchedulerPriorityDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSOperationSchedulerPriorityDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"scheduler_priority": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Service Priority", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
+				Computed:            true,
+			},
+			"scheduler_priority_wsdl_component_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+			},
+			"scheduler_priority_wsdl_component_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Computed:            true,
+			},
+			"scheduler_priority_subscription": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Computed:            true,
+			},
+			"scheduler_priority_fragment_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Computed:            true,
+			},
 		},
-		"scheduler_priority_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-		},
-		"scheduler_priority_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Computed:            true,
-		},
-		"scheduler_priority_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Computed:            true,
-		},
-		"scheduler_priority_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmWSOperationSchedulerPriorityDataSourceSchema
 }
-var DmWSOperationSchedulerPriorityResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"scheduler_priority": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Service Priority", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
+func GetDmWSOperationSchedulerPriorityResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSOperationSchedulerPriorityResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"scheduler_priority": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Service Priority", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
+				},
+				Default: stringdefault.StaticString("normal"),
 			},
-			Default: stringdefault.StaticString("normal"),
-		},
-		"scheduler_priority_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+			"scheduler_priority_wsdl_component_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+				},
+				Default: stringdefault.StaticString("all"),
 			},
-			Default: stringdefault.StaticString("all"),
+			"scheduler_priority_wsdl_component_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Optional:            true,
+			},
+			"scheduler_priority_subscription": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"scheduler_priority_fragment_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Optional:            true,
+			},
 		},
-		"scheduler_priority_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Optional:            true,
-		},
-		"scheduler_priority_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Optional:            true,
-		},
-		"scheduler_priority_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSOperationSchedulerPriorityResourceSchema
 }
 
 func (data DmWSOperationSchedulerPriority) IsNull() bool {
@@ -140,6 +159,7 @@ func (data DmWSOperationSchedulerPriority) ToBody(ctx context.Context, pathRoot 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.SchedulerPriority.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SchedulerPriority`, data.SchedulerPriority.ValueString())
 	}

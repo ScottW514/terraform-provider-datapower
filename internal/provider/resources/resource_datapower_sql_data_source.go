@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &SQLDataSourceResource{}
@@ -98,8 +99,11 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.", "password-alias", "password_alias").String,
-				Required:            true,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.", "password-alias", "password_alias").AddRequiredWhen(models.SQLDataSourcePasswordAliasCondVal.String()).String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SQLDataSourcePasswordAliasCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"data_source_id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier of the data source. The terminology differs by vendor. <ul><li><b>Db2</b> - The IBM Db2 database alias.</li><li><b>IMS</b> - The name of the IBM IMS data store.</li><li><b>Microsoft SQL Server</b> - The name of the Microsoft SQL Server data source.</li><li><b>Oracle</b> - The Oracle system identifier (SID) or service name.</li><li><b>Sybase</b> - The name of the Sybase database.</li></ul>", "id", "").String,
@@ -124,14 +128,13 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(128),
 			},
 			"sql_data_source_config_nv_pairs": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify configuration parameters for the data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some parameters in the configuration file are informational and define characteristics about the environment. These parameters cannot be modified.", "sql-config-param", "").String,
-				NestedObject:        models.DmSQLDataSourceConfigNVPairResourceSchema,
+				NestedObject:        models.GetDmSQLDataSourceConfigNVPairResourceSchema(),
 				Optional:            true,
 			},
 			"max_connection": schema.Int64Attribute{
@@ -139,17 +142,17 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(10),
 			},
 			"oracle_data_source_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Data source type - Oracle", "oracle-datasource-type", "").AddStringEnum("SID", "ServiceName").AddDefaultValue("SID").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Data source type - Oracle", "oracle-datasource-type", "").AddStringEnum("SID", "ServiceName").AddDefaultValue("SID").AddRequiredWhen(models.SQLDataSourceOracleDataSourceTypeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("SID", "ServiceName"),
+					validators.ConditionalRequiredString(models.SQLDataSourceOracleDataSourceTypeCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("SID"),
 			},
@@ -176,35 +179,41 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(false),
 			},
 			"encryption_method_mssql": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.", "mssql-encryption-method", "").AddStringEnum("NoEncryption", "SSL", "RequestSSL", "LoginSSL").AddDefaultValue("NoEncryption").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.", "mssql-encryption-method", "").AddStringEnum("NoEncryption", "SSL", "RequestSSL", "LoginSSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodMSSQLCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL", "RequestSSL", "LoginSSL"),
+					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodMSSQLCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("NoEncryption"),
 			},
 			"encryption_method_oracle": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "oracle-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "oracle-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodOracleCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL"),
+					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodOracleCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("NoEncryption"),
 			},
 			"encryption_method_db2": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an IBM Db2 database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "db2-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an IBM Db2 database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "db2-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodDB2CondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL"),
+					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodDB2CondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("NoEncryption"),
 			},
 			"truststore_ref": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Truststore", "truststore", "crypto_val_cred").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Truststore", "truststore", "crypto_val_cred").AddRequiredWhen(models.SQLDataSourceTruststoreRefCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SQLDataSourceTruststoreRefCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"validate_server_certificate": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Validate server certificate", "validate-server-certificate", "").AddStringEnum("Disabled", "Enabled").AddDefaultValue("Enabled").String,

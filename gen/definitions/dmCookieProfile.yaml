@@ -28,10 +28,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseSharedSecretObject
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: Type
       value:

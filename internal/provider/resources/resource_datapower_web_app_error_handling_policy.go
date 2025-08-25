@@ -37,6 +37,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WebAppErrorHandlingPolicyResource{}
@@ -93,12 +94,18 @@ func (r *WebAppErrorHandlingPolicyResource) Schema(ctx context.Context, req reso
 				Default: stringdefault.StaticString("standard"),
 			},
 			"url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL", "error-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("URL", "error-url", "").AddRequiredWhen(models.WebAppErrorHandlingPolicyURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebAppErrorHandlingPolicyURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"error_style_policy_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Error rule", "error-rule", "style_policy_rule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Error rule", "error-rule", "style_policy_rule").AddRequiredWhen(models.WebAppErrorHandlingPolicyErrorStylePolicyRuleCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WebAppErrorHandlingPolicyErrorStylePolicyRuleCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"error_monitor": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Monitor", "error-monitor", "count_monitor").String,

@@ -52,21 +52,17 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnablePeerGroup
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: EnablePeerGroup
         value:
-        - 'off'
-      - evaluation: property-does-not-equal
-        attribute: PrimaryCount
-        value:
-        - '1'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: PeerGroup
         value:
         - ''
@@ -88,38 +84,16 @@ attributes:
   description: Gateway-peering group
   cli_alias: peer-group
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EnablePeerGroup
     value:
-    - 'on'
+    - true
 - name: MonitorPort
   type: Int64
   default: 26380
   description: Specify the port to monitor for state synchronization. The default
     value is 26380. Ensure that all peers use the same port.
   cli_alias: monitor-port
-  required_when:
-  - evaluation: logical-and
-    conditions:
-    - evaluation: property-equals
-      attribute: PrimaryCount
-      value:
-      - '1'
-    - evaluation: property-equals
-      attribute: PeerGroup
-      value:
-      - ''
-  ignored_when:
-  - evaluation: logical-and
-    conditions:
-    - evaluation: property-does-not-equal
-      attribute: PrimaryCount
-      value:
-      - '1'
-    - evaluation: property-equals
-      attribute: PeerGroup
-      value:
-      - ''
 - name: EnablePeerGroup
   type: Bool
   default: true
@@ -136,7 +110,7 @@ attributes:
     By default, TLS is enabled. In peer-based mode, ensure that all peers use the
     same TLS configuration.
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: PeerGroup
     value:
     - ''
@@ -157,7 +131,7 @@ attributes:
     .
   cli_alias: local-directory
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PersistenceLocation
     value:
     - local

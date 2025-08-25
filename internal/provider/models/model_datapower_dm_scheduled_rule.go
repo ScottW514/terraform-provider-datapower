@@ -45,29 +45,36 @@ var DmScheduledRuleObjectDefault = map[string]attr.Value{
 	"rule":     types.StringNull(),
 	"interval": types.Int64Null(),
 }
-var DmScheduledRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"rule": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the rule to run.", "", "style_policy_rule").String,
-			Computed:            true,
+
+func GetDmScheduledRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmScheduledRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"rule": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the rule to run.", "", "style_policy_rule").String,
+				Computed:            true,
+			},
+			"interval": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmScheduledRuleDataSourceSchema
 }
-var DmScheduledRuleResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"rule": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the rule to run.", "", "style_policy_rule").String,
-			Required:            true,
+func GetDmScheduledRuleResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmScheduledRuleResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"rule": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the rule to run.", "", "style_policy_rule").String,
+				Required:            true,
+			},
+			"interval": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmScheduledRuleResourceSchema
 }
 
 func (data DmScheduledRule) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmScheduledRule) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Rule.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Rule`, data.Rule.ValueString())
 	}

@@ -50,49 +50,64 @@ var DmOIDCHybridResponseTypeObjectDefault = map[string]attr.Value{
 	"code_access_token":          types.BoolValue(false),
 	"code_id_token_access_token": types.BoolValue(false),
 }
-var DmOIDCHybridResponseTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"code_id_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("code id_token", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmOIDCHybridResponseTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmOIDCHybridResponseTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"code_id_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("code id_token", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"code_access_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("code token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"code_id_token_access_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("code id_token token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"code_access_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("code token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"code_id_token_access_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("code id_token token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmOIDCHybridResponseTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmOIDCHybridResponseTypeDataSourceSchema
 }
-var DmOIDCHybridResponseTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmOIDCHybridResponseTypeObjectType,
-			DmOIDCHybridResponseTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"code_id_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("code id_token", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmOIDCHybridResponseTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmOIDCHybridResponseTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmOIDCHybridResponseTypeObjectType,
+				DmOIDCHybridResponseTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"code_id_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("code id_token", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"code_access_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("code token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"code_id_token_access_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("code id_token token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"code_access_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("code token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"code_id_token_access_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("code id_token token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmOIDCHybridResponseTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmOIDCHybridResponseTypeResourceSchema.Required = true
+	} else {
+		DmOIDCHybridResponseTypeResourceSchema.Optional = true
+		DmOIDCHybridResponseTypeResourceSchema.Computed = true
+	}
+	return DmOIDCHybridResponseTypeResourceSchema
 }
 
 func (data DmOIDCHybridResponseType) IsNull() bool {
@@ -107,27 +122,13 @@ func (data DmOIDCHybridResponseType) IsNull() bool {
 	}
 	return true
 }
-func GetDmOIDCHybridResponseTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmOIDCHybridResponseTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmOIDCHybridResponseTypeDataSourceSchema
-}
-
-func GetDmOIDCHybridResponseTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmOIDCHybridResponseTypeResourceSchema.Required = true
-	} else {
-		DmOIDCHybridResponseTypeResourceSchema.Optional = true
-		DmOIDCHybridResponseTypeResourceSchema.Computed = true
-	}
-	DmOIDCHybridResponseTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmOIDCHybridResponseTypeResourceSchema
-}
 
 func (data DmOIDCHybridResponseType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.CodeIdToken.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`code_id_token`, tfutils.StringFromBool(data.CodeIdToken, ""))
 	}

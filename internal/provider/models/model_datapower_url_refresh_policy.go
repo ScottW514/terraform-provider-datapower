@@ -77,6 +77,7 @@ func (data URLRefreshPolicy) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -84,9 +85,9 @@ func (data URLRefreshPolicy) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.UrlRefreshRule.IsNull() {
-		var values []DmURLRefreshRule
-		data.UrlRefreshRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmURLRefreshRule
+		data.UrlRefreshRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`URLRefreshRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}

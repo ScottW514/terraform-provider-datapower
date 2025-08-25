@@ -36,6 +36,7 @@ import (
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"gopkg.in/yaml.v3"
 )
 
@@ -96,6 +97,7 @@ type YamlConfig struct {
 	ListItem          bool                  `yaml:"list_item"`
 	RestEndpoint      string                `yaml:"rest_endpoint"`
 	UpdateOnly        bool                  `yaml:"update_only"`
+	WriteOnlyAttrs    bool                  `yaml:"write_only_attrs"`
 	DefaultDomainOnly bool                  `yaml:"default_domain_only"`
 	PutCreate         bool                  `yaml:"put_create"`
 	Description       string                `yaml:"description"`
@@ -109,10 +111,14 @@ type YamlConfig struct {
 }
 
 type YamlValidationTest struct {
-	Evaluation string               `yaml:"evaluation"`
-	Conditions []YamlValidationTest `yaml:"conditions"`
-	Attribute  string               `yaml:"attribute"`
-	Value      []string             `yaml:"value"`
+	Evaluation  string               `yaml:"evaluation"`
+	Conditions  []YamlValidationTest `yaml:"conditions"`
+	Attribute   string               `yaml:"attribute"`
+	AttrTfName  string               `yaml:"attr_tf_name"`
+	AttrPath    string               `yaml:"attr_path"`
+	AttrType    string               `yaml:"attr_type"`
+	AttrDefault string               `yaml:"attr_default"`
+	Value       []string             `yaml:"value"`
 }
 
 type YamlActionAttribute struct {
@@ -132,6 +138,7 @@ type YamlConfigAttribute struct {
 	Required        bool                 `yaml:"required"`
 	Computed        bool                 `yaml:"computed"`
 	WriteOnly       bool                 `yaml:"write_only"`
+	WriteOnlyAttrs  bool                 `yaml:"write_only_attrs"`
 	Description     string               `yaml:"description"`
 	Deprecated      string               `yaml:"deprecated"`
 	Sensitive       string               `yaml:"sensitive"`
@@ -157,31 +164,44 @@ type YamlConfigAttribute struct {
 	IgnoredWhen     []YamlValidationTest `yaml:"ignored_when"`
 }
 
-// camelCase converts a string (possibly with spaces or hyphens) to CamelCase.
-func camelCase(s string) string {
-	var b strings.Builder
-	s = strings.ReplaceAll(s, "-", " ")
-	parts := strings.Fields(s)
-	for _, part := range parts {
-		b.WriteString(cases.Title(language.English).String(part))
+// getAttributeDefault returns attribute default value
+func getAttributeDefault(attributes []YamlConfigAttribute, name string) string {
+	for _, attr := range attributes {
+		if attr.Name == name {
+			return attr.Default
+		}
 	}
-	return b.String()
+	return "ERROR-NOT-FOUND"
+}
+
+// getAttributeTfName returns attribute TfName
+func getAttributeTfName(attributes []YamlConfigAttribute, name string) string {
+	for _, attr := range attributes {
+		if attr.Name == name {
+			return attr.TfName
+		}
+	}
+	return tfutils.ToTfName(name)
+}
+
+// getAttributeType returns attribute type or dm_type value
+func getAttributeType(attributes []YamlConfigAttribute, name string) string {
+	for _, attr := range attributes {
+		if attr.Name == name {
+			if attr.Type != "" {
+				return attr.Type
+			} else if attr.DmType != "" {
+				return attr.DmType
+			}
+		}
+	}
+	return "ERROR-NOT-FOUND"
 }
 
 // hasDomainAttribute returns true if an "AppDomain" attribute is present.
 func hasDomainAttribute(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
 		if attr.Name == "AppDomain" {
-			return true
-		}
-	}
-	return false
-}
-
-// hasWriteOnlyAttribute returns true if any attribute is write-only.
-func hasWriteOnlyAttribute(attributes []YamlConfigAttribute) bool {
-	for _, attr := range attributes {
-		if attr.WriteOnly {
 			return true
 		}
 	}
@@ -208,74 +228,6 @@ func isStringList(attribute YamlConfigAttribute) bool {
 	return attribute.Type == "List" && attribute.ElementType == "String"
 }
 
-// snakeCase converts a string (possibly with spaces or hyphens) to snake_case.
-func snakeCase(s string) string {
-	abbreviations := []string{
-		"AAA",
-		"API",
-		"AAA",
-		"AS1",
-		"AS2",
-		"AS3",
-		"B2B",
-		"EBMS2",
-		"EBMS3",
-		"GraphQL",
-		"MQv9",
-		"OAuth",
-		"SSKey",
-		"SSL",
-		"TAM",
-		"XACML",
-		"XPath",
-	}
-	for _, a := range abbreviations {
-		s = strings.ReplaceAll(s, a, "-"+strings.ToLower(a)+"-")
-	}
-
-	var b strings.Builder
-	i := 0
-	n := len(s)
-	for i < n {
-		r := rune(s[i])
-		if unicode.IsSpace(r) || r == '-' || r == '_' {
-			if b.Len() > 0 && b.String()[b.Len()-1] != '_' {
-				b.WriteRune('_')
-			}
-			i++
-			continue
-		}
-
-		isUpper := unicode.IsUpper(r)
-
-		insert := false
-		if isUpper && i > 0 {
-			prev := rune(s[i-1])
-			isPrevLower := unicode.IsLower(prev)
-			isPrevUpper := unicode.IsUpper(prev)
-			if isPrevLower {
-				insert = true
-			} else if isPrevUpper {
-				if i+1 < n {
-					next := rune(s[i+1])
-					isNextLower := unicode.IsLower(next)
-					if isNextLower {
-						insert = true
-					}
-				}
-			}
-		}
-
-		if insert {
-			b.WriteRune('_')
-		}
-
-		b.WriteRune(unicode.ToLower(r))
-		i++
-	}
-	return strings.Trim(b.String(), "_")
-}
-
 // toGoName converts a snake_case string to Go-style CamelCase.
 func toGoName(s string) string {
 	var b strings.Builder
@@ -297,18 +249,20 @@ func updateComputed(attributes []YamlConfigAttribute) bool {
 
 // Map of templating functions.
 var functions = template.FuncMap{
-	"camelCase":             camelCase,
-	"hasDomainAttribute":    hasDomainAttribute,
-	"hasWriteOnlyAttribute": hasWriteOnlyAttribute,
-	"isList":                isList,
-	"isObject":              isObject,
-	"isObjectList":          isObjectList,
-	"isStringList":          isStringList,
-	"snakeCase":             snakeCase,
-	"strContains":           strings.Contains,
-	"updateComputed":        updateComputed,
-	"toGoName":              toGoName,
-	"quote":                 strconv.Quote,
+	"getAttributeDefault": getAttributeDefault,
+	"getAttributeTfName":  getAttributeTfName,
+	"getAttributeType":    getAttributeType,
+	"hasDomainAttribute":  hasDomainAttribute,
+	"isList":              isList,
+	"isObject":            isObject,
+	"isObjectList":        isObjectList,
+	"isStringList":        isStringList,
+	"lower":               strings.ToLower,
+	"updateComputed":      updateComputed,
+	"strContains":         strings.Contains,
+	"toGoName":            toGoName,
+	"toTfName":            tfutils.ToTfName,
+	"quote":               strconv.Quote,
 }
 
 // buildAttribute derives TfName from Name if not set, handling camel to snake conversion
@@ -329,6 +283,9 @@ func buildAttribute(attr *YamlConfigAttribute) {
 	if attr.TfName == "" {
 		attr.TfName = strings.ReplaceAll(b.String(), "-", "_")
 		attr.TfName = strings.ReplaceAll(attr.TfName, ".", "_")
+	}
+	if attr.WriteOnly {
+		attr.TfName = attr.TfName + "_wo"
 	}
 }
 
@@ -426,7 +383,7 @@ func main() {
 			if configs[i].ModelOnly && (strings.Contains(t.path, "data_source") || strings.Contains(t.path, "resource") || strings.Contains(t.path, "data-source.tf") || strings.Contains(t.path, "resource.tf")) {
 				continue
 			}
-			outputPath := t.prefix + snakeCase(configs[i].Name) + t.suffix
+			outputPath := t.prefix + tfutils.ToTfName(configs[i].Name) + t.suffix
 			processTemplate(t.path, outputPath, configs[i])
 		}
 	}

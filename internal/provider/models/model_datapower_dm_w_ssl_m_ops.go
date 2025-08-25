@@ -57,67 +57,74 @@ var DmWSSLMOpsObjectDefault = map[string]attr.Value{
 	"threshold": types.Int64Null(),
 	"action":    types.StringNull(),
 }
-var DmWSSLMOpsDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"operation": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the operation to monitor. The operation is defined in the WSDL file. The current implementation is to monitor all operations in the WSDL file.", "operation", "").AddStringEnum("all").AddDefaultValue("all").String,
-			Computed:            true,
+
+func GetDmWSSLMOpsDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSSLMOpsDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"operation": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the operation to monitor. The operation is defined in the WSDL file. The current implementation is to monitor all operations in the WSDL file.", "operation", "").AddStringEnum("all").AddDefaultValue("all").String,
+				Computed:            true,
+			},
+			"target": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the target activity to monitor. Define the operation for each monitored activity.", "target", "").AddStringEnum("front", "rate").String,
+				Computed:            true,
+			},
+			"severity": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action threshold with its value. For example, you can define low and high thresholds as transactions rates increase. If the low threshold is 100 transactions/second and that limit is reached, some action is taken. Then, if the high threshold is 300 transactions/second and that limit is reached, another action is taken.", "severity", "").AddStringEnum("low", "high").String,
+				Computed:            true,
+			},
+			"threshold": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").String,
+				Computed:            true,
+			},
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to take when the threshold is reached.", "action", "").AddStringEnum("log", "throttle").String,
+				Computed:            true,
+			},
 		},
-		"target": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the target activity to monitor. Define the operation for each monitored activity.", "target", "").AddStringEnum("front", "rate").String,
-			Computed:            true,
-		},
-		"severity": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action threshold with its value. For example, you can define low and high thresholds as transactions rates increase. If the low threshold is 100 transactions/second and that limit is reached, some action is taken. Then, if the high threshold is 300 transactions/second and that limit is reached, another action is taken.", "severity", "").AddStringEnum("low", "high").String,
-			Computed:            true,
-		},
-		"threshold": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").String,
-			Computed:            true,
-		},
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to take when the threshold is reached.", "action", "").AddStringEnum("log", "throttle").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmWSSLMOpsDataSourceSchema
 }
-var DmWSSLMOpsResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"operation": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the operation to monitor. The operation is defined in the WSDL file. The current implementation is to monitor all operations in the WSDL file.", "operation", "").AddStringEnum("all").AddDefaultValue("all").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("all"),
+func GetDmWSSLMOpsResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSSLMOpsResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"operation": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the operation to monitor. The operation is defined in the WSDL file. The current implementation is to monitor all operations in the WSDL file.", "operation", "").AddStringEnum("all").AddDefaultValue("all").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("all"),
+				},
+				Default: stringdefault.StaticString("all"),
 			},
-			Default: stringdefault.StaticString("all"),
-		},
-		"target": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the target activity to monitor. Define the operation for each monitored activity.", "target", "").AddStringEnum("front", "rate").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("front", "rate"),
+			"target": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the target activity to monitor. Define the operation for each monitored activity.", "target", "").AddStringEnum("front", "rate").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("front", "rate"),
+				},
+			},
+			"severity": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action threshold with its value. For example, you can define low and high thresholds as transactions rates increase. If the low threshold is 100 transactions/second and that limit is reached, some action is taken. Then, if the high threshold is 300 transactions/second and that limit is reached, another action is taken.", "severity", "").AddStringEnum("low", "high").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("low", "high"),
+				},
+			},
+			"threshold": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").String,
+				Optional:            true,
+			},
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to take when the threshold is reached.", "action", "").AddStringEnum("log", "throttle").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("log", "throttle"),
+				},
 			},
 		},
-		"severity": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action threshold with its value. For example, you can define low and high thresholds as transactions rates increase. If the low threshold is 100 transactions/second and that limit is reached, some action is taken. Then, if the high threshold is 300 transactions/second and that limit is reached, another action is taken.", "severity", "").AddStringEnum("low", "high").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("low", "high"),
-			},
-		},
-		"threshold": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").String,
-			Optional:            true,
-		},
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to take when the threshold is reached.", "action", "").AddStringEnum("log", "throttle").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("log", "throttle"),
-			},
-		},
-	},
+	}
+	return DmWSSLMOpsResourceSchema
 }
 
 func (data DmWSSLMOps) IsNull() bool {
@@ -144,6 +151,7 @@ func (data DmWSSLMOps) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Operation.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Operation`, data.Operation.ValueString())
 	}

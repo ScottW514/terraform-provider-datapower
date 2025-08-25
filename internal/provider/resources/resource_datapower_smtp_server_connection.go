@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &SMTPServerConnectionResource{}
@@ -105,8 +106,11 @@ func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("plain"),
 			},
 			"account_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "username", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "username", "").AddRequiredWhen(models.SMTPServerConnectionAccountNameCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SMTPServerConnectionAccountNameCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"account_password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "password-alias", "password_alias").String,

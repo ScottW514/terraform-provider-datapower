@@ -68,10 +68,10 @@ attributes:
     declaring failure.
   cli_alias: udp-timeout
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseTCP
     value:
-    - 'on'
+    - true
 - name: CacheTickets
   type: Bool
   default: true
@@ -87,10 +87,10 @@ attributes:
     to cache in this realm.
   cli_alias: max-cached-tickets
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: CacheTickets
     value:
-    - 'off'
+    - false
 - name: MinCachedTicketValidity
   type: Int64
   minimum: 1
@@ -100,7 +100,7 @@ attributes:
     on a Kerberos service ticket for it to be reused from the ticket cache.
   cli_alias: min-cached-ticket-validity
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: CacheTickets
     value:
-    - 'off'
+    - false

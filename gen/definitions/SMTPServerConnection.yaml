@@ -67,10 +67,10 @@ attributes:
     policy in the associated user agent.
   cli_alias: auth
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Options
     value:
-    - Auth
+    - auth
 - name: AccountName
   type: String
   description: The account or user name of the SMTP client to authenticate on the
@@ -79,15 +79,15 @@ attributes:
     in the associated user agent.
   cli_alias: username
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Options
     value:
-    - Auth
+    - auth
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Options
     value:
-    - Auth
+    - auth
 - name: AccountPasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -97,10 +97,10 @@ attributes:
     associated user agent.
   cli_alias: password-alias
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Options
     value:
-    - Auth
+    - auth
 - name: SSLClientConfigType
   type: String
   enum:
@@ -116,7 +116,7 @@ attributes:
     Gateway and its targets.
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLClientConfigType
     value:
     - client

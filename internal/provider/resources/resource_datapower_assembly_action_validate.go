@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AssemblyActionValidateResource{}
@@ -99,8 +100,11 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 				Default: stringdefault.StaticString("all"),
 			},
 			"schema": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Schema", "schema", "api_schema").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Schema", "schema", "api_schema").AddRequiredWhen(models.AssemblyActionValidateSchemaCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionValidateSchemaCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"input": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable in the API context that contains the data to validate. The content of the <tt>body</tt> field is the input to validate. The default variable is <tt>message</tt> .", "input", "").AddDefaultValue("message").String,
@@ -113,8 +117,11 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"definition": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to a schema in the API definition. Use the format <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined schema.", "definition", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to a schema in the API definition. Use the format <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined schema.", "definition", "").AddRequiredWhen(models.AssemblyActionValidateDefinitionCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionValidateDefinitionCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"compile_settings": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Compile settings", "compile-settings-validate", "compile_settings").String,

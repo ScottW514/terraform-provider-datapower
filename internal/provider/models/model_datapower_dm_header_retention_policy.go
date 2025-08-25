@@ -45,23 +45,30 @@ var DmHeaderRetentionPolicyObjectDefault = map[string]attr.Value{
 	"reg_exp":          types.StringNull(),
 	"header_retention": types.ObjectValueMust(DmHeaderRetentionBitmapObjectType, DmHeaderRetentionBitmapObjectDefault),
 }
-var DmHeaderRetentionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmHeaderRetentionPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmHeaderRetentionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"header_retention": GetDmHeaderRetentionBitmapDataSourceSchema("Specify the headers to retain in outbound traffic.", "", ""),
 		},
-		"header_retention": GetDmHeaderRetentionBitmapDataSourceSchema("Specify the headers to retain in outbound traffic.", "", ""),
-	},
+	}
+	return DmHeaderRetentionPolicyDataSourceSchema
 }
-var DmHeaderRetentionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
+func GetDmHeaderRetentionPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmHeaderRetentionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"header_retention": GetDmHeaderRetentionBitmapResourceSchema("Specify the headers to retain in outbound traffic.", "", "", false),
 		},
-		"header_retention": GetDmHeaderRetentionBitmapResourceSchema("Specify the headers to retain in outbound traffic.", "", "", false),
-	},
+	}
+	return DmHeaderRetentionPolicyResourceSchema
 }
 
 func (data DmHeaderRetentionPolicy) IsNull() bool {
@@ -81,6 +88,7 @@ func (data DmHeaderRetentionPolicy) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

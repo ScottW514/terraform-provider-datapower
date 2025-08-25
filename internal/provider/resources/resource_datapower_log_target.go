@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &LogTargetResource{}
@@ -89,7 +90,7 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"log_events": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Subscribes the log target to particular event categories. Some example categories include:</p><dl><dt>auth</dt><dd>Authorization events</dd><dt>mgmt</dt><dd>Configuration management events</dd><dt>xslt</dt><dd>XSLT processing events</dd></dl><p>For each event category chosen (including the <tt>all</tt> category), you can establish a priority level that must be met before the log message will be captured by the log target. Without event subscriptions, no events are included by default. To allow the log target to capture messages, the configuration must include at least one event subscription. The category can be the <tt>all</tt> category.</p>", "event", "").String,
-				NestedObject:        models.DmLogEventResourceSchema,
+				NestedObject:        models.GetDmLogEventResourceSchema(),
 				Optional:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -148,78 +149,100 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(false),
 			},
 			"local_identifier": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify a descriptive string that identifies the log target to remote recipients. For syslog destinations, do not include spaces.", "local-ident", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a descriptive string that identifies the log target to remote recipients. For syslog destinations, do not include spaces.", "local-ident", "").AddRequiredWhen(models.LogTargetLocalIdentifierCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetLocalIdentifierCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"email_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Recipient email address", "email-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Recipient email address", "email-address", "").AddRequiredWhen(models.LogTargetEmailAddressCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetEmailAddressCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"sender_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address of the sender. The value must match the email address of the crypto key when email messages are signed.", "sender-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address of the sender. The value must match the email address of the crypto key when email messages are signed.", "sender-address", "").AddRequiredWhen(models.LogTargetSenderAddressCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetSenderAddressCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"smtp_domain": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fully-qualified domain name of the SMTP client. This information is part of the SMTP session initiation (HELO command).", "smtp-domain", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fully-qualified domain name of the SMTP client. This information is part of the SMTP session initiation (HELO command).", "smtp-domain", "").AddRequiredWhen(models.LogTargetSMTPDomainCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetSMTPDomainCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of file-based log targets. Enter a value in the range 100 - 50000. The default value is 500.", "size", "").AddIntegerRange(100, 50000).AddDefaultValue("500").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of file-based log targets. Enter a value in the range 100 - 50000. The default value is 500.", "size", "").AddIntegerRange(100, 50000).AddDefaultValue("500").AddRequiredWhen(models.LogTargetSizeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(100, 50000),
+					validators.ConditionalRequiredInt64(models.LogTargetSizeCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(500),
 			},
 			"url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP URL to send log entries. Entries are sent with the POST method and uses the default user agent.", "url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP URL to send log entries. Entries are sent with the POST method and uses the default user agent.", "url", "").AddRequiredWhen(models.LogTargetURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"nfs_mount": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("NFS static mount", "nfs-static-mount", "nfs_static_mount").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("NFS static mount", "nfs-static-mount", "nfs_static_mount").AddRequiredWhen(models.LogTargetNFSMountCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetNFSMountCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"local_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt> or <tt>logstore:///filename.log</tt> .", "local-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt> or <tt>logstore:///filename.log</tt> .", "local-file", "").AddRequiredWhen(models.LogTargetLocalFileCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^(logtemp|logstore):[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$"), "Must match :"+"^(logtemp|logstore):[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$"),
+					validators.ConditionalRequiredString(models.LogTargetLocalFileCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"nfs_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).", "nfs-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).", "nfs-file", "").AddRequiredWhen(models.LogTargetNFSFileCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$"), "Must match :"+"^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$"),
+					validators.ConditionalRequiredString(models.LogTargetNFSFileCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"archive_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Archive mode", "archive-mode", "").AddStringEnum("rotate", "upload").AddDefaultValue("rotate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Archive mode", "archive-mode", "").AddStringEnum("rotate", "upload").AddDefaultValue("rotate").AddRequiredWhen(models.LogTargetArchiveModeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("rotate", "upload"),
+					validators.ConditionalRequiredString(models.LogTargetArchiveModeCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("rotate"),
 			},
 			"upload_method": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Upload protocol", "upload-method", "").AddStringEnum("ftp", "scp", "sftp", "smtp").AddDefaultValue("ftp").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Upload protocol", "upload-method", "").AddStringEnum("ftp", "scp", "sftp", "smtp").AddDefaultValue("ftp").AddRequiredWhen(models.LogTargetUploadMethodCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ftp", "scp", "sftp", "smtp"),
+					validators.ConditionalRequiredString(models.LogTargetUploadMethodCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("ftp"),
 			},
 			"rotate": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.", "rotate", "").AddIntegerRange(1, 100).AddDefaultValue("3").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.", "rotate", "").AddIntegerRange(1, 100).AddDefaultValue("3").AddRequiredWhen(models.LogTargetRotateCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 100),
+					validators.ConditionalRequiredInt64(models.LogTargetRotateCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(3),
 			},
@@ -230,40 +253,67 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(false),
 			},
 			"remote_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote server. To establish a secure TLS connection to the server, set this value to the value of the remote host of a TLS proxy service. The local TLS proxy service then securely forwards the log entries to its configured remote server.", "remote-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote server. To establish a secure TLS connection to the server, set this value to the value of the remote host of a TLS proxy service. The local TLS proxy service then securely forwards the log entries to its configured remote server.", "remote-address", "").AddRequiredWhen(models.LogTargetRemoteAddressCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetRemoteAddressCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"remote_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the remote server. If using a local TLS proxy service to establish a secure TLS connection, set this value to the value of the remote port of the TLS proxy service.", "remote-port", "").AddIntegerRange(1, 65535).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
 			"remote_login": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Remote login", "remote-login", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Remote login", "remote-login", "").AddRequiredWhen(models.LogTargetRemoteLoginCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetRemoteLoginCondVal, validators.Evaluation{}, false),
+				},
 			},
-			"remote_password": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.", "", "").String,
+			"remote_password_wo": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.", "", "").AddRequiredWhen(models.LogTargetRemotePasswordCondVal.String()).String,
 				Optional:            true,
+				WriteOnly:           true,
 				Sensitive:           true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetRemotePasswordCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"remote_password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Changes to this value trigger an update to `write_only` value.",
+				Optional:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(
+						validators.Evaluation{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "remote_password_wo",
+							AttrType:    "String",
+							AttrDefault: "",
+							Value:       []string{""},
+						}, validators.Evaluation{}, false),
+				},
 			},
 			"remote_directory": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify an existing writable directory on the remote server to upload files. <ul><li>To denote an absolute directory from the root directory, specify a single forward slash character (/) or equivalent encoded character (%2F) before the fully qualified path. <ul><li>For SCP or SFTP, enter / to resolve to //.</li><li>For FTP, enter %2F to resolve to /%2F.</li></ul></li><li>To denote a directory that is relative to the home directory of a user, do not specify a forward slash character or encoded character before the fully qualified file name.</li></ul>", "remote-directory", "").String,
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "local-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "local-address", "").AddRequiredWhen(models.LogTargetLocalAddressCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.LogTargetLocalAddressCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"syslog_facility": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the syslog log facility (per RFC 3164) to include in messages sent to the syslog log target.", "facility", "").AddStringEnum("user", "security", "authpriv", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7").AddDefaultValue("user").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the syslog log facility (per RFC 3164) to include in messages sent to the syslog log target.", "facility", "").AddStringEnum("user", "security", "authpriv", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7").AddDefaultValue("user").AddRequiredWhen(models.LogTargetSyslogFacilityCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("user", "security", "authpriv", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"),
+					validators.ConditionalRequiredString(models.LogTargetSyslogFacilityCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("user"),
 			},
@@ -272,7 +322,6 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1000),
 				},
 				Default: int64default.StaticInt64(100),
@@ -282,7 +331,6 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 100),
 				},
 				Default: int64default.StaticInt64(1),
@@ -292,7 +340,6 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 90),
 				},
 				Default: int64default.StaticInt64(60),
@@ -302,7 +349,6 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 600),
 				},
 				Default: int64default.StaticInt64(15),
@@ -312,7 +358,6 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 60),
 				},
 				Default: int64default.StaticInt64(0),
@@ -335,17 +380,17 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"log_objects": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify specific objects to log events for. Object filters allow only those log messages for specific objects to be written to this log target. Object filters are based on object classes. With this filter, you can create a log target that collects only log messages generated by particular instances of the specified object classes.", "object", "").String,
-				NestedObject:        models.DmLogObjectResourceSchema,
+				NestedObject:        models.GetDmLogObjectResourceSchema(),
 				Optional:            true,
 			},
 			"log_ip_filter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify specific IP addresses to log events for. IP address filters allow only those log messages from specific IP addresses to be written to this log target.", "ip-filter", "").String,
-				NestedObject:        models.DmLogIPFilterResourceSchema,
+				NestedObject:        models.GetDmLogIPFilterResourceSchema(),
 				Optional:            true,
 			},
 			"log_triggers": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify event trigger points. Event triggers start actions only when triggered by a specified message ID or event code. With this filter, it is possible to create a log target that collects only the results of the specified trigger action. For example, to trigger the generation of an error report when a certain event occurs use the <b>save error-report</b> command.", "trigger", "").String,
-				NestedObject:        models.DmLogTriggerResourceSchema,
+				NestedObject:        models.GetDmLogTriggerResourceSchema(),
 				Optional:            true,
 			},
 			"ssl_client_profile": schema.StringAttribute{
@@ -366,7 +411,6 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 600),
 				},
 				Default: int64default.StaticInt64(1),
@@ -376,7 +420,6 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 100),
 				},
 				Default: int64default.StaticInt64(1),
@@ -386,17 +429,17 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 600),
 				},
 				Default: int64default.StaticInt64(20),
 			},
 			"log_precision": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the precision for the timestamp of log messages. The default value is seconds.", "precision", "").AddStringEnum("second", "microsecond").AddDefaultValue("second").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the precision for the timestamp of log messages. The default value is seconds.", "precision", "").AddStringEnum("second", "microsecond").AddDefaultValue("second").AddRequiredWhen(models.LogTargetLogPrecisionCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("second", "microsecond"),
+					validators.ConditionalRequiredString(models.LogTargetLogPrecisionCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("second"),
 			},
@@ -426,7 +469,7 @@ func (r *LogTargetResource) Create(ctx context.Context, req resource.CreateReque
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-	var data models.LogTarget
+	var data, config models.LogTarget
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -436,14 +479,24 @@ func (r *LogTargetResource) Create(ctx context.Context, req resource.CreateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
-	body := data.ToBody(ctx, `LogTarget`)
+	body := data.ToBody(ctx, `LogTarget`, &config)
 	_, err := r.pData.Client.Post(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
 		return
 	}
+	getRes, getErr := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	if getErr != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object after creation (GET), got error: %s", getErr))
+		return
+	}
+	data.UpdateUnknownFromBody(ctx, `LogTarget`, getRes)
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
 		return
@@ -484,7 +537,7 @@ func (r *LogTargetResource) Update(ctx context.Context, req resource.UpdateReque
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-	var data models.LogTarget
+	var data, config models.LogTarget
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -494,7 +547,11 @@ func (r *LogTargetResource) Update(ctx context.Context, req resource.UpdateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `LogTarget`))
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `LogTarget`, &config))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return

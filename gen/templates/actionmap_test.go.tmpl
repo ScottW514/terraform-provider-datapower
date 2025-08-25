@@ -46,7 +46,7 @@ func TestAccActions{{$root.Name}}{{toGoName .Name}}(t *testing.T) {
     {
       target_id     = "AccTest_{{$root.Name}}"
       target_domain = "acceptance_test"
-      target_type   = "datapower_{{snakeCase $root.Name}}"
+      target_type   = "datapower_{{toTfName $root.Name}}"
       on_create     = true
       on_update     = false
       on_delete     = false

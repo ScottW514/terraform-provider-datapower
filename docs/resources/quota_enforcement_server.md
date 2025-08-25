@@ -37,6 +37,7 @@ resource "datapower_quota_enforcement_server" "test" {
   - Default value: `true`
 - `ip_address` (String) <p>Indicates the IP address of the DataPower Gateway for other peers to connect to. The IP address can be the IP address on any interface of the DataPower Gateway and must be accessible by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::. This IP address uniquely identifies the DataPower Gateway.</p><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address.</p>
   - CLI Alias: `ip-address`
+  - Required When: `enable_peer_group`=`true`
 - `monitor_port` (Number) Indicates the listening port for operational state monitoring for the quota enforcement server. The default port is 26379.
   - CLI Alias: `monitor-port`
   - Default value: `26379`
@@ -49,6 +50,7 @@ resource "datapower_quota_enforcement_server" "test" {
   - CLI Alias: `priority`
   - Range: `0`-`255`
   - Default value: `100`
+  - Required When: `enable_peer_group`=`true`
 - `raid_volume` (String) <p>Specifies whether data storage is persistent or in-memory. <ul><li>For persistent storage, select the RAID volume that must be <tt>raid0</tt> .</li><li>For in-memory storage, do not select the RAID volume.</li></ul></p>
   - CLI Alias: `raid-volume`
   - Reference to: `datapower_raid_volume:id`
@@ -58,9 +60,11 @@ resource "datapower_quota_enforcement_server" "test" {
 - `ssl_crypto_certificate` (String) Indicates the certificate alias that is sent to a peer when the DataPower Gateway negotiates a TLS connection with the peer.
   - CLI Alias: `ssl-cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: (`enable_peer_group`=`true` AND `enable_ssl`=`true`)
 - `ssl_crypto_key` (String) Indicates the key alias for the DataPower Gateway to authenticate a peer of the DataPower Gateway during the TLS handshake.
   - CLI Alias: `ssl-key`
   - Reference to: `datapower_crypto_key:id`
+  - Required When: (`enable_peer_group`=`true` AND `enable_ssl`=`true`)
 - `strict_mode` (Boolean) Based on your requirements for quota enforcement, enable or disable strict mode. By default, the strict mode is enabled.
   - CLI Alias: `strict-mode`
   - Default value: `true`

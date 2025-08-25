@@ -68,109 +68,124 @@ var DmHTTPRequestMethodsObjectDefault = map[string]attr.Value{
 	"delete":  types.BoolValue(false),
 	"connect": types.BoolValue(false),
 }
-var DmHTTPRequestMethodsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"post": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("POST method", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmHTTPRequestMethodsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmHTTPRequestMethodsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"post": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("POST method", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"get": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("GET method", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"put": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("PUT method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"patch": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("PATCH method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"head": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HEAD method", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"options": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("OPTIONS method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"trace": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("TRACE method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"delete": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("DELETE method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"connect": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("CONNECT method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"get": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("GET method", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"put": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("PUT method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"patch": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("PATCH method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"head": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HEAD method", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"options": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("OPTIONS method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"trace": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TRACE method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"delete": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("DELETE method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"connect": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CONNECT method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmHTTPRequestMethodsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmHTTPRequestMethodsDataSourceSchema
 }
-var DmHTTPRequestMethodsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmHTTPRequestMethodsObjectType,
-			DmHTTPRequestMethodsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"post": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("POST method", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmHTTPRequestMethodsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmHTTPRequestMethodsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmHTTPRequestMethodsObjectType,
+				DmHTTPRequestMethodsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"post": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("POST method", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"get": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("GET method", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"put": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("PUT method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"patch": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("PATCH method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"head": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HEAD method", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"options": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("OPTIONS method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"trace": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("TRACE method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"delete": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("DELETE method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"connect": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("CONNECT method", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"get": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("GET method", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"put": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("PUT method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"patch": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("PATCH method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"head": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HEAD method", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"options": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("OPTIONS method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"trace": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TRACE method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"delete": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("DELETE method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"connect": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CONNECT method", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmHTTPRequestMethodsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmHTTPRequestMethodsResourceSchema.Required = true
+	} else {
+		DmHTTPRequestMethodsResourceSchema.Optional = true
+		DmHTTPRequestMethodsResourceSchema.Computed = true
+	}
+	return DmHTTPRequestMethodsResourceSchema
 }
 
 func (data DmHTTPRequestMethods) IsNull() bool {
@@ -203,27 +218,13 @@ func (data DmHTTPRequestMethods) IsNull() bool {
 	}
 	return true
 }
-func GetDmHTTPRequestMethodsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmHTTPRequestMethodsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmHTTPRequestMethodsDataSourceSchema
-}
-
-func GetDmHTTPRequestMethodsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmHTTPRequestMethodsResourceSchema.Required = true
-	} else {
-		DmHTTPRequestMethodsResourceSchema.Optional = true
-		DmHTTPRequestMethodsResourceSchema.Computed = true
-	}
-	DmHTTPRequestMethodsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmHTTPRequestMethodsResourceSchema
-}
 
 func (data DmHTTPRequestMethods) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Post.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`POST`, tfutils.StringFromBool(data.Post, ""))
 	}

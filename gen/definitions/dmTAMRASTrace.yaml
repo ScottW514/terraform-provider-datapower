@@ -15,15 +15,15 @@ attributes:
     <i>client-name</i> directory.'
   cli_alias: tam-trace-file
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: TAMTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: TAMTraceEnable
     value:
-    - 'off'
+    - false
 - name: TAMTraceSize
   type: Int64
   minimum: 100
@@ -33,15 +33,15 @@ attributes:
     a value in the range 100 - 1000000. The default value is 100.
   cli_alias: tam-trace-size
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: TAMTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: TAMTraceEnable
     value:
-    - 'off'
+    - false
 - name: TAMTraceType
   type: String
   enum:
@@ -51,15 +51,15 @@ attributes:
   description: Specifies the format of trace messages in the file.
   cli_alias: tam-trace-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: TAMTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: TAMTraceEnable
     value:
-    - 'off'
+    - false
 - name: TAMTraceComponents
   type: String
   default: '*:*.9'
@@ -68,15 +68,15 @@ attributes:
     Contact IBM Support to set the value needed to help resolve your problem.
   cli_alias: tam-trace-components
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: TAMTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: TAMTraceEnable
     value:
-    - 'off'
+    - false
 - name: LDAPTraceEnable
   type: Bool
   default: false
@@ -91,15 +91,15 @@ attributes:
     directory.'
   cli_alias: ldap-trace-file
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LDAPTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LDAPTraceEnable
     value:
-    - 'off'
+    - false
 - name: LDAPTraceSize
   type: Int64
   minimum: 10000
@@ -109,15 +109,15 @@ attributes:
     a value in the range 10000 - 10000000. The default value is 10000.
   cli_alias: ldap-trace-size
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LDAPTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LDAPTraceEnable
     value:
-    - 'off'
+    - false
 - name: LDAPTraceLevel
   type: Int64
   minimum: 1
@@ -128,15 +128,15 @@ attributes:
     IBM Support to set the value needed to help resolve your problem.
   cli_alias: ldap-trace-level
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LDAPTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LDAPTraceEnable
     value:
-    - 'off'
+    - false
 - name: GSKitTraceEnable
   type: Bool
   default: false
@@ -151,15 +151,15 @@ attributes:
     directory.'
   cli_alias: gskit-trace-file
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GSKitTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GSKitTraceEnable
     value:
-    - 'off'
+    - false
 - name: GSKitTraceFlush
   type: Bool
   default: false
@@ -167,12 +167,12 @@ attributes:
     be written to the file without buffering.
   cli_alias: gskit-trace-flush
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GSKitTraceEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GSKitTraceEnable
     value:
-    - 'off'
+    - false

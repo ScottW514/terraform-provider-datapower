@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -40,10 +41,40 @@ type FileSystemUsageMonitor struct {
 	AllSystemWarningThreshold  types.Int64                 `tfsdk:"all_system_warning_threshold"`
 	AllSystemCriticalThreshold types.Int64                 `tfsdk:"all_system_critical_threshold"`
 	System                     types.List                  `tfsdk:"system"`
+	AllQueueManagers           types.Bool                  `tfsdk:"all_queue_managers"`
 	AllQmWarningThreshold      types.Int64                 `tfsdk:"all_qm_warning_threshold"`
 	AllQmCriticalThreshold     types.Int64                 `tfsdk:"all_qm_critical_threshold"`
 	QueueManager               types.List                  `tfsdk:"queue_manager"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var FileSystemUsageMonitorAllSystemWarningThresholdCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "all_system",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var FileSystemUsageMonitorAllSystemCriticalThresholdCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "all_system",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var FileSystemUsageMonitorAllQMWarningThresholdCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "all_queue_managers",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var FileSystemUsageMonitorAllQMCriticalThresholdCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "all_queue_managers",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
 }
 
 var FileSystemUsageMonitorObjectType = map[string]attr.Type{
@@ -54,6 +85,7 @@ var FileSystemUsageMonitorObjectType = map[string]attr.Type{
 	"all_system_warning_threshold":  types.Int64Type,
 	"all_system_critical_threshold": types.Int64Type,
 	"system":                        types.ListType{ElemType: types.ObjectType{AttrTypes: DmFileSystemUsageObjectType}},
+	"all_queue_managers":            types.BoolType,
 	"all_qm_warning_threshold":      types.Int64Type,
 	"all_qm_critical_threshold":     types.Int64Type,
 	"queue_manager":                 types.ListType{ElemType: types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType}},
@@ -87,6 +119,9 @@ func (data FileSystemUsageMonitor) IsNull() bool {
 	if !data.System.IsNull() {
 		return false
 	}
+	if !data.AllQueueManagers.IsNull() {
+		return false
+	}
 	if !data.AllQmWarningThreshold.IsNull() {
 		return false
 	}
@@ -105,6 +140,7 @@ func (data FileSystemUsageMonitor) ToBody(ctx context.Context, pathRoot string) 
 	}
 	body := ""
 	body, _ = sjson.Set(body, "FileSystemUsageMonitor.name", path.Base("/mgmt/config/default/FileSystemUsageMonitor/FileSystemUsageMonitor"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -124,11 +160,14 @@ func (data FileSystemUsageMonitor) ToBody(ctx context.Context, pathRoot string) 
 		body, _ = sjson.Set(body, pathRoot+`AllSystemCriticalThreshold`, data.AllSystemCriticalThreshold.ValueInt64())
 	}
 	if !data.System.IsNull() {
-		var values []DmFileSystemUsage
-		data.System.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmFileSystemUsage
+		data.System.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`System`+".-1", val.ToBody(ctx, ""))
 		}
+	}
+	if !data.AllQueueManagers.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AllQueueManagers`, tfutils.StringFromBool(data.AllQueueManagers, ""))
 	}
 	if !data.AllQmWarningThreshold.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AllQMWarningThreshold`, data.AllQmWarningThreshold.ValueInt64())
@@ -137,9 +176,9 @@ func (data FileSystemUsageMonitor) ToBody(ctx context.Context, pathRoot string) 
 		body, _ = sjson.Set(body, pathRoot+`AllQMCriticalThreshold`, data.AllQmCriticalThreshold.ValueInt64())
 	}
 	if !data.QueueManager.IsNull() {
-		var values []DmQMFileSystemUsage
-		data.QueueManager.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmQMFileSystemUsage
+		data.QueueManager.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`QueueManager`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -198,6 +237,11 @@ func (data *FileSystemUsageMonitor) FromBody(ctx context.Context, pathRoot strin
 		}
 	} else {
 		data.System = types.ListNull(types.ObjectType{AttrTypes: DmFileSystemUsageObjectType})
+	}
+	if value := res.Get(pathRoot + `AllQueueManagers`); value.Exists() {
+		data.AllQueueManagers = tfutils.BoolFromString(value.String())
+	} else {
+		data.AllQueueManagers = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AllQMWarningThreshold`); value.Exists() {
 		data.AllQmWarningThreshold = types.Int64Value(value.Int())
@@ -280,6 +324,11 @@ func (data *FileSystemUsageMonitor) UpdateFromBody(ctx context.Context, pathRoot
 		}
 	} else {
 		data.System = types.ListNull(types.ObjectType{AttrTypes: DmFileSystemUsageObjectType})
+	}
+	if value := res.Get(pathRoot + `AllQueueManagers`); value.Exists() && !data.AllQueueManagers.IsNull() {
+		data.AllQueueManagers = tfutils.BoolFromString(value.String())
+	} else if !data.AllQueueManagers.ValueBool() {
+		data.AllQueueManagers = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AllQMWarningThreshold`); value.Exists() && !data.AllQmWarningThreshold.IsNull() {
 		data.AllQmWarningThreshold = types.Int64Value(value.Int())

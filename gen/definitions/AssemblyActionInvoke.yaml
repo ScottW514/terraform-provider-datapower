@@ -94,55 +94,36 @@ attributes:
   - detect
   - graphql
   - json
+  default: detect
   description: Specify the type of payload to send for GraphQL POST requests. When
     GraphQL or JSON, this setting overrides the message type of the payload.
   cli_alias: graphql-send-type
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: logical-or
-      conditions:
-      - evaluation: property-equals
-        attribute: Method
-        value:
-        - Keep
-      - evaluation: property-equals
-        attribute: Method
-        value:
-        - POST
-    - evaluation: logical-or
-      conditions:
-      - evaluation: property-equals
-        attribute: BackendType
-        value:
-        - detect
-      - evaluation: property-equals
-        attribute: BackendType
-        value:
-        - graphql
+    - evaluation: property-value-in-list
+      attribute: Method
+      value:
+      - Keep
+      - POST
+    - evaluation: property-value-in-list
+      attribute: BackendType
+      value:
+      - detect
+      - graphql
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-does-not-equal
-        attribute: Method
-        value:
-        - Keep
-      - evaluation: property-does-not-equal
-        attribute: Method
-        value:
-        - POST
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-does-not-equal
-        attribute: BackendType
-        value:
-        - detect
-      - evaluation: property-does-not-equal
-        attribute: BackendType
-        value:
-        - graphql
+    - evaluation: property-value-not-in-list
+      attribute: Method
+      value:
+      - Keep
+      - POST
+    - evaluation: property-value-not-in-list
+      attribute: BackendType
+      value:
+      - detect
+      - graphql
 - name: Compression
   type: Bool
   default: false
@@ -165,12 +146,12 @@ attributes:
     The default value is 900.
   cli_alias: ttl
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: CacheType
     value:
     - TimeToLive
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: CacheType
     value:
     - TimeToLive
@@ -184,7 +165,7 @@ attributes:
     HTTP POST) will not change the server state.'
   cli_alias: cache-unsafe-response
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: CacheType
     value:
     - TimeToLive
@@ -217,7 +198,7 @@ attributes:
     and the connection uses TLS. The default value is off.
   cli_alias: http2-required
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: HTTPVersion
     value:
     - HTTP/2
@@ -248,15 +229,15 @@ attributes:
   description: Error types
   cli_alias: error-types
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: StopOnError
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: StopOnError
     value:
-    - 'on'
+    - true
 - name: Output
   type: String
   default: message

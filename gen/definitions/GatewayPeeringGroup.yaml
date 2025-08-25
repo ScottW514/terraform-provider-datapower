@@ -54,12 +54,12 @@ attributes:
     address or host alias and its priority.
   cli_alias: peer-node
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - peer
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Mode
     value:
     - peer
@@ -71,12 +71,12 @@ attributes:
   description: Primary count
   cli_alias: cluster-primary-count
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - cluster
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Mode
     value:
     - cluster
@@ -96,12 +96,12 @@ attributes:
     has 2 secondary nodes.</p>
   cli_alias: cluster-node
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - cluster
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Mode
     value:
     - cluster
@@ -113,12 +113,12 @@ attributes:
     IBM Support, do not change this setting.
   cli_alias: cluster-auto-config
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - cluster
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Mode
     value:
     - cluster
@@ -139,22 +139,22 @@ attributes:
     uses mutual TLS.
   cli_alias: idcred
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnableSSL
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnableSSL
     value:
-    - 'off'
+    - false
 - name: Valcred
   type: String
   reference_to: CryptoValCred
   description: Validation credentials
   cli_alias: valcred
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnableSSL
     value:
-    - 'off'
+    - false

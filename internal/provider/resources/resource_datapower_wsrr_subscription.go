@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WSRRSubscriptionResource{}
@@ -87,8 +88,11 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				Required:            true,
 			},
 			"namespace": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the namespace to unambiguously identify the WSRR resource. This property is used with the object name.", "namespace", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the namespace to unambiguously identify the WSRR resource. This property is used with the object name.", "namespace", "").AddRequiredWhen(models.WSRRSubscriptionNamespaceCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WSRRSubscriptionNamespaceCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"object_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Subscription object", "object-type", "").AddStringEnum("wsdl", "concept", "saved-search", "service-version").String,
@@ -115,7 +119,6 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(60, 4294967),
 				},
 				Default: int64default.StaticInt64(86400),

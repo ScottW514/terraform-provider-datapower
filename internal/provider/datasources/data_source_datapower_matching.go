@@ -82,7 +82,7 @@ func (d *MatchingDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 						},
 						"match_rules": schema.ListNestedAttribute{
 							MarkdownDescription: "The rules in the matching rule.",
-							NestedObject:        models.DmMatchRuleDataSourceSchema,
+							NestedObject:        models.GetDmMatchRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"match_with_pcre": schema.BoolAttribute{

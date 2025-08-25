@@ -70,6 +70,7 @@ func (data GitOpsVariables) ToBody(ctx context.Context, pathRoot string) string 
 	}
 	body := ""
 	body, _ = sjson.Set(body, "GitOpsVariables.name", path.Base("/mgmt/config/default/GitOpsVariables/gitops-variables"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -77,9 +78,9 @@ func (data GitOpsVariables) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.Variables.IsNull() {
-		var values []DmGitOpsVariableEntry
-		data.Variables.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmGitOpsVariableEntry
+		data.Variables.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Variables`+".-1", val.ToBody(ctx, ""))
 		}
 	}

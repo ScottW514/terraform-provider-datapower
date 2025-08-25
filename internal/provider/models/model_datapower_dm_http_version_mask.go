@@ -47,39 +47,54 @@ var DmHTTPVersionMaskObjectDefault = map[string]attr.Value{
 	"http_1_0": types.BoolValue(true),
 	"http_1_1": types.BoolValue(true),
 }
-var DmHTTPVersionMaskDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"http_1_0": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.0", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmHTTPVersionMaskDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmHTTPVersionMaskDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"http_1_0": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.0", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_1_1": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.1", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"http_1_1": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.1", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmHTTPVersionMaskDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmHTTPVersionMaskDataSourceSchema
 }
-var DmHTTPVersionMaskResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmHTTPVersionMaskObjectType,
-			DmHTTPVersionMaskObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"http_1_0": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.0", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmHTTPVersionMaskResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmHTTPVersionMaskResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmHTTPVersionMaskObjectType,
+				DmHTTPVersionMaskObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"http_1_0": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.0", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_1_1": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.1", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"http_1_1": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.1", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmHTTPVersionMaskResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmHTTPVersionMaskResourceSchema.Required = true
+	} else {
+		DmHTTPVersionMaskResourceSchema.Optional = true
+		DmHTTPVersionMaskResourceSchema.Computed = true
+	}
+	return DmHTTPVersionMaskResourceSchema
 }
 
 func (data DmHTTPVersionMask) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmHTTPVersionMask) IsNull() bool {
 	}
 	return true
 }
-func GetDmHTTPVersionMaskDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmHTTPVersionMaskDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmHTTPVersionMaskDataSourceSchema
-}
-
-func GetDmHTTPVersionMaskResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmHTTPVersionMaskResourceSchema.Required = true
-	} else {
-		DmHTTPVersionMaskResourceSchema.Optional = true
-		DmHTTPVersionMaskResourceSchema.Computed = true
-	}
-	DmHTTPVersionMaskResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmHTTPVersionMaskResourceSchema
-}
 
 func (data DmHTTPVersionMask) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Http10.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.0`, tfutils.StringFromBool(data.Http10, ""))
 	}

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -48,6 +49,45 @@ type GatewayPeering struct {
 	LocalDirectory      types.String                `tfsdk:"local_directory"`
 	MaxMemory           types.Int64                 `tfsdk:"max_memory"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var GatewayPeeringLocalAddressCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_peer_group",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "enable_peer_group",
+					AttrType:    "Bool",
+					AttrDefault: "true",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "peer_group",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{""},
+				},
+			},
+		},
+	},
+}
+var GatewayPeeringLocalDirectoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "persistence_location",
+	AttrType:    "String",
+	AttrDefault: "memory",
+	Value:       []string{"local"},
 }
 
 var GatewayPeeringObjectType = map[string]attr.Type{
@@ -122,6 +162,7 @@ func (data GatewayPeering) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

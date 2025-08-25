@@ -50,49 +50,64 @@ var DmLTPATokenVersionObjectDefault = map[string]attr.Value{
 	"ltpa2":       types.BoolValue(true),
 	"ltpa_domino": types.BoolValue(false),
 }
-var DmLTPATokenVersionDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"ltpa": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 1", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmLTPATokenVersionDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmLTPATokenVersionDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"ltpa": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 1", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"ltpa2": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 2", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"ltpa_domino": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Domino", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"ltpa2": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 2", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"ltpa_domino": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Domino", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmLTPATokenVersionDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmLTPATokenVersionDataSourceSchema
 }
-var DmLTPATokenVersionResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmLTPATokenVersionObjectType,
-			DmLTPATokenVersionObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"ltpa": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 1", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmLTPATokenVersionResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmLTPATokenVersionResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmLTPATokenVersionObjectType,
+				DmLTPATokenVersionObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"ltpa": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 1", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"ltpa2": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 2", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"ltpa_domino": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Domino", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"ltpa2": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 2", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"ltpa_domino": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Domino", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmLTPATokenVersionResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmLTPATokenVersionResourceSchema.Required = true
+	} else {
+		DmLTPATokenVersionResourceSchema.Optional = true
+		DmLTPATokenVersionResourceSchema.Computed = true
+	}
+	return DmLTPATokenVersionResourceSchema
 }
 
 func (data DmLTPATokenVersion) IsNull() bool {
@@ -107,27 +122,13 @@ func (data DmLTPATokenVersion) IsNull() bool {
 	}
 	return true
 }
-func GetDmLTPATokenVersionDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmLTPATokenVersionDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmLTPATokenVersionDataSourceSchema
-}
-
-func GetDmLTPATokenVersionResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmLTPATokenVersionResourceSchema.Required = true
-	} else {
-		DmLTPATokenVersionResourceSchema.Optional = true
-		DmLTPATokenVersionResourceSchema.Computed = true
-	}
-	DmLTPATokenVersionResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmLTPATokenVersionResourceSchema
-}
 
 func (data DmLTPATokenVersion) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Ltpa.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LTPA`, tfutils.StringFromBool(data.Ltpa, ""))
 	}

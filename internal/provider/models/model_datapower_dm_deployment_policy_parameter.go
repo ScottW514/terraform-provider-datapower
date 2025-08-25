@@ -45,29 +45,36 @@ var DmDeploymentPolicyParameterObjectDefault = map[string]attr.Value{
 	"parameter_name":  types.StringNull(),
 	"parameter_value": types.StringNull(),
 }
-var DmDeploymentPolicyParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"parameter_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the deployment policy variable.", "", "").String,
-			Computed:            true,
+
+func GetDmDeploymentPolicyParameterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmDeploymentPolicyParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"parameter_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the deployment policy variable.", "", "").String,
+				Computed:            true,
+			},
+			"parameter_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the corresponding value of the deployment policy variable.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"parameter_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the corresponding value of the deployment policy variable.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmDeploymentPolicyParameterDataSourceSchema
 }
-var DmDeploymentPolicyParameterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"parameter_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the deployment policy variable.", "", "").String,
-			Required:            true,
+func GetDmDeploymentPolicyParameterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmDeploymentPolicyParameterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"parameter_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the deployment policy variable.", "", "").String,
+				Required:            true,
+			},
+			"parameter_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the corresponding value of the deployment policy variable.", "", "").String,
+				Required:            true,
+			},
 		},
-		"parameter_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the corresponding value of the deployment policy variable.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmDeploymentPolicyParameterResourceSchema
 }
 
 func (data DmDeploymentPolicyParameter) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmDeploymentPolicyParameter) ToBody(ctx context.Context, pathRoot str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ParameterName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParameterName`, data.ParameterName.ValueString())
 	}

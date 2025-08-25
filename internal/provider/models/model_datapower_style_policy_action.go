@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -124,6 +125,451 @@ type StylePolicyAction struct {
 	MethodType2                types.String                     `tfsdk:"method_type2"`
 	PolicyKey                  types.String                     `tfsdk:"policy_key"`
 	DependencyActions          []*actions.DependencyAction      `tfsdk:"dependency_actions"`
+}
+
+var StylePolicyActionInputCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"rewrite", "route-set", "on-error", "method-rewrite"},
+}
+var StylePolicyActionTransformCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"filter", "cryptobin"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "xform",
+					Value:       []string{"xformng"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "transform_language",
+					AttrType:    "String",
+					AttrDefault: "none",
+					Value:       []string{"none"},
+				},
+			},
+		},
+	},
+}
+var StylePolicyActionParseMetricsResultLocationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"parse"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "parse_metrics_result_type",
+			AttrType:    "String",
+			AttrDefault: "none",
+			Value:       []string{"none"},
+		},
+	},
+}
+var StylePolicyActionInputLanguageCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformng"},
+}
+var StylePolicyActionTransformLanguageCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformng"},
+}
+var StylePolicyActionGatewayScriptLocationCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"gatewayscript", "jose-sign", "jose-verify", "jose-encrypt", "jose-decrypt"},
+}
+var StylePolicyActionOutputCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformpi", "xformbin", "xformng", "cryptobin", "xform", "convert-http", "fetch", "extract", "call", "gatewayscript", "jose-sign", "jose-verify", "jose-encrypt", "jose-decrypt"},
+}
+var StylePolicyActionDestinationCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"results-async", "fetch", "route-set"},
+}
+var StylePolicyActionPolicyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"rewrite"},
+}
+var StylePolicyActionAAACondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"aaa"},
+}
+var StylePolicyActionErrorModeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"on-error"},
+}
+var StylePolicyActionRuleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"call"},
+}
+var StylePolicyActionLogLevelCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"log"},
+}
+var StylePolicyActionLogTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"log"},
+}
+var StylePolicyActionCheckpointEventCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"checkpoint"},
+}
+var StylePolicyActionSLMPolicyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"slm"},
+}
+var StylePolicyActionSQLDataSourceCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"sql"},
+}
+var StylePolicyActionSQLTextCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "sql_source_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"static"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"sql"},
+		},
+	},
+}
+var StylePolicyActionSQLSourceTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"sql"},
+}
+var StylePolicyActionJOSESerializationTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"jose-sign", "jose-encrypt"},
+}
+var StylePolicyActionJWEEncAlgorithmCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"jose-encrypt"},
+}
+var StylePolicyActionJWSSignatureObjectCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"jose-sign"},
+}
+var StylePolicyActionJWEHeaderObjectCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"jose-encrypt"},
+}
+var StylePolicyActionSignatureIdentifierCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"jose-verify"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "jose_verify_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"identifiers"},
+		},
+	},
+}
+var StylePolicyActionRecipientIdentifierCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"jose-decrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "jose_decrypt_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"identifiers"},
+		},
+	},
+}
+var StylePolicyActionSingleCertificateCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"jose-verify"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "jose_verify_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"single-cert"},
+		},
+	},
+}
+var StylePolicyActionSingleKeyCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"jose-decrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "jose_decrypt_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"single-key"},
+		},
+	},
+}
+var StylePolicyActionSingleSSKeyCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "xform",
+					Value:       []string{"jose-decrypt"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "jose_decrypt_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"single-sskey"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "xform",
+					Value:       []string{"jose-verify"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "jose_verify_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"single-sskey"},
+				},
+			},
+		},
+	},
+}
+var StylePolicyActionJWEDirectKeyObjectCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"jose-decrypt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "jose_decrypt_type",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"direct-key"},
+		},
+	},
+}
+var StylePolicyActionIteratorTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"for-each"},
+}
+var StylePolicyActionIteratorExpressionCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"for-each"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "iterator_type",
+			AttrType:    "String",
+			AttrDefault: "XPATH",
+			Value:       []string{"XPATH"},
+		},
+	},
+}
+var StylePolicyActionIteratorCountCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"for-each"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "iterator_type",
+			AttrType:    "String",
+			AttrDefault: "XPATH",
+			Value:       []string{"COUNT"},
+		},
+	},
+}
+var StylePolicyActionLoopActionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"for-each"},
+}
+var StylePolicyActionMethodRewriteTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"method-rewrite", "fetch"},
+}
+var StylePolicyActionMethodTypeCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"results-async"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "xform",
+					Value:       []string{"results"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "destination",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{""},
+				},
+			},
+		},
+	},
+}
+var StylePolicyActionMethodType2CondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"log"},
 }
 
 var StylePolicyActionObjectType = map[string]attr.Type{
@@ -504,6 +950,7 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -576,16 +1023,16 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`NamedInOutLocationType`, data.NamedInOutLocationType.ValueString())
 	}
 	if !data.NamedInputs.IsNull() {
-		var values []DmNamedInOut
-		data.NamedInputs.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmNamedInOut
+		data.NamedInputs.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`NamedInputs`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.NamedOutputs.IsNull() {
-		var values []DmNamedInOut
-		data.NamedOutputs.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmNamedInOut
+		data.NamedOutputs.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`NamedOutputs`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -635,9 +1082,9 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`AttachmentURI`, data.AttachmentUri.ValueString())
 	}
 	if !data.StylesheetParameters.IsNull() {
-		var values []DmStylesheetParameter
-		data.StylesheetParameters.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmStylesheetParameter
+		data.StylesheetParameters.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -702,16 +1149,16 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`JOSEDecryptType`, data.JoseDecryptType.ValueString())
 	}
 	if !data.SignatureIdentifier.IsNull() {
-		var values []string
-		data.SignatureIdentifier.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.SignatureIdentifier.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`SignatureIdentifier`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.RecipientIdentifier.IsNull() {
-		var values []string
-		data.RecipientIdentifier.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.RecipientIdentifier.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`RecipientIdentifier`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -734,9 +1181,9 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`Asynchronous`, tfutils.StringFromBool(data.Asynchronous, ""))
 	}
 	if !data.Condition.IsNull() {
-		var values []DmCondition
-		data.Condition.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmCondition
+		data.Condition.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Condition`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -765,9 +1212,9 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`LoopAction`, data.LoopAction.ValueString())
 	}
 	if !data.AsyncAction.IsNull() {
-		var values []string
-		data.AsyncAction.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.AsyncAction.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`AsyncAction`+".-1", map[string]string{"value": val})
 		}
 	}

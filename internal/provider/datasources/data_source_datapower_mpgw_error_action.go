@@ -106,7 +106,7 @@ func (d *MPGWErrorActionDataSource) Schema(ctx context.Context, req datasource.S
 						},
 						"header_injection": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the name and the value for the HTTP header that the appliance injects.",
-							NestedObject:        models.DmWebGWErrorRespHeaderInjectionDataSourceSchema,
+							NestedObject:        models.GetDmWebGWErrorRespHeaderInjectionDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

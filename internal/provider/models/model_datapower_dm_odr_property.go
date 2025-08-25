@@ -45,29 +45,36 @@ var DmODRPropertyObjectDefault = map[string]attr.Value{
 	"prop_name":  types.StringNull(),
 	"prop_value": types.StringNull(),
 }
-var DmODRPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"prop_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a property.", "odr-prop-name", "").String,
-			Computed:            true,
+
+func GetDmODRPropertyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmODRPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"prop_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a property.", "odr-prop-name", "").String,
+				Computed:            true,
+			},
+			"prop_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value of a property.", "odr-prop-value", "").String,
+				Computed:            true,
+			},
 		},
-		"prop_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value of a property.", "odr-prop-value", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmODRPropertyDataSourceSchema
 }
-var DmODRPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"prop_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a property.", "odr-prop-name", "").String,
-			Required:            true,
+func GetDmODRPropertyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmODRPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"prop_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a property.", "odr-prop-name", "").String,
+				Required:            true,
+			},
+			"prop_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value of a property.", "odr-prop-value", "").String,
+				Required:            true,
+			},
 		},
-		"prop_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value of a property.", "odr-prop-value", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmODRPropertyResourceSchema
 }
 
 func (data DmODRProperty) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmODRProperty) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.PropName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PropName`, data.PropName.ValueString())
 	}

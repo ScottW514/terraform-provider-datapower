@@ -45,29 +45,36 @@ var DmODRConnectorObjectDefault = map[string]attr.Value{
 	"dmgr_hostname": types.StringNull(),
 	"dmgr_port":     types.Int64Null(),
 }
-var DmODRConnectorDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"dmgr_hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The host name of the server where the Intelligent management service is enabled.", "dmgr-host", "").String,
-			Computed:            true,
+
+func GetDmODRConnectorDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmODRConnectorDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"dmgr_hostname": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The host name of the server where the Intelligent management service is enabled.", "dmgr-host", "").String,
+				Computed:            true,
+			},
+			"dmgr_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The port on the server where the Intelligent management service is enabled.", "dmgr-port", "").String,
+				Computed:            true,
+			},
 		},
-		"dmgr_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The port on the server where the Intelligent management service is enabled.", "dmgr-port", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmODRConnectorDataSourceSchema
 }
-var DmODRConnectorResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"dmgr_hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The host name of the server where the Intelligent management service is enabled.", "dmgr-host", "").String,
-			Required:            true,
+func GetDmODRConnectorResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmODRConnectorResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"dmgr_hostname": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The host name of the server where the Intelligent management service is enabled.", "dmgr-host", "").String,
+				Required:            true,
+			},
+			"dmgr_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The port on the server where the Intelligent management service is enabled.", "dmgr-port", "").String,
+				Required:            true,
+			},
 		},
-		"dmgr_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The port on the server where the Intelligent management service is enabled.", "dmgr-port", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmODRConnectorResourceSchema
 }
 
 func (data DmODRConnector) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmODRConnector) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.DmgrHostname.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DmgrHostname`, data.DmgrHostname.ValueString())
 	}

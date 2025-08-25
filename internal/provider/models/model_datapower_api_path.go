@@ -92,6 +92,7 @@ func (data APIPath) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -102,9 +103,9 @@ func (data APIPath) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Path`, data.Path.ValueString())
 	}
 	if !data.Operation.IsNull() {
-		var values []string
-		data.Operation.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Operation.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Operation`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -112,9 +113,9 @@ func (data APIPath) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`RequestSchema`, data.RequestSchema.ValueString())
 	}
 	if !data.Parameter.IsNull() {
-		var values []DmAPIParameter
-		data.Parameter.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIParameter
+		data.Parameter.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Parameter`+".-1", val.ToBody(ctx, ""))
 		}
 	}

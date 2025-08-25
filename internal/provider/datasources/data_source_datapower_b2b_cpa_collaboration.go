@@ -110,7 +110,7 @@ func (d *B2BCPACollaborationDataSource) Schema(ctx context.Context, req datasour
 						},
 						"actions": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify CPA actions to bind. For a business collaboration, each action entry identifies a business message that a party can send or receive. For a collaboration of MSH level signal, the action overrides the sending or receiving behaviors of the default sender setting or default receiver setting.",
-							NestedObject:        models.DmCPACollaborationActionDataSourceSchema,
+							NestedObject:        models.GetDmCPACollaborationActionDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

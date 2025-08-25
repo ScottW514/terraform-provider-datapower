@@ -89,7 +89,6 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(64, 256),
 				},
 				Default: int64default.StaticInt64(64),
@@ -99,7 +98,6 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(256, 8192),
 				},
 				Default: int64default.StaticInt64(256),
@@ -109,7 +107,6 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(8192, 5368709121),
 				},
 				Default: int64default.StaticInt64(8192),
@@ -119,7 +116,6 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(128, 256),
 				},
 				Default: int64default.StaticInt64(128),
@@ -129,7 +125,6 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(4194304, 5368709121),
 				},
 				Default: int64default.StaticInt64(4194304),

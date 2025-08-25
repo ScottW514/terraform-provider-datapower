@@ -49,7 +49,7 @@ attributes:
     call.
   cli_alias: required
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Value
     value:
     - ''

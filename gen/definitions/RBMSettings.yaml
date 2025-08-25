@@ -67,12 +67,12 @@ attributes:
     contains the public key for one or more certificate authorities.
   cli_alias: ssh-ca-pubkey-file
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSHAUMethod
     value:
     - certificate
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSHAUMethod
     value:
     - certificate
@@ -87,7 +87,7 @@ attributes:
     user public key file.
   cli_alias: ssh-revoked-keys
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSHAUMethod
     value:
     - certificate
@@ -97,7 +97,7 @@ attributes:
   description: z/OS NSS client
   cli_alias: zos-nss-au
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - zosnss
@@ -139,7 +139,7 @@ attributes:
   description: Kerberos keytab
   cli_alias: au-kerberos-keytab
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - spnego
@@ -150,7 +150,7 @@ attributes:
   description: Custom URL
   cli_alias: au-custom-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - custom
@@ -163,7 +163,7 @@ attributes:
     to map credentials.
   cli_alias: au-info-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - xmlfile
@@ -175,7 +175,7 @@ attributes:
   description: Validation credentials
   cli_alias: au-valcred
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - client-ssl
@@ -225,7 +225,7 @@ attributes:
     user DN.</li></ul>
   cli_alias: au-ldap-search
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -236,14 +236,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'off'
+      - false
 - name: AULDAPBindPasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -252,14 +252,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'off'
+      - false
 - name: AULDAPSearchParameters
   type: String
   reference_to: LDAPSearchParameters
@@ -268,25 +268,25 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'off'
+      - false
 - name: AULDAPPrefix
   type: String
   default: cn=
@@ -297,14 +297,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'on'
+      - true
 - name: AUForceDNLDAPOrder
   type: Bool
   default: false
@@ -317,7 +317,7 @@ attributes:
     commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   cli_alias: au-force-dn-ldap-order
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - client-ssl
@@ -330,14 +330,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'on'
+      - true
 - name: AULDAPLoadBalanceGroup
   type: String
   reference_to: LoadBalancerGroup
@@ -347,11 +347,11 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - custom
@@ -375,7 +375,7 @@ attributes:
     in the range 1 - 86400. The default value is 600.
   cli_alias: au-cache-ttl
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUCacheAllow
     value:
     - disabled
@@ -389,7 +389,7 @@ attributes:
     times out.
   cli_alias: au-ldap-readtimeout
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -408,7 +408,7 @@ attributes:
   description: Custom URL
   cli_alias: mc-custom-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: MCMethod
     value:
     - custom
@@ -426,7 +426,7 @@ attributes:
     directly as the input credential.</li></ul>
   cli_alias: mc-ldap-search
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: MCMethod
     value:
     - custom
@@ -437,11 +437,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: MCMethod
       value:
       - custom
@@ -454,11 +454,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: MCMethod
       value:
       - custom
@@ -472,11 +472,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: MCMethod
       value:
       - custom
@@ -487,11 +487,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: MCMethod
       value:
       - custom
@@ -503,11 +503,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: MCMethod
       value:
       - custom
@@ -519,11 +519,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: MCMethod
       value:
       - custom
@@ -536,7 +536,7 @@ attributes:
     for authentication.
   cli_alias: mc-info-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: MCMethod
     value:
     - xmlfile
@@ -554,11 +554,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: MCMethod
       value:
       - custom
@@ -570,7 +570,7 @@ attributes:
   description: LDAP version
   cli_alias: ldap-version
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -590,7 +590,7 @@ attributes:
     fallback users are supported.</p>'
   cli_alias: fallback-login
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - local
@@ -605,11 +605,11 @@ attributes:
     conditions:
     - evaluation: logical-not
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: AUMethod
         value:
         - local
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: FallbackLogin
       value:
       - restricted
@@ -625,11 +625,11 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AUMethod
       value:
       - client-ssl
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: FallbackLogin
       value:
       - disabled
@@ -689,10 +689,10 @@ attributes:
     common criteria is not enabled, the default value is 30.</li></ul>
   cli_alias: pwd-max-age
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DoPasswordAging
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: DoPasswordHistory
@@ -712,10 +712,10 @@ attributes:
     the default value is 5.</li></ul>
   cli_alias: pwd-max-history
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DoPasswordHistory
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: CliTimeout
@@ -770,15 +770,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - client-ssl
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: MCMethod
       value:
       - custom
@@ -803,7 +803,7 @@ attributes:
   description: TLS client type
   cli_alias: ssl-client-type
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -815,11 +815,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: LDAPSSLClientConfigType
       value:
       - client
@@ -834,11 +834,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: MCMethod
       value:
       - custom
@@ -850,15 +850,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MCLDAPSearchForGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: MCMethod
       value:
       - custom
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: MCLDAPSSLClientConfigType
       value:
       - client

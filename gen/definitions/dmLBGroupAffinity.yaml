@@ -40,10 +40,10 @@ attributes:
   description: The mode of session affinity applied to this load balancer group.
   cli_alias: affinity-mode
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AffinityWLMOverride
     value:
-    - 'off'
+    - false
 - name: InsertionAttributes
   dm_type: DmInsertionAttributes
   description: Specifies the attributes to insert in the cookie in the response when

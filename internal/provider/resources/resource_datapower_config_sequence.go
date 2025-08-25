@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &ConfigSequenceResource{}
@@ -88,7 +89,7 @@ func (r *ConfigSequenceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"locations": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the locations to watch for changes and the permissions for each location. Each entry specifies a directory where the configuration files to match are stored. The DataPower Gateway watches the location and reloads the configuration when a change is detected that match the PCRE match pattern. The entries are processed in the listed order. The assess profile indicates the permissions for processing.", "location", "").String,
-				NestedObject:        models.DmConfigSequenceLocationResourceSchema,
+				NestedObject:        models.GetDmConfigSequenceLocationResourceSchema(),
 				Optional:            true,
 			},
 			"match_pattern": schema.StringAttribute{
@@ -122,10 +123,13 @@ func (r *ConfigSequenceResource) Schema(ctx context.Context, req resource.Schema
 				Default:             booldefault.StaticBool(false),
 			},
 			"output_location": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store the output files that processing generates. When not specified, the input file location is used.", "output-location", "").AddDefaultValue("logtemp:///").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store the output files that processing generates. When not specified, the input file location is used.", "output-location", "").AddDefaultValue("logtemp:///").AddRequiredWhen(models.ConfigSequenceOutputLocationCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("logtemp:///"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ConfigSequenceOutputLocationCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("logtemp:///"),
 			},
 			"delete_unused": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to clean up objects that are no longer needed. When enabled, the configuration sequence detects and attempts to delete objects that are no longer modified by any configuration file. By default, the configuration sequence does not delete unneeded objects.", "delete-unused", "").AddDefaultValue("true").String,
@@ -138,7 +142,6 @@ func (r *ConfigSequenceResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(100, 60000),
 				},
 				Default: int64default.StaticInt64(100),

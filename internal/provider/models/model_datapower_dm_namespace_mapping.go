@@ -45,29 +45,36 @@ var DmNamespaceMappingObjectDefault = map[string]attr.Value{
 	"prefix": types.StringNull(),
 	"uri":    types.StringNull(),
 }
-var DmNamespaceMappingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"prefix": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The prefix (Prefix:) used to map namespaces that might be encountered in client requests.", "", "").String,
-			Computed:            true,
+
+func GetDmNamespaceMappingDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmNamespaceMappingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"prefix": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The prefix (Prefix:) used to map namespaces that might be encountered in client requests.", "", "").String,
+				Computed:            true,
+			},
+			"uri": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The URI (URI:) used to map namespaces that might be encountered in client requests.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"uri": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The URI (URI:) used to map namespaces that might be encountered in client requests.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmNamespaceMappingDataSourceSchema
 }
-var DmNamespaceMappingResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"prefix": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The prefix (Prefix:) used to map namespaces that might be encountered in client requests.", "", "").String,
-			Optional:            true,
+func GetDmNamespaceMappingResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmNamespaceMappingResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"prefix": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The prefix (Prefix:) used to map namespaces that might be encountered in client requests.", "", "").String,
+				Optional:            true,
+			},
+			"uri": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The URI (URI:) used to map namespaces that might be encountered in client requests.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"uri": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The URI (URI:) used to map namespaces that might be encountered in client requests.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmNamespaceMappingResourceSchema
 }
 
 func (data DmNamespaceMapping) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmNamespaceMapping) ToBody(ctx context.Context, pathRoot string) stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Prefix.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Prefix`, data.Prefix.ValueString())
 	}

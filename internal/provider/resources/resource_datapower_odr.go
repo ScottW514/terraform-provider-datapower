@@ -76,7 +76,7 @@ func (r *ODRResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"odr_custom_properties": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Defines custom property name-value strings to connect to Liberty Collective or WebSphere cell to define which ODR connection group accepts routing rules.</p><ul><li>The scheme that the DataPower ODR feature uses to connect to WebSphere Application Server does not apply to Liberty Collective. For any HTTP or HTTPS request to connect to Liberty Collective, you must define the <tt>profileType</tt> property. <ol><li>Set the <b>Name</b> to <tt>profileType</tt> .</li><li>Set the <b>Value</b> to <tt>Liberty</tt> .</li></ol></li><li>To set the name of the ODR connector group from which routing rules are accepted, you must define the <tt>RoutingRulesConnectorClusterName</tt> property. The following example shows setting the <tt>liberty-collective-node03</tt> connector group as the group that accepts routing rules. <ol><li>Set the <b>Name</b> to <tt>RoutingRulesConnectorClusterName</tt> .</li><li>Set the <b>Value</b> to <tt>liberty-collective-node03</tt> .</li></ol></li></ul><p>Beyond these situations, use custom properties only when directed by IBM Support.</p>", "odr-custom-properties", "").String,
-				NestedObject:        models.DmODRPropertyResourceSchema,
+				NestedObject:        models.GetDmODRPropertyResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

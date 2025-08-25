@@ -85,7 +85,7 @@ func (r *AssemblyActionFunctionCallResource) Schema(ctx context.Context, req res
 			},
 			"parameter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Parameters", "parameter", "").String,
-				NestedObject:        models.DmAssemblyActionFunctionCallParameterResourceSchema,
+				NestedObject:        models.GetDmAssemblyActionFunctionCallParameterResourceSchema(),
 				Optional:            true,
 			},
 			"user_summary": schema.StringAttribute{

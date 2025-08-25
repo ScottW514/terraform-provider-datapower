@@ -107,7 +107,6 @@ func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(10),

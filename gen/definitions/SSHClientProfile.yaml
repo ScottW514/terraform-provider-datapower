@@ -56,12 +56,12 @@ attributes:
     When both methods are defined, public key authentication is attempted first.
   cli_alias: user-auth
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileUsage
     value:
     - sftp
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProfileUsage
     value:
     - sftp
@@ -76,15 +76,15 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ProfileUsage
         value:
         - sftp
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSHUserAuthentication
         value:
         - publickey
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileUsage
       value:
       - scc
@@ -93,15 +93,15 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ProfileUsage
         value:
         - sftp
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: SSHUserAuthentication
         value:
         - publickey
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProfileUsage
       value:
       - sftp
@@ -113,32 +113,28 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileUsage
       value:
       - sftp
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SSHUserAuthentication
       value:
       - password
-    - evaluation: property-equals
-      attribute: Password
-      value:
-      - ''
   ignored_when:
   - evaluation: logical-or
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ProfileUsage
         value:
         - sftp
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: SSHUserAuthentication
         value:
         - password
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProfileUsage
       value:
       - sftp
@@ -151,12 +147,12 @@ attributes:
     request must reauthenticate.</li></ul>
   cli_alias: persistent-connections
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileUsage
     value:
     - sftp
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProfileUsage
     value:
     - sftp
@@ -172,25 +168,25 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProfileUsage
       value:
       - sftp
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PersistentConnections
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProfileUsage
       value:
       - sftp
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: PersistentConnections
       value:
-      - 'on'
+      - true
 - name: StrictHostKeyChecking
   type: Bool
   default: false
@@ -202,12 +198,12 @@ attributes:
     to the known hosts list and accepted.</li></ul>
   cli_alias: strict-host-key-checking
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileUsage
     value:
     - sftp
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProfileUsage
     value:
     - sftp
@@ -226,7 +222,7 @@ attributes:
   description: Specify the SSH cipher suites to support.
   cli_alias: ciphers
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileUsage
     value:
     - scc
@@ -244,7 +240,7 @@ attributes:
   description: Specify the key exchange (KEX) algorithms to support.
   cli_alias: kex-alg
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileUsage
     value:
     - scc
@@ -267,7 +263,7 @@ attributes:
   description: Specify the message authentication codes (MAC) to support.
   cli_alias: mac-alg
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProfileUsage
     value:
     - scc

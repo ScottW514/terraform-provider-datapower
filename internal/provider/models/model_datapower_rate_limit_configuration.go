@@ -73,13 +73,14 @@ func (data RateLimitConfiguration) ToBody(ctx context.Context, pathRoot string) 
 	}
 	body := ""
 	body, _ = sjson.Set(body, "RateLimitConfiguration.name", path.Base("/mgmt/config/{domain}/RateLimitConfiguration/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
 	if !data.Parameters.IsNull() {
-		var values []DmRateLimitConfigurationNameValuePair
-		data.Parameters.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmRateLimitConfigurationNameValuePair
+		data.Parameters.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Parameters`+".-1", val.ToBody(ctx, ""))
 		}
 	}

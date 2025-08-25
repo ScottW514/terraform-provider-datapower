@@ -21,7 +21,7 @@ attributes:
   default: false
   description: Specify whether HTTP/2 is required when the version is HTTP/2.
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Version
     value:
     - HTTP/2

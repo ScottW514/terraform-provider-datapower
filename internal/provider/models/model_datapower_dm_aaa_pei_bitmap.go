@@ -110,249 +110,264 @@ var DmAAAPEIBitmapObjectDefault = map[string]attr.Value{
 	"social_login":           types.BoolValue(false),
 	"oauth":                  types.BoolValue(false),
 }
-var DmAAAPEIBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"http_basic_auth": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Authentication header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmAAAPEIBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmAAAPEIBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"http_basic_auth": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Authentication header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"wssec_username": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Password-carrying UsernameToken element from WS-Security header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"wssec_derived_key": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Derived-key UsernameToken element from WS-Security header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"wssec_binary_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("BinarySecurityToken element from WS-Security header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"ws_secure_conversation": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-SecureConversation identifier", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"ws_trust": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-Trust Base or Supporting token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"kerberos": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Kerberos AP-REQ from WS-Security header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"kerberos_spnego": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Kerberos AP-REQ from SPNEGO token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"client_ssl": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Subject DN of TLS certificate from connection peer", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"saml_attr_name": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name from SAML attribute assertion", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"saml_authen_name": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name from SAML authentication assertion", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"saml_artifact": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SAML artifact", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"client_ip_address": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client IP address", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"signer_dn": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Subject DN from certificate in message signature", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Token extracted from message", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"cookie_token": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Token extracted as cookie value", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"ltpa": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("LTPA token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"metadata": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"jwt": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"custom": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom processing", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"html_forms_auth": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTML forms-based authentication", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"social_login": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Redirect to a social login provider", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"oauth": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("OAuth", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"wssec_username": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password-carrying UsernameToken element from WS-Security header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"wssec_derived_key": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Derived-key UsernameToken element from WS-Security header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"wssec_binary_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("BinarySecurityToken element from WS-Security header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"ws_secure_conversation": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-SecureConversation identifier", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"ws_trust": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-Trust Base or Supporting token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"kerberos": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Kerberos AP-REQ from WS-Security header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"kerberos_spnego": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Kerberos AP-REQ from SPNEGO token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"client_ssl": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subject DN of TLS certificate from connection peer", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"saml_attr_name": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name from SAML attribute assertion", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"saml_authen_name": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name from SAML authentication assertion", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"saml_artifact": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SAML artifact", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"client_ip_address": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client IP address", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"signer_dn": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subject DN from certificate in message signature", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Token extracted from message", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"cookie_token": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Token extracted as cookie value", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"ltpa": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LTPA token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"metadata": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"jwt": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"custom": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom processing", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"html_forms_auth": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTML forms-based authentication", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"social_login": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Redirect to a social login provider", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"oauth": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("OAuth", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmAAAPEIBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmAAAPEIBitmapDataSourceSchema
 }
-var DmAAAPEIBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmAAAPEIBitmapObjectType,
-			DmAAAPEIBitmapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"http_basic_auth": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Authentication header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmAAAPEIBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmAAAPEIBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmAAAPEIBitmapObjectType,
+				DmAAAPEIBitmapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"http_basic_auth": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Authentication header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"wssec_username": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Password-carrying UsernameToken element from WS-Security header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"wssec_derived_key": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Derived-key UsernameToken element from WS-Security header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"wssec_binary_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("BinarySecurityToken element from WS-Security header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"ws_secure_conversation": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-SecureConversation identifier", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"ws_trust": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-Trust Base or Supporting token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"kerberos": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Kerberos AP-REQ from WS-Security header", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"kerberos_spnego": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Kerberos AP-REQ from SPNEGO token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"client_ssl": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Subject DN of TLS certificate from connection peer", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"saml_attr_name": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name from SAML attribute assertion", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"saml_authen_name": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name from SAML authentication assertion", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"saml_artifact": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SAML artifact", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"client_ip_address": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client IP address", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"signer_dn": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Subject DN from certificate in message signature", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Token extracted from message", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"cookie_token": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Token extracted as cookie value", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"ltpa": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("LTPA token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"metadata": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"jwt": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"custom": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom processing", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"html_forms_auth": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTML forms-based authentication", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"social_login": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Redirect to a social login provider", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"oauth": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("OAuth", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"wssec_username": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password-carrying UsernameToken element from WS-Security header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"wssec_derived_key": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Derived-key UsernameToken element from WS-Security header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"wssec_binary_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("BinarySecurityToken element from WS-Security header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"ws_secure_conversation": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-SecureConversation identifier", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"ws_trust": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-Trust Base or Supporting token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"kerberos": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Kerberos AP-REQ from WS-Security header", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"kerberos_spnego": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Kerberos AP-REQ from SPNEGO token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"client_ssl": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subject DN of TLS certificate from connection peer", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"saml_attr_name": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name from SAML attribute assertion", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"saml_authen_name": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name from SAML authentication assertion", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"saml_artifact": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SAML artifact", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"client_ip_address": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client IP address", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"signer_dn": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subject DN from certificate in message signature", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Token extracted from message", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"cookie_token": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Token extracted as cookie value", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"ltpa": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LTPA token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"metadata": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"jwt": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"custom": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom processing", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"html_forms_auth": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTML forms-based authentication", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"social_login": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Redirect to a social login provider", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"oauth": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("OAuth", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmAAAPEIBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmAAAPEIBitmapResourceSchema.Required = true
+	} else {
+		DmAAAPEIBitmapResourceSchema.Optional = true
+		DmAAAPEIBitmapResourceSchema.Computed = true
+	}
+	return DmAAAPEIBitmapResourceSchema
 }
 
 func (data DmAAAPEIBitmap) IsNull() bool {
@@ -427,27 +442,13 @@ func (data DmAAAPEIBitmap) IsNull() bool {
 	}
 	return true
 }
-func GetDmAAAPEIBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmAAAPEIBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmAAAPEIBitmapDataSourceSchema
-}
-
-func GetDmAAAPEIBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmAAAPEIBitmapResourceSchema.Required = true
-	} else {
-		DmAAAPEIBitmapResourceSchema.Optional = true
-		DmAAAPEIBitmapResourceSchema.Computed = true
-	}
-	DmAAAPEIBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmAAAPEIBitmapResourceSchema
-}
 
 func (data DmAAAPEIBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.HttpBasicAuth.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`http-basic-auth`, tfutils.StringFromBool(data.HttpBasicAuth, ""))
 	}

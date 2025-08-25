@@ -48,11 +48,12 @@ attributes:
 - name: GetQueue
   type: String
   example: queue
+  test_value: '"queue"'
   description: Specify the name of the get queue associated with the queue manager.
     The handler gets messages from this queue.
   cli_alias: get-queue
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SubscribeTopicString
     value:
     - ''
@@ -62,7 +63,7 @@ attributes:
     handler subscribes to this topic string and gets messages from it.
   cli_alias: subscribe-topic-string
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GetQueue
     value:
     - ''
@@ -140,11 +141,11 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: GetQueue
       value:
       - ''
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: SubscribeTopicString
       value:
       - ''

@@ -36,6 +36,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &MgmtInterfaceResource{}
@@ -71,7 +72,6 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(5550),
@@ -87,10 +87,13 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             stringdefault.StaticString("xml-mgmt"),
 			},
 			"slm_peering": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SLM update interval", "slm-peering", "").AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("SLM update interval", "slm-peering", "").AddDefaultValue("10").AddRequiredWhen(models.MgmtInterfaceSLMPeeringCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(10),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.MgmtInterfaceSLMPeeringCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(10),
 			},
 			"mode": models.GetDmXMLMgmtModesResourceSchema("Specify which service endpoints to enable. For each enabled endpoint, the interface listens for requests from those services.", "mode", "", false),
 			"ssl_config_type": schema.StringAttribute{
@@ -107,8 +110,11 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"sslsni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.MgmtInterfaceSSLSNIServerCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.MgmtInterfaceSSLSNIServerCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,

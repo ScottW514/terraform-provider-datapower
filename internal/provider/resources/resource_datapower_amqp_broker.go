@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AMQPBrokerResource{}
@@ -95,7 +96,6 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(5672),
@@ -120,19 +120,24 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: stringdefault.StaticString("none"),
 			},
 			"user_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Username", "user", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Username", "user", "").AddRequiredWhen(models.AMQPBrokerUserNameCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AMQPBrokerUserNameCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "password_alias").AddRequiredWhen(models.AMQPBrokerPasswordAliasCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AMQPBrokerPasswordAliasCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"maximum_frame_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum frame size in bytes to allow. Frames Frames that are larger are rejected. When rejected, the connection is closed. Enter a value in the range 512 - 104857600. The default value is 104857600.", "maximum-frame-size", "").AddIntegerRange(512, 104857600).AddDefaultValue("104857600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(512, 104857600),
 				},
 				Default: int64default.StaticInt64(104857600),
@@ -148,7 +153,6 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(10),
@@ -164,7 +168,6 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(600),
@@ -174,7 +177,6 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(10),

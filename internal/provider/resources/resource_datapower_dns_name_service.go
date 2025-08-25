@@ -35,6 +35,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &DNSNameServiceResource{}
@@ -67,17 +68,17 @@ func (r *DNSNameServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"search_domains": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of search domains to resolve partial hostnames.", "search-domain", "").String,
-				NestedObject:        models.DmSearchDomainResourceSchema,
+				NestedObject:        models.GetDmSearchDomainResourceSchema(),
 				Optional:            true,
 			},
 			"name_servers": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of DNS servers to contact to resolve hostnames. If you define multiple servers, ensure that the sequence to contact the servers is your preferred order.", "name-server", "").String,
-				NestedObject:        models.DmNameServerResourceSchema,
+				NestedObject:        models.GetDmNameServerResourceSchema(),
 				Optional:            true,
 			},
 			"static_hosts": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the static map of hostnames to IP addresses that do not use DNS resolution. Because the local resolver uses a cache, static hosts do not improve performance.", "static-host", "").String,
-				NestedObject:        models.DmStaticHostResourceSchema,
+				NestedObject:        models.GetDmStaticHostResourceSchema(),
 				Optional:            true,
 			},
 			"ip_preference": schema.StringAttribute{
@@ -103,16 +104,22 @@ func (r *DNSNameServiceResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("first-alive"),
 			},
 			"max_retries": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the maximum number of resolution attempts to send a query to the list of name servers before an error is returned. By default, an unacknowledged resolution request is attempted 3 times.", "retries", "").AddDefaultValue("2").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the maximum number of resolution attempts to send a query to the list of name servers before an error is returned. By default, an unacknowledged resolution request is attempted 3 times.", "retries", "").AddDefaultValue("2").AddRequiredWhen(models.DNSNameServiceMaxRetriesCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(2),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.DNSNameServiceMaxRetriesCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(2),
 			},
 			"timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the duration in seconds that the resolver waits for a response from a DNS server. After expiry, the resolver attempts the query to a different DNS server. The default value is 5.", "timeout", "").AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the duration in seconds that the resolver waits for a response from a DNS server. After expiry, the resolver attempts the query to a different DNS server. The default value is 5.", "timeout", "").AddDefaultValue("5").AddRequiredWhen(models.DNSNameServiceTimeoutCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(5),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.DNSNameServiceTimeoutCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(5),
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

@@ -48,34 +48,41 @@ var DmRateLimitInfoObjectDefault = map[string]attr.Value{
 	"name":   types.StringNull(),
 	"action": types.StringValue("consume"),
 }
-var DmRateLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit.", "name", "").String,
-			Computed:            true,
-		},
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit.", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
-			Computed:            true,
-		},
-	},
-}
-var DmRateLimitInfoResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit.", "name", "").String,
-			Required:            true,
-		},
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit.", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("consume", "replenish"),
+
+func GetDmRateLimitInfoDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmRateLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit.", "name", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("consume"),
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit.", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmRateLimitInfoDataSourceSchema
+}
+func GetDmRateLimitInfoResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmRateLimitInfoResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit.", "name", "").String,
+				Required:            true,
+			},
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit.", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("consume", "replenish"),
+				},
+				Default: stringdefault.StaticString("consume"),
+			},
+		},
+	}
+	return DmRateLimitInfoResourceSchema
 }
 
 func (data DmRateLimitInfo) IsNull() bool {
@@ -93,6 +100,7 @@ func (data DmRateLimitInfo) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

@@ -45,29 +45,36 @@ var DmPubkeyAuthPolicyObjectDefault = map[string]attr.Value{
 	"reg_exp":    types.StringNull(),
 	"crypto_key": types.StringNull(),
 }
-var DmPubkeyAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmPubkeyAuthPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmPubkeyAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"crypto_key": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the private key for public key authentication.", "", "crypto_key").String,
+				Computed:            true,
+			},
 		},
-		"crypto_key": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the private key for public key authentication.", "", "crypto_key").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmPubkeyAuthPolicyDataSourceSchema
 }
-var DmPubkeyAuthPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
+func GetDmPubkeyAuthPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmPubkeyAuthPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"crypto_key": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the private key for public key authentication.", "", "crypto_key").String,
+				Required:            true,
+			},
 		},
-		"crypto_key": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the private key for public key authentication.", "", "crypto_key").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmPubkeyAuthPolicyResourceSchema
 }
 
 func (data DmPubkeyAuthPolicy) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmPubkeyAuthPolicy) ToBody(ctx context.Context, pathRoot string) stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

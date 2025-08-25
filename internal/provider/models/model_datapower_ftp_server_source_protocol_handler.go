@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -76,6 +77,59 @@ type FTPServerSourceProtocolHandler struct {
 	SslServer                   types.String                `tfsdk:"ssl_server"`
 	SslsniServer                types.String                `tfsdk:"sslsni_server"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_alternate_pasv_addr",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var FTPServerSourceProtocolHandlerSSLServerConfigTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "require_tls",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"explicit", "implicit"},
+}
+var FTPServerSourceProtocolHandlerSSLServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "require_tls",
+			AttrType:    "String",
+			AttrDefault: "off",
+			Value:       []string{"explicit", "implicit"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"server"},
+		},
+	},
+}
+var FTPServerSourceProtocolHandlerSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "require_tls",
+			AttrType:    "String",
+			AttrDefault: "off",
+			Value:       []string{"explicit", "implicit"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"sni"},
+		},
+	},
 }
 
 var FTPServerSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -262,6 +316,7 @@ func (data FTPServerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -281,9 +336,9 @@ func (data FTPServerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 		body, _ = sjson.Set(body, pathRoot+`PersistentFilesystemTimeout`, data.PersistentFilesystemTimeout.ValueInt64())
 	}
 	if !data.VirtualDirectories.IsNull() {
-		var values []DmFTPServerVirtualDirectory
-		data.VirtualDirectories.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmFTPServerVirtualDirectory
+		data.VirtualDirectories.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`VirtualDirectories`+".-1", val.ToBody(ctx, ""))
 		}
 	}

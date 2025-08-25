@@ -88,20 +88,20 @@ attributes:
     allows processing actions to be performed on Non-XML content as well.
   cli_alias: non-xml-processing
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Unprocessed
     value:
-    - 'on'
+    - true
 - name: Unprocessed
   type: Bool
   default: false
   description: Permit rule to pass-through data unprocessed
   cli_alias: unprocessed
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: NonXMLProcessing
     value:
-    - 'on'
+    - true
 - name: UserSummary
   type: String
   description: Comments

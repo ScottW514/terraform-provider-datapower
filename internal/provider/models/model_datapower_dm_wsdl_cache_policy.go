@@ -48,34 +48,41 @@ var DmWSDLCachePolicyObjectDefault = map[string]attr.Value{
 	"match": types.StringNull(),
 	"ttl":   types.Int64Value(900),
 }
-var DmWSDLCachePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in this cache policy.", "", "").String,
-			Computed:            true,
-		},
-		"ttl": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Configures lifetime in seconds of document. Enter an integer between 5 and 86400. The default value is 900.", "", "").AddIntegerRange(5, 86400).AddDefaultValue("900").String,
-			Computed:            true,
-		},
-	},
-}
-var DmWSDLCachePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in this cache policy.", "", "").String,
-			Optional:            true,
-		},
-		"ttl": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Configures lifetime in seconds of document. Enter an integer between 5 and 86400. The default value is 900.", "", "").AddIntegerRange(5, 86400).AddDefaultValue("900").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(5, 86400),
+
+func GetDmWSDLCachePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSDLCachePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"match": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in this cache policy.", "", "").String,
+				Computed:            true,
 			},
-			Default: int64default.StaticInt64(900),
+			"ttl": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Configures lifetime in seconds of document. Enter an integer between 5 and 86400. The default value is 900.", "", "").AddIntegerRange(5, 86400).AddDefaultValue("900").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmWSDLCachePolicyDataSourceSchema
+}
+func GetDmWSDLCachePolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSDLCachePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"match": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in this cache policy.", "", "").String,
+				Optional:            true,
+			},
+			"ttl": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Configures lifetime in seconds of document. Enter an integer between 5 and 86400. The default value is 900.", "", "").AddIntegerRange(5, 86400).AddDefaultValue("900").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(5, 86400),
+				},
+				Default: int64default.StaticInt64(900),
+			},
+		},
+	}
+	return DmWSDLCachePolicyResourceSchema
 }
 
 func (data DmWSDLCachePolicy) IsNull() bool {
@@ -93,6 +100,7 @@ func (data DmWSDLCachePolicy) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Match.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Match`, data.Match.ValueString())
 	}

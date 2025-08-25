@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &ConformancePolicyResource{}
@@ -112,8 +113,11 @@ func (r *ConformancePolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("never"),
 			},
 			"log_target": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Target URL to which conformance reports will be sent", "report-target", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Target URL to which conformance reports will be sent", "report-target", "").AddRequiredWhen(models.ConformancePolicyLogTargetCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ConformancePolicyLogTargetCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"reject_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance to cause the message to be rejected.", "reject-level", "").AddStringEnum("never", "failure", "warning").AddDefaultValue("never").String,
@@ -125,7 +129,7 @@ func (r *ConformancePolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("never"),
 			},
 			"reject_include_summary": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found.", "reject-include-summary", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found.", "reject-include-summary", "").AddDefaultValue("false").AddRequiredWhen(models.ConformancePolicyRejectIncludeSummaryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -143,29 +147,34 @@ func (r *ConformancePolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default:             booldefault.StaticBool(false),
 			},
 			"response_report_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance in a response message to cause a conformance report to be recorded.", "response-report-level", "").AddStringEnum("never", "failure", "warning", "always").AddDefaultValue("never").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance in a response message to cause a conformance report to be recorded.", "response-report-level", "").AddStringEnum("never", "failure", "warning", "always").AddDefaultValue("never").AddRequiredWhen(models.ConformancePolicyResponseReportLevelCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "failure", "warning", "always"),
+					validators.ConditionalRequiredString(models.ConformancePolicyResponseReportLevelCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("never"),
 			},
 			"response_log_target": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Target URL to which response conformance reports will be sent", "response-report-target", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Target URL to which response conformance reports will be sent", "response-report-target", "").AddRequiredWhen(models.ConformancePolicyResponseLogTargetCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ConformancePolicyResponseLogTargetCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"response_reject_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance to cause a response message to be rejected.", "response-reject-level", "").AddStringEnum("never", "failure", "warning").AddDefaultValue("never").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance to cause a response message to be rejected.", "response-reject-level", "").AddStringEnum("never", "failure", "warning").AddDefaultValue("never").AddRequiredWhen(models.ConformancePolicyResponseRejectLevelCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "failure", "warning"),
+					validators.ConditionalRequiredString(models.ConformancePolicyResponseRejectLevelCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("never"),
 			},
 			"response_reject_include_summary": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found in response messages.", "response-reject-include-summary", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found in response messages.", "response-reject-include-summary", "").AddDefaultValue("false").AddRequiredWhen(models.ConformancePolicyResponseRejectIncludeSummaryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

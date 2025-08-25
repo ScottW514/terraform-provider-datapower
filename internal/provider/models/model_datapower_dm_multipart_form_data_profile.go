@@ -54,59 +54,74 @@ var DmMultipartFormDataProfileObjectDefault = map[string]attr.Value{
 	"max_size":                types.Int64Value(5000000),
 	"content_type_restricted": types.BoolValue(false),
 }
-var DmMultipartFormDataProfileDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"max_parts": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum number of parts allowed. Defaults to 4.", "", "").AddDefaultValue("4").String,
-			Computed:            true,
+
+func GetDmMultipartFormDataProfileDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmMultipartFormDataProfileDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"max_parts": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Maximum number of parts allowed. Defaults to 4.", "", "").AddDefaultValue("4").String,
+				Computed:            true,
+			},
+			"max_size_per_part": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for any one part. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
+				Computed:            true,
+			},
+			"max_size": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for all parts combined. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
+				Computed:            true,
+			},
+			"content_type_restricted": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("If set, this forces the individual form-data content types to be matched against the general list of request acceptable content-type expressions.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"max_size_per_part": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for any one part. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
-			Computed:            true,
-		},
-		"max_size": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for all parts combined. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
-			Computed:            true,
-		},
-		"content_type_restricted": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("If set, this forces the individual form-data content types to be matched against the general list of request acceptable content-type expressions.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmMultipartFormDataProfileDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmMultipartFormDataProfileDataSourceSchema
 }
-var DmMultipartFormDataProfileResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmMultipartFormDataProfileObjectType,
-			DmMultipartFormDataProfileObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"max_parts": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum number of parts allowed. Defaults to 4.", "", "").AddDefaultValue("4").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             int64default.StaticInt64(4),
+func GetDmMultipartFormDataProfileResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmMultipartFormDataProfileResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmMultipartFormDataProfileObjectType,
+				DmMultipartFormDataProfileObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"max_parts": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Maximum number of parts allowed. Defaults to 4.", "", "").AddDefaultValue("4").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             int64default.StaticInt64(4),
+			},
+			"max_size_per_part": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for any one part. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             int64default.StaticInt64(5000000),
+			},
+			"max_size": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for all parts combined. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             int64default.StaticInt64(5000000),
+			},
+			"content_type_restricted": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("If set, this forces the individual form-data content types to be matched against the general list of request acceptable content-type expressions.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"max_size_per_part": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for any one part. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             int64default.StaticInt64(5000000),
-		},
-		"max_size": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for all parts combined. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             int64default.StaticInt64(5000000),
-		},
-		"content_type_restricted": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("If set, this forces the individual form-data content types to be matched against the general list of request acceptable content-type expressions.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmMultipartFormDataProfileResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmMultipartFormDataProfileResourceSchema.Required = true
+	} else {
+		DmMultipartFormDataProfileResourceSchema.Optional = true
+		DmMultipartFormDataProfileResourceSchema.Computed = true
+	}
+	return DmMultipartFormDataProfileResourceSchema
 }
 
 func (data DmMultipartFormDataProfile) IsNull() bool {
@@ -124,27 +139,13 @@ func (data DmMultipartFormDataProfile) IsNull() bool {
 	}
 	return true
 }
-func GetDmMultipartFormDataProfileDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmMultipartFormDataProfileDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmMultipartFormDataProfileDataSourceSchema
-}
-
-func GetDmMultipartFormDataProfileResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmMultipartFormDataProfileResourceSchema.Required = true
-	} else {
-		DmMultipartFormDataProfileResourceSchema.Optional = true
-		DmMultipartFormDataProfileResourceSchema.Computed = true
-	}
-	DmMultipartFormDataProfileResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmMultipartFormDataProfileResourceSchema
-}
 
 func (data DmMultipartFormDataProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.MaxParts.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MaxParts`, data.MaxParts.ValueInt64())
 	}

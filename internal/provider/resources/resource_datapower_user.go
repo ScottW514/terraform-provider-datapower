@@ -27,22 +27,19 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/tidwall/gjson"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
-var _ resource.ResourceWithModifyPlan = &UserResource{}
+var _ resource.Resource = &UserResource{}
 
 func NewUserResource() resource.Resource {
 	return &UserResource{}
@@ -75,7 +72,7 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
 				Optional:            true,
 			},
-			"password": schema.StringAttribute{
+			"password_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password for the account. The password must comply to the password policy in RBM settings.", "password", "").String,
 				Required:            true,
 				WriteOnly:           true,
@@ -84,12 +81,19 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 					stringvalidator.LengthBetween(1, 128),
 				},
 			},
-			"password_update": schema.BoolAttribute{
-				MarkdownDescription: "Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.",
+			"password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Changes to this value trigger an update to `write_only` value.",
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(false),
-				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(
+						validators.Evaluation{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "password_wo",
+							AttrType:    "String",
+							AttrDefault: "",
+							Value:       []string{""},
+						}, validators.Evaluation{}, false),
+				},
 			},
 			"access_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Access level", "access-level", "").AddStringEnum("none", "privileged", "group-defined", "technician", "expired", "config-sequence").AddDefaultValue("group-defined").String,
@@ -101,17 +105,20 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Default: stringdefault.StaticString("group-defined"),
 			},
 			"group_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user group for the user account. Each user group has an access profile to manage access rights. A user account inherits access rights from its user group.", "group", "user_group").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user group for the user account. Each user group has an access profile to manage access rights. A user account inherits access rights from its user group.", "group", "user_group").AddRequiredWhen(models.UserGroupNameCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.UserGroupNameCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"snmp_creds": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify SNMP V3 credentials for the user account. SNMP V3 users are a type of user account with SNMP V3 credentials. This type of user account creates an account and adds SNMP V3 credentials. Each account can have multiple SNMP V3 credentials, one for each SNMP V3 engine that is identified by an engine ID value. The current implementation supports an SNMP V3 credential for the local engine ID only. Therefore, define only one SNMP V3 credential for each account. <p>SNMP V3 requests can use authentication with the <tt>AuthKey</tt> and can use privacy (encryption and decryption) with the <tt>PrivKey</tt> . The use of these keys is between the user and the local SNMP engine. <ul><li>The <tt>AuthKey</tt> provides data integrity and data origin authentication.</li><li>The <tt>PrivKey</tt> provides data encryption and decryption.</li></ul></p><p>The <tt>AuthKey</tt> and the <tt>PrivKey</tt> can be explicit values or be generated by the DataPower Gateway. Specifying explicit values is useful when the key is created on another system. <ul><li>When the authentication protocol is MD5, enter the hex representation of the 16-byte key.</li><li>When the authentication protocol is SHA, enter the hex representation of the 20-byte key.</li><li>When the DataPower Gateway generates and stores the appropriate length key, enter a plaintext string that is at least 8 characters long as the hash.</li></ul></p>", "snmp-cred", "").String,
-				NestedObject:        models.DmSnmpCredResourceSchema,
+				NestedObject:        models.GetDmSnmpCredResourceSchema(),
 				Optional:            true,
 			},
 			"hashed_snmp_creds": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "snmp-cred-hashed", "").String,
-				NestedObject:        models.DmSnmpCredMaskedResourceSchema,
+				NestedObject:        models.GetDmSnmpCredMaskedResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,
@@ -131,7 +138,7 @@ func (r *UserResource) Create(ctx context.Context, req resource.CreateRequest, r
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-	var data models.User
+	var data, config models.User
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -141,17 +148,12 @@ func (r *UserResource) Create(ctx context.Context, req resource.CreateRequest, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	var config models.User
-
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	data.Password = config.Password
-	resp.Diagnostics.Append(resp.Private.SetKey(ctx, "User.Password", []byte("{\"value\": \""+tfutils.GenerateHash(config.Password.ValueString())+"\"}"))...)
 
-	body := data.ToBody(ctx, `User`)
+	body := data.ToBody(ctx, `User`, &config)
 	_, err := r.pData.Client.Post(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
@@ -214,18 +216,11 @@ func (r *UserResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	if data.PasswordUpdate.IsUnknown() {
-		data.Password = config.Password
-		data.PasswordUpdate = types.BoolValue(false)
-		resp.Diagnostics.Append(resp.Private.SetKey(ctx, "User.Password", []byte("{\"value\": \""+tfutils.GenerateHash(config.Password.ValueString())+"\"}"))...)
-	}
-	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `User`))
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `User`, &config))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
@@ -264,33 +259,6 @@ func (r *UserResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 	}
 
 	resp.State.RemoveResource(ctx)
-}
-func (r *UserResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
-	if req.Plan.Raw.IsNull() {
-		return
-	}
-	var data, config models.User
-
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	var val []byte
-	var diags diag.Diagnostics
-	val, diags = req.Private.GetKey(ctx, "User.Password")
-	resp.Diagnostics.Append(diags...)
-	if val != nil {
-		if hash := gjson.GetBytes(val, "value"); hash.Exists() && !tfutils.VerifyHash(config.Password.ValueString(), hash.String()) {
-			data.PasswordUpdate = types.BoolUnknown()
-		}
-	}
-
-	resp.Diagnostics.Append(resp.Plan.Set(ctx, &data)...)
 }
 
 func (r *UserResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {

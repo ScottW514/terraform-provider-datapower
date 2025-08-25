@@ -99,7 +99,6 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: tfutils.NewAttributeDescription("An integer (within the range 1 through 65535) that specifies the port monitored by the TCP proxy", "", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
@@ -111,7 +110,6 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number of the remote host, specify with Remote Host, for which this proxy is accepting TCP traffic.", "", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
@@ -120,7 +118,6 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(360),

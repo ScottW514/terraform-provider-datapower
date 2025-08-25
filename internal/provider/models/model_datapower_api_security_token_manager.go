@@ -88,6 +88,7 @@ func (data APISecurityTokenManager) ToBody(ctx context.Context, pathRoot string)
 	}
 	body := ""
 	body, _ = sjson.Set(body, "APISecurityTokenManager.name", path.Base("/mgmt/config/{domain}/APISecurityTokenManager/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

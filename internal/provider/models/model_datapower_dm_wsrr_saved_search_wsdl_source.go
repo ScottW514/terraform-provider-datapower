@@ -45,29 +45,36 @@ var DmWSRRSavedSearchWSDLSourceObjectDefault = map[string]attr.Value{
 	"wsrr_saved_search_subscription": types.StringNull(),
 	"wsrr_attachment":                types.StringNull(),
 }
-var DmWSRRSavedSearchWSDLSourceDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"wsrr_saved_search_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a WSRR saved search subscription", "", "wsrr_saved_search_subscription").String,
-			Computed:            true,
+
+func GetDmWSRRSavedSearchWSDLSourceDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSRRSavedSearchWSDLSourceDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"wsrr_saved_search_subscription": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a WSRR saved search subscription", "", "wsrr_saved_search_subscription").String,
+				Computed:            true,
+			},
+			"wsrr_attachment": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a WS-Policy attachment", "", "policy_attachments").String,
+				Computed:            true,
+			},
 		},
-		"wsrr_attachment": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a WS-Policy attachment", "", "policy_attachments").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmWSRRSavedSearchWSDLSourceDataSourceSchema
 }
-var DmWSRRSavedSearchWSDLSourceResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"wsrr_saved_search_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a WSRR saved search subscription", "", "wsrr_saved_search_subscription").String,
-			Optional:            true,
+func GetDmWSRRSavedSearchWSDLSourceResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSRRSavedSearchWSDLSourceResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"wsrr_saved_search_subscription": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a WSRR saved search subscription", "", "wsrr_saved_search_subscription").String,
+				Optional:            true,
+			},
+			"wsrr_attachment": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a WS-Policy attachment", "", "policy_attachments").String,
+				Optional:            true,
+			},
 		},
-		"wsrr_attachment": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a WS-Policy attachment", "", "policy_attachments").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSRRSavedSearchWSDLSourceResourceSchema
 }
 
 func (data DmWSRRSavedSearchWSDLSource) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmWSRRSavedSearchWSDLSource) ToBody(ctx context.Context, pathRoot str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.WsrrSavedSearchSubscription.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSRRSavedSearchSubscription`, data.WsrrSavedSearchSubscription.ValueString())
 	}

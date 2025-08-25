@@ -103,7 +103,6 @@ func (r *AMQPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 3600),
 				},
 				Default: int64default.StaticInt64(100),

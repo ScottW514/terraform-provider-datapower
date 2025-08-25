@@ -84,7 +84,7 @@ func (r *PolicyParametersResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"policy_parameter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A key-value pair. The key specifies a policy parameter in a policy mapping stylesheet formatted {policy-domain-ns}key.", "parameter", "").String,
-				NestedObject:        models.DmPolicyParameterResourceSchema,
+				NestedObject:        models.GetDmPolicyParameterResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -40,12 +40,12 @@ attributes:
   test_bed_value: datapower_b2b_cpa_sender_setting.acc_test.id
   cli_alias: sender-setting
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Capability
     value:
     - cansend
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Capability
     value:
     - cansend
@@ -57,12 +57,12 @@ attributes:
     of document-exchange configurations and transport configurations.
   cli_alias: receiver-setting
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Capability
     value:
     - canreceive
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Capability
     value:
     - canreceive

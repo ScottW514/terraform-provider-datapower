@@ -93,7 +93,7 @@ var {{.Name}}TestConfig = ModelTestConfig{
     Name:         "{{.Name}}",
     {{- if not .ModelOnly}}
     Resource: `
-resource "datapower_{{snakeCase .Name}}" "test" {
+resource "datapower_{{toTfName .Name}}" "test" {
     {{- else}}
     Model: `{
     {{- end}}
@@ -121,12 +121,15 @@ resource "datapower_{{snakeCase .Name}}" "test" {
             {{- else if len .Default}}
   {{.TfName}} = {{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}}
 		    {{- end}}
+            {{- if .WriteOnly}}
+  {{.TfName}}_version = 1
+            {{- end}}
 	    {{- end}}
     {{- end}}
 }`,
     {{- if not .ModelOnly}}
     Data: `
-data "datapower_{{snakeCase .Name}}" "test" {
+data "datapower_{{toTfName .Name}}" "test" {
         {{- if not .DefaultDomainOnly}}
             {{- $modelName := .Name}}
             {{- range  .Attributes}}
@@ -140,7 +143,7 @@ data "datapower_{{snakeCase .Name}}" "test" {
     {{- if not .UpdateOnly}}
         {{- if and (not .ModelOnly) (not .SkipTest)}}
     TestBed: `
-resource "datapower_{{snakeCase .Name}}" "acc_test" {
+resource "datapower_{{toTfName .Name}}" "acc_test" {
         {{- else}}
     ModelTestBed: `{
     {{- end}}
@@ -170,6 +173,9 @@ resource "datapower_{{snakeCase .Name}}" "acc_test" {
                 {{- else if len .Default}}
   {{.TfName}} = {{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}}
 		        {{- end}}
+                {{- if .WriteOnly}}
+  {{.TfName}}_version = 1
+                {{- end}}
 	        {{- end}}
         {{- end}}
 }`,

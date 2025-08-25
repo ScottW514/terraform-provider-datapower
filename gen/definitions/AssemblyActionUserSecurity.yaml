@@ -54,7 +54,7 @@ attributes:
     failed, stops the assembly and return an error.
   cli_alias: ei-stop-on-error
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ExtractIdentityMethod
     value:
     - disabled
@@ -65,7 +65,7 @@ attributes:
   description: Username context variable
   cli_alias: user-context-var
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExtractIdentityMethod
     value:
     - context-var
@@ -76,7 +76,7 @@ attributes:
   description: Password context variable
   cli_alias: pass-context-var
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExtractIdentityMethod
     value:
     - context-var
@@ -89,7 +89,7 @@ attributes:
     format.
   cli_alias: redirect-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExtractIdentityMethod
     value:
     - redirect
@@ -105,7 +105,7 @@ attributes:
     300.
   cli_alias: redirect-time-limit
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExtractIdentityMethod
     value:
     - redirect
@@ -116,7 +116,7 @@ attributes:
   description: Query parameters
   cli_alias: query-parameters
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ExtractIdentityMethod
     value:
     - redirect
@@ -128,7 +128,7 @@ attributes:
     configuration to return the custom login page.
   cli_alias: ei-default-form
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExtractIdentityMethod
     value:
     - html-form
@@ -143,14 +143,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ExtractIdentityMethod
       value:
       - html-form
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIDefaultForm
       value:
-      - 'off'
+      - false
   ignored_when:
   - evaluation: logical-true
 - name: EICustomFormClientProfile
@@ -161,14 +161,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ExtractIdentityMethod
       value:
       - html-form
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIDefaultForm
       value:
-      - 'on'
+      - true
 - name: EICustomFormContentSecurityPolicy
   type: String
   default: default-src 'self'
@@ -181,14 +181,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ExtractIdentityMethod
       value:
       - html-form
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIDefaultForm
       value:
-      - 'on'
+      - true
 - name: EIFormTimeLimit
   type: Int64
   minimum: 10
@@ -199,7 +199,7 @@ attributes:
     default value is 300.
   cli_alias: ei-form-time-limit
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExtractIdentityMethod
     value:
     - html-form
@@ -221,7 +221,7 @@ attributes:
     stops the assembly and return an error.
   cli_alias: au-stop-on-error
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: UserAuthMethod
     value:
     - disabled
@@ -235,7 +235,7 @@ attributes:
   test_bed_value: datapower_api_auth_url_registry.acc_test.id
   cli_alias: user-registry
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: UserAuthMethod
     value:
     - disabled
@@ -250,7 +250,7 @@ attributes:
     one or more runtime context variables in the <tt>$(variable)</tt> format.
   cli_alias: auth-response-headers-pattern
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: UserAuthMethod
     value:
     - user-registry
@@ -262,7 +262,7 @@ attributes:
     one or more runtime context variables in the <tt>$(variable)</tt> format.
   cli_alias: auth-response-header-credential
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: UserAuthMethod
     value:
     - user-registry
@@ -283,7 +283,7 @@ attributes:
     stops the assembly and return an error.
   cli_alias: az-stop-on-error
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: UserAZMethod
     value:
     - disabled
@@ -297,7 +297,7 @@ attributes:
     define the configuration to return the custom authorization page.
   cli_alias: az-default-form
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UserAZMethod
     value:
     - html-form
@@ -312,14 +312,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UserAZMethod
       value:
       - html-form
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZDefaultForm
       value:
-      - 'off'
+      - false
   ignored_when:
   - evaluation: logical-true
 - name: AZCustomFormClientProfile
@@ -330,14 +330,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: UserAZMethod
       value:
       - html-form
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZDefaultForm
       value:
-      - 'on'
+      - true
 - name: AZCustomFormContentSecurityPolicy
   type: String
   default: default-src 'self'
@@ -350,14 +350,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: UserAZMethod
       value:
       - html-form
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZDefaultForm
       value:
-      - 'on'
+      - true
 - name: AZFormTimeLimit
   type: Int64
   minimum: 10
@@ -368,7 +368,7 @@ attributes:
     value is 300.
   cli_alias: az-form-time-limit
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UserAZMethod
     value:
     - html-form
@@ -380,7 +380,7 @@ attributes:
   description: Display table check boxes
   cli_alias: az-table-display-checkboxes
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: UserAZMethod
     value:
     - html-form
@@ -392,7 +392,7 @@ attributes:
     of names, or a JSON array of objects with name and description.
   cli_alias: az-table-dynamic-entries
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: UserAZMethod
     value:
     - html-form
@@ -402,7 +402,7 @@ attributes:
   description: Default table entry
   cli_alias: az-table-default-entry
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: UserAZMethod
     value:
     - html-form
@@ -413,15 +413,15 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ExtractIdentityMethod
       value:
       - redirect
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ExtractIdentityMethod
       value:
       - html-form
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: UserAZMethod
       value:
       - html-form

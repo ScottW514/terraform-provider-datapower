@@ -151,6 +151,7 @@ func (data LoadBalancerGroup) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -182,9 +183,9 @@ func (data LoadBalancerGroup) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`NeverReturnSickMember`, tfutils.StringFromBool(data.NeverReturnSickMember, ""))
 	}
 	if !data.LbGroupMembers.IsNull() {
-		var values []DmLBGroupMember
-		data.LbGroupMembers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmLBGroupMember
+		data.LbGroupMembers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`LBGroupMembers`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -208,9 +209,9 @@ func (data LoadBalancerGroup) ToBody(ctx context.Context, pathRoot string) strin
 		}
 	}
 	if !data.MonitoredCookies.IsNull() {
-		var values []string
-		data.MonitoredCookies.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.MonitoredCookies.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`MonitoredCookies`+".-1", map[string]string{"value": val})
 		}
 	}

@@ -122,12 +122,12 @@ func (d *MultiProtocolGatewayDataSource) Schema(ctx context.Context, req datasou
 						},
 						"wsrr_saved_search_subscriptions": schema.ListNestedAttribute{
 							MarkdownDescription: "The Gateway services endpoints based on the metadata returned by the saved search or named query.",
-							NestedObject:        models.DmWSRRSavedSearchWSDLSourceDataSourceSchema,
+							NestedObject:        models.GetDmWSRRSavedSearchWSDLSourceDataSourceSchema(),
 							Computed:            true,
 						},
 						"wsrr_subscriptions": schema.ListNestedAttribute{
 							MarkdownDescription: "The Gateway services endpoints based on the metadata obtained using these subscriptions.",
-							NestedObject:        models.DmWSRRWSDLSourceDataSourceSchema,
+							NestedObject:        models.GetDmWSRRWSDLSourceDataSourceSchema(),
 							Computed:            true,
 						},
 						"policy_attachments": schema.StringAttribute{
@@ -136,7 +136,7 @@ func (d *MultiProtocolGatewayDataSource) Schema(ctx context.Context, req datasou
 						},
 						"policy_parameter": schema.ListNestedAttribute{
 							MarkdownDescription: "Policy parameters influence the enforcement of policy in the gateway",
-							NestedObject:        models.DmWSPolicyParametersDataSourceSchema,
+							NestedObject:        models.GetDmWSPolicyParametersDataSourceSchema(),
 							Computed:            true,
 						},
 						"wsm_agent_monitor": schema.BoolAttribute{
@@ -194,17 +194,17 @@ func (d *MultiProtocolGatewayDataSource) Schema(ctx context.Context, req datasou
 						},
 						"header_injection": schema.ListNestedAttribute{
 							MarkdownDescription: "HTTP Header Injection",
-							NestedObject:        models.DmHeaderInjectionDataSourceSchema,
+							NestedObject:        models.GetDmHeaderInjectionDataSourceSchema(),
 							Computed:            true,
 						},
 						"header_suppression": schema.ListNestedAttribute{
 							MarkdownDescription: "HTTP Header Suppression",
-							NestedObject:        models.DmHeaderSuppressionDataSourceSchema,
+							NestedObject:        models.GetDmHeaderSuppressionDataSourceSchema(),
 							Computed:            true,
 						},
 						"stylesheet_parameters": schema.ListNestedAttribute{
 							MarkdownDescription: "Style sheets used in processing policies can take stylesheet parameters. These parameters can be passed in by this object. You can define more than one parameter.",
-							NestedObject:        models.DmStylesheetParameterDataSourceSchema,
+							NestedObject:        models.GetDmStylesheetParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"default_param_namespace": schema.StringAttribute{
@@ -340,7 +340,7 @@ func (d *MultiProtocolGatewayDataSource) Schema(ctx context.Context, req datasou
 						},
 						"debug_trigger": schema.ListNestedAttribute{
 							MarkdownDescription: "The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.",
-							NestedObject:        models.DmMSDebugTriggerTypeDataSourceSchema,
+							NestedObject:        models.GetDmMSDebugTriggerTypeDataSourceSchema(),
 							Computed:            true,
 						},
 						"flow_control": schema.BoolAttribute{

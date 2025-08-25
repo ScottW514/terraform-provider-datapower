@@ -76,6 +76,8 @@ resource "datapower_assembly_action_invoke" "test" {
 - `graph_ql_send_type` (String) Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.
   - CLI Alias: `graphql-send-type`
   - Choices: `detect`, `graphql`, `json`
+  - Default value: `detect`
+  - Required When: (`method`=`Keep`|`POST` AND `backend_type`=`detect`|`graphql`)
 - `header_control_list` (String) Specify the control list that uses headers to accept or reject requests. By default, accepts all requests with headers.
   - CLI Alias: `header-control-list`
   - Reference to: `datapower_control_list:id`
@@ -121,6 +123,7 @@ resource "datapower_assembly_action_invoke" "test" {
 - `time_to_live` (Number) Specify the validity period in seconds for documents in the cache. The default value is 900.
   - CLI Alias: `ttl`
   - Default value: `900`
+  - Required When: `cache_type`=`TimeToLive`
 - `timeout` (Number) Specify the duration in seconds to wait for a reply from the target. The default value is 60.
   - CLI Alias: `timeout`
   - Default value: `60`

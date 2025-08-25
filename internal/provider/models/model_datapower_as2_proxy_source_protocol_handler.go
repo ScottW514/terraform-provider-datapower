@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -66,6 +67,33 @@ type AS2ProxySourceProtocolHandler struct {
 	SslClientConfigType           types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient                     types.String                `tfsdk:"ssl_client"`
 	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_visibility_event",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_visibility_event",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_hmac_authentication",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
 }
 
 var AS2ProxySourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -214,6 +242,7 @@ func (data AS2ProxySourceProtocolHandler) ToBody(ctx context.Context, pathRoot s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

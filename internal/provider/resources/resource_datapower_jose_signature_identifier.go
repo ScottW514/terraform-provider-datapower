@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &JOSESignatureIdentifierResource{}
@@ -92,24 +93,32 @@ func (r *JOSESignatureIdentifierResource) Schema(ctx context.Context, req resour
 				},
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the signature.", "sskey", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the signature.", "sskey", "crypto_sskey").AddRequiredWhen(models.JOSESignatureIdentifierSSKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.JOSESignatureIdentifierSSKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the certificate to verify the signature.", "cert", "crypto_certificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the certificate to verify the signature.", "cert", "crypto_certificate").AddRequiredWhen(models.JOSESignatureIdentifierCertificateCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.JOSESignatureIdentifierCertificateCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"valid_algorithms": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies an array of algorithm values that are valid for signature verification. When specified, the JWS <tt>alg</tt> header parameter value must match a value in this set. By default, all allowed JWS <tt>alg</tt> header parameters values are valid.", "alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
-					listvalidator.ValueStringsAre(stringvalidator.OneOf("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512")),
+					listvalidator.ValueStringsAre(
+						stringvalidator.OneOf("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512"),
+					),
 				},
 			},
 			"header_param": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The JOSE header parameters used to identify the signature.", "header-param", "").String,
-				NestedObject:        models.DmJOSEHeaderResourceSchema,
+				NestedObject:        models.GetDmJOSEHeaderResourceSchema(),
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

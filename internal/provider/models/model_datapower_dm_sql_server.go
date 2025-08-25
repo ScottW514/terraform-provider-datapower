@@ -55,52 +55,59 @@ var DmSQLServerObjectDefault = map[string]attr.Value{
 	"type":           types.StringValue("OracleListener"),
 	"data_source_id": types.StringNull(),
 }
-var DmSQLServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the server.", "host", "").String,
-			Computed:            true,
-		},
-		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddDefaultValue("1521").String,
-			Computed:            true,
-		},
-		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the server configuration.", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
-			Computed:            true,
-		},
-		"data_source_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Data Source ID", "id", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmSQLServerResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the server.", "host", "").String,
-			Required:            true,
-		},
-		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddDefaultValue("1521").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             int64default.StaticInt64(1521),
-		},
-		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the server configuration.", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("Unspecified", "OracleListener", "OracleONS"),
+
+func GetDmSQLServerDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSQLServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"host": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the server.", "host", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("OracleListener"),
+			"port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddDefaultValue("1521").String,
+				Computed:            true,
+			},
+			"type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the server configuration.", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
+				Computed:            true,
+			},
+			"data_source_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Data Source ID", "id", "").String,
+				Computed:            true,
+			},
 		},
-		"data_source_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Data Source ID", "id", "").String,
-			Optional:            true,
+	}
+	return DmSQLServerDataSourceSchema
+}
+func GetDmSQLServerResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSQLServerResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"host": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the server.", "host", "").String,
+				Required:            true,
+			},
+			"port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddDefaultValue("1521").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             int64default.StaticInt64(1521),
+			},
+			"type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the server configuration.", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("Unspecified", "OracleListener", "OracleONS"),
+				},
+				Default: stringdefault.StaticString("OracleListener"),
+			},
+			"data_source_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Data Source ID", "id", "").String,
+				Optional:            true,
+			},
 		},
-	},
+	}
+	return DmSQLServerResourceSchema
 }
 
 func (data DmSQLServer) IsNull() bool {
@@ -124,6 +131,7 @@ func (data DmSQLServer) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Host.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Host`, data.Host.ValueString())
 	}

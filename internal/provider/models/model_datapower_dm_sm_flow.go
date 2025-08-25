@@ -47,39 +47,54 @@ var DmSMFlowObjectDefault = map[string]attr.Value{
 	"frontend": types.BoolValue(false),
 	"backend":  types.BoolValue(false),
 }
-var DmSMFlowDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"frontend": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Responses", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmSMFlowDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSMFlowDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"frontend": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Responses", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"backend": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"backend": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSMFlowDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSMFlowDataSourceSchema
 }
-var DmSMFlowResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSMFlowObjectType,
-			DmSMFlowObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"frontend": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Responses", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmSMFlowResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSMFlowResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSMFlowObjectType,
+				DmSMFlowObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"frontend": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Responses", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"backend": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Requests", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"backend": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Requests", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmSMFlowResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSMFlowResourceSchema.Required = true
+	} else {
+		DmSMFlowResourceSchema.Optional = true
+		DmSMFlowResourceSchema.Computed = true
+	}
+	return DmSMFlowResourceSchema
 }
 
 func (data DmSMFlow) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmSMFlow) IsNull() bool {
 	}
 	return true
 }
-func GetDmSMFlowDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSMFlowDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSMFlowDataSourceSchema
-}
-
-func GetDmSMFlowResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSMFlowResourceSchema.Required = true
-	} else {
-		DmSMFlowResourceSchema.Optional = true
-		DmSMFlowResourceSchema.Computed = true
-	}
-	DmSMFlowResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSMFlowResourceSchema
-}
 
 func (data DmSMFlow) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Frontend.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`frontend`, tfutils.StringFromBool(data.Frontend, ""))
 	}

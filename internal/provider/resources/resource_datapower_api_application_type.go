@@ -88,7 +88,7 @@ func (r *APIApplicationTypeResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"supported_o_auth_types": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Supported OAuth types", "supported-oauth-types", "").String,
-				NestedObject:        models.DmOAuthTypeResourceSchema,
+				NestedObject:        models.GetDmOAuthTypeResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

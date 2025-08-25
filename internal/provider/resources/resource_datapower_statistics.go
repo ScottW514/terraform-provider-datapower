@@ -80,7 +80,6 @@ func (r *StatisticsResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(500, 5000),
 				},
 				Default: int64default.StaticInt64(1000),

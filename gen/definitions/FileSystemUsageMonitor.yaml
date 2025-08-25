@@ -49,15 +49,15 @@ attributes:
     critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   cli_alias: all-system-warning
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AllSystem
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AllSystem
     value:
-    - 'off'
+    - false
 - name: AllSystemCriticalThreshold
   type: Int64
   maximum: 100
@@ -69,15 +69,15 @@ attributes:
     75.
   cli_alias: all-system-critical
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AllSystem
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AllSystem
     value:
-    - 'off'
+    - false
 - name: System
   type: List
   element_type: DmFileSystemUsage
@@ -85,6 +85,12 @@ attributes:
     These thresholds override the thresholds that are defined for all system file
     systems.
   cli_alias: system
+- name: AllQueueManagers
+  type: Bool
+  default: true
+  required: true
+  cli_alias": all-qm
+  description: Specify whether the utility checks all or only a subset of queue manager file systems.
 - name: AllQMWarningThreshold
   type: Int64
   maximum: 100
@@ -96,15 +102,15 @@ attributes:
     is 75.
   cli_alias: all-qm-warning
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AllQueueManagers
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AllQueueManagers
     value:
-    - 'off'
+    - false
 - name: AllQMCriticalThreshold
   type: Int64
   maximum: 100
@@ -116,15 +122,15 @@ attributes:
     is 75.
   cli_alias: all-qm-critical
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AllQueueManagers
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AllQueueManagers
     value:
-    - 'off'
+    - false
 - name: QueueManager
   type: List
   element_type: DmQMFileSystemUsage

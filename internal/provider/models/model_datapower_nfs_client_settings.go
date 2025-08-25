@@ -70,6 +70,7 @@ func (data NFSClientSettings) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	body := ""
 	body, _ = sjson.Set(body, "NFSClientSettings.name", path.Base("/mgmt/config/default/NFSClientSettings/NFS-Client-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

@@ -36,6 +36,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &JOSERecipientIdentifierResource{}
@@ -90,16 +91,22 @@ func (r *JOSERecipientIdentifierResource) Schema(ctx context.Context, req resour
 				},
 			},
 			"key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the private key to verify the recipient.", "key", "crypto_key").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the private key to verify the recipient.", "key", "crypto_key").AddRequiredWhen(models.JOSERecipientIdentifierKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.JOSERecipientIdentifierKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the recipient.", "sskey", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the recipient.", "sskey", "crypto_sskey").AddRequiredWhen(models.JOSERecipientIdentifierSSKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.JOSERecipientIdentifierSSKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"header_param": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The JOSE header parameters used to identify the recipient.", "header-param", "").String,
-				NestedObject:        models.DmJOSEHeaderResourceSchema,
+				NestedObject:        models.GetDmJOSEHeaderResourceSchema(),
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

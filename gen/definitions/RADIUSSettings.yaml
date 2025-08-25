@@ -7,6 +7,7 @@ cmd_group: radius
 rest_endpoint: /mgmt/config/default/RADIUSSettings/RADIUS-Settings
 update_only: true
 default_domain_only: true
+write_only_attrs: true
 attributes:
 - name: mAdminState
   tf_name: enabled
@@ -45,5 +46,6 @@ attributes:
 - name: AAAServers
   type: List
   element_type: DmRadiusServer
+  write_only_attrs: true
   description: AAA and RBM
   cli_alias: aaaserver

@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,14 @@ type DmWSOperationPolicySubjectOptOut struct {
 	PolicySubjectOptOutWsdlComponentValue types.String           `tfsdk:"policy_subject_opt_out_wsdl_component_value"`
 	PolicySubjectOptOutSubscription       types.String           `tfsdk:"policy_subject_opt_out_subscription"`
 	PolicySubjectOptOutFragmentId         types.String           `tfsdk:"policy_subject_opt_out_fragment_id"`
+}
+
+var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "policy_subject_opt_out_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
 }
 
 var DmWSOperationPolicySubjectOptOutObjectType = map[string]attr.Type{
@@ -57,52 +66,62 @@ var DmWSOperationPolicySubjectOptOutObjectDefault = map[string]attr.Value{
 	"policy_subject_opt_out_subscription":         types.StringNull(),
 	"policy_subject_opt_out_fragment_id":          types.StringNull(),
 }
-var DmWSOperationPolicySubjectOptOutDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"ignored_subjects": GetDmPolicySubjectBitmapDataSourceSchema("Ignored Subjects", "", ""),
-		"policy_subject_opt_out_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-		},
-		"policy_subject_opt_out_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Computed:            true,
-		},
-		"policy_subject_opt_out_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Computed:            true,
-		},
-		"policy_subject_opt_out_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmWSOperationPolicySubjectOptOutResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"ignored_subjects": GetDmPolicySubjectBitmapResourceSchema("Ignored Subjects", "", "", false),
-		"policy_subject_opt_out_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+
+func GetDmWSOperationPolicySubjectOptOutDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSOperationPolicySubjectOptOutDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"ignored_subjects": GetDmPolicySubjectBitmapDataSourceSchema("Ignored Subjects", "", ""),
+			"policy_subject_opt_out_wsdl_component_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("all"),
+			"policy_subject_opt_out_wsdl_component_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Computed:            true,
+			},
+			"policy_subject_opt_out_subscription": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Computed:            true,
+			},
+			"policy_subject_opt_out_fragment_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Computed:            true,
+			},
 		},
-		"policy_subject_opt_out_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Optional:            true,
+	}
+	return DmWSOperationPolicySubjectOptOutDataSourceSchema
+}
+func GetDmWSOperationPolicySubjectOptOutResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSOperationPolicySubjectOptOutResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"ignored_subjects": GetDmPolicySubjectBitmapResourceSchema("Ignored Subjects", "", "", false),
+			"policy_subject_opt_out_wsdl_component_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+				},
+				Default: stringdefault.StaticString("all"),
+			},
+			"policy_subject_opt_out_wsdl_component_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Optional:            true,
+			},
+			"policy_subject_opt_out_subscription": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"policy_subject_opt_out_fragment_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Optional:            true,
+			},
 		},
-		"policy_subject_opt_out_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Optional:            true,
-		},
-		"policy_subject_opt_out_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSOperationPolicySubjectOptOutResourceSchema
 }
 
 func (data DmWSOperationPolicySubjectOptOut) IsNull() bool {
@@ -131,6 +150,7 @@ func (data DmWSOperationPolicySubjectOptOut) ToBody(ctx context.Context, pathRoo
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if data.IgnoredSubjects != nil {
 		if !data.IgnoredSubjects.IsNull() {
 			body, _ = sjson.SetRaw(body, pathRoot+`IgnoredSubjects`, data.IgnoredSubjects.ToBody(ctx, ""))

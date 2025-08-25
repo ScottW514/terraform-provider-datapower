@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -51,6 +52,35 @@ type Domain struct {
 	ConfigPermissionsMode      types.String                `tfsdk:"config_permissions_mode"`
 	ConfigPermissionsProfile   types.String                `tfsdk:"config_permissions_profile"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var DomainImportURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"import"},
+}
+var DomainImportFormatCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"import"},
+}
+var DomainLocalIPRewriteCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"import"},
+}
+var DomainConfigPermissionsProfileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "config_permissions_mode",
+	AttrType:    "String",
+	AttrDefault: "scope-domain",
+	Value:       []string{"global-profile"},
 }
 
 var DomainObjectType = map[string]attr.Type{
@@ -141,6 +171,7 @@ func (data Domain) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "Domain.name", data.AppDomain.ValueString())
+
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
@@ -148,16 +179,16 @@ func (data Domain) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`ConfigDir`, data.ConfigDir.ValueString())
 	}
 	if !data.NeighborDomain.IsNull() {
-		var values []string
-		data.NeighborDomain.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.NeighborDomain.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`NeighborDomain`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.DomainUser.IsNull() {
-		var values []string
-		data.DomainUser.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.DomainUser.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`DomainUser`+".-1", map[string]string{"value": val})
 		}
 	}

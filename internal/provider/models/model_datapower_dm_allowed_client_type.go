@@ -47,39 +47,54 @@ var DmAllowedClientTypeObjectDefault = map[string]attr.Value{
 	"confidential": types.BoolValue(true),
 	"public":       types.BoolValue(false),
 }
-var DmAllowedClientTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"confidential": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Confidential", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmAllowedClientTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmAllowedClientTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"confidential": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Confidential", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"public": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Public", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"public": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Public", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmAllowedClientTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmAllowedClientTypeDataSourceSchema
 }
-var DmAllowedClientTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmAllowedClientTypeObjectType,
-			DmAllowedClientTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"confidential": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Confidential", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmAllowedClientTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmAllowedClientTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmAllowedClientTypeObjectType,
+				DmAllowedClientTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"confidential": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Confidential", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"public": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Public", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"public": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Public", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmAllowedClientTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmAllowedClientTypeResourceSchema.Required = true
+	} else {
+		DmAllowedClientTypeResourceSchema.Optional = true
+		DmAllowedClientTypeResourceSchema.Computed = true
+	}
+	return DmAllowedClientTypeResourceSchema
 }
 
 func (data DmAllowedClientType) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmAllowedClientType) IsNull() bool {
 	}
 	return true
 }
-func GetDmAllowedClientTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmAllowedClientTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmAllowedClientTypeDataSourceSchema
-}
-
-func GetDmAllowedClientTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmAllowedClientTypeResourceSchema.Required = true
-	} else {
-		DmAllowedClientTypeResourceSchema.Optional = true
-		DmAllowedClientTypeResourceSchema.Computed = true
-	}
-	DmAllowedClientTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmAllowedClientTypeResourceSchema
-}
 
 func (data DmAllowedClientType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Confidential.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`confidential`, tfutils.StringFromBool(data.Confidential, ""))
 	}

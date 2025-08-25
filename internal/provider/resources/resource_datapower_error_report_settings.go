@@ -35,6 +35,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &ErrorReportSettingsResource{}
@@ -114,37 +115,46 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 				Default:             booldefault.StaticBool(true),
 			},
 			"protocol": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol to use to upload the error report. Note that the selection you will see depends on your device features and licenses.", "protocol", "").AddStringEnum("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol to use to upload the error report. Note that the selection you will see depends on your device features and licenses.", "protocol", "").AddStringEnum("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag").AddRequiredWhen(models.ErrorReportSettingsProtocolCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag"),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsProtocolCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"location_identifier": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.", "location-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.", "location-id", "").AddRequiredWhen(models.ErrorReportSettingsLocationIdentifierCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ErrorReportSettingsLocationIdentifierCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"smtp_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote SMTP server to which to send the error report.", "remote-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote SMTP server to which to send the error report.", "remote-address", "").AddRequiredWhen(models.ErrorReportSettingsSmtpServerCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.NoneOf([]string{"127.0.0.1", "localhost"}...),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsSmtpServerCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"email_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address to which to send the error report.", "email-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address to which to send the error report.", "email-address", "").AddRequiredWhen(models.ErrorReportSettingsEmailAddressCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ErrorReportSettingsEmailAddressCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"email_sender_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender ( <tt>MAIL FROM</tt> ). If not specified, the configuration uses the e-mail address of the recipient.", "email-sender-address", "").String,
 				Optional:            true,
 			},
 			"ftp_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote FTP server to which to upload the error report.", "ftp-server", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote FTP server to which to upload the error report.", "ftp-server", "").AddRequiredWhen(models.ErrorReportSettingsFTPServerCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 128),
 					stringvalidator.NoneOf([]string{"127.0.0.1", "localhost"}...),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsFTPServerCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"ftp_path": schema.StringAttribute{
@@ -155,20 +165,29 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 				},
 			},
 			"ftp_user_agent": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.", "ftp-user-agent", "http_user_agent").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.", "ftp-user-agent", "http_user_agent").AddRequiredWhen(models.ErrorReportSettingsFTPUserAgentCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ErrorReportSettingsFTPUserAgentCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"nfs_mount": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the NFS mount point to which to upload the error report.", "nfs-mount", "nfs_static_mount").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the NFS mount point to which to upload the error report.", "nfs-mount", "nfs_static_mount").AddRequiredWhen(models.ErrorReportSettingsNFSMountCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ErrorReportSettingsNFSMountCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"nfs_path": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("This describes the NFS path location for the Error Report", "nfs-path", "").String,
 				Optional:            true,
 			},
 			"raid_volume": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the volume on the RAID array to which to upload the error report.", "raid-volume", "raid_volume").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the volume on the RAID array to which to upload the error report.", "raid-volume", "raid_volume").AddRequiredWhen(models.ErrorReportSettingsRaidVolumeCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ErrorReportSettingsRaidVolumeCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"raid_path": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory on the RAID volume to which to upload the error report.", "raid-path", "").String,
@@ -179,7 +198,6 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(2, 10),
 				},
 				Default: int64default.StaticInt64(5),

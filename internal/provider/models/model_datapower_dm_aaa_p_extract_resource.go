@@ -27,8 +27,10 @@ import (
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectdefault"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -37,6 +39,14 @@ type DmAAAPExtractResource struct {
 	ErBitmap   *DmAAAPERBitmap `tfsdk:"er_bitmap"`
 	ErxPath    types.String    `tfsdk:"erx_path"`
 	ErMetadata types.String    `tfsdk:"er_metadata"`
+}
+
+var DmAAAPExtractResourceERXPathCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "er_bitmap",
+	AttrType:    "DmAAAPERBitmap",
+	AttrDefault: "",
+	Value:       []string{"XPath"},
 }
 
 var DmAAAPExtractResourceObjectType = map[string]attr.Type{
@@ -49,37 +59,55 @@ var DmAAAPExtractResourceObjectDefault = map[string]attr.Value{
 	"erx_path":    types.StringNull(),
 	"er_metadata": types.StringNull(),
 }
-var DmAAAPExtractResourceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"er_bitmap": GetDmAAAPERBitmapDataSourceSchema("Specify the methods to extract resource.", "method", ""),
-		"erx_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
-			Computed:            true,
+
+func GetDmAAAPExtractResourceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmAAAPExtractResourceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"er_bitmap": GetDmAAAPERBitmapDataSourceSchema("Specify the methods to extract resource.", "method", ""),
+			"erx_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
+				Computed:            true,
+			},
+			"er_metadata": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processing_metadata").String,
+				Computed:            true,
+			},
 		},
-		"er_metadata": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processing_metadata").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmAAAPExtractResourceDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmAAAPExtractResourceDataSourceSchema
 }
-var DmAAAPExtractResourceResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmAAAPExtractResourceObjectType,
-			DmAAAPExtractResourceObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"er_bitmap": GetDmAAAPERBitmapResourceSchema("Specify the methods to extract resource.", "method", "", false),
-		"erx_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
-			Optional:            true,
+func GetDmAAAPExtractResourceResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmAAAPExtractResourceResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmAAAPExtractResourceObjectType,
+				DmAAAPExtractResourceObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"er_bitmap": GetDmAAAPERBitmapResourceSchema("Specify the methods to extract resource.", "method", "", false),
+			"erx_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPExtractResourceERXPathCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"er_metadata": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processing_metadata").String,
+				Optional:            true,
+			},
 		},
-		"er_metadata": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processing_metadata").String,
-			Optional:            true,
-		},
-	},
+	}
+	DmAAAPExtractResourceResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmAAAPExtractResourceResourceSchema.Required = true
+	} else {
+		DmAAAPExtractResourceResourceSchema.Optional = true
+		DmAAAPExtractResourceResourceSchema.Computed = true
+	}
+	return DmAAAPExtractResourceResourceSchema
 }
 
 func (data DmAAAPExtractResource) IsNull() bool {
@@ -96,27 +124,13 @@ func (data DmAAAPExtractResource) IsNull() bool {
 	}
 	return true
 }
-func GetDmAAAPExtractResourceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmAAAPExtractResourceDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmAAAPExtractResourceDataSourceSchema
-}
-
-func GetDmAAAPExtractResourceResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmAAAPExtractResourceResourceSchema.Required = true
-	} else {
-		DmAAAPExtractResourceResourceSchema.Optional = true
-		DmAAAPExtractResourceResourceSchema.Computed = true
-	}
-	DmAAAPExtractResourceResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmAAAPExtractResourceResourceSchema
-}
 
 func (data DmAAAPExtractResource) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if data.ErBitmap != nil {
 		if !data.ErBitmap.IsNull() {
 			body, _ = sjson.SetRaw(body, pathRoot+`ERBitmap`, data.ErBitmap.ToBody(ctx, ""))

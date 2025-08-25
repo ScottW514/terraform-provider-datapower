@@ -37,6 +37,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &ZosNSSClientResource{}
@@ -114,7 +115,7 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>", "password-alias", "password_alias").String,
-				Optional:            true,
+				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 127),
 				},
@@ -129,8 +130,11 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and the NSS server.", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and the NSS server.", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.ZosNSSClientSSLClientCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.ZosNSSClientSSLClientCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

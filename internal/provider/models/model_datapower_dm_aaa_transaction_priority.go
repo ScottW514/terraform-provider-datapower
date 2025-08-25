@@ -51,42 +51,49 @@ var DmAAATransactionPriorityObjectDefault = map[string]attr.Value{
 	"priority":      types.StringNull(),
 	"authorization": types.BoolValue(false),
 }
-var DmAAATransactionPriorityDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"credential": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the output credentials.", "", "").String,
-			Computed:            true,
-		},
-		"priority": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority for scheduling or resource allocation.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
-			Computed:            true,
-		},
-		"authorization": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require authorization. By default, authorization is not required.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
-}
-var DmAAATransactionPriorityResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"credential": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the output credentials.", "", "").String,
-			Required:            true,
-		},
-		"priority": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority for scheduling or resource allocation.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
+
+func GetDmAAATransactionPriorityDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAAATransactionPriorityDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"credential": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the output credentials.", "", "").String,
+				Computed:            true,
+			},
+			"priority": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority for scheduling or resource allocation.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
+				Computed:            true,
+			},
+			"authorization": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require authorization. By default, authorization is not required.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
 			},
 		},
-		"authorization": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require authorization. By default, authorization is not required.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+	}
+	return DmAAATransactionPriorityDataSourceSchema
+}
+func GetDmAAATransactionPriorityResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAAATransactionPriorityResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"credential": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the output credentials.", "", "").String,
+				Required:            true,
+			},
+			"priority": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority for scheduling or resource allocation.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
+				},
+			},
+			"authorization": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require authorization. By default, authorization is not required.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-	},
+	}
+	return DmAAATransactionPriorityResourceSchema
 }
 
 func (data DmAAATransactionPriority) IsNull() bool {
@@ -107,6 +114,7 @@ func (data DmAAATransactionPriority) ToBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Credential.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Credential`, data.Credential.ValueString())
 	}

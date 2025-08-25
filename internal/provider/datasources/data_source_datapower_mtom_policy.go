@@ -90,7 +90,7 @@ func (d *MTOMPolicyDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"rule": schema.ListNestedAttribute{
 							MarkdownDescription: "Each MTOM rule describes which message elements to optimize. A single XPath expression selects one or more elements for optimization.",
-							NestedObject:        models.DmMtomRuleDataSourceSchema,
+							NestedObject:        models.GetDmMtomRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

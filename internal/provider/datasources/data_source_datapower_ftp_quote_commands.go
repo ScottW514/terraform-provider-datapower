@@ -82,7 +82,7 @@ func (d *FTPQuoteCommandsDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"ftp_quoted_commands": schema.ListNestedAttribute{
 							MarkdownDescription: "The list of commands to send to the remote FTP server.",
-							NestedObject:        models.DmFTPQuotedCommandDataSourceSchema,
+							NestedObject:        models.GetDmFTPQuotedCommandDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

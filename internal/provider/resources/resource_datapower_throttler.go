@@ -71,7 +71,6 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 100),
 				},
 				Default: int64default.StaticInt64(0),
@@ -81,7 +80,6 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 100),
 				},
 				Default: int64default.StaticInt64(0),
@@ -91,7 +89,6 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 100),
 				},
 				Default: int64default.StaticInt64(0),
@@ -101,7 +98,6 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 100),
 				},
 				Default: int64default.StaticInt64(0),
@@ -111,7 +107,6 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(5, 100),
 				},
 				Default: int64default.StaticInt64(10),
@@ -148,7 +143,6 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 500),
 				},
 				Default: int64default.StaticInt64(0),

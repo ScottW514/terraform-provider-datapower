@@ -41,6 +41,15 @@ type RADIUSSettings struct {
 	AaaServers        types.List                  `tfsdk:"aaa_servers"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
+type RADIUSSettingsWO struct {
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Id                types.String                `tfsdk:"id"`
+	Timeout           types.Int64                 `tfsdk:"timeout"`
+	Retries           types.Int64                 `tfsdk:"retries"`
+	AaaServers        types.List                  `tfsdk:"aaa_servers"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
 
 var RADIUSSettingsObjectType = map[string]attr.Type{
 	"enabled":            types.BoolType,
@@ -51,8 +60,22 @@ var RADIUSSettingsObjectType = map[string]attr.Type{
 	"aaa_servers":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmRadiusServerObjectType}},
 	"dependency_actions": actions.ActionsListType,
 }
+var RADIUSSettingsObjectTypeWO = map[string]attr.Type{
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"id":                 types.StringType,
+	"timeout":            types.Int64Type,
+	"retries":            types.Int64Type,
+	"aaa_servers":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO}},
+	"dependency_actions": actions.ActionsListType,
+}
 
 func (data RADIUSSettings) GetPath() string {
+	rest_path := "/mgmt/config/default/RADIUSSettings/RADIUS-Settings"
+	return rest_path
+}
+
+func (data RADIUSSettingsWO) GetPath() string {
 	rest_path := "/mgmt/config/default/RADIUSSettings/RADIUS-Settings"
 	return rest_path
 }
@@ -78,13 +101,35 @@ func (data RADIUSSettings) IsNull() bool {
 	}
 	return true
 }
+func (data RADIUSSettingsWO) IsNull() bool {
+	if !data.Enabled.IsNull() {
+		return false
+	}
+	if !data.UserSummary.IsNull() {
+		return false
+	}
+	if !data.Id.IsNull() {
+		return false
+	}
+	if !data.Timeout.IsNull() {
+		return false
+	}
+	if !data.Retries.IsNull() {
+		return false
+	}
+	if !data.AaaServers.IsNull() {
+		return false
+	}
+	return true
+}
 
-func (data RADIUSSettings) ToBody(ctx context.Context, pathRoot string) string {
+func (data RADIUSSettings) ToBody(ctx context.Context, pathRoot string, config *RADIUSSettings) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
 	body, _ = sjson.Set(body, "RADIUSSettings.name", path.Base("/mgmt/config/default/RADIUSSettings/RADIUS-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -101,10 +146,12 @@ func (data RADIUSSettings) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Retries`, data.Retries.ValueInt64())
 	}
 	if !data.AaaServers.IsNull() {
-		var values []DmRadiusServer
-		data.AaaServers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
-			body, _ = sjson.SetRaw(body, pathRoot+`AAAServers`+".-1", val.ToBody(ctx, ""))
+		var dataValues []DmRadiusServer
+		data.AaaServers.ElementsAs(ctx, &dataValues, false)
+		var configValues []DmRadiusServer
+		config.AaaServers.ElementsAs(ctx, &configValues, false)
+		for idx, val := range dataValues {
+			body, _ = sjson.SetRaw(body, pathRoot+`AAAServers`+".-1", val.ToBody(ctx, "", &configValues[idx]))
 		}
 	}
 	return body
@@ -140,10 +187,10 @@ func (data *RADIUSSettings) FromBody(ctx context.Context, pathRoot string, res g
 		data.Retries = types.Int64Value(3)
 	}
 	if value := res.Get(pathRoot + `AAAServers`); value.Exists() {
-		l := []DmRadiusServer{}
+		l := []DmRadiusServerWO{}
 		if value := res.Get(`AAAServers`); value.Exists() {
 			for _, v := range value.Array() {
-				item := DmRadiusServer{}
+				item := DmRadiusServerWO{}
 				item.FromBody(ctx, "", v)
 				if !item.IsNull() {
 					l = append(l, item)
@@ -151,12 +198,61 @@ func (data *RADIUSSettings) FromBody(ctx context.Context, pathRoot string, res g
 			}
 		}
 		if len(l) > 0 {
-			data.AaaServers, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmRadiusServerObjectType}, l)
+			data.AaaServers, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO}, l)
 		} else {
-			data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectType})
+			data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO})
 		}
 	} else {
-		data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectType})
+		data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO})
+	}
+}
+func (data *RADIUSSettingsWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
+	if pathRoot != "" {
+		pathRoot = pathRoot + "."
+	}
+	if value := res.Get(pathRoot + `mAdminState`); value.Exists() {
+		data.Enabled = tfutils.BoolFromString(value.String())
+	} else {
+		data.Enabled = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.UserSummary = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.UserSummary = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `IdgId`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.Id = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.Id = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `Timeout`); value.Exists() {
+		data.Timeout = types.Int64Value(value.Int())
+	} else {
+		data.Timeout = types.Int64Value(1000)
+	}
+	if value := res.Get(pathRoot + `Retries`); value.Exists() {
+		data.Retries = types.Int64Value(value.Int())
+	} else {
+		data.Retries = types.Int64Value(3)
+	}
+	if value := res.Get(pathRoot + `AAAServers`); value.Exists() {
+		l := []DmRadiusServerWO{}
+		if value := res.Get(`AAAServers`); value.Exists() {
+			for _, v := range value.Array() {
+				item := DmRadiusServerWO{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		}
+		if len(l) > 0 {
+			data.AaaServers, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO}, l)
+		} else {
+			data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO})
+		}
+	} else {
+		data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO})
 	}
 }
 

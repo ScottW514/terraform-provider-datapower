@@ -62,7 +62,7 @@ attributes:
     against the repository. Use of branch is the default setting.
   cli_alias: commit-id-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - read-write
@@ -87,12 +87,12 @@ attributes:
     specify 0.
   cli_alias: interval
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - read-only
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - read-write
@@ -102,12 +102,12 @@ attributes:
   description: SSH client profile
   cli_alias: ssh-client-profile
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - ssh
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - https
@@ -115,13 +115,14 @@ attributes:
   type: String
   description: Username
   cli_alias: username
+  test_value: '"gitusername"'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - https
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - ssh
@@ -130,13 +131,14 @@ attributes:
   reference_to: PasswordAlias
   description: Password
   cli_alias: password
+  test_value: '"AccTest_PasswordAlias"'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - https
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - ssh
@@ -146,12 +148,12 @@ attributes:
     be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.
   cli_alias: ssh-authorized-keyfile
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - ssh
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - https
@@ -163,13 +165,14 @@ attributes:
   reference_to: CryptoValCred
   description: HTTPS validation credentials
   cli_alias: https-valcred
+  test_value: '"AccTest_CryptoValCred"'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - https
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConnectionType
     value:
     - ssh
@@ -178,13 +181,14 @@ attributes:
   description: Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt>
     .
   cli_alias: name
+  test_value: '"Git User"'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - read-write
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - read-only
@@ -193,13 +197,14 @@ attributes:
   description: Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt>
     .
   cli_alias: email
+  test_value: '"git@user.domain"'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - read-write
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - read-only

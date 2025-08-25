@@ -77,6 +77,7 @@ func (data APISecurityRequirement) ToBody(ctx context.Context, pathRoot string) 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -84,9 +85,9 @@ func (data APISecurityRequirement) ToBody(ctx context.Context, pathRoot string) 
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.Security.IsNull() {
-		var values []string
-		data.Security.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Security.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Security`+".-1", map[string]string{"value": val})
 		}
 	}

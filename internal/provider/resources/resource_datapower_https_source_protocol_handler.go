@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &HTTPSSourceProtocolHandlerResource{}
@@ -98,7 +99,6 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(443),
@@ -136,11 +136,11 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Default:             booldefault.StaticBool(false),
 			},
 			"web_socket_idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.", "websocket-idle-timeout", "").AddIntegerRange(0, 86400).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.", "websocket-idle-timeout", "").AddIntegerRange(0, 86400).AddRequiredWhen(models.HTTPSSourceProtocolHandlerWebSocketIdleTimeoutCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
+					validators.ConditionalRequiredInt64(models.HTTPSSourceProtocolHandlerWebSocketIdleTimeoutCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"max_url_len": schema.Int64Attribute{
@@ -148,7 +148,6 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 128000),
 				},
 				Default: int64default.StaticInt64(16384),
@@ -158,7 +157,6 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(5, 128000),
 				},
 				Default: int64default.StaticInt64(128000),
@@ -202,19 +200,24 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.", "ssl-server", "ssl_server_profile").AddRequiredWhen(models.HTTPSSourceProtocolHandlerSSLServerCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.HTTPSSourceProtocolHandlerSSLServerCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"sslsni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.HTTPSSourceProtocolHandlerSSLSNIServerCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.HTTPSSourceProtocolHandlerSSLSNIServerCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"http2_max_streams": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent streams that the client can have outstanding at the same time. Enter a value in the range 1 - 500. The default value is 100. <p>The limit applies to the number of streams that the client allows the target to create. The greater the number of streams in use, the more resources the client uses. Resources include memory and the network connections to the destination.</p>", "http2-max-streams", "").AddIntegerRange(1, 500).AddDefaultValue("100").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 500),
 				},
 				Default: int64default.StaticInt64(100),
@@ -224,7 +227,6 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(16384, 16777215),
 				},
 				Default: int64default.StaticInt64(16384),
@@ -246,7 +248,6 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 3600000),
 				},
 				Default: int64default.StaticInt64(30000),
@@ -255,7 +256,6 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle duration in milliseconds to allow before closing the HTTP/2 connection. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 0.", "http2-idle-timeout", "").AddIntegerRange(0, 3600000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 3600000),
 				},
 			},

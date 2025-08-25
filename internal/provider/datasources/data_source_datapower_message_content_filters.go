@@ -87,7 +87,7 @@ func (d *MessageContentFiltersDataSource) Schema(ctx context.Context, req dataso
 						},
 						"filters": schema.ListNestedAttribute{
 							MarkdownDescription: "Defines the group of message content filters.",
-							NestedObject:        models.DmMCFilterDataSourceSchema,
+							NestedObject:        models.GetDmMCFilterDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

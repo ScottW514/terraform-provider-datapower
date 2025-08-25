@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &B2BCPAReceiverSettingResource{}
@@ -129,7 +130,6 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.", "persist-duration", "").AddIntegerRange(0, 6000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 6000000),
 				},
 			},
@@ -140,8 +140,11 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 				Default:             booldefault.StaticBool(false),
 			},
 			"decrypt_id_cred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Decryption identification credentials", "decrypt-idcred", "crypto_ident_cred").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Decryption identification credentials", "decrypt-idcred", "crypto_ident_cred").AddRequiredWhen(models.B2BCPAReceiverSettingDecryptIdCredCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BCPAReceiverSettingDecryptIdCredCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"signature_required": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Require signature", "sign-required", "").AddDefaultValue("false").String,
@@ -150,12 +153,18 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 				Default:             booldefault.StaticBool(false),
 			},
 			"verify_val_cred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Signature validation credentials", "verify-valcred", "crypto_val_cred").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Signature validation credentials", "verify-valcred", "crypto_val_cred").AddRequiredWhen(models.B2BCPAReceiverSettingVerifyValCredCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BCPAReceiverSettingVerifyValCredCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"default_signer_cert": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default certificate to verify the signature. This certificate is used when either the <tt>keyInfo</tt> element is missing or the signature method is not supported.", "default-signer-cert", "crypto_certificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default certificate to verify the signature. This certificate is used when either the <tt>keyInfo</tt> element is missing or the signature method is not supported.", "default-signer-cert", "crypto_certificate").AddRequiredWhen(models.B2BCPAReceiverSettingDefaultSignerCertCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BCPAReceiverSettingDefaultSignerCertCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

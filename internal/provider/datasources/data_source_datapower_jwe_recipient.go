@@ -94,7 +94,7 @@ func (d *JWERecipientDataSource) Schema(ctx context.Context, req datasource.Sche
 						},
 						"unprotected_header": schema.ListNestedAttribute{
 							MarkdownDescription: "Unprotected header for the JWE recipient.",
-							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
+							NestedObject:        models.GetDmJOSEHeaderDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

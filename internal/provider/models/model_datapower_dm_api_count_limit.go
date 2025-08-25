@@ -74,117 +74,124 @@ var DmAPICountLimitObjectDefault = map[string]attr.Value{
 	"weight":        types.StringValue("1"),
 	"auto_dec":      types.BoolValue(true),
 }
-var DmAPICountLimitDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the count limit scheme.", "", "").String,
-			Computed:            true,
+
+func GetDmAPICountLimitDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAPICountLimitDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the count limit scheme.", "", "").String,
+				Computed:            true,
+			},
+			"count": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum count that this limit will allow.", "", "").String,
+				Computed:            true,
+			},
+			"hard_limit": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"cache_only": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"is_client": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"use_api_name": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"use_app_id": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"use_client_id": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"dynamic_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.", "", "").String,
+				Computed:            true,
+			},
+			"weight": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
+				Computed:            true,
+			},
+			"auto_dec": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to automatically decrement this count limit in each transaction.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"count": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum count that this limit will allow.", "", "").String,
-			Computed:            true,
-		},
-		"hard_limit": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"cache_only": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"is_client": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"use_api_name": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the count limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"use_app_id": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"use_client_id": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"dynamic_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.", "", "").String,
-			Computed:            true,
-		},
-		"weight": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
-			Computed:            true,
-		},
-		"auto_dec": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to automatically decrement this count limit in each transaction.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAPICountLimitDataSourceSchema
 }
-var DmAPICountLimitResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the count limit scheme.", "", "").String,
-			Required:            true,
+func GetDmAPICountLimitResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAPICountLimitResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the count limit scheme.", "", "").String,
+				Required:            true,
+			},
+			"count": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum count that this limit will allow.", "", "").String,
+				Required:            true,
+			},
+			"hard_limit": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"cache_only": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"is_client": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"use_api_name": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"use_app_id": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"use_client_id": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"dynamic_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.", "", "").String,
+				Optional:            true,
+			},
+			"weight": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("1"),
+			},
+			"auto_dec": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to automatically decrement this count limit in each transaction.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"count": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum count that this limit will allow.", "", "").String,
-			Required:            true,
-		},
-		"hard_limit": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"cache_only": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"is_client": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"use_api_name": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the count limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"use_app_id": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"use_client_id": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"dynamic_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.", "", "").String,
-			Optional:            true,
-		},
-		"weight": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("1"),
-		},
-		"auto_dec": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to automatically decrement this count limit in each transaction.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	return DmAPICountLimitResourceSchema
 }
 
 func (data DmAPICountLimit) IsNull() bool {
@@ -229,6 +236,7 @@ func (data DmAPICountLimit) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

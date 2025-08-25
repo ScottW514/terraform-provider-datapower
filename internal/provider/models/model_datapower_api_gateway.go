@@ -192,6 +192,7 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -202,9 +203,9 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`GatewayServiceName`, data.GatewayServiceName.ValueString())
 	}
 	if !data.FrontProtocol.IsNull() {
-		var values []string
-		data.FrontProtocol.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.FrontProtocol.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`FrontProtocol`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -224,9 +225,9 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`StaticDocumentCalls`, tfutils.StringFromBool(data.StaticDocumentCalls, ""))
 	}
 	if !data.VirtualServers.IsNull() {
-		var values []string
-		data.VirtualServers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.VirtualServers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`VirtualServers`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -240,23 +241,23 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DocMaxWrites`, data.DocMaxWrites.ValueInt64())
 	}
 	if !data.DocCachePolicy.IsNull() {
-		var values []DmDocCachePolicy
-		data.DocCachePolicy.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmDocCachePolicy
+		data.DocCachePolicy.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.ScheduledRule.IsNull() {
-		var values []DmScheduledRule
-		data.ScheduledRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmScheduledRule
+		data.ScheduledRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.ApiCollection.IsNull() {
-		var values []string
-		data.ApiCollection.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.ApiCollection.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`APICollection`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -264,23 +265,23 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`ShareRateLimitCount`, data.ShareRateLimitCount.ValueString())
 	}
 	if !data.AssemblyBurstLimit.IsNull() {
-		var values []DmAPIBurstLimit
-		data.AssemblyBurstLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIBurstLimit
+		data.AssemblyBurstLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.AssemblyRateLimit.IsNull() {
-		var values []DmAPIRateLimit
-		data.AssemblyRateLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIRateLimit
+		data.AssemblyRateLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.AssemblyCountLimit.IsNull() {
-		var values []DmAPICountLimit
-		data.AssemblyCountLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPICountLimit
+		data.AssemblyCountLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -288,9 +289,9 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`LDAPConnPool`, data.LdapConnPool.ValueString())
 	}
 	if !data.ProxyPolicies.IsNull() {
-		var values []DmAPIProxyPolicy
-		data.ProxyPolicies.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIProxyPolicy
+		data.ProxyPolicies.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -304,9 +305,9 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`OpenTelemetry`, data.OpenTelemetry.ValueString())
 	}
 	if !data.OpenTelemetryResourceAttribute.IsNull() {
-		var values []DmOpenTelemetryResourceAttribute
-		data.OpenTelemetryResourceAttribute.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmOpenTelemetryResourceAttribute
+		data.OpenTelemetryResourceAttribute.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`OpenTelemetryResourceAttribute`+".-1", val.ToBody(ctx, ""))
 		}
 	}

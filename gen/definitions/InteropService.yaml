@@ -41,15 +41,15 @@ attributes:
     default value is 0.0.0.0, which indicates that the service is active on all addresses.
   cli_alias: http-ip-address
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpService
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpService
     value:
-    - 'off'
+    - false
 - name: LocalPort
   type: Int64
   minimum: 1000
@@ -58,25 +58,25 @@ attributes:
   description: Local port
   cli_alias: http-port
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpService
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpService
     value:
-    - 'off'
+    - false
 - name: ACL
   type: String
   reference_to: AccessControlList
   description: Access control list
   cli_alias: http-acl
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpService
     value:
-    - 'off'
+    - false
 - name: HttpsService
   type: Bool
   default: false
@@ -89,15 +89,15 @@ attributes:
     default value is 0.0.0.0, which indicates that the service is active on all addresses.
   cli_alias: https-ip-address
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpsService
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpsService
     value:
-    - 'off'
+    - false
 - name: HttpsLocalPort
   type: Int64
   minimum: 1000
@@ -106,25 +106,25 @@ attributes:
   description: Local port
   cli_alias: https-port
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpsService
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpsService
     value:
-    - 'off'
+    - false
 - name: HttpsACL
   type: String
   reference_to: AccessControlList
   description: Access control list
   cli_alias: https-acl
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpsService
     value:
-    - 'off'
+    - false
 - name: SSLServerConfigType
   type: String
   enum:
@@ -134,10 +134,10 @@ attributes:
   description: TLS server type
   cli_alias: ssl-config-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HttpsService
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: SSLServer
@@ -148,11 +148,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: HttpsService
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: SSLServerConfigType
       value:
       - server
@@ -166,11 +166,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: HttpsService
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: SSLServerConfigType
       value:
       - sni

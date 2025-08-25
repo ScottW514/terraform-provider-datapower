@@ -122,7 +122,6 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 31622400),
 				},
 				Default: int64default.StaticInt64(3600),

@@ -87,6 +87,7 @@ func (data LunaHAGroup) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -97,16 +98,16 @@ func (data LunaHAGroup) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`GroupName`, data.GroupName.ValueString())
 	}
 	if !data.Member.IsNull() {
-		var values []string
-		data.Member.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Member.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Member`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.Standby.IsNull() {
-		var values []string
-		data.Standby.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Standby.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Standby`+".-1", map[string]string{"value": val})
 		}
 	}

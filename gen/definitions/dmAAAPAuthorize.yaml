@@ -29,7 +29,7 @@ attributes:
     authorization.
   cli_alias: custom-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - custom
@@ -40,7 +40,7 @@ attributes:
   description: Specify the location of the AAA information file.
   cli_alias: xmlfile-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - xmlfile
@@ -112,7 +112,7 @@ attributes:
   description: Specify the DN of the required LDAP group.
   cli_alias: ldap-group-dn
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -163,7 +163,7 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZSAMLType
       value:
       - xpath
@@ -176,7 +176,7 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AZSAMLType
       value:
       - xpath
@@ -222,7 +222,7 @@ attributes:
     a value in the range 1 - 86400. The default value is 3.
   cli_alias: cache-ttl
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZCacheAllow
     value:
     - disabled
@@ -236,7 +236,7 @@ attributes:
     name.
   cli_alias: netegrity-base-uri
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - netegrity
@@ -252,11 +252,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AZMethod
       value:
       - netegrity
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZSMRequestType
       value:
       - webservice
@@ -265,7 +265,7 @@ attributes:
   description: Specify the URL to access the ClearTrust server for authorization.
   cli_alias: cleartrust-server-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - cleartrust
@@ -293,7 +293,7 @@ attributes:
   description: Specify the load balancer group that contains the LDAP servers.
   cli_alias: ldap-lbgroup
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -302,7 +302,7 @@ attributes:
   description: Specify the DN to bind to the LDAP server.
   cli_alias: ldap-bind-dn
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -313,7 +313,7 @@ attributes:
     The authorizing identity must exist as an attribute value in the group.
   cli_alias: ldap-group-attr
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -328,7 +328,7 @@ attributes:
     value is subtree.
   cli_alias: ldap-search-scope
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -339,7 +339,7 @@ attributes:
     <tt>(objectClass=*)</tt> .
   cli_alias: ldap-search-filter
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -354,7 +354,7 @@ attributes:
     default value is 2.0.
   cli_alias: xacml-version
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - xacml
@@ -373,11 +373,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZMethod
       value:
       - xacml
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AZXACMLVersion
       value:
       - '1.0'
@@ -390,7 +390,7 @@ attributes:
     By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.
   cli_alias: xacml-use-builtin
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - xacml
@@ -404,14 +404,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZMethod
       value:
       - xacml
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZXACMLUseOnBoxPDP
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: AZXACMLExternalPDPUrl
@@ -423,14 +423,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZMethod
       value:
       - xacml
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZXACMLUseOnBoxPDP
       value:
-      - 'off'
+      - false
   ignored_when:
   - evaluation: logical-true
 - name: AZXACMLBindingMethod
@@ -443,7 +443,7 @@ attributes:
     value is custom processing.
   cli_alias: xacml-binding-method
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - xacml
@@ -462,11 +462,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZMethod
       value:
       - xacml
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AZXACMLBindingMethod
       value:
       - dp-pdp
@@ -482,7 +482,7 @@ attributes:
     <tt>xsl:value-of select="false()"</tt> />.</li></ul>
   cli_alias: xacml-obligation-custom-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - xacml
@@ -500,18 +500,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZMethod
       value:
       - xacml
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZXACMLVersion
       value:
       - '2.0'
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZXACMLUseOnBoxPDP
       value:
-      - 'off'
+      - false
   ignored_when:
   - evaluation: logical-true
 - name: AZTAMServer
@@ -520,7 +520,7 @@ attributes:
   description: Specify the IBM Security Access Manager client.
   cli_alias: tam
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - tivoli
@@ -554,7 +554,7 @@ attributes:
   description: Specify the default Access Manager action. The default value is T (traverse).
   cli_alias: tam-action-default
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - tivoli
@@ -566,7 +566,7 @@ attributes:
     is in the <tt>local:</tt> or <tt>store:</tt> directory.
   cli_alias: tam-action-map
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - tivoli
@@ -580,14 +580,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZMethod
       value:
       - xacml
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AZXACMLUseOnBoxPDP
       value:
-      - 'off'
+      - false
   ignored_when:
   - evaluation: logical-true
 - name: AZZOSNSSConfig
@@ -596,7 +596,7 @@ attributes:
   description: Specify the z/OS NSS client for SAF communication.
   cli_alias: zos-nss-az
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - zosnss
@@ -613,7 +613,7 @@ attributes:
   description: Specify the default action. The default value is r (Read).
   cli_alias: zos-nss-default-action
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - zosnss
@@ -627,7 +627,7 @@ attributes:
     retrieve these attributes from the registry.
   cli_alias: az-ldap-attributes
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -657,7 +657,7 @@ attributes:
     the remote resource server enforces the scope.</li></ul>
   cli_alias: az-oauth-enforce-scope
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - oauth
@@ -674,7 +674,7 @@ attributes:
     response attributes are exported to HTTP headers.
   cli_alias: az-oauth-export-headers
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - oauth
@@ -691,7 +691,7 @@ attributes:
     is automatically cleared for authorization when applied.</p>
   cli_alias: tam-pac-return
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - tivoli
@@ -706,7 +706,7 @@ attributes:
     You can use the PAC token in the postprocessing phase.</p>
   cli_alias: use-tam-pac
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - tivoli
@@ -725,7 +725,7 @@ attributes:
     idle connections from the connection pool.</p>
   cli_alias: ldap-readtimeout
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -761,7 +761,7 @@ attributes:
       - netegrity
       - saml-attr
       - saml-authz
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AZSSLClientConfigType
       value:
       - client
@@ -771,7 +771,7 @@ attributes:
   description: Specify the password alias to bind to the LDAP server.
   cli_alias: ldap-bind-password-alias
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - ldap
@@ -785,12 +785,12 @@ attributes:
     the CA Single Sign-On web agent.
   cli_alias: sm-request-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AZMethod
     value:
     - netegrity
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - netegrity
@@ -799,7 +799,7 @@ attributes:
   description: Specify which flows to include the authorization session cookie.
   cli_alias: sm-cookie-flow
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - netegrity
@@ -810,7 +810,7 @@ attributes:
     of <tt>SM_</tt> .
   cli_alias: sm-header-flow
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AZMethod
     value:
     - netegrity

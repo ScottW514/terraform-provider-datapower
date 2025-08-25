@@ -81,12 +81,12 @@ attributes:
   description: Username
   cli_alias: user
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Authorization
     value:
     - plain
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Authorization
     value:
     - plain
@@ -96,12 +96,12 @@ attributes:
   description: Password alias
   cli_alias: password-alias
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Authorization
     value:
     - plain
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Authorization
     value:
     - plain
@@ -133,10 +133,10 @@ attributes:
     does not affect attempts over an established connection.</p>
   cli_alias: retry-interval
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AutoRetry
     value:
-    - 'on'
+    - true
 - name: RetryAttempts
   type: Int64
   default: 6
@@ -146,10 +146,10 @@ attributes:
     value of 0 disables the long interval, where the retry interval is used forever.
   cli_alias: retry-attempts
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AutoRetry
     value:
-    - 'on'
+    - true
 - name: LongRetryInterval
   type: Int64
   minimum: 1
@@ -161,10 +161,10 @@ attributes:
     over an established connection.</p>
   cli_alias: long-retry-interval
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AutoRetry
     value:
-    - 'on'
+    - true
 - name: ReportingInterval
   type: Int64
   minimum: 1
@@ -174,10 +174,10 @@ attributes:
     message. Enter a value in the range 1 - 65535. The default value is 10.
   cli_alias: reporting-interval
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AutoRetry
     value:
-    - 'on'
+    - true
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile

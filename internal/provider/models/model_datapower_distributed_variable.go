@@ -78,6 +78,7 @@ func (data DistributedVariable) ToBody(ctx context.Context, pathRoot string) str
 	}
 	body := ""
 	body, _ = sjson.Set(body, "DistributedVariable.name", path.Base("/mgmt/config/{domain}/DistributedVariable/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

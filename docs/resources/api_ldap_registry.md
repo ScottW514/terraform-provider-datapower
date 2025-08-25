@@ -55,14 +55,19 @@ resource "datapower_api_ldap_registry" "test" {
 - `ldap_group_auth_type` (String) Specify the type of group authentication configuration to use. The default value is static.
   - CLI Alias: `ldap-group-auth-type`
   - Choices: `dynamic`, `static`
+  - Required When: `ldap_group_auth_enabled`=`true`
 - `ldap_group_base_dn` (String) Specify the base DN name to begin the group authentication search. This value identifies the entry level of the tree used by the LDAP group scope.
   - CLI Alias: `ldap-group-base-dn`
+  - Required When: (`ldap_group_auth_enabled`=`true` AND `ldap_group_auth_type`=`static`)
 - `ldap_group_dynamic_filter` (String) Specify the filter expression of the LDAP dynamic group configuration. Only for dynamic. <p>When the filter is <tt>(memberOf=CN=ibm-group,DC=ibm,DC=com)</tt> , the value is used verbatim for LDAP group dynamic search.</p>
   - CLI Alias: `ldap-group-dynamic-filter`
+  - Required When: (`ldap_group_auth_enabled`=`true` AND `ldap_group_auth_type`=`dynamic`)
 - `ldap_group_filter_prefix` (String) Specify the prefix of the LDAP group filter expression. An LDAP group filter expression is composed by <tt>prefix + user DN + suffix</tt> . <p>When the prefix is <tt>(&amp;(objectclass=group)(member=</tt> and the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com))</tt> .</p>
   - CLI Alias: `ldap-group-filter-prefix`
+  - Required When: (`ldap_group_auth_enabled`=`true` AND `ldap_group_auth_type`=`static`)
 - `ldap_group_filter_suffix` (String) Specify the suffix of the LDAP group filter expression. <p>When the prefix is <tt>&amp;(objectclass=group)(member=</tt> , the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , and the suffix is <tt>)(CN=ibm-group))</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com)(CN=ibm-group))</tt> .</p>
   - CLI Alias: `ldap-group-filter-suffix`
+  - Required When: (`ldap_group_auth_enabled`=`true` AND `ldap_group_auth_type`=`static`)
 - `ldap_group_scope` (String) Specify the depth of the LDAP group search. The default value is subtree.
   - CLI Alias: `ldap-group-scope`
   - Choices: `subtree`, `one-level`, `base`

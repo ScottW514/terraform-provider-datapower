@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -62,6 +63,82 @@ type B2BCPASenderSetting struct {
 	SslClientConfigType    types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient              types.String                `tfsdk:"ssl_client"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var B2BCPASenderSettingMaxRetriesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingRetryIntervalCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingEncryptCertCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "encryption_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingEncryptAlgorithmCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "encryption_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingSignIdCredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "signature_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingSignatureAlgorithmCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "signature_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingSignDigestAlgorithmCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "signature_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingSignatureC14NAlgorithmCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "signature_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingSSLClientCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "dest_endpoint_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms2s"},
+		},
+	},
 }
 
 var B2BCPASenderSettingObjectType = map[string]attr.Type{
@@ -194,6 +271,7 @@ func (data B2BCPASenderSetting) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

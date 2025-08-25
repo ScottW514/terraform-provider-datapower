@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,21 @@ type JOSESignatureIdentifier struct {
 	ValidAlgorithms   types.List                  `tfsdk:"valid_algorithms"`
 	HeaderParam       types.List                  `tfsdk:"header_param"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var JOSESignatureIdentifierSSKeyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"sskey"},
+}
+var JOSESignatureIdentifierCertificateCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"certificate"},
 }
 
 var JOSESignatureIdentifierObjectType = map[string]attr.Type{
@@ -97,6 +113,7 @@ func (data JOSESignatureIdentifier) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -113,16 +130,16 @@ func (data JOSESignatureIdentifier) ToBody(ctx context.Context, pathRoot string)
 		body, _ = sjson.Set(body, pathRoot+`Certificate`, data.Certificate.ValueString())
 	}
 	if !data.ValidAlgorithms.IsNull() {
-		var values []string
-		data.ValidAlgorithms.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.ValidAlgorithms.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`ValidAlgorithms`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.HeaderParam.IsNull() {
-		var values []DmJOSEHeader
-		data.HeaderParam.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmJOSEHeader
+		data.HeaderParam.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderParam`+".-1", val.ToBody(ctx, ""))
 		}
 	}

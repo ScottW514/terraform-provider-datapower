@@ -16,9 +16,10 @@ The password map alias provides the mapping of an alias to a plaintext password.
 
 ```terraform
 resource "datapower_password_alias" "test" {
-  id         = "ResTestPasswordAlias"
-  app_domain = "acceptance_test"
-  password   = "password"
+  id                  = "ResTestPasswordAlias"
+  app_domain          = "acceptance_test"
+  password_wo         = "password"
+  password_wo_version = 1
 }
 ```
 
@@ -35,9 +36,9 @@ resource "datapower_password_alias" "test" {
 > **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `password` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Password
+- `password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Password
   - CLI Alias: `password`
-- `password_update` (Boolean, Deprecated) Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.
+- `password_wo_version` (Number) Changes to this value trigger an update to `write_only` value.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

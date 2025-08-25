@@ -54,57 +54,64 @@ var DmNameServerObjectDefault = map[string]attr.Value{
 	"tcp_port":    types.Int64Value(53),
 	"max_retries": types.Int64Value(3),
 }
-var DmNameServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"ip_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address of DNS server.", "", "").String,
-			Computed:            true,
+
+func GetDmNameServerDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmNameServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"ip_address": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address of DNS server.", "", "").String,
+				Computed:            true,
+			},
+			"udp_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the UDP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("53").String,
+				Computed:            true,
+			},
+			"tcp_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("53").String,
+				Computed:            true,
+			},
+			"max_retries": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times to send a query to the DNS server. By default, an unacknowledged resolution request is attempted 3 times. This setting is ignored with the first alive load balancing algorithm. For the first alive algorithm, define this behavior at the DNS settings level rather than the individual server level.", "", "").AddDefaultValue("3").String,
+				Computed:            true,
+			},
 		},
-		"udp_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the UDP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("53").String,
-			Computed:            true,
-		},
-		"tcp_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("53").String,
-			Computed:            true,
-		},
-		"max_retries": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times to send a query to the DNS server. By default, an unacknowledged resolution request is attempted 3 times. This setting is ignored with the first alive load balancing algorithm. For the first alive algorithm, define this behavior at the DNS settings level rather than the individual server level.", "", "").AddDefaultValue("3").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmNameServerDataSourceSchema
 }
-var DmNameServerResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"ip_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address of DNS server.", "", "").String,
-			Required:            true,
-		},
-		"udp_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the UDP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("53").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 65535),
+func GetDmNameServerResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmNameServerResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"ip_address": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address of DNS server.", "", "").String,
+				Required:            true,
 			},
-			Default: int64default.StaticInt64(53),
-		},
-		"tcp_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("53").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 65535),
+			"udp_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the UDP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("53").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65535),
+				},
+				Default: int64default.StaticInt64(53),
 			},
-			Default: int64default.StaticInt64(53),
+			"tcp_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("53").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65535),
+				},
+				Default: int64default.StaticInt64(53),
+			},
+			"max_retries": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times to send a query to the DNS server. By default, an unacknowledged resolution request is attempted 3 times. This setting is ignored with the first alive load balancing algorithm. For the first alive algorithm, define this behavior at the DNS settings level rather than the individual server level.", "", "").AddDefaultValue("3").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             int64default.StaticInt64(3),
+			},
 		},
-		"max_retries": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times to send a query to the DNS server. By default, an unacknowledged resolution request is attempted 3 times. This setting is ignored with the first alive load balancing algorithm. For the first alive algorithm, define this behavior at the DNS settings level rather than the individual server level.", "", "").AddDefaultValue("3").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             int64default.StaticInt64(3),
-		},
-	},
+	}
+	return DmNameServerResourceSchema
 }
 
 func (data DmNameServer) IsNull() bool {
@@ -128,6 +135,7 @@ func (data DmNameServer) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.IpAddress.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`IPAddress`, data.IpAddress.ValueString())
 	}

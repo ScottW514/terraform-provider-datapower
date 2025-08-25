@@ -48,13 +48,16 @@ resource "datapower_ssh_client_profile" "test" {
 - `password_alias` (String) Password Alias
   - CLI Alias: `user-password-alias`
   - Reference to: `datapower_password_alias:id`
+  - Required When: (`profile_usage`=`sftp` AND `ssh_user_authentication`=`password`)
 - `persistent_connection_timeout` (Number) Specify the idle duration in seconds for a persistent connection. When the connection remains idle for the specified duration, the connection is closed. Enter any value in the range 1 - 86000. The default value is 120.
   - CLI Alias: `persistent-connection-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
+  - Required When: (`profile_usage`=`sftp` AND `persistent_connections`=`true`)
 - `persistent_connections` (Boolean) Specify whether to support persistent connections. By default, persistent connections are enabled. <ul><li>When enabled, new requests reuse the connection of a previous session without reauthentication.</li><li>When not enabled, new request must reauthenticate.</li></ul>
   - CLI Alias: `persistent-connections`
   - Default value: `true`
+  - Required When: `profile_usage`=`sftp`
 - `profile_usage` (String) Specify the usage of the profile. Only SFTP is supported.
   - CLI Alias: `profile-usage`
   - Choices: `sftp`, `scc`
@@ -64,9 +67,11 @@ resource "datapower_ssh_client_profile" "test" {
 - `strict_host_key_checking` (Boolean) Specify how to check host keys during the connection and authentication phases. By default strict host key checking is not enabled. <ul><li>When enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are rejected.</li><li>When not enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are added to the known hosts list and accepted.</li></ul>
   - CLI Alias: `strict-host-key-checking`
   - Default value: `false`
+  - Required When: `profile_usage`=`sftp`
 - `user_private_key` (String) Specify the private key for public key authentication. User private keys must not be password protected.
   - CLI Alias: `user-private-key`
   - Reference to: `datapower_crypto_key:id`
+  - Required When: ((`profile_usage`=`sftp` AND `ssh_user_authentication`=`publickey`) OR `profile_usage`=`scc`)
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

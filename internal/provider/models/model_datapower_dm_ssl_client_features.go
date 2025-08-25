@@ -50,49 +50,64 @@ var DmSSLClientFeaturesObjectDefault = map[string]attr.Value{
 	"permit_insecure_servers": types.BoolValue(false),
 	"compression":             types.BoolValue(false),
 }
-var DmSSLClientFeaturesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"use_sni": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use SNI", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmSSLClientFeaturesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSSLClientFeaturesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"use_sni": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Use SNI", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"permit_insecure_servers": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Permit connections without renegotiation", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"compression": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable compression", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"permit_insecure_servers": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Permit connections without renegotiation", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"compression": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable compression", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSSLClientFeaturesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSSLClientFeaturesDataSourceSchema
 }
-var DmSSLClientFeaturesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSSLClientFeaturesObjectType,
-			DmSSLClientFeaturesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"use_sni": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use SNI", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmSSLClientFeaturesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSSLClientFeaturesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSSLClientFeaturesObjectType,
+				DmSSLClientFeaturesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"use_sni": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Use SNI", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"permit_insecure_servers": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Permit connections without renegotiation", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"compression": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable compression", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"permit_insecure_servers": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Permit connections without renegotiation", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"compression": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable compression", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmSSLClientFeaturesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSSLClientFeaturesResourceSchema.Required = true
+	} else {
+		DmSSLClientFeaturesResourceSchema.Optional = true
+		DmSSLClientFeaturesResourceSchema.Computed = true
+	}
+	return DmSSLClientFeaturesResourceSchema
 }
 
 func (data DmSSLClientFeatures) IsNull() bool {
@@ -107,27 +122,13 @@ func (data DmSSLClientFeatures) IsNull() bool {
 	}
 	return true
 }
-func GetDmSSLClientFeaturesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSSLClientFeaturesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSSLClientFeaturesDataSourceSchema
-}
-
-func GetDmSSLClientFeaturesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSSLClientFeaturesResourceSchema.Required = true
-	} else {
-		DmSSLClientFeaturesResourceSchema.Optional = true
-		DmSSLClientFeaturesResourceSchema.Computed = true
-	}
-	DmSSLClientFeaturesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSSLClientFeaturesResourceSchema
-}
 
 func (data DmSSLClientFeatures) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.UseSni.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`use-sni`, tfutils.StringFromBool(data.UseSni, ""))
 	}

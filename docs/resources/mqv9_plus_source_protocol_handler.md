@@ -20,6 +20,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   id            = "ResTestMQv9PlusSourceProtocolHandler"
   app_domain    = "acceptance_test"
   queue_manager = "AccTest_MQManager"
+  get_queue     = "queue"
 }
 ```
 
@@ -56,6 +57,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   - Default value: `None`
 - `content_type_x_path` (String) XPath expression to extract Content-Type from IBM MQ header
   - CLI Alias: `content-type-xpath`
+  - Required When: `content_type_header`=`MQRFH`|`MQRFH2`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `exclude_headers` (Attributes) Specify the headers after MQMD to strip from the message. By default only the MQMD header is parsed.
   - CLI Alias: `exclude-headers` (see [below for nested schema](#nestedatt--exclude_headers))
@@ -65,6 +67,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   - Default value: `1`
 - `get_queue` (String) Specify the name of the get queue associated with the queue manager. The handler gets messages from this queue.
   - CLI Alias: `get-queue`
+  - Required When: `subscribe_topic_string`=``
 - `message_selector` (String) Specify the selector that filters the messages from a queue or a subscription by their properties. The selector uses the SQL92 conditional expression syntax. The selector enables the handler to filter messages from a queue or a subscription.
   - CLI Alias: `selector`
 - `parse_properties` (Boolean) Specify whether to parse the properties of the incoming messages from a queue or a subscription. By default, properties are not parsed.
@@ -83,6 +86,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   - Default value: `false`
 - `subscribe_topic_string` (String) Specify the the topic string associated with the queue manager. The handler subscribes to this topic string and gets messages from it.
   - CLI Alias: `subscribe-topic-string`
+  - Required When: `get_queue`=``
 - `subscription_name` (String) Specify the subscription name of a durable subscription associated with the queue manager. This name identifies the subscription after reestablishing a lost connection.
   - CLI Alias: `sub-name`
 - `use_qm_name_in_url` (Boolean) Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>

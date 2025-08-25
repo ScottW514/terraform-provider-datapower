@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -49,6 +50,47 @@ type AssemblyActionClientSecurity struct {
 	CorrelationPath          types.String                `tfsdk:"correlation_path"`
 	ActionDebug              types.Bool                  `tfsdk:"action_debug"`
 	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AssemblyActionClientSecurityIdNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_credential_method",
+	AttrType:    "String",
+	AttrDefault: "header",
+	Value:       []string{"header", "cookie", "query", "form", "context-var"},
+}
+var AssemblyActionClientSecuritySecretNameCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "secret_required",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "extract_credential_method",
+			AttrType:    "String",
+			AttrDefault: "header",
+			Value:       []string{"header", "cookie", "query", "form", "context-var"},
+		},
+	},
+}
+var AssemblyActionClientSecurityHTTPTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_credential_method",
+	AttrType:    "String",
+	AttrDefault: "header",
+	Value:       []string{"http"},
+}
+var AssemblyActionClientSecurityUserRegistryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "authenticate_client_method",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third-party"},
 }
 
 var AssemblyActionClientSecurityObjectType = map[string]attr.Type{
@@ -127,6 +169,7 @@ func (data AssemblyActionClientSecurity) ToBody(ctx context.Context, pathRoot st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

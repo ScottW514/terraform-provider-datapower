@@ -102,12 +102,12 @@ func (r *MessageMatchingResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"http_header": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Click this tab to add match criteria for inclusive HTTP header fields to the traffic definition. The field with its corresponding value must appear in the HTTP header of the message to qualify for inclusion.", "http-header", "").String,
-				NestedObject:        models.DmHTTPHeaderResourceSchema,
+				NestedObject:        models.GetDmHTTPHeaderResourceSchema(),
 				Optional:            true,
 			},
 			"http_header_exclude": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Click this tab to add match criteria for exclusive HTTP header field to the traffic definition. The field with its corresponding value cannot appear in the HTTP header of the message to qualify for exclusion.", "http-header-exclude", "").String,
-				NestedObject:        models.DmHTTPHeaderResourceSchema,
+				NestedObject:        models.GetDmHTTPHeaderResourceSchema(),
 				Optional:            true,
 			},
 			"request_url": schema.StringAttribute{

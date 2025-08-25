@@ -82,7 +82,7 @@ func (d *PolicyParametersDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"policy_parameter": schema.ListNestedAttribute{
 							MarkdownDescription: "A key-value pair. The key specifies a policy parameter in a policy mapping stylesheet formatted {policy-domain-ns}key.",
-							NestedObject:        models.DmPolicyParameterDataSourceSchema,
+							NestedObject:        models.GetDmPolicyParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

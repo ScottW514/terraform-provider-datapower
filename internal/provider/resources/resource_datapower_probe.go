@@ -84,7 +84,6 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 10000),
 				},
 				Default: int64default.StaticInt64(1000),
@@ -94,7 +93,6 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(60, 86400),
 				},
 				Default: int64default.StaticInt64(3600),

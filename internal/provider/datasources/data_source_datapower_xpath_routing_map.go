@@ -78,12 +78,12 @@ func (d *XPathRoutingMapDataSource) Schema(ctx context.Context, req datasource.S
 						},
 						"x_path_routing_rules": schema.ListNestedAttribute{
 							MarkdownDescription: "Rules",
-							NestedObject:        models.DmXPathRoutingRuleDataSourceSchema,
+							NestedObject:        models.GetDmXPathRoutingRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"name_space_mappings": schema.ListNestedAttribute{
 							MarkdownDescription: "The prefix and URI for namespaces that might be encountered in requests.",
-							NestedObject:        models.DmNamespaceMappingDataSourceSchema,
+							NestedObject:        models.GetDmNamespaceMappingDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

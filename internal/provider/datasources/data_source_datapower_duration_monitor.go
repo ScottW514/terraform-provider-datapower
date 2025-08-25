@@ -82,7 +82,7 @@ func (d *DurationMonitorDataSource) Schema(ctx context.Context, req datasource.S
 						},
 						"filter": schema.ListNestedAttribute{
 							MarkdownDescription: "Click this tab to define a message-duration monitor threshold and assign an action taken when the threshold is reached.",
-							NestedObject:        models.DmDurationMonitorFilterDataSourceSchema,
+							NestedObject:        models.GetDmDurationMonitorFilterDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

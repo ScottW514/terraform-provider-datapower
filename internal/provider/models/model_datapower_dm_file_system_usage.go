@@ -52,50 +52,57 @@ var DmFileSystemUsageObjectDefault = map[string]attr.Value{
 	"warning_threshold":  types.Int64Value(75),
 	"critical_threshold": types.Int64Value(90),
 }
-var DmFileSystemUsageDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the system file system to check.", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
-			Computed:            true,
+
+func GetDmFileSystemUsageDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmFileSystemUsageDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the system file system to check.", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
+				Computed:            true,
+			},
+			"warning_threshold": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+				Computed:            true,
+			},
+			"critical_threshold": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+				Computed:            true,
+			},
 		},
-		"warning_threshold": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
-			Computed:            true,
-		},
-		"critical_threshold": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmFileSystemUsageDataSourceSchema
 }
-var DmFileSystemUsageResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the system file system to check.", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace"),
+func GetDmFileSystemUsageResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmFileSystemUsageResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the system file system to check.", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace"),
+				},
+			},
+			"warning_threshold": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(0, 100),
+				},
+				Default: int64default.StaticInt64(75),
+			},
+			"critical_threshold": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(0, 100),
+				},
+				Default: int64default.StaticInt64(90),
 			},
 		},
-		"warning_threshold": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(0, 100),
-			},
-			Default: int64default.StaticInt64(75),
-		},
-		"critical_threshold": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(0, 100),
-			},
-			Default: int64default.StaticInt64(90),
-		},
-	},
+	}
+	return DmFileSystemUsageResourceSchema
 }
 
 func (data DmFileSystemUsage) IsNull() bool {
@@ -116,6 +123,7 @@ func (data DmFileSystemUsage) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

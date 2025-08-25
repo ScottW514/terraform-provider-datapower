@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -56,6 +57,142 @@ type AnalyticsEndpoint struct {
 	Timeout                types.Int64                 `tfsdk:"timeout"`
 	PersistentTimeout      types.Int64                 `tfsdk:"persistent_timeout"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AnalyticsEndpointSSLClientCondVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-in-list",
+	Attribute:   "analytics_server_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"https"},
+}
+var AnalyticsEndpointRequestTopicCondVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-in-list",
+	Attribute:   "analytics_server_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"dpkafka"},
+}
+var AnalyticsEndpointManagementURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+	},
+}
+var AnalyticsEndpointManagementURL_SSLClientCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "management_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"https"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+	},
+}
+var AnalyticsEndpointClientIDCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+	},
+}
+var AnalyticsEndpointClientSecretAliasCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+	},
+}
+var AnalyticsEndpointGrantTypeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+	},
+}
+var AnalyticsEndpointScopeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+	},
 }
 
 var AnalyticsEndpointObjectType = map[string]attr.Type{
@@ -162,6 +299,7 @@ func (data AnalyticsEndpoint) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

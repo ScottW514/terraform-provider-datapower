@@ -76,12 +76,12 @@ attributes:
     By default, an unacknowledged resolution request is attempted 3 times.
   cli_alias: retries
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LoadBalanceAlgorithm
     value:
     - first-alive
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LoadBalanceAlgorithm
     value:
     - first-alive
@@ -93,12 +93,12 @@ attributes:
     attempts the query to a different DNS server. The default value is 5.
   cli_alias: timeout
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LoadBalanceAlgorithm
     value:
     - first-alive
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LoadBalanceAlgorithm
     value:
     - first-alive

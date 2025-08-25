@@ -88,7 +88,7 @@ func (r *AssemblyActionExtractResource) Schema(ctx context.Context, req resource
 			},
 			"extract": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify fields in the API context and how to transform the content of the fields. You use a subset of JSONata notation to specify the fields and how to transform the content. For more information, see \"JSONata and assembly actions\" in IBM Documentation.", "extract", "").String,
-				NestedObject:        models.DmAssemblyActionExtractResourceSchema,
+				NestedObject:        models.GetDmAssemblyActionExtractResourceSchema(),
 				Required:            true,
 			},
 			"user_summary": schema.StringAttribute{

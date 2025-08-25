@@ -61,9 +61,9 @@ attributes:
     operational.
   cli_alias: interface-detection
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: OnStartup
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true

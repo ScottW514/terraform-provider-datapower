@@ -67,7 +67,7 @@ attributes:
     that the granted access token is valid to access only specific protected resources.</p>
   cli_alias: default-scopes
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - third_party
@@ -81,7 +81,7 @@ attributes:
   description: Supported client types
   cli_alias: supported-client-types
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -94,7 +94,7 @@ attributes:
     default value is <tt>/</tt> .
   cli_alias: apic-provider-base-path
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -107,7 +107,7 @@ attributes:
     grant. The default value is <tt>/oauth2/authorize</tt> .
   cli_alias: apic-authorize-endpoint
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -120,7 +120,7 @@ attributes:
     grant for an access token. The default value is <tt>/oauth2/token</tt> .
   cli_alias: apic-token-endpoint
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -135,7 +135,7 @@ attributes:
     introspection is disabled.
   cli_alias: apic-enable-introspection
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProviderType
     value:
     - native
@@ -148,14 +148,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: APICEnableIntrospection
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: APICTokenSecret
@@ -166,7 +166,7 @@ attributes:
   test_value: '"AccTest_CryptoSSKey"'
   test_bed_value: datapower_crypto_sskey.acc_test.id
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -178,7 +178,7 @@ attributes:
   description: One-time use access token
   cli_alias: apic-enable-one-time-use-access-token
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -193,7 +193,7 @@ attributes:
     default value is 3600.
   cli_alias: apic-access-token-ttl
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -210,7 +210,7 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
@@ -229,7 +229,7 @@ attributes:
     access tokens with identical or narrower scope. By default, this setting is disabled.
   cli_alias: apic-enable-refresh-token
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProviderType
     value:
     - native
@@ -243,14 +243,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: APICEnableRefreshToken
       value:
-      - 'on'
+      - true
 - name: APICRefreshTokenLimit
   type: Int64
   minimum: 1
@@ -262,18 +262,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: APICEnableRefreshToken
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: APICOneTimeUseRefreshtoken
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: APICRefreshTokenTTL
@@ -287,14 +287,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: APICEnableRefreshToken
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: APICMaximumConsentTTL
@@ -308,11 +308,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: APICEnableRefreshToken
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -328,10 +328,10 @@ attributes:
   description: Use URL from API Security Definition
   cli_alias: advanced-scope-url-from-security
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AdvScopeValidationEnabled
     value:
-    - 'on'
+    - true
 - name: AdvancedScopeURL
   type: String
   description: Specify the URL to send scope information for validation. This external
@@ -341,39 +341,39 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AdvancedScopeURLOverride
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: AdvScopeValidationEnabled
       value:
-      - 'on'
+      - true
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AdvScopeValidationEnabled
     value:
-    - 'on'
+    - true
 - name: AdvScopeTLSProfile
   type: String
   reference_to: SSLClientProfile
   description: TLS profile to access advanced scope URL
   cli_alias: advanced-scope-tls-profile
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AdvScopeValidationEnabled
     value:
-    - 'on'
+    - true
 - name: AdvScopeURLSecurityEnabled
   type: Bool
   default: false
   description: Enable advanced scope endpoint security
   cli_alias: advanced-scope-url-security-enabled
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AdvScopeValidationEnabled
     value:
-    - 'on'
+    - true
 - name: AdvScopeURLSecurity
   dm_type: DmSecurityType
   default: basic-auth
@@ -382,14 +382,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AdvScopeURLSecurityEnabled
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: AdvScopeValidationEnabled
       value:
-      - 'on'
+      - true
 - name: AdvScopeBasicAuthUserName
   type: String
   description: Basic authentication username
@@ -397,14 +397,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AdvScopeValidationEnabled
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: AdvScopeURLSecurityEnabled
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: AdvScopeURLSecurity
       value:
@@ -417,14 +417,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AdvScopeValidationEnabled
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: AdvScopeURLSecurityEnabled
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: AdvScopeURLSecurity
       value:
@@ -437,14 +437,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AdvScopeValidationEnabled
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: AdvScopeURLSecurityEnabled
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: AdvScopeURLSecurity
       value:
@@ -455,10 +455,10 @@ attributes:
     request. Use a regular expression match to include headers from the initial request.
   cli_alias: advanced-scope-request-headers
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AdvScopeValidationEnabled
     value:
-    - 'on'
+    - true
 - name: AdvancedScopeCustomContexts
   type: String
   description: Specify custom context variables to save headers from the advanced
@@ -466,10 +466,10 @@ attributes:
     advanced scope endpoint response.
   cli_alias: advanced-scope-response-contexts
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AdvScopeValidationEnabled
     value:
-    - 'on'
+    - true
 - name: APICEnableOIDC
   type: Bool
   default: true
@@ -482,7 +482,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -503,7 +503,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -517,10 +517,10 @@ attributes:
         attribute: SupportedGrantTypes
         value:
         - implicit
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: APICEnableOIDC
       value:
-      - 'on'
+      - true
 - name: APICSupportPKCE
   type: Bool
   default: true
@@ -530,7 +530,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -547,7 +547,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -555,10 +555,10 @@ attributes:
       attribute: SupportedGrantTypes
       value:
       - access_code
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: APICSupportPKCE
       value:
-      - 'on'
+      - true
 - name: APICSupportPKCEPlain
   type: Bool
   default: false
@@ -568,7 +568,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -576,10 +576,10 @@ attributes:
       attribute: SupportedGrantTypes
       value:
       - access_code
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: APICSupportPKCE
       value:
-      - 'on'
+      - true
 - name: APICTokenTypeToGenerate
   type: String
   enum:
@@ -589,7 +589,7 @@ attributes:
   description: Type of token to generate
   cli_alias: apic-token-type-to-generate
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProviderType
     value:
     - native
@@ -598,7 +598,7 @@ attributes:
   description: Obtain metadata from
   cli_alias: metadata-from
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProviderType
     value:
     - native
@@ -611,7 +611,7 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
@@ -629,7 +629,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -646,7 +646,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -664,7 +664,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
@@ -682,15 +682,15 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -704,15 +704,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -724,15 +724,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -743,15 +743,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -767,15 +767,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -792,15 +792,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -816,15 +816,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -840,15 +840,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -863,19 +863,19 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ExternalRevocationCacheType
       value:
       - TimeToLive
@@ -888,15 +888,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - native
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: TokenManagerType
       value:
       - external
@@ -909,7 +909,7 @@ attributes:
     the token manager.
   cli_alias: enable-token-management
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - third_party
@@ -924,11 +924,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableTokenManagement
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - third_party
@@ -941,15 +941,15 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: TokenManagerType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
@@ -964,15 +964,15 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: TokenManagerType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
@@ -986,19 +986,19 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableApplicationRevocation
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: TokenManagerType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
@@ -1014,15 +1014,15 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: TokenManagerType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
@@ -1036,19 +1036,19 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableOwnerRevocation
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: EnableTokenManagement
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: TokenManagerType
       value:
       - native
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - native
@@ -1063,7 +1063,7 @@ attributes:
   description: Token validation requirement
   cli_alias: token-validation-requirement
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - third_party
@@ -1074,7 +1074,7 @@ attributes:
   description: Authorization endpoint
   cli_alias: third-party-az-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProviderType
     value:
     - third_party
@@ -1083,7 +1083,7 @@ attributes:
   description: Token endpoint
   cli_alias: third-party-token-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProviderType
     value:
     - third_party
@@ -1093,7 +1093,7 @@ attributes:
     include one or more runtime context variables in the <tt>$(variable)</tt> format.
   cli_alias: third-party-introspect-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - third_party
@@ -1109,7 +1109,7 @@ attributes:
   description: Cache type
   cli_alias: third-party-introspect-cache-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - third_party
@@ -1126,11 +1126,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ProviderType
       value:
       - third_party
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ThirdPartyIntrospectCacheType
       value:
       - TimeToLive
@@ -1143,7 +1143,7 @@ attributes:
     for a bearer token. The default behavior is to remove this header.
   cli_alias: third-party-authorization-header-pass-thru
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -1153,7 +1153,7 @@ attributes:
   description: Introspection endpoint security
   cli_alias: third-party-introspect-url-security
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native
@@ -1164,7 +1164,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - third_party
@@ -1180,7 +1180,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - third_party
@@ -1196,7 +1196,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ProviderType
       value:
       - third_party
@@ -1210,7 +1210,7 @@ attributes:
     For example, <tt>x-introspect-*</tt> .
   cli_alias: third-party-introspect-custom-headername-format
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProviderType
     value:
     - third_party
@@ -1220,7 +1220,7 @@ attributes:
   description: TLS client profile
   cli_alias: third-party-introspect-ssl-profile
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProviderType
     value:
     - native

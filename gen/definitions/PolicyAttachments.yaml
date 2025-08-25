@@ -58,10 +58,10 @@ attributes:
     attachment point leaving other policy references intact.
   cli_alias: ignore-attachment-point
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PolicyReferences
     value:
-    - 'off'
+    - false
 - name: ExternalPolicy
   type: List
   element_type: DmExternalAttachedPolicy

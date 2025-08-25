@@ -28,8 +28,10 @@ import (
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectdefault"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -38,6 +40,21 @@ type DmAPICGSProxyPolicy struct {
 	ProxyPolicyEnable types.Bool   `tfsdk:"proxy_policy_enable"`
 	RemoteAddress     types.String `tfsdk:"remote_address"`
 	RemotePort        types.Int64  `tfsdk:"remote_port"`
+}
+
+var DmAPICGSProxyPolicyRemoteAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "proxy_policy_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmAPICGSProxyPolicyRemotePortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "proxy_policy_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var DmAPICGSProxyPolicyObjectType = map[string]attr.Type{
@@ -50,45 +67,66 @@ var DmAPICGSProxyPolicyObjectDefault = map[string]attr.Value{
 	"remote_address":      types.StringNull(),
 	"remote_port":         types.Int64Null(),
 }
-var DmAPICGSProxyPolicyDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"proxy_policy_enable": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmAPICGSProxyPolicyDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmAPICGSProxyPolicyDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"proxy_policy_enable": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"remote_address": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").String,
+				Computed:            true,
+			},
+			"remote_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"remote_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").String,
-			Computed:            true,
-		},
-		"remote_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmAPICGSProxyPolicyDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmAPICGSProxyPolicyDataSourceSchema
 }
-var DmAPICGSProxyPolicyResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmAPICGSProxyPolicyObjectType,
-			DmAPICGSProxyPolicyObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"proxy_policy_enable": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmAPICGSProxyPolicyResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmAPICGSProxyPolicyResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmAPICGSProxyPolicyObjectType,
+				DmAPICGSProxyPolicyObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"proxy_policy_enable": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"remote_address": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAPICGSProxyPolicyRemoteAddressCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"remote_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").String,
+				Required:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(DmAPICGSProxyPolicyRemotePortCondVal, validators.Evaluation{}, false),
+				},
+			},
 		},
-		"remote_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").String,
-			Required:            true,
-		},
-		"remote_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	DmAPICGSProxyPolicyResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmAPICGSProxyPolicyResourceSchema.Required = true
+	} else {
+		DmAPICGSProxyPolicyResourceSchema.Optional = true
+		DmAPICGSProxyPolicyResourceSchema.Computed = true
+	}
+	return DmAPICGSProxyPolicyResourceSchema
 }
 
 func (data DmAPICGSProxyPolicy) IsNull() bool {
@@ -103,27 +141,13 @@ func (data DmAPICGSProxyPolicy) IsNull() bool {
 	}
 	return true
 }
-func GetDmAPICGSProxyPolicyDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmAPICGSProxyPolicyDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmAPICGSProxyPolicyDataSourceSchema
-}
-
-func GetDmAPICGSProxyPolicyResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmAPICGSProxyPolicyResourceSchema.Required = true
-	} else {
-		DmAPICGSProxyPolicyResourceSchema.Optional = true
-		DmAPICGSProxyPolicyResourceSchema.Computed = true
-	}
-	DmAPICGSProxyPolicyResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmAPICGSProxyPolicyResourceSchema
-}
 
 func (data DmAPICGSProxyPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ProxyPolicyEnable.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ProxyPolicyEnable`, tfutils.StringFromBool(data.ProxyPolicyEnable, ""))
 	}

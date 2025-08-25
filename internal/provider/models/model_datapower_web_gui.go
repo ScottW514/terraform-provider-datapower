@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -46,6 +47,14 @@ type WebGUI struct {
 	EnableSts            types.Bool                  `tfsdk:"enable_sts"`
 	LocalAddress         types.String                `tfsdk:"local_address"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WebGUISSLSNIServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
 }
 
 var WebGUIObjectType = map[string]attr.Type{
@@ -115,6 +124,7 @@ func (data WebGUI) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "WebGUI.name", path.Base("/mgmt/config/default/WebGUI/WebGUI-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

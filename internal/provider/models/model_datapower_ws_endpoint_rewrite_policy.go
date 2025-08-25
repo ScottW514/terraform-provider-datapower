@@ -102,6 +102,7 @@ func (data WSEndpointRewritePolicy) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -109,44 +110,44 @@ func (data WSEndpointRewritePolicy) ToBody(ctx context.Context, pathRoot string)
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.WsEndpointLocalRewriteRule.IsNull() {
-		var values []DmWSEndpointLocalRewriteRule
-		data.WsEndpointLocalRewriteRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSEndpointLocalRewriteRule
+		data.WsEndpointLocalRewriteRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointLocalRewriteRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.WsEndpointRemoteRewriteRule.IsNull() {
-		var values []DmWSEndpointRemoteRewriteRule
-		data.WsEndpointRemoteRewriteRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSEndpointRemoteRewriteRule
+		data.WsEndpointRemoteRewriteRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointRemoteRewriteRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.WsEndpointPublishRewriteRule.IsNull() {
-		var values []DmWSEndpointPublishRewriteRule
-		data.WsEndpointPublishRewriteRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSEndpointPublishRewriteRule
+		data.WsEndpointPublishRewriteRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointPublishRewriteRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.WsEndpointSubscriptionLocalRule.IsNull() {
-		var values []DmWSEndpointSubscriptionLocalRule
-		data.WsEndpointSubscriptionLocalRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSEndpointSubscriptionLocalRule
+		data.WsEndpointSubscriptionLocalRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionLocalRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.WsEndpointSubscriptionRemoteRule.IsNull() {
-		var values []DmWSEndpointSubscriptionRemoteRule
-		data.WsEndpointSubscriptionRemoteRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSEndpointSubscriptionRemoteRule
+		data.WsEndpointSubscriptionRemoteRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionRemoteRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.WsEndpointSubscriptionPublishRule.IsNull() {
-		var values []DmWSEndpointSubscriptionPublishRule
-		data.WsEndpointSubscriptionPublishRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSEndpointSubscriptionPublishRule
+		data.WsEndpointSubscriptionPublishRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionPublishRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}

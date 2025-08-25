@@ -27,8 +27,10 @@ import (
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -38,6 +40,21 @@ type DmProxyPolicy struct {
 	Skip          types.Bool   `tfsdk:"skip"`
 	RemoteAddress types.String `tfsdk:"remote_address"`
 	RemotePort    types.Int64  `tfsdk:"remote_port"`
+}
+
+var DmProxyPolicyRemoteAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "skip",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmProxyPolicyRemotePortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "skip",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
 }
 
 var DmProxyPolicyObjectType = map[string]attr.Type{
@@ -52,47 +69,60 @@ var DmProxyPolicyObjectDefault = map[string]attr.Value{
 	"remote_address": types.StringNull(),
 	"remote_port":    types.Int64Null(),
 }
-var DmProxyPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmProxyPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmProxyPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"skip": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"remote_address": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").String,
+				Computed:            true,
+			},
+			"remote_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"skip": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"remote_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").String,
-			Computed:            true,
-		},
-		"remote_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmProxyPolicyDataSourceSchema
 }
-var DmProxyPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
+func GetDmProxyPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmProxyPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"skip": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"remote_address": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmProxyPolicyRemoteAddressCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"remote_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").String,
+				Required:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(DmProxyPolicyRemotePortCondVal, validators.Evaluation{}, false),
+				},
+			},
 		},
-		"skip": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"remote_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").String,
-			Optional:            true,
-		},
-		"remote_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmProxyPolicyResourceSchema
 }
 
 func (data DmProxyPolicy) IsNull() bool {
@@ -116,6 +146,7 @@ func (data DmProxyPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

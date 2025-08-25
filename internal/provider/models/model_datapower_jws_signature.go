@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,21 @@ type JWSSignature struct {
 	ProtectedHeader   types.List                  `tfsdk:"protected_header"`
 	UnprotectedHeader types.List                  `tfsdk:"unprotected_header"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var JWSSignatureKeyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "algorithm",
+	AttrType:    "String",
+	AttrDefault: "RS256",
+	Value:       []string{"RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512"},
+}
+var JWSSignatureSSKeyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "algorithm",
+	AttrType:    "String",
+	AttrDefault: "RS256",
+	Value:       []string{"HS256", "HS384", "HS512"},
 }
 
 var JWSSignatureObjectType = map[string]attr.Type{
@@ -97,6 +113,7 @@ func (data JWSSignature) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -113,16 +130,16 @@ func (data JWSSignature) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.SsKey.ValueString())
 	}
 	if !data.ProtectedHeader.IsNull() {
-		var values []DmJOSEHeader
-		data.ProtectedHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmJOSEHeader
+		data.ProtectedHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ProtectedHeader`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.UnprotectedHeader.IsNull() {
-		var values []DmJOSEHeader
-		data.UnprotectedHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmJOSEHeader
+		data.UnprotectedHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`+".-1", val.ToBody(ctx, ""))
 		}
 	}

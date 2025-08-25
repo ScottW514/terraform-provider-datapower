@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -70,6 +71,42 @@ type WebAppRequest struct {
 	CookieNameVector         types.List                  `tfsdk:"cookie_name_vector"`
 	SqlInjectionPatternsFile types.String                `tfsdk:"sql_injection_patterns_file"`
 	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WebAppRequestXMLRuleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "xml_policy",
+	AttrType:    "String",
+	AttrDefault: "nothing",
+	Value:       []string{"xml", "soap"},
+}
+var WebAppRequestNonXMLRuleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "non_xml_policy",
+	AttrType:    "String",
+	AttrDefault: "nothing",
+	Value:       []string{"side", "binary"},
+}
+var WebAppRequestQueryStringGNVCCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "query_string_policy",
+	AttrType:    "String",
+	AttrDefault: "allow",
+	Value:       []string{"require"},
+}
+var WebAppRequestCookieNameVectorCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "process_all_cookie",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var WebAppRequestSQLInjectionPatternsFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "sql_injection",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var WebAppRequestObjectType = map[string]attr.Type{
@@ -240,6 +277,7 @@ func (data WebAppRequest) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -329,9 +367,9 @@ func (data WebAppRequest) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`URIFilterFragment`, data.UriFilterFragment.ValueString())
 	}
 	if !data.ContentTypes.IsNull() {
-		var values []string
-		data.ContentTypes.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.ContentTypes.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`ContentTypes`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -349,9 +387,9 @@ func (data WebAppRequest) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`ProcessAllCookie`, tfutils.StringFromBool(data.ProcessAllCookie, ""))
 	}
 	if !data.CookieNameVector.IsNull() {
-		var values []string
-		data.CookieNameVector.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.CookieNameVector.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`CookieNameVector`+".-1", map[string]string{"value": val})
 		}
 	}

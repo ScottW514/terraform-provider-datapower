@@ -49,43 +49,58 @@ var DmDynamicOAuthProviderSettingsReferenceObjectDefault = map[string]attr.Value
 	"literal": types.StringNull(),
 	"default": types.StringNull(),
 }
-var DmDynamicOAuthProviderSettingsReferenceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.", "url", "").String,
-			Computed:            true,
+
+func GetDmDynamicOAuthProviderSettingsReferenceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmDynamicOAuthProviderSettingsReferenceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"url": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.", "url", "").String,
+				Computed:            true,
+			},
+			"literal": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.", "literal", "").String,
+				Computed:            true,
+			},
+			"default": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.", "default", "oauth_provider_settings").String,
+				Computed:            true,
+			},
 		},
-		"literal": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.", "literal", "").String,
-			Computed:            true,
-		},
-		"default": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.", "default", "oauth_provider_settings").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmDynamicOAuthProviderSettingsReferenceDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmDynamicOAuthProviderSettingsReferenceDataSourceSchema
 }
-var DmDynamicOAuthProviderSettingsReferenceResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmDynamicOAuthProviderSettingsReferenceObjectType,
-			DmDynamicOAuthProviderSettingsReferenceObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.", "url", "").String,
-			Optional:            true,
+func GetDmDynamicOAuthProviderSettingsReferenceResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmDynamicOAuthProviderSettingsReferenceResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmDynamicOAuthProviderSettingsReferenceObjectType,
+				DmDynamicOAuthProviderSettingsReferenceObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"url": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.", "url", "").String,
+				Optional:            true,
+			},
+			"literal": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.", "literal", "").String,
+				Optional:            true,
+			},
+			"default": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.", "default", "oauth_provider_settings").String,
+				Optional:            true,
+			},
 		},
-		"literal": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.", "literal", "").String,
-			Optional:            true,
-		},
-		"default": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.", "default", "oauth_provider_settings").String,
-			Optional:            true,
-		},
-	},
+	}
+	DmDynamicOAuthProviderSettingsReferenceResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmDynamicOAuthProviderSettingsReferenceResourceSchema.Required = true
+	} else {
+		DmDynamicOAuthProviderSettingsReferenceResourceSchema.Optional = true
+		DmDynamicOAuthProviderSettingsReferenceResourceSchema.Computed = true
+	}
+	return DmDynamicOAuthProviderSettingsReferenceResourceSchema
 }
 
 func (data DmDynamicOAuthProviderSettingsReference) IsNull() bool {
@@ -100,27 +115,13 @@ func (data DmDynamicOAuthProviderSettingsReference) IsNull() bool {
 	}
 	return true
 }
-func GetDmDynamicOAuthProviderSettingsReferenceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmDynamicOAuthProviderSettingsReferenceDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmDynamicOAuthProviderSettingsReferenceDataSourceSchema
-}
-
-func GetDmDynamicOAuthProviderSettingsReferenceResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmDynamicOAuthProviderSettingsReferenceResourceSchema.Required = true
-	} else {
-		DmDynamicOAuthProviderSettingsReferenceResourceSchema.Optional = true
-		DmDynamicOAuthProviderSettingsReferenceResourceSchema.Computed = true
-	}
-	DmDynamicOAuthProviderSettingsReferenceResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmDynamicOAuthProviderSettingsReferenceResourceSchema
-}
 
 func (data DmDynamicOAuthProviderSettingsReference) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Url.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`URL`, data.Url.ValueString())
 	}

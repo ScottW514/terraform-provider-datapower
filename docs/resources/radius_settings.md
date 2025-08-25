@@ -50,12 +50,13 @@ Required:
 - `host` (String) Specify the IP address of the RADIUS server.
 - `number` (Number) Specify the list position of this RADIUS server within the list of all RADIUS servers known to the client implementation. The lower the number, the more preferred the server.
   - Range: `0`-`2147483647`
+- `secret_wo` (String, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify the password login to the RADIUS server. You must confirm the password for accuracy.
 
 Optional:
 
 - `port` (Number) Specify the listening port on the RADIUS server.
   - Default value: `1812`
-- `secret` (String) Specify the password login to the RADIUS server. You must confirm the password for accuracy.
+- `secret_wo_version` (Number) Changes to this value trigger an update to `write_only` value.
 
 
 <a id="nestedatt--dependency_actions"></a>

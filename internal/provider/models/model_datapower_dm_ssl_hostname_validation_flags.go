@@ -56,69 +56,84 @@ var DmSSLHostnameValidationFlagsObjectDefault = map[string]attr.Value{
 	"x509_check_flag_multi_label_wildcards":   types.BoolValue(false),
 	"x509_check_flag_single_label_subdomains": types.BoolValue(false),
 }
-var DmSSLHostnameValidationFlagsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"x509_check_flag_always_check_subject": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmSSLHostnameValidationFlagsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSSLHostnameValidationFlagsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"x509_check_flag_always_check_subject": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"x509_check_flag_no_wildcards": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_WILDCARDS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"x509_check_flag_no_partial_wildcards": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"x509_check_flag_multi_label_wildcards": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"x509_check_flag_single_label_subdomains": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"x509_check_flag_no_wildcards": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_WILDCARDS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"x509_check_flag_no_partial_wildcards": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"x509_check_flag_multi_label_wildcards": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"x509_check_flag_single_label_subdomains": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSSLHostnameValidationFlagsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSSLHostnameValidationFlagsDataSourceSchema
 }
-var DmSSLHostnameValidationFlagsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSSLHostnameValidationFlagsObjectType,
-			DmSSLHostnameValidationFlagsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"x509_check_flag_always_check_subject": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmSSLHostnameValidationFlagsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSSLHostnameValidationFlagsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSSLHostnameValidationFlagsObjectType,
+				DmSSLHostnameValidationFlagsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"x509_check_flag_always_check_subject": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"x509_check_flag_no_wildcards": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_WILDCARDS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"x509_check_flag_no_partial_wildcards": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"x509_check_flag_multi_label_wildcards": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"x509_check_flag_single_label_subdomains": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"x509_check_flag_no_wildcards": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_WILDCARDS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"x509_check_flag_no_partial_wildcards": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"x509_check_flag_multi_label_wildcards": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"x509_check_flag_single_label_subdomains": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmSSLHostnameValidationFlagsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSSLHostnameValidationFlagsResourceSchema.Required = true
+	} else {
+		DmSSLHostnameValidationFlagsResourceSchema.Optional = true
+		DmSSLHostnameValidationFlagsResourceSchema.Computed = true
+	}
+	return DmSSLHostnameValidationFlagsResourceSchema
 }
 
 func (data DmSSLHostnameValidationFlags) IsNull() bool {
@@ -139,27 +154,13 @@ func (data DmSSLHostnameValidationFlags) IsNull() bool {
 	}
 	return true
 }
-func GetDmSSLHostnameValidationFlagsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSSLHostnameValidationFlagsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSSLHostnameValidationFlagsDataSourceSchema
-}
-
-func GetDmSSLHostnameValidationFlagsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSSLHostnameValidationFlagsResourceSchema.Required = true
-	} else {
-		DmSSLHostnameValidationFlagsResourceSchema.Optional = true
-		DmSSLHostnameValidationFlagsResourceSchema.Computed = true
-	}
-	DmSSLHostnameValidationFlagsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSSLHostnameValidationFlagsResourceSchema
-}
 
 func (data DmSSLHostnameValidationFlags) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.X509CheckFlagAlwaysCheckSubject.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT`, tfutils.StringFromBool(data.X509CheckFlagAlwaysCheckSubject, ""))
 	}

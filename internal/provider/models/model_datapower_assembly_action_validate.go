@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -48,6 +49,21 @@ type AssemblyActionValidate struct {
 	CorrelationPath   types.String                `tfsdk:"correlation_path"`
 	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AssemblyActionValidateSchemaCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validate_against",
+	AttrType:    "String",
+	AttrDefault: "url",
+	Value:       []string{"url"},
+}
+var AssemblyActionValidateDefinitionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validate_against",
+	AttrType:    "String",
+	AttrDefault: "url",
+	Value:       []string{"definition"},
 }
 
 var AssemblyActionValidateObjectType = map[string]attr.Type{
@@ -122,6 +138,7 @@ func (data AssemblyActionValidate) ToBody(ctx context.Context, pathRoot string) 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &APILDAPRegistryResource{}
@@ -135,7 +136,6 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(60),
@@ -147,10 +147,11 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 				Default:             booldefault.StaticBool(false),
 			},
 			"ldap_group_auth_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of group authentication configuration to use. The default value is static.", "ldap-group-auth-type", "").AddStringEnum("dynamic", "static").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of group authentication configuration to use. The default value is static.", "ldap-group-auth-type", "").AddStringEnum("dynamic", "static").AddRequiredWhen(models.APILDAPRegistryLDAPGroupAuthTypeCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("dynamic", "static"),
+					validators.ConditionalRequiredString(models.APILDAPRegistryLDAPGroupAuthTypeCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"ldap_group_scope": schema.StringAttribute{
@@ -163,20 +164,32 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("subtree"),
 			},
 			"ldap_group_base_dn": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base DN name to begin the group authentication search. This value identifies the entry level of the tree used by the LDAP group scope.", "ldap-group-base-dn", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base DN name to begin the group authentication search. This value identifies the entry level of the tree used by the LDAP group scope.", "ldap-group-base-dn", "").AddRequiredWhen(models.APILDAPRegistryLDAPGroupBaseDNCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APILDAPRegistryLDAPGroupBaseDNCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ldap_group_filter_prefix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix of the LDAP group filter expression. An LDAP group filter expression is composed by <tt>prefix + user DN + suffix</tt> . <p>When the prefix is <tt>(&amp;(objectclass=group)(member=</tt> and the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com))</tt> .</p>", "ldap-group-filter-prefix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix of the LDAP group filter expression. An LDAP group filter expression is composed by <tt>prefix + user DN + suffix</tt> . <p>When the prefix is <tt>(&amp;(objectclass=group)(member=</tt> and the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com))</tt> .</p>", "ldap-group-filter-prefix", "").AddRequiredWhen(models.APILDAPRegistryLDAPGroupFilterPrefixCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APILDAPRegistryLDAPGroupFilterPrefixCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ldap_group_filter_suffix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the suffix of the LDAP group filter expression. <p>When the prefix is <tt>&amp;(objectclass=group)(member=</tt> , the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , and the suffix is <tt>)(CN=ibm-group))</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com)(CN=ibm-group))</tt> .</p>", "ldap-group-filter-suffix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the suffix of the LDAP group filter expression. <p>When the prefix is <tt>&amp;(objectclass=group)(member=</tt> , the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , and the suffix is <tt>)(CN=ibm-group))</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com)(CN=ibm-group))</tt> .</p>", "ldap-group-filter-suffix", "").AddRequiredWhen(models.APILDAPRegistryLDAPGroupFilterSuffixCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APILDAPRegistryLDAPGroupFilterSuffixCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ldap_group_dynamic_filter": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the filter expression of the LDAP dynamic group configuration. Only for dynamic. <p>When the filter is <tt>(memberOf=CN=ibm-group,DC=ibm,DC=com)</tt> , the value is used verbatim for LDAP group dynamic search.</p>", "ldap-group-dynamic-filter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the filter expression of the LDAP dynamic group configuration. Only for dynamic. <p>When the filter is <tt>(memberOf=CN=ibm-group,DC=ibm,DC=com)</tt> , the value is used verbatim for LDAP group dynamic search.</p>", "ldap-group-dynamic-filter", "").AddRequiredWhen(models.APILDAPRegistryLDAPGroupDynamicFilterCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APILDAPRegistryLDAPGroupDynamicFilterCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

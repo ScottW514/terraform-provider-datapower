@@ -45,29 +45,36 @@ var DmJOSEHeaderObjectDefault = map[string]attr.Value{
 	"header_name":  types.StringNull(),
 	"header_value": types.StringNull(),
 }
-var DmJOSEHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"header_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name of a JOSE header.", "", "").String,
-			Computed:            true,
+
+func GetDmJOSEHeaderDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmJOSEHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"header_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name of a JOSE header.", "", "").String,
+				Computed:            true,
+			},
+			"header_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"header_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmJOSEHeaderDataSourceSchema
 }
-var DmJOSEHeaderResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"header_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name of a JOSE header.", "", "").String,
-			Optional:            true,
+func GetDmJOSEHeaderResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmJOSEHeaderResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"header_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name of a JOSE header.", "", "").String,
+				Optional:            true,
+			},
+			"header_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.", "", "").String,
+				Required:            true,
+			},
 		},
-		"header_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmJOSEHeaderResourceSchema
 }
 
 func (data DmJOSEHeader) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmJOSEHeader) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.HeaderName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HeaderName`, data.HeaderName.ValueString())
 	}

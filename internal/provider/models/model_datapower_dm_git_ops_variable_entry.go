@@ -45,29 +45,36 @@ var DmGitOpsVariableEntryObjectDefault = map[string]attr.Value{
 	"variable_name":  types.StringNull(),
 	"variable_value": types.StringNull(),
 }
-var DmGitOpsVariableEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"variable_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Variable name", "name", "").String,
-			Computed:            true,
+
+func GetDmGitOpsVariableEntryDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmGitOpsVariableEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"variable_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Variable name", "name", "").String,
+				Computed:            true,
+			},
+			"variable_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Variable value", "value", "").String,
+				Computed:            true,
+			},
 		},
-		"variable_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Variable value", "value", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmGitOpsVariableEntryDataSourceSchema
 }
-var DmGitOpsVariableEntryResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"variable_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Variable name", "name", "").String,
-			Required:            true,
+func GetDmGitOpsVariableEntryResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmGitOpsVariableEntryResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"variable_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Variable name", "name", "").String,
+				Required:            true,
+			},
+			"variable_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Variable value", "value", "").String,
+				Required:            true,
+			},
 		},
-		"variable_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Variable value", "value", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmGitOpsVariableEntryResourceSchema
 }
 
 func (data DmGitOpsVariableEntry) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmGitOpsVariableEntry) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.VariableName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`VariableName`, data.VariableName.ValueString())
 	}

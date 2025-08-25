@@ -50,49 +50,64 @@ var DmInvokeErrorTypeObjectDefault = map[string]attr.Value{
 	"soap_error":       types.BoolValue(false),
 	"operation_error":  types.BoolValue(false),
 }
-var DmInvokeErrorTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"connection_error": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Connection error", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmInvokeErrorTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmInvokeErrorTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"connection_error": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Connection error", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"soap_error": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SOAP error", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"operation_error": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Operation error", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"soap_error": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP error", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"operation_error": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Operation error", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmInvokeErrorTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmInvokeErrorTypeDataSourceSchema
 }
-var DmInvokeErrorTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmInvokeErrorTypeObjectType,
-			DmInvokeErrorTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"connection_error": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Connection error", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmInvokeErrorTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmInvokeErrorTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmInvokeErrorTypeObjectType,
+				DmInvokeErrorTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"connection_error": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Connection error", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"soap_error": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SOAP error", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"operation_error": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Operation error", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"soap_error": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP error", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"operation_error": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Operation error", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmInvokeErrorTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmInvokeErrorTypeResourceSchema.Required = true
+	} else {
+		DmInvokeErrorTypeResourceSchema.Optional = true
+		DmInvokeErrorTypeResourceSchema.Computed = true
+	}
+	return DmInvokeErrorTypeResourceSchema
 }
 
 func (data DmInvokeErrorType) IsNull() bool {
@@ -107,27 +122,13 @@ func (data DmInvokeErrorType) IsNull() bool {
 	}
 	return true
 }
-func GetDmInvokeErrorTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmInvokeErrorTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmInvokeErrorTypeDataSourceSchema
-}
-
-func GetDmInvokeErrorTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmInvokeErrorTypeResourceSchema.Required = true
-	} else {
-		DmInvokeErrorTypeResourceSchema.Optional = true
-		DmInvokeErrorTypeResourceSchema.Computed = true
-	}
-	DmInvokeErrorTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmInvokeErrorTypeResourceSchema
-}
 
 func (data DmInvokeErrorType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ConnectionError.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ConnectionError`, tfutils.StringFromBool(data.ConnectionError, ""))
 	}

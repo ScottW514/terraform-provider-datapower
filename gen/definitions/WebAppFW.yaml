@@ -132,10 +132,10 @@ attributes:
     does not delay error messages.
   cli_alias: delay-errors
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: RewriteErrors
     value:
-    - 'on'
+    - true
 - name: DelayErrorsDuration
   type: Int64
   minimum: 250
@@ -150,14 +150,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DelayErrors
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: RewriteErrors
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: StreamOutputToBack
@@ -327,10 +327,10 @@ attributes:
     Enter a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DebugMode
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: DebugTrigger
@@ -343,10 +343,10 @@ attributes:
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: DebugMode
     value:
-    - 'on'
+    - true
 - name: URLRewritePolicy
   type: String
   reference_to: URLRewritePolicy
@@ -381,7 +381,7 @@ attributes:
   description: TLS server profile
   cli_alias: ssl-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLConfigType
     value:
     - server
@@ -391,7 +391,7 @@ attributes:
   description: TLS SNI server profile
   cli_alias: ssl-sni-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLConfigType
     value:
     - sni
@@ -401,7 +401,7 @@ attributes:
   description: TLS client profile
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLConfigType
     value:
     - proxy

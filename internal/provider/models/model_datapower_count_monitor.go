@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,14 @@ type CountMonitor struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	MessageType       types.String                `tfsdk:"message_type"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var CountMonitorHeaderCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "source",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"ip-from-header"},
 }
 
 var CountMonitorObjectType = map[string]attr.Type{
@@ -102,6 +111,7 @@ func (data CountMonitor) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -115,9 +125,9 @@ func (data CountMonitor) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Header`, data.Header.ValueString())
 	}
 	if !data.Filter.IsNull() {
-		var values []DmCountMonitorFilter
-		data.Filter.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmCountMonitorFilter
+		data.Filter.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Filter`+".-1", val.ToBody(ctx, ""))
 		}
 	}

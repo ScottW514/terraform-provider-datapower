@@ -50,49 +50,64 @@ var DmSAMLStatementTypeObjectDefault = map[string]attr.Value{
 	"attribute":      types.BoolValue(true),
 	"authorization":  types.BoolValue(false),
 }
-var DmSAMLStatementTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"authentication": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authentication statement", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmSAMLStatementTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSAMLStatementTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"authentication": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authentication statement", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"attribute": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Attribute statement", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"authorization": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authorization decision statement", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"attribute": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Attribute statement", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"authorization": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authorization decision statement", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSAMLStatementTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSAMLStatementTypeDataSourceSchema
 }
-var DmSAMLStatementTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSAMLStatementTypeObjectType,
-			DmSAMLStatementTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"authentication": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authentication statement", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmSAMLStatementTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSAMLStatementTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSAMLStatementTypeObjectType,
+				DmSAMLStatementTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"authentication": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authentication statement", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"attribute": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Attribute statement", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"authorization": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authorization decision statement", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"attribute": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Attribute statement", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"authorization": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authorization decision statement", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmSAMLStatementTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSAMLStatementTypeResourceSchema.Required = true
+	} else {
+		DmSAMLStatementTypeResourceSchema.Optional = true
+		DmSAMLStatementTypeResourceSchema.Computed = true
+	}
+	return DmSAMLStatementTypeResourceSchema
 }
 
 func (data DmSAMLStatementType) IsNull() bool {
@@ -107,27 +122,13 @@ func (data DmSAMLStatementType) IsNull() bool {
 	}
 	return true
 }
-func GetDmSAMLStatementTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSAMLStatementTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSAMLStatementTypeDataSourceSchema
-}
-
-func GetDmSAMLStatementTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSAMLStatementTypeResourceSchema.Required = true
-	} else {
-		DmSAMLStatementTypeResourceSchema.Optional = true
-		DmSAMLStatementTypeResourceSchema.Computed = true
-	}
-	DmSAMLStatementTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSAMLStatementTypeResourceSchema
-}
 
 func (data DmSAMLStatementType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Authentication.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`authentication`, tfutils.StringFromBool(data.Authentication, ""))
 	}

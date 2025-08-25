@@ -47,39 +47,54 @@ var DmDomainMonitoringMapObjectDefault = map[string]attr.Value{
 	"audit": types.BoolValue(false),
 	"log":   types.BoolValue(false),
 }
-var DmDomainMonitoringMapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"audit": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable auditing", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmDomainMonitoringMapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmDomainMonitoringMapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"audit": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable auditing", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"log": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable logging", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"log": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable logging", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmDomainMonitoringMapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmDomainMonitoringMapDataSourceSchema
 }
-var DmDomainMonitoringMapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmDomainMonitoringMapObjectType,
-			DmDomainMonitoringMapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"audit": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable auditing", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmDomainMonitoringMapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmDomainMonitoringMapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmDomainMonitoringMapObjectType,
+				DmDomainMonitoringMapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"audit": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable auditing", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"log": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable logging", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"log": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable logging", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmDomainMonitoringMapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmDomainMonitoringMapResourceSchema.Required = true
+	} else {
+		DmDomainMonitoringMapResourceSchema.Optional = true
+		DmDomainMonitoringMapResourceSchema.Computed = true
+	}
+	return DmDomainMonitoringMapResourceSchema
 }
 
 func (data DmDomainMonitoringMap) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmDomainMonitoringMap) IsNull() bool {
 	}
 	return true
 }
-func GetDmDomainMonitoringMapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmDomainMonitoringMapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmDomainMonitoringMapDataSourceSchema
-}
-
-func GetDmDomainMonitoringMapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmDomainMonitoringMapResourceSchema.Required = true
-	} else {
-		DmDomainMonitoringMapResourceSchema.Optional = true
-		DmDomainMonitoringMapResourceSchema.Computed = true
-	}
-	DmDomainMonitoringMapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmDomainMonitoringMapResourceSchema
-}
 
 func (data DmDomainMonitoringMap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Audit.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Audit`, tfutils.StringFromBool(data.Audit, ""))
 	}

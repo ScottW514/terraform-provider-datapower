@@ -143,17 +143,17 @@ func (d *WSGatewayDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						"remote_fetch_retry": models.GetDmNetworkRetryDataSourceSchema("Remote Fetch Retry", "remote-retry", ""),
 						"wsdl_cache_policy": schema.ListNestedAttribute{
 							MarkdownDescription: "A WSDL that is part of the cache policy is refreshed when its TTL to is reached. Refresh retrieves the WSDL from the source location and refreshes the web service proxy state. Depending upon the changes in the WSDL file itself, the Proxy may reconfigure itself in any number of ways, including adding new endpoints or removing existing endpoints.",
-							NestedObject:        models.DmWSDLCachePolicyDataSourceSchema,
+							NestedObject:        models.GetDmWSDLCachePolicyDataSourceSchema(),
 							Computed:            true,
 						},
 						"base_wsdl": schema.ListNestedAttribute{
 							MarkdownDescription: "A proxy may use one or more WSDL files to define the service the proxy handles. Those WSDL files are defined on this page.",
-							NestedObject:        models.DmWSBaseWSDLDataSourceSchema,
+							NestedObject:        models.GetDmWSBaseWSDLDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_toggles": schema.ListNestedAttribute{
 							MarkdownDescription: "<p>Each WSDL Operation of the web service proxied by a Web Service Proxy can have a user policy defined for that component.</p><p>Components are specified by the combination of Target Namespace, WSDL file, Service, PortType, Binding and Operation. For example, to specify all operations in the target namespace MySvc, enter \"MySvc\" in the Target Namespace field and set all other inputs to *. To specify only one particular operation, named GetLottoPick for example, enter \"wsdl:definitions//wsdl:operation/@GetLottoPick\" in the Operations field and set all others to *.</p><p>The policy applied to the specified component consists of six options: Enable, Publish, Validate Faults, Validate Headers, Validate Requests and Validate Responses. See below for more information about policy options.</p>",
-							NestedObject:        models.DmWSUserTogglesDataSourceSchema,
+							NestedObject:        models.GetDmWSUserTogglesDataSourceSchema(),
 							Computed:            true,
 						},
 						"client_principal": schema.StringAttribute{
@@ -190,37 +190,37 @@ func (d *WSGatewayDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						},
 						"wsrr_subscriptions": schema.ListNestedAttribute{
 							MarkdownDescription: "Load and proxy services obtained via these subscriptions.",
-							NestedObject:        models.DmWSRRWSDLSourceDataSourceSchema,
+							NestedObject:        models.GetDmWSRRWSDLSourceDataSourceSchema(),
 							Computed:            true,
 						},
 						"wsrr_saved_search_subscriptions": schema.ListNestedAttribute{
 							MarkdownDescription: "The Web Service Proxy virtualizes Web service endpoints based on the WSDL files returned by the saved search.",
-							NestedObject:        models.DmWSRRSavedSearchWSDLSourceDataSourceSchema,
+							NestedObject:        models.GetDmWSRRSavedSearchWSDLSourceDataSourceSchema(),
 							Computed:            true,
 						},
 						"operation_priority": schema.ListNestedAttribute{
 							MarkdownDescription: "Operation Priority",
-							NestedObject:        models.DmWSOperationSchedulerPriorityDataSourceSchema,
+							NestedObject:        models.GetDmWSOperationSchedulerPriorityDataSourceSchema(),
 							Computed:            true,
 						},
 						"operation_conformance_policy": schema.ListNestedAttribute{
 							MarkdownDescription: "Operation Conformance Policy",
-							NestedObject:        models.DmWSOperationConformancePolicyDataSourceSchema,
+							NestedObject:        models.GetDmWSOperationConformancePolicyDataSourceSchema(),
 							Computed:            true,
 						},
 						"operation_policy_subject_opt_out": schema.ListNestedAttribute{
 							MarkdownDescription: "Operation Policy Subject Opt Out",
-							NestedObject:        models.DmWSOperationPolicySubjectOptOutDataSourceSchema,
+							NestedObject:        models.GetDmWSOperationPolicySubjectOptOutDataSourceSchema(),
 							Computed:            true,
 						},
 						"policy_parameter": schema.ListNestedAttribute{
 							MarkdownDescription: "Policy Parameters",
-							NestedObject:        models.DmWSPolicyParametersDataSourceSchema,
+							NestedObject:        models.GetDmWSPolicyParametersDataSourceSchema(),
 							Computed:            true,
 						},
 						"reliable_messaging": schema.ListNestedAttribute{
 							MarkdownDescription: "Reliable Messaging",
-							NestedObject:        models.DmWSOperationReliableMessagingDataSourceSchema,
+							NestedObject:        models.GetDmWSOperationReliableMessagingDataSourceSchema(),
 							Computed:            true,
 						},
 						"wsm_agent_monitor": schema.BoolAttribute{
@@ -270,17 +270,17 @@ func (d *WSGatewayDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						},
 						"header_injection": schema.ListNestedAttribute{
 							MarkdownDescription: "HTTP Header Injection",
-							NestedObject:        models.DmHeaderInjectionDataSourceSchema,
+							NestedObject:        models.GetDmHeaderInjectionDataSourceSchema(),
 							Computed:            true,
 						},
 						"header_suppression": schema.ListNestedAttribute{
 							MarkdownDescription: "HTTP Header Suppression",
-							NestedObject:        models.DmHeaderSuppressionDataSourceSchema,
+							NestedObject:        models.GetDmHeaderSuppressionDataSourceSchema(),
 							Computed:            true,
 						},
 						"stylesheet_parameters": schema.ListNestedAttribute{
 							MarkdownDescription: "Style sheets used in processing policies can take stylesheet parameters. These parameters can be passed in by this object. You can define more than one parameter.",
-							NestedObject:        models.DmStylesheetParameterDataSourceSchema,
+							NestedObject:        models.GetDmStylesheetParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"default_param_namespace": schema.StringAttribute{
@@ -416,7 +416,7 @@ func (d *WSGatewayDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						},
 						"debug_trigger": schema.ListNestedAttribute{
 							MarkdownDescription: "The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.",
-							NestedObject:        models.DmMSDebugTriggerTypeDataSourceSchema,
+							NestedObject:        models.GetDmMSDebugTriggerTypeDataSourceSchema(),
 							Computed:            true,
 						},
 						"flow_control": schema.BoolAttribute{

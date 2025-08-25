@@ -62,7 +62,7 @@ func (d *GitOpsVariablesDataSource) Schema(ctx context.Context, req datasource.S
 			},
 			"variables": schema.ListNestedAttribute{
 				MarkdownDescription: "Variables",
-				NestedObject:        models.DmGitOpsVariableEntryDataSourceSchema,
+				NestedObject:        models.GetDmGitOpsVariableEntryDataSourceSchema(),
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

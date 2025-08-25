@@ -68,10 +68,10 @@ attributes:
     succeeds independent of the availability of a CRL.
   cli_alias: require-crl
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseCRL
     value:
-    - 'off'
+    - false
 - name: CRLDPHandling
   type: String
   enum:
@@ -83,10 +83,10 @@ attributes:
     For more information, see RFC 2527 and RFC 3280.
   cli_alias: crldp
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseCRL
     value:
-    - 'off'
+    - false
 - name: InitialPolicySet
   type: List
   element_type: String
@@ -99,7 +99,7 @@ attributes:
     which identifies <tt>anyPolicy</tt> .</p>
   cli_alias: initial-policy-set
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: CertValidationMode
     value:
     - pkix
@@ -112,7 +112,7 @@ attributes:
     policy constraint extensions in the chain require an explicit policy.
   cli_alias: explicit-policy
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: CertValidationMode
     value:
     - pkix

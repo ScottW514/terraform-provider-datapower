@@ -107,10 +107,10 @@ attributes:
     is at debug level.
   cli_alias: status-loglevel
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Statistics
     value:
-    - 'on'
+    - true
 - name: EnvironmentalLog
   type: Bool
   default: true

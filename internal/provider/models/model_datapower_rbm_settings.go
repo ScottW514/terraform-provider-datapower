@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -98,6 +99,215 @@ type RBMSettings struct {
 	McldapsslClientConfigType         types.String                `tfsdk:"mcldapssl_client_config_type"`
 	McldapsslClientProfile            types.String                `tfsdk:"mcldapssl_client_profile"`
 	DependencyActions                 []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var RBMSettingsCAPubKeyFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "sshau_method",
+	AttrType:    "DmRBMSSHAuthenticateType",
+	AttrDefault: "",
+	Value:       []string{"certificate"},
+}
+var RBMSettingsAUZOSNSSConfigCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"zosnss"},
+}
+var RBMSettingsAUKerberosKeytabCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"spnego"},
+}
+var RBMSettingsAUCustomURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"custom"},
+}
+var RBMSettingsAUInfoURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"xmlfile"},
+}
+var RBMSettingsAUSSLValcredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"client-ssl"},
+}
+var RBMSettingsAUHostCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "auldap_load_balance_group",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var RBMSettingsAUPortCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "auldap_load_balance_group",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var RBMSettingsAULDAPSearchParametersCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "auldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var RBMSettingsMCCustomURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mc_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"custom"},
+}
+var RBMSettingsMCHostCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mcldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsMCPortCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mcldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsMCLDAPSearchParametersCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mcldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsMCInfoURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mc_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"xmlfile"},
+}
+var RBMSettingsFallbackUserCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-not",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "au_method",
+					AttrType:    "String",
+					AttrDefault: "local",
+					Value:       []string{"local"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "fallback_login",
+			AttrType:    "String",
+			AttrDefault: "disabled",
+			Value:       []string{"restricted"},
+		},
+	},
+}
+var RBMSettingsMaxPasswordAgeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "do_password_aging",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var RBMSettingsNumOldPasswordsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "do_password_history",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var RBMSettingsObjectType = map[string]attr.Type{
@@ -377,6 +587,7 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "RBMSettings.name", path.Base("/mgmt/config/default/RBMSettings/RBM-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -395,9 +606,9 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`CAPubKeyFile`, data.CaPubKeyFile.ValueString())
 	}
 	if !data.RevokedKeys.IsNull() {
-		var values []string
-		data.RevokedKeys.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.RevokedKeys.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`RevokedKeys`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -513,9 +724,9 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`FallbackLogin`, data.FallbackLogin.ValueString())
 	}
 	if !data.FallbackUser.IsNull() {
-		var values []string
-		data.FallbackUser.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.FallbackUser.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`FallbackUser`+".-1", map[string]string{"value": val})
 		}
 	}

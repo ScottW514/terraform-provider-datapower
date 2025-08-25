@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -61,6 +62,132 @@ type FormsLoginPolicy struct {
 	FormSupportType     types.String                `tfsdk:"form_support_type"`
 	FormSupportScript   types.String                `tfsdk:"form_support_script"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var FormsLoginPolicyCookieAttributesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_cookie_attributes",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var FormsLoginPolicyUseSSLForLoginCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "form_support_type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"static"},
+}
+var FormsLoginPolicySSLPortCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "form_support_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"static"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_ssl_for_login",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var FormsLoginPolicyFormsLocationCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "form_support_type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"static"},
+}
+var FormsLoginPolicyLocalLoginFormCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "forms_location",
+			AttrType:    "String",
+			AttrDefault: "backend",
+			Value:       []string{"appliance"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "form_support_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"static"},
+		},
+	},
+}
+var FormsLoginPolicyLocalErrorPageCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "forms_location",
+			AttrType:    "String",
+			AttrDefault: "backend",
+			Value:       []string{"appliance"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "form_support_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"static"},
+		},
+	},
+}
+var FormsLoginPolicyLocalLogoutPageCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "forms_location",
+			AttrType:    "String",
+			AttrDefault: "backend",
+			Value:       []string{"appliance"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "form_support_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"static"},
+		},
+	},
+}
+var FormsLoginPolicyInactivityTimeoutCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_cookie_attributes",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var FormsLoginPolicySessionLifetimeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_cookie_attributes",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var FormsLoginPolicyRedirectURLTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "form_support_type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"static"},
+}
+var FormsLoginPolicyFormSupportScriptCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "form_support_type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"custom"},
 }
 
 var FormsLoginPolicyObjectType = map[string]attr.Type{
@@ -187,6 +314,7 @@ func (data FormsLoginPolicy) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

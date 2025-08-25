@@ -30,6 +30,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,35 @@ type DmMCFilter struct {
 	HttpValue       types.String `tfsdk:"http_value"`
 	XPathExpression types.String `tfsdk:"x_path_expression"`
 	XPathValue      types.String `tfsdk:"x_path_value"`
+}
+
+var DmMCFilterHttpNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"http"},
+}
+var DmMCFilterHttpValueCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"http"},
+}
+var DmMCFilterXPathExpressionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"xpath"},
+}
+var DmMCFilterXPathValueCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"xpath"},
 }
 
 var DmMCFilterObjectType = map[string]attr.Type{
@@ -59,64 +89,83 @@ var DmMCFilterObjectDefault = map[string]attr.Value{
 	"x_path_expression": types.StringNull(),
 	"x_path_value":      types.StringNull(),
 }
-var DmMCFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"filter_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name for the message content filter.", "", "").String,
-			Computed:            true,
-		},
-		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the type of the message content filter.", "", "").AddStringEnum("http", "xpath").String,
-			Computed:            true,
-		},
-		"http_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field. Available for HTTP header-based filters.", "", "").String,
-			Computed:            true,
-		},
-		"http_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").String,
-			Computed:            true,
-		},
-		"x_path_expression": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").String,
-			Computed:            true,
-		},
-		"x_path_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmMCFilterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"filter_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name for the message content filter.", "", "").String,
-			Required:            true,
-		},
-		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the type of the message content filter.", "", "").AddStringEnum("http", "xpath").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("http", "xpath"),
+
+func GetDmMCFilterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmMCFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"filter_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name for the message content filter.", "", "").String,
+				Computed:            true,
+			},
+			"type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the type of the message content filter.", "", "").AddStringEnum("http", "xpath").String,
+				Computed:            true,
+			},
+			"http_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field. Available for HTTP header-based filters.", "", "").String,
+				Computed:            true,
+			},
+			"http_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").String,
+				Computed:            true,
+			},
+			"x_path_expression": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").String,
+				Computed:            true,
+			},
+			"x_path_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").String,
+				Computed:            true,
 			},
 		},
-		"http_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field. Available for HTTP header-based filters.", "", "").String,
-			Optional:            true,
+	}
+	return DmMCFilterDataSourceSchema
+}
+func GetDmMCFilterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmMCFilterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"filter_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name for the message content filter.", "", "").String,
+				Required:            true,
+			},
+			"type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the type of the message content filter.", "", "").AddStringEnum("http", "xpath").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("http", "xpath"),
+				},
+			},
+			"http_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field. Available for HTTP header-based filters.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmMCFilterHttpNameCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"http_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmMCFilterHttpValueCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"x_path_expression": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmMCFilterXPathExpressionCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"x_path_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmMCFilterXPathValueCondVal, validators.Evaluation{}, false),
+				},
+			},
 		},
-		"http_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").String,
-			Optional:            true,
-		},
-		"x_path_expression": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").String,
-			Optional:            true,
-		},
-		"x_path_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmMCFilterResourceSchema
 }
 
 func (data DmMCFilter) IsNull() bool {
@@ -146,6 +195,7 @@ func (data DmMCFilter) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.FilterName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`FilterName`, data.FilterName.ValueString())
 	}

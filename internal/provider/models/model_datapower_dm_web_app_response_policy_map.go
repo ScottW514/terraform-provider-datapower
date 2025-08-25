@@ -45,29 +45,36 @@ var DmWebAppResponsePolicyMapObjectDefault = map[string]attr.Value{
 	"match": types.StringNull(),
 	"rule":  types.StringNull(),
 }
-var DmWebAppResponsePolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
-			Computed:            true,
+
+func GetDmWebAppResponsePolicyMapDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWebAppResponsePolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"match": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
+				Computed:            true,
+			},
+			"rule": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Web Response Profile to run.", "", "web_app_response").String,
+				Computed:            true,
+			},
 		},
-		"rule": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Web Response Profile to run.", "", "web_app_response").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmWebAppResponsePolicyMapDataSourceSchema
 }
-var DmWebAppResponsePolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
-			Required:            true,
+func GetDmWebAppResponsePolicyMapResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWebAppResponsePolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"match": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
+				Required:            true,
+			},
+			"rule": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Web Response Profile to run.", "", "web_app_response").String,
+				Required:            true,
+			},
 		},
-		"rule": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Web Response Profile to run.", "", "web_app_response").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmWebAppResponsePolicyMapResourceSchema
 }
 
 func (data DmWebAppResponsePolicyMap) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmWebAppResponsePolicyMap) ToBody(ctx context.Context, pathRoot strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Match.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Match`, data.Match.ValueString())
 	}

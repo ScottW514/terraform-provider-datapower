@@ -50,40 +50,47 @@ var DmHeaderInjectionObjectDefault = map[string]attr.Value{
 	"header_tag":       types.StringNull(),
 	"header_tag_value": types.StringNull(),
 }
-var DmHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"direction": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
-			Computed:            true,
-		},
-		"header_tag": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.", "", "").String,
-			Computed:            true,
-		},
-		"header_tag_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header tag.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmHeaderInjectionResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"direction": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("front", "back"),
+
+func GetDmHeaderInjectionDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"direction": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
+				Computed:            true,
+			},
+			"header_tag": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.", "", "").String,
+				Computed:            true,
+			},
+			"header_tag_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header tag.", "", "").String,
+				Computed:            true,
 			},
 		},
-		"header_tag": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.", "", "").String,
-			Optional:            true,
+	}
+	return DmHeaderInjectionDataSourceSchema
+}
+func GetDmHeaderInjectionResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmHeaderInjectionResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"direction": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("front", "back"),
+				},
+			},
+			"header_tag": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.", "", "").String,
+				Optional:            true,
+			},
+			"header_tag_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header tag.", "", "").String,
+				Required:            true,
+			},
 		},
-		"header_tag_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header tag.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmHeaderInjectionResourceSchema
 }
 
 func (data DmHeaderInjection) IsNull() bool {
@@ -104,6 +111,7 @@ func (data DmHeaderInjection) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Direction.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Direction`, data.Direction.ValueString())
 	}

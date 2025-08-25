@@ -76,10 +76,10 @@ attributes:
     and the DataPower Gateway
   cli_alias: ssl-config-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseSSL
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: SSLServer
@@ -91,11 +91,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseSSL
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: SSLServerConfigType
       value:
       - server
@@ -110,11 +110,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseSSL
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: SSLServerConfigType
       value:
       - sni

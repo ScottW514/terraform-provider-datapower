@@ -155,10 +155,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
     - evaluation: property-url-protocol-in-list
       attribute: AnalyticsServerURL
       value:
@@ -167,10 +167,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
     - evaluation: property-url-protocol-not-in-list
       attribute: AnalyticsServerURL
       value:
@@ -189,10 +189,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
     - evaluation: property-url-protocol-in-list
       attribute: ManagementURL
       value:
@@ -205,10 +205,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
     - evaluation: property-url-protocol-in-list
       attribute: ManagementURL
       value:
@@ -224,10 +224,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
     - evaluation: property-url-protocol-in-list
       attribute: AnalyticsServerURL
       value:
@@ -241,10 +241,10 @@ attributes:
       value:
       - http
       - https
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
 - name: ClientSecretAlias
   type: String
   reference_to: PasswordAlias
@@ -253,10 +253,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
     - evaluation: property-url-protocol-in-list
       attribute: AnalyticsServerURL
       value:
@@ -270,10 +270,10 @@ attributes:
       value:
       - http
       - https
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
   string_max_length: 127
   string_min_length: 0
 - name: GrantType
@@ -289,10 +289,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
     - evaluation: property-url-protocol-in-list
       attribute: AnalyticsServerURL
       value:
@@ -306,10 +306,10 @@ attributes:
       value:
       - http
       - https
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
 - name: Scope
   type: String
   description: Specify the scope for requesting JWT tokens. The value is in the <tt>openid
@@ -318,10 +318,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
     - evaluation: property-url-protocol-in-list
       attribute: AnalyticsServerURL
       value:
@@ -335,10 +335,10 @@ attributes:
       value:
       - http
       - https
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EnableJWT
       value:
-      - 'on'
+      - true
 - name: PersistentConnection
   type: Bool
   default: true
@@ -375,10 +375,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PersistentConnection
       value:
-      - 'off'
+      - false
     - evaluation: property-url-protocol-not-in-list
       attribute: AnalyticsServerURL
       value:

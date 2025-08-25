@@ -37,6 +37,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &OperationRateLimitResource{}
@@ -94,9 +95,12 @@ func (r *OperationRateLimitResource) Schema(ctx context.Context, req resource.Sc
 				Default:             booldefault.StaticBool(false),
 			},
 			"rate_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit", "rate-limit", "").String,
-				NestedObject:        models.DmAPIRateLimitResourceSchema,
+				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit", "rate-limit", "").AddRequiredWhen(models.OperationRateLimitRateLimitCondVal.String()).String,
+				NestedObject:        models.GetDmAPIRateLimitResourceSchema(),
 				Optional:            true,
+				Validators: []validator.List{
+					validators.ConditionalRequiredList(models.OperationRateLimitRateLimitCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"rate_limit_group": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit group", "rate-limit-group", "rate_limit_definition_group").String,

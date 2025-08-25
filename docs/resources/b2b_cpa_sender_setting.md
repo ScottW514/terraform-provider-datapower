@@ -57,9 +57,11 @@ resource "datapower_b2b_cpa_sender_setting" "test" {
   - CLI Alias: `encrypt-algorithm`
   - Choices: `http://www.w3.org/2001/04/xmlenc#tripledes-cbc`, `http://www.w3.org/2001/04/xmlenc#aes128-cbc`, `http://www.w3.org/2001/04/xmlenc#aes192-cbc`, `http://www.w3.org/2001/04/xmlenc#aes256-cbc`, `http://www.w3.org/2009/xmlenc11#aes128-gcm`, `http://www.w3.org/2009/xmlenc11#aes192-gcm`, `http://www.w3.org/2009/xmlenc11#aes256-gcm`
   - Default value: `http://www.w3.org/2001/04/xmlenc#tripledes-cbc`
+  - Required When: `encryption_required`=`true`
 - `encrypt_cert` (String) Encryption certificate
   - CLI Alias: `encrypt-cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: `encryption_required`=`true`
 - `encryption_required` (Boolean) Specify whether to encrypt outbound messages. Encryption does not apply to MSH level signals.
   - CLI Alias: `encrypt-required`
   - Default value: `false`
@@ -70,6 +72,7 @@ resource "datapower_b2b_cpa_sender_setting" "test" {
   - CLI Alias: `max-retries`
   - Range: `1`-`30`
   - Default value: `3`
+  - Required When: `retry`=`true`
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
@@ -83,27 +86,33 @@ resource "datapower_b2b_cpa_sender_setting" "test" {
   - CLI Alias: `retry-interval`
   - Range: `1`-`86400`
   - Default value: `1800`
+  - Required When: `retry`=`true`
 - `sign_digest_algorithm` (String) Signing digest algorithm
   - CLI Alias: `sign-digest-algorithm`
   - Choices: `sha1`, `sha256`, `sha512`, `ripemd160`, `sha224`, `sha384`, `md5`
   - Default value: `sha1`
+  - Required When: `signature_required`=`true`
 - `sign_id_cred` (String) Signature identification credentials
   - CLI Alias: `sign-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: `signature_required`=`true`
 - `signature_algorithm` (String) Signature algorithm
   - CLI Alias: `sign-algorithm`
   - Choices: `dsa-sha1`, `rsa-sha1`, `rsa-sha256`, `rsa-sha384`, `rsa-sha512`, `rsa-ripemd160`, `rsa-ripemd160-2010`, `sha256-rsa-MGF1`, `rsa-md5`, `ecdsa-sha1`, `ecdsa-sha224`, `ecdsa-sha256`, `ecdsa-sha384`, `ecdsa-sha512`
   - Default value: `rsa-sha1`
+  - Required When: `signature_required`=`true`
 - `signature_c14n_algorithm` (String) Signature canonicalization method
   - CLI Alias: `sign-c14n-algorithm`
   - Choices: `c14n`, `exc-c14n`, `c14n-comments`, `exc-c14n-comments`, `c14n11`, `c14n11-comments`
   - Default value: `exc-c14n`
+  - Required When: `signature_required`=`true`
 - `signature_required` (Boolean) Require signature
   - CLI Alias: `sign-required`
   - Default value: `false`
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: (`ssl_client_config_type`=`client` AND `dest_endpoint_url` protocol=`ebms2s`)
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
   - Choices: `client`

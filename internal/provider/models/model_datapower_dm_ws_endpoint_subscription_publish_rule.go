@@ -57,58 +57,65 @@ var DmWSEndpointSubscriptionPublishRuleObjectDefault = map[string]attr.Value{
 	"published_endpoint_port":     types.Int64Null(),
 	"published_endpoint_uri":      types.StringNull(),
 }
-var DmWSEndpointSubscriptionPublishRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
-			Computed:            true,
-		},
-		"published_endpoint_protocol": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the publish endpoint. The protocol can be different from the one in the WSDL.", "published-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
-			Computed:            true,
-		},
-		"published_endpoint_hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the host name or IP address.", "published-endpoint-hostname", "").String,
-			Computed:            true,
-		},
-		"published_endpoint_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "published-endpoint-port", "").String,
-			Computed:            true,
-		},
-		"published_endpoint_uri": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value from the WSDL.", "published-endpoint-path", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmWSEndpointSubscriptionPublishRuleResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
-			Optional:            true,
-		},
-		"published_endpoint_protocol": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the publish endpoint. The protocol can be different from the one in the WSDL.", "published-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("default", "http", "https"),
+
+func GetDmWSEndpointSubscriptionPublishRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSEndpointSubscriptionPublishRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"subscription": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("default"),
+			"published_endpoint_protocol": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the publish endpoint. The protocol can be different from the one in the WSDL.", "published-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
+				Computed:            true,
+			},
+			"published_endpoint_hostname": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the host name or IP address.", "published-endpoint-hostname", "").String,
+				Computed:            true,
+			},
+			"published_endpoint_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "published-endpoint-port", "").String,
+				Computed:            true,
+			},
+			"published_endpoint_uri": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value from the WSDL.", "published-endpoint-path", "").String,
+				Computed:            true,
+			},
 		},
-		"published_endpoint_hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the host name or IP address.", "published-endpoint-hostname", "").String,
-			Optional:            true,
+	}
+	return DmWSEndpointSubscriptionPublishRuleDataSourceSchema
+}
+func GetDmWSEndpointSubscriptionPublishRuleResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSEndpointSubscriptionPublishRuleResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"subscription": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
+				Optional:            true,
+			},
+			"published_endpoint_protocol": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the publish endpoint. The protocol can be different from the one in the WSDL.", "published-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("default", "http", "https"),
+				},
+				Default: stringdefault.StaticString("default"),
+			},
+			"published_endpoint_hostname": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the host name or IP address.", "published-endpoint-hostname", "").String,
+				Optional:            true,
+			},
+			"published_endpoint_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "published-endpoint-port", "").String,
+				Optional:            true,
+			},
+			"published_endpoint_uri": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value from the WSDL.", "published-endpoint-path", "").String,
+				Optional:            true,
+			},
 		},
-		"published_endpoint_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "published-endpoint-port", "").String,
-			Optional:            true,
-		},
-		"published_endpoint_uri": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value from the WSDL.", "published-endpoint-path", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSEndpointSubscriptionPublishRuleResourceSchema
 }
 
 func (data DmWSEndpointSubscriptionPublishRule) IsNull() bool {
@@ -135,6 +142,7 @@ func (data DmWSEndpointSubscriptionPublishRule) ToBody(ctx context.Context, path
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Subscription.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Subscription`, data.Subscription.ValueString())
 	}

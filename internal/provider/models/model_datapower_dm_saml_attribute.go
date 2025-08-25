@@ -30,6 +30,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,6 +43,21 @@ type DmSAMLAttribute struct {
 	ValueData    types.String `tfsdk:"value_data"`
 	SubValueData types.String `tfsdk:"sub_value_data"`
 	FriendlyName types.String `tfsdk:"friendly_name"`
+}
+
+var DmSAMLAttributeNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "source_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"var"},
+}
+var DmSAMLAttributeXPathCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "source_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"xpath"},
 }
 
 var DmSAMLAttributeObjectType = map[string]attr.Type{
@@ -62,72 +78,85 @@ var DmSAMLAttributeObjectDefault = map[string]attr.Value{
 	"sub_value_data": types.StringNull(),
 	"friendly_name":  types.StringNull(),
 }
-var DmSAMLAttributeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"source_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the data source to retrieve the value for each SAML attribute. <p>If the Data Source Type is a variable, configure a DataPower service or context variable name with Data for Attribute Value. That variable must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. A sample to describe the format of the variable content:</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>", "", "").AddStringEnum("var", "xpath", "static").String,
-			Computed:            true,
-		},
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the SAML attribute to be generated. <p>When the Data Source Type is variable, this setting can be an empty string. In that case, the attribute name that is carried by the variable's content is used.</p>", "", "").String,
-			Computed:            true,
-		},
-		"format": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the optional Namespace URI for the SAML 1.x attribute,</p><p>Optional: Specify the NameFormat value for the SAML 2.0 attribute.</p>", "", "").String,
-			Computed:            true,
-		},
-		"x_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPATH information to get the value for the SAML attribute when the attribute value is From Input Message, and specify the XPath expression to locate the value. <p>The XML nodes that the XPath expression points to is the value for the SAML attribute.</p>", "", "").String,
-			Computed:            true,
-		},
-		"value_data": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the information to get the value for the SAML attribute. <p>If the attribute contains a Static Value per each AAA Policy, specify the static string value.</p><p>If the Data Source Type is variable, specify the variable name. You can input an empty string as the variable name to use the default variable var://context/ldap/auxiliary-attributes. That variable is maintained by the LDAP authentication or authorization to query auxiliary LDAP attributes.</p><p>In any case, the variable that is being used here must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. The following sample describes the format of the variable content.</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>", "", "").String,
-			Computed:            true,
-		},
-		"sub_value_data": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>When the SAML attribute value is retrieved from a variable as defined in Data for Attribute Value setting, specify the value to match the name attribute of the attribute-value elements that are carried by that variable.</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p><p>When this value is empty, the value of each attribute-value element is treated as one SAML AttributeValue. Therefore, if multiple attribute-values are carried by the DataPower variable, there can be multiple SAML AttributeValues in one SAML Attribute element.</p>", "", "").String,
-			Computed:            true,
-		},
-		"friendly_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a meaningful name for the SAML attribute.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmSAMLAttributeResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"source_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the data source to retrieve the value for each SAML attribute. <p>If the Data Source Type is a variable, configure a DataPower service or context variable name with Data for Attribute Value. That variable must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. A sample to describe the format of the variable content:</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>", "", "").AddStringEnum("var", "xpath", "static").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("var", "xpath", "static"),
+
+func GetDmSAMLAttributeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSAMLAttributeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"source_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data source to retrieve the value for each SAML attribute. <p>If the Data Source Type is a variable, configure a DataPower service or context variable name with Data for Attribute Value. That variable must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. A sample to describe the format of the variable content:</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>", "", "").AddStringEnum("var", "xpath", "static").String,
+				Computed:            true,
+			},
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the SAML attribute to be generated. <p>When the Data Source Type is variable, this setting can be an empty string. In that case, the attribute name that is carried by the variable's content is used.</p>", "", "").String,
+				Computed:            true,
+			},
+			"format": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the optional Namespace URI for the SAML 1.x attribute,</p><p>Optional: Specify the NameFormat value for the SAML 2.0 attribute.</p>", "", "").String,
+				Computed:            true,
+			},
+			"x_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPATH information to get the value for the SAML attribute when the attribute value is From Input Message, and specify the XPath expression to locate the value. <p>The XML nodes that the XPath expression points to is the value for the SAML attribute.</p>", "", "").String,
+				Computed:            true,
+			},
+			"value_data": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the information to get the value for the SAML attribute. <p>If the attribute contains a Static Value per each AAA Policy, specify the static string value.</p><p>If the Data Source Type is variable, specify the variable name. You can input an empty string as the variable name to use the default variable var://context/ldap/auxiliary-attributes. That variable is maintained by the LDAP authentication or authorization to query auxiliary LDAP attributes.</p><p>In any case, the variable that is being used here must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. The following sample describes the format of the variable content.</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>", "", "").String,
+				Computed:            true,
+			},
+			"sub_value_data": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>When the SAML attribute value is retrieved from a variable as defined in Data for Attribute Value setting, specify the value to match the name attribute of the attribute-value elements that are carried by that variable.</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p><p>When this value is empty, the value of each attribute-value element is treated as one SAML AttributeValue. Therefore, if multiple attribute-values are carried by the DataPower variable, there can be multiple SAML AttributeValues in one SAML Attribute element.</p>", "", "").String,
+				Computed:            true,
+			},
+			"friendly_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a meaningful name for the SAML attribute.", "", "").String,
+				Computed:            true,
 			},
 		},
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the SAML attribute to be generated. <p>When the Data Source Type is variable, this setting can be an empty string. In that case, the attribute name that is carried by the variable's content is used.</p>", "", "").String,
-			Optional:            true,
+	}
+	return DmSAMLAttributeDataSourceSchema
+}
+func GetDmSAMLAttributeResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSAMLAttributeResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"source_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data source to retrieve the value for each SAML attribute. <p>If the Data Source Type is a variable, configure a DataPower service or context variable name with Data for Attribute Value. That variable must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. A sample to describe the format of the variable content:</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>", "", "").AddStringEnum("var", "xpath", "static").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("var", "xpath", "static"),
+				},
+			},
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the SAML attribute to be generated. <p>When the Data Source Type is variable, this setting can be an empty string. In that case, the attribute name that is carried by the variable's content is used.</p>", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmSAMLAttributeNameCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"format": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the optional Namespace URI for the SAML 1.x attribute,</p><p>Optional: Specify the NameFormat value for the SAML 2.0 attribute.</p>", "", "").String,
+				Optional:            true,
+			},
+			"x_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPATH information to get the value for the SAML attribute when the attribute value is From Input Message, and specify the XPath expression to locate the value. <p>The XML nodes that the XPath expression points to is the value for the SAML attribute.</p>", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmSAMLAttributeXPathCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"value_data": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the information to get the value for the SAML attribute. <p>If the attribute contains a Static Value per each AAA Policy, specify the static string value.</p><p>If the Data Source Type is variable, specify the variable name. You can input an empty string as the variable name to use the default variable var://context/ldap/auxiliary-attributes. That variable is maintained by the LDAP authentication or authorization to query auxiliary LDAP attributes.</p><p>In any case, the variable that is being used here must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. The following sample describes the format of the variable content.</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>", "", "").String,
+				Optional:            true,
+			},
+			"sub_value_data": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>When the SAML attribute value is retrieved from a variable as defined in Data for Attribute Value setting, specify the value to match the name attribute of the attribute-value elements that are carried by that variable.</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p><p>When this value is empty, the value of each attribute-value element is treated as one SAML AttributeValue. Therefore, if multiple attribute-values are carried by the DataPower variable, there can be multiple SAML AttributeValues in one SAML Attribute element.</p>", "", "").String,
+				Optional:            true,
+			},
+			"friendly_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a meaningful name for the SAML attribute.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"format": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the optional Namespace URI for the SAML 1.x attribute,</p><p>Optional: Specify the NameFormat value for the SAML 2.0 attribute.</p>", "", "").String,
-			Optional:            true,
-		},
-		"x_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPATH information to get the value for the SAML attribute when the attribute value is From Input Message, and specify the XPath expression to locate the value. <p>The XML nodes that the XPath expression points to is the value for the SAML attribute.</p>", "", "").String,
-			Optional:            true,
-		},
-		"value_data": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the information to get the value for the SAML attribute. <p>If the attribute contains a Static Value per each AAA Policy, specify the static string value.</p><p>If the Data Source Type is variable, specify the variable name. You can input an empty string as the variable name to use the default variable var://context/ldap/auxiliary-attributes. That variable is maintained by the LDAP authentication or authorization to query auxiliary LDAP attributes.</p><p>In any case, the variable that is being used here must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. The following sample describes the format of the variable content.</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>", "", "").String,
-			Optional:            true,
-		},
-		"sub_value_data": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>When the SAML attribute value is retrieved from a variable as defined in Data for Attribute Value setting, specify the value to match the name attribute of the attribute-value elements that are carried by that variable.</p><p>&lt;result> &lt;attribute-value name=\"cn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"sn\">Alice&lt;/attribute-value> &lt;attribute-value name=\"creatorsName\"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p><p>When this value is empty, the value of each attribute-value element is treated as one SAML AttributeValue. Therefore, if multiple attribute-values are carried by the DataPower variable, there can be multiple SAML AttributeValues in one SAML Attribute element.</p>", "", "").String,
-			Optional:            true,
-		},
-		"friendly_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a meaningful name for the SAML attribute.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmSAMLAttributeResourceSchema
 }
 
 func (data DmSAMLAttribute) IsNull() bool {
@@ -160,6 +189,7 @@ func (data DmSAMLAttribute) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.SourceType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SourceType`, data.SourceType.ValueString())
 	}

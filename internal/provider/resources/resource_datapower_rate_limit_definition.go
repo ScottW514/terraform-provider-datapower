@@ -103,7 +103,6 @@ func (r *RateLimitDefinitionResource) Schema(ctx context.Context, req resource.S
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of requests that the API gateway can handle in an interval. The value of 0 indicates no limit.", "rate", "").AddIntegerRange(0, 4294967295).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4294967295),
 				},
 			},
@@ -112,7 +111,6 @@ func (r *RateLimitDefinitionResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(1),
@@ -204,7 +202,7 @@ func (r *RateLimitDefinitionResource) Schema(ctx context.Context, req resource.S
 			},
 			"parameters": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Parameters", "parameter", "").String,
-				NestedObject:        models.DmRateLimitDefinitionNameValuePairResourceSchema,
+				NestedObject:        models.GetDmRateLimitDefinitionNameValuePairResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

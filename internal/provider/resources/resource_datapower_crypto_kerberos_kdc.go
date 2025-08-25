@@ -104,7 +104,6 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(88),
@@ -114,7 +113,6 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 60),
 				},
 				Default: int64default.StaticInt64(5),
@@ -130,7 +128,6 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(32),
@@ -140,7 +137,6 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(60),

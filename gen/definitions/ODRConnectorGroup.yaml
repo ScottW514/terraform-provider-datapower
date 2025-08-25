@@ -74,7 +74,7 @@ attributes:
     Gateway and its targets.
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLClientConfigType
     value:
     - proxy

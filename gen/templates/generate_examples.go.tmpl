@@ -32,7 +32,7 @@ var endPoints = map[string]testutils.ModelTestConfig{
 	"file": testutils.FileTestConfig,
 {{- range .}}
 	{{- if not .ModelOnly}}
-	"{{snakeCase .Name}}": testutils.{{.Name}}TestConfig,
+	"{{toTfName .Name}}": testutils.{{.Name}}TestConfig,
 	{{- end}}
 {{- end}}
 }

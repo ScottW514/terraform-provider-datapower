@@ -70,7 +70,6 @@ func (r *GWSRemoteDebugResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(9229),

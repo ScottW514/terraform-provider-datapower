@@ -34,6 +34,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &B2BPersistenceResource{}
@@ -73,7 +74,6 @@ func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1024, 65536),
 				},
 				Default: int64default.StaticInt64(1024),
@@ -86,18 +86,27 @@ func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"ha_other_hosts": models.GetDmB2BHAHostResourceSchema("Alternate host", "ha-other-hosts", "", false),
 			"ha_local_ip": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Replication address", "ha-local-ip", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Replication address", "ha-local-ip", "").AddRequiredWhen(models.B2BPersistenceHALocalIPCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BPersistenceHALocalIPCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ha_local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Replication port", "ha-local-port", "").AddDefaultValue("1320").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Replication port", "ha-local-port", "").AddDefaultValue("1320").AddRequiredWhen(models.B2BPersistenceHALocalPortCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(1320),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.B2BPersistenceHALocalPortCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(1320),
 			},
 			"ha_virtual_ip": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Virtual IP address", "ha-virtual-ip", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Virtual IP address", "ha-virtual-ip", "").AddRequiredWhen(models.B2BPersistenceHAVirtualIPCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BPersistenceHAVirtualIPCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

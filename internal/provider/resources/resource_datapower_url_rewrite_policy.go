@@ -90,7 +90,7 @@ func (r *URLRewritePolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"url_rewrite_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit, or delete a URL rewrite rule", "rule", "").String,
-				NestedObject:        models.DmURLRewriteRuleResourceSchema,
+				NestedObject:        models.GetDmURLRewriteRuleResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

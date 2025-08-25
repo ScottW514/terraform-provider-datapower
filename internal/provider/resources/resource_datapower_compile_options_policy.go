@@ -126,7 +126,6 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10240, 104857600),
 				},
 				Default: int64default.StaticInt64(524288),

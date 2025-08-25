@@ -82,6 +82,7 @@ func (data MQManagerGroup) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -92,9 +93,9 @@ func (data MQManagerGroup) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`PrimaryQueueManager`, data.PrimaryQueueManager.ValueString())
 	}
 	if !data.BackupQueueManagers.IsNull() {
-		var values []string
-		data.BackupQueueManagers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.BackupQueueManagers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`BackupQueueManagers`+".-1", map[string]string{"value": val})
 		}
 	}

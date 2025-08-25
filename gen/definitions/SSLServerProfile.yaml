@@ -140,20 +140,20 @@ attributes:
     Otherwise, the request does not fail when there is no client certificate.
   cli_alias: require-client-auth
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RequestClientAuth
     value:
-    - 'off'
+    - false
 - name: ValidateClientCert
   type: Bool
   default: true
   description: Validate client certificate
   cli_alias: validate-client-cert
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RequestClientAuth
     value:
-    - 'off'
+    - false
 - name: SendClientAuthCAList
   type: Bool
   default: true
@@ -162,14 +162,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: RequestClientAuth
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: ValidateClientCert
       value:
-      - 'off'
+      - false
 - name: Valcred
   type: String
   reference_to: CryptoValCred
@@ -178,14 +178,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: RequestClientAuth
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: ValidateClientCert
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: Caching
@@ -203,10 +203,10 @@ attributes:
     - 86400. The default value is 300.
   cli_alias: cache-timeout
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Caching
     value:
-    - 'off'
+    - false
 - name: CacheSize
   type: Int64
   minimum: 1
@@ -216,10 +216,10 @@ attributes:
     cache. Enter a value in the range 1 - 500. The default value is 20.
   cli_alias: cache-size
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Caching
     value:
-    - 'off'
+    - false
 - name: SSLOptions
   dm_type: DmSSLOptions
   description: Specify the options to apply to the TLS connection. These options have
@@ -269,7 +269,7 @@ attributes:
       attribute: SSLOptions
       value:
       - max-renegotiation
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: NumberOfRenegotiationAllowed
       value:
       - '0'
@@ -294,7 +294,7 @@ attributes:
       attribute: SSLOptions
       value:
       - max-renegotiation
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: NumberOfRenegotiationAllowed
       value:
       - '0'
@@ -351,10 +351,10 @@ attributes:
     other clients can use other ciphers.
   cli_alias: prioritize-chacha
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PreferServerCiphers
     value:
-    - 'off'
+    - false
 - name: SigAlgs
   type: List
   enum:

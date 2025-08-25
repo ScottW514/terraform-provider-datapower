@@ -78,7 +78,7 @@ attributes:
     a value in the range 1 - 43200. The default value is 600.
   cli_alias: persistent-filesystem-timeout
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - virtual-persistent
@@ -198,7 +198,7 @@ attributes:
     ports dynamically.</p>
   cli_alias: passive-port-range
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Passive
     value:
     - disallow
@@ -214,14 +214,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Passive
       value:
       - disallow
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UsePasvPortRange
       value:
-      - 'off'
+      - false
 - name: PasvMaxPort
   type: Int64
   minimum: 1024
@@ -234,14 +234,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Passive
       value:
       - disallow
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UsePasvPortRange
       value:
-      - 'off'
+      - false
 - name: PasvIdleTimeOut
   type: Int64
   minimum: 5
@@ -263,7 +263,7 @@ attributes:
     the <tt>Require PASV or PORT command first</tt> message.</li></ul>
   cli_alias: passive-idle-timeout
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Passive
     value:
     - disallow
@@ -279,7 +279,7 @@ attributes:
     service proxy.</p>
   cli_alias: passive-promiscuous
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Passive
     value:
     - disallow
@@ -293,7 +293,7 @@ attributes:
     service proxy.</p>
   cli_alias: port-promiscuous
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Passive
     value:
     - require
@@ -306,7 +306,7 @@ attributes:
     a multiprotocol gateway or web service proxy.</p>
   cli_alias: allow-passive-addr
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Passive
     value:
     - disallow
@@ -318,10 +318,10 @@ attributes:
     value is used when the FTP server is behind a firewall that is not FTP-aware.
   cli_alias: passive-addr
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseAlternatePASVAddr
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: AllowLISTCmd
@@ -334,7 +334,7 @@ attributes:
     gateway or web service proxy.</p>
   cli_alias: list-cmd
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - transparent
@@ -348,7 +348,7 @@ attributes:
     for a multiprotocol gateway or web service proxy.</p>
   cli_alias: dele-cmd
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - transparent
@@ -384,10 +384,10 @@ attributes:
     Processing adds a numeric suffix.</p>
   cli_alias: unique-filename-prefix
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AllowSTOU
     value:
-    - 'on'
+    - true
   string_patterns:
   - ^[^/]*$
 - name: AllowREST
@@ -405,7 +405,7 @@ attributes:
     the same as the byte count the the <tt>SIZE</tt> command returned.</p>
   cli_alias: allow-restart
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: FilesystemType
     value:
     - virtual-persistent
@@ -423,11 +423,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AllowREST
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: FilesystemType
       value:
       - virtual-persistent
@@ -463,7 +463,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseType
       value:
       - virtual-filesystem
@@ -482,7 +482,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseStorage
       value:
       - temporary
@@ -499,11 +499,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseType
       value:
       - virtual-filesystem
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseStorage
       value:
       - nfs
@@ -538,7 +538,7 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseType
       value:
       - ftp-client
@@ -560,7 +560,7 @@ attributes:
     clients can encrypt FTP control connection.
   cli_alias: ssl-config-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RequireTLS
     value:
     - explicit
@@ -573,17 +573,17 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: RequireTLS
       value:
       - explicit
       - implicit
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SSLServerConfigType
       value:
       - server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLServerConfigType
     value:
     - server
@@ -595,17 +595,17 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: RequireTLS
       value:
       - explicit
       - implicit
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SSLServerConfigType
       value:
       - sni
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLServerConfigType
     value:
     - sni

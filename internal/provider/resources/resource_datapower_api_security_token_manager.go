@@ -92,7 +92,6 @@ func (r *APISecurityTokenManagerResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(15, 1440),
 				},
 				Default: int64default.StaticInt64(180),

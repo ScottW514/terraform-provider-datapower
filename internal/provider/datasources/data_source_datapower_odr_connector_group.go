@@ -73,7 +73,7 @@ func (d *ODRConnectorGroupDataSource) Schema(ctx context.Context, req datasource
 						},
 						"odr_group_connectors": schema.ListNestedAttribute{
 							MarkdownDescription: "The ODR connectors that are used to retrieve ODR information. An ODR connector defines a connection to the Intelligent Management service. The DataPower Gateway retrieves topology, weights, session affinity, and other information from the WebSphere cell over the connection. If multiple connectors are configured, the top most connection is tried first, followed by the second, and so on. After a connection is established, other endpoints might be retrieved and used if the configured connector endpoint is down. You must define at least one connector in an ODR connector group but cannot define more than 16 connectors.",
-							NestedObject:        models.DmODRConnectorDataSourceSchema,
+							NestedObject:        models.GetDmODRConnectorDataSourceSchema(),
 							Computed:            true,
 						},
 						"max_retry_interval": schema.Int64Attribute{
@@ -86,7 +86,7 @@ func (d *ODRConnectorGroupDataSource) Schema(ctx context.Context, req datasource
 						},
 						"odr_conn_group_properties": schema.ListNestedAttribute{
 							MarkdownDescription: "The custom properties that are associated with the ODR connector group.",
-							NestedObject:        models.DmODRConnPropertyDataSourceSchema,
+							NestedObject:        models.GetDmODRConnPropertyDataSourceSchema(),
 							Computed:            true,
 						},
 						"ssl_client_config_type": schema.StringAttribute{

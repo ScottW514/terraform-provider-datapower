@@ -85,7 +85,7 @@ func (r *MatchingResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"match_rules": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The rules in the matching rule.", "match", "").String,
-				NestedObject:        models.DmMatchRuleResourceSchema,
+				NestedObject:        models.GetDmMatchRuleResourceSchema(),
 				Optional:            true,
 			},
 			"match_with_pcre": schema.BoolAttribute{

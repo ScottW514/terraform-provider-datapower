@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AssemblyActionUserSecurityResource{}
@@ -98,30 +99,39 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default: stringdefault.StaticString("basic"),
 			},
 			"ei_stop_on_error": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if identity extraction fails. If failed, stops the assembly and return an error.", "ei-stop-on-error", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if identity extraction fails. If failed, stops the assembly and return an error.", "ei-stop-on-error", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityEIStopOnErrorCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_context_variable": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Username context variable", "user-context-var", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Username context variable", "user-context-var", "").AddRequiredWhen(models.AssemblyActionUserSecurityUserContextVariableCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionUserSecurityUserContextVariableCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"pass_context_variable": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password context variable", "pass-context-var", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Password context variable", "pass-context-var", "").AddRequiredWhen(models.AssemblyActionUserSecurityPassContextVariableCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionUserSecurityPassContextVariableCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"redirect_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment to redirect the request to obtain user credentials. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "redirect-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment to redirect the request to obtain user credentials. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "redirect-url", "").AddRequiredWhen(models.AssemblyActionUserSecurityRedirectURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionUserSecurityRedirectURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"redirect_time_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the redirect fails. Enter a value in the range 10 - 6000. The default value is 300.", "redirect-time-limit", "").AddIntegerRange(10, 6000).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the redirect fails. Enter a value in the range 10 - 6000. The default value is 300.", "redirect-time-limit", "").AddIntegerRange(10, 6000).AddDefaultValue("300").AddRequiredWhen(models.AssemblyActionUserSecurityRedirectTimeLimitCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 6000),
+					validators.ConditionalRequiredInt64(models.AssemblyActionUserSecurityRedirectTimeLimitCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(300),
 			},
@@ -130,14 +140,17 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Optional:            true,
 			},
 			"ei_default_form": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the default form or a custom form. When enabled, returns the default login page to obtain credentials. When disabled, define the configuration to return the custom login page.", "ei-default-form", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the default form or a custom form. When enabled, returns the default login page to obtain credentials. When disabled, define the configuration to return the custom login page.", "ei-default-form", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityEIDefaultFormCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ei_custom_form": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the custom login page. This page collects user name and password information. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "ei-custom-form", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the custom login page. This page collects user name and password information. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "ei-custom-form", "").AddRequiredWhen(models.AssemblyActionUserSecurityEICustomFormCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionUserSecurityEICustomFormCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ei_custom_form_client_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Custom form TLS client profile", "ei-custom-form-tls-client-profile", "ssl_client_profile").String,
@@ -150,12 +163,12 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default:             stringdefault.StaticString("default-src 'self'"),
 			},
 			"ei_form_time_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the identity extraction request fails. Enter a value in the range 10 - 600. The default value is 300.", "ei-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the identity extraction request fails. Enter a value in the range 10 - 600. The default value is 300.", "ei-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").AddRequiredWhen(models.AssemblyActionUserSecurityEIFormTimeLimitCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 600),
+					validators.ConditionalRequiredInt64(models.AssemblyActionUserSecurityEIFormTimeLimitCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(300),
 			},
@@ -169,14 +182,17 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default: stringdefault.StaticString("user-registry"),
 			},
 			"au_stop_on_error": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if authentication fails. If failed, stops the assembly and return an error.", "au-stop-on-error", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if authentication fails. If failed, stops the assembly and return an error.", "au-stop-on-error", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityAUStopOnErrorCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_registry": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API user registry to authenticate incoming API requests. The supported registries are API authentication URL and API LDAP.", "user-registry", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API user registry to authenticate incoming API requests. The supported registries are API authentication URL and API LDAP.", "user-registry", "").AddRequiredWhen(models.AssemblyActionUserSecurityUserRegistryCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionUserSecurityUserRegistryCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"auth_response_headers_pattern": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the regular expression to select which response headers to add to the API context for access by subsequent actions. The default value is a case-insensitive search on the <tt>x-api</tt> prefix. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "auth-response-headers-pattern", "").AddDefaultValue("(?i)x-api*").String,
@@ -200,20 +216,23 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default: stringdefault.StaticString("authenticated"),
 			},
 			"az_stop_on_error": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if authorization fails. If failed, stops the assembly and return an error.", "az-stop-on-error", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if authorization fails. If failed, stops the assembly and return an error.", "az-stop-on-error", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityAZStopOnErrorCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"az_default_form": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the default form or a custom form. When enabled, returns the default authorization page to obtain authorization. When disabled, define the configuration to return the custom authorization page.", "az-default-form", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the default form or a custom form. When enabled, returns the default authorization page to obtain authorization. When disabled, define the configuration to return the custom authorization page.", "az-default-form", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityAZDefaultFormCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"az_custom_form": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the custom authorization page. This page obtains permission from the end user. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "az-custom-form", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the custom authorization page. This page obtains permission from the end user. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "az-custom-form", "").AddRequiredWhen(models.AssemblyActionUserSecurityAZCustomFormCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionUserSecurityAZCustomFormCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"az_custom_form_client_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Custom form TLS client profile", "az-custom-form-tls-client-profile", "ssl_client_profile").String,
@@ -226,12 +245,12 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default:             stringdefault.StaticString("default-src 'self'"),
 			},
 			"az_form_time_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the authorization request fails. Enter a value in the range 10 - 600. The default value is 300.", "az-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the authorization request fails. Enter a value in the range 10 - 600. The default value is 300.", "az-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").AddRequiredWhen(models.AssemblyActionUserSecurityAZFormTimeLimitCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 600),
+					validators.ConditionalRequiredInt64(models.AssemblyActionUserSecurityAZFormTimeLimitCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(300),
 			},
@@ -249,7 +268,7 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"az_table_default_entry": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Default table entry", "az-table-default-entry", "").String,
-				NestedObject:        models.DmTableEntryResourceSchema,
+				NestedObject:        models.GetDmTableEntryResourceSchema(),
 				Optional:            true,
 			},
 			"hostname": schema.StringAttribute{

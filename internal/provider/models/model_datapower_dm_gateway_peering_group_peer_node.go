@@ -49,37 +49,44 @@ var DmGatewayPeeringGroupPeerNodeObjectDefault = map[string]attr.Value{
 	"host":     types.StringNull(),
 	"priority": types.Int64Value(100),
 }
-var DmGatewayPeeringGroupPeerNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the peer.", "", "").String,
-			Computed:            true,
+
+func GetDmGatewayPeeringGroupPeerNodeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmGatewayPeeringGroupPeerNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"host": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the peer.", "", "").String,
+				Computed:            true,
+			},
+			"priority": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.", "", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
+				Computed:            true,
+			},
 		},
-		"priority": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.", "", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmGatewayPeeringGroupPeerNodeDataSourceSchema
 }
-var DmGatewayPeeringGroupPeerNodeResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the peer.", "", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+func GetDmGatewayPeeringGroupPeerNodeResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmGatewayPeeringGroupPeerNodeResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"host": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the peer.", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+				},
+			},
+			"priority": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.", "", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(0, 255),
+				},
+				Default: int64default.StaticInt64(100),
 			},
 		},
-		"priority": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.", "", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(0, 255),
-			},
-			Default: int64default.StaticInt64(100),
-		},
-	},
+	}
+	return DmGatewayPeeringGroupPeerNodeResourceSchema
 }
 
 func (data DmGatewayPeeringGroupPeerNode) IsNull() bool {
@@ -97,6 +104,7 @@ func (data DmGatewayPeeringGroupPeerNode) ToBody(ctx context.Context, pathRoot s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Host.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Host`, data.Host.ValueString())
 	}

@@ -105,6 +105,7 @@ func (data SSHServerProfile) ToBody(ctx context.Context, pathRoot string) string
 	}
 	body := ""
 	body, _ = sjson.Set(body, "SSHServerProfile.name", path.Base("/mgmt/config/{domain}/SSHServerProfile/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -112,23 +113,23 @@ func (data SSHServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.Ciphers.IsNull() {
-		var values []string
-		data.Ciphers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Ciphers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Ciphers`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.KexAlg.IsNull() {
-		var values []string
-		data.KexAlg.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.KexAlg.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`KEXAlg`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.MacAlg.IsNull() {
-		var values []string
-		data.MacAlg.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.MacAlg.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`MACAlg`+".-1", map[string]string{"value": val})
 		}
 	}

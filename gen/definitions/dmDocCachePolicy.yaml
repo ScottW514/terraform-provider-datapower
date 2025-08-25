@@ -34,7 +34,7 @@ attributes:
     31708800. The default value is 900.
   cli_alias: ttl
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - fixed
@@ -71,7 +71,7 @@ attributes:
   description: The eXtreme Scale grid configuration to use for caching documents.
   cli_alias: xc10-grid
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - no-cache
@@ -128,10 +128,10 @@ attributes:
       attribute: Type
       value:
       - no-cache
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: CacheUnsafeResponse
       value:
-      - 'on'
+      - true
 - name: CacheUnsafeResponse
   type: Bool
   default: false
@@ -144,11 +144,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Type
       value:
       - fixed
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: RESTInvalidation
       value:
-      - 'on'
+      - true

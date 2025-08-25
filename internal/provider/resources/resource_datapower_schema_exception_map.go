@@ -84,7 +84,7 @@ func (r *SchemaExceptionMapResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"schema_exception_rules": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Rules describe what elements may be excepted from the schema validation when the Original Schema is used for Schema Validation.", "rule", "").String,
-				NestedObject:        models.DmSchemaExceptionRuleResourceSchema,
+				NestedObject:        models.GetDmSchemaExceptionRuleResourceSchema(),
 				Required:            true,
 			},
 			"user_summary": schema.StringAttribute{

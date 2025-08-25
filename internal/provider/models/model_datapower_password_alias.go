@@ -37,8 +37,8 @@ type PasswordAlias struct {
 	Id                types.String                `tfsdk:"id"`
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
-	Password          types.String                `tfsdk:"password"`
-	PasswordUpdate    types.Bool                  `tfsdk:"password_update"`
+	PasswordWo        types.String                `tfsdk:"password_wo"`
+	PasswordWoVersion types.Int64                 `tfsdk:"password_wo_version"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 type PasswordAliasWO struct {
@@ -49,12 +49,12 @@ type PasswordAliasWO struct {
 }
 
 var PasswordAliasObjectType = map[string]attr.Type{
-	"id":                 types.StringType,
-	"app_domain":         types.StringType,
-	"user_summary":       types.StringType,
-	"password":           types.StringType,
-	"password_update":    types.BoolType,
-	"dependency_actions": actions.ActionsListType,
+	"id":                  types.StringType,
+	"app_domain":          types.StringType,
+	"user_summary":        types.StringType,
+	"password_wo":         types.StringType,
+	"password_wo_version": types.Int64Type,
+	"dependency_actions":  actions.ActionsListType,
 }
 var PasswordAliasObjectTypeWO = map[string]attr.Type{
 	"id":                 types.StringType,
@@ -87,7 +87,7 @@ func (data PasswordAlias) IsNull() bool {
 	if !data.UserSummary.IsNull() {
 		return false
 	}
-	if !data.Password.IsNull() {
+	if !data.PasswordWo.IsNull() {
 		return false
 	}
 	return true
@@ -105,19 +105,23 @@ func (data PasswordAliasWO) IsNull() bool {
 	return true
 }
 
-func (data PasswordAlias) ToBody(ctx context.Context, pathRoot string) string {
+func (data PasswordAlias) ToBody(ctx context.Context, pathRoot string, config *PasswordAlias) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
-	if !data.Password.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Password`, data.Password.ValueString())
+	if !data.PasswordWo.IsNull() || !data.PasswordWoVersion.IsNull() {
+		if data.PasswordWo.IsNull() && config != nil {
+			data.PasswordWo = config.PasswordWo
+		}
+		body, _ = sjson.Set(body, pathRoot+`Password`, data.PasswordWo.ValueString())
 	}
 	return body
 }
@@ -137,9 +141,9 @@ func (data *PasswordAlias) FromBody(ctx context.Context, pathRoot string, res gj
 		data.UserSummary = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Password`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Password = tfutils.ParseStringFromGJSON(value)
+		data.PasswordWo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Password = types.StringNull()
+		data.PasswordWo = types.StringNull()
 	}
 }
 func (data *PasswordAliasWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -172,10 +176,10 @@ func (data *PasswordAlias) UpdateFromBody(ctx context.Context, pathRoot string, 
 	} else {
 		data.UserSummary = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
-		data.Password = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `Password`); value.Exists() && !data.PasswordWo.IsNull() {
+		data.PasswordWo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Password = types.StringNull()
+		data.PasswordWo = types.StringNull()
 	}
 }
 func (data *PasswordAlias) UpdateUnknownFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -196,11 +200,11 @@ func (data *PasswordAlias) UpdateUnknownFromBody(ctx context.Context, pathRoot s
 			data.UserSummary = types.StringNull()
 		}
 	}
-	if data.Password.IsUnknown() {
-		if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
-			data.Password = tfutils.ParseStringFromGJSON(value)
+	if data.PasswordWo.IsUnknown() {
+		if value := res.Get(pathRoot + `Password`); value.Exists() && !data.PasswordWo.IsNull() {
+			data.PasswordWo = tfutils.ParseStringFromGJSON(value)
 		} else {
-			data.Password = types.StringNull()
+			data.PasswordWo = types.StringNull()
 		}
 	}
 }

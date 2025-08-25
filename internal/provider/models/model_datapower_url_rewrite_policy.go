@@ -77,6 +77,7 @@ func (data URLRewritePolicy) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -84,9 +85,9 @@ func (data URLRewritePolicy) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`Direction`, data.Direction.ValueString())
 	}
 	if !data.UrlRewriteRule.IsNull() {
-		var values []DmURLRewriteRule
-		data.UrlRewriteRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmURLRewriteRule
+		data.UrlRewriteRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`URLRewriteRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}

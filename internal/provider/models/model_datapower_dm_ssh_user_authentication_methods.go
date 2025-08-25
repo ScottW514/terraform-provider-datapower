@@ -47,39 +47,54 @@ var DmSSHUserAuthenticationMethodsObjectDefault = map[string]attr.Value{
 	"publickey": types.BoolValue(true),
 	"password":  types.BoolValue(true),
 }
-var DmSSHUserAuthenticationMethodsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"publickey": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Public key", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmSSHUserAuthenticationMethodsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSSHUserAuthenticationMethodsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"publickey": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Public key", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"password": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"password": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSSHUserAuthenticationMethodsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSSHUserAuthenticationMethodsDataSourceSchema
 }
-var DmSSHUserAuthenticationMethodsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSSHUserAuthenticationMethodsObjectType,
-			DmSSHUserAuthenticationMethodsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"publickey": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Public key", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmSSHUserAuthenticationMethodsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSSHUserAuthenticationMethodsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSSHUserAuthenticationMethodsObjectType,
+				DmSSHUserAuthenticationMethodsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"publickey": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Public key", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"password": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"password": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmSSHUserAuthenticationMethodsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSSHUserAuthenticationMethodsResourceSchema.Required = true
+	} else {
+		DmSSHUserAuthenticationMethodsResourceSchema.Optional = true
+		DmSSHUserAuthenticationMethodsResourceSchema.Computed = true
+	}
+	return DmSSHUserAuthenticationMethodsResourceSchema
 }
 
 func (data DmSSHUserAuthenticationMethods) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmSSHUserAuthenticationMethods) IsNull() bool {
 	}
 	return true
 }
-func GetDmSSHUserAuthenticationMethodsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSSHUserAuthenticationMethodsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSSHUserAuthenticationMethodsDataSourceSchema
-}
-
-func GetDmSSHUserAuthenticationMethodsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSSHUserAuthenticationMethodsResourceSchema.Required = true
-	} else {
-		DmSSHUserAuthenticationMethodsResourceSchema.Optional = true
-		DmSSHUserAuthenticationMethodsResourceSchema.Computed = true
-	}
-	DmSSHUserAuthenticationMethodsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSSHUserAuthenticationMethodsResourceSchema
-}
 
 func (data DmSSHUserAuthenticationMethods) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Publickey.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`publickey`, tfutils.StringFromBool(data.Publickey, ""))
 	}

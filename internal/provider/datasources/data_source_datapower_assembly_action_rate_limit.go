@@ -87,17 +87,17 @@ func (d *AssemblyActionRateLimitDataSource) Schema(ctx context.Context, req data
 						},
 						"rate_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Rate limits",
-							NestedObject:        models.DmRateLimitInfoDataSourceSchema,
+							NestedObject:        models.GetDmRateLimitInfoDataSourceSchema(),
 							Computed:            true,
 						},
 						"count_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Count limits",
-							NestedObject:        models.DmCountLimitInfoDataSourceSchema,
+							NestedObject:        models.GetDmCountLimitInfoDataSourceSchema(),
 							Computed:            true,
 						},
 						"rate_limit_definition": schema.ListNestedAttribute{
 							MarkdownDescription: "Rate limit definitions",
-							NestedObject:        models.DmRateLimitInfoDomainNamedDataSourceSchema,
+							NestedObject:        models.GetDmRateLimitInfoDomainNamedDataSourceSchema(),
 							Computed:            true,
 						},
 						"rate_limit_group": schema.StringAttribute{

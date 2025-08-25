@@ -90,7 +90,7 @@ func (d *WSStylePolicyDataSource) Schema(ctx context.Context, req datasource.Sch
 						},
 						"policy_maps": schema.ListNestedAttribute{
 							MarkdownDescription: "A list of Policy Rules and corresponding Matching Rules that this policy will execute. If a Match is found, the corresponding Rule runs. The policy executes the first Rule with a successful Match. The order in this list is therefore important.",
-							NestedObject:        models.DmWSMPolicyMapDataSourceSchema,
+							NestedObject:        models.GetDmWSMPolicyMapDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

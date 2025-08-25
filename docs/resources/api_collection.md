@@ -79,6 +79,7 @@ resource "datapower_api_collection" "test" {
   - CLI Alias: `cache-capacity`
   - Range: `8`-`51200`
   - Default value: `128`
+  - Required When: `enable_cache`=`true`
 - `catalog_id` (String) Catalog ID
   - CLI Alias: `catalog-id`
   - Default value: `default-catalog-id`
@@ -90,6 +91,8 @@ resource "datapower_api_collection" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `dev_portal_endpoint` (String) Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.
   - CLI Alias: `dev-portal-endpoint`
+- `enable_cache` (Boolean) Enable subscriber caching
+  - Default value: `true`
 - `enforce_pre_assembly_rate_limits` (Boolean) Specify whether to enforce the API rate and burst limits from the plan. When disabled, only the limits specified in a rate limit assembly action are applied to this API.
   - CLI Alias: `enforce-pre-assembly-rate-limits`
   - Default value: `true`

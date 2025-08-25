@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -52,6 +53,33 @@ type TimeSettings struct {
 	DaylightStopTimeHours    types.Int64                 `tfsdk:"daylight_stop_time_hours"`
 	DaylightStopTimeMinutes  types.Int64                 `tfsdk:"daylight_stop_time_minutes"`
 	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var TimeSettingsCustomTZNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+var TimeSettingsTZNameDSTCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
 }
 
 var TimeSettingsObjectType = map[string]attr.Type{
@@ -145,6 +173,7 @@ func (data TimeSettings) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "TimeSettings.name", path.Base("/mgmt/config/default/TimeSettings/Time"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

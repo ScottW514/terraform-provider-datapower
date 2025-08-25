@@ -41,6 +41,7 @@ func TestAccDataSourceSLMCredClass(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_slm_cred_class.test", "result.0.id", "AccTest_SLMCredClass"),
 					resource.TestCheckResourceAttr("data.datapower_slm_cred_class.test", "result.0.cred_type", "aaa-mapped-credential"),
+					resource.TestCheckResourceAttr("data.datapower_slm_cred_class.test", "result.0.cred_match_type", "per-extracted-value"),
 				}...),
 			},
 		},

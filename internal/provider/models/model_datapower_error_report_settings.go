@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -57,6 +58,159 @@ type ErrorReportSettings struct {
 	RaidPath              types.String                `tfsdk:"raid_path"`
 	ReportHistoryKept     types.Int64                 `tfsdk:"report_history_kept"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var ErrorReportSettingsProtocolCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "upload_report",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var ErrorReportSettingsLocationIdentifierCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_smtp",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var ErrorReportSettingsSmtpServerCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_smtp",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "upload_report",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "protocol",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"smtp"},
+				},
+			},
+		},
+	},
+}
+var ErrorReportSettingsEmailAddressCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_smtp",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "upload_report",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "protocol",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"smtp"},
+				},
+			},
+		},
+	},
+}
+var ErrorReportSettingsFTPServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "upload_report",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp"},
+		},
+	},
+}
+var ErrorReportSettingsFTPUserAgentCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "upload_report",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp"},
+		},
+	},
+}
+var ErrorReportSettingsNFSMountCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "upload_report",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"nfs"},
+		},
+	},
+}
+var ErrorReportSettingsRaidVolumeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "upload_report",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"raid"},
+		},
+	},
 }
 
 var ErrorReportSettingsObjectType = map[string]attr.Type{
@@ -170,6 +324,7 @@ func (data ErrorReportSettings) ToBody(ctx context.Context, pathRoot string) str
 	}
 	body := ""
 	body, _ = sjson.Set(body, "ErrorReportSettings.name", path.Base("/mgmt/config/default/ErrorReportSettings/Error-Report"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

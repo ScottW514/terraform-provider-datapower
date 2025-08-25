@@ -70,10 +70,10 @@ attributes:
     Network Deployment (ND) or WAS Virtual Enterprise (VE).
   cli_alias: wlm-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RetrieveInfo
     value:
-    - 'off'
+    - false
 - name: WebSphereCellConfig
   type: String
   reference_to: WCCService
@@ -84,10 +84,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: RetrieveInfo
       value:
-      - 'off'
+      - false
     - evaluation: property-value-not-in-list
       attribute: WLMRetrieval
       value:
@@ -100,10 +100,10 @@ attributes:
     weights retrieved from the back end.
   cli_alias: wlm-group
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RetrieveInfo
     value:
-    - 'off'
+    - false
 - name: WLMTransport
   type: String
   enum:
@@ -117,10 +117,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: RetrieveInfo
       value:
-      - 'off'
+      - false
     - evaluation: property-value-not-in-list
       attribute: WLMRetrieval
       value:
@@ -182,10 +182,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: RetrieveInfo
       value:
-      - 'off'
+      - false
     - evaluation: property-value-not-in-list
       attribute: WLMRetrieval
       value:
@@ -203,10 +203,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AffinityWLMOverride
       value:
-      - 'off'
+      - false
     - evaluation: property-value-not-in-list
       attribute: AffinityMode
       value:

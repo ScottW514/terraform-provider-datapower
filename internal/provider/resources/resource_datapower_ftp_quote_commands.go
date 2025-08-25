@@ -84,7 +84,7 @@ func (r *FTPQuoteCommandsResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"ftp_quoted_commands": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The list of commands to send to the remote FTP server.", "quoted-command", "").String,
-				NestedObject:        models.DmFTPQuotedCommandResourceSchema,
+				NestedObject:        models.GetDmFTPQuotedCommandResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

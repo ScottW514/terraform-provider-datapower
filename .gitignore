@@ -20,3 +20,4 @@ _dev/
 .devcontainer/
 .bin/
 sandbox/
+unconfined

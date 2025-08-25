@@ -87,6 +87,7 @@ func (data MTOMPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -100,9 +101,9 @@ func (data MTOMPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`IncludeContentType`, tfutils.StringFromBool(data.IncludeContentType, ""))
 	}
 	if !data.Rule.IsNull() {
-		var values []DmMtomRule
-		data.Rule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmMtomRule
+		data.Rule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Rule`+".-1", val.ToBody(ctx, ""))
 		}
 	}

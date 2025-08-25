@@ -85,6 +85,7 @@ func (data GWScriptSettings) ToBody(ctx context.Context, pathRoot string) string
 	}
 	body := ""
 	body, _ = sjson.Set(body, "GWScriptSettings.name", path.Base("/mgmt/config/default/GWScriptSettings/GatewayScript-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

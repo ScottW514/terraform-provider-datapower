@@ -112,7 +112,6 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(5, 250000),
 				},
 				Default: int64default.StaticInt64(256),
@@ -139,7 +138,6 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 250000),
 				},
 				Default: int64default.StaticInt64(5000),
@@ -153,19 +151,18 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 32768),
 				},
 				Default: int64default.StaticInt64(32768),
 			},
 			"doc_cache_policy": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the document cache policies to associate a set of URLs with a specific cache policy. A document cache policy allows the administrator to determine how documents are cached. The policy offers time-to-live, priority, and type. The document cache is distinct from the stylesheet cache.", "policy", "").String,
-				NestedObject:        models.DmDocCachePolicyResourceSchema,
+				NestedObject:        models.GetDmDocCachePolicyResourceSchema(),
 				Optional:            true,
 			},
 			"scheduled_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.", "schedule-rule", "").String,
-				NestedObject:        models.DmScheduledRuleResourceSchema,
+				NestedObject:        models.GetDmScheduledRuleResourceSchema(),
 				Optional:            true,
 			},
 			"api_collection": schema.ListAttribute{
@@ -184,17 +181,17 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"assembly_burst_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "assembly-burst-limit", "").String,
-				NestedObject:        models.DmAPIBurstLimitResourceSchema,
+				NestedObject:        models.GetDmAPIBurstLimitResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_rate_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Assembly rate limits", "assembly-rate-limit", "").String,
-				NestedObject:        models.DmAPIRateLimitResourceSchema,
+				NestedObject:        models.GetDmAPIRateLimitResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_count_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Assembly count limits", "assembly-count-limit", "").String,
-				NestedObject:        models.DmAPICountLimitResourceSchema,
+				NestedObject:        models.GetDmAPICountLimitResourceSchema(),
 				Optional:            true,
 			},
 			"ldap_conn_pool": schema.StringAttribute{
@@ -203,7 +200,7 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"proxy_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the proxy policies to associate a set of URLs with a specific HTTP proxy. When multiple proxy policies are defined, URLs are evaluated against each policy in order.", "proxy", "").String,
-				NestedObject:        models.DmAPIProxyPolicyResourceSchema,
+				NestedObject:        models.GetDmAPIProxyPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"front_timeout": schema.Int64Attribute{
@@ -211,7 +208,6 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -221,7 +217,6 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(180),
@@ -232,7 +227,7 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"open_telemetry_resource_attribute": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("OpenTelemetry resource attributes", "otel-resource-attribute", "").String,
-				NestedObject:        models.DmOpenTelemetryResourceAttributeResourceSchema,
+				NestedObject:        models.GetDmOpenTelemetryResourceAttributeResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

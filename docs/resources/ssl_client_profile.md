@@ -49,6 +49,7 @@ resource "datapower_ssl_client_profile" "test" {
   - Choices: `RSA_WITH_NULL_MD5`, `RSA_WITH_NULL_SHA`, `RSA_WITH_RC4_128_MD5`, `RSA_WITH_RC4_128_SHA`, `RSA_WITH_DES_CBC_SHA`, `RSA_WITH_3DES_EDE_CBC_SHA`, `DHE_DSS_WITH_DES_CBC_SHA`, `DHE_DSS_WITH_3DES_EDE_CBC_SHA`, `DHE_RSA_WITH_DES_CBC_SHA`, `DHE_RSA_WITH_3DES_EDE_CBC_SHA`, `RSA_WITH_AES_128_CBC_SHA`, `DHE_DSS_WITH_AES_128_CBC_SHA`, `DHE_RSA_WITH_AES_128_CBC_SHA`, `RSA_WITH_AES_256_CBC_SHA`, `DHE_DSS_WITH_AES_256_CBC_SHA`, `DHE_RSA_WITH_AES_256_CBC_SHA`, `RSA_WITH_NULL_SHA256`, `RSA_WITH_AES_128_CBC_SHA256`, `RSA_WITH_AES_256_CBC_SHA256`, `DHE_DSS_WITH_AES_128_CBC_SHA256`, `DHE_RSA_WITH_AES_128_CBC_SHA256`, `DHE_DSS_WITH_AES_256_CBC_SHA256`, `DHE_RSA_WITH_AES_256_CBC_SHA256`, `RSA_WITH_AES_128_GCM_SHA256`, `RSA_WITH_AES_256_GCM_SHA384`, `DHE_RSA_WITH_AES_128_GCM_SHA256`, `DHE_RSA_WITH_AES_256_GCM_SHA384`, `DHE_DSS_WITH_AES_128_GCM_SHA256`, `DHE_DSS_WITH_AES_256_GCM_SHA384`, `AES_128_GCM_SHA256`, `AES_256_GCM_SHA384`, `CHACHA20_POLY1305_SHA256`, `AES_128_CCM_SHA256`, `AES_128_CCM_8_SHA256`, `ECDHE_RSA_WITH_NULL_SHA`, `ECDHE_RSA_WITH_RC4_128_SHA`, `ECDHE_RSA_WITH_3DES_EDE_CBC_SHA`, `ECDHE_RSA_WITH_AES_128_CBC_SHA`, `ECDHE_RSA_WITH_AES_256_CBC_SHA`, `ECDHE_RSA_WITH_AES_128_CBC_SHA256`, `ECDHE_RSA_WITH_AES_256_CBC_SHA384`, `ECDHE_RSA_WITH_AES_128_GCM_SHA256`, `ECDHE_RSA_WITH_AES_256_GCM_SHA384`, `ECDHE_ECDSA_WITH_NULL_SHA`, `ECDHE_ECDSA_WITH_RC4_128_SHA`, `ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_128_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_256_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`, `ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`, `ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`, `ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
 - `custom_sni_hostname` (String) Custom SNI hostname
   - CLI Alias: `custom-sni-hostname`
+  - Required When: (`use_custom_sni_hostname`=`true` AND `ssl_client_features`=`use-sni`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `disable_renegotiation` (Boolean) Disable renegotiation
   - CLI Alias: `disable-renegotiation`
@@ -80,11 +81,13 @@ resource "datapower_ssl_client_profile" "test" {
 - `use_custom_sni_hostname` (Boolean) Specify whether to use a custom server name in the SNI extension in the TLS client <tt>hello</tt> message. By default, the hostname of the target is used in the SNI extension.
   - CLI Alias: `use-custom-sni-hostname`
   - Default value: `false`
+  - Required When: `ssl_client_features`=`use-sni`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `valcred` (String) Validation credentials
   - CLI Alias: `valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Required When: `validate_server_cert`=`true`
 - `validate_hostname` (Boolean) Validate server hostname
   - CLI Alias: `validate-hostname`
   - Default value: `false`

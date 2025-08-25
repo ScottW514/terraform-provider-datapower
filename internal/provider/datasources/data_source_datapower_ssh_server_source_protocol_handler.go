@@ -144,7 +144,7 @@ func (d *SSHServerSourceProtocolHandlerDataSource) Schema(ctx context.Context, r
 						},
 						"virtual_directories": schema.ListNestedAttribute{
 							MarkdownDescription: "In virtual mode, create a directory in the virtual file system that is presented by this SFTP server. The SFTP client can use all of these directories to write file to be processed. The root directory (/) is always present and cannot be created.",
-							NestedObject:        models.DmSFTPServerVirtualDirectoryDataSourceSchema,
+							NestedObject:        models.GetDmSFTPServerVirtualDirectoryDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

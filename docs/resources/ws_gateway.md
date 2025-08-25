@@ -76,6 +76,7 @@ resource "datapower_ws_gateway" "test" {
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
+  - Required When: `debug_mode`=`true`
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
@@ -98,6 +99,7 @@ resource "datapower_ws_gateway" "test" {
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
+  - Required When: (`delay_errors`=`true` AND `rewrite_errors`=`true`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `do_chunked_upload` (Boolean) Specify whether to enable (on) or disable (off) the ability to send Content-Type Chunked Encoded documents to the back end server. When the device employs the HTTP/1.1 protocol, the body of the document can be delimited by either Content-Length or chunked encodings. While all servers will understand how to interpret Content-Length, many applications will fail to understand Chunked encoding. For this reason, Content-Length is the standard method used. However doing so interferes with the ability of the device to fully stream. To stream full documents towards the back end server, this property should be turned on. However, the back end server must be RFC 2616 compatible, because this feature cannot be renegotiated at run time, unlike all other HTTP/1.1 features which can be negotiated down at runtime if necessary. This property can also be enabled by configuring a User Agent to enable it on a per-URL basis.
   - CLI Alias: `chunked-uploads`
@@ -194,31 +196,40 @@ resource "datapower_ws_gateway" "test" {
 - `parser_limits_attachment_byte_count` (Number) Defines the maximum number of bytes allowed in any single attachment. Attachments that exceed this size will result in a failure of the whole transaction. If this value is 0, no limit is enforced.
   - CLI Alias: `attachment-byte-count`
   - Default value: `2000000000`
+  - Required When: `gateway_parser_limits`=`true`
 - `parser_limits_attachment_package_byte_count` (Number) Defines the maximum number of bytes allowed for all parts of an attachment package, including the root part. Attachment packages that exceed this size will result in a failure of the whole transaction. If this value is 0, no limit is enforced.
   - CLI Alias: `attachment-package-byte-count`
+  - Required When: `gateway_parser_limits`=`true`
 - `parser_limits_attribute_count` (Number) Defines the maximum number of attributes of a given element. If any of the parser limits are set in the service, they will override those on the XML Manager.
   - CLI Alias: `attribute-count`
   - Default value: `128`
+  - Required When: `gateway_parser_limits`=`true`
 - `parser_limits_element_depth` (Number) Defines the maximum depth of element nesting in XML parser. If any of the parser limits are set in the DataPower service, they will override those on the XML Manager.
   - CLI Alias: `element-depth`
   - Default value: `512`
+  - Required When: `gateway_parser_limits`=`true`
 - `parser_limits_external_references` (String) Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.
   - CLI Alias: `external-references`
   - Choices: `forbid`, `ignore`, `allow`
   - Default value: `forbid`
+  - Required When: `gateway_parser_limits`=`true`
 - `parser_limits_max_local_names` (Number) Enter an integer that defines the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.
   - CLI Alias: `max-local-names`
   - Default value: `60000`
+  - Required When: `gateway_parser_limits`=`true`
 - `parser_limits_max_namespaces` (Number) Enter an integer that defines the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.
   - CLI Alias: `max-namespaces`
   - Default value: `1024`
+  - Required When: `gateway_parser_limits`=`true`
 - `parser_limits_max_node_size` (Number) Defines the maximum size any one node may consume. The default is 32 MB. Sizes which are powers of two result in the best performance. If any of the parser limits are set in the DataPower service, they will override those on the XML Manager. Although you set an explicit value, the DataPower Gateway uses a value that is the rounded-down, largest power of two that is smaller than the defined value.
   - CLI Alias: `max-node-size`
   - Range: `1024`-`4294967295`
   - Default value: `33554432`
+  - Required When: `gateway_parser_limits`=`true`
 - `parser_limits_max_prefixes` (Number) Enter an integer that defines the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the range 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.
   - CLI Alias: `max-prefixes`
   - Default value: `1024`
+  - Required When: `gateway_parser_limits`=`true`
 - `persistent_connections` (Boolean) Specify whether to enable or disable persistent connections where appropriate on back side.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
@@ -256,6 +267,7 @@ resource "datapower_ws_gateway" "test" {
 - `request_attachments_flow_control` (Boolean) Specify whether to enable or disable flow control for attachments in requests to servers. The default is off.
   - CLI Alias: `request-attachments-flow-control`
   - Default value: `false`
+  - Required When: (`request_attachments`=`unprocessed` AND `request_type`!=`unprocessed`)
 - `request_type` (String) Characterizes the traffic that originates from the client. The default is SOAP.
   - CLI Alias: `request-type`
   - Choices: `soap`, `xml`, `unprocessed`, `preprocessed`
@@ -267,6 +279,7 @@ resource "datapower_ws_gateway" "test" {
 - `response_attachments_flow_control` (Boolean) Specify whether to enable or disable flow control for attachments in responses to clients. The default is off.
   - CLI Alias: `response-attachments-flow-control`
   - Default value: `false`
+  - Required When: (`response_attachments`=`unprocessed` AND `response_type`!=`unprocessed`)
 - `response_type` (String) Characterizes the traffic that originates from the server. The default is SOAP.
   - CLI Alias: `response-type`
   - Choices: `soap`, `xml`, `unprocessed`, `preprocessed`
@@ -334,6 +347,7 @@ resource "datapower_ws_gateway" "test" {
   - CLI Alias: `user-policy` (see [below for nested schema](#nestedatt--user_toggles))
 - `wsa_back_protocol` (String) <p>Specify the protocol handler that receives asynchronous server responses and forward the response to the original client. This handler must be a protocol handler on which this DataPower service already listens.</p><p>The protocol handler specified by this property can be programmatically overridden by the <tt>var://context/__WSA_REQUEST/replyto</tt> variable, which will change the WS-Addressing <tt>ReplyTo</tt> header on the request to the server.</p><p>This property is relevant when the WS-Addressing mode is either Traditional to WS-Addressing or WS-Addressing to WS-Addressing and the message generation pattern is asynchronous.</p>
   - CLI Alias: `wsa-back-protocol`
+  - Required When: (`wsa_gen_style`=`async` AND `wsa_mode`=`wsa2sync`|`wsa2wsa`|`sync2wsa`)
 - `wsa_default_fault_to` (String) <p>Provide a default value of the WS-Addressing <tt>FaultTo</tt> SOAP header in request messages.</p><p>Because the WS-Addressing specifications do not require the inclusion of the <tt>FaultTo</tt> header, the service might receive WS-Addressing requests that do not contain a <tt>FaultTo</tt> SOAP header, or that contain the header with no value.</p><p>If the SOAP request has no WS-Addressing <tt>FaultTo</tt> , <tt>ReplyTo</tt> , or <tt>From</tt> SOAP header, this will provide a default value of the <tt>FaultTo</tt> header. That header identifies the recipient endpoint of an error message.</p><p>If a default recipient endpoint of fault messages is not explicitly identified by this command, the default value is <tt>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</tt></p><p>This property is relevant when the WS-AddressingMode is WS-Addressing to Traditional, or Traditional to WS-Addressing.</p>
   - CLI Alias: `wsa-default-faultto`
   - Default value: `http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous`
@@ -374,6 +388,7 @@ resource "datapower_ws_gateway" "test" {
   - CLI Alias: `wsa-http-async-response-code`
   - Range: `200`-`599`
   - Default value: `204`
+  - Required When: `wsa_mode`=`wsa2sync`|`wsa2wsa`|`sync2wsa`
 - `wsdl_cache_policy` (Attributes List) A WSDL that is part of the cache policy is refreshed when its TTL to is reached. Refresh retrieves the WSDL from the source location and refreshes the web service proxy state. Depending upon the changes in the WSDL file itself, the Proxy may reconfigure itself in any number of ways, including adding new endpoints or removing existing endpoints.
   - CLI Alias: `wsdl-cache-policy` (see [below for nested schema](#nestedatt--wsdl_cache_policy))
 - `wsm_agent_monitor` (Boolean) Control the collection of monitoring records for this service.

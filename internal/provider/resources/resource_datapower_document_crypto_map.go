@@ -96,7 +96,7 @@ func (r *DocumentCryptoMapResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"name_space_mappings": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The prefix and URI for namespaces that might be encountered in requests.", "namespace-mapping", "").String,
-				NestedObject:        models.DmNamespaceMappingResourceSchema,
+				NestedObject:        models.GetDmNamespaceMappingResourceSchema(),
 				Optional:            true,
 			},
 			"user_summary": schema.StringAttribute{

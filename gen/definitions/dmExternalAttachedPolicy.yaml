@@ -15,12 +15,12 @@ attributes:
   type: String
   description: Enter the qname of a WSDL component formatted {ns}ncname
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ExternalAttachWSDLComponentType
     value:
     - rest
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExternalAttachWSDLComponentType
     value:
     - rest
@@ -33,7 +33,7 @@ attributes:
   type: String
   description: Matches Fragment Identifier
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExternalAttachWSDLComponentType
     value:
     - rest

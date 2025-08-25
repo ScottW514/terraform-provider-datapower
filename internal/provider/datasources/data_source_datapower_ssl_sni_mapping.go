@@ -82,7 +82,7 @@ func (d *SSLSNIMappingDataSource) Schema(ctx context.Context, req datasource.Sch
 						},
 						"sni_mapping": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify a match pattern to select the TLS server profile based on the SNI hostname sent by the TLS client. The map allows virtual TLS server configuration where different server profiles are used in response to the hostname value in the <tt>ClientHello</tt> SNI extension from the TLS client. In this way, a single IP address and port can be used to host multiple TLS servers with separate crypto keys and certificates.",
-							NestedObject:        models.DmHostToSSLServerProfileDataSourceSchema,
+							NestedObject:        models.GetDmHostToSSLServerProfileDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

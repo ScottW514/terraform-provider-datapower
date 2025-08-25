@@ -123,15 +123,15 @@ attributes:
     Enter a value in the range 1 - 30. The default value is 3.
   cli_alias: max-retries
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Retry
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Retry
     value:
-    - 'off'
+    - false
 - name: RetryInterval
   type: Int64
   minimum: 1
@@ -141,15 +141,15 @@ attributes:
     a value in the range 1 - 86400. The default value in 1800.
   cli_alias: retry-interval
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Retry
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Retry
     value:
-    - 'off'
+    - false
 - name: PersistDuration
   type: Int64
   maximum: 6000000
@@ -165,10 +165,10 @@ attributes:
     can accept the message only when it has not expired.
   cli_alias: include-time-to-live
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Retry
     value:
-    - 'on'
+    - true
 - name: EncryptionRequired
   type: Bool
   default: false
@@ -181,10 +181,10 @@ attributes:
   description: Encryption certificate
   cli_alias: encrypt-cert
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EncryptionRequired
     value:
-    - 'on'
+    - true
 - name: EncryptAlgorithm
   type: String
   enum:
@@ -199,10 +199,10 @@ attributes:
   description: Encryption algorithm
   cli_alias: encrypt-algorithm
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EncryptionRequired
     value:
-    - 'on'
+    - true
 - name: SignatureRequired
   type: Bool
   default: false
@@ -214,10 +214,10 @@ attributes:
   description: Signature identification credentials
   cli_alias: sign-idcred
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SignatureRequired
     value:
-    - 'on'
+    - true
 - name: SignatureAlgorithm
   type: String
   enum:
@@ -239,10 +239,10 @@ attributes:
   description: Signature algorithm
   cli_alias: sign-algorithm
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SignatureRequired
     value:
-    - 'on'
+    - true
 - name: SignDigestAlgorithm
   type: String
   enum:
@@ -257,10 +257,10 @@ attributes:
   description: Signing digest algorithm
   cli_alias: sign-digest-algorithm
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SignatureRequired
     value:
-    - 'on'
+    - true
 - name: SignatureC14NAlgorithm
   type: String
   enum:
@@ -274,10 +274,10 @@ attributes:
   description: Signature canonicalization method
   cli_alias: sign-c14n-algorithm
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SignatureRequired
     value:
-    - 'on'
+    - true
 - name: SSLClientConfigType
   type: String
   enum:
@@ -298,7 +298,7 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SSLClientConfigType
       value:
       - client

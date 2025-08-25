@@ -47,32 +47,39 @@ var DmSnmpContextObjectDefault = map[string]attr.Value{
 	"context": types.StringNull(),
 	"domain":  types.StringNull(),
 }
-var DmSnmpContextDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"context": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("An SNMPv3 context that will allow access to an application domain.", "", "").String,
-			Computed:            true,
-		},
-		"domain": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.", "", "domain").String,
-			Computed:            true,
-		},
-	},
-}
-var DmSnmpContextResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"context": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("An SNMPv3 context that will allow access to an application domain.", "", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(1, 32),
+
+func GetDmSnmpContextDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSnmpContextDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"context": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("An SNMPv3 context that will allow access to an application domain.", "", "").String,
+				Computed:            true,
+			},
+			"domain": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.", "", "domain").String,
+				Computed:            true,
 			},
 		},
-		"domain": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.", "", "domain").String,
-			Required:            true,
+	}
+	return DmSnmpContextDataSourceSchema
+}
+func GetDmSnmpContextResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSnmpContextResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"context": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("An SNMPv3 context that will allow access to an application domain.", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+				},
+			},
+			"domain": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.", "", "domain").String,
+				Required:            true,
+			},
 		},
-	},
+	}
+	return DmSnmpContextResourceSchema
 }
 
 func (data DmSnmpContext) IsNull() bool {
@@ -90,6 +97,7 @@ func (data DmSnmpContext) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Context.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Context`, data.Context.ValueString())
 	}

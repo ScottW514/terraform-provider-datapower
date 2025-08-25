@@ -22,7 +22,7 @@ attributes:
   description: Enter the name of the HTTP header field. Available for HTTP header-based
     filters.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - http
@@ -33,7 +33,7 @@ attributes:
   description: Enter the explicit, literal string value for the HTTP header field.
     Wildcards are not supported. Available for HTTP header-based filters.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - http
@@ -45,7 +45,7 @@ attributes:
     that is used to evaluate the messages to obtain the XPath value. Available for
     XPath-based filters.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - xpath
@@ -56,7 +56,7 @@ attributes:
   description: Enter the contents of the element for the XPath expression. Available
     for XPath-based filters.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - xpath

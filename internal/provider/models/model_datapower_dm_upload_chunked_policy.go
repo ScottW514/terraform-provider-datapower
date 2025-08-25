@@ -46,31 +46,38 @@ var DmUploadChunkedPolicyObjectDefault = map[string]attr.Value{
 	"reg_exp":        types.StringNull(),
 	"upload_chunked": types.BoolValue(false),
 }
-var DmUploadChunkedPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmUploadChunkedPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmUploadChunkedPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"upload_chunked": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"upload_chunked": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmUploadChunkedPolicyDataSourceSchema
 }
-var DmUploadChunkedPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
+func GetDmUploadChunkedPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmUploadChunkedPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"upload_chunked": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"upload_chunked": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	return DmUploadChunkedPolicyResourceSchema
 }
 
 func (data DmUploadChunkedPolicy) IsNull() bool {
@@ -88,6 +95,7 @@ func (data DmUploadChunkedPolicy) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

@@ -71,28 +71,14 @@ attributes:
   test_value: '"idname"'
   cli_alias: id-name
   required_when:
-  - evaluation: logical-or
-    conditions:
-    - evaluation: property-equals
-      attribute: ExtractCredentialMethod
-      value:
-      - header
-    - evaluation: property-equals
-      attribute: ExtractCredentialMethod
-      value:
-      - cookie
-    - evaluation: property-equals
-      attribute: ExtractCredentialMethod
-      value:
-      - query
-    - evaluation: property-equals
-      attribute: ExtractCredentialMethod
-      value:
-      - form
-    - evaluation: property-equals
-      attribute: ExtractCredentialMethod
-      value:
-      - context-var
+  - evaluation: property-value-in-list
+    attribute: ExtractCredentialMethod
+    value:
+    - header
+    - cookie
+    - query
+    - form
+    - context-var
   ignored_when:
   - evaluation: logical-true
 - name: SecretName
@@ -107,36 +93,22 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: SecretRequired
       value:
-      - 'on'
-    - evaluation: logical-or
-      conditions:
-      - evaluation: property-equals
-        attribute: ExtractCredentialMethod
-        value:
-        - header
-      - evaluation: property-equals
-        attribute: ExtractCredentialMethod
-        value:
-        - cookie
-      - evaluation: property-equals
-        attribute: ExtractCredentialMethod
-        value:
-        - query
-      - evaluation: property-equals
-        attribute: ExtractCredentialMethod
-        value:
-        - form
-      - evaluation: property-equals
-        attribute: ExtractCredentialMethod
-        value:
-        - context-var
+      - true
+    - evaluation: property-value-in-list
+      attribute: ExtractCredentialMethod
+      value:
+      - header
+      - cookie
+      - query
+      - form
+      - context-var
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ExtractCredentialMethod
       value:
       - http
@@ -148,7 +120,7 @@ attributes:
   description: HTTP type
   cli_alias: http-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ExtractCredentialMethod
     value:
     - http
@@ -171,7 +143,7 @@ attributes:
     The supported registries are API authentication URL and API LDAP.
   cli_alias: user-registry
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AuthenticateClientMethod
     value:
     - third-party

@@ -57,6 +57,7 @@ resource "datapower_api_definition" "test" {
 - `api_mutual_tls_source` (List of String) Specify the sources to obtain the client certificate for mutual TLS. Because you can define multiple ways to obtain the source, ensure that you sequence the methods appropriately.
   - CLI Alias: `api-mutual-tls-source`
   - Choices: `header`, `tls_cert`
+  - Required When: `require_api_mutual_tls`=`true`
 - `assembly` (String) Specify the assembly to apply to API calls. An assembly is a rule that defines the actions to run against API requests and how to handle the processing errors.
   - CLI Alias: `assembly`
   - Reference to: `datapower_assembly:id`
@@ -105,6 +106,7 @@ resource "datapower_api_definition" "test" {
 - `graph_ql_schema` (String) GraphQL schema location
   - CLI Alias: `graphql-schema`
   - Reference to: `datapower_api_schema:id`
+  - Required When: `type`=`graphql`
 - `html_page` (String) Specify the name and location of a static HTML page that the API can return. Import the file to the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> DataPower directory.
   - CLI Alias: `html-page`
 - `message_buffering` (Boolean) Specify whether to buffer requests and responses before processing. <ul><li>When enabled, requests and responses are buffered before processing. The message payload and the output of the invoke assembly action are read as a binary large object (BLOB).</li><li>When disabled, requests and responses are streamed. Only an asynchronous API call can read the streamed data. If the message processing requires data to be parsed at the payload level, buffering is used to capture the data.</li></ul><p>If you enable activity logging to capture payload data, you must enable message buffering to capture all request and response data.</p>

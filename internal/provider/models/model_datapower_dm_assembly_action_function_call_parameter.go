@@ -45,29 +45,36 @@ var DmAssemblyActionFunctionCallParameterObjectDefault = map[string]attr.Value{
 	"name":  types.StringNull(),
 	"value": types.StringNull(),
 }
-var DmAssemblyActionFunctionCallParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
-			Computed:            true,
+
+func GetDmAssemblyActionFunctionCallParameterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAssemblyActionFunctionCallParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.", "value", "").String,
+				Computed:            true,
+			},
 		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.", "value", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAssemblyActionFunctionCallParameterDataSourceSchema
 }
-var DmAssemblyActionFunctionCallParameterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
-			Required:            true,
+func GetDmAssemblyActionFunctionCallParameterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAssemblyActionFunctionCallParameterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
+				Required:            true,
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.", "value", "").String,
+				Optional:            true,
+			},
 		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.", "value", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmAssemblyActionFunctionCallParameterResourceSchema
 }
 
 func (data DmAssemblyActionFunctionCallParameter) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmAssemblyActionFunctionCallParameter) ToBody(ctx context.Context, pa
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

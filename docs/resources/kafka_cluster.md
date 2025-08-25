@@ -56,6 +56,7 @@ resource "datapower_kafka_cluster" "test" {
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
+  - Required When: (`protocol`=`sasl_plaintext` OR `protocol`=`sasl_ssl`)
 - `property` (Attributes List) Specify extra property to configure the connection to the Kafka server. Use this property for each extra property that is required. Some properties are unsupported and will cause a configuration failure.
   - CLI Alias: `property` (see [below for nested schema](#nestedatt--property))
 - `protocol` (String) Specify the transport protocol for the Kafka bootstrap connection. The selected protocol is used for the exchange of information between the Kafka server and the bootstrap server. By default, uses a non-encrypted transport.
@@ -70,11 +71,14 @@ resource "datapower_kafka_cluster" "test" {
   - CLI Alias: `sasl-mechanism`
   - Choices: `plain`, `scram-sha-256`, `scram-sha-512`
   - Default value: `plain`
+  - Required When: (`protocol`=`sasl_plaintext` OR `protocol`=`sasl_ssl`)
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: (`protocol`=`ssl` OR `protocol`=`sasl_ssl`)
 - `user_name` (String) Username
   - CLI Alias: `username`
+  - Required When: (`protocol`=`sasl_plaintext` OR `protocol`=`sasl_ssl`)
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

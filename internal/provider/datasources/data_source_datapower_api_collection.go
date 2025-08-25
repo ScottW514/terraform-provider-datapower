@@ -100,6 +100,10 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Catalog name",
 							Computed:            true,
 						},
+						"enable_cache": schema.BoolAttribute{
+							MarkdownDescription: "Enable subscriber caching",
+							Computed:            true,
+						},
 						"dev_portal_endpoint": schema.StringAttribute{
 							MarkdownDescription: "Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.",
 							Computed:            true,
@@ -110,7 +114,7 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 						},
 						"routing_prefix": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the routing prefix to determine which API collection to route the request. You can use routing prefixes to organize your APIs and plans into collections and subcollections. For example, if you have a collection of APIs serving for a certain purpose, and the APIs are to be used by two segments of your organization, you might create two API collections with the organization name, purpose name, and segment name in the routing prefix. If the organization name is <tt>myorg</tt> , the APIs serve for purpose <tt>purpose1</tt> , and the two segments under the organization is <tt>section1</tt> and <tt>section2</tt> , the resulting URL routing prefixes are <tt>/myorg/purpose1/section1</tt> and <tt>/myorg/purpose1/section2</tt> . The resulting hostname routing prefixes are <tt>section1.purpose1.myorg</tt> and <tt>section2.purpose1.myorg</tt> . <p>The API gateway uses the routing prefix to form the complete URI <tt>routing_prefix/base_path/operation_path</tt> and accepts only the incoming requests with this URI. In the complete URI, <tt>base_path</tt> is the base path on which the API is served, and <tt>operation_path</tt> is the relative path to the base path where the operations are available.</p><p>The default routing prefix is slash (/) when the type is URI and blank when the type is hostname. An API collection becomes the default API collection in the API Gateway when the API collection has a default routing prefix. The API gateway routes a request to the default API collection when other API collections do not match. An API gateway can have only one default API collection. Therefore, regardless of the prefix type, only one API collection can be configured with the default routing prefix.</p>",
-							NestedObject:        models.DmRoutingPrefixDataSourceSchema,
+							NestedObject:        models.GetDmRoutingPrefixDataSourceSchema(),
 							Computed:            true,
 						},
 						"use_rate_limit_group": schema.BoolAttribute{
@@ -119,7 +123,7 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 						},
 						"default_rate_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the default rate limit scheme for API requests without API keys for client identification. When not defined, requests without API keys are rejected.",
-							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIRateLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"rate_limit_group": schema.StringAttribute{
@@ -128,17 +132,17 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 						},
 						"assembly_burst_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Assembly burst limit",
-							NestedObject:        models.DmAPIBurstLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIBurstLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_rate_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Assembly rate limit",
-							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIRateLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_count_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Assembly count limit",
-							NestedObject:        models.DmAPICountLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPICountLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"enforce_pre_assembly_rate_limits": schema.BoolAttribute{

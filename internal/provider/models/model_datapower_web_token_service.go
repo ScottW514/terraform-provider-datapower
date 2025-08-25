@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -53,6 +54,33 @@ type WebTokenService struct {
 	DebugMode              types.String                `tfsdk:"debug_mode"`
 	DebugHistory           types.Int64                 `tfsdk:"debug_history"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WebTokenServiceDelayErrorsDurationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "delay_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rewrite_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var WebTokenServiceDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
 }
 
 var WebTokenServiceObjectType = map[string]attr.Type{
@@ -147,6 +175,7 @@ func (data WebTokenService) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -163,9 +192,9 @@ func (data WebTokenService) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`RequestType`, data.RequestType.ValueString())
 	}
 	if !data.FrontSide.IsNull() {
-		var values []DmSSLFrontSide
-		data.FrontSide.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSSLFrontSide
+		data.FrontSide.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`FrontSide`+".-1", val.ToBody(ctx, ""))
 		}
 	}

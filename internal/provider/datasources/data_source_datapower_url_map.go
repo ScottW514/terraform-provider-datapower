@@ -82,7 +82,7 @@ func (d *URLMapDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 						},
 						"url_map_rule": schema.ListNestedAttribute{
 							MarkdownDescription: "Add, edit or delete a URL map match pattern",
-							NestedObject:        models.DmURLMapRuleDataSourceSchema,
+							NestedObject:        models.GetDmURLMapRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

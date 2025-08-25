@@ -107,7 +107,6 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(5, 250000),
 				},
 				Default: int64default.StaticInt64(256),
@@ -158,7 +157,6 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1024, 4294967295),
 				},
 				Default: int64default.StaticInt64(33554432),
@@ -177,7 +175,6 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 262143),
 				},
 				Default: int64default.StaticInt64(1024),
@@ -187,7 +184,6 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(1024),
@@ -197,7 +193,6 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1048575),
 				},
 				Default: int64default.StaticInt64(60000),
@@ -207,7 +202,6 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 250000),
 				},
 				Default: int64default.StaticInt64(5000),
@@ -221,24 +215,23 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 32768),
 				},
 				Default: int64default.StaticInt64(32768),
 			},
 			"doc_cache_policy": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A document cache policy allows the administrator to determine how documents are cached by the XML manager. The policy offers time-to-live, priority, and type configuration values. This document cache is distinct from the stylesheet cache for the XML manager. Documents and stylesheets that the XML manager retrieves can be cached.", "policy", "").String,
-				NestedObject:        models.DmDocCachePolicyResourceSchema,
+				NestedObject:        models.GetDmDocCachePolicyResourceSchema(),
 				Optional:            true,
 			},
 			"schema_validation": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "validate", "").String,
-				NestedObject:        models.DmSchemaValidationResourceSchema,
+				NestedObject:        models.GetDmSchemaValidationResourceSchema(),
 				Optional:            true,
 			},
 			"scheduled_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Certain applications might require the running of a scheduled processing rule. Integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.", "schedule-rule", "").String,
-				NestedObject:        models.DmScheduledRuleResourceSchema,
+				NestedObject:        models.GetDmScheduledRuleResourceSchema(),
 				Optional:            true,
 			},
 			"user_agent": schema.StringAttribute{

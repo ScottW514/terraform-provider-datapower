@@ -65,10 +65,10 @@ attributes:
     the API-level consume declaration that is defined in the API definition.
   cli_alias: consume
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RemoveConsume
     value:
-    - 'on'
+    - true
   string_patterns:
   - '[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_]{0,126}\/[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_+.]{0,126}(;\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_="]{0,126})*$'
 - name: Produce
@@ -112,10 +112,10 @@ attributes:
     overrides any declared API-level security.
   cli_alias: security
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RemoveSecurity
     value:
-    - 'on'
+    - true
 - name: SOAPAction
   type: String
   description: SOAP action

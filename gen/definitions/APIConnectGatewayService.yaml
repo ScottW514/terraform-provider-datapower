@@ -74,11 +74,12 @@ attributes:
     mode are enabled, all peers must use the same crypto material.</li><li>Keys and
     certificates are restricted to PEM and PKCS #12 formats.</li></ul>'
   cli_alias: gateway-peering
+  test_value: '"default-gateway-peering"'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: V5CompatibilityMode
     value:
-    - 'on'
+    - true
 - name: GatewayPeeringManager
   type: String
   reference_to: GatewayPeeringManager
@@ -88,15 +89,15 @@ attributes:
     an API gateway.
   cli_alias: gateway-peering-manager
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: V5CompatibilityMode
     value:
-    - 'off'
+    - false
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: V5CompatibilityMode
     value:
-    - 'on'
+    - true
 - name: V5CompatibilityMode
   type: Bool
   default: true
@@ -123,7 +124,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: V5CompatibilityMode
     value:
-    - 'off'
+    - false
 - name: V5CSlmMode
   type: String
   enum:
@@ -135,15 +136,15 @@ attributes:
     when the gateway type is a Multi-Protocol Gateway.
   cli_alias: slm-mode
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: V5CompatibilityMode
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: V5CompatibilityMode
     value:
-    - 'off'
+    - false
 - name: IPMulticast
   type: String
   reference_to: IPMulticast
@@ -154,25 +155,25 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: V5CSlmMode
       value:
       - multicast
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: V5CompatibilityMode
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: V5CSlmMode
       value:
       - multicast
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: V5CompatibilityMode
       value:
-      - 'off'
+      - false
 - name: IPUnicast
   type: String
   description: Specify the address of the unicast peer group for the SLM policy. This
@@ -182,25 +183,25 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: V5CSlmMode
       value:
       - unicast
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: V5CompatibilityMode
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: V5CSlmMode
       value:
       - unicast
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: V5CompatibilityMode
       value:
-      - 'off'
+      - false
 - name: JWTValidationMode
   type: String
   enum:

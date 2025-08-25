@@ -27,6 +27,7 @@ import (
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
@@ -47,41 +48,50 @@ var DmB2BActiveProfileObjectType = map[string]attr.Type{
 var DmB2BActiveProfileObjectDefault = map[string]attr.Value{
 	"partner_profile": types.StringNull(),
 	"profile_enabled": types.BoolValue(true),
-	"profile_dest":    types.StringNull(),
+	"profile_dest":    types.StringValue("default"),
 }
-var DmB2BActiveProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"partner_profile": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile", "profile", "b2b_profile").String,
-			Computed:            true,
+
+func GetDmB2BActiveProfileDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmB2BActiveProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"partner_profile": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile", "profile", "b2b_profile").String,
+				Computed:            true,
+			},
+			"profile_enabled": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.", "enabled", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"profile_dest": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.", "destination", "").AddDefaultValue("default").String,
+				Computed:            true,
+			},
 		},
-		"profile_enabled": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.", "enabled", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"profile_dest": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.", "destination", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmB2BActiveProfileDataSourceSchema
 }
-var DmB2BActiveProfileResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"partner_profile": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile", "profile", "b2b_profile").String,
-			Required:            true,
+func GetDmB2BActiveProfileResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmB2BActiveProfileResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"partner_profile": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile", "profile", "b2b_profile").String,
+				Required:            true,
+			},
+			"profile_enabled": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.", "enabled", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"profile_dest": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.", "destination", "").AddDefaultValue("default").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("default"),
+			},
 		},
-		"profile_enabled": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.", "enabled", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"profile_dest": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.", "destination", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmB2BActiveProfileResourceSchema
 }
 
 func (data DmB2BActiveProfile) IsNull() bool {
@@ -102,6 +112,7 @@ func (data DmB2BActiveProfile) ToBody(ctx context.Context, pathRoot string) stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.PartnerProfile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PartnerProfile`, data.PartnerProfile.ValueString())
 	}
@@ -131,7 +142,7 @@ func (data *DmB2BActiveProfile) FromBody(ctx context.Context, pathRoot string, r
 	if value := res.Get(pathRoot + `ProfileDest`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ProfileDest = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ProfileDest = types.StringNull()
+		data.ProfileDest = types.StringValue("default")
 	}
 }
 
@@ -151,7 +162,7 @@ func (data *DmB2BActiveProfile) UpdateFromBody(ctx context.Context, pathRoot str
 	}
 	if value := res.Get(pathRoot + `ProfileDest`); value.Exists() && !data.ProfileDest.IsNull() {
 		data.ProfileDest = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.ProfileDest.ValueString() != "default" {
 		data.ProfileDest = types.StringNull()
 	}
 }

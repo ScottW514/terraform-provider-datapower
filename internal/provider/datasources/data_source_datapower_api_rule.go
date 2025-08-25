@@ -87,7 +87,7 @@ func (d *APIRuleDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 						},
 						"dynamic_actions": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.",
-							NestedObject:        models.DmDynamicStylePolicyActionBaseReferenceDataSourceSchema,
+							NestedObject:        models.GetDmDynamicStylePolicyActionBaseReferenceDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

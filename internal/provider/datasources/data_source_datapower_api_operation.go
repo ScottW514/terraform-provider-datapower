@@ -108,12 +108,12 @@ func (d *APIOperationDataSource) Schema(ctx context.Context, req datasource.Sche
 						},
 						"response_schema": schema.ListNestedAttribute{
 							MarkdownDescription: "Response schema",
-							NestedObject:        models.DmAPIResponseSchemaDataSourceSchema,
+							NestedObject:        models.GetDmAPIResponseSchemaDataSourceSchema(),
 							Computed:            true,
 						},
 						"parameter": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify applicable parameters for the API operation. This setting overrides the setting in the API path configuration for the same parameter.",
-							NestedObject:        models.DmAPIParameterDataSourceSchema,
+							NestedObject:        models.GetDmAPIParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"remove_security": schema.BoolAttribute{

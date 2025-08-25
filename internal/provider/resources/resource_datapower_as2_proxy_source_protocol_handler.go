@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AS2ProxySourceProtocolHandlerResource{}
@@ -98,7 +99,6 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(80),
@@ -134,7 +134,6 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 128000),
 				},
 				Default: int64default.StaticInt64(16384),
@@ -144,7 +143,6 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(5, 128000),
 				},
 				Default: int64default.StaticInt64(128000),
@@ -154,7 +152,6 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -164,7 +161,6 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -174,7 +170,6 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -200,7 +195,6 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the destination port on the Multi-Enterprise Integration Gateway server.", "remote-port", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
@@ -209,7 +203,6 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(60),
@@ -233,8 +226,11 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Default:             booldefault.StaticBool(true),
 			},
 			"visibility_event_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the URL of the MEIG visibility event endpoint. Enter the URL in the format of static IBM MQ URL that provides the information about the IBM MQ server name, queue manager name, and name of the channel configured in the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT", "visibility-event-endpoint", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the URL of the MEIG visibility event endpoint. Enter the URL in the format of static IBM MQ URL that provides the information about the IBM MQ server name, queue manager name, and name of the channel configured in the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT", "visibility-event-endpoint", "").AddRequiredWhen(models.AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"enable_hmac_authentication": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Controls whether to use Hash-based Message Authentication Code (HMAC) to secure all visibility events sent to the visibility event endpoint. If HMAC is enabled in the Multi-Enterprise Integration Gateway server, you must enable HMAC authentication in the AS2 proxy handler to avoid message rejection.", "enable-hmac-authentication", "").AddDefaultValue("true").String,
@@ -243,8 +239,11 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Default:             booldefault.StaticBool(true),
 			},
 			"hmac_passphrase_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the password alias of the passphrase used to calculate the HMAC token for message authentication and integrity checking in the Multi-Enterprise Integration Gateway server.", "hmac-passphrase-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the password alias of the passphrase used to calculate the HMAC token for message authentication and integrity checking in the Multi-Enterprise Integration Gateway server.", "hmac-passphrase-alias", "password_alias").AddRequiredWhen(models.AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ssl_server_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between clients and the DataPower Gateway.", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,

@@ -57,6 +57,7 @@ resource "datapower_oauth_provider_settings" "test" {
   - CLI Alias: `advanced-scope-request-headers`
 - `advanced_scope_url` (String) Specify the URL to send scope information for validation. This external endpoint is where the specified scope is verified. You must define this property for advanced scope validation.
   - CLI Alias: `advanced-scope-url`
+  - Required When: (`advanced_scope_url_override`=`false` AND `adv_scope_validation_enabled`=`true`)
 - `advanced_scope_url_override` (Boolean) Use URL from API Security Definition
   - CLI Alias: `advanced-scope-url-from-security`
   - Default value: `false`
@@ -64,17 +65,21 @@ resource "datapower_oauth_provider_settings" "test" {
   - CLI Alias: `api-security-token-manager`
   - Reference to: `datapower_api_security_token_manager:id`
   - Default value: `default`
+  - Required When: (`enable_token_management`=`true` AND `token_manager_type`=`native` AND `provider_type`=`native`)
 - `apic_access_token_ttl` (Number) Specify the time in seconds that an access token remains valid. The default value is 3600.
   - CLI Alias: `apic-access-token-ttl`
   - Range: `1`-`63244800`
   - Default value: `3600`
+  - Required When: `provider_type`=`native`
 - `apic_auth_code_ttl` (Number) Specify the time in seconds that an authorization code remains valid. The default value is 300.
   - CLI Alias: `apic-auth-code-ttl`
   - Range: `1`-`600`
   - Default value: `300`
+  - Required When: (`provider_type`=`native` AND `supported_grant_types`=`access_code`)
 - `apic_authorize_endpoint` (String) Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .
   - CLI Alias: `apic-authorize-endpoint`
   - Default value: `/oauth2/authorize`
+  - Required When: `provider_type`=`native`
 - `apic_enable_introspection` (Boolean) Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.
   - CLI Alias: `apic-enable-introspection`
   - Default value: `false`
@@ -87,6 +92,7 @@ resource "datapower_oauth_provider_settings" "test" {
 - `apic_introspect_endpoint` (String) Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .
   - CLI Alias: `apic-introspect-endpoint`
   - Default value: `/oauth2/introspect`
+  - Required When: (`provider_type`=`native` AND `apic_enable_introspection`=`true`)
 - `apic_maximum_consent_ttl` (Number) Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.
   - CLI Alias: `apic-maximum-consent-ttl`
   - Range: `0`-`2529792000`
@@ -94,20 +100,24 @@ resource "datapower_oauth_provider_settings" "test" {
 - `apic_one_time_use_accesstoken` (Boolean) One-time use access token
   - CLI Alias: `apic-enable-one-time-use-access-token`
   - Default value: `false`
+  - Required When: `provider_type`=`native`
 - `apic_one_time_use_refreshtoken` (Boolean) Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>
   - CLI Alias: `apic-enable-one-time-use-refresh-token`
   - Default value: `true`
 - `apic_provider_base_path` (String) Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .
   - CLI Alias: `apic-provider-base-path`
   - Default value: `/`
+  - Required When: `provider_type`=`native`
 - `apic_refresh_token_limit` (Number) Specify the number of refresh tokens to allow to be generated. The default value is 10.
   - CLI Alias: `apic-refresh-token-limit`
   - Range: `1`-`4096`
   - Default value: `10`
+  - Required When: (`provider_type`=`native` AND `apic_enable_refresh_token`=`true` AND `apic_one_time_use_refreshtoken`=`true`)
 - `apic_refresh_token_ttl` (Number) Specify the time in seconds that a refresh token remains valid. The default value is 5400.
   - CLI Alias: `apic-refresh-token-ttl`
   - Range: `2`-`252979200`
   - Default value: `5400`
+  - Required When: (`provider_type`=`native` AND `apic_enable_refresh_token`=`true`)
 - `apic_require_pkce` (Boolean) Specify whether the application must enforce PKCE. For more information, see RFC 7636.
   - CLI Alias: `apic-require-pkce`
   - Default value: `false`
@@ -120,9 +130,11 @@ resource "datapower_oauth_provider_settings" "test" {
 - `apic_token_endpoint` (String) Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .
   - CLI Alias: `apic-token-endpoint`
   - Default value: `/oauth2/token`
+  - Required When: `provider_type`=`native`
 - `apic_token_secret` (String) Token secret
   - CLI Alias: `apic-token-secret`
   - Reference to: `datapower_crypto_sskey:id`
+  - Required When: `provider_type`=`native`
 - `apic_token_type_to_generate` (String) Type of token to generate
   - CLI Alias: `apic-token-type-to-generate`
   - Choices: `Bearer`, `jwt`
@@ -132,18 +144,21 @@ resource "datapower_oauth_provider_settings" "test" {
 - `application_revocation_endpoint` (String) Application revocation endpoint
   - CLI Alias: `apic-app-revoke-endpoint`
   - Default value: `/oauth2/revoke`
+  - Required When: (`enable_application_revocation`=`true` AND `enable_token_management`=`true` AND `token_manager_type`=`native` AND `provider_type`=`native`)
 - `default_scopes` (String) Specify the default scopes to apply when the request does not contain a scope. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The default scopes must be a subset of the allowed scopes in the API security OAuth requirement. Without defined scopes and the request does not contain a scope, an invalid scope error is returned.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
   - CLI Alias: `default-scopes`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enable_application_revocation` (Boolean) Specify whether to enable revocation by application. Enabling application revocation allows the application to revoke consent before the token expires.
   - CLI Alias: `apic-app-revoke-enable`
   - Default value: `false`
+  - Required When: (`enable_token_management`=`true` AND `token_manager_type`=`native` AND `provider_type`=`native`)
 - `enable_debug_mode` (Boolean) Specify whether to enable debug mode to add security error details in response headers. In debug mode when you use a validation endpoint, security error details are sent in the <tt>x-apic-debug-oauth-error</tt> and <tt>x-apic-debug-oauth-error-desc</tt> response headers.
   - CLI Alias: `enable-debug-mode`
   - Default value: `false`
 - `enable_owner_revocation` (Boolean) Specify whether to enable revocation by resource owner. Enabling resource owner revocation allows the resource owner to revoke consent before the token expires.
   - CLI Alias: `apic-owner-revoke-enable`
   - Default value: `false`
+  - Required When: (`enable_token_management`=`true` AND `token_manager_type`=`native` AND `provider_type`=`native`)
 - `enable_token_management` (Boolean) Specify if security token details should be managed and stored. Enabling token management for security token details provides the ability to create one-time use tokens, prevent AZ code reuse, and support allow-listing through the use of the token manager.
   - CLI Alias: `enable-token-management`
   - Default value: `true`
@@ -171,6 +186,7 @@ resource "datapower_oauth_provider_settings" "test" {
   - Reference to: `datapower_ssl_client_profile:id`
 - `external_revocation_url` (String) Specify an external endpoint through which the token management is accomplished. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `external-revocation-url`
+  - Required When: (`provider_type`=`native` AND `enable_token_management`=`true` AND `token_manager_type`=`external`)
 - `external_revocation_url_security` (Attributes) External management security
   - CLI Alias: `external-revocation-url-security` (see [below for nested schema](#nestedatt--external_revocation_url_security))
 - `metadata_from` (Attributes) Obtain metadata from
@@ -186,9 +202,11 @@ resource "datapower_oauth_provider_settings" "test" {
   - Reference to: `datapower_ssl_client_profile:id`
 - `metadata_url` (String) Specify the URL to a remote server where the custom metadata is stored. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `metadata-url`
+  - Required When: (`provider_type`=`native` AND `metadata_from`=`external_url`)
 - `owner_revocation_endpoint` (String) Resource owner revocation endpoint
   - CLI Alias: `apic-owner-revoke-endpoint`
   - Default value: `/oauth2/issued`
+  - Required When: (`enable_owner_revocation`=`true` AND `enable_token_management`=`true` AND `token_manager_type`=`native` AND `provider_type`=`native`)
 - `provider_type` (String) Provider type
   - CLI Alias: `provider-type`
   - Choices: `native`, `third_party`
@@ -217,15 +235,18 @@ resource "datapower_oauth_provider_settings" "test" {
   - CLI Alias: `third-party-introspect-cache-ttl`
   - Range: `0`-`4294967295`
   - Default value: `900`
+  - Required When: (`provider_type`=`third_party` AND `third_party_introspect_cache_type`=`TimeToLive`)
 - `third_party_introspect_cache_type` (String) Cache type
   - CLI Alias: `third-party-introspect-cache-type`
   - Choices: `Protocol`, `NoCache`, `TimeToLive`
   - Default value: `NoCache`
+  - Required When: `provider_type`=`third_party`
 - `third_party_introspect_ssl_profile` (String) TLS client profile
   - CLI Alias: `third-party-introspect-ssl-profile`
   - Reference to: `datapower_ssl_client_profile:id`
 - `third_party_introspect_url` (String) Specify the endpoint for token-introspection operation. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `third-party-introspect-url`
+  - Required When: `provider_type`=`third_party`
 - `third_party_introspect_url_security` (Attributes) Introspection endpoint security
   - CLI Alias: `third-party-introspect-url-security` (see [below for nested schema](#nestedatt--third_party_introspect_url_security))
 - `third_party_token_url` (String) Token endpoint
@@ -237,6 +258,7 @@ resource "datapower_oauth_provider_settings" "test" {
 - `token_validation_req` (String) Token validation requirement
   - CLI Alias: `token-validation-requirement`
   - Choices: `connected`, `active`, `custom`
+  - Required When: `provider_type`=`third_party`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

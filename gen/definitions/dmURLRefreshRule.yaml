@@ -36,7 +36,7 @@ attributes:
     - no-flush
     - protocol-specified
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: URLRefreshPolicy
     value:
     - no-cache

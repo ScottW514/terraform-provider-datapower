@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,21 @@ type DNSNameService struct {
 	MaxRetries           types.Int64                 `tfsdk:"max_retries"`
 	Timeout              types.Int64                 `tfsdk:"timeout"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var DNSNameServiceMaxRetriesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "load_balance_algorithm",
+	AttrType:    "String",
+	AttrDefault: "first-alive",
+	Value:       []string{"first-alive"},
+}
+var DNSNameServiceTimeoutCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "load_balance_algorithm",
+	AttrType:    "String",
+	AttrDefault: "first-alive",
+	Value:       []string{"first-alive"},
 }
 
 var DNSNameServiceObjectType = map[string]attr.Type{
@@ -105,6 +121,7 @@ func (data DNSNameService) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "DNSNameService.name", path.Base("/mgmt/config/default/DNSNameService/Main-Name-Service"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -112,23 +129,23 @@ func (data DNSNameService) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.SearchDomains.IsNull() {
-		var values []DmSearchDomain
-		data.SearchDomains.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSearchDomain
+		data.SearchDomains.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`SearchDomains`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.NameServers.IsNull() {
-		var values []DmNameServer
-		data.NameServers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmNameServer
+		data.NameServers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`NameServers`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.StaticHosts.IsNull() {
-		var values []DmStaticHost
-		data.StaticHosts.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmStaticHost
+		data.StaticHosts.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`StaticHosts`+".-1", val.ToBody(ctx, ""))
 		}
 	}

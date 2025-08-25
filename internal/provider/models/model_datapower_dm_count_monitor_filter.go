@@ -56,56 +56,63 @@ var DmCountMonitorFilterObjectDefault = map[string]attr.Value{
 	"burst_limit": types.Int64Null(),
 	"action":      types.StringNull(),
 }
-var DmCountMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the log files when the threshold is reached.", "", "").String,
-			Computed:            true,
-		},
-		"interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the measurement interval in milliseconds. One second is expressed as 1000 here.", "", "").String,
-			Computed:            true,
-		},
-		"rate_limit": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value as a number of messages. A monitored message type that exceeds this value over the measurement interval specified by the Interval property is subject to the policy identified by the Action values list.", "", "").AddIntegerRange(1, 4294967295).String,
-			Computed:            true,
-		},
-		"burst_limit": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum allowed message burst. Use a value approximately twice the value of Rate Limit.", "", "").String,
-			Computed:            true,
-		},
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy implemented by the monitor when the target message type exceeds the threshold value. This is a list of Message Filter Actions. Click the + button to create a new action.", "", "filter_action").String,
-			Computed:            true,
-		},
-	},
-}
-var DmCountMonitorFilterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the log files when the threshold is reached.", "", "").String,
-			Required:            true,
-		},
-		"interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the measurement interval in milliseconds. One second is expressed as 1000 here.", "", "").String,
-			Required:            true,
-		},
-		"rate_limit": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value as a number of messages. A monitored message type that exceeds this value over the measurement interval specified by the Interval property is subject to the policy identified by the Action values list.", "", "").AddIntegerRange(1, 4294967295).String,
-			Required:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 4294967295),
+
+func GetDmCountMonitorFilterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmCountMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the log files when the threshold is reached.", "", "").String,
+				Computed:            true,
+			},
+			"interval": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the measurement interval in milliseconds. One second is expressed as 1000 here.", "", "").String,
+				Computed:            true,
+			},
+			"rate_limit": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value as a number of messages. A monitored message type that exceeds this value over the measurement interval specified by the Interval property is subject to the policy identified by the Action values list.", "", "").AddIntegerRange(1, 4294967295).String,
+				Computed:            true,
+			},
+			"burst_limit": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum allowed message burst. Use a value approximately twice the value of Rate Limit.", "", "").String,
+				Computed:            true,
+			},
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy implemented by the monitor when the target message type exceeds the threshold value. This is a list of Message Filter Actions. Click the + button to create a new action.", "", "filter_action").String,
+				Computed:            true,
 			},
 		},
-		"burst_limit": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum allowed message burst. Use a value approximately twice the value of Rate Limit.", "", "").String,
-			Required:            true,
+	}
+	return DmCountMonitorFilterDataSourceSchema
+}
+func GetDmCountMonitorFilterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmCountMonitorFilterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the log files when the threshold is reached.", "", "").String,
+				Required:            true,
+			},
+			"interval": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the measurement interval in milliseconds. One second is expressed as 1000 here.", "", "").String,
+				Required:            true,
+			},
+			"rate_limit": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value as a number of messages. A monitored message type that exceeds this value over the measurement interval specified by the Interval property is subject to the policy identified by the Action values list.", "", "").AddIntegerRange(1, 4294967295).String,
+				Required:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 4294967295),
+				},
+			},
+			"burst_limit": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum allowed message burst. Use a value approximately twice the value of Rate Limit.", "", "").String,
+				Required:            true,
+			},
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy implemented by the monitor when the target message type exceeds the threshold value. This is a list of Message Filter Actions. Click the + button to create a new action.", "", "filter_action").String,
+				Required:            true,
+			},
 		},
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy implemented by the monitor when the target message type exceeds the threshold value. This is a list of Message Filter Actions. Click the + button to create a new action.", "", "filter_action").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmCountMonitorFilterResourceSchema
 }
 
 func (data DmCountMonitorFilter) IsNull() bool {
@@ -132,6 +139,7 @@ func (data DmCountMonitorFilter) ToBody(ctx context.Context, pathRoot string) st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

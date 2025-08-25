@@ -35,7 +35,7 @@ attributes:
   description: Enter the name of a WSDL-defined component of the type selected in
     the WSDL Component Type field.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SchedulerPriorityWSDLComponentType
     value:
     - subscription
@@ -43,7 +43,7 @@ attributes:
   type: String
   description: Select a subscription.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SchedulerPriorityWSDLComponentType
     value:
     - subscription

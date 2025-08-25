@@ -82,7 +82,7 @@ func (d *WebServiceMonitorDataSource) Schema(ctx context.Context, req datasource
 						},
 						"operations": schema.ListNestedAttribute{
 							MarkdownDescription: "Operations to monitor",
-							NestedObject:        models.DmWSSLMOpsDataSourceSchema,
+							NestedObject:        models.GetDmWSSLMOpsDataSourceSchema(),
 							Computed:            true,
 						},
 						"endpoint_name": schema.StringAttribute{

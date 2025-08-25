@@ -18,6 +18,7 @@ resource "datapower_log_target" "test" {
   id         = "ResTest_LogTarget"
   app_domain = "acceptance_test"
   type       = "file"
+  local_file = "logtemp:///AccTest_LogTarget.log"
 }
 ```
 
@@ -31,6 +32,8 @@ resource "datapower_log_target" "test" {
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `active_timeout` (Number) Specify the time to wait in seconds before closing an established and active connection to the server. Enter a value in the range 0 - 60. A value of 0 allows the log target to most efficiently send messages to the server by maintaining a healthy connection indefinitely. The default value is 0. <p><b>Attention:</b> If multiple log targets have the following configuration, they might share connections. <ul><li>The same local address and port</li><li>The same remote address and port</li></ul> Because of potential connection-sharing, set the same active timeout value for these log targets.</p>
   - CLI Alias: `active-timeout`
   - Range: `0`-`60`
@@ -39,6 +42,7 @@ resource "datapower_log_target" "test" {
   - CLI Alias: `archive-mode`
   - Choices: `rotate`, `upload`
   - Default value: `rotate`
+  - Required When: `type`=`file`
 - `backup` (String) Sets another Log Target object as a backup to receive redirected events in case of an error on the current file-based log target. This setting has no effect on network-based log targets. For network-based log targets, set a load balancer group as the remote host.
   - CLI Alias: `backup`
   - Reference to: `datapower_log_target:id`
@@ -49,6 +53,7 @@ resource "datapower_log_target" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `email_address` (String) Recipient email address
   - CLI Alias: `email-address`
+  - Required When: (`type`=`smtp` OR (`type`=`file` AND `upload_method`=`smtp`))
 - `event_buffer_size` (String) Specify the buffer size in number of event entries. The buffer stores log events before they are written to the target. A buffer of this size is allocated for each connection.
   - CLI Alias: `buffer-size`
   - Choices: `2048`, `16384`, `65536`, `131072`, `262144`, `524288`, `1048576`, `2097152`, `4194304`, `8388608`
@@ -69,10 +74,13 @@ resource "datapower_log_target" "test" {
   - Default value: `15`
 - `local_address` (String) Local address
   - CLI Alias: `local-address`
+  - Required When: `type`=`smtp`|`syslog-tcp`
 - `local_file` (String) Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt> or <tt>logstore:///filename.log</tt> .
   - CLI Alias: `local-file`
+  - Required When: `type`=`file`
 - `local_identifier` (String) Specify a descriptive string that identifies the log target to remote recipients. For syslog destinations, do not include spaces.
   - CLI Alias: `local-ident`
+  - Required When: (`format`=`cbe` OR `type`=`syslog`|`smtp` OR (`type`=`file` AND `upload_method`=`smtp`))
 - `log_event_code` (List of String) Specify specific events to allow in the log. Subscription filters allow only those log messages that contain the configured event codes. With this filter, it is possible to create a log target that collects only log messages for a specific set of event codes.
   - CLI Alias: `event-code`
 - `log_event_filter` (List of String) Specify specific events to suppress in the log. Suppression filters suppress those log messages that contain the configured event codes. With this filter, it is possible to create a log target that collects a wide range of log messages except for a specific set of event codes.
@@ -87,6 +95,7 @@ resource "datapower_log_target" "test" {
   - CLI Alias: `precision`
   - Choices: `second`, `microsecond`
   - Default value: `second`
+  - Required When: `type`=`syslog-tcp`
 - `log_triggers` (Attributes List) Specify event trigger points. Event triggers start actions only when triggered by a specified message ID or event code. With this filter, it is possible to create a log target that collects only the results of the specified trigger action. For example, to trigger the generation of an error report when a certain event occurs use the <b>save error-report</b> command.
   - CLI Alias: `trigger` (see [below for nested schema](#nestedatt--log_triggers))
 - `long_retry_interval` (Number) Specify the time to wait in seconds before attempting to reestablish a failed connection to the syslog server after the number of attempts is reached. Enter a value in the range 0 - 600. The default value is 20. <p><b>Note:</b> The long retry interval must be greater than the retry interval or it will take no effect.</p>
@@ -99,9 +108,11 @@ resource "datapower_log_target" "test" {
   - Default value: `1`
 - `nfs_file` (String) Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).
   - CLI Alias: `nfs-file`
+  - Required When: `type`=`nfs`
 - `nfs_mount` (String) NFS static mount
   - CLI Alias: `nfs-static-mount`
   - Reference to: `datapower_nfs_static_mount:id`
+  - Required When: `type`=`nfs`
 - `priority` (String) Specify the priority to control the scheduling of logs. When system resources are in high demand, high priority operations are favored over lower priority operations.
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
@@ -112,11 +123,15 @@ resource "datapower_log_target" "test" {
   - Default value: `100`
 - `remote_address` (String) Specify the host name or IP address of the remote server. To establish a secure TLS connection to the server, set this value to the value of the remote host of a TLS proxy service. The local TLS proxy service then securely forwards the log entries to its configured remote server.
   - CLI Alias: `remote-address`
+  - Required When: (`type`=`syslog`|`syslog-tcp`|`smtp` OR (`archive_mode`=`upload` AND `type`=`file`))
 - `remote_directory` (String) Specify an existing writable directory on the remote server to upload files. <ul><li>To denote an absolute directory from the root directory, specify a single forward slash character (/) or equivalent encoded character (%2F) before the fully qualified path. <ul><li>For SCP or SFTP, enter / to resolve to //.</li><li>For FTP, enter %2F to resolve to /%2F.</li></ul></li><li>To denote a directory that is relative to the home directory of a user, do not specify a forward slash character or encoded character before the fully qualified file name.</li></ul>
   - CLI Alias: `remote-directory`
 - `remote_login` (String) Remote login
   - CLI Alias: `remote-login`
-- `remote_password` (String, Sensitive) Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.
+  - Required When: (`upload_method`=`ftp`|`scp`|`sftp` AND `archive_mode`=`upload` AND `type`=`file`)
+- `remote_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.
+  - Required When: (`upload_method`=`ftp` AND `archive_mode`=`upload` AND `type`=`file`)
+- `remote_password_wo_version` (Number) Changes to this value trigger an update to `write_only` value.
 - `remote_port` (Number) Specify the listening port on the remote server. If using a local TLS proxy service to establish a secure TLS connection, set this value to the value of the remote port of the TLS proxy service.
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
@@ -132,14 +147,18 @@ resource "datapower_log_target" "test" {
   - CLI Alias: `rotate`
   - Range: `1`-`100`
   - Default value: `3`
+  - Required When: (`type`=`nfs` OR (`archive_mode`=`rotate` AND `type`=`file`))
 - `sender_address` (String) Specify the email address of the sender. The value must match the email address of the crypto key when email messages are signed.
   - CLI Alias: `sender-address`
+  - Required When: (`type`=`smtp` OR (`type`=`file` AND `upload_method`=`smtp`))
 - `size` (Number) Specify the maximum size of file-based log targets. Enter a value in the range 100 - 50000. The default value is 500.
   - CLI Alias: `size`
   - Range: `100`-`50000`
   - Default value: `500`
+  - Required When: `type`=`file`|`nfs`
 - `smtp_domain` (String) Specify the fully-qualified domain name of the SMTP client. This information is part of the SMTP session initiation (HELO command).
   - CLI Alias: `smtp-domain`
+  - Required When: (`type`=`smtp` OR (`type`=`file` AND `upload_method`=`smtp`))
 - `soap_version` (String) SOAP version
   - CLI Alias: `soap-version`
   - Choices: `soap11`, `soap12`
@@ -155,6 +174,7 @@ resource "datapower_log_target" "test" {
   - CLI Alias: `facility`
   - Choices: `user`, `security`, `authpriv`, `local0`, `local1`, `local2`, `local3`, `local4`, `local5`, `local6`, `local7`
   - Default value: `user`
+  - Required When: `type`=`syslog-tcp`|`syslog`
 - `timestamp_format` (String) Specify the format of the timestamp for log entries. The default format is ISO UTC format.
   - CLI Alias: `timestamp`
   - Choices: `syslog`, `numeric`, `zulu`
@@ -167,8 +187,10 @@ resource "datapower_log_target" "test" {
   - CLI Alias: `upload-method`
   - Choices: `ftp`, `scp`, `sftp`, `smtp`
   - Default value: `ftp`
+  - Required When: (`archive_mode`=`upload` AND `type`=`file`)
 - `url` (String) Specify the HTTP URL to send log entries. Entries are sent with the POST method and uses the default user agent.
   - CLI Alias: `url`
+  - Required When: `type`=`soap`
 - `use_ansi_color` (Boolean) Specify whether to enable the use of ANSI color scheme. When enabled, ANSI X3.64 escape sequences color-code messages by log level.
   - CLI Alias: `ansi-color`
   - Default value: `false`

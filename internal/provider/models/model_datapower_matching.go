@@ -87,6 +87,7 @@ func (data Matching) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -94,9 +95,9 @@ func (data Matching) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.MatchRules.IsNull() {
-		var values []DmMatchRule
-		data.MatchRules.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmMatchRule
+		data.MatchRules.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`MatchRules`+".-1", val.ToBody(ctx, ""))
 		}
 	}

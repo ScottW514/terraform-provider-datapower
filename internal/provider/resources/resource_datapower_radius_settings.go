@@ -73,7 +73,6 @@ func (r *RADIUSSettingsResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 30000),
 				},
 				Default: int64default.StaticInt64(1000),
@@ -83,14 +82,13 @@ func (r *RADIUSSettingsResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 10),
 				},
 				Default: int64default.StaticInt64(3),
 			},
 			"aaa_servers": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("AAA and RBM", "aaaserver", "").String,
-				NestedObject:        models.DmRadiusServerResourceSchema,
+				NestedObject:        models.GetDmRadiusServerResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,
@@ -110,7 +108,7 @@ func (r *RADIUSSettingsResource) Create(ctx context.Context, req resource.Create
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-	var data models.RADIUSSettings
+	var data, config models.RADIUSSettings
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -120,8 +118,12 @@ func (r *RADIUSSettingsResource) Create(ctx context.Context, req resource.Create
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
-	body := data.ToBody(ctx, `RADIUSSettings`)
+	body := data.ToBody(ctx, `RADIUSSettings`, &config)
 	_, err := r.pData.Client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
@@ -168,7 +170,7 @@ func (r *RADIUSSettingsResource) Update(ctx context.Context, req resource.Update
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-	var data models.RADIUSSettings
+	var data, config models.RADIUSSettings
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -178,7 +180,11 @@ func (r *RADIUSSettingsResource) Update(ctx context.Context, req resource.Update
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `RADIUSSettings`))
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `RADIUSSettings`, &config))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return

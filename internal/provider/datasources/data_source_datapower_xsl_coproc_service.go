@@ -134,7 +134,7 @@ func (d *XSLCoprocServiceDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"debug_trigger": schema.ListNestedAttribute{
 							MarkdownDescription: "",
-							NestedObject:        models.DmMSDebugTriggerTypeDataSourceSchema,
+							NestedObject:        models.GetDmMSDebugTriggerTypeDataSourceSchema(),
 							Computed:            true,
 						},
 						"ssl_server_config_type": schema.StringAttribute{

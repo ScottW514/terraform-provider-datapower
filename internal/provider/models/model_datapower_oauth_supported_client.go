@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -47,8 +48,8 @@ type OAuthSupportedClient struct {
 	ClientAuthenMethod         types.String                `tfsdk:"client_authen_method"`
 	ClientValCred              types.String                `tfsdk:"client_val_cred"`
 	GenerateClientSecret       types.Bool                  `tfsdk:"generate_client_secret"`
-	ClientSecret               types.String                `tfsdk:"client_secret"`
-	ClientSecretUpdate         types.Bool                  `tfsdk:"client_secret_update"`
+	ClientSecretWo             types.String                `tfsdk:"client_secret_wo"`
+	ClientSecretWoVersion      types.Int64                 `tfsdk:"client_secret_wo_version"`
 	Caching                    types.String                `tfsdk:"caching"`
 	ValidationUrl              types.String                `tfsdk:"validation_url"`
 	ValidationFeatures         *DmValidationFeatures       `tfsdk:"validation_features"`
@@ -120,6 +121,1192 @@ type OAuthSupportedClientWO struct {
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var OAuthSupportedClientCustomizedProcessUrlCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "customized",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var OAuthSupportedClientOAuthRoleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "customized",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var OAuthSupportedClientAZGrantCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+	},
+}
+var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "o_auth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"azsvr"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "az_grant",
+					AttrType:    "DmOAuthAZGrantType",
+					AttrDefault: "",
+					Value:       []string{"code", "implicit", "password", "jwt"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "o_auth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"rssvr"},
+				},
+				{
+					Evaluation: "logical-or",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "use_validation_url",
+							AttrType:    "Bool",
+							AttrDefault: "false",
+							Value:       []string{"true"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "check_client_credential",
+							AttrType:    "Bool",
+							AttrDefault: "false",
+							Value:       []string{"true"},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "client_type",
+					AttrType:    "String",
+					AttrDefault: "confidential",
+					Value:       []string{"confidential"},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"client"},
+						},
+					},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"code", "implicit", "password", "client", "jwt"},
+						},
+					},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"rssvr"},
+						},
+						{
+							Evaluation: "logical-or",
+							Conditions: []validators.Evaluation{
+								{
+									Evaluation:  "property-value-in-list",
+									Attribute:   "use_validation_url",
+									AttrType:    "Bool",
+									AttrDefault: "false",
+									Value:       []string{"true"},
+								},
+								{
+									Evaluation:  "property-value-in-list",
+									Attribute:   "check_client_credential",
+									AttrType:    "Bool",
+									AttrDefault: "false",
+									Value:       []string{"true"},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "client_type",
+					AttrType:    "String",
+					AttrDefault: "confidential",
+					Value:       []string{"confidential"},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"client"},
+						},
+					},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "client_authen_method",
+			AttrType:    "String",
+			AttrDefault: "secret",
+			Value:       []string{"ssl"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"code", "implicit", "password", "client", "jwt"},
+						},
+					},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"rssvr"},
+						},
+						{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "check_client_credential",
+							AttrType:    "Bool",
+							AttrDefault: "false",
+							Value:       []string{"true"},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientGenerateClientSecretCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "client_type",
+					AttrType:    "String",
+					AttrDefault: "confidential",
+					Value:       []string{"confidential"},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"client"},
+						},
+					},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "client_secret_wo",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"code", "implicit", "password", "client", "jwt"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "client_authen_method",
+			AttrType:    "String",
+			AttrDefault: "secret",
+			Value:       []string{"secret"},
+		},
+	},
+}
+var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "client_type",
+					AttrType:    "String",
+					AttrDefault: "confidential",
+					Value:       []string{"confidential"},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"client"},
+						},
+					},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "client_authen_method",
+			AttrType:    "String",
+			AttrDefault: "secret",
+			Value:       []string{"secret"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "generate_client_secret",
+							AttrType:    "Bool",
+							AttrDefault: "true",
+							Value:       []string{"false"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"code", "implicit", "password", "client", "jwt", "saml20bearer"},
+						},
+					},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"rssvr"},
+						},
+						{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation: "logical-or",
+							Conditions: []validators.Evaluation{
+								{
+									Evaluation:  "property-value-in-list",
+									Attribute:   "check_client_credential",
+									AttrType:    "Bool",
+									AttrDefault: "false",
+									Value:       []string{"true"},
+								},
+								{
+									Evaluation:  "property-value-in-list",
+									Attribute:   "use_validation_url",
+									AttrType:    "Bool",
+									AttrDefault: "false",
+									Value:       []string{"true"},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientValidationURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"rssvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_validation_url",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var OAuthSupportedClientRedirectURICondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"implicit", "code"},
+		},
+	},
+}
+var OAuthSupportedClientScopeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "custom_scope_check",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "o_auth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"azsvr"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "use_validation_url",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientScopeUrlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "custom_scope_check",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "o_auth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"azsvr"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "use_validation_url",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation: "logical-or",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation: "logical-and",
+							Conditions: []validators.Evaluation{
+								{
+									Evaluation:  "property-value-not-in-list",
+									Attribute:   "o_auth_role",
+									AttrType:    "DmOAuthRole",
+									AttrDefault: "",
+									Value:       []string{"azsrv"},
+								},
+								{
+									Evaluation:  "property-value-in-list",
+									Attribute:   "use_validation_url",
+									AttrType:    "Bool",
+									AttrDefault: "false",
+									Value:       []string{"false"},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "az_grant",
+					AttrType:    "DmOAuthAZGrantType",
+					AttrDefault: "",
+					Value:       []string{"code", "implicit"},
+				},
+				{
+					Evaluation: "logical-or",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation: "logical-and",
+							Conditions: []validators.Evaluation{
+								{
+									Evaluation:  "property-value-not-in-list",
+									Attribute:   "o_auth_role",
+									AttrType:    "DmOAuthRole",
+									AttrDefault: "",
+									Value:       []string{"azsvr"},
+								},
+								{
+									Evaluation:  "property-value-in-list",
+									Attribute:   "use_validation_url",
+									AttrType:    "Bool",
+									AttrDefault: "false",
+									Value:       []string{"false"},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientLocalAZPageUrlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "o_auth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"azsvr"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"code", "implicit"},
+		},
+	},
+}
+var OAuthSupportedClientDPStateLifeTimeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "o_auth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"azsvr"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"code", "implicit"},
+		},
+	},
+}
+var OAuthSupportedClientAUCodeLifeTimeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"code"},
+		},
+	},
+}
+var OAuthSupportedClientAccessTokenLifeTimeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+	},
+}
+var OAuthSupportedClientRefreshTokenAllowedCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"code", "password", "jwt"},
+		},
+	},
+}
+var OAuthSupportedClientRefreshTokenLifeTimeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"code", "password", "jwt"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "refresh_token_allowed",
+			AttrType:    "Int64",
+			AttrDefault: "0",
+			Value:       []string{"0"},
+		},
+	},
+}
+var OAuthSupportedClientMaxConsentLifeTimeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"code", "password", "jwt"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "refresh_token_allowed",
+			AttrType:    "Int64",
+			AttrDefault: "0",
+			Value:       []string{"0"},
+		},
+	},
+}
+var OAuthSupportedClientResourceOwnerUrlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "custom_resource_owner",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var OAuthSupportedClientAdditionalOAuthProcessUrlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "caching",
+			AttrType:    "String",
+			AttrDefault: "replay",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var OAuthSupportedClientValidationURLSSLClientTypeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"rssvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_validation_url",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var OAuthSupportedClientValidationURLSSLClientCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"rssvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_validation_url",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "validation_urlssl_client_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+	},
+}
+var OAuthSupportedClientJWTGrantValidatorCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"jwt"},
+		},
+	},
+}
+var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "client_type",
+					AttrType:    "String",
+					AttrDefault: "confidential",
+					Value:       []string{"confidential"},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"client"},
+						},
+					},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "client_authen_method",
+			AttrType:    "String",
+			AttrDefault: "secret",
+			Value:       []string{"jwt"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "az_grant",
+							AttrType:    "DmOAuthAZGrantType",
+							AttrDefault: "",
+							Value:       []string{"code", "implicit", "password", "client", "jwt"},
+						},
+					},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"rssvr"},
+						},
+						{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "o_auth_role",
+							AttrType:    "DmOAuthRole",
+							AttrDefault: "",
+							Value:       []string{"azsvr"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "check_client_credential",
+							AttrType:    "Bool",
+							AttrDefault: "false",
+							Value:       []string{"true"},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+var OAuthSupportedClientOIDCIDTokenGeneratorCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "o_auth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"oidc"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"code", "implicit", "password", "client", "jwt"},
+		},
+	},
+}
+
 var OAuthSupportedClientObjectType = map[string]attr.Type{
 	"id":                            types.StringType,
 	"app_domain":                    types.StringType,
@@ -134,8 +1321,8 @@ var OAuthSupportedClientObjectType = map[string]attr.Type{
 	"client_authen_method":          types.StringType,
 	"client_val_cred":               types.StringType,
 	"generate_client_secret":        types.BoolType,
-	"client_secret":                 types.StringType,
-	"client_secret_update":          types.BoolType,
+	"client_secret_wo":              types.StringType,
+	"client_secret_wo_version":      types.Int64Type,
 	"caching":                       types.StringType,
 	"validation_url":                types.StringType,
 	"validation_features":           types.ObjectType{AttrTypes: DmValidationFeaturesObjectType},
@@ -265,7 +1452,7 @@ func (data OAuthSupportedClient) IsNull() bool {
 	if !data.GenerateClientSecret.IsNull() {
 		return false
 	}
-	if !data.ClientSecret.IsNull() {
+	if !data.ClientSecretWo.IsNull() {
 		return false
 	}
 	if !data.Caching.IsNull() {
@@ -485,11 +1672,12 @@ func (data OAuthSupportedClientWO) IsNull() bool {
 	return true
 }
 
-func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string) string {
+func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string, config *OAuthSupportedClient) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -530,8 +1718,11 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string) st
 	if !data.GenerateClientSecret.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`GenerateClientSecret`, tfutils.StringFromBool(data.GenerateClientSecret, ""))
 	}
-	if !data.ClientSecret.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ClientSecret`, data.ClientSecret.ValueString())
+	if !data.ClientSecretWo.IsNull() || !data.ClientSecretWoVersion.IsNull() {
+		if data.ClientSecretWo.IsNull() && config != nil {
+			data.ClientSecretWo = config.ClientSecretWo
+		}
+		body, _ = sjson.Set(body, pathRoot+`ClientSecret`, data.ClientSecretWo.ValueString())
 	}
 	if !data.Caching.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Caching`, data.Caching.ValueString())
@@ -545,9 +1736,9 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string) st
 		}
 	}
 	if !data.RedirectUri.IsNull() {
-		var values []string
-		data.RedirectUri.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.RedirectUri.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`RedirectURI`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -691,9 +1882,9 @@ func (data *OAuthSupportedClient) FromBody(ctx context.Context, pathRoot string,
 		data.GenerateClientSecret = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `ClientSecret`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ClientSecret = tfutils.ParseStringFromGJSON(value)
+		data.ClientSecretWo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ClientSecret = types.StringNull()
+		data.ClientSecretWo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Caching`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Caching = tfutils.ParseStringFromGJSON(value)
@@ -764,7 +1955,7 @@ func (data *OAuthSupportedClient) FromBody(ctx context.Context, pathRoot string,
 	if value := res.Get(pathRoot + `RefreshTokenAllowed`); value.Exists() {
 		data.RefreshTokenAllowed = types.Int64Value(value.Int())
 	} else {
-		data.RefreshTokenAllowed = types.Int64Null()
+		data.RefreshTokenAllowed = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `RefreshTokenLifeTime`); value.Exists() {
 		data.RefreshTokenLifeTime = types.Int64Value(value.Int())
@@ -964,7 +2155,7 @@ func (data *OAuthSupportedClientWO) FromBody(ctx context.Context, pathRoot strin
 	if value := res.Get(pathRoot + `RefreshTokenAllowed`); value.Exists() {
 		data.RefreshTokenAllowed = types.Int64Value(value.Int())
 	} else {
-		data.RefreshTokenAllowed = types.Int64Null()
+		data.RefreshTokenAllowed = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `RefreshTokenLifeTime`); value.Exists() {
 		data.RefreshTokenLifeTime = types.Int64Value(value.Int())
@@ -1094,10 +2285,10 @@ func (data *OAuthSupportedClient) UpdateFromBody(ctx context.Context, pathRoot s
 	} else if !data.GenerateClientSecret.ValueBool() {
 		data.GenerateClientSecret = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `ClientSecret`); value.Exists() && !data.ClientSecret.IsNull() {
-		data.ClientSecret = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `ClientSecret`); value.Exists() && !data.ClientSecretWo.IsNull() {
+		data.ClientSecretWo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ClientSecret = types.StringNull()
+		data.ClientSecretWo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Caching`); value.Exists() && !data.Caching.IsNull() {
 		data.Caching = tfutils.ParseStringFromGJSON(value)
@@ -1166,7 +2357,7 @@ func (data *OAuthSupportedClient) UpdateFromBody(ctx context.Context, pathRoot s
 	}
 	if value := res.Get(pathRoot + `RefreshTokenAllowed`); value.Exists() && !data.RefreshTokenAllowed.IsNull() {
 		data.RefreshTokenAllowed = types.Int64Value(value.Int())
-	} else {
+	} else if data.RefreshTokenAllowed.ValueInt64() != 0 {
 		data.RefreshTokenAllowed = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `RefreshTokenLifeTime`); value.Exists() && !data.RefreshTokenLifeTime.IsNull() {
@@ -1322,11 +2513,11 @@ func (data *OAuthSupportedClient) UpdateUnknownFromBody(ctx context.Context, pat
 			data.GenerateClientSecret = types.BoolNull()
 		}
 	}
-	if data.ClientSecret.IsUnknown() {
-		if value := res.Get(pathRoot + `ClientSecret`); value.Exists() && !data.ClientSecret.IsNull() {
-			data.ClientSecret = tfutils.ParseStringFromGJSON(value)
+	if data.ClientSecretWo.IsUnknown() {
+		if value := res.Get(pathRoot + `ClientSecret`); value.Exists() && !data.ClientSecretWo.IsNull() {
+			data.ClientSecretWo = tfutils.ParseStringFromGJSON(value)
 		} else {
-			data.ClientSecret = types.StringNull()
+			data.ClientSecretWo = types.StringNull()
 		}
 	}
 	if data.Caching.IsUnknown() {
@@ -1425,7 +2616,7 @@ func (data *OAuthSupportedClient) UpdateUnknownFromBody(ctx context.Context, pat
 	if data.RefreshTokenAllowed.IsUnknown() {
 		if value := res.Get(pathRoot + `RefreshTokenAllowed`); value.Exists() && !data.RefreshTokenAllowed.IsNull() {
 			data.RefreshTokenAllowed = types.Int64Value(value.Int())
-		} else {
+		} else if data.RefreshTokenAllowed.ValueInt64() != 0 {
 			data.RefreshTokenAllowed = types.Int64Null()
 		}
 	}

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -46,6 +47,49 @@ type SLMRsrcClass struct {
 	WsrrSubscription            types.String                `tfsdk:"wsrr_subscription"`
 	WsrrSavedSearchSubscription types.String                `tfsdk:"wsrr_saved_search_subscription"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SLMRsrcClassRsrcMatchTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"xpath-filter", "request-message", "response-message", "soap-fault", "custom-stylesheet", "concurrent-connections", "concurrent-transactions", "uddi-subscription", "wsrr-subscription", "wsrr-saved-search-subscription"},
+}
+var SLMRsrcClassStylesheetCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"custom-stylesheet"},
+}
+var SLMRsrcClassXPathFilterCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"xpath-filter"},
+}
+var SLMRsrcClassSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"uddi-subscription"},
+}
+var SLMRsrcClassWSRRSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"wsrr-subscription"},
+}
+var SLMRsrcClassWSRRSavedSearchSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"wsrr-saved-search-subscription"},
 }
 
 var SLMRsrcClassObjectType = map[string]attr.Type{
@@ -112,6 +156,7 @@ func (data SLMRsrcClass) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -125,9 +170,9 @@ func (data SLMRsrcClass) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`RsrcMatchType`, data.RsrcMatchType.ValueString())
 	}
 	if !data.RsrcValue.IsNull() {
-		var values []string
-		data.RsrcValue.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.RsrcValue.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`RsrcValue`+".-1", map[string]string{"value": val})
 		}
 	}

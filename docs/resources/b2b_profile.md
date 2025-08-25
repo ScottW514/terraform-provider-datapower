@@ -20,8 +20,9 @@ resource "datapower_b2b_profile" "test" {
   app_domain    = "acceptance_test"
   business_i_ds = ["businessid"]
   destinations = [{
-    dest_name = "b2bdestinationname"
-    dest_url  = "https://localhost"
+    dest_name  = "b2bdestinationname"
+    dest_url   = "https://localhost"
+    ssl_client = "AccTest_SSLClientProfile"
   }]
 }
 ```
@@ -67,6 +68,7 @@ resource "datapower_b2b_profile" "test" {
 - `ebms3_inbound_decrypt_id_cred` (String) Inbound decryption identification credentials
   - CLI Alias: `ebms3-decrypt-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: (`profile_type`=`internal` AND `ebms3_inbound_require_encrypted`=`true`)
 - `ebms3_inbound_require_compressed` (Boolean) Specify whether internal partners require compressed inbound ebMS3 messages. The default behavior is not to require compression.
   - CLI Alias: `ebms3-require-compressed`
   - Default value: `false`
@@ -89,6 +91,7 @@ resource "datapower_b2b_profile" "test" {
 - `ebms3_outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or outbound receipt signal. The outbound receipt signal is signed if requested by a partner and this setting is configured.
   - CLI Alias: `ebms3-sign-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: (`profile_type`=`internal` AND `ebms3_outbound_sign`=`true`)
 - `ebms3_outbound_signature_alg` (String) Specify the algorithm to sign outbound ebMS3 messages. The default value is dsa-sha1, which is recommended by the ebMS specification.
   - CLI Alias: `ebms3-signature-alg`
   - Choices: `dsa-sha1`, `rsa-sha1`, `rsa-sha256`, `rsa-sha384`, `rsa-sha512`, `rsa-ripemd160`, `rsa-ripemd160-2010`, `sha256-rsa-MGF1`, `rsa-md5`, `ecdsa-sha1`, `ecdsa-sha224`, `ecdsa-sha256`, `ecdsa-sha384`, `ecdsa-sha512`
@@ -99,6 +102,7 @@ resource "datapower_b2b_profile" "test" {
 - `ebms3_receipt_ssl_client` (String) Receipt/Error TLS client profile
   - CLI Alias: `ebms3-receipt-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: (`ebms3_receipt_ssl_client_config_type`=`client` AND (`ebms_receipt_url` protocol=`https` OR `ebms_inbound_error_url` protocol=`https`) AND `profile_type`=`external` AND `ebms_inbound_send_receipt`=`true` AND `ebms_inbound_receipt_reply_pattern`=`Callback`)
 - `ebms3_receipt_ssl_client_config_type` (String) Receipt/Error TLS client type
   - CLI Alias: `ebms3-receipt-ssl-client-type`
   - Choices: `client`
@@ -128,11 +132,14 @@ resource "datapower_b2b_profile" "test" {
   - Default value: `false`
 - `ebms_error_url` (String) Specify the redirection URL to send the error message when received ebMS2 message requests an asynchronous response. When an asynchronous reply is requested by the inbound ebMS2 document, this field is used as the error reporting location to send the error message that contains the error code and the description of the problem. Error URL cannot be empty when the acknowledgment URL is specified.
   - CLI Alias: `ebms-error-url`
+  - Required When: `ebms_ack_url`!=``
 - `ebms_inbound_decrypt_id_cred` (String) Specify the identification credentials to decrypt inbound ebMS2 messages.
   - CLI Alias: `ebms-decrypt-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: (`profile_type`=`internal` AND `ebms_inbound_require_encrypted`=`true`)
 - `ebms_inbound_error_url` (String) When the error is sent asynchronously, specify the URL to send the error signal.
   - CLI Alias: `ebms-inbound-error-url`
+  - Required When: (`ebms_inbound_send_receipt`=`true` AND `ebms_inbound_receipt_reply_pattern`=`Callback` AND `profile_type`=`external`)
 - `ebms_inbound_receipt_reply_pattern` (String) Specify the pattern to send the receipt signal. The default behavior is response.
   - CLI Alias: `ebms-inbound-receipt-reply-pattern`
   - Choices: `Response`, `Callback`
@@ -160,12 +167,14 @@ resource "datapower_b2b_profile" "test" {
 - `ebms_notification_ssl_client` (String) Notification TLS client profile
   - CLI Alias: `ebms-notification-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: (`ebms_notification_ssl_client_config_type`=`client` AND `ebms_notification_url` protocol=`https` AND `profile_type`=`internal` AND `ebms_notification`=`true`)
 - `ebms_notification_ssl_client_config_type` (String) Notification TLS client type
   - CLI Alias: `ebms-notification-ssl-client-type`
   - Choices: `client`
   - Default value: `client`
 - `ebms_notification_url` (String) Notification URL
   - CLI Alias: `ebms-notification-url`
+  - Required When: `ebms_notification`=`true`
 - `ebms_outbound_sign` (Boolean) Specify whether to sign outbound messages. The default behavior is disabled. <ul><li>If enabled, signs outbound messages with the configured identification credentials and algorithm. If the configuration of a destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>If disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound acknowledgment messages. Regardless of this setting and if a partner requests a signed acknowledgment, the outbound acknowledgment is signed if this partner has a configured identification credentials.</p>
   - CLI Alias: `ebms-sign`
   - Default value: `false`
@@ -176,6 +185,7 @@ resource "datapower_b2b_profile" "test" {
 - `ebms_outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or acknowledgment. The outbound acknowledgment is signed if requested by a partner and this setting is configured. For ebMS2 messages, only <tt>X509Data</tt> and <tt>KeyName</tt> signature methods are supported.
   - CLI Alias: `ebms-sign-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: (`profile_type`=`internal` AND `ebms_outbound_sign`=`true`)
 - `ebms_outbound_signature_alg` (String) Specify the algorithm to sign the outbound ebMS2 message. The default value is dsa-sha1, which is recommended by the ebMS specification.
   - CLI Alias: `ebms-signature-alg`
   - Choices: `dsa-sha1`, `rsa-sha1`, `rsa-sha256`, `rsa-sha384`, `rsa-sha512`, `rsa-ripemd160`, `rsa-ripemd160-2010`, `sha256-rsa-MGF1`, `rsa-md5`, `ecdsa-sha1`, `ecdsa-sha224`, `ecdsa-sha256`, `ecdsa-sha384`, `ecdsa-sha512`
@@ -191,6 +201,7 @@ resource "datapower_b2b_profile" "test" {
   - CLI Alias: `profile-cpa-binding` (see [below for nested schema](#nestedatt--ebms_profile_cpa_bindings))
 - `ebms_receipt_url` (String) When the receipt reply pattern is callback, specify the URL to send the receipt signal.
   - CLI Alias: `ebms-receipt-url`
+  - Required When: (`ebms_inbound_send_receipt`=`true` AND `ebms_inbound_receipt_reply_pattern`=`Callback` AND `profile_type`=`external`)
 - `ebms_role` (String) Specify the name of authorized role of the party. When sending outbound message, the role associated with internal partner presents the <tt>From</tt> party and the role associated with external partner presents the <tt>To</tt> party. The value is referencing the <tt>Role</tt> specified in CPA. A <tt>Role</tt> is better defined as a URI, for example, http://rosettanet.org/roles/buyer.
   - CLI Alias: `ebms-role`
 - `ebms_service` (String) Specify the service to package in the outbound ebMS2 message header. This value is used when when the B2B gateway is CPA-enforced.
@@ -203,6 +214,7 @@ resource "datapower_b2b_profile" "test" {
 - `inbound_decrypt_id_cred` (String) Inbound decryption identification credentials
   - CLI Alias: `decrypt-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: (`profile_type`=`internal` AND `inbound_require_encrypted`=`true`)
 - `inbound_require_encrypted` (Boolean) Specify whether inbound AS messages must be encrypted. The default behavior is off.
   - CLI Alias: `require-encrypted`
   - Default value: `false`
@@ -229,6 +241,7 @@ resource "datapower_b2b_profile" "test" {
 - `outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or outbound MDN. The outbound MDN is signed if requested by a partner and this setting is configured.
   - CLI Alias: `sign-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Required When: (`profile_type`=`internal` AND `outbound_sign`=`true`)
 - `outbound_sign_mic_alg_version` (String) Specify the S/MIME specification version to generate the micalg parameter value in a multipart/signed message. The following value is a sample <tt>Content-Type</tt> header of the multipart/signed message. <p><tt>Content-Type: multipart/signed;protocol="application/pkcs7-signature";micalg=sha1; boundary=...</tt></p><p>The micalg parameter indicates which message digest algorithm (such as, MD5, SHA-1, SHA-256, SHA-384, and SHA-512) to use in the calculation of the Message Integrity Check (MIC). The formats of the micalg value differ between S/MIME Version 3.1 (RFC 3851) and Version 3.2 (RFC 5751).</p><ul><li>In Version 3.1, the micalg parameter value has micalg=[md5|sha1|sha256|sha384|sha512].</li><li>In Version 3.2, the micalg parameter value has micalg=[md5|sha-1|sha-256|sha-384|sha-512].</li></ul>
   - CLI Alias: `sign-micalg-version`
   - Choices: `SMIME3.1`, `SMIME3.2`

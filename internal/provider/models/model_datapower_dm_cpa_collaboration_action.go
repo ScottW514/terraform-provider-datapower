@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,21 @@ type DmCPACollaborationAction struct {
 	Capability      types.String `tfsdk:"capability"`
 	SenderSetting   types.String `tfsdk:"sender_setting"`
 	ReceiverSetting types.String `tfsdk:"receiver_setting"`
+}
+
+var DmCPACollaborationActionSenderSettingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "capability",
+	AttrType:    "String",
+	AttrDefault: "cansend",
+	Value:       []string{"cansend"},
+}
+var DmCPACollaborationActionReceiverSettingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "capability",
+	AttrType:    "String",
+	AttrDefault: "cansend",
+	Value:       []string{"canreceive"},
 }
 
 var DmCPACollaborationActionObjectType = map[string]attr.Type{
@@ -57,64 +73,77 @@ var DmCPACollaborationActionObjectDefault = map[string]attr.Value{
 	"sender_setting":   types.StringNull(),
 	"receiver_setting": types.StringNull(),
 }
-var DmCPACollaborationActionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an ID for naming the action", "name", "").String,
-			Computed:            true,
+
+func GetDmCPACollaborationActionDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmCPACollaborationActionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies an ID for naming the action", "name", "").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of Action. For outbound message, the value is used in the Action element of the ebXML Message Header. For inbound transaction, the Action value is used to identify the action binding for processing the incoming message within the Service.", "value", "").String,
+				Computed:            true,
+			},
+			"capability": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of this action binding.", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,
+				Computed:            true,
+			},
+			"sender_setting": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2b_cpa_sender_setting").String,
+				Computed:            true,
+			},
+			"receiver_setting": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2b_cpa_receiver_setting").String,
+				Computed:            true,
+			},
 		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of Action. For outbound message, the value is used in the Action element of the ebXML Message Header. For inbound transaction, the Action value is used to identify the action binding for processing the incoming message within the Service.", "value", "").String,
-			Computed:            true,
-		},
-		"capability": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of this action binding.", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,
-			Computed:            true,
-		},
-		"sender_setting": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2b_cpa_sender_setting").String,
-			Computed:            true,
-		},
-		"receiver_setting": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2b_cpa_receiver_setting").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmCPACollaborationActionDataSourceSchema
 }
-var DmCPACollaborationActionResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an ID for naming the action", "name", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(0, 128),
+func GetDmCPACollaborationActionResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmCPACollaborationActionResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies an ID for naming the action", "name", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+				},
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of Action. For outbound message, the value is used in the Action element of the ebXML Message Header. For inbound transaction, the Action value is used to identify the action binding for processing the incoming message within the Service.", "value", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+				},
+			},
+			"capability": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of this action binding.", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("cansend", "canreceive"),
+				},
+				Default: stringdefault.StaticString("cansend"),
+			},
+			"sender_setting": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2b_cpa_sender_setting").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmCPACollaborationActionSenderSettingCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"receiver_setting": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2b_cpa_receiver_setting").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmCPACollaborationActionReceiverSettingCondVal, validators.Evaluation{}, false),
+				},
 			},
 		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of Action. For outbound message, the value is used in the Action element of the ebXML Message Header. For inbound transaction, the Action value is used to identify the action binding for processing the incoming message within the Service.", "value", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(0, 128),
-			},
-		},
-		"capability": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of this action binding.", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("cansend", "canreceive"),
-			},
-			Default: stringdefault.StaticString("cansend"),
-		},
-		"sender_setting": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2b_cpa_sender_setting").String,
-			Optional:            true,
-		},
-		"receiver_setting": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2b_cpa_receiver_setting").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmCPACollaborationActionResourceSchema
 }
 
 func (data DmCPACollaborationAction) IsNull() bool {
@@ -141,6 +170,7 @@ func (data DmCPACollaborationAction) ToBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

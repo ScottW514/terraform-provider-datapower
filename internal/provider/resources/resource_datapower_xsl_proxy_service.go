@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &XSLProxyServiceResource{}
@@ -156,20 +157,22 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port to monitor for incoming client requests.", "port", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
 			"remote_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.", "remote-ip-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.", "remote-ip-address", "").AddRequiredWhen(models.XSLProxyServiceRemoteAddressCondVal.String()).String,
 				Required:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.XSLProxyServiceRemoteAddressCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"remote_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number to monitor. Used only when Type is static-backend.", "remote-port", "").AddIntegerRange(1, 65535).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number to monitor. Used only when Type is static-backend.", "remote-port", "").AddIntegerRange(1, 65535).AddRequiredWhen(models.XSLProxyServiceRemotePortCondVal.String()).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(models.XSLProxyServiceRemotePortCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"acl": schema.StringAttribute{
@@ -181,7 +184,6 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -191,7 +193,6 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 7200),
 				},
 				Default: int64default.StaticInt64(180),
@@ -265,7 +266,6 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(800),
@@ -279,17 +279,17 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"header_injection": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Header Injection", "inject", "").String,
-				NestedObject:        models.DmHeaderInjectionResourceSchema,
+				NestedObject:        models.GetDmHeaderInjectionResourceSchema(),
 				Optional:            true,
 			},
 			"header_suppression": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Headers can be suppressed (removed) from the message flow using this property. For example, the Via: header, which contains the name of the DataPower service handling the message, may be suppressed from messages sent by the DataPower device back to the client.", "suppress", "").String,
-				NestedObject:        models.DmHeaderSuppressionResourceSchema,
+				NestedObject:        models.GetDmHeaderSuppressionResourceSchema(),
 				Optional:            true,
 			},
 			"stylesheet_parameters": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Stylesheets used in Processing Policies can take stylesheet parameters. These parameters can be passed in by this object. More than one parameter can be defined.", "parameter", "").String,
-				NestedObject:        models.DmStylesheetParameterResourceSchema,
+				NestedObject:        models.GetDmStylesheetParameterResourceSchema(),
 				Optional:            true,
 			},
 			"default_param_namespace": schema.StringAttribute{
@@ -339,18 +339,18 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.XSLProxyServiceDebugHistoryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 250),
+					validators.ConditionalRequiredInt64(models.XSLProxyServiceDebugHistoryCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.", "debug-trigger", "").String,
-				NestedObject:        models.DmMSDebugTriggerTypeResourceSchema,
+				NestedObject:        models.GetDmMSDebugTriggerTypeResourceSchema(),
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{

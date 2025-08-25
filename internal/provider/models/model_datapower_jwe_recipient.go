@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,6 +43,21 @@ type JWERecipient struct {
 	Certificate       types.String                `tfsdk:"certificate"`
 	UnprotectedHeader types.List                  `tfsdk:"unprotected_header"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var JWERecipientSSKeyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "algorithm",
+	AttrType:    "String",
+	AttrDefault: "RSA1_5",
+	Value:       []string{"A128KW", "A192KW", "A256KW", "dir"},
+}
+var JWERecipientCertificateCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "algorithm",
+	AttrType:    "String",
+	AttrDefault: "RSA1_5",
+	Value:       []string{"RSA1_5", "RSA-OAEP", "RSA-OAEP-256"},
 }
 
 var JWERecipientObjectType = map[string]attr.Type{
@@ -92,6 +108,7 @@ func (data JWERecipient) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -108,9 +125,9 @@ func (data JWERecipient) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Certificate`, data.Certificate.ValueString())
 	}
 	if !data.UnprotectedHeader.IsNull() {
-		var values []DmJOSEHeader
-		data.UnprotectedHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmJOSEHeader
+		data.UnprotectedHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`+".-1", val.ToBody(ctx, ""))
 		}
 	}

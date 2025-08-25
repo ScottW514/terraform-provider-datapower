@@ -1,6 +1,7 @@
 name: DmRadiusServer
 model_only: true
 list_item: true
+write_only_attrs: true
 attributes:
 - name: Number
   type: Int64
@@ -19,7 +20,8 @@ attributes:
   description: Specify the listening port on the RADIUS server.
 - name: Secret
   type: String
+  sensitive: true
+  write_only: true
   description: Specify the password login to the RADIUS server. You must confirm the
     password for accuracy.
-  required_when:
-  - evaluation: is-edit-new-object
+  required: true

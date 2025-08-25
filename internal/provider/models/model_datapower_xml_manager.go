@@ -197,6 +197,7 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -225,9 +226,9 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`SearchResults`, tfutils.StringFromBool(data.SearchResults, ""))
 	}
 	if !data.VirtualServers.IsNull() {
-		var values []string
-		data.VirtualServers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.VirtualServers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`VirtualServers`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -265,23 +266,23 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DocMaxWrites`, data.DocMaxWrites.ValueInt64())
 	}
 	if !data.DocCachePolicy.IsNull() {
-		var values []DmDocCachePolicy
-		data.DocCachePolicy.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmDocCachePolicy
+		data.DocCachePolicy.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.SchemaValidation.IsNull() {
-		var values []DmSchemaValidation
-		data.SchemaValidation.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSchemaValidation
+		data.SchemaValidation.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`SchemaValidation`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.ScheduledRule.IsNull() {
-		var values []DmScheduledRule
-		data.ScheduledRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmScheduledRule
+		data.ScheduledRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}

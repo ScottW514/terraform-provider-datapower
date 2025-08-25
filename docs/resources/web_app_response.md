@@ -53,6 +53,7 @@ resource "datapower_web_app_response" "test" {
 - `non_xml_rule` (String) This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.
   - CLI Alias: `response-nonxml-rule`
   - Reference to: `datapower_style_policy_rule:id`
+  - Required When: `non_xml_policy`=`side`|`binary`
 - `ok_codes` (Attributes) Specify which response codes from the backend server are acceptable.
   - CLI Alias: `response-codes` (see [below for nested schema](#nestedatt--ok_codes))
 - `ok_versions` (Attributes) Specify which HTTP versions are acceptable from the backend server.
@@ -70,6 +71,7 @@ resource "datapower_web_app_response" "test" {
 - `xml_rule` (String) This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.
   - CLI Alias: `response-xml-rule`
   - Reference to: `datapower_style_policy_rule:id`
+  - Required When: `xml_policy`=`xml`|`soap`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

@@ -98,7 +98,6 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 1440),
 				},
 				Default: int64default.StaticInt64(1440),

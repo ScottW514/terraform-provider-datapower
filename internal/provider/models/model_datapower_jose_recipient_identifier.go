@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,6 +43,21 @@ type JOSERecipientIdentifier struct {
 	SsKey             types.String                `tfsdk:"ss_key"`
 	HeaderParam       types.List                  `tfsdk:"header_param"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var JOSERecipientIdentifierKeyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"key"},
+}
+var JOSERecipientIdentifierSSKeyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"sskey"},
 }
 
 var JOSERecipientIdentifierObjectType = map[string]attr.Type{
@@ -92,6 +108,7 @@ func (data JOSERecipientIdentifier) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -108,9 +125,9 @@ func (data JOSERecipientIdentifier) ToBody(ctx context.Context, pathRoot string)
 		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.SsKey.ValueString())
 	}
 	if !data.HeaderParam.IsNull() {
-		var values []DmJOSEHeader
-		data.HeaderParam.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmJOSEHeader
+		data.HeaderParam.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderParam`+".-1", val.ToBody(ctx, ""))
 		}
 	}

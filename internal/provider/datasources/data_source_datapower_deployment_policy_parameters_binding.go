@@ -82,7 +82,7 @@ func (d *DeploymentPolicyParametersBindingDataSource) Schema(ctx context.Context
 						},
 						"deployment_policy_parameter": schema.ListNestedAttribute{
 							MarkdownDescription: "A list of name-value pairs. The name specifies a variable in a deployment policy, which will be replaced by its associated value before applying the policy to a configuration import.",
-							NestedObject:        models.DmDeploymentPolicyParameterDataSourceSchema,
+							NestedObject:        models.GetDmDeploymentPolicyParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -51,42 +51,49 @@ var DmWebSphereJMSEndpointObjectDefault = map[string]attr.Value{
 	"port":      types.Int64Null(),
 	"transport": types.StringValue("TCP"),
 }
-var DmWebSphereJMSEndpointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
-			Computed:            true,
-		},
-		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port number of a bootstrap server.", "", "").String,
-			Computed:            true,
-		},
-		"transport": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the predefined transport chain for the bootstrap server. This connection is used to exchange information between the DataPower Gateway and the bootstrap server. By default, uses the predefined <tt>BootstrapBasicMessaging</tt> transport chain.", "", "").AddStringEnum("TCP", "SSL", "HTTP", "HTTPS").AddDefaultValue("TCP").String,
-			Computed:            true,
-		},
-	},
-}
-var DmWebSphereJMSEndpointResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
-			Required:            true,
-		},
-		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port number of a bootstrap server.", "", "").String,
-			Required:            true,
-		},
-		"transport": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the predefined transport chain for the bootstrap server. This connection is used to exchange information between the DataPower Gateway and the bootstrap server. By default, uses the predefined <tt>BootstrapBasicMessaging</tt> transport chain.", "", "").AddStringEnum("TCP", "SSL", "HTTP", "HTTPS").AddDefaultValue("TCP").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("TCP", "SSL", "HTTP", "HTTPS"),
+
+func GetDmWebSphereJMSEndpointDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWebSphereJMSEndpointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"host": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("TCP"),
+			"port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port number of a bootstrap server.", "", "").String,
+				Computed:            true,
+			},
+			"transport": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the predefined transport chain for the bootstrap server. This connection is used to exchange information between the DataPower Gateway and the bootstrap server. By default, uses the predefined <tt>BootstrapBasicMessaging</tt> transport chain.", "", "").AddStringEnum("TCP", "SSL", "HTTP", "HTTPS").AddDefaultValue("TCP").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmWebSphereJMSEndpointDataSourceSchema
+}
+func GetDmWebSphereJMSEndpointResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWebSphereJMSEndpointResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"host": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
+				Required:            true,
+			},
+			"port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port number of a bootstrap server.", "", "").String,
+				Required:            true,
+			},
+			"transport": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the predefined transport chain for the bootstrap server. This connection is used to exchange information between the DataPower Gateway and the bootstrap server. By default, uses the predefined <tt>BootstrapBasicMessaging</tt> transport chain.", "", "").AddStringEnum("TCP", "SSL", "HTTP", "HTTPS").AddDefaultValue("TCP").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("TCP", "SSL", "HTTP", "HTTPS"),
+				},
+				Default: stringdefault.StaticString("TCP"),
+			},
+		},
+	}
+	return DmWebSphereJMSEndpointResourceSchema
 }
 
 func (data DmWebSphereJMSEndpoint) IsNull() bool {
@@ -107,6 +114,7 @@ func (data DmWebSphereJMSEndpoint) ToBody(ctx context.Context, pathRoot string) 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Host.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Host`, data.Host.ValueString())
 	}

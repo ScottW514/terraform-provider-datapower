@@ -45,29 +45,36 @@ var DmAssemblyCatchObjectDefault = map[string]attr.Value{
 	"error":   types.StringNull(),
 	"handler": types.StringNull(),
 }
-var DmAssemblyCatchDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"error": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of a custom error.", "", "").String,
-			Computed:            true,
+
+func GetDmAssemblyCatchDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAssemblyCatchDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"error": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of a custom error.", "", "").String,
+				Computed:            true,
+			},
+			"handler": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the error handler for the custom error.", "", "api_rule").String,
+				Computed:            true,
+			},
 		},
-		"handler": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the error handler for the custom error.", "", "api_rule").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAssemblyCatchDataSourceSchema
 }
-var DmAssemblyCatchResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"error": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of a custom error.", "", "").String,
-			Required:            true,
+func GetDmAssemblyCatchResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAssemblyCatchResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"error": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of a custom error.", "", "").String,
+				Required:            true,
+			},
+			"handler": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the error handler for the custom error.", "", "api_rule").String,
+				Required:            true,
+			},
 		},
-		"handler": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the error handler for the custom error.", "", "api_rule").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmAssemblyCatchResourceSchema
 }
 
 func (data DmAssemblyCatch) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmAssemblyCatch) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Error.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Error`, data.Error.ValueString())
 	}

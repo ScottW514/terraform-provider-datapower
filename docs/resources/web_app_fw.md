@@ -64,6 +64,7 @@ resource "datapower_web_app_fw" "test" {
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
+  - Required When: `debug_mode`=`true`
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
@@ -77,6 +78,7 @@ resource "datapower_web_app_fw" "test" {
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
+  - Required When: (`delay_errors`=`true` AND `rewrite_errors`=`true`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `do_chunked_upload` (Boolean) Use the radio buttons to enable (on) or disable (off) the ability to send Content-Type Chunked Encoded documents to the back end server. When the device employs the HTTP/1.1 protocol, the body of the document can be delimited by either Content-Length or chunked encodings. While all servers will understand how to interpret Content-Length, many applications will fail to understand Chunked encoding. For this reason, Content-Length is the standard method used. However doing so interferes with the ability of the device to fully stream. To stream full documents towards the back end server, this property should be turned on. However, the back end server must be RFC 2616 compatible, because this feature cannot be renegotiated at run time, unlike all other HTTP/1.1 features which can be negotiated down at runtime if necessary. This property can also be enabled by configuring a User Agent to enable it on a per-URL basis.
   - CLI Alias: `chunked-uploads`

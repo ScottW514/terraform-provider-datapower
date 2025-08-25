@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -57,6 +58,28 @@ type MQv9PlusSourceProtocolHandler struct {
 	RetrieveBackoutSettings types.Bool                  `tfsdk:"retrieve_backout_settings"`
 	UseQmNameInUrl          types.Bool                  `tfsdk:"use_qm_name_in_url"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var MQv9PlusSourceProtocolHandlerGetQueueCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "subscribe_topic_string",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{""},
+}
+var MQv9PlusSourceProtocolHandlerSubscribeTopicStringCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "get_queue",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{""},
+}
+var MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "content_type_header",
+	AttrType:    "String",
+	AttrDefault: "None",
+	Value:       []string{"MQRFH", "MQRFH2"},
 }
 
 var MQv9PlusSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -169,6 +192,7 @@ func (data MQv9PlusSourceProtocolHandler) ToBody(ctx context.Context, pathRoot s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -46,6 +47,42 @@ type B2BCPACollaboration struct {
 	ReceiverMshSetting   types.String                `tfsdk:"receiver_msh_setting"`
 	Actions              types.List                  `tfsdk:"actions"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var B2BCPACollaborationInternalRoleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
+}
+var B2BCPACollaborationExternalRoleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
+}
+var B2BCPACollaborationSenderMshSettingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
+}
+var B2BCPACollaborationReceiverMshSettingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
+}
+var B2BCPACollaborationActionsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
 }
 
 var B2BCPACollaborationObjectType = map[string]attr.Type{
@@ -112,6 +149,7 @@ func (data B2BCPACollaboration) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -140,9 +178,9 @@ func (data B2BCPACollaboration) ToBody(ctx context.Context, pathRoot string) str
 		body, _ = sjson.Set(body, pathRoot+`ReceiverMshSetting`, data.ReceiverMshSetting.ValueString())
 	}
 	if !data.Actions.IsNull() {
-		var values []DmCPACollaborationAction
-		data.Actions.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmCPACollaborationAction
+		data.Actions.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Actions`+".-1", val.ToBody(ctx, ""))
 		}
 	}

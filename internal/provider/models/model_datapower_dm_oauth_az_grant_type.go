@@ -65,99 +65,114 @@ var DmOAuthAZGrantTypeObjectDefault = map[string]attr.Value{
 	"oidc":         types.BoolValue(false),
 	"saml20bearer": types.BoolValue(false),
 }
-var DmOAuthAZGrantTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"code": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authorization Code Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmOAuthAZGrantTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmOAuthAZGrantTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"code": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authorization Code Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"implicit": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Implicit Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"password": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner Password Credential Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"client": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client Credentials Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"jwt": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("JWT Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"novalidate": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Disable Validation Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"oidc": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("OpenID Connect", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"saml20bearer": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"implicit": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Implicit Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"password": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner Password Credential Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"client": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client Credentials Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"jwt": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("JWT Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"novalidate": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Disable Validation Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"oidc": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("OpenID Connect", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"saml20bearer": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmOAuthAZGrantTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmOAuthAZGrantTypeDataSourceSchema
 }
-var DmOAuthAZGrantTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmOAuthAZGrantTypeObjectType,
-			DmOAuthAZGrantTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"code": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authorization Code Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmOAuthAZGrantTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmOAuthAZGrantTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmOAuthAZGrantTypeObjectType,
+				DmOAuthAZGrantTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"code": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authorization Code Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"implicit": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Implicit Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"password": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner Password Credential Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"client": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client Credentials Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"jwt": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("JWT Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"novalidate": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Disable Validation Grant", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"oidc": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("OpenID Connect", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"saml20bearer": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"implicit": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Implicit Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"password": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner Password Credential Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"client": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client Credentials Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"jwt": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("JWT Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"novalidate": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Disable Validation Grant", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"oidc": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("OpenID Connect", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"saml20bearer": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmOAuthAZGrantTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmOAuthAZGrantTypeResourceSchema.Required = true
+	} else {
+		DmOAuthAZGrantTypeResourceSchema.Optional = true
+		DmOAuthAZGrantTypeResourceSchema.Computed = true
+	}
+	return DmOAuthAZGrantTypeResourceSchema
 }
 
 func (data DmOAuthAZGrantType) IsNull() bool {
@@ -187,27 +202,13 @@ func (data DmOAuthAZGrantType) IsNull() bool {
 	}
 	return true
 }
-func GetDmOAuthAZGrantTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmOAuthAZGrantTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmOAuthAZGrantTypeDataSourceSchema
-}
-
-func GetDmOAuthAZGrantTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmOAuthAZGrantTypeResourceSchema.Required = true
-	} else {
-		DmOAuthAZGrantTypeResourceSchema.Optional = true
-		DmOAuthAZGrantTypeResourceSchema.Computed = true
-	}
-	DmOAuthAZGrantTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmOAuthAZGrantTypeResourceSchema
-}
 
 func (data DmOAuthAZGrantType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Code.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`code`, tfutils.StringFromBool(data.Code, ""))
 	}

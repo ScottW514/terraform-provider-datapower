@@ -86,7 +86,7 @@ func (d *AssemblyDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 						},
 						"catch": schema.ListNestedAttribute{
 							MarkdownDescription: "Specifies how to handle a specific error when it occurs during the assembly execution.",
-							NestedObject:        models.DmAssemblyCatchDataSourceSchema,
+							NestedObject:        models.GetDmAssemblyCatchDataSourceSchema(),
 							Computed:            true,
 						},
 						"default_catch": schema.StringAttribute{

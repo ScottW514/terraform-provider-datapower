@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -49,6 +50,28 @@ type B2BCPAReceiverSetting struct {
 	VerifyValCred         types.String                `tfsdk:"verify_val_cred"`
 	DefaultSignerCert     types.String                `tfsdk:"default_signer_cert"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var B2BCPAReceiverSettingDecryptIdCredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "encryption_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPAReceiverSettingVerifyValCredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "signature_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPAReceiverSettingDefaultSignerCertCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "signature_required",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var B2BCPAReceiverSettingObjectType = map[string]attr.Type{
@@ -127,6 +150,7 @@ func (data B2BCPAReceiverSetting) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

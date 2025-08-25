@@ -45,29 +45,36 @@ var DmWebGWErrorPolicyMapObjectDefault = map[string]attr.Value{
 	"match":  types.StringNull(),
 	"action": types.StringNull(),
 }
-var DmWebGWErrorPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that defines the matching criteria.", "", "matching").String,
-			Computed:            true,
+
+func GetDmWebGWErrorPolicyMapDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWebGWErrorPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"match": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that defines the matching criteria.", "", "matching").String,
+				Computed:            true,
+			},
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the error action that handles the errors and generates responses.", "", "mpgw_error_action").String,
+				Computed:            true,
+			},
 		},
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the error action that handles the errors and generates responses.", "", "mpgw_error_action").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmWebGWErrorPolicyMapDataSourceSchema
 }
-var DmWebGWErrorPolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that defines the matching criteria.", "", "matching").String,
-			Required:            true,
+func GetDmWebGWErrorPolicyMapResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWebGWErrorPolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"match": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that defines the matching criteria.", "", "matching").String,
+				Required:            true,
+			},
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the error action that handles the errors and generates responses.", "", "mpgw_error_action").String,
+				Required:            true,
+			},
 		},
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the error action that handles the errors and generates responses.", "", "mpgw_error_action").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmWebGWErrorPolicyMapResourceSchema
 }
 
 func (data DmWebGWErrorPolicyMap) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmWebGWErrorPolicyMap) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Match.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Match`, data.Match.ValueString())
 	}

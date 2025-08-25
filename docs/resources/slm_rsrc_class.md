@@ -36,6 +36,7 @@ resource "datapower_slm_rsrc_class" "test" {
   - CLI Alias: `match-type`
   - Choices: `per-extracted-value`, `exact-match`, `regexp-match`
   - Default value: `per-extracted-value`
+  - Required When: `rsrc_type`!=`xpath-filter`|`request-message`|`response-message`|`soap-fault`|`custom-stylesheet`|`concurrent-connections`|`concurrent-transactions`|`uddi-subscription`|`wsrr-subscription`|`wsrr-saved-search-subscription`
 - `rsrc_type` (String) Resource type
   - CLI Alias: `type`
   - Choices: `aaa-mapped-resource`, `front-url`, `destination-url`, `xpath-filter`, `request-message`, `response-message`, `soap-fault`, `errorcode`, `custom-stylesheet`, `concurrent-connections`, `concurrent-transactions`, `wsdl`, `wsdl-service`, `wsdl-port`, `wsdl-operation`, `request-mq-qname`, `reply-mq-qname`, `uddi-subscription`, `wsrr-subscription`, `wsrr-saved-search-subscription`
@@ -44,18 +45,23 @@ resource "datapower_slm_rsrc_class" "test" {
   - CLI Alias: `value`
 - `stylesheet` (String) Custom stylesheet
   - CLI Alias: `stylesheet`
+  - Required When: `rsrc_type`=`custom-stylesheet`
 - `subscription` (String) UDDI subscription (deprecated)
   - CLI Alias: `subscription`
+  - Required When: `rsrc_type`=`uddi-subscription`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `wsrr_saved_search_subscription` (String) WSRR saved search subscription
   - CLI Alias: `wsrr-saved-search-subscription`
   - Reference to: `datapower_wsrr_saved_search_subscription:id`
+  - Required When: `rsrc_type`=`wsrr-saved-search-subscription`
 - `wsrr_subscription` (String) WSRR subscription
   - CLI Alias: `wsrr-subscription`
   - Reference to: `datapower_wsrr_subscription:id`
+  - Required When: `rsrc_type`=`wsrr-subscription`
 - `x_path_filter` (String) XPath filter
   - CLI Alias: `xpath-filter`
+  - Required When: `rsrc_type`=`xpath-filter`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

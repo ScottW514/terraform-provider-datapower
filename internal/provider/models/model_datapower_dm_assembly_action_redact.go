@@ -48,34 +48,41 @@ var DmAssemblyActionRedactObjectDefault = map[string]attr.Value{
 	"path":   types.StringNull(),
 	"action": types.StringValue("redact"),
 }
-var DmAssemblyActionRedactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata path expression to the content.", "path", "").String,
-			Computed:            true,
-		},
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to redact or remove the content.", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
-			Computed:            true,
-		},
-	},
-}
-var DmAssemblyActionRedactResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata path expression to the content.", "path", "").String,
-			Required:            true,
-		},
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to redact or remove the content.", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("redact", "remove"),
+
+func GetDmAssemblyActionRedactDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAssemblyActionRedactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata path expression to the content.", "path", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("redact"),
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to redact or remove the content.", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmAssemblyActionRedactDataSourceSchema
+}
+func GetDmAssemblyActionRedactResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAssemblyActionRedactResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata path expression to the content.", "path", "").String,
+				Required:            true,
+			},
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to redact or remove the content.", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("redact", "remove"),
+				},
+				Default: stringdefault.StaticString("redact"),
+			},
+		},
+	}
+	return DmAssemblyActionRedactResourceSchema
 }
 
 func (data DmAssemblyActionRedact) IsNull() bool {
@@ -93,6 +100,7 @@ func (data DmAssemblyActionRedact) ToBody(ctx context.Context, pathRoot string) 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Path.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Path`, data.Path.ValueString())
 	}

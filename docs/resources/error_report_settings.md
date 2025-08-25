@@ -32,6 +32,7 @@ resource "datapower_error_report_settings" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `email_address` (String) Specify the e-mail address to which to send the error report.
   - CLI Alias: `email-address`
+  - Required When: (`use_smtp`=`true` OR (`upload_report`=`true` AND `protocol`=`smtp`))
 - `email_sender_address` (String) Specify the e-mail address of the sender ( <tt>MAIL FROM</tt> ). If not specified, the configuration uses the e-mail address of the recipient.
   - CLI Alias: `email-sender-address`
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
@@ -50,33 +51,40 @@ resource "datapower_error_report_settings" "test" {
   - CLI Alias: `ftp-path`
 - `ftp_server` (String) Specify the host name or IP address of the remote FTP server to which to upload the error report.
   - CLI Alias: `ftp-server`
+  - Required When: (`upload_report`=`true` AND `protocol`=`ftp`)
 - `ftp_user_agent` (String) Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.
   - CLI Alias: `ftp-user-agent`
   - Reference to: `datapower_http_user_agent:id`
+  - Required When: (`upload_report`=`true` AND `protocol`=`ftp`)
 - `internal_state` (Boolean) Specify whether to include the internal state of the appliance in the error report. The internal state can be useful in diagnosing the cause of the error.
   - CLI Alias: `internal-state`
   - Default value: `false`
 - `location_identifier` (String) Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.
   - CLI Alias: `location-id`
+  - Required When: `use_smtp`=`true`
 - `nfs_mount` (String) Specify the NFS mount point to which to upload the error report.
   - CLI Alias: `nfs-mount`
   - Reference to: `datapower_nfs_static_mount:id`
+  - Required When: (`upload_report`=`true` AND `protocol`=`nfs`)
 - `nfs_path` (String) This describes the NFS path location for the Error Report
   - CLI Alias: `nfs-path`
 - `protocol` (String) Specify the protocol to use to upload the error report. Note that the selection you will see depends on your device features and licenses.
   - CLI Alias: `protocol`
   - Choices: `ftp`, `nfs`, `raid`, `smtp`, `temporary`, `mqdiag`
+  - Required When: `upload_report`=`true`
 - `raid_path` (String) Specify the directory on the RAID volume to which to upload the error report.
   - CLI Alias: `raid-path`
 - `raid_volume` (String) Specify the volume on the RAID array to which to upload the error report.
   - CLI Alias: `raid-volume`
   - Reference to: `datapower_raid_volume:id`
+  - Required When: (`upload_report`=`true` AND `protocol`=`raid`)
 - `report_history_kept` (Number) <p>Specify the maximum number of local error reports to maintain when using the upload error report feature. After reaching this limit, the next local error report overwrites the oldest local error report. Use any value of 2 - 10. The default value is 5.</p><p>This feature only applies to locally stored error reports, including temporary and Raid.</p><p>To view the history, see the Failure Notification status provider.</p>
   - CLI Alias: `report-history`
   - Range: `2`-`10`
   - Default value: `5`
 - `smtp_server` (String) Specify the host name or IP address of the remote SMTP server to which to send the error report.
   - CLI Alias: `remote-address`
+  - Required When: (`use_smtp`=`true` OR (`upload_report`=`true` AND `protocol`=`smtp`))
 - `upload_report` (Boolean) <p>Specify whether to upload the error report to an NFS, RAID, SMTP, or FTP destination or write the error report to the local temporary directory. If you enable this feature:</p><ul><li>It enables the Failure Notification status provider, which tracks previous error reports</li><li>It changes the naming convention to include the serial number of the appliance and the timestamp, which prevents one report overwriting another</li></ul>
   - CLI Alias: `upload-report`
   - Default value: `false`

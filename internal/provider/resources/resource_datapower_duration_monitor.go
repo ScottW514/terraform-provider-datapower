@@ -90,7 +90,7 @@ func (r *DurationMonitorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"filter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Click this tab to define a message-duration monitor threshold and assign an action taken when the threshold is reached.", "filter", "").String,
-				NestedObject:        models.DmDurationMonitorFilterResourceSchema,
+				NestedObject:        models.GetDmDurationMonitorFilterResourceSchema(),
 				Optional:            true,
 			},
 			"user_summary": schema.StringAttribute{

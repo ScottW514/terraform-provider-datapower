@@ -59,79 +59,94 @@ var DmHostKeyAlgorithmsObjectDefault = map[string]attr.Value{
 	"rsa_sha2_512":        types.BoolValue(false),
 	"rsa_sha2_256":        types.BoolValue(false),
 }
-var DmHostKeyAlgorithmsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"ssh_ed25519": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ssh-ed25519", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmHostKeyAlgorithmsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmHostKeyAlgorithmsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"ssh_ed25519": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("ssh-ed25519", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"ecdsa_sha2_nistp256": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp256", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"ecdsa_sha2_nistp384": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp384", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"ecdsa_sha2_nistp521": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp521", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"rsa_sha2_512": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-512", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"rsa_sha2_256": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-256", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"ecdsa_sha2_nistp256": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp256", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"ecdsa_sha2_nistp384": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp384", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"ecdsa_sha2_nistp521": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp521", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"rsa_sha2_512": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-512", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"rsa_sha2_256": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-256", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmHostKeyAlgorithmsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmHostKeyAlgorithmsDataSourceSchema
 }
-var DmHostKeyAlgorithmsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmHostKeyAlgorithmsObjectType,
-			DmHostKeyAlgorithmsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"ssh_ed25519": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ssh-ed25519", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmHostKeyAlgorithmsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmHostKeyAlgorithmsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmHostKeyAlgorithmsObjectType,
+				DmHostKeyAlgorithmsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"ssh_ed25519": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("ssh-ed25519", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"ecdsa_sha2_nistp256": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp256", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"ecdsa_sha2_nistp384": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp384", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"ecdsa_sha2_nistp521": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp521", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"rsa_sha2_512": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-512", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"rsa_sha2_256": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-256", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"ecdsa_sha2_nistp256": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp256", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"ecdsa_sha2_nistp384": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp384", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"ecdsa_sha2_nistp521": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp521", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"rsa_sha2_512": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-512", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"rsa_sha2_256": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-256", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmHostKeyAlgorithmsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmHostKeyAlgorithmsResourceSchema.Required = true
+	} else {
+		DmHostKeyAlgorithmsResourceSchema.Optional = true
+		DmHostKeyAlgorithmsResourceSchema.Computed = true
+	}
+	return DmHostKeyAlgorithmsResourceSchema
 }
 
 func (data DmHostKeyAlgorithms) IsNull() bool {
@@ -155,27 +170,13 @@ func (data DmHostKeyAlgorithms) IsNull() bool {
 	}
 	return true
 }
-func GetDmHostKeyAlgorithmsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmHostKeyAlgorithmsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmHostKeyAlgorithmsDataSourceSchema
-}
-
-func GetDmHostKeyAlgorithmsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmHostKeyAlgorithmsResourceSchema.Required = true
-	} else {
-		DmHostKeyAlgorithmsResourceSchema.Optional = true
-		DmHostKeyAlgorithmsResourceSchema.Computed = true
-	}
-	DmHostKeyAlgorithmsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmHostKeyAlgorithmsResourceSchema
-}
 
 func (data DmHostKeyAlgorithms) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.SshEd25519.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSH-ED25519`, tfutils.StringFromBool(data.SshEd25519, ""))
 	}

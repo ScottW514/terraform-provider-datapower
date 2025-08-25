@@ -11,7 +11,7 @@ attributes:
     or GatewayScript that extracts identity information from the candidate XML document.
   cli_alias: custom-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
     - custom
@@ -23,7 +23,7 @@ attributes:
     identity uses the string value for this expression.
   cli_alias: xpath
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
     - token
@@ -35,7 +35,7 @@ attributes:
   description: Specify the validation credentials to verify the signer certificate.
   cli_alias: valcred
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EIBitmap
     value:
     - signer-dn
@@ -45,7 +45,7 @@ attributes:
     as the identity token.
   cli_alias: cookie-name
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
     - cookie-token
@@ -59,7 +59,7 @@ attributes:
     which credentials must be supplied. The default value is <tt>login</tt> .
   cli_alias: basic-auth-realm
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EIBitmap
     value:
     - http-basic-auth
@@ -74,7 +74,7 @@ attributes:
     extracted somewhere other than the WS-Security <tt>Security</tt> header.</li></ul>
   cli_alias: use-wssec-token
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
     - ltpa
@@ -89,7 +89,7 @@ attributes:
     for the current processing rule.</li></ul>
   cli_alias: metadata
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: EIBitmap
     value:
     - metadata
@@ -122,10 +122,10 @@ attributes:
       attribute: EIBitmap
       value:
       - signer-dn
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIAllowRemoteTokenReference
       value:
-      - 'off'
+      - false
 - name: EIPasswordRetrievalMechanism
   type: String
   enum:
@@ -136,7 +136,7 @@ attributes:
     to calculate the derived symmetric key.
   cli_alias: password-retrieval-method
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
     - wssec-derived-key
@@ -149,11 +149,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIBitmap
       value:
       - wssec-derived-key
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIPasswordRetrievalMechanism
       value:
       - custom
@@ -166,11 +166,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIBitmap
       value:
       - wssec-derived-key
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIPasswordRetrievalMechanism
       value:
       - xmlfile
@@ -216,10 +216,10 @@ attributes:
       attribute: EIBitmap
       value:
       - signer-dn
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIAllowRemoteTokenReference
       value:
-      - 'off'
+      - false
 - name: EISSLClientProfile
   type: String
   reference_to: SSLClientProfile
@@ -232,11 +232,11 @@ attributes:
       attribute: EIBitmap
       value:
       - signer-dn
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EIAllowRemoteTokenReference
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: EISSLClientConfigType
       value:
       - client
@@ -276,11 +276,11 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EIBitmap
       value:
       - saml-attr-name
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: EIBitmap
       value:
       - saml-authen-name

@@ -82,7 +82,7 @@ func (d *GitOpsTemplateDataSource) Schema(ctx context.Context, req datasource.Sc
 						},
 						"templates": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the GitOps templates to modify the DataPower configuration. Template processing is in the order of the read or write GitOps operation.",
-							NestedObject:        models.DmGitOpsTemplateEntryDataSourceSchema,
+							NestedObject:        models.GetDmGitOpsTemplateEntryDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -46,6 +46,7 @@ resource "datapower_mgmt_interface" "test" {
 - `slm_peering` (Number) SLM update interval
   - CLI Alias: `slm-peering`
   - Default value: `10`
+  - Required When: `mode`=`slm`
 - `ssl_config_type` (String) Custom TLS server type
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
@@ -56,6 +57,7 @@ resource "datapower_mgmt_interface" "test" {
 - `sslsni_server` (String) Custom TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Required When: `ssl_config_type`=`sni`
 - `user_agent` (String) Custom user agent
   - CLI Alias: `user-agent`
   - Reference to: `datapower_http_user_agent:id`

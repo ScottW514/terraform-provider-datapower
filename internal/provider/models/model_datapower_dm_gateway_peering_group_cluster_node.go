@@ -47,32 +47,39 @@ var DmGatewayPeeringGroupClusterNodeObjectDefault = map[string]attr.Value{
 	"host":        types.StringNull(),
 	"local_nodes": types.StringNull(),
 }
-var DmGatewayPeeringGroupClusterNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
-			Computed:            true,
-		},
-		"local_nodes": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a comma-separated list of the local IP addresses or host aliases of the other nodes that are in the same data center.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmGatewayPeeringGroupClusterNodeResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+
+func GetDmGatewayPeeringGroupClusterNodeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmGatewayPeeringGroupClusterNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"host": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
+				Computed:            true,
+			},
+			"local_nodes": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a comma-separated list of the local IP addresses or host aliases of the other nodes that are in the same data center.", "", "").String,
+				Computed:            true,
 			},
 		},
-		"local_nodes": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a comma-separated list of the local IP addresses or host aliases of the other nodes that are in the same data center.", "", "").String,
-			Optional:            true,
+	}
+	return DmGatewayPeeringGroupClusterNodeDataSourceSchema
+}
+func GetDmGatewayPeeringGroupClusterNodeResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmGatewayPeeringGroupClusterNodeResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"host": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+				},
+			},
+			"local_nodes": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a comma-separated list of the local IP addresses or host aliases of the other nodes that are in the same data center.", "", "").String,
+				Optional:            true,
+			},
 		},
-	},
+	}
+	return DmGatewayPeeringGroupClusterNodeResourceSchema
 }
 
 func (data DmGatewayPeeringGroupClusterNode) IsNull() bool {
@@ -90,6 +97,7 @@ func (data DmGatewayPeeringGroupClusterNode) ToBody(ctx context.Context, pathRoo
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Host.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Host`, data.Host.ValueString())
 	}

@@ -125,21 +125,21 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSLClientConfigType
         value:
         - proxy
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSLProfile
         value:
         - ''
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSLClientConfigType
         value:
         - client
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSLClient
         value:
         - ''
@@ -156,21 +156,21 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSLClientConfigType
         value:
         - proxy
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSLProfile
         value:
         - ''
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSLClientConfigType
         value:
         - client
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: SSLClient
         value:
         - ''
@@ -280,7 +280,7 @@ attributes:
   description: TLS client profile
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLClientConfigType
     value:
     - proxy

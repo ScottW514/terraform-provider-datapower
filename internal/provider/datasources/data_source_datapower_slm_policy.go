@@ -86,7 +86,7 @@ func (d *SLMPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						},
 						"statement": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the policy statement that establishes criteria to select messages, to set a measurement interval, to set thresholds, and to determine the action to take when the threshold is met. A policy can have multiple statements that run in the sequence defined by the statement identifier.",
-							NestedObject:        models.DmSLMStatementDataSourceSchema,
+							NestedObject:        models.GetDmSLMStatementDataSourceSchema(),
 							Computed:            true,
 						},
 						"peer_group": schema.StringAttribute{

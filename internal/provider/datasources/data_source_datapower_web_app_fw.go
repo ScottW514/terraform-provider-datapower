@@ -86,7 +86,7 @@ func (d *WebAppFWDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 						},
 						"front_side": schema.ListNestedAttribute{
 							MarkdownDescription: "Source Addresses",
-							NestedObject:        models.DmFrontSideDataSourceSchema,
+							NestedObject:        models.GetDmFrontSideDataSourceSchema(),
 							Computed:            true,
 						},
 						"remote_address": schema.StringAttribute{
@@ -195,7 +195,7 @@ func (d *WebAppFWDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 						},
 						"debug_trigger": schema.ListNestedAttribute{
 							MarkdownDescription: "The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.",
-							NestedObject:        models.DmMSDebugTriggerTypeDataSourceSchema,
+							NestedObject:        models.GetDmMSDebugTriggerTypeDataSourceSchema(),
 							Computed:            true,
 						},
 						"url_rewrite_policy": schema.StringAttribute{

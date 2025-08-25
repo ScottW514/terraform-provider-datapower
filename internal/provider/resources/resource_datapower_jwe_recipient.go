@@ -37,6 +37,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &JWERecipientResource{}
@@ -93,16 +94,22 @@ func (r *JWERecipientResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("RSA1_5"),
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").AddRequiredWhen(models.JWERecipientSSKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.JWERecipientSSKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Certificate.", "cert", "crypto_certificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Certificate.", "cert", "crypto_certificate").AddRequiredWhen(models.JWERecipientCertificateCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.JWERecipientCertificateCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"unprotected_header": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Unprotected header for the JWE recipient.", "unprotected-header", "").String,
-				NestedObject:        models.DmJOSEHeaderResourceSchema,
+				NestedObject:        models.GetDmJOSEHeaderResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -61,6 +61,7 @@ resource "datapower_name_value_profile" "test" {
 - `no_match_xss_patterns_file` (String) Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.
   - CLI Alias: `unvalidated-xss-patternsfile`
   - Default value: `store:///XSS-Patterns.xml`
+  - Required When: `default_xss`=`true`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `validation_list` (Attributes List) Each pair submitted to this profile consults this validation list, looking for the first regular expression match of the name against the name expression in the list. When that is found, the corresponding value constraint is matched against the value portion of the name-value pair. If that does not match, the policy applies the 'fixup' attribute to the submitted value. That may result in no change, the pair being removed, an error being generated, or the value being mapped to a known constant.

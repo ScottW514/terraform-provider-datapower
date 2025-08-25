@@ -48,7 +48,7 @@ attributes:
     a hint.
   cli_alias: bearer-format
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Scheme
     value:
     - bearer
@@ -61,7 +61,7 @@ attributes:
   description: Bearer validation method
   cli_alias: bearer-validation-method
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Scheme
     value:
     - bearer
@@ -75,11 +75,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Scheme
       value:
       - bearer
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: BearerValidationMethod
       value:
       - external-url
@@ -95,11 +95,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Scheme
       value:
       - bearer
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: BearerValidationMethod
       value:
       - external-url

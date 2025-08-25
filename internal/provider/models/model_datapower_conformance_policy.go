@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -52,6 +53,54 @@ type ConformancePolicy struct {
 	ResponseRejectLevel          types.String                `tfsdk:"response_reject_level"`
 	ResponseRejectIncludeSummary types.Bool                  `tfsdk:"response_reject_include_summary"`
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var ConformancePolicyLogTargetCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "report_level",
+	AttrType:    "String",
+	AttrDefault: "never",
+	Value:       []string{"never"},
+}
+var ConformancePolicyRejectIncludeSummaryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "reject_level",
+	AttrType:    "String",
+	AttrDefault: "never",
+	Value:       []string{"never"},
+}
+var ConformancePolicyResponseReportLevelCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "response_properties_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var ConformancePolicyResponseLogTargetCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "response_report_level",
+	AttrType:    "String",
+	AttrDefault: "never",
+	Value:       []string{"never"},
+}
+var ConformancePolicyResponseRejectLevelCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "response_properties_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var ConformancePolicyResponseRejectIncludeSummaryCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "response_reject_level",
+			AttrType:    "String",
+			AttrDefault: "never",
+			Value:       []string{"never"},
+		},
+	},
 }
 
 var ConformancePolicyObjectType = map[string]attr.Type{
@@ -144,6 +193,7 @@ func (data ConformancePolicy) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -156,16 +206,16 @@ func (data ConformancePolicy) ToBody(ctx context.Context, pathRoot string) strin
 		}
 	}
 	if !data.IgnoredRequirements.IsNull() {
-		var values []string
-		data.IgnoredRequirements.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.IgnoredRequirements.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`IgnoredRequirements`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.FixupStylesheets.IsNull() {
-		var values []string
-		data.FixupStylesheets.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.FixupStylesheets.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`FixupStylesheets`+".-1", map[string]string{"value": val})
 		}
 	}

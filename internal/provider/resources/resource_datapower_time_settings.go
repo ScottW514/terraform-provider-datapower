@@ -37,6 +37,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &TimeSettingsResource{}
@@ -73,11 +74,12 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("EST5EDT"),
 			},
 			"custom_tz_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symbolic name for the custom time zone. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.", "custom", "").AddDefaultValue("STD").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symbolic name for the custom time zone. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.", "custom", "").AddDefaultValue("STD").AddRequiredWhen(models.TimeSettingsCustomTZNameCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z]{3,}$"), "Must match :"+"^[a-zA-Z]{3,}$"),
+					validators.ConditionalRequiredString(models.TimeSettingsCustomTZNameCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("STD"),
 			},
@@ -94,7 +96,6 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of hours the custom time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 2.", "offset-hours", "").AddIntegerRange(0, 12).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 12),
 				},
 			},
@@ -102,7 +103,6 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of minutes the time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 30.", "offset-minutes", "").AddIntegerRange(0, 59).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 59),
 				},
 			},
@@ -111,16 +111,18 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 12),
 				},
 				Default: int64default.StaticInt64(1),
 			},
 			"tz_name_dst": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.", "daylight-name", "").AddDefaultValue("DST").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.", "daylight-name", "").AddDefaultValue("DST").AddRequiredWhen(models.TimeSettingsTZNameDSTCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("DST"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.TimeSettingsTZNameDSTCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("DST"),
 			},
 			"daylight_start_month": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the month when DST starts for the custom time zone. The default value is March.", "daylight-start-month", "").AddStringEnum("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December").AddDefaultValue("March").String,
@@ -136,7 +138,6 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 5),
 				},
 				Default: int64default.StaticInt64(2),
@@ -155,7 +156,6 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 23),
 				},
 				Default: int64default.StaticInt64(2),
@@ -164,7 +164,6 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minute when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 30.", "daylight-start-minutes", "").AddIntegerRange(0, 59).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 59),
 				},
 			},
@@ -182,7 +181,6 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 5),
 				},
 				Default: int64default.StaticInt64(1),
@@ -201,7 +199,6 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 23),
 				},
 				Default: int64default.StaticInt64(2),
@@ -210,7 +207,6 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minute when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 30.", "daylight-stop-minutes", "").AddIntegerRange(0, 59).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 59),
 				},
 			},

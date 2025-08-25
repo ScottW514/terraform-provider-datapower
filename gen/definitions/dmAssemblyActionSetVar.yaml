@@ -33,7 +33,7 @@ attributes:
     to set or add a variable.
   cli_alias: type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Action
     value:
     - clear
@@ -53,12 +53,12 @@ attributes:
   test_value: '"value"'
   cli_alias: value
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Action
     value:
     - clear
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Action
     value:
     - clear

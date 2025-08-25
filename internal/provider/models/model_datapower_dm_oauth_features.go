@@ -53,59 +53,74 @@ var DmOAuthFeaturesObjectDefault = map[string]attr.Value{
 	"pkce":                     types.BoolValue(false),
 	"multipleusesrefreshtoken": types.BoolValue(false),
 }
-var DmOAuthFeaturesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"verboseerror": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Verbose", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmOAuthFeaturesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmOAuthFeaturesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"verboseerror": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Verbose", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"onetimeuse": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("One-time use access token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"pkce": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Require PKCE for Authorization Code", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"multipleusesrefreshtoken": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow reuse of refresh token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"onetimeuse": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("One-time use access token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"pkce": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Require PKCE for Authorization Code", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"multipleusesrefreshtoken": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow reuse of refresh token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmOAuthFeaturesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmOAuthFeaturesDataSourceSchema
 }
-var DmOAuthFeaturesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmOAuthFeaturesObjectType,
-			DmOAuthFeaturesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"verboseerror": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Verbose", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmOAuthFeaturesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmOAuthFeaturesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmOAuthFeaturesObjectType,
+				DmOAuthFeaturesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"verboseerror": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Verbose", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"onetimeuse": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("One-time use access token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"pkce": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Require PKCE for Authorization Code", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"multipleusesrefreshtoken": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Allow reuse of refresh token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"onetimeuse": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("One-time use access token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"pkce": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Require PKCE for Authorization Code", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"multipleusesrefreshtoken": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow reuse of refresh token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmOAuthFeaturesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmOAuthFeaturesResourceSchema.Required = true
+	} else {
+		DmOAuthFeaturesResourceSchema.Optional = true
+		DmOAuthFeaturesResourceSchema.Computed = true
+	}
+	return DmOAuthFeaturesResourceSchema
 }
 
 func (data DmOAuthFeatures) IsNull() bool {
@@ -123,27 +138,13 @@ func (data DmOAuthFeatures) IsNull() bool {
 	}
 	return true
 }
-func GetDmOAuthFeaturesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmOAuthFeaturesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmOAuthFeaturesDataSourceSchema
-}
-
-func GetDmOAuthFeaturesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmOAuthFeaturesResourceSchema.Required = true
-	} else {
-		DmOAuthFeaturesResourceSchema.Optional = true
-		DmOAuthFeaturesResourceSchema.Computed = true
-	}
-	DmOAuthFeaturesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmOAuthFeaturesResourceSchema
-}
 
 func (data DmOAuthFeatures) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Verboseerror.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`verboseerror`, tfutils.StringFromBool(data.Verboseerror, ""))
 	}

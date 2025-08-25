@@ -114,7 +114,7 @@ func (d *SQLDataSourceDataSource) Schema(ctx context.Context, req datasource.Sch
 						},
 						"sql_data_source_config_nv_pairs": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify configuration parameters for the data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some parameters in the configuration file are informational and define characteristics about the environment. These parameters cannot be modified.",
-							NestedObject:        models.DmSQLDataSourceConfigNVPairDataSourceSchema,
+							NestedObject:        models.GetDmSQLDataSourceConfigNVPairDataSourceSchema(),
 							Computed:            true,
 						},
 						"max_connection": schema.Int64Attribute{

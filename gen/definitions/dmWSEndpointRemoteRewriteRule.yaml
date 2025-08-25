@@ -72,7 +72,7 @@ attributes:
     IBM MQ Queue Manager. Required when remote server is IBM MQ.
   cli_alias: remote-mq-qm
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RemoteEndpointProtocol
     value:
     - dpmq
@@ -87,7 +87,7 @@ attributes:
     IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.
   cli_alias: remote-idg-mq-qm
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RemoteEndpointProtocol
     value:
     - idgmq
@@ -103,7 +103,7 @@ attributes:
     TIBCO EMS. Required when remote server is TIBCO EMS.
   cli_alias: remote-tibems-server
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RemoteEndpointProtocol
     value:
     - dptibems
@@ -119,7 +119,7 @@ attributes:
     WebSphere JMS. Required when remote server is WebSphere Application Server.
   cli_alias: remote-wasjms-server
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RemoteEndpointProtocol
     value:
     - dpwasjms

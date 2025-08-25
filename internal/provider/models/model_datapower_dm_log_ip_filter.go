@@ -42,21 +42,28 @@ var DmLogIPFilterObjectType = map[string]attr.Type{
 var DmLogIPFilterObjectDefault = map[string]attr.Value{
 	"ip_address": types.StringNull(),
 }
-var DmLogIPFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"ip_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the explicit IP address.", "", "").String,
-			Computed:            true,
+
+func GetDmLogIPFilterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmLogIPFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"ip_address": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the explicit IP address.", "", "").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmLogIPFilterDataSourceSchema
 }
-var DmLogIPFilterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"ip_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the explicit IP address.", "", "").String,
-			Optional:            true,
+func GetDmLogIPFilterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmLogIPFilterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"ip_address": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the explicit IP address.", "", "").String,
+				Optional:            true,
+			},
 		},
-	},
+	}
+	return DmLogIPFilterResourceSchema
 }
 
 func (data DmLogIPFilter) IsNull() bool {
@@ -71,6 +78,7 @@ func (data DmLogIPFilter) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.IpAddress.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`IPAddress`, data.IpAddress.ValueString())
 	}

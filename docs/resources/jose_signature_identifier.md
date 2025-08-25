@@ -41,10 +41,12 @@ resource "datapower_jose_signature_identifier" "test" {
 - `certificate` (String) Use the certificate to verify the signature.
   - CLI Alias: `cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: `type`=`certificate`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `ss_key` (String) Use the shared secret key to verify the signature.
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`
+  - Required When: `type`=`sskey`
 - `type` (String) Key material type used to verify the signature.
   - CLI Alias: `type`
   - Choices: `certificate`, `sskey`

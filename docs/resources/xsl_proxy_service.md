@@ -39,9 +39,11 @@ resource "datapower_xsl_proxy_service" "test" {
   - Range: `1`-`65535`
 - `remote_address` (String) Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.
   - CLI Alias: `remote-ip-address`
+  - Required When: `type`=`static-backend`
 - `remote_port` (Number) Specify the port number to monitor. Used only when Type is static-backend.
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
+  - Required When: `type`=`static-backend`
 
 ### Optional
 
@@ -61,6 +63,7 @@ resource "datapower_xsl_proxy_service" "test" {
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
+  - Required When: `debug_mode`=`true`
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`

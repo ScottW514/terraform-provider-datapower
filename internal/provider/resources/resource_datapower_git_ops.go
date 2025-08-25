@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &GitOpsResource{}
@@ -116,42 +117,63 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Required:            true,
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.", "interval", "").AddIntegerRange(0, 1440).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.", "interval", "").AddIntegerRange(0, 1440).AddDefaultValue("5").AddRequiredWhen(models.GitOpsIntervalCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1440),
+					validators.ConditionalRequiredInt64(models.GitOpsIntervalCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(5),
 			},
 			"ssh_client_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SSH client profile", "ssh-client-profile", "ssh_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("SSH client profile", "ssh-client-profile", "ssh_client_profile").AddRequiredWhen(models.GitOpsSSHClientProfileCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.GitOpsSSHClientProfileCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"username": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").AddRequiredWhen(models.GitOpsUsernameCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.GitOpsUsernameCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"password": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password", "password", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Password", "password", "password_alias").AddRequiredWhen(models.GitOpsPasswordCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.GitOpsPasswordCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ssh_authorized_keys_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.", "ssh-authorized-keyfile", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.", "ssh-authorized-keyfile", "").AddRequiredWhen(models.GitOpsSSHAuthorizedKeysFileCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.GitOpsSSHAuthorizedKeysFileCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"tls_valcred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTPS validation credentials", "https-valcred", "crypto_val_cred").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTPS validation credentials", "https-valcred", "crypto_val_cred").AddRequiredWhen(models.GitOpsTLSValcredCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.GitOpsTLSValcredCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"git_user": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt> .", "name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt> .", "name", "").AddRequiredWhen(models.GitOpsGitUserCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.GitOpsGitUserCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"git_email": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt> .", "email", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt> .", "email", "").AddRequiredWhen(models.GitOpsGitEmailCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.GitOpsGitEmailCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"json_parse_settings": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("JSON parse settings", "json-settings", "json_settings").String,
@@ -159,7 +181,7 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"template_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of template policy for GitOps processing. The policy processing is in the order of the read or write GitOps operation.", "template-policy", "").String,
-				NestedObject:        models.DmGitOpsTemplatePolicyResourceSchema,
+				NestedObject:        models.GetDmGitOpsTemplatePolicyResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

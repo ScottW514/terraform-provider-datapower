@@ -51,20 +51,20 @@ attributes:
   description: Sets the method to customize an OAuth client.
   cli_alias: customized-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Customized
     value:
-    - 'off'
+    - false
 - name: OAuthRole
   dm_type: DmOAuthRole
   description: Identifies the roles of clients in the group. This property is mutually
     exclusive to the <b>Customized OAuth</b> property.
   cli_alias: oauth-role
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Customized
     value:
-    - 'off'
+    - false
   ignored_when:
   - evaluation: logical-true
 - name: Client
@@ -74,20 +74,22 @@ attributes:
   description: Manages the group of OAuth clients. Use the controls to add or remove
     clients from the group.
   cli_alias: client
+  test_value: '["AccTest_OAuthSupportedClient"]'
+  test_bed_value: '[datapower_oauth_supported_client.acc_test.id]'
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Customized
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: CustomizedType
         value:
         - custom
@@ -136,11 +138,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: CustomizedType
       value:
       - template
@@ -159,11 +161,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: CustomizedType
       value:
       - template

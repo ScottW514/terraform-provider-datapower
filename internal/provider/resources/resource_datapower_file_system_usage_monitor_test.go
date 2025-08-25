@@ -41,6 +41,7 @@ func TestAccResourceFileSystemUsageMonitor(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_file_system_usage_monitor.test", "all_system", "true"),
 			resource.TestCheckResourceAttr("datapower_file_system_usage_monitor.test", "all_system_warning_threshold", "75"),
 			resource.TestCheckResourceAttr("datapower_file_system_usage_monitor.test", "all_system_critical_threshold", "90"),
+			resource.TestCheckResourceAttr("datapower_file_system_usage_monitor.test", "all_queue_managers", "true"),
 			resource.TestCheckResourceAttr("datapower_file_system_usage_monitor.test", "all_qm_warning_threshold", "75"),
 			resource.TestCheckResourceAttr("datapower_file_system_usage_monitor.test", "all_qm_critical_threshold", "90"),
 		}...),

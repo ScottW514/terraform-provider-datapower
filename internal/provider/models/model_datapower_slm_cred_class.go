@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,28 @@ type SLMCredClass struct {
 	Stylesheet        types.String                `tfsdk:"stylesheet"`
 	Header            types.String                `tfsdk:"header"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SLMCredClassCredMatchTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "cred_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-credential",
+	Value:       []string{"custom-stylesheet"},
+}
+var SLMCredClassStylesheetCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cred_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-credential",
+	Value:       []string{"custom-stylesheet"},
+}
+var SLMCredClassHeaderCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cred_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-credential",
+	Value:       []string{"ip-from-header", "request-header"},
 }
 
 var SLMCredClassObjectType = map[string]attr.Type{
@@ -97,6 +120,7 @@ func (data SLMCredClass) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -110,9 +134,9 @@ func (data SLMCredClass) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`CredMatchType`, data.CredMatchType.ValueString())
 	}
 	if !data.CredValue.IsNull() {
-		var values []string
-		data.CredValue.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.CredValue.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`CredValue`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -147,7 +171,7 @@ func (data *SLMCredClass) FromBody(ctx context.Context, pathRoot string, res gjs
 	if value := res.Get(pathRoot + `CredMatchType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.CredMatchType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.CredMatchType = types.StringNull()
+		data.CredMatchType = types.StringValue("per-extracted-value")
 	}
 	if value := res.Get(pathRoot + `CredValue`); value.Exists() {
 		data.CredValue = tfutils.ParseStringListFromGJSON(value)
@@ -187,7 +211,7 @@ func (data *SLMCredClass) UpdateFromBody(ctx context.Context, pathRoot string, r
 	}
 	if value := res.Get(pathRoot + `CredMatchType`); value.Exists() && !data.CredMatchType.IsNull() {
 		data.CredMatchType = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.CredMatchType.ValueString() != "per-extracted-value" {
 		data.CredMatchType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `CredValue`); value.Exists() && !data.CredValue.IsNull() {

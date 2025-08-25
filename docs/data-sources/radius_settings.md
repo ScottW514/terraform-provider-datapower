@@ -60,4 +60,3 @@ Read-Only:
   - Range: `0`-`2147483647`
 - `port` (Number) Specify the listening port on the RADIUS server.
   - Default value: `1812`
-- `secret` (String) Specify the password login to the RADIUS server. You must confirm the password for accuracy.

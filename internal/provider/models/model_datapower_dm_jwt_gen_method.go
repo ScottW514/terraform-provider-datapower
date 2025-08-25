@@ -47,39 +47,54 @@ var DmJWTGenMethodObjectDefault = map[string]attr.Value{
 	"sign":    types.BoolValue(false),
 	"encrypt": types.BoolValue(false),
 }
-var DmJWTGenMethodDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"sign": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sign the JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmJWTGenMethodDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmJWTGenMethodDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"sign": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Sign the JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"encrypt": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Encrypt the JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"encrypt": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Encrypt the JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmJWTGenMethodDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmJWTGenMethodDataSourceSchema
 }
-var DmJWTGenMethodResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmJWTGenMethodObjectType,
-			DmJWTGenMethodObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"sign": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sign the JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmJWTGenMethodResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmJWTGenMethodResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmJWTGenMethodObjectType,
+				DmJWTGenMethodObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"sign": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Sign the JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"encrypt": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Encrypt the JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"encrypt": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Encrypt the JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmJWTGenMethodResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmJWTGenMethodResourceSchema.Required = true
+	} else {
+		DmJWTGenMethodResourceSchema.Optional = true
+		DmJWTGenMethodResourceSchema.Computed = true
+	}
+	return DmJWTGenMethodResourceSchema
 }
 
 func (data DmJWTGenMethod) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmJWTGenMethod) IsNull() bool {
 	}
 	return true
 }
-func GetDmJWTGenMethodDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmJWTGenMethodDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmJWTGenMethodDataSourceSchema
-}
-
-func GetDmJWTGenMethodResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmJWTGenMethodResourceSchema.Required = true
-	} else {
-		DmJWTGenMethodResourceSchema.Optional = true
-		DmJWTGenMethodResourceSchema.Computed = true
-	}
-	DmJWTGenMethodResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmJWTGenMethodResourceSchema
-}
 
 func (data DmJWTGenMethod) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Sign.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`sign`, tfutils.StringFromBool(data.Sign, ""))
 	}

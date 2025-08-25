@@ -37,6 +37,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &QuotaEnforcementServerResource{}
@@ -100,18 +101,25 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_crypto_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the key alias for the DataPower Gateway to authenticate a peer of the DataPower Gateway during the TLS handshake.", "ssl-key", "crypto_key").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the key alias for the DataPower Gateway to authenticate a peer of the DataPower Gateway during the TLS handshake.", "ssl-key", "crypto_key").AddRequiredWhen(models.QuotaEnforcementServerSSLCryptoKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.QuotaEnforcementServerSSLCryptoKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ssl_crypto_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the certificate alias that is sent to a peer when the DataPower Gateway negotiates a TLS connection with the peer.", "ssl-cert", "crypto_certificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the certificate alias that is sent to a peer when the DataPower Gateway negotiates a TLS connection with the peer.", "ssl-cert", "crypto_certificate").AddRequiredWhen(models.QuotaEnforcementServerSSLCryptoCertificateCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.QuotaEnforcementServerSSLCryptoCertificateCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ip_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the IP address of the DataPower Gateway for other peers to connect to. The IP address can be the IP address on any interface of the DataPower Gateway and must be accessible by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::. This IP address uniquely identifies the DataPower Gateway.</p><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address.</p>", "ip-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the IP address of the DataPower Gateway for other peers to connect to. The IP address can be the IP address on any interface of the DataPower Gateway and must be accessible by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::. This IP address uniquely identifies the DataPower Gateway.</p><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address.</p>", "ip-address", "").AddRequiredWhen(models.QuotaEnforcementServerIPAddressCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+					validators.ConditionalRequiredString(models.QuotaEnforcementServerIPAddressCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"peers": schema.ListAttribute{
@@ -125,12 +133,12 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"priority": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the priority that is used to decide which replica is promoted to the primary node when failover occurs.</p><p>Enter a value in range 0 - 255. The default value is 100. The replica with the lowest priority number is promoted. A replica with the value of 0 can never be promoted.</p>", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the priority that is used to decide which replica is promoted to the primary node when failover occurs.</p><p>Enter a value in range 0 - 255. The default value is 100. The replica with the lowest priority number is promoted. A replica with the value of 0 can never be promoted.</p>", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").AddRequiredWhen(models.QuotaEnforcementServerPriorityCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 255),
+					validators.ConditionalRequiredInt64(models.QuotaEnforcementServerPriorityCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(100),
 			},

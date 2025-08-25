@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -77,6 +78,59 @@ type AS3SourceProtocolHandler struct {
 	SslServer                   types.String                `tfsdk:"ssl_server"`
 	SslsniServer                types.String                `tfsdk:"sslsni_server"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AS3SourceProtocolHandlerAlternatePASVAddrCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_alternate_pasv_addr",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var AS3SourceProtocolHandlerSSLServerConfigTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "require_tls",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"explicit", "implicit"},
+}
+var AS3SourceProtocolHandlerSSLServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "require_tls",
+			AttrType:    "String",
+			AttrDefault: "off",
+			Value:       []string{"explicit", "implicit"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"server"},
+		},
+	},
+}
+var AS3SourceProtocolHandlerSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "require_tls",
+			AttrType:    "String",
+			AttrDefault: "off",
+			Value:       []string{"explicit", "implicit"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"sni"},
+		},
+	},
 }
 
 var AS3SourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -267,6 +321,7 @@ func (data AS3SourceProtocolHandler) ToBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -286,9 +341,9 @@ func (data AS3SourceProtocolHandler) ToBody(ctx context.Context, pathRoot string
 		body, _ = sjson.Set(body, pathRoot+`PersistentFilesystemTimeout`, data.PersistentFilesystemTimeout.ValueInt64())
 	}
 	if !data.VirtualDirectories.IsNull() {
-		var values []DmFTPServerVirtualDirectory
-		data.VirtualDirectories.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmFTPServerVirtualDirectory
+		data.VirtualDirectories.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`VirtualDirectories`+".-1", val.ToBody(ctx, ""))
 		}
 	}

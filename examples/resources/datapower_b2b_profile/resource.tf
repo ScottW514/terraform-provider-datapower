@@ -4,7 +4,8 @@ resource "datapower_b2b_profile" "test" {
   app_domain    = "acceptance_test"
   business_i_ds = ["businessid"]
   destinations = [{
-    dest_name = "b2bdestinationname"
-    dest_url  = "https://localhost"
+    dest_name  = "b2bdestinationname"
+    dest_url   = "https://localhost"
+    ssl_client = "AccTest_SSLClientProfile"
   }]
 }

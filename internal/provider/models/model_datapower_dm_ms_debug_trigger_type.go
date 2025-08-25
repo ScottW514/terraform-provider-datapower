@@ -59,64 +59,71 @@ var DmMSDebugTriggerTypeObjectDefault = map[string]attr.Value{
 	"rule_match":    types.StringNull(),
 	"x_path":        types.StringNull(),
 }
-var DmMSDebugTriggerTypeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"client_ip": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against client IP addresses. Requests from clients with matching IP addresses will trigger the probe. To create a match for all IP addresses, specify .* instead of * as the PCRE.", "", "").String,
-			Computed:            true,
-		},
-		"in_url_match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against the inbound URLs. Requests from clients with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.", "", "").String,
-			Computed:            true,
-		},
-		"out_url_match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.", "", "").String,
-			Computed:            true,
-		},
-		"rule_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the rule direction or type that will trigger the probe.", "", "").AddStringEnum("all", "response", "request", "call", "error", "scheduled", "lbhealth").String,
-			Computed:            true,
-		},
-		"rule_match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.", "", "").String,
-			Computed:            true,
-		},
-		"x_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmMSDebugTriggerTypeResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"client_ip": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against client IP addresses. Requests from clients with matching IP addresses will trigger the probe. To create a match for all IP addresses, specify .* instead of * as the PCRE.", "", "").String,
-			Optional:            true,
-		},
-		"in_url_match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against the inbound URLs. Requests from clients with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.", "", "").String,
-			Optional:            true,
-		},
-		"out_url_match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.", "", "").String,
-			Optional:            true,
-		},
-		"rule_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the rule direction or type that will trigger the probe.", "", "").AddStringEnum("all", "response", "request", "call", "error", "scheduled", "lbhealth").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("all", "response", "request", "call", "error", "scheduled", "lbhealth"),
+
+func GetDmMSDebugTriggerTypeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmMSDebugTriggerTypeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"client_ip": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against client IP addresses. Requests from clients with matching IP addresses will trigger the probe. To create a match for all IP addresses, specify .* instead of * as the PCRE.", "", "").String,
+				Computed:            true,
+			},
+			"in_url_match": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against the inbound URLs. Requests from clients with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.", "", "").String,
+				Computed:            true,
+			},
+			"out_url_match": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.", "", "").String,
+				Computed:            true,
+			},
+			"rule_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the rule direction or type that will trigger the probe.", "", "").AddStringEnum("all", "response", "request", "call", "error", "scheduled", "lbhealth").String,
+				Computed:            true,
+			},
+			"rule_match": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.", "", "").String,
+				Computed:            true,
+			},
+			"x_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.", "", "").String,
+				Computed:            true,
 			},
 		},
-		"rule_match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.", "", "").String,
-			Optional:            true,
+	}
+	return DmMSDebugTriggerTypeDataSourceSchema
+}
+func GetDmMSDebugTriggerTypeResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmMSDebugTriggerTypeResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"client_ip": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against client IP addresses. Requests from clients with matching IP addresses will trigger the probe. To create a match for all IP addresses, specify .* instead of * as the PCRE.", "", "").String,
+				Optional:            true,
+			},
+			"in_url_match": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against the inbound URLs. Requests from clients with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.", "", "").String,
+				Optional:            true,
+			},
+			"out_url_match": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.", "", "").String,
+				Optional:            true,
+			},
+			"rule_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the rule direction or type that will trigger the probe.", "", "").AddStringEnum("all", "response", "request", "call", "error", "scheduled", "lbhealth").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("all", "response", "request", "call", "error", "scheduled", "lbhealth"),
+				},
+			},
+			"rule_match": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.", "", "").String,
+				Optional:            true,
+			},
+			"x_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"x_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmMSDebugTriggerTypeResourceSchema
 }
 
 func (data DmMSDebugTriggerType) IsNull() bool {
@@ -146,6 +153,7 @@ func (data DmMSDebugTriggerType) ToBody(ctx context.Context, pathRoot string) st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ClientIp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ClientIP`, data.ClientIp.ValueString())
 	}

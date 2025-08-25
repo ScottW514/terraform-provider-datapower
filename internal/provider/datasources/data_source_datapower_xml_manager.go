@@ -159,17 +159,17 @@ func (d *XMLManagerDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"doc_cache_policy": schema.ListNestedAttribute{
 							MarkdownDescription: "A document cache policy allows the administrator to determine how documents are cached by the XML manager. The policy offers time-to-live, priority, and type configuration values. This document cache is distinct from the stylesheet cache for the XML manager. Documents and stylesheets that the XML manager retrieves can be cached.",
-							NestedObject:        models.DmDocCachePolicyDataSourceSchema,
+							NestedObject:        models.GetDmDocCachePolicyDataSourceSchema(),
 							Computed:            true,
 						},
 						"schema_validation": schema.ListNestedAttribute{
 							MarkdownDescription: "",
-							NestedObject:        models.DmSchemaValidationDataSourceSchema,
+							NestedObject:        models.GetDmSchemaValidationDataSourceSchema(),
 							Computed:            true,
 						},
 						"scheduled_rule": schema.ListNestedAttribute{
 							MarkdownDescription: "Certain applications might require the running of a scheduled processing rule. Integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.",
-							NestedObject:        models.DmScheduledRuleDataSourceSchema,
+							NestedObject:        models.GetDmScheduledRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_agent": schema.StringAttribute{

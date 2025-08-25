@@ -81,136 +81,143 @@ var DmAPIRateLimitObjectDefault = map[string]attr.Value{
 	"dynamic_value": types.StringNull(),
 	"weight":        types.StringValue("1"),
 }
-var DmAPIRateLimitDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the rate limit scheme.", "", "").String,
-			Computed:            true,
+
+func GetDmAPIRateLimitDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAPIRateLimitDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the rate limit scheme.", "", "").String,
+				Computed:            true,
+			},
+			"rate": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.", "", "").AddIntegerRange(0, 4294967295).String,
+				Computed:            true,
+			},
+			"interval": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
+				Computed:            true,
+			},
+			"unit": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the time unit for the rate limit. The default value is second.", "", "").AddStringEnum("second", "minute", "hour", "day", "week").AddDefaultValue("second").String,
+				Computed:            true,
+			},
+			"hard_limit": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"cache_only": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"is_client": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"use_api_name": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the rate limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"use_app_id": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the rate limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"use_client_id": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the rate limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"dynamic_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set(\"my.server\", \"server34\")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>", "", "").String,
+				Computed:            true,
+			},
+			"weight": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
+				Computed:            true,
+			},
 		},
-		"rate": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.", "", "").AddIntegerRange(0, 4294967295).String,
-			Computed:            true,
-		},
-		"interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
-			Computed:            true,
-		},
-		"unit": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the time unit for the rate limit. The default value is second.", "", "").AddStringEnum("second", "minute", "hour", "day", "week").AddDefaultValue("second").String,
-			Computed:            true,
-		},
-		"hard_limit": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"cache_only": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"is_client": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"use_api_name": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the rate limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"use_app_id": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the rate limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"use_client_id": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the rate limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"dynamic_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set(\"my.server\", \"server34\")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>", "", "").String,
-			Computed:            true,
-		},
-		"weight": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAPIRateLimitDataSourceSchema
 }
-var DmAPIRateLimitResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the rate limit scheme.", "", "").String,
-			Required:            true,
-		},
-		"rate": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.", "", "").AddIntegerRange(0, 4294967295).String,
-			Required:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(0, 4294967295),
+func GetDmAPIRateLimitResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAPIRateLimitResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the rate limit scheme.", "", "").String,
+				Required:            true,
+			},
+			"rate": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.", "", "").AddIntegerRange(0, 4294967295).String,
+				Required:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(0, 4294967295),
+				},
+			},
+			"interval": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65535),
+				},
+				Default: int64default.StaticInt64(1),
+			},
+			"unit": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the time unit for the rate limit. The default value is second.", "", "").AddStringEnum("second", "minute", "hour", "day", "week").AddDefaultValue("second").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("second", "minute", "hour", "day", "week"),
+				},
+				Default: stringdefault.StaticString("second"),
+			},
+			"hard_limit": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"cache_only": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"is_client": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"use_api_name": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the rate limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"use_app_id": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the rate limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"use_client_id": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the rate limit key.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"dynamic_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set(\"my.server\", \"server34\")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>", "", "").String,
+				Optional:            true,
+			},
+			"weight": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("1"),
 			},
 		},
-		"interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 65535),
-			},
-			Default: int64default.StaticInt64(1),
-		},
-		"unit": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the time unit for the rate limit. The default value is second.", "", "").AddStringEnum("second", "minute", "hour", "day", "week").AddDefaultValue("second").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("second", "minute", "hour", "day", "week"),
-			},
-			Default: stringdefault.StaticString("second"),
-		},
-		"hard_limit": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"cache_only": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"is_client": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"use_api_name": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the rate limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"use_app_id": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the rate limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"use_client_id": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the rate limit key.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"dynamic_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set(\"my.server\", \"server34\")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>", "", "").String,
-			Optional:            true,
-		},
-		"weight": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("1"),
-		},
-	},
+	}
+	return DmAPIRateLimitResourceSchema
 }
 
 func (data DmAPIRateLimit) IsNull() bool {
@@ -258,6 +265,7 @@ func (data DmAPIRateLimit) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

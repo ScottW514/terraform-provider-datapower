@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,14 @@ type IncludeConfig struct {
 	OnStartup          types.Bool                  `tfsdk:"on_startup"`
 	InterfaceDetection types.Bool                  `tfsdk:"interface_detection"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var IncludeConfigInterfaceDetectionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "on_startup",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
 }
 
 var IncludeConfigObjectType = map[string]attr.Type{
@@ -87,6 +96,7 @@ func (data IncludeConfig) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

@@ -40,7 +40,7 @@ attributes:
     firewall applications. Although a security risk, no other option exists when NAT
     is in use.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AuthTLS
     value:
     - auth-off
@@ -55,7 +55,7 @@ attributes:
   description: Specify the use of encryption of file transfers. Compatible with NAT
     in all settings.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AuthTLS
     value:
     - auth-off

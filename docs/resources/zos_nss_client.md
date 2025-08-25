@@ -23,6 +23,7 @@ resource "datapower_zos_nss_client" "test" {
   client_id      = "client_id"
   system_name    = "sysname"
   user_name      = "username"
+  password_alias = "AccTest_PasswordAlias"
   ssl_client     = "AccTest_SSLClientProfile"
 }
 ```
@@ -36,6 +37,9 @@ resource "datapower_zos_nss_client" "test" {
 - `client_id` (String) <p>Specifies the client ID to be used for registration with the NSS server. Minimum length is 1. Maximum length is 24.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Client ID identifies the client ID to register the appliance with the NSS server. The NSS client ID is a unique string used by the NSS Server to track clients.</p><p>The Client ID does not have to correspond to any preexisting object. It is provided to the server at the time of registration. If another client attempts to register with the same client ID to the same NSS Server, the NSS server will send a heartbeat to the first client. If the first client responds to the heartbeat, the second client's registration will be rejected. If the first client does not respond, the connect to the first client will be severed and the second client will be registered.</p>
   - CLI Alias: `client-id`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `password_alias` (String) <p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>
+  - CLI Alias: `password-alias`
+  - Reference to: `datapower_password_alias:id`
 - `remote_address` (String) Specifies IP address or host name of the NSS server. In conjunction with the Remote Port, identifies the host and listening port of the NSS server. The NSS server must have the XMLAppliance discipline support enabled.
   - CLI Alias: `host`
 - `remote_port` (Number) Specifies NSS server port. In conjunction with the Remote Address, identifies the host and listening port of the NSS server.
@@ -48,12 +52,10 @@ resource "datapower_zos_nss_client" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `password_alias` (String) <p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>
-  - CLI Alias: `password-alias`
-  - Reference to: `datapower_password_alias:id`
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and the NSS server.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: `ssl_client_config_type`=`client`
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and the NSS server.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`

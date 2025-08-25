@@ -59,79 +59,94 @@ var DmOAuthProviderGrantTypeObjectDefault = map[string]attr.Value{
 	"application": types.BoolValue(false),
 	"access_code": types.BoolValue(true),
 }
-var DmOAuthProviderGrantTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"none": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmOAuthProviderGrantTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmOAuthProviderGrantTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"none": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"implicit": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Implicit", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"password": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - Password", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"jwt": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - JSON Web Token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"application": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client credentials", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"access_code": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authorization code", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"implicit": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Implicit", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"password": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - Password", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"jwt": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - JSON Web Token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"application": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client credentials", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"access_code": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authorization code", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmOAuthProviderGrantTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmOAuthProviderGrantTypeDataSourceSchema
 }
-var DmOAuthProviderGrantTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmOAuthProviderGrantTypeObjectType,
-			DmOAuthProviderGrantTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"none": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmOAuthProviderGrantTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmOAuthProviderGrantTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmOAuthProviderGrantTypeObjectType,
+				DmOAuthProviderGrantTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"none": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"implicit": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Implicit", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"password": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - Password", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"jwt": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - JSON Web Token", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"application": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client credentials", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"access_code": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authorization code", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"implicit": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Implicit", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"password": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - Password", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"jwt": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - JSON Web Token", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"application": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client credentials", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"access_code": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authorization code", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmOAuthProviderGrantTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmOAuthProviderGrantTypeResourceSchema.Required = true
+	} else {
+		DmOAuthProviderGrantTypeResourceSchema.Optional = true
+		DmOAuthProviderGrantTypeResourceSchema.Computed = true
+	}
+	return DmOAuthProviderGrantTypeResourceSchema
 }
 
 func (data DmOAuthProviderGrantType) IsNull() bool {
@@ -155,27 +170,13 @@ func (data DmOAuthProviderGrantType) IsNull() bool {
 	}
 	return true
 }
-func GetDmOAuthProviderGrantTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmOAuthProviderGrantTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmOAuthProviderGrantTypeDataSourceSchema
-}
-
-func GetDmOAuthProviderGrantTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmOAuthProviderGrantTypeResourceSchema.Required = true
-	} else {
-		DmOAuthProviderGrantTypeResourceSchema.Optional = true
-		DmOAuthProviderGrantTypeResourceSchema.Computed = true
-	}
-	DmOAuthProviderGrantTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmOAuthProviderGrantTypeResourceSchema
-}
 
 func (data DmOAuthProviderGrantType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.None.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`none`, tfutils.StringFromBool(data.None, ""))
 	}

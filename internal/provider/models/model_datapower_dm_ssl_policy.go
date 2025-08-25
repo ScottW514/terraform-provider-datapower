@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -39,6 +40,14 @@ type DmSSLPolicy struct {
 	RegExp              types.String `tfsdk:"reg_exp"`
 	SslClientConfigType types.String `tfsdk:"ssl_client_config_type"`
 	SslClient           types.String `tfsdk:"ssl_client"`
+}
+
+var DmSSLPolicySSLClientCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_client_config_type",
+	AttrType:    "String",
+	AttrDefault: "client",
+	Value:       []string{"client"},
 }
 
 var DmSSLPolicyObjectType = map[string]attr.Type{
@@ -51,42 +60,52 @@ var DmSSLPolicyObjectDefault = map[string]attr.Value{
 	"ssl_client_config_type": types.StringValue("client"),
 	"ssl_client":             types.StringNull(),
 }
-var DmSSLPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
-		},
-		"ssl_client_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile to secure connections with targets", "", "").AddStringEnum("client").AddDefaultValue("client").String,
-			Computed:            true,
-		},
-		"ssl_client": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").String,
-			Computed:            true,
-		},
-	},
-}
-var DmSSLPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
-		},
-		"ssl_client_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile to secure connections with targets", "", "").AddStringEnum("client").AddDefaultValue("client").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("client"),
+
+func GetDmSSLPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSSLPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("client"),
+			"ssl_client_config_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile to secure connections with targets", "", "").AddStringEnum("client").AddDefaultValue("client").String,
+				Computed:            true,
+			},
+			"ssl_client": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").String,
+				Computed:            true,
+			},
 		},
-		"ssl_client": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").String,
-			Optional:            true,
+	}
+	return DmSSLPolicyDataSourceSchema
+}
+func GetDmSSLPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSSLPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"ssl_client_config_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile to secure connections with targets", "", "").AddStringEnum("client").AddDefaultValue("client").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("client"),
+				},
+				Default: stringdefault.StaticString("client"),
+			},
+			"ssl_client": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmSSLPolicySSLClientCondVal, validators.Evaluation{}, false),
+				},
+			},
 		},
-	},
+	}
+	return DmSSLPolicyResourceSchema
 }
 
 func (data DmSSLPolicy) IsNull() bool {
@@ -107,6 +126,7 @@ func (data DmSSLPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

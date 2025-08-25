@@ -14,7 +14,7 @@ attributes:
   type: String
   description: Enter the qname of a wsdl component formatted {ns}ncname
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: WSDLComponentType
     value:
     - subscription

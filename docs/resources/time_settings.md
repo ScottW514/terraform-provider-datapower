@@ -27,6 +27,7 @@ resource "datapower_time_settings" "test" {
 - `custom_tz_name` (String) Specify the symbolic name for the custom time zone. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.
   - CLI Alias: `custom`
   - Default value: `STD`
+  - Required When: `local_time_zone`=`Custom`
 - `daylight_offset_hours` (Number) Specify the offset in hours when the custom time zone observes DST. Generally, the offset is 1 hour. The default value is 1.
   - CLI Alias: `daylight-offset`
   - Range: `0`-`12`
@@ -86,6 +87,7 @@ resource "datapower_time_settings" "test" {
 - `tz_name_dst` (String) Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.
   - CLI Alias: `daylight-name`
   - Default value: `DST`
+  - Required When: (`local_time_zone`=`Custom` AND `daylight_offset_hours`!=`0`)
 - `utc_direction` (String) Specify the direction relative to UTC for the custom time zone. Asia is east. North America is west. The default value is East.
   - CLI Alias: `direction`
   - Choices: `East`, `West`

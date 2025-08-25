@@ -44,29 +44,44 @@ var DmSecurityTypeObjectType = map[string]attr.Type{
 var DmSecurityTypeObjectDefault = map[string]attr.Value{
 	"basic_auth": types.BoolValue(true),
 }
-var DmSecurityTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"basic_auth": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Basic authentication header", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmSecurityTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSecurityTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"basic_auth": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Basic authentication header", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	DmSecurityTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSecurityTypeDataSourceSchema
 }
-var DmSecurityTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSecurityTypeObjectType,
-			DmSecurityTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"basic_auth": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Basic authentication header", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmSecurityTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSecurityTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSecurityTypeObjectType,
+				DmSecurityTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"basic_auth": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Basic authentication header", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-	},
+	}
+	DmSecurityTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSecurityTypeResourceSchema.Required = true
+	} else {
+		DmSecurityTypeResourceSchema.Optional = true
+		DmSecurityTypeResourceSchema.Computed = true
+	}
+	return DmSecurityTypeResourceSchema
 }
 
 func (data DmSecurityType) IsNull() bool {
@@ -75,27 +90,13 @@ func (data DmSecurityType) IsNull() bool {
 	}
 	return true
 }
-func GetDmSecurityTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSecurityTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSecurityTypeDataSourceSchema
-}
-
-func GetDmSecurityTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSecurityTypeResourceSchema.Required = true
-	} else {
-		DmSecurityTypeResourceSchema.Optional = true
-		DmSecurityTypeResourceSchema.Computed = true
-	}
-	DmSecurityTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSecurityTypeResourceSchema
-}
 
 func (data DmSecurityType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.BasicAuth.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`basic-auth`, tfutils.StringFromBool(data.BasicAuth, ""))
 	}

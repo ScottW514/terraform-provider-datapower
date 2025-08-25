@@ -35,7 +35,7 @@ attributes:
     or GatewayScript that authenticates the extracted identity.
   cli_alias: custom-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - custom
@@ -48,7 +48,7 @@ attributes:
     successfully.
   cli_alias: xmlfile-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - xmlfile
@@ -122,7 +122,7 @@ attributes:
     validate the remote TLS peer.
   cli_alias: valcred
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - client-ssl
@@ -147,7 +147,7 @@ attributes:
     Enter a value in the range 1 - 86400. The default value is 3.
   cli_alias: cache-ttl
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUCacheAllow
     value:
     - disabled
@@ -158,7 +158,7 @@ attributes:
     realm. For example, <tt>foo/bar@REALM</tt> .
   cli_alias: kerberos-principal
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - kerberos
@@ -172,7 +172,7 @@ attributes:
   description: Specify the URL to access the ClearTrust server for authentication.
   cli_alias: cleartrust-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - cleartrust
@@ -187,7 +187,7 @@ attributes:
   description: Specify the URL of the SAML artifact responder.
   cli_alias: saml-artifact-responder
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - saml-artifact
@@ -206,7 +206,7 @@ attributes:
     is <tt>/</tt> , then the base URI must be <tt>datapoweragent/</tt> .
   cli_alias: netegrity-base-uri
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - netegrity
@@ -216,7 +216,7 @@ attributes:
     to post a SAML authentication query.
   cli_alias: saml-authen-query-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - saml-authen-query
@@ -246,14 +246,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'on'
+      - true
 - name: AULDAPSuffix
   type: String
   description: Specify the suffix used to construct the LDAP lookup DN.
@@ -261,14 +261,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'on'
+      - true
 - name: AULDAPLoadBalanceGroup
   type: String
   reference_to: LoadBalancerGroup
@@ -276,7 +276,7 @@ attributes:
     servers.
   cli_alias: ldap-lbgroup
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -287,7 +287,7 @@ attributes:
     keytab is required to decrypt the client Kerberos ticket.
   cli_alias: kerberos-keytab
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - kerberos
@@ -298,7 +298,7 @@ attributes:
   description: Specify the URL to access the WS-Trust server.
   cli_alias: ws-trust-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - ws-trust
@@ -317,7 +317,7 @@ attributes:
     rejected as untrusted.
   cli_alias: valcred
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - validate-signer
@@ -328,7 +328,7 @@ attributes:
     the specific XPath expression is part of the signed message.
   cli_alias: signed-xpath
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - validate-signer
@@ -340,7 +340,7 @@ attributes:
     password to verify the PasswordDigest.
   cli_alias: ldap-bind-dn
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -351,7 +351,7 @@ attributes:
     is userPassword.
   cli_alias: ldap-search-attr
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -361,7 +361,7 @@ attributes:
   description: Specify which versions of LTPA tokens are acceptable.
   cli_alias: lpta-version
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - ltpa
@@ -377,7 +377,7 @@ attributes:
     secret.</li></ul>
   cli_alias: lpta-key-file
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - ltpa
@@ -402,7 +402,7 @@ attributes:
     certificate in the BinarySecurityToken.
   cli_alias: x509-bin-token-valcred
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - binarytokenx509
@@ -414,7 +414,7 @@ attributes:
   description: Specify the name of the Access Manager client.
   cli_alias: tam
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - tivoli
@@ -453,10 +453,10 @@ attributes:
       value:
       - saml-signature
       - validate-signer
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AUAllowRemoteTokenReference
       value:
-      - 'off'
+      - false
 - name: AUWSTrustVersion
   type: String
   enum:
@@ -469,7 +469,7 @@ attributes:
     these specifications are updated together. The default value is 1.2.
   cli_alias: ws-trust-version
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ws-trust
@@ -481,7 +481,7 @@ attributes:
     to construct the user DN.
   cli_alias: ldap-search-for-dn
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -494,25 +494,25 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ldap
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AULDAPSearchForDN
       value:
-      - 'off'
+      - false
 - name: AUWSTrustRequireClientEntropy
   type: Bool
   default: false
@@ -525,7 +525,7 @@ attributes:
     the exchange with the WS-Trust server.</li></ul>
   cli_alias: trust-require-client-entropy
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ws-trust
@@ -541,14 +541,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ws-trust
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AUWSTrustRequireClientEntropy
       value:
-      - 'off'
+      - false
 - name: AUWSTrustRequireServerEntropy
   type: Bool
   default: false
@@ -557,7 +557,7 @@ attributes:
     as part of the security token request exchange. By default, entropy is not required.
   cli_alias: trust-require-server-entropy
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ws-trust
@@ -573,14 +573,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ws-trust
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AUWSTrustRequireServerEntropy
       value:
-      - 'off'
+      - false
 - name: AUWSTrustRequireRSTC
   type: Bool
   default: false
@@ -589,7 +589,7 @@ attributes:
     element to be sent by the client. By default, the element is not required.
   cli_alias: trust-require-rstc
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ws-trust
@@ -600,7 +600,7 @@ attributes:
     in the message exchange. By default, the header is not required.
   cli_alias: trust-require-applies-to-header
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ws-trust
@@ -613,14 +613,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ws-trust
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AUWSTrustRequireAppliesToHeader
       value:
-      - 'off'
+      - false
 - name: AUWSTrustEncryptionCertificate
   type: String
   reference_to: CryptoCertificate
@@ -630,7 +630,7 @@ attributes:
     specified, use a TLS profile to secure the message exchange.
   cli_alias: trust-encryption-certificate
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ws-trust
@@ -643,7 +643,7 @@ attributes:
   description: Specify the name of the z/OS NSS client for SAF communication.
   cli_alias: zos-nss-au
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - zosnss
@@ -658,7 +658,7 @@ attributes:
     the delimiter. For example, <tt>email, cn, userPassword</tt> .
   cli_alias: au-ldap-attributes
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -688,7 +688,7 @@ attributes:
     returned.
   cli_alias: tam-pac-return
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - tivoli
@@ -707,7 +707,7 @@ attributes:
     LDAP connection pool.</p>
   cli_alias: ldap-readtimeout
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -737,10 +737,10 @@ attributes:
         value:
         - saml-signature
         - validate-signer
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: AUAllowRemoteTokenReference
         value:
-        - 'off'
+        - false
 - name: AUSSLClientProfile
   type: String
   reference_to: SSLClientProfile
@@ -767,11 +767,11 @@ attributes:
           value:
           - saml-signature
           - validate-signer
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: AUAllowRemoteTokenReference
           value:
-          - 'off'
-    - evaluation: property-does-not-equal
+          - false
+    - evaluation: property-value-not-in-list
       attribute: AUSSLClientConfigType
       value:
       - client
@@ -784,7 +784,7 @@ attributes:
     the corresponding password to verify the PasswordDigest.
   cli_alias: ldap-bind-password-alias
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -798,25 +798,19 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
-      attribute: AULTPAKeyFilePassword
+    - evaluation: property-value-in-list
+      attribute: AUMethod
       value:
-      - ''
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-equals
-        attribute: AUMethod
-        value:
-        - ltpa
-      - evaluation: property-value-in-list
-        attribute: AULTPATokenVersionsBitmap
-        value:
-        - LTPA
-        - LTPA2
+      - ltpa
+    - evaluation: property-value-in-list
+      attribute: AULTPATokenVersionsBitmap
+      value:
+      - LTPA
+      - LTPA2
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
       value:
       - ltpa
@@ -841,12 +835,12 @@ attributes:
     the CA Single Sign-On web agent.
   cli_alias: sm-request-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - netegrity
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - netegrity
@@ -855,7 +849,7 @@ attributes:
   description: Specify which flow to include the authentication session cookie.
   cli_alias: sm-cookie-flow
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - netegrity
@@ -866,7 +860,7 @@ attributes:
     <tt>SM_</tt> .
   cli_alias: sm-header-flow
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: AUMethod
     value:
     - netegrity

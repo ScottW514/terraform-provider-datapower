@@ -97,13 +97,14 @@ func (data AssemblyLogicSwitch) ToBody(ctx context.Context, pathRoot string) str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
 	if !data.Case.IsNull() {
-		var values []DmAssemblyLogicExecute
-		data.Case.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAssemblyLogicExecute
+		data.Case.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Case`+".-1", val.ToBody(ctx, ""))
 		}
 	}

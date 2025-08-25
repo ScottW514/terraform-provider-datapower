@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -48,6 +49,59 @@ type QuotaEnforcementServer struct {
 	Priority             types.Int64                 `tfsdk:"priority"`
 	StrictMode           types.Bool                  `tfsdk:"strict_mode"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var QuotaEnforcementServerSSLCryptoKeyCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_peer_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_ssl",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var QuotaEnforcementServerSSLCryptoCertificateCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_peer_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_ssl",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var QuotaEnforcementServerIPAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_peer_group",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var QuotaEnforcementServerPriorityCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_peer_group",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var QuotaEnforcementServerObjectType = map[string]attr.Type{
@@ -125,6 +179,7 @@ func (data QuotaEnforcementServer) ToBody(ctx context.Context, pathRoot string) 
 	}
 	body := ""
 	body, _ = sjson.Set(body, "QuotaEnforcementServer.name", path.Base("/mgmt/config/default/QuotaEnforcementServer/QuotaEnforcementServer"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -159,9 +214,9 @@ func (data QuotaEnforcementServer) ToBody(ctx context.Context, pathRoot string) 
 		body, _ = sjson.Set(body, pathRoot+`IPAddress`, data.IpAddress.ValueString())
 	}
 	if !data.Peers.IsNull() {
-		var values []string
-		data.Peers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Peers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Peers`+".-1", map[string]string{"value": val})
 		}
 	}

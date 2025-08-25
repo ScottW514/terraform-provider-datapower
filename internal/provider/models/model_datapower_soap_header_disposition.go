@@ -77,6 +77,7 @@ func (data SOAPHeaderDisposition) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -84,9 +85,9 @@ func (data SOAPHeaderDisposition) ToBody(ctx context.Context, pathRoot string) s
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.Refine.IsNull() {
-		var values []DmSOAPHeaderDispositionItem
-		data.Refine.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSOAPHeaderDispositionItem
+		data.Refine.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Refine`+".-1", val.ToBody(ctx, ""))
 		}
 	}

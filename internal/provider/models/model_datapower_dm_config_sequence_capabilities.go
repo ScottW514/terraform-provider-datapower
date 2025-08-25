@@ -61,75 +61,90 @@ var DmConfigSequenceCapabilitiesObjectDefault = map[string]attr.Value{
 	"batch":               types.BoolNull(),
 	"git_ops_mode":        types.BoolNull(),
 }
-var DmConfigSequenceCapabilitiesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"api_connect": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Optimize for API Connect processing", "", "").String,
-			Computed:            true,
+
+func GetDmConfigSequenceCapabilitiesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmConfigSequenceCapabilitiesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"api_connect": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Optimize for API Connect processing", "", "").String,
+				Computed:            true,
+			},
+			"monitor_persistence": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Monitor changes for persistence", "", "").String,
+				Computed:            true,
+			},
+			"apply_all_objects": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Apply to all objects", "", "").String,
+				Computed:            true,
+			},
+			"mark_external": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Mark objects as external", "", "").String,
+				Computed:            true,
+			},
+			"delete_config": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Delete files after processing", "", "").String,
+				Computed:            true,
+			},
+			"batch": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Batch changes from configuration files", "", "").String,
+				Computed:            true,
+			},
+			"git_ops_mode": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Process in GitOps mode", "", "").String,
+				Computed:            true,
+			},
 		},
-		"monitor_persistence": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Monitor changes for persistence", "", "").String,
-			Computed:            true,
-		},
-		"apply_all_objects": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Apply to all objects", "", "").String,
-			Computed:            true,
-		},
-		"mark_external": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Mark objects as external", "", "").String,
-			Computed:            true,
-		},
-		"delete_config": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Delete files after processing", "", "").String,
-			Computed:            true,
-		},
-		"batch": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Batch changes from configuration files", "", "").String,
-			Computed:            true,
-		},
-		"git_ops_mode": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Process in GitOps mode", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmConfigSequenceCapabilitiesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmConfigSequenceCapabilitiesDataSourceSchema
 }
-var DmConfigSequenceCapabilitiesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmConfigSequenceCapabilitiesObjectType,
-			DmConfigSequenceCapabilitiesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"api_connect": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Optimize for API Connect processing", "", "").String,
-			Optional:            true,
+func GetDmConfigSequenceCapabilitiesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmConfigSequenceCapabilitiesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmConfigSequenceCapabilitiesObjectType,
+				DmConfigSequenceCapabilitiesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"api_connect": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Optimize for API Connect processing", "", "").String,
+				Optional:            true,
+			},
+			"monitor_persistence": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Monitor changes for persistence", "", "").String,
+				Optional:            true,
+			},
+			"apply_all_objects": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Apply to all objects", "", "").String,
+				Optional:            true,
+			},
+			"mark_external": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Mark objects as external", "", "").String,
+				Optional:            true,
+			},
+			"delete_config": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Delete files after processing", "", "").String,
+				Optional:            true,
+			},
+			"batch": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Batch changes from configuration files", "", "").String,
+				Optional:            true,
+			},
+			"git_ops_mode": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Process in GitOps mode", "", "").String,
+				Optional:            true,
+			},
 		},
-		"monitor_persistence": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Monitor changes for persistence", "", "").String,
-			Optional:            true,
-		},
-		"apply_all_objects": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Apply to all objects", "", "").String,
-			Optional:            true,
-		},
-		"mark_external": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Mark objects as external", "", "").String,
-			Optional:            true,
-		},
-		"delete_config": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Delete files after processing", "", "").String,
-			Optional:            true,
-		},
-		"batch": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Batch changes from configuration files", "", "").String,
-			Optional:            true,
-		},
-		"git_ops_mode": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Process in GitOps mode", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	DmConfigSequenceCapabilitiesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmConfigSequenceCapabilitiesResourceSchema.Required = true
+	} else {
+		DmConfigSequenceCapabilitiesResourceSchema.Optional = true
+		DmConfigSequenceCapabilitiesResourceSchema.Computed = true
+	}
+	return DmConfigSequenceCapabilitiesResourceSchema
 }
 
 func (data DmConfigSequenceCapabilities) IsNull() bool {
@@ -156,27 +171,13 @@ func (data DmConfigSequenceCapabilities) IsNull() bool {
 	}
 	return true
 }
-func GetDmConfigSequenceCapabilitiesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmConfigSequenceCapabilitiesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmConfigSequenceCapabilitiesDataSourceSchema
-}
-
-func GetDmConfigSequenceCapabilitiesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmConfigSequenceCapabilitiesResourceSchema.Required = true
-	} else {
-		DmConfigSequenceCapabilitiesResourceSchema.Optional = true
-		DmConfigSequenceCapabilitiesResourceSchema.Computed = true
-	}
-	DmConfigSequenceCapabilitiesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmConfigSequenceCapabilitiesResourceSchema
-}
 
 func (data DmConfigSequenceCapabilities) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ApiConnect.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`APIConnect`, tfutils.StringFromBool(data.ApiConnect, ""))
 	}

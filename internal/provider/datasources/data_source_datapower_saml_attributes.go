@@ -82,7 +82,7 @@ func (d *SAMLAttributesDataSource) Schema(ctx context.Context, req datasource.Sc
 						},
 						"saml_attribute": schema.ListNestedAttribute{
 							MarkdownDescription: "Define an attribute by selecting the source type and specifying the data source and SAML attribute name.",
-							NestedObject:        models.DmSAMLAttributeDataSourceSchema,
+							NestedObject:        models.GetDmSAMLAttributeDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

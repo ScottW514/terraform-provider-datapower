@@ -41,6 +41,7 @@ resource "datapower_domain" "test" {
 - `config_permissions_profile` (String) Global permissions profile
   - CLI Alias: `config-permissions-profile`
   - Reference to: `datapower_access_profile:id`
+  - Required When: `config_permissions_mode`=`global-profile`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `deployment_policy` (String) Deployment policy
   - CLI Alias: `deployment-policy`
@@ -57,11 +58,14 @@ resource "datapower_domain" "test" {
   - CLI Alias: `import-format`
   - Choices: `ZIP`, `XML`
   - Default value: `ZIP`
+  - Required When: `config_mode`=`import`
 - `import_url` (String) Import URL
   - CLI Alias: `import-url`
+  - Required When: `config_mode`=`import`
 - `local_ip_rewrite` (Boolean) Specify whether to rewrite local IP addresses during import. When enabled, local IP addresses in the import package are rewritten to match the local IP address on the DataPower Gateway. In other words, a service that binds to <tt>eth10</tt> in the import package is rewritten to bind to the local IP address of <tt>eth10</tt> on the DataPower Gateway.
   - CLI Alias: `local-ip-rewrite`
   - Default value: `true`
+  - Required When: `config_mode`=`import`
 - `max_chkpoints` (Number) Checkpoint limit
   - CLI Alias: `maxchkpoints`
   - Range: `1`-`5`

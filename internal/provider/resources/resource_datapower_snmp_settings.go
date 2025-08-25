@@ -80,17 +80,17 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("SNMPv1/v2c Communities", "community", "").String,
-				NestedObject:        models.DmSnmpPolicyResourceSchema,
+				NestedObject:        models.GetDmSnmpPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"policies_mq": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("SNMPv1/v2c Communities", "snmp-community", "").String,
-				NestedObject:        models.DmSnmpPolicyMQResourceSchema,
+				NestedObject:        models.GetDmSnmpPolicyMQResourceSchema(),
 				Optional:            true,
 			},
 			"targets": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Trap and Notification Targets", "trap-target", "").String,
-				NestedObject:        models.DmSnmpTargetResourceSchema,
+				NestedObject:        models.GetDmSnmpTargetResourceSchema(),
 				Optional:            true,
 			},
 			"users": schema.ListAttribute{
@@ -100,7 +100,7 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"contexts": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("SNMPv3 context definitions, which provide SNMPv3 access to non-default application domains.", "context", "").String,
-				NestedObject:        models.DmSnmpContextResourceSchema,
+				NestedObject:        models.GetDmSnmpContextResourceSchema(),
 				Optional:            true,
 			},
 			"security_level": schema.StringAttribute{

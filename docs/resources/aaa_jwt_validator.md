@@ -37,23 +37,29 @@ resource "datapower_aaa_jwt_validator" "test" {
   - CLI Alias: `claims` (see [below for nested schema](#nestedatt--claims))
 - `customized_script` (String) A custom GatewayScript or XSLT file is processed to validate the JWT. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> (the default) or <tt>store:</tt> directory. This field is meaningful when you select <tt>Custom processing</tt> in the Validation method field.
   - CLI Alias: `customized-script`
+  - Required When: `val_method`=`customized`
 - `decrypt_credential_type` (String) Various decryption methods (such as PKIX, shared secret key, JSON Web Key (JWK), custom processing, remotely retrieve JWK) can be used to decrypt the JWT. The default method is PKIX. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field.
   - CLI Alias: `decrypt-type`
   - Choices: `pkix`, `ssecret`, `jwk`, `jwk-remote`, `custom`
+  - Required When: `val_method`=`decrypt`
 - `decrypt_fetch_cred_ssl_profile` (String) The TLS client profile is specified for fetching the decryption credentials. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.
   - CLI Alias: `decrypt-fetch-cred-sslprofile`
   - Reference to: `datapower_ssl_client_profile:id`
 - `decrypt_fetch_cred_url` (String) The URL indicates the source location where the decryption credentials can be fetched for decrypting the JWT. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/key. This field is meaningful when you choose <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.
   - CLI Alias: `decrypt-fetch-cred-url`
   - Default value: `http://example.com/v3/key`
+  - Required When: (`val_method`=`decrypt` AND `decrypt_credential_type`=`jwk-remote`)
 - `decrypt_jwk` (String) The file containing the JWK or key set is fetched to decrypt the JWT. The file must be stored in the local: or store: directory. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>JWK</tt> from the Decrypt method list.
   - CLI Alias: `decrypt-jwk`
+  - Required When: (`val_method`=`decrypt` AND `decrypt_credential_type`=`jwk`)
 - `decrypt_key` (String) The private key can be used to decrypt the JWT. You can get the key alias by configuring the Crypto Key. This field is meaningful when you select <tt>Decrypt</tt> in the Validation Method field and choose <tt>PKIX</tt> from the Decrypt method list.
   - CLI Alias: `decrypt-key`
   - Reference to: `datapower_crypto_key:id`
+  - Required When: (`val_method`=`decrypt` AND `decrypt_credential_type`=`pkix`)
 - `decrypt_s_secret` (String) The shared secret key can be used to decrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>Shared secret</tt> from the Decrypt method list.
   - CLI Alias: `decrypt-ssecret`
   - Reference to: `datapower_crypto_sskey:id`
+  - Required When: (`val_method`=`decrypt` AND `decrypt_credential_type`=`ssecret`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `issuer` (String) The optional issuer claim. The "iss" PCRE can be used to verify the JWT. The maximum length of the value is 256 characters.
   - CLI Alias: `iss`
@@ -66,29 +72,37 @@ resource "datapower_aaa_jwt_validator" "test" {
   - CLI Alias: `validate-method` (see [below for nested schema](#nestedatt--val_method))
 - `validate_custom` (String) A custom GatewayScript or XSLT file provides the key material information to decrypt or verify the JWT. This field is meaningful when you select <tt>Custom</tt> for the Decrypt method or Verify method list.
   - CLI Alias: `validate-custom`
+  - Required When: ((`val_method`=`verify` AND `verify_credential_type`=`custom`) OR (`val_method`=`decrypt` AND `decrypt_credential_type`=`custom`))
 - `verify_certificate` (String) The certificate can be used to verify the JWT signature. You can get the certificate by configuring the Crypto Certificate. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt> from the Verify method field.
   - CLI Alias: `verify-certificate`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: (`val_method`=`verify` AND `verify_credential_type`=`pkix`)
 - `verify_certificate_against_val_cred` (Boolean) You decide whether to use validation credentials to verify the JWT signature. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt> from the Verify method list.
   - CLI Alias: `verify-certificate-against-valcred`
   - Default value: `false`
+  - Required When: (`val_method`=`verify` AND `verify_credential_type`=`pkix`)
 - `verify_credential_type` (String) Various methods (such as PKIX, shared secret key, JWK, custom processing, remotely retrieve JWK) can be used to verify the JWT signature. The default method is PKIX. This field is meaningful when you select <tt>Verify</tt> in the Validation method field.
   - CLI Alias: `verify-type`
   - Choices: `pkix`, `ssecret`, `jwk`, `jwk-remote`, `custom`
+  - Required When: `val_method`=`verify`
 - `verify_fetch_cred_ssl_profile` (String) The TLS client profile is provided for fetching the verification credentials. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.
   - CLI Alias: `verify-fetch-cred-sslprofile`
   - Reference to: `datapower_ssl_client_profile:id`
 - `verify_fetch_cred_url` (String) The URL indicates the source location where the verification credentials can be fetched for verifying the JWT signature. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/certs. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.
   - CLI Alias: `verify-fetch-cred-url`
   - Default value: `http://example.com/v3/certs`
+  - Required When: (`val_method`=`verify` AND `verify_credential_type`=`jwk-remote`)
 - `verify_jwk` (String) The file containing the JWK or key set is fetched to verify the JWT signature. The file must be stored in the local: or store: directory. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>JWK</tt> from the Verify method list.
   - CLI Alias: `verify-jwk`
+  - Required When: (`val_method`=`verify` AND `verify_credential_type`=`jwk`)
 - `verify_s_secret` (String) The shared secret key can be used to verify the JWT signature. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Shared secret</tt> from the Verify method list.
   - CLI Alias: `verify-ssecret`
   - Reference to: `datapower_crypto_sskey:id`
+  - Required When: (`val_method`=`verify` AND `verify_credential_type`=`ssecret`)
 - `verify_val_cred` (String) The validation credentials can be used to verify the signers' certificate for the JWT. You can get credentials by configuring the Crypto Validation Credentials. This field is meaningful when you select <tt>on</tt> in the Signature validation credentials field.
   - CLI Alias: `valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Required When: (`val_method`=`verify` AND `verify_credential_type`=`pkix` AND `verify_certificate_against_val_cred`=`true`)
 
 <a id="nestedatt--claims"></a>
 ### Nested Schema for `claims`

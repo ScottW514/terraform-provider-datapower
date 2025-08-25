@@ -175,12 +175,12 @@ func (d *TAMDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 						},
 						"tam_fed_dirs": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify a list of federated directories. Each entry describes a unique set of LDAP suffixes and LDAP server. Federated directories define all the suffixes that can be searched for user identities.",
-							NestedObject:        models.DmTAMFedDirDataSourceSchema,
+							NestedObject:        models.GetDmTAMFedDirDataSourceSchema(),
 							Computed:            true,
 						},
 						"tamaz_replicas": schema.ListNestedAttribute{
 							MarkdownDescription: "<p>Replicas indicate the network location of remote authorization servers. You must configure at least one replica. You can configure additional replicas for failover purposes.</p><p><b>Note:</b> If you uploaded a file that was created previously, it must define at least one replica.</p>",
-							NestedObject:        models.DmTAMAZReplicaDataSourceSchema,
+							NestedObject:        models.GetDmTAMAZReplicaDataSourceSchema(),
 							Computed:            true,
 						},
 						"tamras_trace": models.GetDmTAMRASTraceDataSourceSchema("<p>Trace logging is a useful debugging tool. By default, trace logging is not enabled. Trace logging collects large amounts of data in a short amount of time and might result in a significant performance degradation. Enable trace logging only at the direction of IBM Support.</p><p>When enabled, the DataPower Gateway creates two trace files for each library. The DataPower Gateway writes the files cyclically. Double the size of the files to obtain the total allowable file size.</p>", "tam-ras-trace", ""),

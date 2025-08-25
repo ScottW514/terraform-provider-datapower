@@ -84,7 +84,7 @@ func (r *B2BProfileGroupResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"b2b_profiles": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Partner profiles", "b2b-profiles", "").String,
-				NestedObject:        models.DmB2BGroupedProfileResourceSchema,
+				NestedObject:        models.GetDmB2BGroupedProfileResourceSchema(),
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

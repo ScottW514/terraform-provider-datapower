@@ -49,22 +49,27 @@ resource "datapower_rbm_settings" "test" {
   - Default value: `600`
 - `au_custom_url` (String) Custom URL
   - CLI Alias: `au-custom-url`
+  - Required When: `au_method`=`custom`
 - `au_force_dnldap_order` (Boolean) Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   - CLI Alias: `au-force-dn-ldap-order`
   - Default value: `false`
 - `au_host` (String) Server host
   - CLI Alias: `au-server-host`
+  - Required When: (`au_method`=`ldap` AND `auldap_load_balance_group`=``)
 - `au_info_url` (String) Specify the URL of the XML file for authentication. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file to map credentials.
   - CLI Alias: `au-info-url`
+  - Required When: `au_method`=`xmlfile`
 - `au_kerberos_keytab` (String) Kerberos keytab
   - CLI Alias: `au-kerberos-keytab`
   - Reference to: `datapower_crypto_kerberos_keytab:id`
+  - Required When: `au_method`=`spnego`
 - `au_method` (String) Authentication method
   - CLI Alias: `au-method`
   - Choices: `local`, `xmlfile`, `ldap`, `radius`, `spnego`, `zosnss`, `custom`, `client-ssl`, `oidc`
   - Default value: `local`
 - `au_port` (Number) Server port
   - CLI Alias: `au-server-port`
+  - Required When: (`au_method`=`ldap` AND `auldap_load_balance_group`=``)
 - `auldap_bind_dn` (String) LDAP bind DN
   - CLI Alias: `au-ldap-bind-dn`
 - `auldap_bind_password_alias` (String) LDAP bind password alias
@@ -86,6 +91,7 @@ resource "datapower_rbm_settings" "test" {
 - `auldap_search_parameters` (String) LDAP search parameters
   - CLI Alias: `au-ldap-parameters`
   - Reference to: `datapower_ldap_search_parameters:id`
+  - Required When: (`au_method`=`ldap` AND `auldap_search_for_dn`=`true`)
 - `auoidc_client_id` (String) Client ID
   - CLI Alias: `au-oidc-client-id`
 - `auoidc_client_secret` (String) Client secret
@@ -106,11 +112,14 @@ resource "datapower_rbm_settings" "test" {
 - `aussl_valcred` (String) Validation credentials
   - CLI Alias: `au-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Required When: `au_method`=`client-ssl`
 - `auzosnss_config` (String) z/OS NSS client
   - CLI Alias: `zos-nss-au`
   - Reference to: `datapower_zos_nss_client:id`
+  - Required When: `au_method`=`zosnss`
 - `ca_pub_key_file` (String) Specify the certificate authority (CA) public key file in the <tt>cert:</tt> directory for SSH authentication with SSH user certificates. This public key file contains the public key for one or more certificate authorities.
   - CLI Alias: `ssh-ca-pubkey-file`
+  - Required When: `sshau_method`=`certificate`
 - `cli_timeout` (Number) Specify the time after which to invalidate idle CLI sessions. When invalidated, requires re-authentication. Enter a value in the range 0 - 65535. A value of 0 disables the timer. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 900.</li><li>When common criteria is not enabled, the default value is 0.</li></ul>
   - CLI Alias: `cli-timeout`
   - Range: `0`-`65535`
@@ -135,6 +144,7 @@ resource "datapower_rbm_settings" "test" {
 - `fallback_user` (List of String) Fallback users
   - CLI Alias: `fallback-user`
   - Reference to: `datapower_user:id`
+  - Required When: (NOT`au_method`=`local` AND `fallback_login`=`restricted`)
 - `lda_psuffix` (String) Specify the string to add after the username to form the DN. If this value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .
   - CLI Alias: `ldap-suffix`
 - `ldap_version` (String) LDAP version
@@ -159,21 +169,26 @@ resource "datapower_rbm_settings" "test" {
   - CLI Alias: `pwd-max-age`
   - Range: `1`-`65535`
   - Default value: `30`
+  - Required When: `do_password_aging`=`true`
 - `mc_custom_url` (String) Custom URL
   - CLI Alias: `mc-custom-url`
+  - Required When: `mc_method`=`custom`
 - `mc_force_dnldap_order` (Boolean) Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   - CLI Alias: `mc-force-dn-ldap-order`
   - Default value: `false`
 - `mc_host` (String) Server host
   - CLI Alias: `mc-server-host`
+  - Required When: (`mcldap_search_for_group`=`true` AND `mc_method`!=`custom`)
 - `mc_info_url` (String) Specify the URL of the XML file to map credentials. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file for authentication.
   - CLI Alias: `mc-info-url`
+  - Required When: `mc_method`=`xmlfile`
 - `mc_method` (String) Credential-mapping method
   - CLI Alias: `mc-method`
   - Choices: `local`, `xmlfile`, `custom`
   - Default value: `local`
 - `mc_port` (Number) Server port
   - CLI Alias: `mc-server-port`
+  - Required When: (`mcldap_search_for_group`=`true` AND `mc_method`!=`custom`)
 - `mcldap_bind_dn` (String) LDAP bind DN
   - CLI Alias: `mc-ldap-bind-dn`
 - `mcldap_bind_password_alias` (String) LDAP bind password alias
@@ -192,6 +207,7 @@ resource "datapower_rbm_settings" "test" {
 - `mcldap_search_parameters` (String) LDAP search parameters
   - CLI Alias: `mc-ldap-parameters`
   - Reference to: `datapower_ldap_search_parameters:id`
+  - Required When: (`mcldap_search_for_group`=`true` AND `mc_method`!=`custom`)
 - `mcldapssl_client_config_type` (String) TLS client type
   - CLI Alias: `mc-ssl-client-type`
   - Choices: `client`
@@ -207,6 +223,7 @@ resource "datapower_rbm_settings" "test" {
   - CLI Alias: `pwd-max-history`
   - Range: `1`-`65535`
   - Default value: `5`
+  - Required When: `do_password_history`=`true`
 - `password_hash_algorithm` (String) Specify the algorithm to apply to passwords before they are stored. The hash algorithm affects firmware downgrade and cryptographic modes in the following ways. <ul><li>For firmware downgrade, sha256crypt is not supported in releases earlier than 6.0.1.0.</li><li>For cryptographic modes, like FIPS 140-2 Level 1, md5crypt is not supported in FIPS mode.</li></ul>
   - CLI Alias: `password-hash-algorithm`
   - Choices: `md5crypt`, `sha256crypt`

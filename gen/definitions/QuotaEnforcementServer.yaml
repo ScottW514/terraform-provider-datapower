@@ -83,10 +83,10 @@ attributes:
     of the peer group. By default, the TLS is enabled.
   cli_alias: enable-ssl
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnablePeerGroup
     value:
-    - 'off'
+    - false
 - name: SSLCryptoKey
   type: String
   reference_to: CryptoKey
@@ -96,25 +96,25 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnablePeerGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: EnableSSL
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnablePeerGroup
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: EnableSSL
       value:
-      - 'off'
+      - false
 - name: SSLCryptoCertificate
   type: String
   reference_to: CryptoCertificate
@@ -124,25 +124,25 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnablePeerGroup
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: EnableSSL
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: EnablePeerGroup
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: EnableSSL
       value:
-      - 'off'
+      - false
 - name: IPAddress
   type: String
   description: <p>Indicates the IP address of the DataPower Gateway for other peers
@@ -153,15 +153,15 @@ attributes:
     A host alias resolves a locally configured alias to a static IP address.</p>
   cli_alias: ip-address
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnablePeerGroup
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnablePeerGroup
     value:
-    - 'off'
+    - false
   string_exclude:
   - 127.0.0.1
   - 0.0.0.0
@@ -182,10 +182,10 @@ attributes:
     not specify the IP address or hostname of this DataPower Gateway.</p>'
   cli_alias: peer
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnablePeerGroup
     value:
-    - 'off'
+    - false
   string_exclude:
   - 127.0.0.1
   - 0.0.0.0
@@ -201,15 +201,15 @@ attributes:
     A replica with the value of 0 can never be promoted.</p>
   cli_alias: priority
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnablePeerGroup
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnablePeerGroup
     value:
-    - 'off'
+    - false
 - name: StrictMode
   type: Bool
   default: true
@@ -217,7 +217,7 @@ attributes:
     strict mode. By default, the strict mode is enabled.
   cli_alias: strict-mode
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnablePeerGroup
     value:
-    - 'off'
+    - false

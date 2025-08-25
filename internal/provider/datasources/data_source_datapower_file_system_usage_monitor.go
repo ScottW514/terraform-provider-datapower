@@ -78,7 +78,11 @@ func (d *FileSystemUsageMonitorDataSource) Schema(ctx context.Context, req datas
 			},
 			"system": schema.ListNestedAttribute{
 				MarkdownDescription: "Specify the system file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all system file systems.",
-				NestedObject:        models.DmFileSystemUsageDataSourceSchema,
+				NestedObject:        models.GetDmFileSystemUsageDataSourceSchema(),
+				Computed:            true,
+			},
+			"all_queue_managers": schema.BoolAttribute{
+				MarkdownDescription: "Specify whether the utility checks all or only a subset of queue manager file systems.",
 				Computed:            true,
 			},
 			"all_qm_warning_threshold": schema.Int64Attribute{
@@ -91,7 +95,7 @@ func (d *FileSystemUsageMonitorDataSource) Schema(ctx context.Context, req datas
 			},
 			"queue_manager": schema.ListNestedAttribute{
 				MarkdownDescription: "Specify the queue manager file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all queue manager file systems.",
-				NestedObject:        models.DmQMFileSystemUsageDataSourceSchema,
+				NestedObject:        models.GetDmQMFileSystemUsageDataSourceSchema(),
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

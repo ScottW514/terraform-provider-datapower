@@ -60,62 +60,69 @@ var DmSMTPPolicyObjectDefault = map[string]attr.Value{
 	"options":   types.ObjectValueMust(DmSMTPOptionsObjectType, DmSMTPOptionsObjectDefault),
 	"auth":      types.StringValue("plain"),
 }
-var DmSMTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").AddDefaultValue("dpsmtp://*").String,
-			Computed:            true,
-		},
-		"recipient": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the recipient (\"To:\")", "", "").String,
-			Computed:            true,
-		},
-		"sender": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender (\"From:\")", "", "").String,
-			Computed:            true,
-		},
-		"subject": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the subject line of the e-mail.", "", "").String,
-			Computed:            true,
-		},
-		"options": GetDmSMTPOptionsDataSourceSchema("Specify the SMTP options to enable for the client.", "", ""),
-		"auth": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
-			Computed:            true,
-		},
-	},
-}
-var DmSMTPPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").AddDefaultValue("dpsmtp://*").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("dpsmtp://*"),
-		},
-		"recipient": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the recipient (\"To:\")", "", "").String,
-			Optional:            true,
-		},
-		"sender": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender (\"From:\")", "", "").String,
-			Optional:            true,
-		},
-		"subject": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the subject line of the e-mail.", "", "").String,
-			Optional:            true,
-		},
-		"options": GetDmSMTPOptionsResourceSchema("Specify the SMTP options to enable for the client.", "", "", false),
-		"auth": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("plain", "login"),
+
+func GetDmSMTPPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSMTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").AddDefaultValue("dpsmtp://*").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("plain"),
+			"recipient": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the recipient (\"To:\")", "", "").String,
+				Computed:            true,
+			},
+			"sender": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender (\"From:\")", "", "").String,
+				Computed:            true,
+			},
+			"subject": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the subject line of the e-mail.", "", "").String,
+				Computed:            true,
+			},
+			"options": GetDmSMTPOptionsDataSourceSchema("Specify the SMTP options to enable for the client.", "", ""),
+			"auth": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmSMTPPolicyDataSourceSchema
+}
+func GetDmSMTPPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSMTPPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").AddDefaultValue("dpsmtp://*").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("dpsmtp://*"),
+			},
+			"recipient": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the recipient (\"To:\")", "", "").String,
+				Optional:            true,
+			},
+			"sender": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender (\"From:\")", "", "").String,
+				Optional:            true,
+			},
+			"subject": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the subject line of the e-mail.", "", "").String,
+				Optional:            true,
+			},
+			"options": GetDmSMTPOptionsResourceSchema("Specify the SMTP options to enable for the client.", "", "", false),
+			"auth": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("plain", "login"),
+				},
+				Default: stringdefault.StaticString("plain"),
+			},
+		},
+	}
+	return DmSMTPPolicyResourceSchema
 }
 
 func (data DmSMTPPolicy) IsNull() bool {
@@ -147,6 +154,7 @@ func (data DmSMTPPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

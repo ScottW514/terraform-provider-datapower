@@ -46,6 +46,7 @@ resource "datapower_xsl_coproc_service" "test" {
 - `debug_history` (Number) - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
+  - Required When: `debug_mode`=`true`
 - `debug_mode` (String) - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`

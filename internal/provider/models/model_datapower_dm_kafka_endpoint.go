@@ -45,29 +45,36 @@ var DmKafkaEndpointObjectDefault = map[string]attr.Value{
 	"host": types.StringNull(),
 	"port": types.Int64Null(),
 }
-var DmKafkaEndpointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
-			Computed:            true,
+
+func GetDmKafkaEndpointDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmKafkaEndpointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"host": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
+				Computed:            true,
+			},
+			"port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port that the bootstrap server monitors for incoming bootstrap requests.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the port that the bootstrap server monitors for incoming bootstrap requests.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmKafkaEndpointDataSourceSchema
 }
-var DmKafkaEndpointResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
-			Required:            true,
+func GetDmKafkaEndpointResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmKafkaEndpointResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"host": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
+				Required:            true,
+			},
+			"port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port that the bootstrap server monitors for incoming bootstrap requests.", "", "").String,
+				Required:            true,
+			},
 		},
-		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the port that the bootstrap server monitors for incoming bootstrap requests.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmKafkaEndpointResourceSchema
 }
 
 func (data DmKafkaEndpoint) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmKafkaEndpoint) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Host.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Host`, data.Host.ValueString())
 	}

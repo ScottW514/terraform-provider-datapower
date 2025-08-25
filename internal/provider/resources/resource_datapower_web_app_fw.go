@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WebAppFWResource{}
@@ -98,7 +99,7 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"front_side": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Source Addresses", "listen-on", "").String,
-				NestedObject:        models.DmFrontSideResourceSchema,
+				NestedObject:        models.GetDmFrontSideResourceSchema(),
 				Optional:            true,
 			},
 			"remote_address": schema.StringAttribute{
@@ -110,7 +111,6 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(80),
@@ -148,12 +148,12 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").AddRequiredWhen(models.WebAppFWDelayErrorsDurationCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(250, 300000),
+					validators.ConditionalRequiredInt64(models.WebAppFWDelayErrorsDurationCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(1000),
 			},
@@ -180,7 +180,6 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -190,7 +189,6 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -200,7 +198,6 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(180),
@@ -216,7 +213,6 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(180),
@@ -285,18 +281,18 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostics in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostics in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.WebAppFWDebugHistoryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 250),
+					validators.ConditionalRequiredInt64(models.WebAppFWDebugHistoryCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.", "debug-trigger", "").String,
-				NestedObject:        models.DmMSDebugTriggerTypeResourceSchema,
+				NestedObject:        models.GetDmMSDebugTriggerTypeResourceSchema(),
 				Optional:            true,
 			},
 			"url_rewrite_policy": schema.StringAttribute{

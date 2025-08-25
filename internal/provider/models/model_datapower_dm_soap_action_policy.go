@@ -45,29 +45,36 @@ var DmSoapActionPolicyObjectDefault = map[string]attr.Value{
 	"reg_exp":     types.StringNull(),
 	"soap_action": types.StringNull(),
 }
-var DmSoapActionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmSoapActionPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSoapActionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"soap_action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP SOAPAction header.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"soap_action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP SOAPAction header.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmSoapActionPolicyDataSourceSchema
 }
-var DmSoapActionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
+func GetDmSoapActionPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSoapActionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
+			},
+			"soap_action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP SOAPAction header.", "", "").String,
+				Required:            true,
+			},
 		},
-		"soap_action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP SOAPAction header.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmSoapActionPolicyResourceSchema
 }
 
 func (data DmSoapActionPolicy) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmSoapActionPolicy) ToBody(ctx context.Context, pathRoot string) stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

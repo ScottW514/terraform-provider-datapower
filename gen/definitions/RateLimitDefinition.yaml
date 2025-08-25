@@ -67,11 +67,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Rate
       value:
       - '0'
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Type
       value:
       - count
@@ -90,11 +90,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Rate
       value:
       - '0'
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Type
       value:
       - count
@@ -108,11 +108,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Rate
       value:
       - '0'
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Type
       value:
       - burst
@@ -125,7 +125,7 @@ attributes:
     applied to the client. Non-client rate limits return a 503 error when exceeded.
   cli_alias: is-client
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -136,7 +136,7 @@ attributes:
     the API name is not included. When enabled, the API name is included.
   cli_alias: use-api-name
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -148,7 +148,7 @@ attributes:
     ID is included.
   cli_alias: use-app-id
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -159,7 +159,7 @@ attributes:
     default, the client ID is not included. When enabled, the client ID is included.
   cli_alias: use-client-id
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -172,7 +172,7 @@ attributes:
     action that contains the count limit with a replenish operation.
   cli_alias: auto-replenish
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - count
@@ -190,7 +190,7 @@ attributes:
     "server34")</tt></p>
   cli_alias: dynamic-value
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -204,7 +204,7 @@ attributes:
     error.
   cli_alias: weight
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -224,7 +224,7 @@ attributes:
     limit headers.
   cli_alias: emulate-burst-headers
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - rate
@@ -236,7 +236,7 @@ attributes:
     cannot start at different offsets.
   cli_alias: use-interval-offset
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - count

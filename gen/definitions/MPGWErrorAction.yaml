@@ -83,7 +83,7 @@ attributes:
   description: Specify the custom error rule that the appliance runs to handle errors.
   cli_alias: rule
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - error-rule

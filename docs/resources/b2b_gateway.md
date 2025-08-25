@@ -19,8 +19,9 @@ A B2B gateway can handle B2B messages transmitted over a variety of AS and non-A
 resource "datapower_b2b_gateway" "test" {
   id                            = "ResTestB2BGateway"
   app_domain                    = "acceptance_test"
+  b2b_profiles                  = [{ partner_profile = "AccTest_B2BProfile" }]
   document_routing_preprocessor = "store:///b2b-routing.xsl"
-  archive_mode                  = "archpurge"
+  archive_mode                  = "purgeonly"
   xml_manager                   = "default"
 }
 ```
@@ -43,8 +44,10 @@ resource "datapower_b2b_gateway" "test" {
   - Default value: `90`
 - `archive_file_name` (String) Specify the base file name for archive file. When archiving, the operation appends the current timestamp.
   - CLI Alias: `arch-file`
+  - Required When: `archive_mode`=`archpurge`
 - `archive_location` (String) Specify the location for archive file. Enter the fully qualified name of the directory. To copy the archive file to an FTP server, ensure that the FTP policies in the XML manager enable image (binary) data transfer.
   - CLI Alias: `arch-dir`
+  - Required When: `archive_mode`=`archpurge`
 - `archive_minimum_documents` (Number) Specify the minimum number of documents to retain in document storage after archival. The minimum value is 1. The default value is 100.
   - CLI Alias: `arch-minimum-documents`
   - Range: `1`-`65535`
@@ -73,13 +76,15 @@ resource "datapower_b2b_gateway" "test" {
 - `b2b_groups` (Attributes List) Active profile groups
   - CLI Alias: `b2b-group` (see [below for nested schema](#nestedatt--b2b_groups))
 - `b2b_profiles` (Attributes List) Active partner profiles
-  - CLI Alias: `b2b-profile` (see [below for nested schema](#nestedatt--b2b_profiles))
+  - CLI Alias: `b2b-profile`
+  - Required When: `b2b_groups`=`` (see [below for nested schema](#nestedatt--b2b_profiles))
 - `cpa_entries` (Attributes List) Specify CPA entries. Each CPA entry binds an ebXML messaging service (ebMS) to provide partnership interactions between the internal and partner.
   - CLI Alias: `cpa-entry` (see [below for nested schema](#nestedatt--cpa_entries))
 - `debug_history` (Number) Specify the number of transactions to capture for diagnostics. Enter a value in the range 10 - 250. The default value is 25.
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
+  - Required When: `debug_mode`=`true`
 - `debug_mode` (String) Specify whether to enable diagnostics. Diagnostics are not intended for use in production environments. Diagnostics consume significant resources that can slow down processing.
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
@@ -203,6 +208,7 @@ Optional:
 
 - `profile_dest` (String) Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.
   - CLI Alias: `destination`
+  - Default value: `default`
 - `profile_enabled` (Boolean) Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.
   - CLI Alias: `enabled`
   - Default value: `true`

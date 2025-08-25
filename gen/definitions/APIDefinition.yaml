@@ -130,12 +130,12 @@ attributes:
   description: GraphQL schema location
   cli_alias: graphql-schema
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - graphql
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - graphql
@@ -144,7 +144,7 @@ attributes:
   description: WSDL advertised schema location
   cli_alias: wsdl-advertised-schema-location
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - wsdl
@@ -154,7 +154,7 @@ attributes:
   description: WSDL validation schema location
   cli_alias: wsdl-validation-schema
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - wsdl
@@ -185,15 +185,15 @@ attributes:
     the methods appropriately.
   cli_alias: api-mutual-tls-source
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RequireAPIMutualTLS
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: RequireAPIMutualTLS
     value:
-    - 'on'
+    - true
 - name: APIMutualTLSHeaderName
   type: String
   default: X-Client-Certificate
@@ -203,10 +203,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: RequireAPIMutualTLS
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: APIMutualTLSSource
       value:
@@ -270,10 +270,10 @@ attributes:
     must enable message buffering to capture all request and response data.
   cli_alias: success-content
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ActivityLogToggle
     value:
-    - 'on'
+    - true
 - name: ErrorContent
   type: String
   enum:
@@ -287,10 +287,10 @@ attributes:
     must enable message buffering to capture all request and response data.
   cli_alias: error-content
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ActivityLogToggle
     value:
-    - 'on'
+    - true
 - name: PreservedRequestHeader
   type: List
   element_type: String
@@ -405,7 +405,7 @@ attributes:
   description: Force HTTP 500 for SOAP 1.1
   cli_alias: force-http-500-for-soap11
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - wsdl

@@ -45,29 +45,36 @@ var DmHostToSSLServerProfileObjectDefault = map[string]attr.Value{
 	"host_name_wildmat": types.StringNull(),
 	"ssl_server":        types.StringNull(),
 }
-var DmHostToSSLServerProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"host_name_wildmat": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style pattern to match against the hostname.", "", "").String,
-			Computed:            true,
+
+func GetDmHostToSSLServerProfileDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmHostToSSLServerProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"host_name_wildmat": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style pattern to match against the hostname.", "", "").String,
+				Computed:            true,
+			},
+			"ssl_server": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to use when a hostname matches the pattern.", "", "ssl_server_profile").String,
+				Computed:            true,
+			},
 		},
-		"ssl_server": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to use when a hostname matches the pattern.", "", "ssl_server_profile").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmHostToSSLServerProfileDataSourceSchema
 }
-var DmHostToSSLServerProfileResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"host_name_wildmat": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style pattern to match against the hostname.", "", "").String,
-			Required:            true,
+func GetDmHostToSSLServerProfileResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmHostToSSLServerProfileResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"host_name_wildmat": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style pattern to match against the hostname.", "", "").String,
+				Required:            true,
+			},
+			"ssl_server": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to use when a hostname matches the pattern.", "", "ssl_server_profile").String,
+				Required:            true,
+			},
 		},
-		"ssl_server": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to use when a hostname matches the pattern.", "", "ssl_server_profile").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmHostToSSLServerProfileResourceSchema
 }
 
 func (data DmHostToSSLServerProfile) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmHostToSSLServerProfile) ToBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.HostNameWildmat.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HostNameWildmat`, data.HostNameWildmat.ValueString())
 	}

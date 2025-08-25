@@ -48,7 +48,7 @@ attributes:
   description: SLM update interval
   cli_alias: slm-peering
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Mode
     value:
     - slm
@@ -73,7 +73,7 @@ attributes:
   description: Custom TLS server profile
   cli_alias: ssl-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLConfigType
     value:
     - server
@@ -83,7 +83,7 @@ attributes:
   description: Custom TLS SNI server profile
   cli_alias: ssl-sni-server
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLConfigType
     value:
     - sni

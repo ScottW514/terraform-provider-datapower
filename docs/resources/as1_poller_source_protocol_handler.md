@@ -23,6 +23,7 @@ resource "datapower_as1_poller_source_protocol_handler" "test" {
   port                  = 25
   conn_security         = "none"
   account               = "account"
+  password_alias        = "AccTest_PasswordAlias"
   delay_between_polls   = 300
   max_messages_per_poll = 5
 }
@@ -39,6 +40,9 @@ resource "datapower_as1_poller_source_protocol_handler" "test" {
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `mail_server` (String) The host name or IP address of the mail server.
   - CLI Alias: `mail-server`
+- `password_alias` (String) The password alias of the password for the account that accesses the mailbox on the server.
+  - CLI Alias: `password-alias`
+  - Reference to: `datapower_password_alias:id`
 - `port` (Number) The listening port on the mail server. STARTTLS negotiation and an unsecured connection generally use port 110. An implicit, secured connection generally uses port 995.
   - CLI Alias: `port`
   - Range: `1`-`65535`
@@ -61,16 +65,15 @@ resource "datapower_as1_poller_source_protocol_handler" "test" {
   - CLI Alias: `max-messages-per-poll`
   - Range: `1`-`100`
   - Default value: `5`
-- `password_alias` (String) The password alias of the password for the account that accesses the mailbox on the server.
-  - CLI Alias: `password-alias`
-  - Reference to: `datapower_password_alias:id`
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: (`conn_security`!=`none` AND `ssl_client_config_type`=`client`)
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Required When: `conn_security`!=`none`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

@@ -19,6 +19,7 @@ resource "datapower_operation_rate_limit" "test" {
   id         = "ResTestOperationRateLimit"
   app_domain = "acceptance_test"
   operation  = "AccTest_APIOperation"
+  rate_limit = [{ "name" : "RateLimit", "rate" : "1000" }]
 }
 ```
 
@@ -37,7 +38,8 @@ resource "datapower_operation_rate_limit" "test" {
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `rate_limit` (Attributes List) Rate limit
-  - CLI Alias: `rate-limit` (see [below for nested schema](#nestedatt--rate_limit))
+  - CLI Alias: `rate-limit`
+  - Required When: `use_rate_limit_group`=`false` (see [below for nested schema](#nestedatt--rate_limit))
 - `rate_limit_group` (String) Rate limit group
   - CLI Alias: `rate-limit-group`
   - Reference to: `datapower_rate_limit_definition_group:id`

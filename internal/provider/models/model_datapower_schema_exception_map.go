@@ -82,6 +82,7 @@ func (data SchemaExceptionMap) ToBody(ctx context.Context, pathRoot string) stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -89,9 +90,9 @@ func (data SchemaExceptionMap) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`OriginalSchemaURL`, data.OriginalSchemaUrl.ValueString())
 	}
 	if !data.SchemaExceptionRules.IsNull() {
-		var values []DmSchemaExceptionRule
-		data.SchemaExceptionRules.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSchemaExceptionRule
+		data.SchemaExceptionRules.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`SchemaExceptionRules`+".-1", val.ToBody(ctx, ""))
 		}
 	}

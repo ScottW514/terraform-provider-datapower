@@ -82,7 +82,7 @@ func (d *ConfigSequenceDataSource) Schema(ctx context.Context, req datasource.Sc
 						},
 						"locations": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the locations to watch for changes and the permissions for each location. Each entry specifies a directory where the configuration files to match are stored. The DataPower Gateway watches the location and reloads the configuration when a change is detected that match the PCRE match pattern. The entries are processed in the listed order. The assess profile indicates the permissions for processing.",
-							NestedObject:        models.DmConfigSequenceLocationDataSourceSchema,
+							NestedObject:        models.GetDmConfigSequenceLocationDataSourceSchema(),
 							Computed:            true,
 						},
 						"match_pattern": schema.StringAttribute{

@@ -94,7 +94,7 @@ func (d *AssemblyFunctionDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"parameter": schema.ListNestedAttribute{
 							MarkdownDescription: "Parameters",
-							NestedObject:        models.DmAssemblyFunctionParameterDataSourceSchema,
+							NestedObject:        models.GetDmAssemblyFunctionParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly": schema.StringAttribute{

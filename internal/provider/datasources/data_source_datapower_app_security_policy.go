@@ -82,17 +82,17 @@ func (d *AppSecurityPolicyDataSource) Schema(ctx context.Context, req datasource
 						},
 						"request_maps": schema.ListNestedAttribute{
 							MarkdownDescription: "A list of Web Request Profile objects and their matching criteria. If the client request meets the matching criteria, its Web Request Profile runs.",
-							NestedObject:        models.DmWebAppRequestPolicyMapDataSourceSchema,
+							NestedObject:        models.GetDmWebAppRequestPolicyMapDataSourceSchema(),
 							Computed:            true,
 						},
 						"response_maps": schema.ListNestedAttribute{
 							MarkdownDescription: "A list of Web Response Profile objects and their matching criteria. If the server response meets the matching criteria, its Web Response Profile runs.",
-							NestedObject:        models.DmWebAppResponsePolicyMapDataSourceSchema,
+							NestedObject:        models.GetDmWebAppResponsePolicyMapDataSourceSchema(),
 							Computed:            true,
 						},
 						"error_maps": schema.ListNestedAttribute{
 							MarkdownDescription: "A list of Error Policy objects (Processing Rules) and their matching criteria. If an error meets the matching criteria, its Error Policy runs.",
-							NestedObject:        models.DmPolicyMapDataSourceSchema,
+							NestedObject:        models.GetDmPolicyMapDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -50,11 +50,12 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 
 )
 
-var _ resource.Resource{{if hasWriteOnlyAttribute .Attributes}}WithModifyPlan{{end}} = &{{.Name}}Resource{}
+var _ resource.Resource = &{{.Name}}Resource{}
 {{- if len .Actions}}
 var _ resource.ResourceWithValidateConfig = &{{.Name}}Resource{}
 {{- end}}
@@ -68,7 +69,7 @@ type {{.Name}}Resource struct {
 }
 
 func (r *{{.Name}}Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_{{snakeCase .Name}}"
+	resp.TypeName = req.ProviderTypeName + "_{{toTfName .Name}}"
 }
 
 func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -83,7 +84,7 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 {{- range  .Attributes}}
 	{{- if .Type}}
 			"{{.TfName}}": schema.{{if eq .Type "Object"}}SingleNested{{else if isList .}}List{{- if and (ne .ElementType "String") (ne .ElementType "Int64")}}Nested{{end}}{{else}}{{.Type}}{{end}}Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription({{quote .Description}}, {{quote .CliAlias}}, {{quote (snakeCase .ReferenceTo)}})
+				MarkdownDescription: tfutils.NewAttributeDescription({{quote .Description}}, {{quote .CliAlias}}, {{quote (toTfName .ReferenceTo)}})
 		{{- if len .Enum -}}
 					.AddStringEnum({{range .Enum}}{{quote .}}, {{end}})
 		{{- end -}}
@@ -93,12 +94,15 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 		{{- if .Default -}}
 					.AddDefaultValue({{quote .Default}})
 		{{- end -}}
+		{{- if len .RequiredWhen -}}
+					.AddRequiredWhen(models.{{$root.Name}}{{.Name}}CondVal.String())
+		{{- end -}}
 					.String,
 		{{- if isList .}}
 			{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
 				ElementType:         types.{{.ElementType}}Type,
 			{{- else}}
-				NestedObject:        models.{{.ElementType}}ResourceSchema,
+				NestedObject:        models.Get{{.ElementType}}ResourceSchema(),
 			{{- end}}
 		{{- end}}
 		{{- if and .Required (not .Computed) (not (or (len .Default) (len .ListDefault)))}}
@@ -115,39 +119,38 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 		{{- if and .Sensitive (eq .Type "String")}}
                 Sensitive:           true,
 		{{- end}}
-		{{- if and (len .Enum) (ne .Type "Object")}}
-				Validators: []validator.{{.Type}}{
-					{{if eq .Type "List"}}listvalidator.ValueStringsAre({{end}}stringvalidator.OneOf({{range .Enum}}{{quote .}}, {{end}}){{if eq .Type "List"}}){{end}},
-				},
-		{{- else if or (len .StringPatterns) (len .StringExclude) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
-				Validators: []validator.{{.Type}}{
-			{{- if eq .Type "List"}}
-					listvalidator.ValueStringsAre(
-			{{- end}}
-			{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
-						stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
-			{{- end}}
-			{{- range .StringPatterns}}
-						stringvalidator.RegexMatches(regexp.MustCompile({{quote .}}), "Must match :" + {{quote .}}),
-			{{- end}}
-			{{- if len .StringExclude}}
-		                stringvalidator.NoneOf([]string{ {{range .StringExclude}}{{quote .}},{{end}} }...),
-			{{- end}}
-			{{- if eq .Type "List"}}
+                    {{- if and (ne .Type "Bool") (ne .Type "Object") (or (len .Enum) (len .StringPatterns) (len .StringExclude) (ne .StringMinLength 0) (ne .StringMaxLength 0) (len .RequiredWhen) (ne .Minimum 0) (ne .Maximum 0))}}
+                Validators: []validator.{{.Type}}{
+						{{- if and (eq .Type "List") (or (eq .ElementType "String") (eq .ElementType "Int64"))}}
+					listvalidator.Value{{.ElementType}}sAre(
+						{{- end}}
+                        {{- if or (eq .Type "String") (eq .ElementType "String")}}
+                            {{- if len .Enum}}
+                    stringvalidator.OneOf({{range .Enum}}"{{.}}", {{end}}),
+                            {{- else}}
+                                {{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
+                    stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+                                {{- end}}
+                                {{- range .StringPatterns}}
+                    stringvalidator.RegexMatches(regexp.MustCompile({{quote .}}), "Must match :" + {{quote .}}),
+                                {{- end}}
+                                {{- if len .StringExclude}}
+                    stringvalidator.NoneOf([]string{ {{range .StringExclude}}{{quote .}},{{end}} }...),
+                                {{- end}}
+                            {{- end}}
+                        {{- else if or (eq .Type "Int64") (eq .ElementType "Int64")}}
+                            {{- if or (ne .Minimum 0) (ne .Maximum 0)}}
+                    int64validator.Between({{.Minimum}}, {{.Maximum}}),
+                            {{- end}}
+                        {{- end}}
+						{{- if and (eq .Type "List") (or (eq .ElementType "String") (eq .ElementType "Int64"))}}
 					),
-			{{- end}}
-				},
-		{{- else if or (ne .Minimum 0) (ne .Maximum 0)}}
-				Validators: []validator.{{.Type}}{
-			{{if eq .Type "List"}}
-					listvalidator.ValueInt64sAre(
-			{{end}}
-						int64validator.Between({{.Minimum}}, {{.Maximum}}),
-			{{if eq .Type "List"}}
-					),
-			{{end}}
-				},
-		{{- end}}
+                        {{- end}}
+                        {{- if len .RequiredWhen}}
+                    validators.ConditionalRequired{{.Type}}(models.{{$root.Name}}{{.Name}}CondVal, validators.Evaluation{}, {{if len .Default}}true{{else}}false{{end}}),
+                        {{- end}}
+                },
+                    {{- end}}
 		{{- if len .Default}}
 			{{- if eq .Type "Int64"}}
 				Default:             int64default.StaticInt64({{.Default}}),
@@ -170,21 +173,28 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 			{{- else if eq .Name "Id"}}
 					stringplanmodifier.RequiresReplace(),
 			{{- else if .Computed}}
-					{{snakeCase .Type}}planmodifier.UseStateForUnknown(),
+					{{lower .Type}}planmodifier.UseStateForUnknown(),
 			{{- end}}
 				},
 		{{- end}}
 			},
 	{{- else if .DmType}}
-			"{{.TfName}}": models.Get{{.DmType}}ResourceSchema({{quote .Description}}, {{quote .CliAlias}}, {{quote (snakeCase .ReferenceTo)}}, {{if .Required}}true{{else}}false{{end}}),
+			"{{.TfName}}": models.Get{{.DmType}}ResourceSchema({{quote .Description}}, {{quote .CliAlias}}, {{quote (toTfName .ReferenceTo)}}, {{if .Required}}true{{else}}false{{end}}),
 	{{- end}}
 	{{- if .WriteOnly}}
-			"{{.TfName}}_update": schema.BoolAttribute{
-				MarkdownDescription: "Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.",
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(false),
-				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
+			"{{.TfName}}_version": schema.Int64Attribute{
+				MarkdownDescription: "Changes to this value trigger an update to `write_only` value.",
+                Optional:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(
+						validators.Evaluation{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "{{.TfName}}",
+							AttrType:    "String",
+							AttrDefault: "",
+							Value:       []string{""},
+						}, validators.Evaluation{}, false),
+				},
 			},
 	{{- end}}
 {{- end}}
@@ -205,7 +215,7 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-	var data models.{{.Name}}
+	var data{{if .WriteOnlyAttrs}}, config{{end}} models.{{.Name}}
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -215,24 +225,15 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
-{{- if hasWriteOnlyAttribute .Attributes}}
 
-	var config models.{{.Name}}
-
+{{- if .WriteOnlyAttrs}}
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	{{- $name := .Name}}
-	{{- range .Attributes}}
-		{{- if .WriteOnly}}
-		data.{{toGoName .TfName}} = config.{{toGoName .TfName}}
-		resp.Diagnostics.Append(resp.Private.SetKey(ctx, "{{$name}}.{{.Name}}", []byte("{\"value\": \""+tfutils.GenerateHash(config.{{.Name}}.ValueString())+"\"}"))...)
-		{{- end}}
-	{{- end}}
 {{- end}}
 
-	body := data.ToBody(ctx, `{{.Name}}`)
+	body := data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}})
 	{{- if or .PutCreate .UpdateOnly}}
 	_, err := r.pData.Client.Put(data.GetPath(), body)
 	{{- else}}
@@ -302,7 +303,7 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-	var data{{if hasWriteOnlyAttribute .Attributes}}, config{{end}} models.{{.Name}}
+	var data{{if .WriteOnlyAttrs}}, config{{end}} models.{{.Name}}
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -312,31 +313,18 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
-{{- if hasWriteOnlyAttribute .Attributes}}
 
+{{- if .WriteOnlyAttrs}}
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 {{- end}}
-{{- if hasWriteOnlyAttribute .Attributes}}
-	{{- $name := .Name}}
-	{{- range .Attributes}}
-		{{- if .WriteOnly}}
-
-    if data.{{toGoName .TfName}}Update.IsUnknown() {
-		data.{{toGoName .TfName}} = config.{{.Name}}
-		data.{{toGoName .TfName}}Update = types.BoolValue(false)
-        resp.Diagnostics.Append(resp.Private.SetKey(ctx, "{{$name}}.{{.Name}}", []byte("{\"value\": \""+tfutils.GenerateHash(config.{{.Name}}.ValueString())+"\"}"))...)
-    }
-		{{- end}}
-	{{- end}}
-{{- end}}
 
 {{- if or (eq .Name "Domain") .UpdateOnly}}
-	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`))
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
 {{- else}}
-	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`))
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
 {{- end}}
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
@@ -403,43 +391,6 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 
 	resp.State.RemoveResource(ctx)
 }
-{{- if hasWriteOnlyAttribute .Attributes}}
-func (r *{{.Name}}Resource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
-	if req.Plan.Raw.IsNull() {
-		return
-	}
-	var data, config models.{{.Name}}
-
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	{{- if hasWriteOnlyAttribute .Attributes}}
-	var val []byte
-	var diags diag.Diagnostics
-	{{- end}}
-
-	{{- $name := .Name}}
-	{{- range .Attributes}}
-		{{- if .WriteOnly}}
-	val, diags = req.Private.GetKey(ctx, "{{$name}}.{{.Name}}")
-	resp.Diagnostics.Append(diags...)
-	if val != nil {
-		if hash := gjson.GetBytes(val, "value"); hash.Exists() && !tfutils.VerifyHash(config.{{.Name}}.ValueString(), hash.String()) {
-			data.{{toGoName .TfName}}Update = types.BoolUnknown()
-		}
-	}
-		{{- end}}
-	{{- end}}
-
-	resp.Diagnostics.Append(resp.Plan.Set(ctx, &data)...)
-}
-{{- end}}
 
 func (r *{{.Name}}Resource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
 	var data models.{{.Name}}

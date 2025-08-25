@@ -30,6 +30,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -54,6 +55,63 @@ type GitOps struct {
 	JsonParseSettings     types.String                `tfsdk:"json_parse_settings"`
 	TemplatePolicies      types.List                  `tfsdk:"template_policies"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var GitOpsIntervalCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-only"},
+}
+var GitOpsSSHClientProfileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"ssh"},
+}
+var GitOpsUsernameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"https"},
+}
+var GitOpsPasswordCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"https"},
+}
+var GitOpsSSHAuthorizedKeysFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"ssh"},
+}
+var GitOpsTLSValcredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"https"},
+}
+var GitOpsGitUserCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-write"},
+}
+var GitOpsGitEmailCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-write"},
 }
 
 var GitOpsObjectType = map[string]attr.Type{
@@ -148,6 +206,7 @@ func (data GitOps) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "GitOps.name", path.Base("/mgmt/config/{domain}/GitOps/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -197,9 +256,9 @@ func (data GitOps) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`JSONParseSettings`, data.JsonParseSettings.ValueString())
 	}
 	if !data.TemplatePolicies.IsNull() {
-		var values []DmGitOpsTemplatePolicy
-		data.TemplatePolicies.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmGitOpsTemplatePolicy
+		data.TemplatePolicies.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`TemplatePolicies`+".-1", val.ToBody(ctx, ""))
 		}
 	}

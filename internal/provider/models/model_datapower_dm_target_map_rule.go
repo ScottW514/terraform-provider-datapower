@@ -45,29 +45,36 @@ var DmTargetMapRuleObjectDefault = map[string]attr.Value{
 	"target":  types.StringNull(),
 	"execute": types.StringNull(),
 }
-var DmTargetMapRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"target": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the target name that is configured in the schema.", "target", "").String,
-			Computed:            true,
+
+func GetDmTargetMapRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmTargetMapRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"target": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the target name that is configured in the schema.", "target", "").String,
+				Computed:            true,
+			},
+			"execute": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the function call assembly action to call.", "execute", "assembly_action_function_call").String,
+				Computed:            true,
+			},
 		},
-		"execute": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the function call assembly action to call.", "execute", "assembly_action_function_call").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmTargetMapRuleDataSourceSchema
 }
-var DmTargetMapRuleResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"target": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the target name that is configured in the schema.", "target", "").String,
-			Required:            true,
+func GetDmTargetMapRuleResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmTargetMapRuleResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"target": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the target name that is configured in the schema.", "target", "").String,
+				Required:            true,
+			},
+			"execute": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the function call assembly action to call.", "execute", "assembly_action_function_call").String,
+				Required:            true,
+			},
 		},
-		"execute": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the function call assembly action to call.", "execute", "assembly_action_function_call").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmTargetMapRuleResourceSchema
 }
 
 func (data DmTargetMapRule) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmTargetMapRule) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Target.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Target`, data.Target.ValueString())
 	}

@@ -200,10 +200,10 @@ attributes:
     is informational.
   cli_alias: log-allowed-level
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LogAllowed
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: LogRejected
@@ -228,10 +228,10 @@ attributes:
     level is warning.
   cli_alias: log-rejected-level
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LogRejected
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: WSSecureConversationCryptoKey
@@ -329,10 +329,10 @@ attributes:
     header.</td></tr></table>
   cli_alias: actor-role-id
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnforceSOAPActor
     value:
-    - 'off'
+    - false
 - name: AUSMHTTPHeader
   type: List
   element_type: String
@@ -397,15 +397,10 @@ attributes:
     to construct a schema-compliant AAA configuration.</p>
   cli_alias: dyn-config-custom-url
   required_when:
-  - evaluation: logical-or
-    conditions:
-    - evaluation: property-value-in-list
-      attribute: DynConfig
-      value:
-      - current-aaa
-    - evaluation: property-value-in-list
-      attribute: DynConfig
-      value:
-      - external-aaa
+  - evaluation: property-value-in-list
+    attribute: DynConfig
+    value:
+    - current-aaa
+    - external-aaa
   ignored_when:
   - evaluation: logical-true

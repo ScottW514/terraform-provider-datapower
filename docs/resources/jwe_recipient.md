@@ -40,10 +40,12 @@ resource "datapower_jwe_recipient" "test" {
 - `certificate` (String) Certificate.
   - CLI Alias: `cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: `algorithm`=`RSA1_5`|`RSA-OAEP`|`RSA-OAEP-256`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `ss_key` (String) Shared secret key.
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`
+  - Required When: `algorithm`=`A128KW`|`A192KW`|`A256KW`|`dir`
 - `unprotected_header` (Attributes List) Unprotected header for the JWE recipient.
   - CLI Alias: `unprotected-header` (see [below for nested schema](#nestedatt--unprotected_header))
 - `user_summary` (String) A descriptive summary for the configuration.

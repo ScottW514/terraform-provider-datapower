@@ -90,7 +90,7 @@ func (d *OperationRateLimitDataSource) Schema(ctx context.Context, req datasourc
 						},
 						"rate_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Rate limit",
-							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIRateLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"rate_limit_group": schema.StringAttribute{

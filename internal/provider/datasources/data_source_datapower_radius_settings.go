@@ -74,7 +74,7 @@ func (d *RADIUSSettingsDataSource) Schema(ctx context.Context, req datasource.Sc
 			},
 			"aaa_servers": schema.ListNestedAttribute{
 				MarkdownDescription: "AAA and RBM",
-				NestedObject:        models.DmRadiusServerDataSourceSchema,
+				NestedObject:        models.GetDmRadiusServerDataSourceSchema(),
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,
@@ -94,7 +94,7 @@ func (d *RADIUSSettingsDataSource) Read(ctx context.Context, req datasource.Read
 	d.pData.Mu.Lock()
 	defer d.pData.Mu.Unlock()
 
-	var data models.RADIUSSettings
+	var data models.RADIUSSettingsWO
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return

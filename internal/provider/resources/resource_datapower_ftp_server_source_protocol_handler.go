@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &FTPServerSourceProtocolHandlerResource{}
@@ -98,7 +99,6 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(21),
@@ -117,14 +117,13 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 43200),
 				},
 				Default: int64default.StaticInt64(600),
 			},
 			"virtual_directories": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directories to create in virtual file system that the FTP server presents. The FTP client can use all of these directories to write file to be processed. The root directory (/) is always present, cannot be created, and is its own response directory.", "virtual-directory", "").String,
-				NestedObject:        models.DmFTPServerVirtualDirectoryResourceSchema,
+				NestedObject:        models.GetDmFTPServerVirtualDirectoryResourceSchema(),
 				Optional:            true,
 			},
 			"default_directory": schema.StringAttribute{
@@ -138,7 +137,6 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 4000),
 				},
 				Default: int64default.StaticInt64(256),
@@ -190,7 +188,6 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1024, 65534),
 				},
 				Default: int64default.StaticInt64(1024),
@@ -200,7 +197,6 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1024, 65534),
 				},
 				Default: int64default.StaticInt64(1050),
@@ -210,7 +206,6 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(5, 300),
 				},
 				Default: int64default.StaticInt64(60),
@@ -234,8 +229,11 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default:             booldefault.StaticBool(false),
 			},
 			"alternate_pasv_addr": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address to return to the FTP client in response to a <tt>PASV</tt> command. This setting does not change the IP address that the FTP server listens, which is always the IP address for the FTP data connection. This value is used when the FTP server is behind a firewall that is not FTP-aware.", "passive-addr", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address to return to the FTP client in response to a <tt>PASV</tt> command. This setting does not change the IP address that the FTP server listens, which is always the IP address for the FTP data connection. This value is used when the FTP server is behind a firewall that is not FTP-aware.", "passive-addr", "").AddRequiredWhen(models.FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"allow_list_cmd": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to support the FTP <tt>LIST</tt> command. When enabled, the FTP server makes a distinction between the <tt>LIST</tt> and <tt>NLST</tt> commands. By default, the server always respond with an <tt>NLST</tt> to list files. <p>This setting is only supported by the FTP server handler for a multiprotocol gateway or web service proxy.</p>", "list-cmd", "").AddDefaultValue("false").String,
@@ -288,7 +286,6 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(240),
@@ -298,7 +295,6 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -326,7 +322,6 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 2048),
 				},
 				Default: int64default.StaticInt64(32),
@@ -343,21 +338,28 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				},
 			},
 			"ssl_server_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile type to secure connections from clients. When a TLS profile is assigned, the FTP <tt>AUTH TLS</tt> command is enabled and clients can encrypt FTP control connection.", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile type to secure connections from clients. When a TLS profile is assigned, the FTP <tt>AUTH TLS</tt> command is enabled and clients can encrypt FTP control connection.", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").AddRequiredWhen(models.FTPServerSourceProtocolHandlerSSLServerConfigTypeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
+					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerSSLServerConfigTypeCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").AddRequiredWhen(models.FTPServerSourceProtocolHandlerSSLServerCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerSSLServerCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"sslsni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.FTPServerSourceProtocolHandlerSSLSNIServerCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerSSLSNIServerCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

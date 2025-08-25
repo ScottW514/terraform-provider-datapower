@@ -128,12 +128,12 @@ func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"doc_cache_policy": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the document cache policies to associate a set of URLs with a specific cache policy. A document cache policy allows the administrator to determine how documents are cached. The policy offers time-to-live, priority, and type. The document cache is distinct from the stylesheet cache.",
-							NestedObject:        models.DmDocCachePolicyDataSourceSchema,
+							NestedObject:        models.GetDmDocCachePolicyDataSourceSchema(),
 							Computed:            true,
 						},
 						"scheduled_rule": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.",
-							NestedObject:        models.DmScheduledRuleDataSourceSchema,
+							NestedObject:        models.GetDmScheduledRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"api_collection": schema.ListAttribute{
@@ -147,17 +147,17 @@ func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"assembly_burst_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "",
-							NestedObject:        models.DmAPIBurstLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIBurstLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_rate_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Assembly rate limits",
-							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIRateLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_count_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Assembly count limits",
-							NestedObject:        models.DmAPICountLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPICountLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"ldap_conn_pool": schema.StringAttribute{
@@ -166,7 +166,7 @@ func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"proxy_policies": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the proxy policies to associate a set of URLs with a specific HTTP proxy. When multiple proxy policies are defined, URLs are evaluated against each policy in order.",
-							NestedObject:        models.DmAPIProxyPolicyDataSourceSchema,
+							NestedObject:        models.GetDmAPIProxyPolicyDataSourceSchema(),
 							Computed:            true,
 						},
 						"front_timeout": schema.Int64Attribute{
@@ -183,7 +183,7 @@ func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"open_telemetry_resource_attribute": schema.ListNestedAttribute{
 							MarkdownDescription: "OpenTelemetry resource attributes",
-							NestedObject:        models.DmOpenTelemetryResourceAttributeDataSourceSchema,
+							NestedObject:        models.GetDmOpenTelemetryResourceAttributeDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

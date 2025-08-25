@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AS1PollerSourceProtocolHandlerResource{}
@@ -94,7 +95,6 @@ func (r *AS1PollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				MarkdownDescription: tfutils.NewAttributeDescription("The listening port on the mail server. STARTTLS negotiation and an unsecured connection generally use port 110. An implicit, secured connection generally uses port 995.", "port", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
@@ -122,14 +122,13 @@ func (r *AS1PollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 			},
 			"password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The password alias of the password for the account that accesses the mailbox on the server.", "password-alias", "password_alias").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"delay_between_polls": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between polling sequences. A <em>polling sequence</em> is the time to retrieve the messages plus the time to complete their processing. Enter a value in the range 1 - 65535. The default value is 300. <p><b>Note:</b> Some mail servers restrict the number of times an account can establish a connection during a specific time period. Ensure that the configured interval complies with any restriction.</p>", "delay-time", "").AddIntegerRange(1, 65535).AddDefaultValue("300").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(300),
@@ -139,23 +138,26 @@ func (r *AS1PollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 100),
 				},
 				Default: int64default.StaticInt64(5),
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddRequiredWhen(models.AS1PollerSourceProtocolHandlerSSLClientConfigTypeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
+					validators.ConditionalRequiredString(models.AS1PollerSourceProtocolHandlerSSLClientConfigTypeCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.AS1PollerSourceProtocolHandlerSSLClientCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AS1PollerSourceProtocolHandlerSSLClientCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

@@ -51,42 +51,49 @@ var DmGatewayPeeringClusterNodeObjectDefault = map[string]attr.Value{
 	"port":       types.Int64Null(),
 	"local_node": types.BoolValue(true),
 }
-var DmGatewayPeeringClusterNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
-			Computed:            true,
-		},
-		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port of the node.", "", "").String,
-			Computed:            true,
-		},
-		"local_node": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the node is local to the data center.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
-}
-var DmGatewayPeeringClusterNodeResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+
+func GetDmGatewayPeeringClusterNodeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmGatewayPeeringClusterNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"address": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
+				Computed:            true,
+			},
+			"port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port of the node.", "", "").String,
+				Computed:            true,
+			},
+			"local_node": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the node is local to the data center.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
 			},
 		},
-		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port of the node.", "", "").String,
-			Required:            true,
+	}
+	return DmGatewayPeeringClusterNodeDataSourceSchema
+}
+func GetDmGatewayPeeringClusterNodeResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmGatewayPeeringClusterNodeResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"address": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+				},
+			},
+			"port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port of the node.", "", "").String,
+				Required:            true,
+			},
+			"local_node": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the node is local to the data center.", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"local_node": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the node is local to the data center.", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	return DmGatewayPeeringClusterNodeResourceSchema
 }
 
 func (data DmGatewayPeeringClusterNode) IsNull() bool {
@@ -107,6 +114,7 @@ func (data DmGatewayPeeringClusterNode) ToBody(ctx context.Context, pathRoot str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Address.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Address`, data.Address.ValueString())
 	}

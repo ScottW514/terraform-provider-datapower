@@ -45,29 +45,36 @@ var DmSQLDataSourceConfigNVPairObjectDefault = map[string]attr.Value{
 	"param_name":  types.StringNull(),
 	"param_value": types.StringNull(),
 }
-var DmSQLDataSourceConfigNVPairDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"param_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "", "").String,
-			Computed:            true,
+
+func GetDmSQLDataSourceConfigNVPairDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSQLDataSourceConfigNVPairDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"param_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "", "").String,
+				Computed:            true,
+			},
+			"param_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "", "").String,
+				Computed:            true,
+			},
 		},
-		"param_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmSQLDataSourceConfigNVPairDataSourceSchema
 }
-var DmSQLDataSourceConfigNVPairResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"param_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "", "").String,
-			Required:            true,
+func GetDmSQLDataSourceConfigNVPairResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSQLDataSourceConfigNVPairResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"param_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "", "").String,
+				Required:            true,
+			},
+			"param_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "", "").String,
+				Required:            true,
+			},
 		},
-		"param_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmSQLDataSourceConfigNVPairResourceSchema
 }
 
 func (data DmSQLDataSourceConfigNVPair) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmSQLDataSourceConfigNVPair) ToBody(ctx context.Context, pathRoot str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ParamName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParamName`, data.ParamName.ValueString())
 	}

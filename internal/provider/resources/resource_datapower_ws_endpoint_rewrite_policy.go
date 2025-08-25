@@ -84,32 +84,32 @@ func (r *WSEndpointRewritePolicyResource) Schema(ctx context.Context, req resour
 			},
 			"ws_endpoint_local_rewrite_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit, or delete a local endpoint rewrite rule. These rules evaluate services in a deployed WSDL file and specify the URL the appliance should use locally for matched services. They convert addresses in WSDL files to local endpoints.", "listener-rule", "").String,
-				NestedObject:        models.DmWSEndpointLocalRewriteRuleResourceSchema,
+				NestedObject:        models.GetDmWSEndpointLocalRewriteRuleResourceSchema(),
 				Optional:            true,
 			},
 			"ws_endpoint_remote_rewrite_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit, or delete a remote endpoint rewrite rule. These rules evaluate services in deployed WSDL file and specify the URL the appliance should use remotely for matched services. They convert address in WSDL files to remote endpoints.", "backend-rule", "").String,
-				NestedObject:        models.DmWSEndpointRemoteRewriteRuleResourceSchema,
+				NestedObject:        models.GetDmWSEndpointRemoteRewriteRuleResourceSchema(),
 				Optional:            true,
 			},
 			"ws_endpoint_publish_rewrite_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit, or delete a publish endpoint rewrite rule. These rules evaluate services in deployed WSDL file and specify the URL the appliance should publish when producing its own WSDL files. Use this if you wish to publish an address different from the local address, for example the address of a load balancer in front of appliance.", "publisher-rule", "").String,
-				NestedObject:        models.DmWSEndpointPublishRewriteRuleResourceSchema,
+				NestedObject:        models.GetDmWSEndpointPublishRewriteRuleResourceSchema(),
 				Optional:            true,
 			},
 			"ws_endpoint_subscription_local_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit, or delete a subscription rewrite rule.", "subscription-listener-rule", "").String,
-				NestedObject:        models.DmWSEndpointSubscriptionLocalRuleResourceSchema,
+				NestedObject:        models.GetDmWSEndpointSubscriptionLocalRuleResourceSchema(),
 				Optional:            true,
 			},
 			"ws_endpoint_subscription_remote_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit, or delete a subscription rewrite rule.", "subscription-backend-rule", "").String,
-				NestedObject:        models.DmWSEndpointSubscriptionRemoteRuleResourceSchema,
+				NestedObject:        models.GetDmWSEndpointSubscriptionRemoteRuleResourceSchema(),
 				Optional:            true,
 			},
 			"ws_endpoint_subscription_publish_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit, or delete a subscription rewrite rule.", "subscription-publisher-rule", "").String,
-				NestedObject:        models.DmWSEndpointSubscriptionPublishRuleResourceSchema,
+				NestedObject:        models.GetDmWSEndpointSubscriptionPublishRuleResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

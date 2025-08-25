@@ -75,7 +75,6 @@ func (r *LunaHASettingsResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of recovery attempts for failed members in the HA group. Enter a value in the range 0 - 500. The default value is 0, which disables automatic recovery.", "recovery-count", "").AddIntegerRange(-1, 500).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(-1, 500),
 				},
 			},
@@ -84,7 +83,6 @@ func (r *LunaHASettingsResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(60, 1200),
 				},
 				Default: int64default.StaticInt64(60),

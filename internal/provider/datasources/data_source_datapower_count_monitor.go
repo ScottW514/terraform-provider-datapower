@@ -90,7 +90,7 @@ func (d *CountMonitorDataSource) Schema(ctx context.Context, req datasource.Sche
 						},
 						"filter": schema.ListNestedAttribute{
 							MarkdownDescription: "Click this tab to define a message-count monitor threshold and assign an action (Message Filter Action) that is taken when the threshold is reached.",
-							NestedObject:        models.DmCountMonitorFilterDataSourceSchema,
+							NestedObject:        models.GetDmCountMonitorFilterDataSourceSchema(),
 							Computed:            true,
 						},
 						"max_sources": schema.Int64Attribute{

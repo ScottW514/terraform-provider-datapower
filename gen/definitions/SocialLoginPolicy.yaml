@@ -166,9 +166,9 @@ attributes:
     and verify the ID token.
   cli_alias: jwt-validator
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ValidateJWTToken
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true

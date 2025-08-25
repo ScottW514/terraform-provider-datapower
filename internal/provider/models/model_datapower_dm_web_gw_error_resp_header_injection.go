@@ -45,29 +45,36 @@ var DmWebGWErrorRespHeaderInjectionObjectDefault = map[string]attr.Value{
 	"header_tag":       types.StringNull(),
 	"header_tag_value": types.StringNull(),
 }
-var DmWebGWErrorRespHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"header_tag": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.", "", "").String,
-			Computed:            true,
+
+func GetDmWebGWErrorRespHeaderInjectionDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWebGWErrorRespHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"header_tag": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.", "", "").String,
+				Computed:            true,
+			},
+			"header_tag_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header name.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"header_tag_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header name.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmWebGWErrorRespHeaderInjectionDataSourceSchema
 }
-var DmWebGWErrorRespHeaderInjectionResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"header_tag": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.", "", "").String,
-			Optional:            true,
+func GetDmWebGWErrorRespHeaderInjectionResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWebGWErrorRespHeaderInjectionResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"header_tag": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.", "", "").String,
+				Optional:            true,
+			},
+			"header_tag_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header name.", "", "").String,
+				Required:            true,
+			},
 		},
-		"header_tag_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header name.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmWebGWErrorRespHeaderInjectionResourceSchema
 }
 
 func (data DmWebGWErrorRespHeaderInjection) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmWebGWErrorRespHeaderInjection) ToBody(ctx context.Context, pathRoot
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.HeaderTag.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HeaderTag`, data.HeaderTag.ValueString())
 	}

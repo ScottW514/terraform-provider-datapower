@@ -75,3 +75,9 @@ func (d *AttributeDescription) AddActions(actions ...string) *AttributeDescripti
 	d.String = fmt.Sprintf("%s  - Accepted Dependency Actions: %s\n", d.String, strings.Join(v, ", "))
 	return d
 }
+
+// AddRequiredWhen adds required when conditions.
+func (d *AttributeDescription) AddRequiredWhen(condRequired string) *AttributeDescription {
+	d.String = fmt.Sprintf("%s  - Required When: %s\n", d.String, condRequired)
+	return d
+}

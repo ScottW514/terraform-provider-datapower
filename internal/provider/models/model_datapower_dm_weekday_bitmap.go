@@ -62,89 +62,104 @@ var DmWeekdayBitmapObjectDefault = map[string]attr.Value{
 	"friday":    types.BoolValue(false),
 	"saturday":  types.BoolValue(false),
 }
-var DmWeekdayBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"sunday": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sunday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmWeekdayBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmWeekdayBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"sunday": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Sunday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"monday": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Monday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"tuesday": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Tuesday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"wednesday": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Wednesday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"thursday": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Thursday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"friday": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Friday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"saturday": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Saturday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"monday": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Monday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"tuesday": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Tuesday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"wednesday": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Wednesday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"thursday": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Thursday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"friday": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Friday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"saturday": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Saturday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmWeekdayBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmWeekdayBitmapDataSourceSchema
 }
-var DmWeekdayBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmWeekdayBitmapObjectType,
-			DmWeekdayBitmapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"sunday": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sunday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmWeekdayBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmWeekdayBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmWeekdayBitmapObjectType,
+				DmWeekdayBitmapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"sunday": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Sunday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"monday": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Monday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"tuesday": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Tuesday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"wednesday": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Wednesday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"thursday": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Thursday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"friday": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Friday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"saturday": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Saturday", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"monday": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Monday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"tuesday": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Tuesday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"wednesday": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Wednesday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"thursday": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Thursday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"friday": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Friday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"saturday": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Saturday", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmWeekdayBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmWeekdayBitmapResourceSchema.Required = true
+	} else {
+		DmWeekdayBitmapResourceSchema.Optional = true
+		DmWeekdayBitmapResourceSchema.Computed = true
+	}
+	return DmWeekdayBitmapResourceSchema
 }
 
 func (data DmWeekdayBitmap) IsNull() bool {
@@ -171,27 +186,13 @@ func (data DmWeekdayBitmap) IsNull() bool {
 	}
 	return true
 }
-func GetDmWeekdayBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmWeekdayBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmWeekdayBitmapDataSourceSchema
-}
-
-func GetDmWeekdayBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmWeekdayBitmapResourceSchema.Required = true
-	} else {
-		DmWeekdayBitmapResourceSchema.Optional = true
-		DmWeekdayBitmapResourceSchema.Computed = true
-	}
-	DmWeekdayBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmWeekdayBitmapResourceSchema
-}
 
 func (data DmWeekdayBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Sunday.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Sunday`, tfutils.StringFromBool(data.Sunday, ""))
 	}

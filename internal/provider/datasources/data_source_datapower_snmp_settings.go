@@ -71,17 +71,17 @@ func (d *SNMPSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 			},
 			"policies": schema.ListNestedAttribute{
 				MarkdownDescription: "SNMPv1/v2c Communities",
-				NestedObject:        models.DmSnmpPolicyDataSourceSchema,
+				NestedObject:        models.GetDmSnmpPolicyDataSourceSchema(),
 				Computed:            true,
 			},
 			"policies_mq": schema.ListNestedAttribute{
 				MarkdownDescription: "SNMPv1/v2c Communities",
-				NestedObject:        models.DmSnmpPolicyMQDataSourceSchema,
+				NestedObject:        models.GetDmSnmpPolicyMQDataSourceSchema(),
 				Computed:            true,
 			},
 			"targets": schema.ListNestedAttribute{
 				MarkdownDescription: "Trap and Notification Targets",
-				NestedObject:        models.DmSnmpTargetDataSourceSchema,
+				NestedObject:        models.GetDmSnmpTargetDataSourceSchema(),
 				Computed:            true,
 			},
 			"users": schema.ListAttribute{
@@ -91,7 +91,7 @@ func (d *SNMPSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 			},
 			"contexts": schema.ListNestedAttribute{
 				MarkdownDescription: "SNMPv3 context definitions, which provide SNMPv3 access to non-default application domains.",
-				NestedObject:        models.DmSnmpContextDataSourceSchema,
+				NestedObject:        models.GetDmSnmpContextDataSourceSchema(),
 				Computed:            true,
 			},
 			"security_level": schema.StringAttribute{

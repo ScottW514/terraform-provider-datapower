@@ -85,7 +85,7 @@ func (r *AssemblyActionRedactResource) Schema(ctx context.Context, req resource.
 			},
 			"redact": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to handle sensitive data by path expression and action. When the action is redact, content is obfuscated with asterisks. If the redacted content is numeric data, the type is changed to <tt>string</tt> .", "redact-action", "").String,
-				NestedObject:        models.DmAssemblyActionRedactResourceSchema,
+				NestedObject:        models.GetDmAssemblyActionRedactResourceSchema(),
 				Required:            true,
 			},
 			"user_summary": schema.StringAttribute{

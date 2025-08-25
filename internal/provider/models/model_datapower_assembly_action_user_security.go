@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -70,6 +71,129 @@ type AssemblyActionUserSecurity struct {
 	CorrelationPath                   types.String                `tfsdk:"correlation_path"`
 	ActionDebug                       types.Bool                  `tfsdk:"action_debug"`
 	DependencyActions                 []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AssemblyActionUserSecurityEIStopOnErrorCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "extract_identity_method",
+	AttrType:    "String",
+	AttrDefault: "basic",
+	Value:       []string{"disabled"},
+}
+var AssemblyActionUserSecurityUserContextVariableCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_identity_method",
+	AttrType:    "String",
+	AttrDefault: "basic",
+	Value:       []string{"context-var"},
+}
+var AssemblyActionUserSecurityPassContextVariableCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_identity_method",
+	AttrType:    "String",
+	AttrDefault: "basic",
+	Value:       []string{"context-var"},
+}
+var AssemblyActionUserSecurityRedirectURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_identity_method",
+	AttrType:    "String",
+	AttrDefault: "basic",
+	Value:       []string{"redirect"},
+}
+var AssemblyActionUserSecurityRedirectTimeLimitCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_identity_method",
+	AttrType:    "String",
+	AttrDefault: "basic",
+	Value:       []string{"redirect"},
+}
+var AssemblyActionUserSecurityEIDefaultFormCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_identity_method",
+	AttrType:    "String",
+	AttrDefault: "basic",
+	Value:       []string{"html-form"},
+}
+var AssemblyActionUserSecurityEICustomFormCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "extract_identity_method",
+			AttrType:    "String",
+			AttrDefault: "basic",
+			Value:       []string{"html-form"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ei_default_form",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var AssemblyActionUserSecurityEIFormTimeLimitCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_identity_method",
+	AttrType:    "String",
+	AttrDefault: "basic",
+	Value:       []string{"html-form"},
+}
+var AssemblyActionUserSecurityAUStopOnErrorCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "user_auth_method",
+	AttrType:    "String",
+	AttrDefault: "user-registry",
+	Value:       []string{"disabled"},
+}
+var AssemblyActionUserSecurityUserRegistryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "user_auth_method",
+	AttrType:    "String",
+	AttrDefault: "user-registry",
+	Value:       []string{"disabled"},
+}
+var AssemblyActionUserSecurityAZStopOnErrorCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "user_az_method",
+	AttrType:    "String",
+	AttrDefault: "authenticated",
+	Value:       []string{"disabled"},
+}
+var AssemblyActionUserSecurityAZDefaultFormCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "user_az_method",
+	AttrType:    "String",
+	AttrDefault: "authenticated",
+	Value:       []string{"html-form"},
+}
+var AssemblyActionUserSecurityAZCustomFormCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "user_az_method",
+			AttrType:    "String",
+			AttrDefault: "authenticated",
+			Value:       []string{"html-form"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_default_form",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var AssemblyActionUserSecurityAZFormTimeLimitCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "user_az_method",
+	AttrType:    "String",
+	AttrDefault: "authenticated",
+	Value:       []string{"html-form"},
 }
 
 var AssemblyActionUserSecurityObjectType = map[string]attr.Type{
@@ -232,6 +356,7 @@ func (data AssemblyActionUserSecurity) ToBody(ctx context.Context, pathRoot stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -317,9 +442,9 @@ func (data AssemblyActionUserSecurity) ToBody(ctx context.Context, pathRoot stri
 		body, _ = sjson.Set(body, pathRoot+`AZTableDynamicEntries`, data.AzTableDynamicEntries.ValueString())
 	}
 	if !data.AzTableDefaultEntry.IsNull() {
-		var values []DmTableEntry
-		data.AzTableDefaultEntry.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmTableEntry
+		data.AzTableDefaultEntry.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`AZTableDefaultEntry`+".-1", val.ToBody(ctx, ""))
 		}
 	}

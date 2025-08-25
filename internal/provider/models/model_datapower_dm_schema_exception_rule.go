@@ -48,34 +48,41 @@ var DmSchemaExceptionRuleObjectDefault = map[string]attr.Value{
 	"x_path":         types.StringNull(),
 	"exception_type": types.StringValue("AllowEncrypted"),
 }
-var DmSchemaExceptionRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"x_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
-			Computed:            true,
-		},
-		"exception_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Exception type for encryption.", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
-			Computed:            true,
-		},
-	},
-}
-var DmSchemaExceptionRuleResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"x_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
-			Required:            true,
-		},
-		"exception_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Exception type for encryption.", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("AllowEncrypted", "RequireEncrypted"),
+
+func GetDmSchemaExceptionRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSchemaExceptionRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"x_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("AllowEncrypted"),
+			"exception_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Exception type for encryption.", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmSchemaExceptionRuleDataSourceSchema
+}
+func GetDmSchemaExceptionRuleResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSchemaExceptionRuleResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"x_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
+				Required:            true,
+			},
+			"exception_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Exception type for encryption.", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("AllowEncrypted", "RequireEncrypted"),
+				},
+				Default: stringdefault.StaticString("AllowEncrypted"),
+			},
+		},
+	}
+	return DmSchemaExceptionRuleResourceSchema
 }
 
 func (data DmSchemaExceptionRule) IsNull() bool {
@@ -93,6 +100,7 @@ func (data DmSchemaExceptionRule) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.XPath.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
 	}

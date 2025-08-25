@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,42 @@ type DmWSEndpointSubscriptionRemoteRule struct {
 	RemoteMqManager        types.String `tfsdk:"remote_mq_manager"`
 	RemoteTibcoEms         types.String `tfsdk:"remote_tibco_ems"`
 	RemoteWebSphereJms     types.String `tfsdk:"remote_web_sphere_jms"`
+}
+
+var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointHostnameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dpmq", "idgmq", "dptibems", "dpwasjms"},
+}
+var DmWSEndpointSubscriptionRemoteRuleRemoteMQQMCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dpmq"},
+}
+var DmWSEndpointSubscriptionRemoteRuleRemoteMQManagerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"idgmq"},
+}
+var DmWSEndpointSubscriptionRemoteRuleRemoteTibcoEMSCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dptibems"},
+}
+var DmWSEndpointSubscriptionRemoteRuleRemoteWebSphereJMSCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dpwasjms"},
 }
 
 var DmWSEndpointSubscriptionRemoteRuleObjectType = map[string]attr.Type{
@@ -69,90 +106,112 @@ var DmWSEndpointSubscriptionRemoteRuleObjectDefault = map[string]attr.Value{
 	"remote_tibco_ems":         types.StringNull(),
 	"remote_web_sphere_jms":    types.StringNull(),
 }
-var DmWSEndpointSubscriptionRemoteRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
-			Computed:            true,
-		},
-		"remote_endpoint_protocol": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the remote endpoint. The protocol can be different from the one in the WSDL.", "remote-endpoint-protocol", "").AddStringEnum("default", "http", "https", "dpmq", "mq", "idgmq", "dptibems", "tibems", "dpwasjms").AddDefaultValue("default").String,
-			Computed:            true,
-		},
-		"remote_endpoint_hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten rule web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.", "remote-endpoint-hostname", "").String,
-			Computed:            true,
-		},
-		"remote_endpoint_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").String,
-			Computed:            true,
-		},
-		"remote_endpoint_uri": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the remote path. If not specified, the value from the location attribute of the soap:address element in the WSDL is used. For the IBM MQ, TIBCO EMS, and WebSphere JMS protocols, the URI must specify a RequestQueue parameter. For most web services, the ReplyQueue parameter is required to receive the SOAP response.", "remote-endpoint-uri", "").String,
-			Computed:            true,
-		},
-		"remote_mqqm": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.", "remote-mq-qm", "").String,
-			Computed:            true,
-		},
-		"remote_mq_manager": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.", "remote-idg-mq-qm", "").String,
-			Computed:            true,
-		},
-		"remote_tibco_ems": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.", "remote-tibems-server", "tibco_ems_server").String,
-			Computed:            true,
-		},
-		"remote_web_sphere_jms": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.", "remote-wasjms-server", "web_sphere_jms_server").String,
-			Computed:            true,
-		},
-	},
-}
-var DmWSEndpointSubscriptionRemoteRuleResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
-			Optional:            true,
-		},
-		"remote_endpoint_protocol": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the remote endpoint. The protocol can be different from the one in the WSDL.", "remote-endpoint-protocol", "").AddStringEnum("default", "http", "https", "dpmq", "mq", "idgmq", "dptibems", "tibems", "dpwasjms").AddDefaultValue("default").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("default", "http", "https", "dpmq", "mq", "idgmq", "dptibems", "tibems", "dpwasjms"),
+
+func GetDmWSEndpointSubscriptionRemoteRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSEndpointSubscriptionRemoteRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"subscription": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("default"),
+			"remote_endpoint_protocol": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the remote endpoint. The protocol can be different from the one in the WSDL.", "remote-endpoint-protocol", "").AddStringEnum("default", "http", "https", "dpmq", "mq", "idgmq", "dptibems", "tibems", "dpwasjms").AddDefaultValue("default").String,
+				Computed:            true,
+			},
+			"remote_endpoint_hostname": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten rule web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.", "remote-endpoint-hostname", "").String,
+				Computed:            true,
+			},
+			"remote_endpoint_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").String,
+				Computed:            true,
+			},
+			"remote_endpoint_uri": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the remote path. If not specified, the value from the location attribute of the soap:address element in the WSDL is used. For the IBM MQ, TIBCO EMS, and WebSphere JMS protocols, the URI must specify a RequestQueue parameter. For most web services, the ReplyQueue parameter is required to receive the SOAP response.", "remote-endpoint-uri", "").String,
+				Computed:            true,
+			},
+			"remote_mqqm": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.", "remote-mq-qm", "").String,
+				Computed:            true,
+			},
+			"remote_mq_manager": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.", "remote-idg-mq-qm", "").String,
+				Computed:            true,
+			},
+			"remote_tibco_ems": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.", "remote-tibems-server", "tibco_ems_server").String,
+				Computed:            true,
+			},
+			"remote_web_sphere_jms": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.", "remote-wasjms-server", "web_sphere_jms_server").String,
+				Computed:            true,
+			},
 		},
-		"remote_endpoint_hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten rule web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.", "remote-endpoint-hostname", "").String,
-			Optional:            true,
+	}
+	return DmWSEndpointSubscriptionRemoteRuleDataSourceSchema
+}
+func GetDmWSEndpointSubscriptionRemoteRuleResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSEndpointSubscriptionRemoteRuleResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"subscription": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
+				Optional:            true,
+			},
+			"remote_endpoint_protocol": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the remote endpoint. The protocol can be different from the one in the WSDL.", "remote-endpoint-protocol", "").AddStringEnum("default", "http", "https", "dpmq", "mq", "idgmq", "dptibems", "tibems", "dpwasjms").AddDefaultValue("default").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("default", "http", "https", "dpmq", "mq", "idgmq", "dptibems", "tibems", "dpwasjms"),
+				},
+				Default: stringdefault.StaticString("default"),
+			},
+			"remote_endpoint_hostname": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten rule web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.", "remote-endpoint-hostname", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSEndpointSubscriptionRemoteRuleRemoteEndpointHostnameCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"remote_endpoint_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").String,
+				Optional:            true,
+			},
+			"remote_endpoint_uri": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the remote path. If not specified, the value from the location attribute of the soap:address element in the WSDL is used. For the IBM MQ, TIBCO EMS, and WebSphere JMS protocols, the URI must specify a RequestQueue parameter. For most web services, the ReplyQueue parameter is required to receive the SOAP response.", "remote-endpoint-uri", "").String,
+				Optional:            true,
+			},
+			"remote_mqqm": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.", "remote-mq-qm", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSEndpointSubscriptionRemoteRuleRemoteMQQMCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"remote_mq_manager": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.", "remote-idg-mq-qm", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSEndpointSubscriptionRemoteRuleRemoteMQManagerCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"remote_tibco_ems": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.", "remote-tibems-server", "tibco_ems_server").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSEndpointSubscriptionRemoteRuleRemoteTibcoEMSCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"remote_web_sphere_jms": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.", "remote-wasjms-server", "web_sphere_jms_server").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSEndpointSubscriptionRemoteRuleRemoteWebSphereJMSCondVal, validators.Evaluation{}, false),
+				},
+			},
 		},
-		"remote_endpoint_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").String,
-			Optional:            true,
-		},
-		"remote_endpoint_uri": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the remote path. If not specified, the value from the location attribute of the soap:address element in the WSDL is used. For the IBM MQ, TIBCO EMS, and WebSphere JMS protocols, the URI must specify a RequestQueue parameter. For most web services, the ReplyQueue parameter is required to receive the SOAP response.", "remote-endpoint-uri", "").String,
-			Optional:            true,
-		},
-		"remote_mqqm": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.", "remote-mq-qm", "").String,
-			Optional:            true,
-		},
-		"remote_mq_manager": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.", "remote-idg-mq-qm", "").String,
-			Optional:            true,
-		},
-		"remote_tibco_ems": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.", "remote-tibems-server", "tibco_ems_server").String,
-			Optional:            true,
-		},
-		"remote_web_sphere_jms": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.", "remote-wasjms-server", "web_sphere_jms_server").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSEndpointSubscriptionRemoteRuleResourceSchema
 }
 
 func (data DmWSEndpointSubscriptionRemoteRule) IsNull() bool {
@@ -191,6 +250,7 @@ func (data DmWSEndpointSubscriptionRemoteRule) ToBody(ctx context.Context, pathR
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Subscription.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Subscription`, data.Subscription.ValueString())
 	}

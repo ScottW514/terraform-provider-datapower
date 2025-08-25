@@ -69,7 +69,6 @@ func (r *NFSClientSettingsResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 1000),
 				},
 				Default: int64default.StaticInt64(10),

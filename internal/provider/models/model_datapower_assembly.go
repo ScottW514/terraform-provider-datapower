@@ -92,6 +92,7 @@ func (data Assembly) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -102,9 +103,9 @@ func (data Assembly) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Rule`, data.Rule.ValueString())
 	}
 	if !data.Catch.IsNull() {
-		var values []DmAssemblyCatch
-		data.Catch.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAssemblyCatch
+		data.Catch.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Catch`+".-1", val.ToBody(ctx, ""))
 		}
 	}

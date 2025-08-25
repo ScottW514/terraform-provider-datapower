@@ -82,7 +82,7 @@ func (d *ProcessingMetadataDataSource) Schema(ctx context.Context, req datasourc
 						},
 						"meta_item": schema.ListNestedAttribute{
 							MarkdownDescription: "Define a metadata item by selecting one from the predefined items for a Processing Metadata Category, or configure a custom metadata item for a \"customizable\" category to retrieve value from any arbitrary headers or variables.",
-							NestedObject:        models.DmMetaItemDataSourceSchema,
+							NestedObject:        models.GetDmMetaItemDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

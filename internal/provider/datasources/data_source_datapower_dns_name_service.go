@@ -62,17 +62,17 @@ func (d *DNSNameServiceDataSource) Schema(ctx context.Context, req datasource.Sc
 			},
 			"search_domains": schema.ListNestedAttribute{
 				MarkdownDescription: "Specify the list of search domains to resolve partial hostnames.",
-				NestedObject:        models.DmSearchDomainDataSourceSchema,
+				NestedObject:        models.GetDmSearchDomainDataSourceSchema(),
 				Computed:            true,
 			},
 			"name_servers": schema.ListNestedAttribute{
 				MarkdownDescription: "Specify the list of DNS servers to contact to resolve hostnames. If you define multiple servers, ensure that the sequence to contact the servers is your preferred order.",
-				NestedObject:        models.DmNameServerDataSourceSchema,
+				NestedObject:        models.GetDmNameServerDataSourceSchema(),
 				Computed:            true,
 			},
 			"static_hosts": schema.ListNestedAttribute{
 				MarkdownDescription: "Specify the static map of hostnames to IP addresses that do not use DNS resolution. Because the local resolver uses a cache, static hosts do not improve performance.",
-				NestedObject:        models.DmStaticHostDataSourceSchema,
+				NestedObject:        models.GetDmStaticHostDataSourceSchema(),
 				Computed:            true,
 			},
 			"ip_preference": schema.StringAttribute{

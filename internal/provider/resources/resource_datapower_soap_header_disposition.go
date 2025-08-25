@@ -80,7 +80,7 @@ func (r *SOAPHeaderDispositionResource) Schema(ctx context.Context, req resource
 			},
 			"refine": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Customer specifically asks this transformation to simply remove/keep/fault a SOAP header; or indicates whether a header was processed or not by the prior action, then this action will take the default behaviors.", "refine", "").String,
-				NestedObject:        models.DmSOAPHeaderDispositionItemResourceSchema,
+				NestedObject:        models.GetDmSOAPHeaderDispositionItemResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

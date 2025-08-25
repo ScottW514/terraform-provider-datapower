@@ -53,6 +53,7 @@ resource "datapower_wsrr_subscription" "test" {
   - Default value: `poll`
 - `namespace` (String) Specify the namespace to unambiguously identify the WSRR resource. This property is used with the object name.
   - CLI Alias: `namespace`
+  - Required When: `object_type`!=`service-version`
 - `object_version` (String) Object version
   - CLI Alias: `version`
 - `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.

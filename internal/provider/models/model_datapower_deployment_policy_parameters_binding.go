@@ -77,6 +77,7 @@ func (data DeploymentPolicyParametersBinding) ToBody(ctx context.Context, pathRo
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -84,9 +85,9 @@ func (data DeploymentPolicyParametersBinding) ToBody(ctx context.Context, pathRo
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.DeploymentPolicyParameter.IsNull() {
-		var values []DmDeploymentPolicyParameter
-		data.DeploymentPolicyParameter.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmDeploymentPolicyParameter
+		data.DeploymentPolicyParameter.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DeploymentPolicyParameter`+".-1", val.ToBody(ctx, ""))
 		}
 	}

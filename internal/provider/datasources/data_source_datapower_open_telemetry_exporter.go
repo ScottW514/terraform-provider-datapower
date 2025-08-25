@@ -106,7 +106,7 @@ func (d *OpenTelemetryExporterDataSource) Schema(ctx context.Context, req dataso
 						},
 						"header": schema.ListNestedAttribute{
 							MarkdownDescription: "Headers",
-							NestedObject:        models.DmOpenTelemetryExporterHeaderDataSourceSchema,
+							NestedObject:        models.GetDmOpenTelemetryExporterHeaderDataSourceSchema(),
 							Computed:            true,
 						},
 						"processor": schema.StringAttribute{
@@ -127,7 +127,7 @@ func (d *OpenTelemetryExporterDataSource) Schema(ctx context.Context, req dataso
 						},
 						"proxy_policies": schema.ListNestedAttribute{
 							MarkdownDescription: "Proxy policies",
-							NestedObject:        models.DmAPIProxyPolicyDataSourceSchema,
+							NestedObject:        models.GetDmAPIProxyPolicyDataSourceSchema(),
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{

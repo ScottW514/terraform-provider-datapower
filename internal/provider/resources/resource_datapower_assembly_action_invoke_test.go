@@ -39,6 +39,7 @@ func TestAccResourceAssemblyActionInvoke(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_assembly_action_invoke.test", "timeout", "60"),
 			resource.TestCheckResourceAttr("datapower_assembly_action_invoke.test", "method", "Keep"),
 			resource.TestCheckResourceAttr("datapower_assembly_action_invoke.test", "backend_type", "detect"),
+			resource.TestCheckResourceAttr("datapower_assembly_action_invoke.test", "graph_ql_send_type", "detect"),
 			resource.TestCheckResourceAttr("datapower_assembly_action_invoke.test", "compression", "false"),
 			resource.TestCheckResourceAttr("datapower_assembly_action_invoke.test", "cache_type", "Protocol"),
 			resource.TestCheckResourceAttr("datapower_assembly_action_invoke.test", "time_to_live", "900"),

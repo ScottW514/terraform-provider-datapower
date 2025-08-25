@@ -48,37 +48,44 @@ var DmWSBaseWSDLObjectDefault = map[string]attr.Value{
 	"wsdl_name":            types.StringNull(),
 	"policy_attachments":   types.StringNull(),
 }
-var DmWSBaseWSDLDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"wsdl_source_location": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the exact location (URL) of the WSDL file. The WSDL file can be stored on the device or on a remote server. For example, an on-device location might be \"local:///searchservice.wsdl\".", "", "").String,
-			Computed:            true,
+
+func GetDmWSBaseWSDLDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSBaseWSDLDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"wsdl_source_location": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the exact location (URL) of the WSDL file. The WSDL file can be stored on the device or on a remote server. For example, an on-device location might be \"local:///searchservice.wsdl\".", "", "").String,
+				Computed:            true,
+			},
+			"wsdl_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a mnemonic for this WSDL file. The mnemonic can be be the filename (for example \"searchservice.wsdl\") or an alias (for example \"searchsvc\").", "", "").String,
+				Computed:            true,
+			},
+			"policy_attachments": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select an existing policy attachment object to configure the handling of XML element attached policies and to create external policy attachments to this web service.", "", "policy_attachments").String,
+				Computed:            true,
+			},
 		},
-		"wsdl_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a mnemonic for this WSDL file. The mnemonic can be be the filename (for example \"searchservice.wsdl\") or an alias (for example \"searchsvc\").", "", "").String,
-			Computed:            true,
-		},
-		"policy_attachments": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select an existing policy attachment object to configure the handling of XML element attached policies and to create external policy attachments to this web service.", "", "policy_attachments").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmWSBaseWSDLDataSourceSchema
 }
-var DmWSBaseWSDLResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"wsdl_source_location": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the exact location (URL) of the WSDL file. The WSDL file can be stored on the device or on a remote server. For example, an on-device location might be \"local:///searchservice.wsdl\".", "", "").String,
-			Required:            true,
+func GetDmWSBaseWSDLResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSBaseWSDLResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"wsdl_source_location": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the exact location (URL) of the WSDL file. The WSDL file can be stored on the device or on a remote server. For example, an on-device location might be \"local:///searchservice.wsdl\".", "", "").String,
+				Required:            true,
+			},
+			"wsdl_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a mnemonic for this WSDL file. The mnemonic can be be the filename (for example \"searchservice.wsdl\") or an alias (for example \"searchsvc\").", "", "").String,
+				Required:            true,
+			},
+			"policy_attachments": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select an existing policy attachment object to configure the handling of XML element attached policies and to create external policy attachments to this web service.", "", "policy_attachments").String,
+				Optional:            true,
+			},
 		},
-		"wsdl_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify a mnemonic for this WSDL file. The mnemonic can be be the filename (for example \"searchservice.wsdl\") or an alias (for example \"searchsvc\").", "", "").String,
-			Required:            true,
-		},
-		"policy_attachments": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select an existing policy attachment object to configure the handling of XML element attached policies and to create external policy attachments to this web service.", "", "policy_attachments").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSBaseWSDLResourceSchema
 }
 
 func (data DmWSBaseWSDL) IsNull() bool {
@@ -99,6 +106,7 @@ func (data DmWSBaseWSDL) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.WsdlSourceLocation.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSDLSourceLocation`, data.WsdlSourceLocation.ValueString())
 	}

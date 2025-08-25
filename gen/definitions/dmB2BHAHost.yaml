@@ -6,10 +6,13 @@ attributes:
   description: Specify the host name of the other system in the high availability
     cluster.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
+    attr_type: Bool
+    attr_default: false
+    attr_path: '../'
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: Port
@@ -20,9 +23,12 @@ attributes:
   description: Specify the listening port on the other system in the high availability
     cluster.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HAEnabled
+    attr_type: Bool
+    attr_default: false
+    attr_path: '../'
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true

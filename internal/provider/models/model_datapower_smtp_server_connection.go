@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -46,6 +47,14 @@ type SMTPServerConnection struct {
 	SslClientConfigType  types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient            types.String                `tfsdk:"ssl_client"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SMTPServerConnectionAccountNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "options",
+	AttrType:    "DmSMTPOptions",
+	AttrDefault: "",
+	Value:       []string{"auth"},
 }
 
 var SMTPServerConnectionObjectType = map[string]attr.Type{
@@ -114,6 +123,7 @@ func (data SMTPServerConnection) ToBody(ctx context.Context, pathRoot string) st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

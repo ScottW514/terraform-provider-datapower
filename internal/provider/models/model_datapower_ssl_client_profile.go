@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -57,6 +58,40 @@ type SSLClientProfile struct {
 	SigAlgs                       types.List                    `tfsdk:"sig_algs"`
 	RequireClosureNotification    types.Bool                    `tfsdk:"require_closure_notification"`
 	DependencyActions             []*actions.DependencyAction   `tfsdk:"dependency_actions"`
+}
+
+var SSLClientProfileValcredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validate_server_cert",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var SSLClientProfileUseCustomSNIHostnameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_client_features",
+	AttrType:    "DmSSLClientFeatures",
+	AttrDefault: "",
+	Value:       []string{"use-sni"},
+}
+var SSLClientProfileCustomSNIHostnameCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_custom_sni_hostname",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_client_features",
+			AttrType:    "DmSSLClientFeatures",
+			AttrDefault: "",
+			Value:       []string{"use-sni"},
+		},
+	},
 }
 
 var SSLClientProfileObjectType = map[string]attr.Type{
@@ -173,6 +208,7 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -185,9 +221,9 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.Ciphers.IsNull() {
-		var values []string
-		data.Ciphers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Ciphers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Ciphers`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -215,9 +251,9 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.EllipticCurves.IsNull() {
-		var values []string
-		data.EllipticCurves.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.EllipticCurves.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`EllipticCurves`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -245,9 +281,9 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`DisableRenegotiation`, tfutils.StringFromBool(data.DisableRenegotiation, ""))
 	}
 	if !data.SigAlgs.IsNull() {
-		var values []string
-		data.SigAlgs.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.SigAlgs.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`SigAlgs`+".-1", map[string]string{"value": val})
 		}
 	}

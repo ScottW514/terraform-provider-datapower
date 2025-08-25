@@ -19,7 +19,7 @@ attributes:
   type: String
   description: For HTTP matching, the name of the HTTP header to examine.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - http
@@ -30,7 +30,7 @@ attributes:
   description: For HTTP matching, the value match for the HTTP header. Enter a match
     pattern or a literal string.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - http
@@ -53,7 +53,7 @@ attributes:
   test_value: '"*"'
   description: The error code match expression.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - errorcode
@@ -63,7 +63,7 @@ attributes:
   type: String
   description: The XPath match expression.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - xpath
@@ -85,7 +85,7 @@ attributes:
   description: The HTTP method.
   default: default
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - method
@@ -95,7 +95,7 @@ attributes:
   type: String
   description: For a custom method, the custom HTTP method.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Method
     value:
     - custom

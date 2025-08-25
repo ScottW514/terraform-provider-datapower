@@ -109,7 +109,6 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(4318),
@@ -131,7 +130,7 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 			},
 			"header": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Headers", "header", "").String,
-				NestedObject:        models.DmOpenTelemetryExporterHeaderResourceSchema,
+				NestedObject:        models.GetDmOpenTelemetryExporterHeaderResourceSchema(),
 				Optional:            true,
 			},
 			"processor": schema.StringAttribute{
@@ -163,7 +162,7 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 			},
 			"proxy_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Proxy policies", "proxy", "").String,
-				NestedObject:        models.DmAPIProxyPolicyResourceSchema,
+				NestedObject:        models.GetDmAPIProxyPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"ssl_client": schema.StringAttribute{

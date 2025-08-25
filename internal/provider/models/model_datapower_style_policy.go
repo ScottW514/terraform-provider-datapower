@@ -92,6 +92,7 @@ func (data StylePolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -108,9 +109,9 @@ func (data StylePolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DefXQueryForJSON`, data.DefXQueryForJson.ValueString())
 	}
 	if !data.PolicyMaps.IsNull() {
-		var values []DmPolicyMap
-		data.PolicyMaps.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmPolicyMap
+		data.PolicyMaps.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`PolicyMaps`+".-1", val.ToBody(ctx, ""))
 		}
 	}

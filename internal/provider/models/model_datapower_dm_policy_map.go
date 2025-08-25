@@ -45,29 +45,36 @@ var DmPolicyMapObjectDefault = map[string]attr.Value{
 	"match": types.StringNull(),
 	"rule":  types.StringNull(),
 }
-var DmPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
-			Computed:            true,
+
+func GetDmPolicyMapDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"match": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
+				Computed:            true,
+			},
+			"rule": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Processing Rule to run.", "", "style_policy_rule").String,
+				Computed:            true,
+			},
 		},
-		"rule": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Processing Rule to run.", "", "style_policy_rule").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmPolicyMapDataSourceSchema
 }
-var DmPolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
-			Required:            true,
+func GetDmPolicyMapResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmPolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"match": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
+				Required:            true,
+			},
+			"rule": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Processing Rule to run.", "", "style_policy_rule").String,
+				Required:            true,
+			},
 		},
-		"rule": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the Processing Rule to run.", "", "style_policy_rule").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmPolicyMapResourceSchema
 }
 
 func (data DmPolicyMap) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmPolicyMap) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Match.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Match`, data.Match.ValueString())
 	}

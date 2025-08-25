@@ -11,10 +11,10 @@ attributes:
   description: Specify the location of the custom file for the postprocessing activity.
   cli_alias: custom-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPEnabled
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: PPSAMLAuthAssertion
@@ -34,18 +34,18 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLAuthAssertion
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLSendSLO
       value:
-      - 'off'
+      - false
 - name: PPSAMLNameQualifier
   type: String
   description: Specify the value of the NameQualifier attribute of the NameIdentifier
@@ -55,20 +55,20 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLAuthAssertion
       value:
-      - 'off'
+      - false
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPSAMLIdentityProvider
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: PPSAMLNameID
         value:
-        - 'off'
+        - false
 - name: PPKerberosTicket
   type: Bool
   default: false
@@ -86,44 +86,50 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
+        - true
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosUseS4U2Proxy
         value:
-        - 'off'
+        - false
       - evaluation: logical-and
         conditions:
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: PPKerberosUseS4U2Proxy
           value:
-          - 'on'
-        - evaluation: property-does-not-equal
+          - true
+        - evaluation: property-value-not-in-list
           attribute: AUMethod
+          attr_type: String
+          attr_default: ldap
+          attr_path: '../authenticate'
           value:
           - kerberos
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
         value:
-        - 'off'
+        - false
       - evaluation: logical-and
         conditions:
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
           value:
-          - 'on'
-        - evaluation: property-equals
+          - true
+        - evaluation: property-value-in-list
           attribute: AUMethod
+          attr_type: String
+          attr_default: ldap
+          attr_path: '../authenticate'
           value:
           - kerberos
   ignored_when:
@@ -143,19 +149,19 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
-    - evaluation: property-does-not-equal
+        - true
+    - evaluation: property-value-not-in-list
       attribute: PPKerberosServerSource
       value:
       - custom-url
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: PPKerberosServerSource
       value:
       - ctx-var
@@ -174,10 +180,10 @@ attributes:
     token response.
   cli_alias: ws-trust-add-timestamp
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPWSTrust
     value:
-    - 'off'
+    - false
 - name: PPTimestampExpiry
   type: Int64
   maximum: 31622400
@@ -193,14 +199,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSTrust
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSTrustNeverExpire
       value:
-      - 'on'
+      - true
 - name: PPAllowRenewal
   type: Bool
   default: false
@@ -211,14 +217,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSTrust
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSTrustNeverExpire
       value:
-      - 'on'
+      - true
 - name: PPSAMLVersion
   type: String
   enum:
@@ -233,14 +239,14 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLAuthAssertion
       value:
-      - 'off'
+      - false
 - name: PPSAMLSendSLO
   type: Bool
   default: false
@@ -260,10 +266,10 @@ attributes:
     This endpoint is the authority that authenticated the assertion subject.
   cli_alias: saml-slo-endpoint
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLSendSLO
     value:
-    - 'off'
+    - false
 - name: PPWSUsernameToken
   type: Bool
   default: false
@@ -283,14 +289,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameToken
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameTokenIncludePwd
       value:
-      - 'off'
+      - false
 - name: PPSAMLValidity
   type: Int64
   default: 0
@@ -301,14 +307,14 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLAuthAssertion
       value:
-      - 'off'
+      - false
 - name: PPSAMLSkew
   type: Int64
   default: 0
@@ -321,14 +327,14 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLAuthAssertion
       value:
-      - 'off'
+      - false
 - name: PPWSUsernameTokenIncludePwd
   type: Bool
   default: true
@@ -336,10 +342,10 @@ attributes:
     By default, the token must contain the password.
   cli_alias: wssec-user-name-token-contains-pwd
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPWSUsernameToken
     value:
-    - 'off'
+    - false
 - name: PPLTPA
   type: Bool
   default: false
@@ -358,10 +364,10 @@ attributes:
     WebSphere version 2 token.
   cli_alias: lpta-version
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPLTPA
     value:
-    - 'off'
+    - false
 - name: PPLTPAExpiry
   type: Int64
   minimum: 1
@@ -371,10 +377,10 @@ attributes:
     range 1 - 628992000. The default value is 600.
   cli_alias: lpta-expiry
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPLTPA
     value:
-    - 'off'
+    - false
 - name: PPLTPAKeyFile
   type: String
   description: Specify the location of the LTPA key file that secures the LTPA token.
@@ -385,15 +391,15 @@ attributes:
     secret.</li></ul>
   cli_alias: lpta-key-file
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPLTPA
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPLTPA
     value:
-    - 'off'
+    - false
   file_locations:
   - local
   - store
@@ -409,10 +415,10 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPLTPA
         value:
-        - 'off'
+        - false
       - evaluation: logical-and
         conditions:
         - evaluation: property-value-not-in-list
@@ -426,7 +432,7 @@ attributes:
           attribute: PPLTPAVersion
           value:
           - LTPADomino
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPLTPAKeyFilePassword
       value:
       - ''
@@ -460,10 +466,10 @@ attributes:
     attribute. The default value is for WSS Kerberos Token Profile 1.1 (GSS).
   cli_alias: kerberos-value-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPKerberosTicket
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: PPSAMLUseWSSec
@@ -475,10 +481,10 @@ attributes:
     token profile.
   cli_alias: saml-in-wssec
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLAuthAssertion
     value:
-    - 'off'
+    - false
 - name: PPKerberosClientKeytab
   type: String
   reference_to: CryptoKerberosKeytab
@@ -490,44 +496,50 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
+        - true
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosUseS4U2Proxy
         value:
-        - 'off'
+        - false
       - evaluation: logical-and
         conditions:
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: PPKerberosUseS4U2Proxy
           value:
-          - 'on'
-        - evaluation: property-does-not-equal
+          - true
+        - evaluation: property-value-not-in-list
           attribute: AUMethod
+          attr_type: String
+          attr_default: ldap
+          attr_path: '../authenticate'
           value:
           - kerberos
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
         value:
-        - 'off'
+        - false
       - evaluation: logical-and
         conditions:
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
           value:
-          - 'on'
-        - evaluation: property-equals
+          - true
+        - evaluation: property-value-in-list
           attribute: AUMethod
+          attr_type: String
+          attr_default: ldap
+          attr_path: '../authenticate'
           value:
           - kerberos
   ignored_when:
@@ -545,11 +557,11 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPLTPA
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: PPLTPAVersion
         value:
         - LTPADomino
@@ -585,36 +597,36 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPWSUsernameToken
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPTFIMTokenMapping
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPICRXToken
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPSAMLIdentityProvider
         value:
-        - 'on'
+        - true
       - evaluation: logical-and
         conditions:
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: PPLTPA
           value:
-          - 'on'
-        - evaluation: property-does-not-equal
+          - true
+        - evaluation: property-value-not-in-list
           attribute: PPLTPAVersion
           value:
           - LTPADomino
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: PPUseWSSec
           value:
-          - 'on'
+          - true
 - name: PPWSDerivedKeyUsernameToken
   type: Bool
   default: false
@@ -626,14 +638,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameToken
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameTokenIncludePwd
       value:
-      - 'off'
+      - false
   ignored_when:
   - evaluation: logical-true
 - name: PPWSDerivedKeyUsernameTokenIterations
@@ -647,18 +659,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameToken
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameTokenIncludePwd
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSDerivedKeyUsernameToken
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: PPWSUsernameTokenAllowReplacement
@@ -669,10 +681,10 @@ attributes:
     is retained. When enabled, the generated token replaces any existing ones.
   cli_alias: wssec-replace-existing
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPWSUsernameToken
     value:
-    - 'off'
+    - false
 - name: PPHMACSigningAlg
   type: String
   enum:
@@ -692,18 +704,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameToken
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameTokenIncludePwd
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSDerivedKeyUsernameToken
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: PPSigningHashAlg
@@ -724,18 +736,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameToken
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPWSUsernameTokenIncludePwd
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSDerivedKeyUsernameToken
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: PPWSTrustHeader
@@ -747,10 +759,10 @@ attributes:
     .
   cli_alias: ws-trust-in-header
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPWSTrust
     value:
-    - 'off'
+    - false
 - name: PPWSSCKeySource
   type: String
   enum:
@@ -766,17 +778,17 @@ attributes:
     SecurityContext. By default, a random key is generated.
   cli_alias: ws-trust-key-source
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPWSTrust
     value:
-    - 'off'
+    - false
 - name: PPSharedSecretKey
   type: String
   reference_to: CryptoSSKey
   description: Specify the shared secret key as the WS-Trust key source.
   cli_alias: ws-trust-shared-key
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: PPWSSCKeySource
     value:
     - static
@@ -795,18 +807,18 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSTrust
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSTrustNeverExpire
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPAllowRenewal
       value:
-      - 'off'
+      - false
 - name: PPWSTrustNewInstance
   type: Bool
   default: false
@@ -817,18 +829,18 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSTrust
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSTrustNeverExpire
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPAllowRenewal
       value:
-      - 'off'
+      - false
 - name: PPWSTrustNewKey
   type: Bool
   default: false
@@ -839,22 +851,22 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPWSTrust
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSTrustNeverExpire
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPAllowRenewal
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPWSTrustNewInstance
       value:
-      - 'off'
+      - false
 - name: PPWSTrustNeverExpire
   type: Bool
   default: false
@@ -864,10 +876,10 @@ attributes:
     expiry.
   cli_alias: ws-trust-never-expire
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPWSTrust
     value:
-    - 'off'
+    - false
 - name: PPICRXToken
   type: Bool
   default: false
@@ -884,10 +896,10 @@ attributes:
     of the prefix for a DN in a user registry.
   cli_alias: icrx-user-realm
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: PPICRXToken
     value:
-    - 'on'
+    - true
 - name: PPSAMLIdentityProvider
   type: Bool
   default: false
@@ -913,10 +925,10 @@ attributes:
     the SAML assertion can be put to WS-Security wrap-up later.
   cli_alias: saml-protocol
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'off'
+    - false
 - name: PPSAMLResponseDestination
   type: String
   description: Specify the destination for a SAML response. This information can prevent
@@ -930,15 +942,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: PPSAMLVersion
       value:
       - '2.0'
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: saml-protocol
       value:
       - assertion
@@ -957,10 +969,10 @@ attributes:
     and replaces the same token in the requesting message.
   cli_alias: result-wrapup
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'off'
+    - false
 - name: PPSAMLAssertionType
   dm_type: DmSAMLStatementType
   default: authentication+attribute
@@ -968,15 +980,15 @@ attributes:
     attributes and authentication statements.
   cli_alias: saml-assertion-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'off'
+    - false
 - name: PPSAMLSubjectConfirm
   type: String
   enum:
@@ -988,10 +1000,10 @@ attributes:
     subject of the SAML assertion. By default, the subject is bearer.
   cli_alias: saml-subject-confirm
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'off'
+    - false
 - name: PPSAMLNameID
   type: Bool
   default: true
@@ -1002,10 +1014,10 @@ attributes:
     as the subject.
   cli_alias: saml-nid
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'off'
+    - false
 - name: PPSAMLNameIDFormat
   type: String
   description: Specify the URI reference that represents the classification of string-based
@@ -1017,14 +1029,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLNameID
       value:
-      - 'off'
+      - false
 - name: PPSAMLRecipient
   type: String
   description: Specify a URI that identifies the entity or location that an attesting
@@ -1033,10 +1045,10 @@ attributes:
     setting is applicable for only SAML 2.0.
   cli_alias: saml-recipient
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'off'
+    - false
 - name: PPSAMLAudience
   type: String
   description: Specify URI references that identify an intended audience. Enter any
@@ -1046,10 +1058,10 @@ attributes:
     any URI that contains the + characters to \+.
   cli_alias: saml-audience
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'off'
+    - false
 - name: PPSAMLOmitNotBefore
   type: Bool
   default: false
@@ -1060,10 +1072,10 @@ attributes:
     be required to respond to an <tt>AuthnRequest</tt> .
   cli_alias: saml-omit-notbefore
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLIdentityProvider
     value:
-    - 'off'
+    - false
 - name: PPOneTimeUse
   type: Bool
   default: false
@@ -1076,11 +1088,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLVersion
       value:
       - '1.0'
@@ -1098,11 +1110,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: PPSAMLVersion
       value:
       - '2.0'
@@ -1118,15 +1130,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLProxy
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: PPSAMLVersion
       value:
       - '2.0'
@@ -1145,15 +1157,15 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPSAMLProxy
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: PPSAMLVersion
       value:
       - '2.0'
@@ -1185,11 +1197,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: PPSAMLAssertionType
       value:
       - authorization
@@ -1204,11 +1216,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLIdentityProvider
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPSAMLAssertionType
       value:
       - attribute
@@ -1226,14 +1238,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPLTPA
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: PPUseWSSec
       value:
-      - 'on'
+      - true
 - name: PPTAMPACPropagate
   type: Bool
   default: false
@@ -1249,15 +1261,15 @@ attributes:
     value is iv_creds, which is HTTP header that WebSEAL uses to write headers.
   cli_alias: tam-header
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPTAMPACPropagate
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPTAMPACPropagate
     value:
-    - 'off'
+    - false
 - name: PPTAMHeaderSize
   type: Int64
   default: 0
@@ -1266,15 +1278,15 @@ attributes:
     headers of the specified length. The default value is 0.
   cli_alias: tam-header-size
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPTAMPACPropagate
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPTAMPACPropagate
     value:
-    - 'off'
+    - false
 - name: PPKerberosUseS4U2Proxy
   type: Bool
   default: false
@@ -1285,20 +1297,23 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
+      attr_type: String
+      attr_default: ldap
+      attr_path: '../authenticate'
       value:
       - kerberos
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'off'
+        - false
 - name: PPCookieAttributes
   type: String
   reference_to: CookieAttributePolicy
@@ -1309,14 +1324,14 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: PPLTPA
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: PPLTPAInsertCookie
       value:
-      - 'on'
+      - true
 - name: PPKerberosUseS4U2SelfAndS4U2Proxy
   type: Bool
   default: false
@@ -1330,20 +1345,23 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AUMethod
+      attr_type: String
+      attr_default: ldap
+      attr_path: '../authenticate'
       value:
       - kerberos
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'off'
+        - false
 - name: PPKerberosClientSource
   type: String
   enum:
@@ -1363,22 +1381,25 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
-    - evaluation: property-does-not-equal
+        - true
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
+      attr_type: String
+      attr_default: ldap
+      attr_path: '../authenticate'
       value:
       - kerberos
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: PPKerberosSelf
@@ -1390,22 +1411,25 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
-    - evaluation: property-does-not-equal
+        - true
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
+      attr_type: String
+      attr_default: ldap
+      attr_path: '../authenticate'
       value:
       - kerberos
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: PPKerberosSelfKeytab
@@ -1420,22 +1444,25 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
-    - evaluation: property-does-not-equal
+        - true
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
+      attr_type: String
+      attr_default: ldap
+      attr_path: '../authenticate'
       value:
       - kerberos
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: PPKerberosClientCustomURL
@@ -1450,23 +1477,26 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
-    - evaluation: property-does-not-equal
+        - true
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
+      attr_type: String
+      attr_default: ldap
+      attr_path: '../authenticate'
       value:
       - kerberos
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPKerberosClientSource
       value:
       - custom-url
@@ -1485,23 +1515,26 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
-    - evaluation: property-does-not-equal
+        - true
+    - evaluation: property-value-not-in-list
       attribute: AUMethod
+      attr_type: String
+      attr_default: ldap
+      attr_path: '../authenticate'
       value:
       - kerberos
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPKerberosUseS4U2SelfAndS4U2Proxy
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPKerberosClientSource
       value:
       - ctx-var
@@ -1522,14 +1555,14 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPKerberosTicket
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: PPKerberosSPNEGOToken
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: PPKerberosServerCustomURL
@@ -1547,15 +1580,15 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
-    - evaluation: property-equals
+        - true
+    - evaluation: property-value-in-list
       attribute: PPKerberosServerSource
       value:
       - custom-url
@@ -1574,15 +1607,15 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPKerberosTicket
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: PPKerberosSPNEGOToken
         value:
-        - 'on'
-    - evaluation: property-equals
+        - true
+    - evaluation: property-value-in-list
       attribute: PPKerberosServerSource
       value:
       - ctx-var
@@ -1597,10 +1630,10 @@ attributes:
   description: Specify the TLS client type to secure connections.
   cli_alias: ssl-client-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPSAMLSendSLO
     value:
-    - 'off'
+    - false
 - name: PPSSLClientProfile
   type: String
   reference_to: SSLClientProfile
@@ -1609,11 +1642,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPSAMLSendSLO
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: PPSSLClientConfigType
       value:
       - client
@@ -1625,16 +1658,16 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPLTPAKeyFilePassword
       value:
       - ''
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: PPLTPA
         value:
-        - 'on'
+        - true
       - evaluation: property-value-in-list
         attribute: PPLTPAVersion
         value:
@@ -1645,10 +1678,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: PPLTPA
       value:
-      - 'off'
+      - false
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
@@ -1673,9 +1706,9 @@ attributes:
   description: Specify the JWT generator.
   cli_alias: generate-jwt
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PPJWT
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true

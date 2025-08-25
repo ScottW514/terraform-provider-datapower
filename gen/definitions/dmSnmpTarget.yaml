@@ -42,7 +42,7 @@ attributes:
     recipient. Determines what authentication and privacy (encryption) protocols are
     used, and what keys.
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: TrapVersion
     value:
     - '3'
@@ -58,7 +58,7 @@ attributes:
   description: The SNMPv3 security level at which Notifications are sent to the recipient.
     The default is Authentication, Privacy.
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: TrapVersion
     value:
     - '3'

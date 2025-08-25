@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WebTokenServiceResource{}
@@ -113,7 +114,7 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"front_side": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Define the addresses and ports that the service listens on. You can define listening sources for HTTP and HTTPS requests. For HTTPS request, set the listening source to use TLS parameter and assign the TLS profile.", "listen-on", "").String,
-				NestedObject:        models.DmSSLFrontSideResourceSchema,
+				NestedObject:        models.GetDmSSLFrontSideResourceSchema(),
 				Required:            true,
 			},
 			"style_policy": schema.StringAttribute{
@@ -135,12 +136,12 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the appliance will not send error messages to the client until 3 seconds have elapsed since the appliance performed decryption on the requests. Enter any value in the range 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the appliance will not send error messages to the client until 3 seconds have elapsed since the appliance performed decryption on the requests. Enter any value in the range 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").AddRequiredWhen(models.WebTokenServiceDelayErrorsDurationCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(250, 300000),
+					validators.ConditionalRequiredInt64(models.WebTokenServiceDelayErrorsDurationCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(1000),
 			},
@@ -149,7 +150,6 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -159,7 +159,6 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(180),
@@ -195,12 +194,12 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.WebTokenServiceDebugHistoryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 250),
+					validators.ConditionalRequiredInt64(models.WebTokenServiceDebugHistoryCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},

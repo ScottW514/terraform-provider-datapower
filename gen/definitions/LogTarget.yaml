@@ -7,6 +7,7 @@ description: <p>Log targets capture messages that are posted by the various obje
 cli_alias: logging target
 cmd_group: logging
 rest_endpoint: /mgmt/config/{domain}/LogTarget
+write_only_attrs: true
 attributes:
 - name: Id
   tf_name: id
@@ -43,11 +44,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: dmObjectName
       value:
       - default-log
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: Type
       value:
       - file
@@ -166,11 +167,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: dmObjectName
       value:
       - default-log
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Format
       value:
       - json-icp
@@ -182,7 +183,7 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Format
       value:
       - cbe
@@ -193,11 +194,11 @@ attributes:
       - smtp
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - file
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UploadMethod
         value:
         - smtp
@@ -213,17 +214,17 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Type
       value:
       - smtp
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - file
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UploadMethod
         value:
         - smtp
@@ -237,17 +238,17 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Type
       value:
       - smtp
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - file
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UploadMethod
         value:
         - smtp
@@ -261,17 +262,17 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Type
       value:
       - smtp
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - file
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UploadMethod
         value:
         - smtp
@@ -302,7 +303,7 @@ attributes:
     POST method and uses the default user agent.
   cli_alias: url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - soap
@@ -314,7 +315,7 @@ attributes:
   description: NFS static mount
   cli_alias: nfs-static-mount
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - nfs
@@ -326,8 +327,9 @@ attributes:
   description: Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt>
     or <tt>logstore:///filename.log</tt> .
   cli_alias: local-file
+  test_value: '"logtemp:///AccTest_LogTarget.log"'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - file
@@ -343,7 +345,7 @@ attributes:
     Do not end the path with a forward slash (/).
   cli_alias: nfs-file
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Type
     value:
     - nfs
@@ -379,7 +381,7 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ArchiveMode
       value:
       - upload
@@ -406,7 +408,7 @@ attributes:
       - nfs
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ArchiveMode
         value:
         - rotate
@@ -423,7 +425,7 @@ attributes:
     ANSI X3.64 escape sequences color-code messages by log level.
   cli_alias: ansi-color
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - console
@@ -445,11 +447,11 @@ attributes:
       - smtp
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ArchiveMode
         value:
         - upload
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - file
@@ -468,11 +470,11 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Type
         value:
         - file
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: ArchiveMode
         value:
         - upload
@@ -483,7 +485,7 @@ attributes:
       - syslog-tcp
       - smtp
       - file
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: dmObjectName
       value:
       - default-log
@@ -500,7 +502,7 @@ attributes:
       - ftp
       - scp
       - sftp
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ArchiveMode
       value:
       - upload
@@ -513,18 +515,18 @@ attributes:
 - name: RemotePassword
   type: String
   sensitive: true
+  write_only: true
   description: Specify the password for the account or username for non-public key
     authentication. Public key authentication can be configured through the default
     user agent.
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: is-edit-new-object
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UploadMethod
       value:
       - ftp
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ArchiveMode
       value:
       - upload
@@ -541,7 +543,7 @@ attributes:
       - ftp
       - scp
       - sftp
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ArchiveMode
       value:
       - upload
@@ -568,7 +570,7 @@ attributes:
       - ftp
       - scp
       - sftp
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ArchiveMode
       value:
       - upload
@@ -770,7 +772,7 @@ attributes:
       value:
       - soap
       - syslog-tcp
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: SSLClientConfigType
       value:
       - client

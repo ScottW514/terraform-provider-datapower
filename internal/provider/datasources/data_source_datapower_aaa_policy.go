@@ -90,7 +90,7 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						},
 						"namespace_mapping": schema.ListNestedAttribute{
 							MarkdownDescription: "Define XML namespace maps. Each map is a prefix with its URI.",
-							NestedObject:        models.DmNamespaceMappingDataSourceSchema,
+							NestedObject:        models.GetDmNamespaceMappingDataSourceSchema(),
 							Computed:            true,
 						},
 						"extract_identity": models.GetDmAAAPExtractIdentityDataSourceSchema("Specify the methods to extract the identity of the service requester. For some methods, you must define more properties.", "extract-identity", ""),
@@ -102,17 +102,17 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						"post_process":     models.GetDmAAAPPostProcessDataSourceSchema("Specify postprocessing activities. For some methods, you must define more properties.", "post-process", ""),
 						"saml_attribute": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify SAML attributes. Each attribute consists of its namespace URI, local name, and expected value.",
-							NestedObject:        models.DmSAMLAttributeNameAndValueDataSourceSchema,
+							NestedObject:        models.GetDmSAMLAttributeNameAndValueDataSourceSchema(),
 							Computed:            true,
 						},
 						"ltpa_attributes": schema.ListNestedAttribute{
 							MarkdownDescription: "<p>Specify user attributes to include in the LTPA token. Attributes are relevant for only WebSphere tokens.</p><p>For each attribute, its value can be static or resolved at run time. <ul><li>When static, its value is a fixed value.</li><li>When resolved at run time, its value is resolved at run time with an XPath expression.</li></ul></p>",
-							NestedObject:        models.DmLTPAUserAttributeNameAndValueDataSourceSchema,
+							NestedObject:        models.GetDmLTPAUserAttributeNameAndValueDataSourceSchema(),
 							Computed:            true,
 						},
 						"transaction_priority": schema.ListNestedAttribute{
 							MarkdownDescription: "Define the transactional priority for users. For each user, you must specify the name of the output credentials, their priority for scheduling or resource allocation, and whether authorization is required.",
-							NestedObject:        models.DmAAATransactionPriorityDataSourceSchema,
+							NestedObject:        models.GetDmAAATransactionPriorityDataSourceSchema(),
 							Computed:            true,
 						},
 						"saml_valcred": schema.StringAttribute{

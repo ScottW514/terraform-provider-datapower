@@ -98,11 +98,11 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: RsrcMatchType
         value:
         - exact-match
-      - evaluation: property-does-not-equal
+      - evaluation: property-value-not-in-list
         attribute: RsrcMatchType
         value:
         - regexp-match
@@ -124,7 +124,7 @@ attributes:
   description: Custom stylesheet
   cli_alias: stylesheet
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RsrcType
     value:
     - custom-stylesheet
@@ -135,7 +135,7 @@ attributes:
   description: XPath filter
   cli_alias: xpath-filter
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RsrcType
     value:
     - xpath-filter
@@ -147,7 +147,7 @@ attributes:
   deprecated: true
   cli_alias: subscription
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RsrcType
     value:
     - uddi-subscription
@@ -159,7 +159,7 @@ attributes:
   description: WSRR subscription
   cli_alias: wsrr-subscription
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RsrcType
     value:
     - wsrr-subscription
@@ -171,7 +171,7 @@ attributes:
   description: WSRR saved search subscription
   cli_alias: wsrr-saved-search-subscription
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RsrcType
     value:
     - wsrr-saved-search-subscription

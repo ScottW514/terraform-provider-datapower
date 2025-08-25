@@ -86,7 +86,7 @@ func (d *APIApplicationTypeDataSource) Schema(ctx context.Context, req datasourc
 						},
 						"supported_o_auth_types": schema.ListNestedAttribute{
 							MarkdownDescription: "Supported OAuth types",
-							NestedObject:        models.DmOAuthTypeDataSourceSchema,
+							NestedObject:        models.GetDmOAuthTypeDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

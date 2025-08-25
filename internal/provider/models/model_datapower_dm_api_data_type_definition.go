@@ -45,29 +45,36 @@ var DmAPIDataTypeDefinitionObjectDefault = map[string]attr.Value{
 	"name":   types.StringNull(),
 	"schema": types.StringNull(),
 }
-var DmAPIDataTypeDefinitionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the data type.", "", "").String,
-			Computed:            true,
+
+func GetDmAPIDataTypeDefinitionDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAPIDataTypeDefinitionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the data type.", "", "").String,
+				Computed:            true,
+			},
+			"schema": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema object.", "", "api_schema").String,
+				Computed:            true,
+			},
 		},
-		"schema": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema object.", "", "api_schema").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAPIDataTypeDefinitionDataSourceSchema
 }
-var DmAPIDataTypeDefinitionResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the data type.", "", "").String,
-			Required:            true,
+func GetDmAPIDataTypeDefinitionResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAPIDataTypeDefinitionResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the data type.", "", "").String,
+				Required:            true,
+			},
+			"schema": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema object.", "", "api_schema").String,
+				Required:            true,
+			},
 		},
-		"schema": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema object.", "", "api_schema").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmAPIDataTypeDefinitionResourceSchema
 }
 
 func (data DmAPIDataTypeDefinition) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmAPIDataTypeDefinition) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

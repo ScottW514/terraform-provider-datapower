@@ -85,7 +85,7 @@ attributes:
     DataPower Gateway.
   cli_alias: ssl-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLServerConfigType
     value:
     - server
@@ -96,7 +96,7 @@ attributes:
     the DataPower Gateway.
   cli_alias: ssl-sni-server
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: SSLServerConfigType
     value:
     - sni

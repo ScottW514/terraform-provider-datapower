@@ -87,6 +87,7 @@ func (data DurationMonitor) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -94,9 +95,9 @@ func (data DurationMonitor) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`Measure`, data.Measure.ValueString())
 	}
 	if !data.Filter.IsNull() {
-		var values []DmDurationMonitorFilter
-		data.Filter.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmDurationMonitorFilter
+		data.Filter.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Filter`+".-1", val.ToBody(ctx, ""))
 		}
 	}

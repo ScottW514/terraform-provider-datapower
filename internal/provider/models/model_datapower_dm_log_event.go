@@ -48,34 +48,41 @@ var DmLogEventObjectDefault = map[string]attr.Value{
 	"class":    types.StringNull(),
 	"priority": types.StringValue("notice"),
 }
-var DmLogEventDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"class": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sets an event category.", "", "log_label").String,
-			Computed:            true,
-		},
-		"priority": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sets the minimum event priority. The priorities are hierarchical.", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
-			Computed:            true,
-		},
-	},
-}
-var DmLogEventResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"class": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sets an event category.", "", "log_label").String,
-			Optional:            true,
-		},
-		"priority": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sets the minimum event priority. The priorities are hierarchical.", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
+
+func GetDmLogEventDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmLogEventDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"class": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets an event category.", "", "log_label").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("notice"),
+			"priority": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets the minimum event priority. The priorities are hierarchical.", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmLogEventDataSourceSchema
+}
+func GetDmLogEventResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmLogEventResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"class": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets an event category.", "", "log_label").String,
+				Optional:            true,
+			},
+			"priority": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets the minimum event priority. The priorities are hierarchical.", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
+				},
+				Default: stringdefault.StaticString("notice"),
+			},
+		},
+	}
+	return DmLogEventResourceSchema
 }
 
 func (data DmLogEvent) IsNull() bool {
@@ -93,6 +100,7 @@ func (data DmLogEvent) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Class.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Class`, data.Class.ValueString())
 	}

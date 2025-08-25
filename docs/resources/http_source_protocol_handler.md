@@ -107,6 +107,7 @@ resource "datapower_http_source_protocol_handler" "test" {
 - `web_socket_idle_timeout` (Number) Specify the maximum idle time for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.
   - CLI Alias: `websocket-idle-timeout`
   - Range: `0`-`86400`
+  - Required When: (`allow_web_socket_upgrade`=`true` AND `http_version`!=`HTTP/1.0`)
 
 <a id="nestedatt--allowed_features"></a>
 ### Nested Schema for `allowed_features`

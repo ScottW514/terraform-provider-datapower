@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &NameValueProfileResource{}
@@ -91,7 +92,6 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 4294967295),
 				},
 				Default: int64default.StaticInt64(256),
@@ -101,7 +101,6 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 4294967295),
 				},
 				Default: int64default.StaticInt64(128000),
@@ -111,7 +110,6 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 4294967295),
 				},
 				Default: int64default.StaticInt64(512),
@@ -121,14 +119,13 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 4294967295),
 				},
 				Default: int64default.StaticInt64(1024),
 			},
 			"validation_list": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Each pair submitted to this profile consults this validation list, looking for the first regular expression match of the name against the name expression in the list. When that is found, the corresponding value constraint is matched against the value portion of the name-value pair. If that does not match, the policy applies the 'fixup' attribute to the submitted value. That may result in no change, the pair being removed, an error being generated, or the value being mapped to a known constant.", "validation", "").String,
-				NestedObject:        models.DmValidationTypeResourceSchema,
+				NestedObject:        models.GetDmValidationTypeResourceSchema(),
 				Optional:            true,
 			},
 			"default_fixup": schema.StringAttribute{
@@ -151,10 +148,13 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"no_match_xss_patterns_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "unvalidated-xss-patternsfile", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "unvalidated-xss-patternsfile", "").AddDefaultValue("store:///XSS-Patterns.xml").AddRequiredWhen(models.NameValueProfileNoMatchXSSPatternsFileCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("store:///XSS-Patterns.xml"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.NameValueProfileNoMatchXSSPatternsFileCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("store:///XSS-Patterns.xml"),
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

@@ -58,7 +58,7 @@ func (d *CRLFetchDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 			},
 			"crl_fetch_config": schema.ListNestedAttribute{
 				MarkdownDescription: "Define the configuration of an HTTP-enabled or an LDAP-enabled CRL (Certificate Revocation List) update policy. When HTTP, specify the Fetch URL. When LDAP, specify the LDAP bind information. For both, specify the validation credentials.",
-				NestedObject:        models.DmCRLFetchConfigDataSourceSchema,
+				NestedObject:        models.GetDmCRLFetchConfigDataSourceSchema(),
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

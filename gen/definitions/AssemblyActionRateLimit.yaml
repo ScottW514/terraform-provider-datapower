@@ -50,67 +50,43 @@ attributes:
   description: Burst limits
   cli_alias: burst-limit
   ignored_when:
-  - evaluation: logical-or
-    conditions:
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - plan-default
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - domain-named
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - group
+  - evaluation: property-value-in-list
+    attribute: Source
+    value:
+    - plan-default
+    - domain-named
+    - group
 - name: RateLimit
   type: List
   element_type: DmRateLimitInfo
   description: Rate limits
   cli_alias: rate-limit
   ignored_when:
-  - evaluation: logical-or
-    conditions:
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - plan-default
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - domain-named
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - group
+  - evaluation: property-value-in-list
+    attribute: Source
+    value:
+    - plan-default
+    - domain-named
+    - group
 - name: CountLimit
   type: List
   element_type: DmCountLimitInfo
   description: Count limits
   cli_alias: count-limit
   ignored_when:
-  - evaluation: logical-or
-    conditions:
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - plan-default
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - domain-named
-    - evaluation: property-equals
-      attribute: Source
-      value:
-      - group
+  - evaluation: property-value-in-list
+    attribute: Source
+    value:
+    - plan-default
+    - domain-named
+    - group
 - name: RateLimitDefinition
   type: List
   element_type: DmRateLimitInfoDomainNamed
   description: Rate limit definitions
   cli_alias: rate-limit-definition
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Source
     value:
     - domain-named
@@ -120,7 +96,7 @@ attributes:
   description: Rate limit group
   cli_alias: rate-limit-group
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Source
     value:
     - group
@@ -135,7 +111,7 @@ attributes:
     this setting. The default value is consume.
   cli_alias: group-action
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Source
     value:
     - group

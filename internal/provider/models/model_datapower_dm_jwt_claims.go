@@ -59,79 +59,94 @@ var DmJWTClaimsObjectDefault = map[string]attr.Value{
 	"nonce":  types.BoolValue(false),
 	"custom": types.BoolValue(false),
 }
-var DmJWTClaimsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"aud": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Audience", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmJWTClaimsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmJWTClaimsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"aud": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Audience", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"nbf": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Not before", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"iat": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Issued at", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"jti": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("JWT ID", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"nonce": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Nonce", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"custom": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"nbf": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Not before", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"iat": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Issued at", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"jti": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("JWT ID", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"nonce": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Nonce", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"custom": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmJWTClaimsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmJWTClaimsDataSourceSchema
 }
-var DmJWTClaimsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmJWTClaimsObjectType,
-			DmJWTClaimsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"aud": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Audience", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmJWTClaimsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmJWTClaimsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmJWTClaimsObjectType,
+				DmJWTClaimsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"aud": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Audience", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"nbf": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Not before", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"iat": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Issued at", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"jti": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("JWT ID", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"nonce": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Nonce", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"custom": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"nbf": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Not before", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"iat": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Issued at", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"jti": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("JWT ID", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"nonce": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Nonce", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"custom": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmJWTClaimsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmJWTClaimsResourceSchema.Required = true
+	} else {
+		DmJWTClaimsResourceSchema.Optional = true
+		DmJWTClaimsResourceSchema.Computed = true
+	}
+	return DmJWTClaimsResourceSchema
 }
 
 func (data DmJWTClaims) IsNull() bool {
@@ -155,27 +170,13 @@ func (data DmJWTClaims) IsNull() bool {
 	}
 	return true
 }
-func GetDmJWTClaimsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmJWTClaimsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmJWTClaimsDataSourceSchema
-}
-
-func GetDmJWTClaimsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmJWTClaimsResourceSchema.Required = true
-	} else {
-		DmJWTClaimsResourceSchema.Optional = true
-		DmJWTClaimsResourceSchema.Computed = true
-	}
-	DmJWTClaimsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmJWTClaimsResourceSchema
-}
 
 func (data DmJWTClaims) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Aud.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`aud`, tfutils.StringFromBool(data.Aud, ""))
 	}

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -75,6 +76,21 @@ type MQManager struct {
 	CdpCheckExtensions     types.Bool                  `tfsdk:"cdp_check_extensions"`
 	ClientRevocationChecks types.String                `tfsdk:"client_revocation_checks"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var MQManagerCSPUserIdCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "csp_password_alias",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{""},
+}
+var MQManagerCSPPasswordAliasCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "csp_user_id",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{""},
 }
 
 var MQManagerObjectType = map[string]attr.Type{
@@ -257,6 +273,7 @@ func (data MQManager) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

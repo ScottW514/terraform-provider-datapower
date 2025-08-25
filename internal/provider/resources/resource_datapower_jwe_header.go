@@ -84,12 +84,12 @@ func (r *JWEHeaderResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"jwe_protected_header": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add a JWE protected header to a JWE encrypt action.", "protected-header", "").String,
-				NestedObject:        models.DmJOSEHeaderResourceSchema,
+				NestedObject:        models.GetDmJOSEHeaderResourceSchema(),
 				Optional:            true,
 			},
 			"jwe_shared_unprotected_header": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add a JWE shared unprotected header to a JWE encrypt action.", "shared-unprotected-header", "").String,
-				NestedObject:        models.DmJOSEHeaderResourceSchema,
+				NestedObject:        models.GetDmJOSEHeaderResourceSchema(),
 				Optional:            true,
 			},
 			"recipient": schema.StringAttribute{

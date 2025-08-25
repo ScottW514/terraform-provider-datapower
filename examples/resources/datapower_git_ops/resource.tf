@@ -6,4 +6,9 @@ resource "datapower_git_ops" "test" {
   commit_identifier_type = "branch"
   commit_identifier      = "main"
   remote_location        = "https://github.com/ScottW514/terraform-provider-datapower"
+  username               = "gitusername"
+  password               = "AccTest_PasswordAlias"
+  tls_valcred            = "AccTest_CryptoValCred"
+  git_user               = "Git User"
+  git_email              = "git@user.domain"
 }

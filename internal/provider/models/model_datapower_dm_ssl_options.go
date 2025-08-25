@@ -47,39 +47,54 @@ var DmSSLOptionsObjectDefault = map[string]attr.Value{
 	"max_duration":      types.BoolValue(false),
 	"max_renegotiation": types.BoolValue(false),
 }
-var DmSSLOptionsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"max_duration": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Set maximum TLS session duration", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmSSLOptionsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmSSLOptionsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"max_duration": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Set maximum TLS session duration", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"max_renegotiation": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Set maximum number client initiated renegotiation allow", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"max_renegotiation": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Set maximum number client initiated renegotiation allow", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmSSLOptionsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmSSLOptionsDataSourceSchema
 }
-var DmSSLOptionsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmSSLOptionsObjectType,
-			DmSSLOptionsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"max_duration": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Set maximum TLS session duration", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmSSLOptionsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmSSLOptionsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmSSLOptionsObjectType,
+				DmSSLOptionsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"max_duration": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Set maximum TLS session duration", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"max_renegotiation": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Set maximum number client initiated renegotiation allow", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"max_renegotiation": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Set maximum number client initiated renegotiation allow", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmSSLOptionsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmSSLOptionsResourceSchema.Required = true
+	} else {
+		DmSSLOptionsResourceSchema.Optional = true
+		DmSSLOptionsResourceSchema.Computed = true
+	}
+	return DmSSLOptionsResourceSchema
 }
 
 func (data DmSSLOptions) IsNull() bool {
@@ -91,27 +106,13 @@ func (data DmSSLOptions) IsNull() bool {
 	}
 	return true
 }
-func GetDmSSLOptionsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmSSLOptionsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmSSLOptionsDataSourceSchema
-}
-
-func GetDmSSLOptionsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmSSLOptionsResourceSchema.Required = true
-	} else {
-		DmSSLOptionsResourceSchema.Optional = true
-		DmSSLOptionsResourceSchema.Computed = true
-	}
-	DmSSLOptionsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmSSLOptionsResourceSchema
-}
 
 func (data DmSSLOptions) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.MaxDuration.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`max-duration`, tfutils.StringFromBool(data.MaxDuration, ""))
 	}

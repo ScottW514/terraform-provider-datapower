@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &SLMCredClassResource{}
@@ -94,11 +95,14 @@ func (r *SLMCredClassResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("aaa-mapped-credential"),
 			},
 			"cred_match_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Match Type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Match Type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").AddRequiredWhen(models.SLMCredClassCredMatchTypeCondVal.String()).String,
 				Optional:            true,
+				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("per-extracted-value", "exact-match", "regexp-match"),
+					validators.ConditionalRequiredString(models.SLMCredClassCredMatchTypeCondVal, validators.Evaluation{}, true),
 				},
+				Default: stringdefault.StaticString("per-extracted-value"),
 			},
 			"cred_value": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Credential value", "value", "").String,
@@ -106,12 +110,18 @@ func (r *SLMCredClassResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"stylesheet": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom stylesheet", "stylesheet", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom stylesheet", "stylesheet", "").AddRequiredWhen(models.SLMCredClassStylesheetCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SLMCredClassStylesheetCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"header": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Request header", "header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Request header", "header", "").AddRequiredWhen(models.SLMCredClassHeaderCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SLMCredClassHeaderCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

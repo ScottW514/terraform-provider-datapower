@@ -138,10 +138,10 @@ attributes:
     .</p>
   cli_alias: success-rename-pattern
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DeleteOnSuccess
     value:
-    - 'on'
+    - true
 - name: DeleteOnError
   type: Bool
   default: false
@@ -157,10 +157,10 @@ attributes:
     to use to rename a file when it could not be processed.
   cli_alias: error-rename-pattern
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DeleteOnError
     value:
-    - 'on'
+    - true
 - name: GenerateResultFile
   type: Bool
   default: true
@@ -183,10 +183,10 @@ attributes:
     .</p>
   cli_alias: result-name-pattern
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GenerateResultFile
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ProcessingSeizeTimeout
@@ -218,12 +218,12 @@ attributes:
     was supplied as the renaming pattern.</p>'
   cli_alias: processing-seize-pattern
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ProcessingSeizeTimeout
     value:
     - '0'
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProcessingSeizeTimeout
     value:
     - '0'

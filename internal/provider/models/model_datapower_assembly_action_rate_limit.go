@@ -122,6 +122,7 @@ func (data AssemblyActionRateLimit) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -129,30 +130,30 @@ func (data AssemblyActionRateLimit) ToBody(ctx context.Context, pathRoot string)
 		body, _ = sjson.Set(body, pathRoot+`Source`, data.Source.ValueString())
 	}
 	if !data.BurstLimit.IsNull() {
-		var values []string
-		data.BurstLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.BurstLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`BurstLimit`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.RateLimit.IsNull() {
-		var values []DmRateLimitInfo
-		data.RateLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmRateLimitInfo
+		data.RateLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.CountLimit.IsNull() {
-		var values []DmCountLimitInfo
-		data.CountLimit.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmCountLimitInfo
+		data.CountLimit.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`CountLimit`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.RateLimitDefinition.IsNull() {
-		var values []DmRateLimitInfoDomainNamed
-		data.RateLimitDefinition.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmRateLimitInfoDomainNamed
+		data.RateLimitDefinition.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`RateLimitDefinition`+".-1", val.ToBody(ctx, ""))
 		}
 	}

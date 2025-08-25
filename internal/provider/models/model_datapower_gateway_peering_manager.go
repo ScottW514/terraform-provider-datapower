@@ -93,6 +93,7 @@ func (data GatewayPeeringManager) ToBody(ctx context.Context, pathRoot string) s
 	}
 	body := ""
 	body, _ = sjson.Set(body, "GatewayPeeringManager.name", path.Base("/mgmt/config/{domain}/GatewayPeeringManager/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

@@ -82,27 +82,28 @@ func (data CryptoFWCred) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
 	if !data.PrivateKey.IsNull() {
-		var values []string
-		data.PrivateKey.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.PrivateKey.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`PrivateKey`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.SharedSecretKey.IsNull() {
-		var values []string
-		data.SharedSecretKey.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.SharedSecretKey.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`SharedSecretKey`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.Certificate.IsNull() {
-		var values []string
-		data.Certificate.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Certificate.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Certificate`+".-1", map[string]string{"value": val})
 		}
 	}

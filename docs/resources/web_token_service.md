@@ -46,6 +46,7 @@ resource "datapower_web_token_service" "test" {
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
+  - Required When: `debug_mode`=`true`
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
@@ -57,6 +58,7 @@ resource "datapower_web_token_service" "test" {
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
+  - Required When: (`delay_errors`=`true` AND `rewrite_errors`=`true`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `front_http_version` (String) Set the HTTP version for client-to-service connections. If the client submits an HTTP/1.0 request, the service on the DataPower appliance always replies with HTTP/1.0 compatible responses regardless of this setting. The default version is HTTP 1.1.
   - CLI Alias: `http-front-version`

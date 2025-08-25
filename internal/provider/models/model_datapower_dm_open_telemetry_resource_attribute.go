@@ -45,29 +45,36 @@ var DmOpenTelemetryResourceAttributeObjectDefault = map[string]attr.Value{
 	"key":   types.StringNull(),
 	"value": types.StringNull(),
 }
-var DmOpenTelemetryResourceAttributeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"key": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Key", "", "").String,
-			Computed:            true,
+
+func GetDmOpenTelemetryResourceAttributeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmOpenTelemetryResourceAttributeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"key": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Key", "", "").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+				Computed:            true,
+			},
 		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmOpenTelemetryResourceAttributeDataSourceSchema
 }
-var DmOpenTelemetryResourceAttributeResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"key": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Key", "", "").String,
-			Optional:            true,
+func GetDmOpenTelemetryResourceAttributeResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmOpenTelemetryResourceAttributeResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"key": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Key", "", "").String,
+				Optional:            true,
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+				Required:            true,
+			},
 		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmOpenTelemetryResourceAttributeResourceSchema
 }
 
 func (data DmOpenTelemetryResourceAttribute) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmOpenTelemetryResourceAttribute) ToBody(ctx context.Context, pathRoo
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Key.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Key`, data.Key.ValueString())
 	}

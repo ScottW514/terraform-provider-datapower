@@ -99,7 +99,6 @@ func (r *SSLSNIServerProfileResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 691200),
 				},
 				Default: int64default.StaticInt64(3600),
@@ -108,7 +107,6 @@ func (r *SSLSNIServerProfileResource) Schema(ctx context.Context, req resource.S
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 512),
 				},
 			},

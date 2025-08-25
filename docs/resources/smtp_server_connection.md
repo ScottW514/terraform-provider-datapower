@@ -36,6 +36,7 @@ resource "datapower_smtp_server_connection" "test" {
 
 - `account_name` (String) The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.
   - CLI Alias: `username`
+  - Required When: `options`=`auth`
 - `account_password_alias` (String) The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`

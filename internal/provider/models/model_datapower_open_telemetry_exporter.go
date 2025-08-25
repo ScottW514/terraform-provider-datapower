@@ -137,6 +137,7 @@ func (data OpenTelemetryExporter) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -162,9 +163,9 @@ func (data OpenTelemetryExporter) ToBody(ctx context.Context, pathRoot string) s
 		body, _ = sjson.Set(body, pathRoot+`Timeout`, data.Timeout.ValueInt64())
 	}
 	if !data.Header.IsNull() {
-		var values []DmOpenTelemetryExporterHeader
-		data.Header.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmOpenTelemetryExporterHeader
+		data.Header.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Header`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -181,9 +182,9 @@ func (data OpenTelemetryExporter) ToBody(ctx context.Context, pathRoot string) s
 		body, _ = sjson.Set(body, pathRoot+`ExportDelayInterval`, data.ExportDelayInterval.ValueInt64())
 	}
 	if !data.ProxyPolicies.IsNull() {
-		var values []DmAPIProxyPolicy
-		data.ProxyPolicies.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAPIProxyPolicy
+		data.ProxyPolicies.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`+".-1", val.ToBody(ctx, ""))
 		}
 	}

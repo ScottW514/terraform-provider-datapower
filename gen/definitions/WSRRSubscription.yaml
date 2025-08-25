@@ -49,7 +49,7 @@ attributes:
   test_value: '"namespace"'
   cli_alias: namespace
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ObjectType
     value:
     - service-version
@@ -106,10 +106,10 @@ attributes:
   description: Object version
   cli_alias: version
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseVersion
     value:
-    - 'off'
+    - false
 - name: FetchPolicyAttachments
   type: Bool
   default: false

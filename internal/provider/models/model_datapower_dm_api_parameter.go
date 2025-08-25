@@ -70,97 +70,104 @@ var DmAPIParameterObjectDefault = map[string]attr.Value{
 	"pattern":          types.StringNull(),
 	"enum":             types.StringNull(),
 }
-var DmAPIParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a name for your parameter. Parameter names are case sensitive.", "", "").String,
-			Computed:            true,
+
+func GetDmAPIParameterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAPIParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a name for your parameter. Parameter names are case sensitive.", "", "").String,
+				Computed:            true,
+			},
+			"required": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Controls whether the parameter is required for a call to be valid. By default, a parameter is optional.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of the parameter.", "", "").AddStringEnum("integer", "long", "float", "double", "string", "byte", "binary", "boolean", "date", "dateTime", "password", "array", "object", "file", "number").AddDefaultValue("string").String,
+				Computed:            true,
+			},
+			"where": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the location of the parameter.", "", "").AddStringEnum("path", "query", "body", "formdata", "header").AddDefaultValue("path").String,
+				Computed:            true,
+			},
+			"schema_or_format": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The extending format of the parameter type. If DataPower Gateway does not recognize the specified format, then only the type is used. The following formats are supported. <ul><li>For <tt>number</tt> parameters, <tt>float</tt> and <tt>double</tt> .</li><li>For <tt>integer</tt> parameters, <tt>int32</tt> and <tt>int64</tt> .</li><li>For <tt>string</tt> parameters, <tt>date</tt> , <tt>dateTime</tt> , and <tt>password</tt> .</li></ul>", "", "").String,
+				Computed:            true,
+			},
+			"maximum": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the upper limit of the parameter. A string instance is valid against this keyword if its length is less than, or equal to, the value of this keyword.", "", "").String,
+				Computed:            true,
+			},
+			"minimum": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the lower limit of the parameter. A string instance is valid against this keyword if its length is greater than, or equal to, the value of this keyword.", "", "").String,
+				Computed:            true,
+			},
+			"pattern": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the pattern of the parameter. This string should be a valid regular expression. A string instance is considered valid if the regular expression matches the instance successfully.", "", "").String,
+				Computed:            true,
+			},
+			"enum": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the allowed values of the parameter. An instance validates successfully against this keyword if its value is equal to one of the elements in this keyword's array value.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"required": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Controls whether the parameter is required for a call to be valid. By default, a parameter is optional.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of the parameter.", "", "").AddStringEnum("integer", "long", "float", "double", "string", "byte", "binary", "boolean", "date", "dateTime", "password", "array", "object", "file", "number").AddDefaultValue("string").String,
-			Computed:            true,
-		},
-		"where": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the location of the parameter.", "", "").AddStringEnum("path", "query", "body", "formdata", "header").AddDefaultValue("path").String,
-			Computed:            true,
-		},
-		"schema_or_format": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The extending format of the parameter type. If DataPower Gateway does not recognize the specified format, then only the type is used. The following formats are supported. <ul><li>For <tt>number</tt> parameters, <tt>float</tt> and <tt>double</tt> .</li><li>For <tt>integer</tt> parameters, <tt>int32</tt> and <tt>int64</tt> .</li><li>For <tt>string</tt> parameters, <tt>date</tt> , <tt>dateTime</tt> , and <tt>password</tt> .</li></ul>", "", "").String,
-			Computed:            true,
-		},
-		"maximum": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the upper limit of the parameter. A string instance is valid against this keyword if its length is less than, or equal to, the value of this keyword.", "", "").String,
-			Computed:            true,
-		},
-		"minimum": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the lower limit of the parameter. A string instance is valid against this keyword if its length is greater than, or equal to, the value of this keyword.", "", "").String,
-			Computed:            true,
-		},
-		"pattern": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the pattern of the parameter. This string should be a valid regular expression. A string instance is considered valid if the regular expression matches the instance successfully.", "", "").String,
-			Computed:            true,
-		},
-		"enum": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the allowed values of the parameter. An instance validates successfully against this keyword if its value is equal to one of the elements in this keyword's array value.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAPIParameterDataSourceSchema
 }
-var DmAPIParameterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a name for your parameter. Parameter names are case sensitive.", "", "").String,
-			Required:            true,
-		},
-		"required": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Controls whether the parameter is required for a call to be valid. By default, a parameter is optional.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of the parameter.", "", "").AddStringEnum("integer", "long", "float", "double", "string", "byte", "binary", "boolean", "date", "dateTime", "password", "array", "object", "file", "number").AddDefaultValue("string").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("integer", "long", "float", "double", "string", "byte", "binary", "boolean", "date", "dateTime", "password", "array", "object", "file", "number"),
+func GetDmAPIParameterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAPIParameterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a name for your parameter. Parameter names are case sensitive.", "", "").String,
+				Required:            true,
 			},
-			Default: stringdefault.StaticString("string"),
-		},
-		"where": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the location of the parameter.", "", "").AddStringEnum("path", "query", "body", "formdata", "header").AddDefaultValue("path").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("path", "query", "body", "formdata", "header"),
+			"required": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Controls whether the parameter is required for a call to be valid. By default, a parameter is optional.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
 			},
-			Default: stringdefault.StaticString("path"),
+			"type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of the parameter.", "", "").AddStringEnum("integer", "long", "float", "double", "string", "byte", "binary", "boolean", "date", "dateTime", "password", "array", "object", "file", "number").AddDefaultValue("string").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("integer", "long", "float", "double", "string", "byte", "binary", "boolean", "date", "dateTime", "password", "array", "object", "file", "number"),
+				},
+				Default: stringdefault.StaticString("string"),
+			},
+			"where": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the location of the parameter.", "", "").AddStringEnum("path", "query", "body", "formdata", "header").AddDefaultValue("path").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("path", "query", "body", "formdata", "header"),
+				},
+				Default: stringdefault.StaticString("path"),
+			},
+			"schema_or_format": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The extending format of the parameter type. If DataPower Gateway does not recognize the specified format, then only the type is used. The following formats are supported. <ul><li>For <tt>number</tt> parameters, <tt>float</tt> and <tt>double</tt> .</li><li>For <tt>integer</tt> parameters, <tt>int32</tt> and <tt>int64</tt> .</li><li>For <tt>string</tt> parameters, <tt>date</tt> , <tt>dateTime</tt> , and <tt>password</tt> .</li></ul>", "", "").String,
+				Optional:            true,
+			},
+			"maximum": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the upper limit of the parameter. A string instance is valid against this keyword if its length is less than, or equal to, the value of this keyword.", "", "").String,
+				Optional:            true,
+			},
+			"minimum": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the lower limit of the parameter. A string instance is valid against this keyword if its length is greater than, or equal to, the value of this keyword.", "", "").String,
+				Optional:            true,
+			},
+			"pattern": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the pattern of the parameter. This string should be a valid regular expression. A string instance is considered valid if the regular expression matches the instance successfully.", "", "").String,
+				Optional:            true,
+			},
+			"enum": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the allowed values of the parameter. An instance validates successfully against this keyword if its value is equal to one of the elements in this keyword's array value.", "", "").String,
+				Optional:            true,
+			},
 		},
-		"schema_or_format": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The extending format of the parameter type. If DataPower Gateway does not recognize the specified format, then only the type is used. The following formats are supported. <ul><li>For <tt>number</tt> parameters, <tt>float</tt> and <tt>double</tt> .</li><li>For <tt>integer</tt> parameters, <tt>int32</tt> and <tt>int64</tt> .</li><li>For <tt>string</tt> parameters, <tt>date</tt> , <tt>dateTime</tt> , and <tt>password</tt> .</li></ul>", "", "").String,
-			Optional:            true,
-		},
-		"maximum": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the upper limit of the parameter. A string instance is valid against this keyword if its length is less than, or equal to, the value of this keyword.", "", "").String,
-			Optional:            true,
-		},
-		"minimum": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the lower limit of the parameter. A string instance is valid against this keyword if its length is greater than, or equal to, the value of this keyword.", "", "").String,
-			Optional:            true,
-		},
-		"pattern": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the pattern of the parameter. This string should be a valid regular expression. A string instance is considered valid if the regular expression matches the instance successfully.", "", "").String,
-			Optional:            true,
-		},
-		"enum": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the allowed values of the parameter. An instance validates successfully against this keyword if its value is equal to one of the elements in this keyword's array value.", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmAPIParameterResourceSchema
 }
 
 func (data DmAPIParameter) IsNull() bool {
@@ -199,6 +206,7 @@ func (data DmAPIParameter) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

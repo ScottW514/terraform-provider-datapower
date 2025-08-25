@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,28 @@ type MPGWErrorAction struct {
 	ReasonPhrase      types.String                `tfsdk:"reason_phrase"`
 	HeaderInjection   types.List                  `tfsdk:"header_injection"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var MPGWErrorActionRemoteURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"redirect", "proxy"},
+}
+var MPGWErrorActionLocalURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"static"},
+}
+var MPGWErrorActionErrorRuleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"error-rule"},
 }
 
 var MPGWErrorActionObjectType = map[string]attr.Type{
@@ -107,6 +130,7 @@ func (data MPGWErrorAction) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -132,9 +156,9 @@ func (data MPGWErrorAction) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`ReasonPhrase`, data.ReasonPhrase.ValueString())
 	}
 	if !data.HeaderInjection.IsNull() {
-		var values []DmWebGWErrorRespHeaderInjection
-		data.HeaderInjection.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWebGWErrorRespHeaderInjection
+		data.HeaderInjection.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
 		}
 	}

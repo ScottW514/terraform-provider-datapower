@@ -59,9 +59,10 @@ attributes:
   - exact-match
   - regexp-match
   description: Match Type
+  default: per-extracted-value
   cli_alias: match-type
   required_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: CredType
     value:
     - custom-stylesheet
@@ -80,7 +81,7 @@ attributes:
       value:
       - exact-match
       - regexp-match
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: CredType
       value:
       - custom-stylesheet
@@ -89,7 +90,7 @@ attributes:
   description: Custom stylesheet
   cli_alias: stylesheet
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: CredType
     value:
     - custom-stylesheet

@@ -50,40 +50,47 @@ var DmClaimObjectDefault = map[string]attr.Value{
 	"value": types.StringNull(),
 	"type":  types.StringNull(),
 }
-var DmClaimDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the JWT claim. A claim name is always a string.", "", "").String,
-			Computed:            true,
-		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the JWT claim.", "", "").String,
-			Computed:            true,
-		},
-		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").String,
-			Computed:            true,
-		},
-	},
-}
-var DmClaimResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the JWT claim. A claim name is always a string.", "", "").String,
-			Optional:            true,
-		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the JWT claim.", "", "").String,
-			Required:            true,
-		},
-		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("string", "bool", "number"),
+
+func GetDmClaimDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmClaimDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the JWT claim. A claim name is always a string.", "", "").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the JWT claim.", "", "").String,
+				Computed:            true,
+			},
+			"type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").String,
+				Computed:            true,
 			},
 		},
-	},
+	}
+	return DmClaimDataSourceSchema
+}
+func GetDmClaimResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmClaimResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the JWT claim. A claim name is always a string.", "", "").String,
+				Optional:            true,
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the JWT claim.", "", "").String,
+				Required:            true,
+			},
+			"type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("string", "bool", "number"),
+				},
+			},
+		},
+	}
+	return DmClaimResourceSchema
 }
 
 func (data DmClaim) IsNull() bool {
@@ -104,6 +111,7 @@ func (data DmClaim) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WSGatewayResource{}
@@ -186,17 +187,17 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 			"remote_fetch_retry": models.GetDmNetworkRetryResourceSchema("Remote Fetch Retry", "remote-retry", "", false),
 			"wsdl_cache_policy": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A WSDL that is part of the cache policy is refreshed when its TTL to is reached. Refresh retrieves the WSDL from the source location and refreshes the web service proxy state. Depending upon the changes in the WSDL file itself, the Proxy may reconfigure itself in any number of ways, including adding new endpoints or removing existing endpoints.", "wsdl-cache-policy", "").String,
-				NestedObject:        models.DmWSDLCachePolicyResourceSchema,
+				NestedObject:        models.GetDmWSDLCachePolicyResourceSchema(),
 				Optional:            true,
 			},
 			"base_wsdl": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A proxy may use one or more WSDL files to define the service the proxy handles. Those WSDL files are defined on this page.", "wsdl", "").String,
-				NestedObject:        models.DmWSBaseWSDLResourceSchema,
+				NestedObject:        models.GetDmWSBaseWSDLResourceSchema(),
 				Optional:            true,
 			},
 			"user_toggles": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Each WSDL Operation of the web service proxied by a Web Service Proxy can have a user policy defined for that component.</p><p>Components are specified by the combination of Target Namespace, WSDL file, Service, PortType, Binding and Operation. For example, to specify all operations in the target namespace MySvc, enter \"MySvc\" in the Target Namespace field and set all other inputs to *. To specify only one particular operation, named GetLottoPick for example, enter \"wsdl:definitions//wsdl:operation/@GetLottoPick\" in the Operations field and set all others to *.</p><p>The policy applied to the specified component consists of six options: Enable, Publish, Validate Faults, Validate Headers, Validate Requests and Validate Responses. See below for more information about policy options.</p>", "user-policy", "").String,
-				NestedObject:        models.DmWSUserTogglesResourceSchema,
+				NestedObject:        models.GetDmWSUserTogglesResourceSchema(),
 				Optional:            true,
 			},
 			"client_principal": schema.StringAttribute{
@@ -219,7 +220,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				MarkdownDescription: tfutils.NewAttributeDescription("This is the Cache Lifetime for the decrypted generated key. Setting the value to 0 means the decrypted generated key will not be cached.", "wssec11-enckey-cache", "").AddIntegerRange(0, 604800).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 604800),
 				},
 			},
@@ -246,37 +246,37 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"wsrr_subscriptions": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Load and proxy services obtained via these subscriptions.", "wsrr-subscription", "").String,
-				NestedObject:        models.DmWSRRWSDLSourceResourceSchema,
+				NestedObject:        models.GetDmWSRRWSDLSourceResourceSchema(),
 				Optional:            true,
 			},
 			"wsrr_saved_search_subscriptions": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The Web Service Proxy virtualizes Web service endpoints based on the WSDL files returned by the saved search.", "wsrr-saved-search-subscription", "").String,
-				NestedObject:        models.DmWSRRSavedSearchWSDLSourceResourceSchema,
+				NestedObject:        models.GetDmWSRRSavedSearchWSDLSourceResourceSchema(),
 				Optional:            true,
 			},
 			"operation_priority": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Operation Priority", "operation-priority", "").String,
-				NestedObject:        models.DmWSOperationSchedulerPriorityResourceSchema,
+				NestedObject:        models.GetDmWSOperationSchedulerPriorityResourceSchema(),
 				Optional:            true,
 			},
 			"operation_conformance_policy": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Operation Conformance Policy", "operation-conformance", "").String,
-				NestedObject:        models.DmWSOperationConformancePolicyResourceSchema,
+				NestedObject:        models.GetDmWSOperationConformancePolicyResourceSchema(),
 				Optional:            true,
 			},
 			"operation_policy_subject_opt_out": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Operation Policy Subject Opt Out", "operation-policy-opt-out", "").String,
-				NestedObject:        models.DmWSOperationPolicySubjectOptOutResourceSchema,
+				NestedObject:        models.GetDmWSOperationPolicySubjectOptOutResourceSchema(),
 				Optional:            true,
 			},
 			"policy_parameter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Policy Parameters", "policy-parameters", "").String,
-				NestedObject:        models.DmWSPolicyParametersResourceSchema,
+				NestedObject:        models.GetDmWSPolicyParametersResourceSchema(),
 				Optional:            true,
 			},
 			"reliable_messaging": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging", "reliable-messaging", "").String,
-				NestedObject:        models.DmWSOperationReliableMessagingResourceSchema,
+				NestedObject:        models.GetDmWSOperationReliableMessagingResourceSchema(),
 				Optional:            true,
 			},
 			"wsm_agent_monitor": schema.BoolAttribute{
@@ -347,17 +347,17 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"header_injection": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Header Injection", "inject", "").String,
-				NestedObject:        models.DmHeaderInjectionResourceSchema,
+				NestedObject:        models.GetDmHeaderInjectionResourceSchema(),
 				Optional:            true,
 			},
 			"header_suppression": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Header Suppression", "suppress", "").String,
-				NestedObject:        models.DmHeaderSuppressionResourceSchema,
+				NestedObject:        models.GetDmHeaderSuppressionResourceSchema(),
 				Optional:            true,
 			},
 			"stylesheet_parameters": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Style sheets used in processing policies can take stylesheet parameters. These parameters can be passed in by this object. You can define more than one parameter.", "parameter", "").String,
-				NestedObject:        models.DmStylesheetParameterResourceSchema,
+				NestedObject:        models.GetDmStylesheetParameterResourceSchema(),
 				Optional:            true,
 			},
 			"default_param_namespace": schema.StringAttribute{
@@ -425,13 +425,13 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: stringdefault.StaticString("strip"),
 			},
 			"request_attachments_flow_control": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable or disable flow control for attachments in requests to servers. The default is off.", "request-attachments-flow-control", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable or disable flow control for attachments in requests to servers. The default is off.", "request-attachments-flow-control", "").AddDefaultValue("false").AddRequiredWhen(models.WSGatewayRequestAttachmentsFlowControlCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"response_attachments_flow_control": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable or disable flow control for attachments in responses to clients. The default is off.", "response-attachments-flow-control", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable or disable flow control for attachments in responses to clients. The default is off.", "response-attachments-flow-control", "").AddDefaultValue("false").AddRequiredWhen(models.WSGatewayResponseAttachmentsFlowControlCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -497,7 +497,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the maximum allowable size in kilobytes of a message. Enter a value in the range 0 - 2097151. The default value is 0. A value of 0 specifies that no limit is enforced, and the message can be of unlimited size.</p><p>The maximum message size limit applies to JSON, SOAP, XML, and non-XML messages. If the message type is pass-through, no limit is enforced.</p>", "max-message-size", "").AddIntegerRange(0, 2097151).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 2097151),
 				},
 			},
@@ -508,63 +507,85 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(false),
 			},
 			"parser_limits_element_depth": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum depth of element nesting in XML parser. If any of the parser limits are set in the DataPower service, they will override those on the XML Manager.", "element-depth", "").AddDefaultValue("512").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             int64default.StaticInt64(512),
-			},
-			"parser_limits_attribute_count": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of attributes of a given element. If any of the parser limits are set in the service, they will override those on the XML Manager.", "attribute-count", "").AddDefaultValue("128").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             int64default.StaticInt64(128),
-			},
-			"parser_limits_max_node_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum size any one node may consume. The default is 32 MB. Sizes which are powers of two result in the best performance. If any of the parser limits are set in the DataPower service, they will override those on the XML Manager. Although you set an explicit value, the DataPower Gateway uses a value that is the rounded-down, largest power of two that is smaller than the defined value.", "max-node-size", "").AddIntegerRange(1024, 4294967295).AddDefaultValue("33554432").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum depth of element nesting in XML parser. If any of the parser limits are set in the DataPower service, they will override those on the XML Manager.", "element-depth", "").AddDefaultValue("512").AddRequiredWhen(models.WSGatewayParserLimitsElementDepthCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
+					validators.ConditionalRequiredInt64(models.WSGatewayParserLimitsElementDepthCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(512),
+			},
+			"parser_limits_attribute_count": schema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of attributes of a given element. If any of the parser limits are set in the service, they will override those on the XML Manager.", "attribute-count", "").AddDefaultValue("128").AddRequiredWhen(models.WSGatewayParserLimitsAttributeCountCondVal.String()).String,
+				Optional:            true,
+				Computed:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.WSGatewayParserLimitsAttributeCountCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(128),
+			},
+			"parser_limits_max_node_size": schema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum size any one node may consume. The default is 32 MB. Sizes which are powers of two result in the best performance. If any of the parser limits are set in the DataPower service, they will override those on the XML Manager. Although you set an explicit value, the DataPower Gateway uses a value that is the rounded-down, largest power of two that is smaller than the defined value.", "max-node-size", "").AddIntegerRange(1024, 4294967295).AddDefaultValue("33554432").AddRequiredWhen(models.WSGatewayParserLimitsMaxNodeSizeCondVal.String()).String,
+				Optional:            true,
+				Computed:            true,
+				Validators: []validator.Int64{
 					int64validator.Between(1024, 4294967295),
+					validators.ConditionalRequiredInt64(models.WSGatewayParserLimitsMaxNodeSizeCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(33554432),
 			},
 			"parser_limits_external_references": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.", "external-references", "").AddStringEnum("forbid", "ignore", "allow").AddDefaultValue("forbid").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.", "external-references", "").AddStringEnum("forbid", "ignore", "allow").AddDefaultValue("forbid").AddRequiredWhen(models.WSGatewayParserLimitsExternalReferencesCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("forbid", "ignore", "allow"),
+					validators.ConditionalRequiredString(models.WSGatewayParserLimitsExternalReferencesCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("forbid"),
 			},
 			"parser_limits_max_prefixes": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the range 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-prefixes", "").AddDefaultValue("1024").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the range 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-prefixes", "").AddDefaultValue("1024").AddRequiredWhen(models.WSGatewayParserLimitsMaxPrefixesCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(1024),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.WSGatewayParserLimitsMaxPrefixesCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(1024),
 			},
 			"parser_limits_max_namespaces": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-namespaces", "").AddDefaultValue("1024").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-namespaces", "").AddDefaultValue("1024").AddRequiredWhen(models.WSGatewayParserLimitsMaxNamespacesCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(1024),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.WSGatewayParserLimitsMaxNamespacesCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(1024),
 			},
 			"parser_limits_max_local_names": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.", "max-local-names", "").AddDefaultValue("60000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer that defines the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.", "max-local-names", "").AddDefaultValue("60000").AddRequiredWhen(models.WSGatewayParserLimitsMaxLocalNamesCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(60000),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.WSGatewayParserLimitsMaxLocalNamesCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(60000),
 			},
 			"parser_limits_attachment_byte_count": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes allowed in any single attachment. Attachments that exceed this size will result in a failure of the whole transaction. If this value is 0, no limit is enforced.", "attachment-byte-count", "").AddDefaultValue("2000000000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes allowed in any single attachment. Attachments that exceed this size will result in a failure of the whole transaction. If this value is 0, no limit is enforced.", "attachment-byte-count", "").AddDefaultValue("2000000000").AddRequiredWhen(models.WSGatewayParserLimitsAttachmentByteCountCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(2000000000),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.WSGatewayParserLimitsAttachmentByteCountCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(2000000000),
 			},
 			"parser_limits_attachment_package_byte_count": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes allowed for all parts of an attachment package, including the root part. Attachment packages that exceed this size will result in a failure of the whole transaction. If this value is 0, no limit is enforced.", "attachment-package-byte-count", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the maximum number of bytes allowed for all parts of an attachment package, including the root part. Attachment packages that exceed this size will result in a failure of the whole transaction. If this value is 0, no limit is enforced.", "attachment-package-byte-count", "").AddRequiredWhen(models.WSGatewayParserLimitsAttachmentPackageByteCountCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.WSGatewayParserLimitsAttachmentPackageByteCountCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"debug_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>", "debug-mode", "").AddStringEnum("on", "off", "unbounded").AddDefaultValue("off").String,
@@ -576,18 +597,18 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.WSGatewayDebugHistoryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 250),
+					validators.ConditionalRequiredInt64(models.WSGatewayDebugHistoryCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.", "debug-trigger", "").String,
-				NestedObject:        models.DmMSDebugTriggerTypeResourceSchema,
+				NestedObject:        models.GetDmMSDebugTriggerTypeResourceSchema(),
 				Optional:            true,
 			},
 			"flow_control": schema.BoolAttribute{
@@ -607,7 +628,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -617,7 +637,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -627,7 +646,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(180),
@@ -637,7 +655,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(180),
@@ -756,25 +773,27 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: stringdefault.StaticString("sync"),
 			},
 			"wsahttp_async_response_code": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP Response Code sent to a client device prior to transmitting the actual asynchronous server response.</p><p>If the server response to an HTTP client request is asynchronous, the DataPower service must close the original HTTP client channel with a valid response code. After the channel is closed, the DataPower service forwards the server-generated response or fault message to the client over a new channel.</p><p>Enter a value in the range 200 - 599. The default value is 204, which specifies the HTTP response code used to close the original client channel. While 204 is the default, 202 is more commonly required by current standards.</p><p>This property is relevant when the WS-Addressing mode is either Traditional to WS-Addressing or WS-Addressing to WS-Addressing.</p>", "wsa-http-async-response-code", "").AddIntegerRange(200, 599).AddDefaultValue("204").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP Response Code sent to a client device prior to transmitting the actual asynchronous server response.</p><p>If the server response to an HTTP client request is asynchronous, the DataPower service must close the original HTTP client channel with a valid response code. After the channel is closed, the DataPower service forwards the server-generated response or fault message to the client over a new channel.</p><p>Enter a value in the range 200 - 599. The default value is 204, which specifies the HTTP response code used to close the original client channel. While 204 is the default, 202 is more commonly required by current standards.</p><p>This property is relevant when the WS-Addressing mode is either Traditional to WS-Addressing or WS-Addressing to WS-Addressing.</p>", "wsa-http-async-response-code", "").AddIntegerRange(200, 599).AddDefaultValue("204").AddRequiredWhen(models.WSGatewayWSAHTTPAsyncResponseCodeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(200, 599),
+					validators.ConditionalRequiredInt64(models.WSGatewayWSAHTTPAsyncResponseCodeCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(204),
 			},
 			"wsa_back_protocol": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the protocol handler that receives asynchronous server responses and forward the response to the original client. This handler must be a protocol handler on which this DataPower service already listens.</p><p>The protocol handler specified by this property can be programmatically overridden by the <tt>var://context/__WSA_REQUEST/replyto</tt> variable, which will change the WS-Addressing <tt>ReplyTo</tt> header on the request to the server.</p><p>This property is relevant when the WS-Addressing mode is either Traditional to WS-Addressing or WS-Addressing to WS-Addressing and the message generation pattern is asynchronous.</p>", "wsa-back-protocol", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the protocol handler that receives asynchronous server responses and forward the response to the original client. This handler must be a protocol handler on which this DataPower service already listens.</p><p>The protocol handler specified by this property can be programmatically overridden by the <tt>var://context/__WSA_REQUEST/replyto</tt> variable, which will change the WS-Addressing <tt>ReplyTo</tt> header on the request to the server.</p><p>This property is relevant when the WS-Addressing mode is either Traditional to WS-Addressing or WS-Addressing to WS-Addressing and the message generation pattern is asynchronous.</p>", "wsa-back-protocol", "").AddRequiredWhen(models.WSGatewayWSABackProtocolCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.WSGatewayWSABackProtocolCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"wsa_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the maximum period of time in seconds to wait for an asynchronous response from the server before abandoning the transaction with an error.</p><p>Use any value of 1 - 4000000. The default value is 120.</p><p>This value can be programmatically overridden by the <tt>var://service/wsa/timeout</tt> variable.</p><p>The establishment of this timer can be programmatically overridden by the <tt>var://service/soap-oneway-mep</tt> variable, which eliminates waiting for a response. This can be applied to messages known to use the SOAP 1.2 one-way message exchange pattern.</p><p>This property is relevant when the WS-Addressing mode is either Traditional to WS-Addressing WS-Addressing to WS-Addressing and the message generation pattern is asynchronous.</p>", "wsa-timeout", "").AddIntegerRange(1, 4000000).AddDefaultValue("120").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 4000000),
 				},
 				Default: int64default.StaticInt64(120),
@@ -790,7 +809,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 86400),
 				},
 				Default: int64default.StaticInt64(3600),
@@ -810,7 +828,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 2048),
 				},
 				Default: int64default.StaticInt64(400),
@@ -826,7 +843,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 256),
 				},
 				Default: int64default.StaticInt64(10),
@@ -886,7 +902,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 2048),
 				},
 				Default: int64default.StaticInt64(400),
@@ -896,7 +911,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(2, 600),
 				},
 				Default: int64default.StaticInt64(10),
@@ -912,7 +926,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 256),
 				},
 				Default: int64default.StaticInt64(4),
@@ -922,7 +935,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 256),
 				},
 				Default: int64default.StaticInt64(30),
@@ -932,7 +944,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 256),
 				},
 				Default: int64default.StaticInt64(1),
@@ -942,7 +953,6 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 3600),
 				},
 				Default: int64default.StaticInt64(360),
@@ -966,12 +976,12 @@ func (r *WSGatewayResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Enter a value in the range 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Enter a value in the range 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").AddRequiredWhen(models.WSGatewayDelayErrorsDurationCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(250, 300000),
+					validators.ConditionalRequiredInt64(models.WSGatewayDelayErrorsDurationCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(1000),
 			},

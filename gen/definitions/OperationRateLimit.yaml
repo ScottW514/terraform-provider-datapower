@@ -51,23 +51,24 @@ attributes:
   element_type: DmAPIRateLimit
   description: Rate limit
   cli_alias: rate-limit
+  test_value: '[{"name": "RateLimit", "rate": "1000"}]'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseRateLimitGroup
     value:
-    - 'off'
+    - false
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseRateLimitGroup
     value:
-    - 'on'
+    - true
 - name: RateLimitGroup
   type: String
   reference_to: RateLimitDefinitionGroup
   description: Rate limit group
   cli_alias: rate-limit-group
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseRateLimitGroup
     value:
-    - 'off'
+    - false

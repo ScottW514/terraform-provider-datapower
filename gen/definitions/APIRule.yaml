@@ -45,10 +45,10 @@ attributes:
     ensure that the actions are in the correct processing sequence.
   cli_alias: action
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DynamicActionsMode
     value:
-    - 'on'
+    - true
 - name: DynamicActions
   type: List
   element_type: DmDynamicStylePolicyActionBaseReference
@@ -56,15 +56,15 @@ attributes:
     that the actions are in the correct processing sequence.
   cli_alias: dynamic-action
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DynamicActionsMode
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DynamicActionsMode
     value:
-    - 'off'
+    - false
 - name: UserSummary
   type: String
   description: Comments

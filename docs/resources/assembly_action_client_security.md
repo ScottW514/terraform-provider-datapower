@@ -52,10 +52,13 @@ resource "datapower_assembly_action_client_security" "test" {
   - CLI Alias: `http-type`
   - Choices: `basic`
   - Default value: `basic`
+  - Required When: `extract_credential_method`=`http`
 - `id_name` (String) <p>Specify the location where to find the client ID to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>
   - CLI Alias: `id-name`
+  - Required When: `extract_credential_method`=`header`|`cookie`|`query`|`form`|`context-var`
 - `secret_name` (String) <p>Specify the location where to find the secret to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>
   - CLI Alias: `secret-name`
+  - Required When: (`secret_required`=`true` AND `extract_credential_method`=`header`|`cookie`|`query`|`form`|`context-var`)
 - `secret_required` (Boolean) Specify whether to require the client secret. When required, the secret is compared to the registered secret on the application that is identified by the client ID.
   - CLI Alias: `secret-required`
   - Default value: `true`
@@ -66,6 +69,7 @@ resource "datapower_assembly_action_client_security" "test" {
   - CLI Alias: `title`
 - `user_registry` (String) Specify the API registry to authenticate the extracted client credentials. The supported registries are API authentication URL and API LDAP.
   - CLI Alias: `user-registry`
+  - Required When: `authenticate_client_method`=`third-party`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

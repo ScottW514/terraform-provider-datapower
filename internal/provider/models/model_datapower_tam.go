@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -68,6 +69,75 @@ type TAM struct {
 	RetryAttempts               types.Int64                 `tfsdk:"retry_attempts"`
 	LongRetryInterval           types.Int64                 `tfsdk:"long_retry_interval"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var TAMADUseADCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v801"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v901"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v903"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v1005"},
+		},
+	},
+}
+var TAMADConfigurationFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ad_use_ad",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var TAMPollIntervalCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_local_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var TAMListenModeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_local_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var TAMLDAPSSLKeyFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_use_ssl",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var TAMUserPrincipalAttributeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_use_basic_user",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var TAMObjectType = map[string]attr.Type{
@@ -224,6 +294,7 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -294,9 +365,9 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserNoDuplicates`, tfutils.StringFromBool(data.UserNoDuplicates, ""))
 	}
 	if !data.UserSearchSuffixes.IsNull() {
-		var values []string
-		data.UserSearchSuffixes.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.UserSearchSuffixes.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`UserSearchSuffixes`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -304,16 +375,16 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSuffixOptimiser`, tfutils.StringFromBool(data.UserSuffixOptimiser, ""))
 	}
 	if !data.TamFedDirs.IsNull() {
-		var values []DmTAMFedDir
-		data.TamFedDirs.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmTAMFedDir
+		data.TamFedDirs.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`TAMFedDirs`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.TamazReplicas.IsNull() {
-		var values []DmTAMAZReplica
-		data.TamazReplicas.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmTAMAZReplica
+		data.TamazReplicas.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`TAMAZReplicas`+".-1", val.ToBody(ctx, ""))
 		}
 	}

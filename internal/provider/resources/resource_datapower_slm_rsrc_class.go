@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &SLMRsrcClassResource{}
@@ -94,11 +95,12 @@ func (r *SLMRsrcClassResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("aaa-mapped-resource"),
 			},
 			"rsrc_match_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Match type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Match type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").AddRequiredWhen(models.SLMRsrcClassRsrcMatchTypeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("per-extracted-value", "exact-match", "regexp-match"),
+					validators.ConditionalRequiredString(models.SLMRsrcClassRsrcMatchTypeCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("per-extracted-value"),
 			},
@@ -108,24 +110,39 @@ func (r *SLMRsrcClassResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"stylesheet": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom stylesheet", "stylesheet", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom stylesheet", "stylesheet", "").AddRequiredWhen(models.SLMRsrcClassStylesheetCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SLMRsrcClassStylesheetCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"x_path_filter": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XPath filter", "xpath-filter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("XPath filter", "xpath-filter", "").AddRequiredWhen(models.SLMRsrcClassXPathFilterCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SLMRsrcClassXPathFilterCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"subscription": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("UDDI subscription (deprecated)", "subscription", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("UDDI subscription (deprecated)", "subscription", "").AddRequiredWhen(models.SLMRsrcClassSubscriptionCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SLMRsrcClassSubscriptionCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"wsrr_subscription": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "wsrr-subscription", "wsrr_subscription").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "wsrr-subscription", "wsrr_subscription").AddRequiredWhen(models.SLMRsrcClassWSRRSubscriptionCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SLMRsrcClassWSRRSubscriptionCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"wsrr_saved_search_subscription": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSRR saved search subscription", "wsrr-saved-search-subscription", "wsrr_saved_search_subscription").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("WSRR saved search subscription", "wsrr-saved-search-subscription", "wsrr_saved_search_subscription").AddRequiredWhen(models.SLMRsrcClassWSRRSavedSearchSubscriptionCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.SLMRsrcClassWSRRSavedSearchSubscriptionCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

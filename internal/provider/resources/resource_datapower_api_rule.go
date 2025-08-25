@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &APIRuleResource{}
@@ -92,9 +93,12 @@ func (r *APIRuleResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Optional:            true,
 			},
 			"dynamic_actions": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.", "dynamic-action", "").String,
-				NestedObject:        models.DmDynamicStylePolicyActionBaseReferenceResourceSchema,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.", "dynamic-action", "").AddRequiredWhen(models.APIRuleDynamicActionsCondVal.String()).String,
+				NestedObject:        models.GetDmDynamicStylePolicyActionBaseReferenceResourceSchema(),
 				Optional:            true,
+				Validators: []validator.List{
+					validators.ConditionalRequiredList(models.APIRuleDynamicActionsCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,

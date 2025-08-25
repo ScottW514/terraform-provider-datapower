@@ -87,7 +87,9 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.List{
-					listvalidator.ValueStringsAre(stringvalidator.OneOf("CHACHA20-POLY1305_AT_OPENSSH.COM", "AES128-CTR", "AES192-CTR", "AES256-CTR", "AES128-GCM_AT_OPENSSH.COM", "AES256-GCM_AT_OPENSSH.COM")),
+					listvalidator.ValueStringsAre(
+						stringvalidator.OneOf("CHACHA20-POLY1305_AT_OPENSSH.COM", "AES128-CTR", "AES192-CTR", "AES256-CTR", "AES128-GCM_AT_OPENSSH.COM", "AES256-GCM_AT_OPENSSH.COM"),
+					),
 				},
 				Default: listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
 					types.StringValue("AES128-CTR"),
@@ -103,7 +105,9 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.List{
-					listvalidator.ValueStringsAre(stringvalidator.OneOf("DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256", "ECDH-SHA2-NISTP256", "ECDH-SHA2-NISTP384", "ECDH-SHA2-NISTP521", "CURVE25519-SHA256_AT_LIBSSH.ORG")),
+					listvalidator.ValueStringsAre(
+						stringvalidator.OneOf("DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256", "ECDH-SHA2-NISTP256", "ECDH-SHA2-NISTP384", "ECDH-SHA2-NISTP521", "CURVE25519-SHA256_AT_LIBSSH.ORG"),
+					),
 				},
 				Default: listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
 					types.StringValue("CURVE25519-SHA256_AT_LIBSSH.ORG"),
@@ -119,7 +123,9 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.List{
-					listvalidator.ValueStringsAre(stringvalidator.OneOf("HMAC-SHA1", "HMAC-SHA2-256", "HMAC-SHA2-512", "UMAC-64_AT_OPENSSH.COM", "UMAC-128_AT_OPENSSH.COM", "HMAC-SHA1-ETM_AT_OPENSSH.COM", "HMAC-SHA2-256-ETM_AT_OPENSSH.COM", "HMAC-SHA2-512-ETM_AT_OPENSSH.COM", "UMAC-64-ETM_AT_OPENSSH.COM", "UMAC-128-ETM_AT_OPENSSH.COM")),
+					listvalidator.ValueStringsAre(
+						stringvalidator.OneOf("HMAC-SHA1", "HMAC-SHA2-256", "HMAC-SHA2-512", "UMAC-64_AT_OPENSSH.COM", "UMAC-128_AT_OPENSSH.COM", "HMAC-SHA1-ETM_AT_OPENSSH.COM", "HMAC-SHA2-256-ETM_AT_OPENSSH.COM", "HMAC-SHA2-512-ETM_AT_OPENSSH.COM", "UMAC-64-ETM_AT_OPENSSH.COM", "UMAC-128-ETM_AT_OPENSSH.COM"),
+					),
 				},
 				Default: listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
 					types.StringValue("UMAC-64-ETM_AT_OPENSSH.COM"),

@@ -301,6 +301,7 @@ resource "datapower_api_connect_gateway_service" "test" {
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 3000
+  gateway_peering = "default-gateway-peering"
   proxy_policy = {proxy_policy_enable = false, remote_address = "localhost", remote_port = 8080}
 }`,
     Data: `
@@ -719,6 +720,7 @@ resource "datapower_as1_poller_source_protocol_handler" "test" {
   port = 25
   conn_security = "none"
   account = "account"
+  password_alias = "AccTest_PasswordAlias"
   delay_between_polls = 300
   max_messages_per_poll = 5
 }`,
@@ -734,6 +736,7 @@ resource "datapower_as1_poller_source_protocol_handler" "acc_test" {
   port = 25
   conn_security = "none"
   account = "account"
+  password_alias = datapower_password_alias.acc_test.id
   delay_between_polls = 300
   max_messages_per_poll = 5
 }`,
@@ -1622,8 +1625,9 @@ var B2BGatewayTestConfig = ModelTestConfig{
 resource "datapower_b2b_gateway" "test" {
   id = "ResTestB2BGateway"
   app_domain = "acceptance_test"
+  b2b_profiles = [{partner_profile="AccTest_B2BProfile"}]
   document_routing_preprocessor = "store:///b2b-routing.xsl"
-  archive_mode = "archpurge"
+  archive_mode = "purgeonly"
   xml_manager = "default"
 }`,
     Data: `
@@ -1634,8 +1638,9 @@ data "datapower_b2b_gateway" "test" {
 resource "datapower_b2b_gateway" "acc_test" {
   id = "AccTest_B2BGateway"
   app_domain = datapower_domain.acc_test.app_domain
+  b2b_profiles = [{partner_profile=datapower_b2b_profile.acc_test.id}]
   document_routing_preprocessor = "store:///b2b-routing.xsl"
-  archive_mode = "archpurge"
+  archive_mode = "purgeonly"
   xml_manager = "default"
 }`,
     ModelOnly:    false,
@@ -2542,10 +2547,12 @@ var DmB2BDestinationTestConfig = ModelTestConfig{
     Model: `{
   dest_name = "b2bdestinationname"
   dest_url = "https://localhost"
+  ssl_client = "AccTest_SSLClientProfile"
 }`,
     ModelTestBed: `{
   dest_name = "b2bdestinationname"
   dest_url = "https://localhost"
+  ssl_client = datapower_ssl_client_profile.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -3634,8 +3641,10 @@ var DmRBMSSHAuthenticateTypeTestConfig = ModelTestConfig{
 var DmRadiusServerTestConfig = ModelTestConfig{
     Name:         "DmRadiusServer",
     Model: `{
+  secret_wo_version = 1
 }`,
     ModelTestBed: `{
+  secret_wo_version = 1
 }`,
     ModelOnly:    true,
 }
@@ -4612,6 +4621,7 @@ resource "datapower_ftp_file_poller_source_protocol_handler" "test" {
   target_directory = "ftp://user:password@host:port/path/"
   delay_between_polls = 60000
   input_file_match_pattern = ".*"
+  result_name_pattern = "../result/$1"
   processing_seize_timeout = 0
   xml_manager = "default"
 }`,
@@ -4626,6 +4636,7 @@ resource "datapower_ftp_file_poller_source_protocol_handler" "acc_test" {
   target_directory = "ftp://user:password@host:port/path/"
   delay_between_polls = 60000
   input_file_match_pattern = ".*"
+  result_name_pattern = "../result/$1"
   processing_seize_timeout = 0
   xml_manager = "default"
 }`,
@@ -4677,6 +4688,7 @@ var FileSystemUsageMonitorTestConfig = ModelTestConfig{
 resource "datapower_file_system_usage_monitor" "test" {
   polling_interval = 60
   all_system = true
+  all_queue_managers = true
 }`,
     Data: `
 data "datapower_file_system_usage_monitor" "test" {
@@ -4833,6 +4845,11 @@ resource "datapower_git_ops" "test" {
   commit_identifier_type = "branch"
   commit_identifier = "main"
   remote_location = "https://github.com/ScottW514/terraform-provider-datapower"
+  username = "gitusername"
+  password = "AccTest_PasswordAlias"
+  tls_valcred = "AccTest_CryptoValCred"
+  git_user = "Git User"
+  git_email = "git@user.domain"
 }`,
     Data: `
 data "datapower_git_ops" "test" {
@@ -5300,6 +5317,7 @@ resource "datapower_log_target" "test" {
   id = "ResTest_LogTarget"
   app_domain = "acceptance_test"
   type = "file"
+  local_file = "logtemp:///AccTest_LogTarget.log"
 }`,
     Data: `
 data "datapower_log_target" "test" {
@@ -5310,6 +5328,7 @@ resource "datapower_log_target" "acc_test" {
   id = "AccTest_LogTarget"
   app_domain = datapower_domain.acc_test.app_domain
   type = "file"
+  local_file = "logtemp:///AccTest_LogTarget.log"
 }`,
     ModelOnly:    false,
 }
@@ -5610,6 +5629,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   id = "ResTestMQv9PlusSourceProtocolHandler"
   app_domain = "acceptance_test"
   queue_manager = "AccTest_MQManager"
+  get_queue = "queue"
 }`,
     Data: `
 data "datapower_mqv9_plus_source_protocol_handler" "test" {
@@ -5620,6 +5640,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "acc_test" {
   id = "AccTest_MQv9PlusSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   queue_manager = datapower_mq_manager.acc_test.id
+  get_queue = "queue"
 }`,
     ModelOnly:    false,
 }
@@ -5878,7 +5899,10 @@ resource "datapower_oauth_supported_client" "test" {
   o_auth_role = {"azsvr": true}
   az_grant = {"code": true}
   generate_client_secret = false
-  client_secret = "secret"
+  client_secret_wo = "secret"
+  client_secret_wo_version = 1
+  redirect_uri = ["^https://example.com/redirect$"]
+  scope = "*"
   token_secret = "AccTest_CryptoSSKey"
 }`,
     Data: `
@@ -5892,7 +5916,10 @@ resource "datapower_oauth_supported_client" "acc_test" {
   o_auth_role = {"azsvr": true}
   az_grant = {"code": true}
   generate_client_secret = false
-  client_secret = "secret"
+  client_secret_wo = "secret"
+  client_secret_wo_version = 1
+  redirect_uri = ["^https://example.com/redirect$"]
+  scope = "*"
   token_secret = datapower_crypto_sskey.acc_test.id
 }`,
     ModelOnly:    false,
@@ -5903,6 +5930,7 @@ var OAuthSupportedClientGroupTestConfig = ModelTestConfig{
 resource "datapower_oauth_supported_client_group" "test" {
   id = "ResTestOAuthSupportedClientGroup"
   app_domain = "acceptance_test"
+  client = ["AccTest_OAuthSupportedClient"]
 }`,
     Data: `
 data "datapower_oauth_supported_client_group" "test" {
@@ -5912,6 +5940,7 @@ data "datapower_oauth_supported_client_group" "test" {
 resource "datapower_oauth_supported_client_group" "acc_test" {
   id = "AccTest_OAuthSupportedClientGroup"
   app_domain = datapower_domain.acc_test.app_domain
+  client = [datapower_oauth_supported_client.acc_test.id]
 }`,
     ModelOnly:    false,
 }
@@ -6020,6 +6049,7 @@ resource "datapower_operation_rate_limit" "test" {
   id = "ResTestOperationRateLimit"
   app_domain = "acceptance_test"
   operation = "AccTest_APIOperation"
+  rate_limit = [{"name": "RateLimit", "rate": "1000"}]
 }`,
     Data: `
 data "datapower_operation_rate_limit" "test" {
@@ -6030,6 +6060,7 @@ resource "datapower_operation_rate_limit" "acc_test" {
   id = "AccTest_OperationRateLimit"
   app_domain = datapower_domain.acc_test.app_domain
   operation = datapower_api_operation.acc_test.id
+  rate_limit = [{"name": "RateLimit", "rate": "1000"}]
 }`,
     ModelOnly:    false,
 }
@@ -6043,6 +6074,7 @@ resource "datapower_pop_poller_source_protocol_handler" "test" {
   port = 8888
   conn_security = "none"
   account = "account"
+  password_alias = "AccTest_PasswordAlias"
   delay_between_polls = 300
   max_messages_per_poll = 5
 }`,
@@ -6058,6 +6090,7 @@ resource "datapower_pop_poller_source_protocol_handler" "acc_test" {
   port = 8888
   conn_security = "none"
   account = "account"
+  password_alias = datapower_password_alias.acc_test.id
   delay_between_polls = 300
   max_messages_per_poll = 5
 }`,
@@ -6087,7 +6120,8 @@ var PasswordAliasTestConfig = ModelTestConfig{
 resource "datapower_password_alias" "test" {
   id = "ResTestPasswordAlias"
   app_domain = "acceptance_test"
-  password = "password"
+  password_wo = "password"
+  password_wo_version = 1
 }`,
     Data: `
 data "datapower_password_alias" "test" {
@@ -6097,7 +6131,8 @@ data "datapower_password_alias" "test" {
 resource "datapower_password_alias" "acc_test" {
   id = "AccTest_PasswordAlias"
   app_domain = datapower_domain.acc_test.app_domain
-  password = "password"
+  password_wo = "password"
+  password_wo_version = 1
 }`,
     ModelOnly:    false,
 }
@@ -7063,7 +7098,8 @@ var UserTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_user" "test" {
   id = "ResTest_User"
-  password = "Password$123"
+  password_wo = "Password$123"
+  password_wo_version = 1
   access_level = "group-defined"
   group_name = "AccTest_UserGroup"
   snmp_creds = null
@@ -7075,7 +7111,8 @@ data "datapower_user" "test" {
     TestBed: `
 resource "datapower_user" "acc_test" {
   id = "AccTest_User"
-  password = "Password$123"
+  password_wo = "Password$123"
+  password_wo_version = 1
   access_level = "group-defined"
   group_name = datapower_user_group.acc_test.id
   snmp_creds = null
@@ -7754,6 +7791,7 @@ resource "datapower_zos_nss_client" "test" {
   client_id = "client_id"
   system_name = "sysname"
   user_name = "username"
+  password_alias = "AccTest_PasswordAlias"
   ssl_client = "AccTest_SSLClientProfile"
 }`,
     Data: `
@@ -7769,6 +7807,7 @@ resource "datapower_zos_nss_client" "acc_test" {
   client_id = "client_id"
   system_name = "sysname"
   user_name = "username"
+  password_alias = datapower_password_alias.acc_test.id
   ssl_client = datapower_ssl_client_profile.acc_test.id
 }`,
     ModelOnly:    false,

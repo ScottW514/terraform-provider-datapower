@@ -94,7 +94,7 @@ func (d *WebTokenServiceDataSource) Schema(ctx context.Context, req datasource.S
 						},
 						"front_side": schema.ListNestedAttribute{
 							MarkdownDescription: "Define the addresses and ports that the service listens on. You can define listening sources for HTTP and HTTPS requests. For HTTPS request, set the listening source to use TLS parameter and assign the TLS profile.",
-							NestedObject:        models.DmSSLFrontSideDataSourceSchema,
+							NestedObject:        models.GetDmSSLFrontSideDataSourceSchema(),
 							Computed:            true,
 						},
 						"style_policy": schema.StringAttribute{

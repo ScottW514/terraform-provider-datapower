@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -48,6 +49,33 @@ type AS1PollerSourceProtocolHandler struct {
 	SslClientConfigType types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient           types.String                `tfsdk:"ssl_client"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AS1PollerSourceProtocolHandlerSSLClientConfigTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "conn_security",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"none"},
+}
+var AS1PollerSourceProtocolHandlerSSLClientCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "conn_security",
+			AttrType:    "String",
+			AttrDefault: "none",
+			Value:       []string{"none"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+	},
 }
 
 var AS1PollerSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -122,6 +150,7 @@ func (data AS1PollerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

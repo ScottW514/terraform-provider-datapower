@@ -65,6 +65,11 @@ attributes:
   default: default
   description: Catalog name
   cli_alias: catalog-name
+- name: EnableCache
+  type: Bool
+  default: true
+  description: Enable subscriber caching
+  cli_alias": enable-cache
 - name: DevPortalEndpoint
   type: String
   description: Specify the URL of the Developer Portal endpoint. This endpoint can
@@ -80,15 +85,15 @@ attributes:
     the least recently used (LRU) entry is removed.
   cli_alias: cache-capacity
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnableCache
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EnableCache
     value:
-    - 'off'
+    - false
 - name: RoutingPrefix
   type: List
   element_type: DmRoutingPrefix
@@ -129,10 +134,10 @@ attributes:
     rejected.
   cli_alias: default-rate-limit
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseRateLimitGroup
     value:
-    - 'on'
+    - true
 - name: RateLimitGroup
   type: String
   reference_to: RateLimitDefinitionGroup
@@ -140,10 +145,10 @@ attributes:
     for client identification. When not defined, requests without API keys are rejected.
   cli_alias: rate-limit-group
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: UseRateLimitGroup
     value:
-    - 'off'
+    - false
 - name: AssemblyBurstLimit
   type: List
   element_type: DmAPIBurstLimit

@@ -82,7 +82,7 @@ func (d *SOAPHeaderDispositionDataSource) Schema(ctx context.Context, req dataso
 						},
 						"refine": schema.ListNestedAttribute{
 							MarkdownDescription: "Customer specifically asks this transformation to simply remove/keep/fault a SOAP header; or indicates whether a header was processed or not by the prior action, then this action will take the default behaviors.",
-							NestedObject:        models.DmSOAPHeaderDispositionItemDataSourceSchema,
+							NestedObject:        models.GetDmSOAPHeaderDispositionItemDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

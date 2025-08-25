@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -38,6 +39,14 @@ import (
 type DmRoutingPrefix struct {
 	Type types.String `tfsdk:"type"`
 	Name types.String `tfsdk:"name"`
+}
+
+var DmRoutingPrefixNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "uri",
+	Value:       []string{"uri"},
 }
 
 var DmRoutingPrefixObjectType = map[string]attr.Type{
@@ -48,34 +57,44 @@ var DmRoutingPrefixObjectDefault = map[string]attr.Value{
 	"type": types.StringValue("uri"),
 	"name": types.StringNull(),
 }
-var DmRoutingPrefixDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type for the routing prefix.", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
-			Computed:            true,
-		},
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmRoutingPrefixResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type for the routing prefix.", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("uri", "host"),
+
+func GetDmRoutingPrefixDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmRoutingPrefixDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type for the routing prefix.", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("uri"),
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").String,
+				Computed:            true,
+			},
 		},
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").String,
-			Optional:            true,
+	}
+	return DmRoutingPrefixDataSourceSchema
+}
+func GetDmRoutingPrefixResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmRoutingPrefixResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type for the routing prefix.", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("uri", "host"),
+				},
+				Default: stringdefault.StaticString("uri"),
+			},
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmRoutingPrefixNameCondVal, validators.Evaluation{}, false),
+				},
+			},
 		},
-	},
+	}
+	return DmRoutingPrefixResourceSchema
 }
 
 func (data DmRoutingPrefix) IsNull() bool {
@@ -93,6 +112,7 @@ func (data DmRoutingPrefix) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Type.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Type`, data.Type.ValueString())
 	}

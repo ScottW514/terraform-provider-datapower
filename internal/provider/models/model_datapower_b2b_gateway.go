@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -68,6 +69,35 @@ type B2BGateway struct {
 	SqlDataSource                    types.String                `tfsdk:"sql_data_source"`
 	FrontSideTimeout                 types.Int64                 `tfsdk:"front_side_timeout"`
 	DependencyActions                []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var B2BGatewayB2BProfilesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "b2b_groups",
+	AttrType:    "List",
+	AttrDefault: "",
+	Value:       []string{""},
+}
+var B2BGatewayArchiveLocationCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "archive_mode",
+	AttrType:    "String",
+	AttrDefault: "archpurge",
+	Value:       []string{"archpurge"},
+}
+var B2BGatewayArchiveFileNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "archive_mode",
+	AttrType:    "String",
+	AttrDefault: "archpurge",
+	Value:       []string{"archpurge"},
+}
+var B2BGatewayDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
 }
 
 var B2BGatewayObjectType = map[string]attr.Type{
@@ -224,6 +254,7 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -237,9 +268,9 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DocStoreLocation`, data.DocStoreLocation.ValueString())
 	}
 	if !data.AsFrontProtocol.IsNull() {
-		var values []DmASFrontProtocol
-		data.AsFrontProtocol.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmASFrontProtocol
+		data.AsFrontProtocol.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ASFrontProtocol`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -256,16 +287,16 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`AS3MDNURL`, data.As3mdnurl.ValueString())
 	}
 	if !data.B2bProfiles.IsNull() {
-		var values []DmB2BActiveProfile
-		data.B2bProfiles.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmB2BActiveProfile
+		data.B2bProfiles.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.B2bGroups.IsNull() {
-		var values []DmB2BActiveGroup
-		data.B2bGroups.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmB2BActiveGroup
+		data.B2bGroups.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`B2BGroups`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -314,9 +345,9 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.XPathRoutingPolicies.IsNull() {
-		var values []string
-		data.XPathRoutingPolicies.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.XPathRoutingPolicies.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`XPathRoutingPolicies`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -330,9 +361,9 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DebugHistory`, data.DebugHistory.ValueInt64())
 	}
 	if !data.CpaEntries.IsNull() {
-		var values []DmB2BCPAEntry
-		data.CpaEntries.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmB2BCPAEntry
+		data.CpaEntries.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`CPAEntries`+".-1", val.ToBody(ctx, ""))
 		}
 	}

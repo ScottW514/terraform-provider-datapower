@@ -37,14 +37,17 @@ resource "datapower_mpgw_error_action" "test" {
 - `error_rule` (String) Specify the custom error rule that the appliance runs to handle errors.
   - CLI Alias: `rule`
   - Reference to: `datapower_style_policy_rule:id`
+  - Required When: `type`=`error-rule`
 - `header_injection` (Attributes List) Specify the name and the value for the HTTP header that the appliance injects.
   - CLI Alias: `header-inject` (see [below for nested schema](#nestedatt--header_injection))
 - `local_url` (String) Specify the URL of the local error page.
   - CLI Alias: `local-url`
+  - Required When: `type`=`static`
 - `reason_phrase` (String) Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.
   - CLI Alias: `reason-phrase`
 - `remote_url` (String) Specify the URL of the remote error page.
   - CLI Alias: `remote-url`
+  - Required When: `type`=`redirect`|`proxy`
 - `status_code` (Number) Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.
   - CLI Alias: `status-code`
   - Range: `100`-`999`

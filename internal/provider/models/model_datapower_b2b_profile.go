@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -108,6 +109,272 @@ type B2BProfile struct {
 	Ebms3DuplicateDetectionNotification types.Bool                  `tfsdk:"ebms3_duplicate_detection_notification"`
 	EbmsMessageProperties               types.List                  `tfsdk:"ebms_message_properties"`
 	DependencyActions                   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var B2BProfileInboundDecryptIdCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "inbound_require_encrypted",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var B2BProfileOutboundSignIdCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var B2BProfileEBMSErrorURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ebms_ack_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{""},
+}
+var B2BProfileEBMSReceiptURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_send_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_receipt_reply_pattern",
+			AttrType:    "String",
+			AttrDefault: "Response",
+			Value:       []string{"Callback"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+	},
+}
+var B2BProfileEBMSInboundErrorURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_send_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_receipt_reply_pattern",
+			AttrType:    "String",
+			AttrDefault: "Response",
+			Value:       []string{"Callback"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+	},
+}
+var B2BProfileEBMSInboundDecryptIdCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_require_encrypted",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var B2BProfileEBMSOutboundSignIdCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var B2BProfileEBMS3OutboundSignIdCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms3_outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var B2BProfileEBMS3InboundDecryptIdCredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms3_inbound_require_encrypted",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var B2BProfileEBMS3ReceiptSSLClientCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms3_receipt_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-url-protocol-in-list",
+					Attribute:   "ebms_receipt_url",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"https"},
+				},
+				{
+					Evaluation:  "property-url-protocol-in-list",
+					Attribute:   "ebms_inbound_error_url",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"https"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_send_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_receipt_reply_pattern",
+			AttrType:    "String",
+			AttrDefault: "Response",
+			Value:       []string{"Callback"},
+		},
+	},
+}
+var B2BProfileEBMSNotificationURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ebms_notification",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BProfileEBMSNotificationSSLClientCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_notification_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "ebms_notification_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"https"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_notification",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
 }
 
 var B2BProfileObjectType = map[string]attr.Type{
@@ -422,6 +689,7 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -432,23 +700,23 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`ProfileType`, data.ProfileType.ValueString())
 	}
 	if !data.BusinessIDs.IsNull() {
-		var values []string
-		data.BusinessIDs.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.BusinessIDs.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`BusinessIDs`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.BusinessIDsDuns.IsNull() {
-		var values []string
-		data.BusinessIDsDuns.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.BusinessIDsDuns.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`BusinessIDsDUNS`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.BusinessIDsDunsPlus4.IsNull() {
-		var values []string
-		data.BusinessIDsDunsPlus4.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.BusinessIDsDunsPlus4.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`BusinessIDsDUNSPlus4`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -459,16 +727,16 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`ResponseType`, data.ResponseType.ValueString())
 	}
 	if !data.EmailAddresses.IsNull() {
-		var values []string
-		data.EmailAddresses.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.EmailAddresses.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`EmailAddresses`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.Destinations.IsNull() {
-		var values []DmB2BDestination
-		data.Destinations.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmB2BDestination
+		data.Destinations.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Destinations`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -497,9 +765,9 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`OutboundSignMICAlgVersion`, data.OutboundSignMicAlgVersion.ValueString())
 	}
 	if !data.Contacts.IsNull() {
-		var values []DmB2BContact
-		data.Contacts.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmB2BContact
+		data.Contacts.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Contacts`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -573,9 +841,9 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`EBMSEnableCPABinding`, tfutils.StringFromBool(data.EbmsEnableCpaBinding, ""))
 	}
 	if !data.EbmsProfileCpaBindings.IsNull() {
-		var values []DmProfileCPABinding
-		data.EbmsProfileCpaBindings.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmProfileCPABinding
+		data.EbmsProfileCpaBindings.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`EBMSProfileCPABindings`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -664,9 +932,9 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`EBMS3DuplicateDetectionNotification`, tfutils.StringFromBool(data.Ebms3DuplicateDetectionNotification, ""))
 	}
 	if !data.EbmsMessageProperties.IsNull() {
-		var values []DmB2BMessageProperties
-		data.EbmsMessageProperties.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmB2BMessageProperties
+		data.EbmsMessageProperties.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`EBMSMessageProperties`+".-1", val.ToBody(ctx, ""))
 		}
 	}

@@ -29,7 +29,7 @@ attributes:
   description: An value that fails validation is changed to this value if the failure
     policy is 'set'.
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Fixup
     value:
     - set
@@ -52,15 +52,15 @@ attributes:
     forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns
     to be used by the XSS filter.
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: XSS
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: XSS
     value:
-    - 'on'
+    - true
   file_locations:
   - local
   - store

@@ -97,17 +97,17 @@ func (r *AssemblyActionRateLimitResource) Schema(ctx context.Context, req resour
 			},
 			"rate_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Rate limits", "rate-limit", "").String,
-				NestedObject:        models.DmRateLimitInfoResourceSchema,
+				NestedObject:        models.GetDmRateLimitInfoResourceSchema(),
 				Optional:            true,
 			},
 			"count_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Count limits", "count-limit", "").String,
-				NestedObject:        models.DmCountLimitInfoResourceSchema,
+				NestedObject:        models.GetDmCountLimitInfoResourceSchema(),
 				Optional:            true,
 			},
 			"rate_limit_definition": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit definitions", "rate-limit-definition", "").String,
-				NestedObject:        models.DmRateLimitInfoDomainNamedResourceSchema,
+				NestedObject:        models.GetDmRateLimitInfoDomainNamedResourceSchema(),
 				Optional:            true,
 			},
 			"rate_limit_group": schema.StringAttribute{

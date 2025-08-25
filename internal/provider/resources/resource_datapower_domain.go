@@ -43,6 +43,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &DomainResource{}
@@ -112,15 +113,19 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: stringdefault.StaticString("local"),
 			},
 			"import_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Import URL", "import-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Import URL", "import-url", "").AddRequiredWhen(models.DomainImportURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.DomainImportURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"import_format": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Import format", "import-format", "").AddStringEnum("ZIP", "XML").AddDefaultValue("ZIP").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Import format", "import-format", "").AddStringEnum("ZIP", "XML").AddDefaultValue("ZIP").AddRequiredWhen(models.DomainImportFormatCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ZIP", "XML"),
+					validators.ConditionalRequiredString(models.DomainImportFormatCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("ZIP"),
 			},
@@ -133,7 +138,7 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"local_ip_rewrite": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to rewrite local IP addresses during import. When enabled, local IP addresses in the import package are rewritten to match the local IP address on the DataPower Gateway. In other words, a service that binds to <tt>eth10</tt> in the import package is rewritten to bind to the local IP address of <tt>eth10</tt> on the DataPower Gateway.", "local-ip-rewrite", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to rewrite local IP addresses during import. When enabled, local IP addresses in the import package are rewritten to match the local IP address on the DataPower Gateway. In other words, a service that binds to <tt>eth10</tt> in the import package is rewritten to bind to the local IP address of <tt>eth10</tt> on the DataPower Gateway.", "local-ip-rewrite", "").AddDefaultValue("true").AddRequiredWhen(models.DomainLocalIPRewriteCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -143,7 +148,6 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 5),
 				},
 				Default: int64default.StaticInt64(3),
@@ -158,8 +162,11 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: stringdefault.StaticString("scope-domain"),
 			},
 			"config_permissions_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Global permissions profile", "config-permissions-profile", "access_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Global permissions profile", "config-permissions-profile", "access_profile").AddRequiredWhen(models.DomainConfigPermissionsProfileCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.DomainConfigPermissionsProfileCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

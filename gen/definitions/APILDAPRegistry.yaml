@@ -116,15 +116,15 @@ attributes:
     default value is static.
   cli_alias: ldap-group-auth-type
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LDAPGroupAuthEnabled
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: LDAPGroupAuthEnabled
     value:
-    - 'on'
+    - true
 - name: LDAPGroupScope
   type: String
   enum:
@@ -135,10 +135,10 @@ attributes:
   description: Specify the depth of the LDAP group search. The default value is subtree.
   cli_alias: ldap-group-scope
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: LDAPGroupAuthEnabled
     value:
-    - 'off'
+    - false
 - name: LDAPGroupBaseDN
   type: String
   description: Specify the base DN name to begin the group authentication search.
@@ -147,28 +147,28 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthEnabled
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthType
       value:
       - static
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthEnabled
       value:
-      - 'off'
+      - false
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: LDAPGroupAuthEnabled
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: LDAPGroupAuthType
         value:
         - dynamic
@@ -183,28 +183,28 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthEnabled
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthType
       value:
       - static
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthEnabled
       value:
-      - 'off'
+      - false
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: LDAPGroupAuthEnabled
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: LDAPGroupAuthType
         value:
         - dynamic
@@ -218,28 +218,28 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthEnabled
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthType
       value:
       - static
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthEnabled
       value:
-      - 'off'
+      - false
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: LDAPGroupAuthEnabled
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: LDAPGroupAuthType
         value:
         - dynamic
@@ -252,28 +252,28 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthEnabled
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthType
       value:
       - dynamic
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: LDAPGroupAuthEnabled
       value:
-      - 'off'
+      - false
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: LDAPGroupAuthEnabled
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: LDAPGroupAuthType
         value:
         - static

@@ -59,79 +59,94 @@ var DmMQHeadersObjectDefault = map[string]attr.Value{
 	"mqrfh2": types.BoolValue(false),
 	"mqwih":  types.BoolValue(false),
 }
-var DmMQHeadersDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"mqcih": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CICS Bridge Header (MQCIH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmMQHeadersDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmMQHeadersDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"mqcih": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("CICS Bridge Header (MQCIH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"mqdlh": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Dead Letter Header (MQDLH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"mqiih": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("IMS Information Header (MQIIH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"mqrfh": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"mqrfh2": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH2)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"mqwih": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Work Information Header (MQWIH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"mqdlh": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Dead Letter Header (MQDLH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"mqiih": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("IMS Information Header (MQIIH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"mqrfh": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"mqrfh2": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH2)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"mqwih": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Work Information Header (MQWIH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmMQHeadersDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmMQHeadersDataSourceSchema
 }
-var DmMQHeadersResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmMQHeadersObjectType,
-			DmMQHeadersObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"mqcih": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CICS Bridge Header (MQCIH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmMQHeadersResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmMQHeadersResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmMQHeadersObjectType,
+				DmMQHeadersObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"mqcih": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("CICS Bridge Header (MQCIH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"mqdlh": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Dead Letter Header (MQDLH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"mqiih": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("IMS Information Header (MQIIH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"mqrfh": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"mqrfh2": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH2)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"mqwih": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Work Information Header (MQWIH)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"mqdlh": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Dead Letter Header (MQDLH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"mqiih": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("IMS Information Header (MQIIH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"mqrfh": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"mqrfh2": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH2)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"mqwih": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Work Information Header (MQWIH)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmMQHeadersResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmMQHeadersResourceSchema.Required = true
+	} else {
+		DmMQHeadersResourceSchema.Optional = true
+		DmMQHeadersResourceSchema.Computed = true
+	}
+	return DmMQHeadersResourceSchema
 }
 
 func (data DmMQHeaders) IsNull() bool {
@@ -155,27 +170,13 @@ func (data DmMQHeaders) IsNull() bool {
 	}
 	return true
 }
-func GetDmMQHeadersDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmMQHeadersDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmMQHeadersDataSourceSchema
-}
-
-func GetDmMQHeadersResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmMQHeadersResourceSchema.Required = true
-	} else {
-		DmMQHeadersResourceSchema.Optional = true
-		DmMQHeadersResourceSchema.Computed = true
-	}
-	DmMQHeadersResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmMQHeadersResourceSchema
-}
 
 func (data DmMQHeaders) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Mqcih.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MQCIH`, tfutils.StringFromBool(data.Mqcih, ""))
 	}

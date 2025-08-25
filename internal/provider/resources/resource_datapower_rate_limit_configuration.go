@@ -75,7 +75,7 @@ func (r *RateLimitConfigurationResource) Schema(ctx context.Context, req resourc
 			},
 			"parameters": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Parameters", "parameter", "").String,
-				NestedObject:        models.DmRateLimitConfigurationNameValuePairResourceSchema,
+				NestedObject:        models.GetDmRateLimitConfigurationNameValuePairResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -90,7 +90,6 @@ func (r *LDAPConnectionPoolResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -100,7 +99,6 @@ func (r *LDAPConnectionPoolResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 2000),
 				},
 				Default: int64default.StaticInt64(35),

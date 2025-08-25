@@ -50,40 +50,47 @@ var DmPolicyAttachmentPointObjectDefault = map[string]attr.Value{
 	"policy_attach_wsdl_component_value": types.StringNull(),
 	"policy_attach_fragment_id":          types.StringNull(),
 }
-var DmPolicyAttachmentPointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"policy_attach_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
-			Computed:            true,
-		},
-		"policy_attach_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a wsdl component formatted {ns}ncname", "", "").String,
-			Computed:            true,
-		},
-		"policy_attach_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmPolicyAttachmentPointResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"policy_attach_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("service", "port", "fragmentid", "rest"),
+
+func GetDmPolicyAttachmentPointDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmPolicyAttachmentPointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"policy_attach_wsdl_component_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
+				Computed:            true,
+			},
+			"policy_attach_wsdl_component_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a wsdl component formatted {ns}ncname", "", "").String,
+				Computed:            true,
+			},
+			"policy_attach_fragment_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Computed:            true,
 			},
 		},
-		"policy_attach_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a wsdl component formatted {ns}ncname", "", "").String,
-			Optional:            true,
+	}
+	return DmPolicyAttachmentPointDataSourceSchema
+}
+func GetDmPolicyAttachmentPointResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmPolicyAttachmentPointResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"policy_attach_wsdl_component_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("service", "port", "fragmentid", "rest"),
+				},
+			},
+			"policy_attach_wsdl_component_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a wsdl component formatted {ns}ncname", "", "").String,
+				Optional:            true,
+			},
+			"policy_attach_fragment_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Optional:            true,
+			},
 		},
-		"policy_attach_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmPolicyAttachmentPointResourceSchema
 }
 
 func (data DmPolicyAttachmentPoint) IsNull() bool {
@@ -104,6 +111,7 @@ func (data DmPolicyAttachmentPoint) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.PolicyAttachWsdlComponentType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PolicyAttachWSDLComponentType`, data.PolicyAttachWsdlComponentType.ValueString())
 	}

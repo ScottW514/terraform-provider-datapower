@@ -159,6 +159,7 @@ func (data SSHServerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -175,9 +176,9 @@ func (data SSHServerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 		body, _ = sjson.Set(body, pathRoot+`ACL`, data.Acl.ValueString())
 	}
 	if !data.HostPrivateKeys.IsNull() {
-		var values []string
-		data.HostPrivateKeys.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.HostPrivateKeys.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`HostPrivateKeys`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -220,9 +221,9 @@ func (data SSHServerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 		body, _ = sjson.Set(body, pathRoot+`PersistentFilesystemTimeout`, data.PersistentFilesystemTimeout.ValueInt64())
 	}
 	if !data.VirtualDirectories.IsNull() {
-		var values []DmSFTPServerVirtualDirectory
-		data.VirtualDirectories.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSFTPServerVirtualDirectory
+		data.VirtualDirectories.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`VirtualDirectories`+".-1", val.ToBody(ctx, ""))
 		}
 	}

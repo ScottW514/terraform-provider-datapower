@@ -114,7 +114,7 @@ func (d *B2BProfileDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"destinations": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the routing information for the partner. The first destination is the default destination. The gateway uses the default destination when no specific destination is assigned or when no matching destination is found.",
-							NestedObject:        models.DmB2BDestinationDataSourceSchema,
+							NestedObject:        models.GetDmB2BDestinationDataSourceSchema(),
 							Computed:            true,
 						},
 						"inbound_verify_val_cred": schema.StringAttribute{
@@ -151,7 +151,7 @@ func (d *B2BProfileDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"contacts": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the contact information for partners. To define the contact information, you must provide information for at least one property.",
-							NestedObject:        models.DmB2BContactDataSourceSchema,
+							NestedObject:        models.GetDmB2BContactDataSourceSchema(),
 							Computed:            true,
 						},
 						"override_asid": schema.StringAttribute{
@@ -248,7 +248,7 @@ func (d *B2BProfileDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"ebms_profile_cpa_bindings": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the CPA binding for the external partner profile. A CPA binding binds a CPA entry (CPA, service, and action) that you prefer to use. When a CPA entry is matched through the internal partner profile, outbound messages from the internal partner use the CPA, service, and action that are specified by the matched CPA entry. You must have the CPA entry in the ebXML settings of the associated B2B gateway before you add the entry to the CPA bindings list.",
-							NestedObject:        models.DmProfileCPABindingDataSourceSchema,
+							NestedObject:        models.GetDmProfileCPABindingDataSourceSchema(),
 							Computed:            true,
 						},
 						"ebms_cpa_id": schema.StringAttribute{
@@ -365,7 +365,7 @@ func (d *B2BProfileDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"ebms_message_properties": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the <tt>eb:Property</tt> elements to add to the <tt>eb:MessageProperties</tt> node. Define message properties to meet your business needs and the agreement between partners.",
-							NestedObject:        models.DmB2BMessagePropertiesDataSourceSchema,
+							NestedObject:        models.GetDmB2BMessagePropertiesDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

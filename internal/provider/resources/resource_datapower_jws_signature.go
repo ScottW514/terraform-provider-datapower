@@ -37,6 +37,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &JWSSignatureResource{}
@@ -93,21 +94,27 @@ func (r *JWSSignatureResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("RS256"),
 			},
 			"key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Private key.", "key", "crypto_key").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Private key.", "key", "crypto_key").AddRequiredWhen(models.JWSSignatureKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.JWSSignatureKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").AddRequiredWhen(models.JWSSignatureSSKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.JWSSignatureSSKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"protected_header": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add a protected header to the JWS Sign action.", "protected-header", "").String,
-				NestedObject:        models.DmJOSEHeaderResourceSchema,
+				NestedObject:        models.GetDmJOSEHeaderResourceSchema(),
 				Optional:            true,
 			},
 			"unprotected_header": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add an unprotected header to the JWS Sign action.", "unprotected-header", "").String,
-				NestedObject:        models.DmJOSEHeaderResourceSchema,
+				NestedObject:        models.GetDmJOSEHeaderResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -115,12 +115,12 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"rate_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit scheme to enforce. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.", "rate-limit", "").String,
-				NestedObject:        models.DmAPIRateLimitResourceSchema,
+				NestedObject:        models.GetDmAPIRateLimitResourceSchema(),
 				Optional:            true,
 			},
 			"burst_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the burst limit scheme to enforce. This scheme defines the maximum burst rate to allow during a specified interval. The burst limit helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.", "burst-limit", "").String,
-				NestedObject:        models.DmAPIBurstLimitResourceSchema,
+				NestedObject:        models.GetDmAPIBurstLimitResourceSchema(),
 				Optional:            true,
 			},
 			"rate_limit_group": schema.StringAttribute{
@@ -135,32 +135,32 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"assembly_burst_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the burst limit scheme that the rate limit assembly action enforces. This scheme defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.", "assembly-burst-limit", "").String,
-				NestedObject:        models.DmAPIBurstLimitResourceSchema,
+				NestedObject:        models.GetDmAPIBurstLimitResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_burst_limit_definition": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a burst limit definition that the rate limit assembly action enforces. A burst limit definition defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. A message is first checked against the burst limit scheme and then against the rate limit scheme.", "assembly-burst-limit-def", "").String,
-				NestedObject:        models.DmDefinitionLinkResourceSchema,
+				NestedObject:        models.GetDmDefinitionLinkResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_rate_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit scheme that the rate limit assembly action enforces. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.", "assembly-rate-limit", "").String,
-				NestedObject:        models.DmAPIRateLimitResourceSchema,
+				NestedObject:        models.GetDmAPIRateLimitResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_rate_limit_definition": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a rate limit definition that the rate limit assembly action enforces. A rate limit definition defines the maximum rate that is allowed in a specified interval and the actions to take when the limit is exceeded.", "assembly-rate-limit-def", "").String,
-				NestedObject:        models.DmDefinitionLinkResourceSchema,
+				NestedObject:        models.GetDmDefinitionLinkResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_count_limit": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the count limit scheme that the rate limit assembly action enforces. This scheme defines the maximum count to allow and the actions to take when the limit is exceeded.", "assembly-count-limit", "").String,
-				NestedObject:        models.DmAPICountLimitResourceSchema,
+				NestedObject:        models.GetDmAPICountLimitResourceSchema(),
 				Optional:            true,
 			},
 			"assembly_count_limit_definition": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a count limit definition that the rate limit assembly action enforces. A count limit definition defines the maximum count that is allowed and the actions to take when the limit is exceeded.", "assembly-count-limit-def", "").String,
-				NestedObject:        models.DmDefinitionLinkResourceSchema,
+				NestedObject:        models.GetDmDefinitionLinkResourceSchema(),
 				Optional:            true,
 			},
 			"space_id": schema.StringAttribute{

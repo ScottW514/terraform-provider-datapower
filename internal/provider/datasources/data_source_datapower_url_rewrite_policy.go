@@ -82,7 +82,7 @@ func (d *URLRewritePolicyDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"url_rewrite_rule": schema.ListNestedAttribute{
 							MarkdownDescription: "Add, edit, or delete a URL rewrite rule",
-							NestedObject:        models.DmURLRewriteRuleDataSourceSchema,
+							NestedObject:        models.GetDmURLRewriteRuleDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

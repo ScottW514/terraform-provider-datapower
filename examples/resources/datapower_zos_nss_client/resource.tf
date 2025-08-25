@@ -7,5 +7,6 @@ resource "datapower_zos_nss_client" "test" {
   client_id      = "client_id"
   system_name    = "sysname"
   user_name      = "username"
+  password_alias = "AccTest_PasswordAlias"
   ssl_client     = "AccTest_SSLClientProfile"
 }

@@ -111,10 +111,10 @@ attributes:
     error messages.
   cli_alias: delay-errors
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: RewriteErrors
     value:
-    - 'on'
+    - true
 - name: DelayErrorsDuration
   type: Int64
   minimum: 250
@@ -129,14 +129,14 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DelayErrors
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: RewriteErrors
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: FrontTimeout
@@ -212,9 +212,9 @@ attributes:
     Enter a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DebugMode
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true

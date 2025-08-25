@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -175,6 +176,160 @@ type WSGateway struct {
 	DelayErrors                              types.Bool                  `tfsdk:"delay_errors"`
 	DelayErrorsDuration                      types.Int64                 `tfsdk:"delay_errors_duration"`
 	DependencyActions                        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WSGatewayRequestAttachmentsFlowControlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "request_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"unprocessed"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "request_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"unprocessed"},
+		},
+	},
+}
+var WSGatewayResponseAttachmentsFlowControlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "response_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"unprocessed"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "response_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"unprocessed"},
+		},
+	},
+}
+var WSGatewayParserLimitsElementDepthCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayParserLimitsAttributeCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayParserLimitsMaxNodeSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayParserLimitsExternalReferencesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayParserLimitsMaxPrefixesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayParserLimitsMaxNamespacesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayParserLimitsMaxLocalNamesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayParserLimitsAttachmentByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayParserLimitsAttachmentPackageByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSGatewayDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
+var WSGatewayWSAHTTPAsyncResponseCodeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "wsa_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+}
+var WSGatewayWSABackProtocolCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "wsa_gen_style",
+			AttrType:    "String",
+			AttrDefault: "sync",
+			Value:       []string{"async"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "wsa_mode",
+			AttrType:    "String",
+			AttrDefault: "sync2sync",
+			Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+		},
+	},
+}
+var WSGatewayDelayErrorsDurationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "delay_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rewrite_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
 }
 
 var WSGatewayObjectType = map[string]attr.Type{
@@ -761,6 +916,7 @@ func (data WSGateway) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -818,23 +974,23 @@ func (data WSGateway) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.WsdlCachePolicy.IsNull() {
-		var values []DmWSDLCachePolicy
-		data.WsdlCachePolicy.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSDLCachePolicy
+		data.WsdlCachePolicy.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSDLCachePolicy`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.BaseWsdl.IsNull() {
-		var values []DmWSBaseWSDL
-		data.BaseWsdl.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSBaseWSDL
+		data.BaseWsdl.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`BaseWSDL`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.UserToggles.IsNull() {
-		var values []DmWSUserToggles
-		data.UserToggles.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSUserToggles
+		data.UserToggles.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`UserToggles`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -863,51 +1019,51 @@ func (data WSGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`SOAPActionPolicy`, data.SoapActionPolicy.ValueString())
 	}
 	if !data.WsrrSubscriptions.IsNull() {
-		var values []DmWSRRWSDLSource
-		data.WsrrSubscriptions.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSRRWSDLSource
+		data.WsrrSubscriptions.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSRRSubscriptions`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.WsrrSavedSearchSubscriptions.IsNull() {
-		var values []DmWSRRSavedSearchWSDLSource
-		data.WsrrSavedSearchSubscriptions.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSRRSavedSearchWSDLSource
+		data.WsrrSavedSearchSubscriptions.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`WSRRSavedSearchSubscriptions`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.OperationPriority.IsNull() {
-		var values []DmWSOperationSchedulerPriority
-		data.OperationPriority.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSOperationSchedulerPriority
+		data.OperationPriority.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`OperationPriority`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.OperationConformancePolicy.IsNull() {
-		var values []DmWSOperationConformancePolicy
-		data.OperationConformancePolicy.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSOperationConformancePolicy
+		data.OperationConformancePolicy.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`OperationConformancePolicy`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.OperationPolicySubjectOptOut.IsNull() {
-		var values []DmWSOperationPolicySubjectOptOut
-		data.OperationPolicySubjectOptOut.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSOperationPolicySubjectOptOut
+		data.OperationPolicySubjectOptOut.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`OperationPolicySubjectOptOut`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.PolicyParameter.IsNull() {
-		var values []DmWSPolicyParameters
-		data.PolicyParameter.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSPolicyParameters
+		data.PolicyParameter.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`PolicyParameter`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.ReliableMessaging.IsNull() {
-		var values []DmWSOperationReliableMessaging
-		data.ReliableMessaging.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSOperationReliableMessaging
+		data.ReliableMessaging.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`ReliableMessaging`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -927,9 +1083,9 @@ func (data WSGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Priority`, data.Priority.ValueString())
 	}
 	if !data.FrontProtocol.IsNull() {
-		var values []string
-		data.FrontProtocol.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.FrontProtocol.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`FrontProtocol`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -949,23 +1105,23 @@ func (data WSGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`FWCred`, data.FwCred.ValueString())
 	}
 	if !data.HeaderInjection.IsNull() {
-		var values []DmHeaderInjection
-		data.HeaderInjection.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmHeaderInjection
+		data.HeaderInjection.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.HeaderSuppression.IsNull() {
-		var values []DmHeaderSuppression
-		data.HeaderSuppression.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmHeaderSuppression
+		data.HeaderSuppression.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.StylesheetParameters.IsNull() {
-		var values []DmStylesheetParameter
-		data.StylesheetParameters.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmStylesheetParameter
+		data.StylesheetParameters.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -982,23 +1138,23 @@ func (data WSGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`PropagateURI`, tfutils.StringFromBool(data.PropagateUri, ""))
 	}
 	if !data.ServiceMonitors.IsNull() {
-		var values []string
-		data.ServiceMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.ServiceMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`ServiceMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.CountMonitors.IsNull() {
-		var values []string
-		data.CountMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.CountMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`CountMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.DurationMonitors.IsNull() {
-		var values []string
-		data.DurationMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.DurationMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`DurationMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -1078,9 +1234,9 @@ func (data WSGateway) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DebugHistory`, data.DebugHistory.ValueInt64())
 	}
 	if !data.DebugTrigger.IsNull() {
-		var values []DmMSDebugTriggerType
-		data.DebugTrigger.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmMSDebugTriggerType
+		data.DebugTrigger.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
 		}
 	}

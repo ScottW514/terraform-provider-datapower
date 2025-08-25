@@ -106,12 +106,12 @@ func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 						},
 						"rate_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the rate limit scheme to enforce. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.",
-							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIRateLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"burst_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the burst limit scheme to enforce. This scheme defines the maximum burst rate to allow during a specified interval. The burst limit helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.",
-							NestedObject:        models.DmAPIBurstLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIBurstLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"rate_limit_group": schema.StringAttribute{
@@ -124,32 +124,32 @@ func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 						},
 						"assembly_burst_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the burst limit scheme that the rate limit assembly action enforces. This scheme defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.",
-							NestedObject:        models.DmAPIBurstLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIBurstLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_burst_limit_definition": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify a burst limit definition that the rate limit assembly action enforces. A burst limit definition defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. A message is first checked against the burst limit scheme and then against the rate limit scheme.",
-							NestedObject:        models.DmDefinitionLinkDataSourceSchema,
+							NestedObject:        models.GetDmDefinitionLinkDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_rate_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the rate limit scheme that the rate limit assembly action enforces. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.",
-							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPIRateLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_rate_limit_definition": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify a rate limit definition that the rate limit assembly action enforces. A rate limit definition defines the maximum rate that is allowed in a specified interval and the actions to take when the limit is exceeded.",
-							NestedObject:        models.DmDefinitionLinkDataSourceSchema,
+							NestedObject:        models.GetDmDefinitionLinkDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_count_limit": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the count limit scheme that the rate limit assembly action enforces. This scheme defines the maximum count to allow and the actions to take when the limit is exceeded.",
-							NestedObject:        models.DmAPICountLimitDataSourceSchema,
+							NestedObject:        models.GetDmAPICountLimitDataSourceSchema(),
 							Computed:            true,
 						},
 						"assembly_count_limit_definition": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify a count limit definition that the rate limit assembly action enforces. A count limit definition defines the maximum count that is allowed and the actions to take when the limit is exceeded.",
-							NestedObject:        models.DmDefinitionLinkDataSourceSchema,
+							NestedObject:        models.GetDmDefinitionLinkDataSourceSchema(),
 							Computed:            true,
 						},
 						"space_id": schema.StringAttribute{

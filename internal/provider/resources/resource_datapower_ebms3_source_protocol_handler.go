@@ -98,7 +98,6 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(80),
@@ -129,7 +128,6 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 128000),
 				},
 				Default: int64default.StaticInt64(16384),
@@ -139,7 +137,6 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(5, 128000),
 				},
 				Default: int64default.StaticInt64(128000),
@@ -149,7 +146,6 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -159,7 +155,6 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -169,7 +164,6 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),
@@ -179,7 +173,6 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(0),

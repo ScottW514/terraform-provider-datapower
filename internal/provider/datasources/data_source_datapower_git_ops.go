@@ -122,7 +122,7 @@ func (d *GitOpsDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 			},
 			"template_policies": schema.ListNestedAttribute{
 				MarkdownDescription: "Specify the list of template policy for GitOps processing. The policy processing is in the order of the read or write GitOps operation.",
-				NestedObject:        models.DmGitOpsTemplatePolicyDataSourceSchema,
+				NestedObject:        models.GetDmGitOpsTemplatePolicyDataSourceSchema(),
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

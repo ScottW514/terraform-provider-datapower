@@ -19,7 +19,9 @@
 package tfutils
 
 import (
+	"strings"
 	"sync"
+	"unicode"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -120,4 +122,72 @@ func GenerateHash(text string) string {
 // It returns true if the plaintext matches the hash, false otherwise.
 func VerifyHash(text, hash string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(text)) == nil
+}
+
+// ToTfName converts a string (possibly with spaces or hyphens) to snake_case.
+func ToTfName(s string) string {
+	abbreviations := []string{
+		"AAA",
+		"API",
+		"AAA",
+		"AS1",
+		"AS2",
+		"AS3",
+		"B2B",
+		"EBMS2",
+		"EBMS3",
+		"GraphQL",
+		"MQv9",
+		"OAuth",
+		"SSKey",
+		"SSL",
+		"TAM",
+		"XACML",
+		"XPath",
+	}
+	for _, a := range abbreviations {
+		s = strings.ReplaceAll(s, a, "-"+strings.ToLower(a)+"-")
+	}
+
+	var b strings.Builder
+	i := 0
+	n := len(s)
+	for i < n {
+		r := rune(s[i])
+		if unicode.IsSpace(r) || r == '-' || r == '_' {
+			if b.Len() > 0 && b.String()[b.Len()-1] != '_' {
+				b.WriteRune('_')
+			}
+			i++
+			continue
+		}
+
+		isUpper := unicode.IsUpper(r)
+
+		insert := false
+		if isUpper && i > 0 {
+			prev := rune(s[i-1])
+			isPrevLower := unicode.IsLower(prev)
+			isPrevUpper := unicode.IsUpper(prev)
+			if isPrevLower {
+				insert = true
+			} else if isPrevUpper {
+				if i+1 < n {
+					next := rune(s[i+1])
+					isNextLower := unicode.IsLower(next)
+					if isNextLower {
+						insert = true
+					}
+				}
+			}
+		}
+
+		if insert {
+			b.WriteRune('_')
+		}
+
+		b.WriteRune(unicode.ToLower(r))
+		i++
+	}
+	return strings.Trim(b.String(), "_")
 }

@@ -65,99 +65,114 @@ var DmXMLMgmtModesObjectDefault = map[string]attr.Value{
 	"wsdm":              types.BoolValue(false),
 	"wsrr_subscription": types.BoolValue(true),
 }
-var DmXMLMgmtModesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"any": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP management URI", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmXMLMgmtModesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmXMLMgmtModesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"any": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SOAP management URI", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"soma": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"v2004": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management (v2004)", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"amp": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("AMP endpoint", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"slm": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SLM endpoint", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"wsm": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-Management endpoint", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"wsdm": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WSDM endpoint", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"wsrr_subscription": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"soma": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"v2004": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management (v2004)", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"amp": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("AMP endpoint", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"slm": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SLM endpoint", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"wsm": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-Management endpoint", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"wsdm": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDM endpoint", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"wsrr_subscription": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmXMLMgmtModesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmXMLMgmtModesDataSourceSchema
 }
-var DmXMLMgmtModesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmXMLMgmtModesObjectType,
-			DmXMLMgmtModesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"any": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP management URI", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmXMLMgmtModesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmXMLMgmtModesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmXMLMgmtModesObjectType,
+				DmXMLMgmtModesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"any": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SOAP management URI", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"soma": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"v2004": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management (v2004)", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"amp": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("AMP endpoint", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"slm": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SLM endpoint", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"wsm": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WS-Management endpoint", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"wsdm": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WSDM endpoint", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"wsrr_subscription": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"soma": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"v2004": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management (v2004)", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"amp": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("AMP endpoint", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"slm": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SLM endpoint", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"wsm": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WS-Management endpoint", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"wsdm": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDM endpoint", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"wsrr_subscription": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmXMLMgmtModesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmXMLMgmtModesResourceSchema.Required = true
+	} else {
+		DmXMLMgmtModesResourceSchema.Optional = true
+		DmXMLMgmtModesResourceSchema.Computed = true
+	}
+	return DmXMLMgmtModesResourceSchema
 }
 
 func (data DmXMLMgmtModes) IsNull() bool {
@@ -187,27 +202,13 @@ func (data DmXMLMgmtModes) IsNull() bool {
 	}
 	return true
 }
-func GetDmXMLMgmtModesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmXMLMgmtModesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmXMLMgmtModesDataSourceSchema
-}
-
-func GetDmXMLMgmtModesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmXMLMgmtModesResourceSchema.Required = true
-	} else {
-		DmXMLMgmtModesResourceSchema.Optional = true
-		DmXMLMgmtModesResourceSchema.Computed = true
-	}
-	DmXMLMgmtModesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmXMLMgmtModesResourceSchema
-}
 
 func (data DmXMLMgmtModes) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Any.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`any`, tfutils.StringFromBool(data.Any, ""))
 	}

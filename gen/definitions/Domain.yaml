@@ -40,7 +40,7 @@ attributes:
   description: Specify where the configuration file for this domain is stored. This
     property is read-only because it is configured in domain settings.
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ConfigMode
     value:
     - local
@@ -92,7 +92,7 @@ attributes:
   description: Import URL
   cli_alias: import-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConfigMode
     value:
     - import
@@ -107,7 +107,7 @@ attributes:
   description: Import format
   cli_alias: import-format
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConfigMode
     value:
     - import
@@ -119,7 +119,7 @@ attributes:
   description: Deployment policy
   cli_alias: deployment-policy
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ConfigMode
     value:
     - import
@@ -129,7 +129,7 @@ attributes:
   description: Deployment policy variables
   cli_alias: deployment-policy-variables
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ConfigMode
     value:
     - import
@@ -143,7 +143,7 @@ attributes:
     on the DataPower Gateway.
   cli_alias: local-ip-rewrite
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConfigMode
     value:
     - import
@@ -171,12 +171,12 @@ attributes:
   description: Global permissions profile
   cli_alias: config-permissions-profile
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ConfigPermissionsMode
     value:
     - global-profile
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ConfigPermissionsMode
     value:
     - global-profile

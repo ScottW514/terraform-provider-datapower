@@ -137,339 +137,354 @@ var DmHTTPResponseCodesObjectDefault = map[string]attr.Value{
 	"http_500": types.BoolValue(false),
 	"http_503": types.BoolValue(false),
 }
-var DmHTTPResponseCodesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"http_100": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("100 Continue", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmHTTPResponseCodesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmHTTPResponseCodesDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"http_100": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("100 Continue", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_101": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("101 Switching Protocols", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_200": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("200 OK", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_201": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("201 Created", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_202": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("202 Accepted", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_203": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("203 Non-Authoritative Information", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_204": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("204 No Content", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_205": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("205 Reset Content", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_206": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("206 Partial Content", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_300": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("300 Multiple Choices", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_301": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("301 Moved", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_302": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("302 Found", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_303": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("303 See Other", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_304": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("304 Not Modified", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_305": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("305 Use Proxy", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_307": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("307 Temporary Redirect", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"http_400": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("400 Bad Request", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_401": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("401 Unauthorized", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_402": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("402 Payment Required", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_403": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("403 Forbidden", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_404": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("404 Not Found", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_405": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("405 Method Not Allowed", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_406": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("406 Not Acceptable", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_407": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("407 Proxy Authentication Required", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_408": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("408 Request Timeout", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_409": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("409 Conflict", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_410": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("410 Gone", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_411": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("411 Length required", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_412": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("412 Precondition Failed", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_413": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("413 Request Entity Too Large", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_500": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("500 Server Error", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_503": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("503 Service Unavailable", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"http_101": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("101 Switching Protocols", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_200": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("200 OK", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_201": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("201 Created", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_202": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("202 Accepted", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_203": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("203 Non-Authoritative Information", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_204": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("204 No Content", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_205": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("205 Reset Content", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_206": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("206 Partial Content", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_300": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("300 Multiple Choices", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_301": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("301 Moved", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_302": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("302 Found", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_303": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("303 See Other", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_304": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("304 Not Modified", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_305": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("305 Use Proxy", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_307": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("307 Temporary Redirect", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"http_400": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("400 Bad Request", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_401": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("401 Unauthorized", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_402": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("402 Payment Required", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_403": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("403 Forbidden", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_404": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("404 Not Found", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_405": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("405 Method Not Allowed", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_406": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("406 Not Acceptable", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_407": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("407 Proxy Authentication Required", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_408": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("408 Request Timeout", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_409": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("409 Conflict", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_410": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("410 Gone", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_411": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("411 Length required", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_412": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("412 Precondition Failed", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_413": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("413 Request Entity Too Large", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_500": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("500 Server Error", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_503": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("503 Service Unavailable", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmHTTPResponseCodesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmHTTPResponseCodesDataSourceSchema
 }
-var DmHTTPResponseCodesResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmHTTPResponseCodesObjectType,
-			DmHTTPResponseCodesObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"http_100": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("100 Continue", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmHTTPResponseCodesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmHTTPResponseCodesResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmHTTPResponseCodesObjectType,
+				DmHTTPResponseCodesObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"http_100": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("100 Continue", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_101": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("101 Switching Protocols", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_200": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("200 OK", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_201": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("201 Created", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_202": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("202 Accepted", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_203": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("203 Non-Authoritative Information", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_204": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("204 No Content", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_205": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("205 Reset Content", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_206": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("206 Partial Content", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_300": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("300 Multiple Choices", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_301": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("301 Moved", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_302": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("302 Found", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_303": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("303 See Other", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_304": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("304 Not Modified", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_305": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("305 Use Proxy", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_307": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("307 Temporary Redirect", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"http_400": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("400 Bad Request", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_401": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("401 Unauthorized", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_402": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("402 Payment Required", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_403": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("403 Forbidden", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_404": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("404 Not Found", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_405": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("405 Method Not Allowed", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_406": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("406 Not Acceptable", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_407": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("407 Proxy Authentication Required", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_408": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("408 Request Timeout", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_409": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("409 Conflict", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_410": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("410 Gone", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_411": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("411 Length required", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_412": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("412 Precondition Failed", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_413": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("413 Request Entity Too Large", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_500": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("500 Server Error", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_503": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("503 Service Unavailable", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"http_101": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("101 Switching Protocols", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_200": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("200 OK", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_201": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("201 Created", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_202": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("202 Accepted", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_203": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("203 Non-Authoritative Information", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_204": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("204 No Content", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_205": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("205 Reset Content", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_206": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("206 Partial Content", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_300": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("300 Multiple Choices", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_301": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("301 Moved", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_302": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("302 Found", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_303": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("303 See Other", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_304": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("304 Not Modified", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_305": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("305 Use Proxy", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_307": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("307 Temporary Redirect", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"http_400": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("400 Bad Request", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_401": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("401 Unauthorized", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_402": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("402 Payment Required", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_403": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("403 Forbidden", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_404": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("404 Not Found", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_405": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("405 Method Not Allowed", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_406": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("406 Not Acceptable", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_407": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("407 Proxy Authentication Required", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_408": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("408 Request Timeout", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_409": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("409 Conflict", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_410": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("410 Gone", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_411": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("411 Length required", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_412": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("412 Precondition Failed", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_413": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("413 Request Entity Too Large", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_500": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("500 Server Error", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_503": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("503 Service Unavailable", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmHTTPResponseCodesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmHTTPResponseCodesResourceSchema.Required = true
+	} else {
+		DmHTTPResponseCodesResourceSchema.Optional = true
+		DmHTTPResponseCodesResourceSchema.Computed = true
+	}
+	return DmHTTPResponseCodesResourceSchema
 }
 
 func (data DmHTTPResponseCodes) IsNull() bool {
@@ -571,27 +586,13 @@ func (data DmHTTPResponseCodes) IsNull() bool {
 	}
 	return true
 }
-func GetDmHTTPResponseCodesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmHTTPResponseCodesDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmHTTPResponseCodesDataSourceSchema
-}
-
-func GetDmHTTPResponseCodesResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmHTTPResponseCodesResourceSchema.Required = true
-	} else {
-		DmHTTPResponseCodesResourceSchema.Optional = true
-		DmHTTPResponseCodesResourceSchema.Computed = true
-	}
-	DmHTTPResponseCodesResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmHTTPResponseCodesResourceSchema
-}
 
 func (data DmHTTPResponseCodes) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Http100.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HTTP-100`, tfutils.StringFromBool(data.Http100, ""))
 	}

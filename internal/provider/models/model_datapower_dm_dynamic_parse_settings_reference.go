@@ -49,43 +49,58 @@ var DmDynamicParseSettingsReferenceObjectDefault = map[string]attr.Value{
 	"literal": types.StringNull(),
 	"default": types.StringNull(),
 }
-var DmDynamicParseSettingsReferenceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.", "url", "").String,
-			Computed:            true,
+
+func GetDmDynamicParseSettingsReferenceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmDynamicParseSettingsReferenceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"url": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.", "url", "").String,
+				Computed:            true,
+			},
+			"literal": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.", "literal", "").String,
+				Computed:            true,
+			},
+			"default": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.", "default", "parse_settings").String,
+				Computed:            true,
+			},
 		},
-		"literal": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.", "literal", "").String,
-			Computed:            true,
-		},
-		"default": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.", "default", "parse_settings").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmDynamicParseSettingsReferenceDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmDynamicParseSettingsReferenceDataSourceSchema
 }
-var DmDynamicParseSettingsReferenceResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmDynamicParseSettingsReferenceObjectType,
-			DmDynamicParseSettingsReferenceObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.", "url", "").String,
-			Optional:            true,
+func GetDmDynamicParseSettingsReferenceResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmDynamicParseSettingsReferenceResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmDynamicParseSettingsReferenceObjectType,
+				DmDynamicParseSettingsReferenceObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"url": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.", "url", "").String,
+				Optional:            true,
+			},
+			"literal": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.", "literal", "").String,
+				Optional:            true,
+			},
+			"default": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.", "default", "parse_settings").String,
+				Optional:            true,
+			},
 		},
-		"literal": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.", "literal", "").String,
-			Optional:            true,
-		},
-		"default": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.", "default", "parse_settings").String,
-			Optional:            true,
-		},
-	},
+	}
+	DmDynamicParseSettingsReferenceResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmDynamicParseSettingsReferenceResourceSchema.Required = true
+	} else {
+		DmDynamicParseSettingsReferenceResourceSchema.Optional = true
+		DmDynamicParseSettingsReferenceResourceSchema.Computed = true
+	}
+	return DmDynamicParseSettingsReferenceResourceSchema
 }
 
 func (data DmDynamicParseSettingsReference) IsNull() bool {
@@ -100,27 +115,13 @@ func (data DmDynamicParseSettingsReference) IsNull() bool {
 	}
 	return true
 }
-func GetDmDynamicParseSettingsReferenceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmDynamicParseSettingsReferenceDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmDynamicParseSettingsReferenceDataSourceSchema
-}
-
-func GetDmDynamicParseSettingsReferenceResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmDynamicParseSettingsReferenceResourceSchema.Required = true
-	} else {
-		DmDynamicParseSettingsReferenceResourceSchema.Optional = true
-		DmDynamicParseSettingsReferenceResourceSchema.Computed = true
-	}
-	DmDynamicParseSettingsReferenceResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmDynamicParseSettingsReferenceResourceSchema
-}
 
 func (data DmDynamicParseSettingsReference) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Url.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`URL`, data.Url.ValueString())
 	}

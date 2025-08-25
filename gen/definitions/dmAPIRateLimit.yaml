@@ -22,7 +22,7 @@ attributes:
   description: Indicates the time interval for the rate limit. Specify a value that
     is greater than or equal to 1. The default value is 1.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -37,7 +37,7 @@ attributes:
   default: second
   description: Indicates the time unit for the rate limit. The default value is second.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -50,7 +50,7 @@ attributes:
     but produces a warning message.</li></ul><p>By default, the API Gateway does not
     reject requests when the limit is exceeded.</p>
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -62,7 +62,7 @@ attributes:
     delays if communication problems arise across the peer group. However, the transaction
     count is less precise when this setting is enabled.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -74,7 +74,7 @@ attributes:
     limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit
     information is not included in the response header.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -83,7 +83,7 @@ attributes:
   default: false
   description: Indicates whether to use the API name as part of the rate limit key.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -93,7 +93,7 @@ attributes:
   description: Indicates whether to use the application ID as part of the rate limit
     key.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -102,7 +102,7 @@ attributes:
   default: false
   description: Indicates whether to use the client ID as part of the rate limit key.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -119,7 +119,7 @@ attributes:
     value can then include the variable <tt>my.server</tt> , which resolves to the
     server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'
@@ -132,7 +132,7 @@ attributes:
     that is less than or equal to 0, it is set to 1. An empty string results in an
     error.
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Rate
     value:
     - '0'

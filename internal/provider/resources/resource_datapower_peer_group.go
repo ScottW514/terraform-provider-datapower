@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &PeerGroupResource{}
@@ -101,16 +102,19 @@ func (r *PeerGroupResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 			},
 			"ip_multicast": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("IP multicast", "ip-multicast", "ip_multicast").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("IP multicast", "ip-multicast", "ip_multicast").AddRequiredWhen(models.PeerGroupIPMulticastCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.PeerGroupIPMulticastCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"update_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the update interval in milliseconds that data is transmitted among peers.", "update-interval", "").AddIntegerRange(1, 10000).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the update interval in milliseconds that data is transmitted among peers.", "update-interval", "").AddIntegerRange(1, 10000).AddDefaultValue("10").AddRequiredWhen(models.PeerGroupUpdateIntervalCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 10000),
+					validators.ConditionalRequiredInt64(models.PeerGroupUpdateIntervalCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(10),
 			},

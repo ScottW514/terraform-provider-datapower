@@ -62,7 +62,7 @@ attributes:
   description: XML validation mode
   cli_alias: xml-validation-mode
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: XMLType
     value:
     - xml
@@ -73,7 +73,7 @@ attributes:
     all input, use the string <tt>reject</tt> instead of a URL.
   cli_alias: xml-schema-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: XMLType
     value:
     - xml
@@ -84,7 +84,7 @@ attributes:
     all input, use the string <tt>reject</tt> instead of a URL.
   cli_alias: wsdl-schema-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: XMLType
     value:
     - wsdl
@@ -96,7 +96,7 @@ attributes:
     for the named port are valid.
   cli_alias: wsdl-port
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: XMLType
     value:
     - wsdl
@@ -108,7 +108,7 @@ attributes:
     operation are valid.
   cli_alias: wsdl-operation
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: XMLType
     value:
     - wsdl
@@ -123,7 +123,7 @@ attributes:
     direction.
   cli_alias: wsdl-message-direction-or-name
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: XMLType
     value:
     - wsdl
@@ -136,7 +136,7 @@ attributes:
     The root MIME part is bound to a <tt>soap:Body</tt> .
   cli_alias: wsdl-attachment-part
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: XMLType
     value:
     - wsdl

@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AssemblyActionClientSecurityResource{}
@@ -102,19 +103,26 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 				Default: stringdefault.StaticString("header"),
 			},
 			"id_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location where to find the client ID to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>", "id-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location where to find the client ID to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>", "id-name", "").AddRequiredWhen(models.AssemblyActionClientSecurityIdNameCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionClientSecurityIdNameCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"secret_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location where to find the secret to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>", "secret-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location where to find the secret to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>", "secret-name", "").AddRequiredWhen(models.AssemblyActionClientSecuritySecretNameCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionClientSecuritySecretNameCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"http_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP type", "http-type", "").AddStringEnum("basic").AddDefaultValue("basic").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP type", "http-type", "").AddStringEnum("basic").AddDefaultValue("basic").AddRequiredWhen(models.AssemblyActionClientSecurityHTTPTypeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("basic"),
+					validators.ConditionalRequiredString(models.AssemblyActionClientSecurityHTTPTypeCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("basic"),
 			},
@@ -128,8 +136,11 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 				Default: stringdefault.StaticString("native"),
 			},
 			"user_registry": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API registry to authenticate the extracted client credentials. The supported registries are API authentication URL and API LDAP.", "user-registry", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API registry to authenticate the extracted client credentials. The supported registries are API authentication URL and API LDAP.", "user-registry", "").AddRequiredWhen(models.AssemblyActionClientSecurityUserRegistryCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AssemblyActionClientSecurityUserRegistryCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,

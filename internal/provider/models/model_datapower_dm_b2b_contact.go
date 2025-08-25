@@ -57,73 +57,80 @@ var DmB2BContactObjectDefault = map[string]attr.Value{
 	"phone":       types.StringNull(),
 	"email":       types.StringNull(),
 }
-var DmB2BContactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"family_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the family name of the person to contact. A family name is the surname borne by family members.", "family-name", "").String,
-			Computed:            true,
+
+func GetDmB2BContactDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmB2BContactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"family_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the family name of the person to contact. A family name is the surname borne by family members.", "family-name", "").String,
+				Computed:            true,
+			},
+			"given_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.", "given-name", "").String,
+				Computed:            true,
+			},
+			"title": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the person to contact.", "title", "").String,
+				Computed:            true,
+			},
+			"phone": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the telephone number to contact the person.", "phone", "").String,
+				Computed:            true,
+			},
+			"email": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address to contact the person.", "email", "").String,
+				Computed:            true,
+			},
 		},
-		"given_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.", "given-name", "").String,
-			Computed:            true,
-		},
-		"title": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the person to contact.", "title", "").String,
-			Computed:            true,
-		},
-		"phone": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the telephone number to contact the person.", "phone", "").String,
-			Computed:            true,
-		},
-		"email": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address to contact the person.", "email", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmB2BContactDataSourceSchema
 }
-var DmB2BContactResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"family_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the family name of the person to contact. A family name is the surname borne by family members.", "family-name", "").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(0, 128),
-				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
+func GetDmB2BContactResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmB2BContactResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"family_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the family name of the person to contact. A family name is the surname borne by family members.", "family-name", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
+				},
+			},
+			"given_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.", "given-name", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
+				},
+			},
+			"title": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the person to contact.", "title", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
+				},
+			},
+			"phone": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the telephone number to contact the person.", "phone", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[(0-9][)0-9- ]+[0-9]$"), "Must match :"+"^[(0-9][)0-9- ]+[0-9]$"),
+				},
+			},
+			"email": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address to contact the person.", "email", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-.]+@[_a-zA-Z0-9.]+$"), "Must match :"+"^[_a-zA-Z0-9-.]+@[_a-zA-Z0-9.]+$"),
+				},
 			},
 		},
-		"given_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.", "given-name", "").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(0, 128),
-				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
-			},
-		},
-		"title": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the person to contact.", "title", "").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(0, 128),
-				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
-			},
-		},
-		"phone": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the telephone number to contact the person.", "phone", "").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(0, 128),
-				stringvalidator.RegexMatches(regexp.MustCompile("^[(0-9][)0-9- ]+[0-9]$"), "Must match :"+"^[(0-9][)0-9- ]+[0-9]$"),
-			},
-		},
-		"email": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address to contact the person.", "email", "").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.LengthBetween(0, 128),
-				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-.]+@[_a-zA-Z0-9.]+$"), "Must match :"+"^[_a-zA-Z0-9-.]+@[_a-zA-Z0-9.]+$"),
-			},
-		},
-	},
+	}
+	return DmB2BContactResourceSchema
 }
 
 func (data DmB2BContact) IsNull() bool {
@@ -150,6 +157,7 @@ func (data DmB2BContact) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.FamilyName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`FamilyName`, data.FamilyName.ValueString())
 	}

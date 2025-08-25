@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -36,8 +37,8 @@ import (
 type User struct {
 	Id                types.String                `tfsdk:"id"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
-	Password          types.String                `tfsdk:"password"`
-	PasswordUpdate    types.Bool                  `tfsdk:"password_update"`
+	PasswordWo        types.String                `tfsdk:"password_wo"`
+	PasswordWoVersion types.Int64                 `tfsdk:"password_wo_version"`
 	AccessLevel       types.String                `tfsdk:"access_level"`
 	GroupName         types.String                `tfsdk:"group_name"`
 	SnmpCreds         types.List                  `tfsdk:"snmp_creds"`
@@ -54,23 +55,31 @@ type UserWO struct {
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var UserGroupNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "access_level",
+	AttrType:    "String",
+	AttrDefault: "group-defined",
+	Value:       []string{"group-defined"},
+}
+
 var UserObjectType = map[string]attr.Type{
-	"id":                 types.StringType,
-	"user_summary":       types.StringType,
-	"password":           types.StringType,
-	"password_update":    types.BoolType,
-	"access_level":       types.StringType,
-	"group_name":         types.StringType,
-	"snmp_creds":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
-	"hashed_snmp_creds":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
-	"dependency_actions": actions.ActionsListType,
+	"id":                  types.StringType,
+	"user_summary":        types.StringType,
+	"password_wo":         types.StringType,
+	"password_wo_version": types.Int64Type,
+	"access_level":        types.StringType,
+	"group_name":          types.StringType,
+	"snmp_creds":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
+	"hashed_snmp_creds":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
+	"dependency_actions":  actions.ActionsListType,
 }
 var UserObjectTypeWO = map[string]attr.Type{
 	"id":                 types.StringType,
 	"user_summary":       types.StringType,
 	"access_level":       types.StringType,
 	"group_name":         types.StringType,
-	"snmp_creds":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
+	"snmp_creds":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO}},
 	"hashed_snmp_creds":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
 	"dependency_actions": actions.ActionsListType,
 }
@@ -94,7 +103,7 @@ func (data User) IsNull() bool {
 	if !data.UserSummary.IsNull() {
 		return false
 	}
-	if !data.Password.IsNull() {
+	if !data.PasswordWo.IsNull() {
 		return false
 	}
 	if !data.AccessLevel.IsNull() {
@@ -133,19 +142,23 @@ func (data UserWO) IsNull() bool {
 	return true
 }
 
-func (data User) ToBody(ctx context.Context, pathRoot string) string {
+func (data User) ToBody(ctx context.Context, pathRoot string, config *User) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
-	if !data.Password.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Password`, data.Password.ValueString())
+	if !data.PasswordWo.IsNull() || !data.PasswordWoVersion.IsNull() {
+		if data.PasswordWo.IsNull() && config != nil {
+			data.PasswordWo = config.PasswordWo
+		}
+		body, _ = sjson.Set(body, pathRoot+`Password`, data.PasswordWo.ValueString())
 	}
 	if !data.AccessLevel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AccessLevel`, data.AccessLevel.ValueString())
@@ -154,16 +167,18 @@ func (data User) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`GroupName`, data.GroupName.ValueString())
 	}
 	if !data.SnmpCreds.IsNull() {
-		var values []DmSnmpCred
-		data.SnmpCreds.ElementsAs(ctx, &values, false)
-		for _, val := range values {
-			body, _ = sjson.SetRaw(body, pathRoot+`SnmpCreds`+".-1", val.ToBody(ctx, ""))
+		var dataValues []DmSnmpCred
+		data.SnmpCreds.ElementsAs(ctx, &dataValues, false)
+		var configValues []DmSnmpCred
+		config.SnmpCreds.ElementsAs(ctx, &configValues, false)
+		for idx, val := range dataValues {
+			body, _ = sjson.SetRaw(body, pathRoot+`SnmpCreds`+".-1", val.ToBody(ctx, "", &configValues[idx]))
 		}
 	}
 	if !data.HashedSnmpCreds.IsNull() {
-		var values []DmSnmpCredMasked
-		data.HashedSnmpCreds.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSnmpCredMasked
+		data.HashedSnmpCreds.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HashedSnmpCreds`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -185,9 +200,9 @@ func (data *User) FromBody(ctx context.Context, pathRoot string, res gjson.Resul
 		data.UserSummary = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Password`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Password = tfutils.ParseStringFromGJSON(value)
+		data.PasswordWo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Password = types.StringNull()
+		data.PasswordWo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AccessLevel`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AccessLevel = tfutils.ParseStringFromGJSON(value)
@@ -200,10 +215,10 @@ func (data *User) FromBody(ctx context.Context, pathRoot string, res gjson.Resul
 		data.GroupName = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SnmpCreds`); value.Exists() {
-		l := []DmSnmpCred{}
+		l := []DmSnmpCredWO{}
 		if value := res.Get(`SnmpCreds`); value.Exists() {
 			for _, v := range value.Array() {
-				item := DmSnmpCred{}
+				item := DmSnmpCredWO{}
 				item.FromBody(ctx, "", v)
 				if !item.IsNull() {
 					l = append(l, item)
@@ -211,12 +226,12 @@ func (data *User) FromBody(ctx context.Context, pathRoot string, res gjson.Resul
 			}
 		}
 		if len(l) > 0 {
-			data.SnmpCreds, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmSnmpCredObjectType}, l)
+			data.SnmpCreds, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO}, l)
 		} else {
-			data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectType})
+			data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO})
 		}
 	} else {
-		data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectType})
+		data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO})
 	}
 	if value := res.Get(pathRoot + `HashedSnmpCreds`); value.Exists() {
 		l := []DmSnmpCredMasked{}
@@ -263,10 +278,10 @@ func (data *UserWO) FromBody(ctx context.Context, pathRoot string, res gjson.Res
 		data.GroupName = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SnmpCreds`); value.Exists() {
-		l := []DmSnmpCred{}
+		l := []DmSnmpCredWO{}
 		if value := res.Get(`SnmpCreds`); value.Exists() {
 			for _, v := range value.Array() {
-				item := DmSnmpCred{}
+				item := DmSnmpCredWO{}
 				item.FromBody(ctx, "", v)
 				if !item.IsNull() {
 					l = append(l, item)
@@ -274,12 +289,12 @@ func (data *UserWO) FromBody(ctx context.Context, pathRoot string, res gjson.Res
 			}
 		}
 		if len(l) > 0 {
-			data.SnmpCreds, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmSnmpCredObjectType}, l)
+			data.SnmpCreds, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO}, l)
 		} else {
-			data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectType})
+			data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO})
 		}
 	} else {
-		data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectType})
+		data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO})
 	}
 	if value := res.Get(pathRoot + `HashedSnmpCreds`); value.Exists() {
 		l := []DmSnmpCredMasked{}
@@ -316,10 +331,10 @@ func (data *User) UpdateFromBody(ctx context.Context, pathRoot string, res gjson
 	} else {
 		data.UserSummary = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
-		data.Password = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `Password`); value.Exists() && !data.PasswordWo.IsNull() {
+		data.PasswordWo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Password = types.StringNull()
+		data.PasswordWo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AccessLevel`); value.Exists() && !data.AccessLevel.IsNull() {
 		data.AccessLevel = tfutils.ParseStringFromGJSON(value)
@@ -384,11 +399,11 @@ func (data *User) UpdateUnknownFromBody(ctx context.Context, pathRoot string, re
 			data.UserSummary = types.StringNull()
 		}
 	}
-	if data.Password.IsUnknown() {
-		if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
-			data.Password = tfutils.ParseStringFromGJSON(value)
+	if data.PasswordWo.IsUnknown() {
+		if value := res.Get(pathRoot + `Password`); value.Exists() && !data.PasswordWo.IsNull() {
+			data.PasswordWo = tfutils.ParseStringFromGJSON(value)
 		} else {
-			data.Password = types.StringNull()
+			data.PasswordWo = types.StringNull()
 		}
 	}
 	if data.AccessLevel.IsUnknown() {

@@ -32,6 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,14 @@ type DmValidationType struct {
 	MapValue        types.String `tfsdk:"map_value"`
 	Xss             types.Bool   `tfsdk:"xss"`
 	XssPatternsFile types.String `tfsdk:"xss_patterns_file"`
+}
+
+var DmValidationTypeXSSPatternsFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "xss",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var DmValidationTypeObjectType = map[string]attr.Type{
@@ -61,70 +70,80 @@ var DmValidationTypeObjectDefault = map[string]attr.Value{
 	"xss":               types.BoolValue(false),
 	"xss_patterns_file": types.StringValue("store:///XSS-Patterns.xml"),
 }
-var DmValidationTypeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The regular expression that the submitted names are matched against. If they match the value must also match against the corresponding value constraint to be passed through.", "", "").String,
-			Computed:            true,
-		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The regular expression (PCRE style) that is applied to a value input to see if it is an expected input", "", "").String,
-			Computed:            true,
-		},
-		"fixup": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select which action should be taken when a value constraint fails to validate an input. The default is Error.", "", "").AddStringEnum("passthrough", "strip", "error", "set").AddDefaultValue("error").String,
-			Computed:            true,
-		},
-		"map_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").String,
-			Computed:            true,
-		},
-		"xss": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"xss_patterns_file": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
-			Computed:            true,
-		},
-	},
-}
-var DmValidationTypeResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The regular expression that the submitted names are matched against. If they match the value must also match against the corresponding value constraint to be passed through.", "", "").String,
-			Required:            true,
-		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The regular expression (PCRE style) that is applied to a value input to see if it is an expected input", "", "").String,
-			Required:            true,
-		},
-		"fixup": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select which action should be taken when a value constraint fails to validate an input. The default is Error.", "", "").AddStringEnum("passthrough", "strip", "error", "set").AddDefaultValue("error").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("passthrough", "strip", "error", "set"),
+
+func GetDmValidationTypeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmValidationTypeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The regular expression that the submitted names are matched against. If they match the value must also match against the corresponding value constraint to be passed through.", "", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("error"),
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The regular expression (PCRE style) that is applied to a value input to see if it is an expected input", "", "").String,
+				Computed:            true,
+			},
+			"fixup": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select which action should be taken when a value constraint fails to validate an input. The default is Error.", "", "").AddStringEnum("passthrough", "strip", "error", "set").AddDefaultValue("error").String,
+				Computed:            true,
+			},
+			"map_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").String,
+				Computed:            true,
+			},
+			"xss": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"xss_patterns_file": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
+				Computed:            true,
+			},
 		},
-		"map_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").String,
-			Optional:            true,
+	}
+	return DmValidationTypeDataSourceSchema
+}
+func GetDmValidationTypeResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmValidationTypeResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The regular expression that the submitted names are matched against. If they match the value must also match against the corresponding value constraint to be passed through.", "", "").String,
+				Required:            true,
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The regular expression (PCRE style) that is applied to a value input to see if it is an expected input", "", "").String,
+				Required:            true,
+			},
+			"fixup": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select which action should be taken when a value constraint fails to validate an input. The default is Error.", "", "").AddStringEnum("passthrough", "strip", "error", "set").AddDefaultValue("error").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("passthrough", "strip", "error", "set"),
+				},
+				Default: stringdefault.StaticString("error"),
+			},
+			"map_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").String,
+				Optional:            true,
+			},
+			"xss": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"xss_patterns_file": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmValidationTypeXSSPatternsFileCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("store:///XSS-Patterns.xml"),
+			},
 		},
-		"xss": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"xss_patterns_file": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("store:///XSS-Patterns.xml"),
-		},
-	},
+	}
+	return DmValidationTypeResourceSchema
 }
 
 func (data DmValidationType) IsNull() bool {
@@ -154,6 +173,7 @@ func (data DmValidationType) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

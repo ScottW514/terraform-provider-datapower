@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -40,6 +41,14 @@ type DmAssemblyActionSetVar struct {
 	Name   types.String `tfsdk:"name"`
 	Type   types.String `tfsdk:"type"`
 	Value  types.String `tfsdk:"value"`
+}
+
+var DmAssemblyActionSetVarValueCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "action",
+	AttrType:    "String",
+	AttrDefault: "set",
+	Value:       []string{"clear"},
 }
 
 var DmAssemblyActionSetVarObjectType = map[string]attr.Type{
@@ -54,55 +63,65 @@ var DmAssemblyActionSetVarObjectDefault = map[string]attr.Value{
 	"type":   types.StringValue("any"),
 	"value":  types.StringNull(),
 }
-var DmAssemblyActionSetVarDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to manage the variable.", "action", "").AddStringEnum("set", "add", "clear").AddDefaultValue("set").String,
-			Computed:            true,
+
+func GetDmAssemblyActionSetVarDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAssemblyActionSetVarDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to manage the variable.", "action", "").AddStringEnum("set", "add", "clear").AddDefaultValue("set").String,
+				Computed:            true,
+			},
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p>", "name", "").String,
+				Computed:            true,
+			},
+			"type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the variable. You must define this property to set or add a variable.", "type", "").AddStringEnum("any", "string", "number", "boolean").AddDefaultValue("any").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the variable. You must define this property to set or add a variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p><p>When you assign value, comply with the following rules. Otherwise, error occurs and the action fails.</p><ul><li>The value must match the specified data type: number, string, or Boolean.</li><li>The value for the <tt>message.status.code</tt> variable must be a valid HTTP status code.</li></ul>", "value", "").String,
+				Computed:            true,
+			},
 		},
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p>", "name", "").String,
-			Computed:            true,
-		},
-		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the variable. You must define this property to set or add a variable.", "type", "").AddStringEnum("any", "string", "number", "boolean").AddDefaultValue("any").String,
-			Computed:            true,
-		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the variable. You must define this property to set or add a variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p><p>When you assign value, comply with the following rules. Otherwise, error occurs and the action fails.</p><ul><li>The value must match the specified data type: number, string, or Boolean.</li><li>The value for the <tt>message.status.code</tt> variable must be a valid HTTP status code.</li></ul>", "value", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmAssemblyActionSetVarDataSourceSchema
 }
-var DmAssemblyActionSetVarResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to manage the variable.", "action", "").AddStringEnum("set", "add", "clear").AddDefaultValue("set").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("set", "add", "clear"),
+func GetDmAssemblyActionSetVarResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAssemblyActionSetVarResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to manage the variable.", "action", "").AddStringEnum("set", "add", "clear").AddDefaultValue("set").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("set", "add", "clear"),
+				},
+				Default: stringdefault.StaticString("set"),
 			},
-			Default: stringdefault.StaticString("set"),
-		},
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p>", "name", "").String,
-			Required:            true,
-		},
-		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the variable. You must define this property to set or add a variable.", "type", "").AddStringEnum("any", "string", "number", "boolean").AddDefaultValue("any").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("any", "string", "number", "boolean"),
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p>", "name", "").String,
+				Required:            true,
 			},
-			Default: stringdefault.StaticString("any"),
+			"type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the variable. You must define this property to set or add a variable.", "type", "").AddStringEnum("any", "string", "number", "boolean").AddDefaultValue("any").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("any", "string", "number", "boolean"),
+				},
+				Default: stringdefault.StaticString("any"),
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the variable. You must define this property to set or add a variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p><p>When you assign value, comply with the following rules. Otherwise, error occurs and the action fails.</p><ul><li>The value must match the specified data type: number, string, or Boolean.</li><li>The value for the <tt>message.status.code</tt> variable must be a valid HTTP status code.</li></ul>", "value", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAssemblyActionSetVarValueCondVal, validators.Evaluation{}, false),
+				},
+			},
 		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the variable. You must define this property to set or add a variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p><p>When you assign value, comply with the following rules. Otherwise, error occurs and the action fails.</p><ul><li>The value must match the specified data type: number, string, or Boolean.</li><li>The value for the <tt>message.status.code</tt> variable must be a valid HTTP status code.</li></ul>", "value", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmAssemblyActionSetVarResourceSchema
 }
 
 func (data DmAssemblyActionSetVar) IsNull() bool {
@@ -126,6 +145,7 @@ func (data DmAssemblyActionSetVar) ToBody(ctx context.Context, pathRoot string) 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Action.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Action`, data.Action.ValueString())
 	}

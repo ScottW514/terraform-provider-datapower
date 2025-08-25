@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &HTTPSourceProtocolHandlerResource{}
@@ -98,7 +99,6 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(80),
@@ -136,11 +136,11 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Default:             booldefault.StaticBool(false),
 			},
 			"web_socket_idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.", "websocket-idle-timeout", "").AddIntegerRange(0, 86400).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.", "websocket-idle-timeout", "").AddIntegerRange(0, 86400).AddRequiredWhen(models.HTTPSourceProtocolHandlerWebSocketIdleTimeoutCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
+					validators.ConditionalRequiredInt64(models.HTTPSourceProtocolHandlerWebSocketIdleTimeoutCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"max_url_len": schema.Int64Attribute{
@@ -148,7 +148,6 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 128000),
 				},
 				Default: int64default.StaticInt64(16384),
@@ -158,7 +157,6 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(5, 128000),
 				},
 				Default: int64default.StaticInt64(128000),
@@ -195,7 +193,6 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 500),
 				},
 				Default: int64default.StaticInt64(100),
@@ -205,7 +202,6 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(16384, 16777215),
 				},
 				Default: int64default.StaticInt64(16384),
@@ -227,7 +223,6 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 3600000),
 				},
 				Default: int64default.StaticInt64(30000),
@@ -236,7 +231,6 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle duration in milliseconds to allow before closing the HTTP/2 connection. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 0.", "http2-idle-timeout", "").AddIntegerRange(0, 3600000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 3600000),
 				},
 			},

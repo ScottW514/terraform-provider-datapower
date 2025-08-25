@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -50,6 +51,83 @@ type KafkaCluster struct {
 	RetryInterval      types.Int64                 `tfsdk:"retry_interval"`
 	Property           types.List                  `tfsdk:"property"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var KafkaClusterSASLMechanismCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_ssl"},
+		},
+	},
+}
+var KafkaClusterUserNameCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_ssl"},
+		},
+	},
+}
+var KafkaClusterPasswordAliasCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_ssl"},
+		},
+	},
+}
+var KafkaClusterSSLClientCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"ssl"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_ssl"},
+		},
+	},
 }
 
 var KafkaClusterObjectType = map[string]attr.Type{
@@ -132,6 +210,7 @@ func (data KafkaCluster) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -142,9 +221,9 @@ func (data KafkaCluster) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Protocol`, data.Protocol.ValueString())
 	}
 	if !data.Endpoint.IsNull() {
-		var values []DmKafkaEndpoint
-		data.Endpoint.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmKafkaEndpoint
+		data.Endpoint.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Endpoint`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -176,9 +255,9 @@ func (data KafkaCluster) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`RetryInterval`, data.RetryInterval.ValueInt64())
 	}
 	if !data.Property.IsNull() {
-		var values []DmKafkaProperty
-		data.Property.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmKafkaProperty
+		data.Property.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Property`+".-1", val.ToBody(ctx, ""))
 		}
 	}

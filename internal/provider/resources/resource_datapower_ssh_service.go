@@ -66,7 +66,6 @@ func (r *SSHServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(22),
@@ -82,7 +81,6 @@ func (r *SSHServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1000),
 				},
 				Default: int64default.StaticInt64(0),

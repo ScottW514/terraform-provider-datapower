@@ -123,6 +123,7 @@ func (data NFSDynamicMounts) ToBody(ctx context.Context, pathRoot string) string
 	}
 	body := ""
 	body, _ = sjson.Set(body, "NFSDynamicMounts.name", path.Base("/mgmt/config/{domain}/NFSDynamicMounts/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

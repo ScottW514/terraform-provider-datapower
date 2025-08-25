@@ -35,9 +35,11 @@ resource "datapower_api_security_http_scheme" "test" {
   - CLI Alias: `bearer-format`
 - `bearer_validation_endpoint` (String) Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.
   - CLI Alias: `bearer-validation-endpoint`
+  - Required When: (`scheme`=`bearer` AND `bearer_validation_method`=`external-url`)
 - `bearer_validation_method` (String) Bearer validation method
   - CLI Alias: `bearer-validation-method`
   - Choices: `external-url`, `udp`, `none`
+  - Required When: `scheme`=`bearer`
 - `bearer_validation_tls_profile` (String) Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.
   - CLI Alias: `bearer-validation-tls-profile`
   - Reference to: `datapower_ssl_client_profile:id`

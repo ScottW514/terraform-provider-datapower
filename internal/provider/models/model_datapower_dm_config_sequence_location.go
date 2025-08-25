@@ -46,31 +46,38 @@ var DmConfigSequenceLocationObjectDefault = map[string]attr.Value{
 	"directory":           types.StringValue("local:///"),
 	"access_profile_name": types.StringNull(),
 }
-var DmConfigSequenceLocationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"directory": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.", "directory", "").AddDefaultValue("local:///").String,
-			Computed:            true,
+
+func GetDmConfigSequenceLocationDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmConfigSequenceLocationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"directory": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.", "directory", "").AddDefaultValue("local:///").String,
+				Computed:            true,
+			},
+			"access_profile_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the access policies to enforce. Each policy defines permissions to a specific resource group.", "access-profile", "access_profile").String,
+				Computed:            true,
+			},
 		},
-		"access_profile_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the access policies to enforce. Each policy defines permissions to a specific resource group.", "access-profile", "access_profile").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmConfigSequenceLocationDataSourceSchema
 }
-var DmConfigSequenceLocationResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"directory": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.", "directory", "").AddDefaultValue("local:///").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("local:///"),
+func GetDmConfigSequenceLocationResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmConfigSequenceLocationResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"directory": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.", "directory", "").AddDefaultValue("local:///").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("local:///"),
+			},
+			"access_profile_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the access policies to enforce. Each policy defines permissions to a specific resource group.", "access-profile", "access_profile").String,
+				Optional:            true,
+			},
 		},
-		"access_profile_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the access policies to enforce. Each policy defines permissions to a specific resource group.", "access-profile", "access_profile").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmConfigSequenceLocationResourceSchema
 }
 
 func (data DmConfigSequenceLocation) IsNull() bool {
@@ -88,6 +95,7 @@ func (data DmConfigSequenceLocation) ToBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Directory.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Directory`, data.Directory.ValueString())
 	}

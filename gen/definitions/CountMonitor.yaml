@@ -58,7 +58,7 @@ attributes:
     IP address.
   cli_alias: header
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Source
     value:
     - ip-from-header

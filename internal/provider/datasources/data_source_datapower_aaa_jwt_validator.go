@@ -155,7 +155,7 @@ func (d *AAAJWTValidatorDataSource) Schema(ctx context.Context, req datasource.S
 						},
 						"claims": schema.ListNestedAttribute{
 							MarkdownDescription: "JWT claims need to be validated. You must enter the claim name, value, and data type. If the data type is string, specify the PCRE regular expression to verify the claim value.",
-							NestedObject:        models.DmClaimDataSourceSchema,
+							NestedObject:        models.GetDmClaimDataSourceSchema(),
 							Computed:            true,
 						},
 						"username_claim": schema.StringAttribute{

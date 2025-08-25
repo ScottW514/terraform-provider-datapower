@@ -48,39 +48,46 @@ var DmOAuthTypeObjectDefault = map[string]attr.Value{
 	"client_type": types.StringValue("confidential"),
 	"grant_type":  types.StringValue("implicit"),
 }
-var DmOAuthTypeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"client_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client type", "", "").AddStringEnum("confidential", "public").AddDefaultValue("confidential").String,
-			Computed:            true,
+
+func GetDmOAuthTypeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmOAuthTypeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"client_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client type", "", "").AddStringEnum("confidential", "public").AddDefaultValue("confidential").String,
+				Computed:            true,
+			},
+			"grant_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Flow", "", "").AddStringEnum("implicit", "password", "application", "accessCode").AddDefaultValue("implicit").String,
+				Computed:            true,
+			},
 		},
-		"grant_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Flow", "", "").AddStringEnum("implicit", "password", "application", "accessCode").AddDefaultValue("implicit").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmOAuthTypeDataSourceSchema
 }
-var DmOAuthTypeResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"client_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client type", "", "").AddStringEnum("confidential", "public").AddDefaultValue("confidential").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("confidential", "public"),
+func GetDmOAuthTypeResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmOAuthTypeResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"client_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client type", "", "").AddStringEnum("confidential", "public").AddDefaultValue("confidential").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("confidential", "public"),
+				},
+				Default: stringdefault.StaticString("confidential"),
 			},
-			Default: stringdefault.StaticString("confidential"),
-		},
-		"grant_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Flow", "", "").AddStringEnum("implicit", "password", "application", "accessCode").AddDefaultValue("implicit").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("implicit", "password", "application", "accessCode"),
+			"grant_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Flow", "", "").AddStringEnum("implicit", "password", "application", "accessCode").AddDefaultValue("implicit").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("implicit", "password", "application", "accessCode"),
+				},
+				Default: stringdefault.StaticString("implicit"),
 			},
-			Default: stringdefault.StaticString("implicit"),
 		},
-	},
+	}
+	return DmOAuthTypeResourceSchema
 }
 
 func (data DmOAuthType) IsNull() bool {
@@ -98,6 +105,7 @@ func (data DmOAuthType) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ClientType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ClientType`, data.ClientType.ValueString())
 	}

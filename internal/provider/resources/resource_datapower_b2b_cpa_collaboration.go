@@ -36,6 +36,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &B2BCPACollaborationResource{}
@@ -83,12 +84,18 @@ func (r *B2BCPACollaborationResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 			},
 			"internal_role": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the internal partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Buyer</tt> role has the authority for purchasing actions.", "internal-role", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the internal partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Buyer</tt> role has the authority for purchasing actions.", "internal-role", "").AddRequiredWhen(models.B2BCPACollaborationInternalRoleCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BCPACollaborationInternalRoleCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"external_role": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the external partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Supplier</tt> role has the authority for selling actions.", "external-role", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the external partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Supplier</tt> role has the authority for selling actions.", "external-role", "").AddRequiredWhen(models.B2BCPACollaborationExternalRoleCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BCPACollaborationExternalRoleCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"process_specification": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the process specification document that defines the interactions between the internal and external partners. For example, <tt>http://www.rosettanet.org/processes/3A4</tt> .", "process-spec", "").String,
@@ -103,17 +110,26 @@ func (r *B2BCPACollaborationResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 			},
 			"sender_msh_setting": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal sender to send ebMS MSH signals to send MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "sender-msh-setting", "b2b_cpa_sender_setting").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal sender to send ebMS MSH signals to send MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "sender-msh-setting", "b2b_cpa_sender_setting").AddRequiredWhen(models.B2BCPACollaborationSenderMshSettingCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BCPACollaborationSenderMshSettingCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"receiver_msh_setting": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal receiver to receive ebMS MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "receiver-msh-setting", "b2b_cpa_receiver_setting").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal receiver to receive ebMS MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "receiver-msh-setting", "b2b_cpa_receiver_setting").AddRequiredWhen(models.B2BCPACollaborationReceiverMshSettingCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BCPACollaborationReceiverMshSettingCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"actions": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify CPA actions to bind. For a business collaboration, each action entry identifies a business message that a party can send or receive. For a collaboration of MSH level signal, the action overrides the sending or receiving behaviors of the default sender setting or default receiver setting.", "action", "").String,
-				NestedObject:        models.DmCPACollaborationActionResourceSchema,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify CPA actions to bind. For a business collaboration, each action entry identifies a business message that a party can send or receive. For a collaboration of MSH level signal, the action overrides the sending or receiving behaviors of the default sender setting or default receiver setting.", "action", "").AddRequiredWhen(models.B2BCPACollaborationActionsCondVal.String()).String,
+				NestedObject:        models.GetDmCPACollaborationActionResourceSchema(),
 				Required:            true,
+				Validators: []validator.List{
+					validators.ConditionalRequiredList(models.B2BCPACollaborationActionsCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

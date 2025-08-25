@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -61,6 +62,128 @@ type SQLDataSource struct {
 	ValidateHostName           types.Bool                  `tfsdk:"validate_host_name"`
 	KeystoreRef                types.String                `tfsdk:"keystore_ref"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SQLDataSourcePasswordAliasCondVal = validators.Evaluation{
+	Evaluation: "logical-not",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"DB2"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "encryption_method_db2",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "keystore_ref",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{""},
+				},
+			},
+		},
+	},
+}
+var SQLDataSourceOracleDataSourceTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"Oracle"},
+}
+var SQLDataSourceEncryptionMethodMSSQLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"MSSQLServer"},
+}
+var SQLDataSourceEncryptionMethodOracleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"Oracle"},
+}
+var SQLDataSourceEncryptionMethodDB2CondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"DB2"},
+}
+var SQLDataSourceTruststoreRefCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"Oracle"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "encryption_method_oracle",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"MSSQLServer"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "encryption_method_mssql",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"DB2"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "encryption_method_db2",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+	},
 }
 
 var SQLDataSourceObjectType = map[string]attr.Type{
@@ -187,6 +310,7 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -218,9 +342,9 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`LimitReturnedDataSize`, data.LimitReturnedDataSize.ValueInt64())
 	}
 	if !data.SqlDataSourceConfigNvPairs.IsNull() {
-		var values []DmSQLDataSourceConfigNVPair
-		data.SqlDataSourceConfigNvPairs.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSQLDataSourceConfigNVPair
+		data.SqlDataSourceConfigNvPairs.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`SQLDataSourceConfigNVPairs`+".-1", val.ToBody(ctx, ""))
 		}
 	}

@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AssemblyActionInvokeResource{}
@@ -125,11 +126,14 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("detect"),
 			},
 			"graph_ql_send_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.", "graphql-send-type", "").AddStringEnum("detect", "graphql", "json").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.", "graphql-send-type", "").AddStringEnum("detect", "graphql", "json").AddDefaultValue("detect").AddRequiredWhen(models.AssemblyActionInvokeGraphQLSendTypeCondVal.String()).String,
 				Optional:            true,
+				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("detect", "graphql", "json"),
+					validators.ConditionalRequiredString(models.AssemblyActionInvokeGraphQLSendTypeCondVal, validators.Evaluation{}, true),
 				},
+				Default: stringdefault.StaticString("detect"),
 			},
 			"compression": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable compression", "compression", "").AddDefaultValue("false").String,
@@ -147,10 +151,13 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("Protocol"),
 			},
 			"time_to_live": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds for documents in the cache. The default value is 900.", "ttl", "").AddDefaultValue("900").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds for documents in the cache. The default value is 900.", "ttl", "").AddDefaultValue("900").AddRequiredWhen(models.AssemblyActionInvokeTimeToLiveCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             int64default.StaticInt64(900),
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(models.AssemblyActionInvokeTimeToLiveCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(900),
 			},
 			"cache_unsafe_response": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to cache responses to POST and PUT requests when the cache policy type is set to time to live. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").String,

@@ -45,29 +45,36 @@ var DmPolicyParameterObjectDefault = map[string]attr.Value{
 	"parameter_name":  types.StringNull(),
 	"parameter_value": types.StringNull(),
 }
-var DmPolicyParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"parameter_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Policy key name formated {policy-domain-ns}name", "", "").String,
-			Computed:            true,
+
+func GetDmPolicyParameterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmPolicyParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"parameter_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Policy key name formated {policy-domain-ns}name", "", "").String,
+				Computed:            true,
+			},
+			"parameter_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Value for corresponding policy parameter key.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"parameter_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value for corresponding policy parameter key.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmPolicyParameterDataSourceSchema
 }
-var DmPolicyParameterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"parameter_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Policy key name formated {policy-domain-ns}name", "", "").String,
-			Required:            true,
+func GetDmPolicyParameterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmPolicyParameterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"parameter_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Policy key name formated {policy-domain-ns}name", "", "").String,
+				Required:            true,
+			},
+			"parameter_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Value for corresponding policy parameter key.", "", "").String,
+				Required:            true,
+			},
 		},
-		"parameter_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value for corresponding policy parameter key.", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmPolicyParameterResourceSchema
 }
 
 func (data DmPolicyParameter) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmPolicyParameter) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ParameterName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParameterName`, data.ParameterName.ValueString())
 	}

@@ -90,7 +90,7 @@ func (r *MessageContentFiltersResource) Schema(ctx context.Context, req resource
 			},
 			"filters": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Defines the group of message content filters.", "mcfilter", "").String,
-				NestedObject:        models.DmMCFilterResourceSchema,
+				NestedObject:        models.GetDmMCFilterResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

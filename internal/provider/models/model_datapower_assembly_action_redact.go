@@ -97,6 +97,7 @@ func (data AssemblyActionRedact) ToBody(ctx context.Context, pathRoot string) st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -104,9 +105,9 @@ func (data AssemblyActionRedact) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`Root`, data.Root.ValueString())
 	}
 	if !data.Redact.IsNull() {
-		var values []DmAssemblyActionRedact
-		data.Redact.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAssemblyActionRedact
+		data.Redact.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Redact`+".-1", val.ToBody(ctx, ""))
 		}
 	}

@@ -44,6 +44,7 @@ resource "datapower_count_monitor" "test" {
 - `header` (String) The name of the HTTP header to read to determine the value of the source IP address.
   - CLI Alias: `header`
   - Default value: `X-Client-IP`
+  - Required When: `source`=`ip-from-header`
 - `max_sources` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
   - CLI Alias: `distinct-sources`
   - Default value: `10000`

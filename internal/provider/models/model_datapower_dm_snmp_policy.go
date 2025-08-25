@@ -54,50 +54,57 @@ var DmSnmpPolicyObjectDefault = map[string]attr.Value{
 	"mode":      types.StringNull(),
 	"host":      types.StringValue("0.0.0.0/0"),
 }
-var DmSnmpPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"community": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a specific SNMP community. All SNMP Version 1 or Version 2c managers identifying themselves as a member of this community will have the Mode permissions set here for the Associated Domains selected here and must originate from the Remote Host Address specified here.", "", "").String,
-			Computed:            true,
-		},
-		"domain": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the application domain visible to the SNMP managers belonging to this community. The default value is the default application domain.", "", "domain").String,
-			Computed:            true,
-		},
-		"mode": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the access privileges accorded to SNMP managers that belong to this community. Use none to disable SNMP access.", "", "").AddStringEnum("none", "read-only", "read-write").String,
-			Computed:            true,
-		},
-		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The IP address of an SNMP manager belonging to this community. The default value of '0.0.0.0/0' indicates all hosts, or all SNMP managers claiming membership in the community.", "", "").AddDefaultValue("0.0.0.0/0").String,
-			Computed:            true,
-		},
-	},
-}
-var DmSnmpPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"community": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a specific SNMP community. All SNMP Version 1 or Version 2c managers identifying themselves as a member of this community will have the Mode permissions set here for the Associated Domains selected here and must originate from the Remote Host Address specified here.", "", "").String,
-			Required:            true,
-		},
-		"domain": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the application domain visible to the SNMP managers belonging to this community. The default value is the default application domain.", "", "domain").String,
-			Required:            true,
-		},
-		"mode": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the access privileges accorded to SNMP managers that belong to this community. Use none to disable SNMP access.", "", "").AddStringEnum("none", "read-only", "read-write").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("none", "read-only", "read-write"),
+
+func GetDmSnmpPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmSnmpPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"community": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a specific SNMP community. All SNMP Version 1 or Version 2c managers identifying themselves as a member of this community will have the Mode permissions set here for the Associated Domains selected here and must originate from the Remote Host Address specified here.", "", "").String,
+				Computed:            true,
+			},
+			"domain": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the application domain visible to the SNMP managers belonging to this community. The default value is the default application domain.", "", "domain").String,
+				Computed:            true,
+			},
+			"mode": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the access privileges accorded to SNMP managers that belong to this community. Use none to disable SNMP access.", "", "").AddStringEnum("none", "read-only", "read-write").String,
+				Computed:            true,
+			},
+			"host": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The IP address of an SNMP manager belonging to this community. The default value of '0.0.0.0/0' indicates all hosts, or all SNMP managers claiming membership in the community.", "", "").AddDefaultValue("0.0.0.0/0").String,
+				Computed:            true,
 			},
 		},
-		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The IP address of an SNMP manager belonging to this community. The default value of '0.0.0.0/0' indicates all hosts, or all SNMP managers claiming membership in the community.", "", "").AddDefaultValue("0.0.0.0/0").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("0.0.0.0/0"),
+	}
+	return DmSnmpPolicyDataSourceSchema
+}
+func GetDmSnmpPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmSnmpPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"community": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a specific SNMP community. All SNMP Version 1 or Version 2c managers identifying themselves as a member of this community will have the Mode permissions set here for the Associated Domains selected here and must originate from the Remote Host Address specified here.", "", "").String,
+				Required:            true,
+			},
+			"domain": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the application domain visible to the SNMP managers belonging to this community. The default value is the default application domain.", "", "domain").String,
+				Required:            true,
+			},
+			"mode": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the access privileges accorded to SNMP managers that belong to this community. Use none to disable SNMP access.", "", "").AddStringEnum("none", "read-only", "read-write").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("none", "read-only", "read-write"),
+				},
+			},
+			"host": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The IP address of an SNMP manager belonging to this community. The default value of '0.0.0.0/0' indicates all hosts, or all SNMP managers claiming membership in the community.", "", "").AddDefaultValue("0.0.0.0/0").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("0.0.0.0/0"),
+			},
 		},
-	},
+	}
+	return DmSnmpPolicyResourceSchema
 }
 
 func (data DmSnmpPolicy) IsNull() bool {
@@ -121,6 +128,7 @@ func (data DmSnmpPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Community.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Community`, data.Community.ValueString())
 	}

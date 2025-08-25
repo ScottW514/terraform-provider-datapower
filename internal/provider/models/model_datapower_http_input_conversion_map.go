@@ -82,6 +82,7 @@ func (data HTTPInputConversionMap) ToBody(ctx context.Context, pathRoot string) 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -92,9 +93,9 @@ func (data HTTPInputConversionMap) ToBody(ctx context.Context, pathRoot string) 
 		body, _ = sjson.Set(body, pathRoot+`DefaultInputEncoding`, data.DefaultInputEncoding.ValueString())
 	}
 	if !data.InputEncoding.IsNull() {
-		var values []DmInputEncoding
-		data.InputEncoding.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmInputEncoding
+		data.InputEncoding.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`InputEncoding`+".-1", val.ToBody(ctx, ""))
 		}
 	}

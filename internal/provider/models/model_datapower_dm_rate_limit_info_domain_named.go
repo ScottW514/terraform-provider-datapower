@@ -48,34 +48,41 @@ var DmRateLimitInfoDomainNamedObjectDefault = map[string]attr.Value{
 	"name":   types.StringNull(),
 	"action": types.StringValue("consume"),
 }
-var DmRateLimitInfoDomainNamedDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit definition.", "name", "rate_limit_definition").String,
-			Computed:            true,
-		},
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit definition.", "action", "").AddStringEnum("consume", "replenish", "check", "update").AddDefaultValue("consume").String,
-			Computed:            true,
-		},
-	},
-}
-var DmRateLimitInfoDomainNamedResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit definition.", "name", "rate_limit_definition").String,
-			Required:            true,
-		},
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit definition.", "action", "").AddStringEnum("consume", "replenish", "check", "update").AddDefaultValue("consume").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("consume", "replenish", "check", "update"),
+
+func GetDmRateLimitInfoDomainNamedDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmRateLimitInfoDomainNamedDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit definition.", "name", "rate_limit_definition").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("consume"),
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit definition.", "action", "").AddStringEnum("consume", "replenish", "check", "update").AddDefaultValue("consume").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmRateLimitInfoDomainNamedDataSourceSchema
+}
+func GetDmRateLimitInfoDomainNamedResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmRateLimitInfoDomainNamedResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit definition.", "name", "rate_limit_definition").String,
+				Required:            true,
+			},
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit definition.", "action", "").AddStringEnum("consume", "replenish", "check", "update").AddDefaultValue("consume").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("consume", "replenish", "check", "update"),
+				},
+				Default: stringdefault.StaticString("consume"),
+			},
+		},
+	}
+	return DmRateLimitInfoDomainNamedResourceSchema
 }
 
 func (data DmRateLimitInfoDomainNamed) IsNull() bool {
@@ -93,6 +100,7 @@ func (data DmRateLimitInfoDomainNamed) ToBody(ctx context.Context, pathRoot stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

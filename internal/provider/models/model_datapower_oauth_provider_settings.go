@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -110,6 +111,387 @@ type OAuthProviderSettings struct {
 	ThirdPartyCustomHeaderNameFormat      types.String                `tfsdk:"third_party_custom_header_name_format"`
 	ThirdPartyIntrospectSslProfile        types.String                `tfsdk:"third_party_introspect_ssl_profile"`
 	DependencyActions                     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var OAuthProviderSettingsSupportedClientTypesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+var OAuthProviderSettingsAPICProviderBasePathCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+var OAuthProviderSettingsAPICAuthorizeEndpointCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+var OAuthProviderSettingsAPICTokenEndpointCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+var OAuthProviderSettingsAPICIntrospectEndpointCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "apic_enable_introspection",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var OAuthProviderSettingsAPICTokenSecretCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+var OAuthProviderSettingsAPICOneTimeUseAccesstokenCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+var OAuthProviderSettingsAPICAccessTokenTTLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+var OAuthProviderSettingsAPICAuthCodeTTLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "supported_grant_types",
+			AttrType:    "DmOAuthProviderGrantType",
+			AttrDefault: "",
+			Value:       []string{"access_code"},
+		},
+	},
+}
+var OAuthProviderSettingsAPICRefreshTokenLimitCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "apic_enable_refresh_token",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "apic_one_time_use_refreshtoken",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var OAuthProviderSettingsAPICRefreshTokenTTLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "apic_enable_refresh_token",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var OAuthProviderSettingsAdvancedScopeURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "advanced_scope_url_override",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "adv_scope_validation_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var OAuthProviderSettingsMetadataURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "metadata_from",
+			AttrType:    "DmMetadataFromType",
+			AttrDefault: "",
+			Value:       []string{"external_url"},
+		},
+	},
+}
+var OAuthProviderSettingsExternalRevocationURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"external"},
+		},
+	},
+}
+var OAuthProviderSettingsAPISecurityTokenManagerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+var OAuthProviderSettingsEnableApplicationRevocationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+var OAuthProviderSettingsApplicationRevocationEndpointCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_application_revocation",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+var OAuthProviderSettingsEnableOwnerRevocationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+var OAuthProviderSettingsOwnerRevocationEndpointCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_owner_revocation",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+var OAuthProviderSettingsTokenValidationReqCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third_party"},
+}
+var OAuthProviderSettingsThirdPartyIntrospectURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third_party"},
+}
+var OAuthProviderSettingsThirdPartyIntrospectCacheTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third_party"},
+}
+var OAuthProviderSettingsThirdPartyIntrospectCacheTimeToLiveCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"third_party"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "third_party_introspect_cache_type",
+			AttrType:    "String",
+			AttrDefault: "NoCache",
+			Value:       []string{"TimeToLive"},
+		},
+	},
 }
 
 var OAuthProviderSettingsObjectType = map[string]attr.Type{
@@ -446,6 +828,7 @@ func (data OAuthProviderSettings) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

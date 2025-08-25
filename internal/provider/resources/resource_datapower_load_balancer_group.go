@@ -133,7 +133,6 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),
@@ -146,7 +145,7 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"lb_group_members": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Members", "server", "").String,
-				NestedObject:        models.DmLBGroupMemberResourceSchema,
+				NestedObject:        models.GetDmLBGroupMemberResourceSchema(),
 				Optional:            true,
 			},
 			"try_every_server_before_failing": schema.BoolAttribute{

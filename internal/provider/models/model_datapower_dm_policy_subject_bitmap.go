@@ -56,69 +56,84 @@ var DmPolicySubjectBitmapObjectDefault = map[string]attr.Value{
 	"message_in":  types.BoolValue(false),
 	"message_out": types.BoolValue(false),
 }
-var DmPolicySubjectBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"service": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Service Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmPolicySubjectBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmPolicySubjectBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"service": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Service Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"endpoint": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Endpoint Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"operation": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Operation Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"message_in": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Message Input Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"message_out": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Message Output Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"endpoint": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Endpoint Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"operation": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Operation Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"message_in": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Message Input Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"message_out": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Message Output Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmPolicySubjectBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmPolicySubjectBitmapDataSourceSchema
 }
-var DmPolicySubjectBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmPolicySubjectBitmapObjectType,
-			DmPolicySubjectBitmapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"service": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Service Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmPolicySubjectBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmPolicySubjectBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmPolicySubjectBitmapObjectType,
+				DmPolicySubjectBitmapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"service": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Service Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"endpoint": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Endpoint Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"operation": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Operation Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"message_in": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Message Input Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"message_out": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Message Output Subject", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"endpoint": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Endpoint Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"operation": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Operation Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"message_in": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Message Input Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"message_out": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Message Output Subject", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmPolicySubjectBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmPolicySubjectBitmapResourceSchema.Required = true
+	} else {
+		DmPolicySubjectBitmapResourceSchema.Optional = true
+		DmPolicySubjectBitmapResourceSchema.Computed = true
+	}
+	return DmPolicySubjectBitmapResourceSchema
 }
 
 func (data DmPolicySubjectBitmap) IsNull() bool {
@@ -139,27 +154,13 @@ func (data DmPolicySubjectBitmap) IsNull() bool {
 	}
 	return true
 }
-func GetDmPolicySubjectBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmPolicySubjectBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmPolicySubjectBitmapDataSourceSchema
-}
-
-func GetDmPolicySubjectBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmPolicySubjectBitmapResourceSchema.Required = true
-	} else {
-		DmPolicySubjectBitmapResourceSchema.Optional = true
-		DmPolicySubjectBitmapResourceSchema.Computed = true
-	}
-	DmPolicySubjectBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmPolicySubjectBitmapResourceSchema
-}
 
 func (data DmPolicySubjectBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Service.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Service`, tfutils.StringFromBool(data.Service, ""))
 	}

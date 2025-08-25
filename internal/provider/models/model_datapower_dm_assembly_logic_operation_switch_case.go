@@ -54,50 +54,57 @@ var DmAssemblyLogicOperationSwitchCaseObjectDefault = map[string]attr.Value{
 	"path":         types.StringNull(),
 	"method":       types.StringValue("GET"),
 }
-var DmAssemblyLogicOperationSwitchCaseDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"execute": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API rule to run when the case is matched.", "", "").String,
-			Computed:            true,
-		},
-		"operation_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique operation ID to match.", "", "").String,
-			Computed:            true,
-		},
-		"path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the relative API path to match.", "", "").String,
-			Computed:            true,
-		},
-		"method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP method to match.", "", "").AddStringEnum("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE").AddDefaultValue("GET").String,
-			Computed:            true,
-		},
-	},
-}
-var DmAssemblyLogicOperationSwitchCaseResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"execute": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API rule to run when the case is matched.", "", "").String,
-			Required:            true,
-		},
-		"operation_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique operation ID to match.", "", "").String,
-			Optional:            true,
-		},
-		"path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the relative API path to match.", "", "").String,
-			Optional:            true,
-		},
-		"method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP method to match.", "", "").AddStringEnum("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE").AddDefaultValue("GET").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE"),
+
+func GetDmAssemblyLogicOperationSwitchCaseDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmAssemblyLogicOperationSwitchCaseDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"execute": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API rule to run when the case is matched.", "", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("GET"),
+			"operation_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique operation ID to match.", "", "").String,
+				Computed:            true,
+			},
+			"path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the relative API path to match.", "", "").String,
+				Computed:            true,
+			},
+			"method": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP method to match.", "", "").AddStringEnum("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE").AddDefaultValue("GET").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmAssemblyLogicOperationSwitchCaseDataSourceSchema
+}
+func GetDmAssemblyLogicOperationSwitchCaseResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmAssemblyLogicOperationSwitchCaseResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"execute": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API rule to run when the case is matched.", "", "").String,
+				Required:            true,
+			},
+			"operation_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique operation ID to match.", "", "").String,
+				Optional:            true,
+			},
+			"path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the relative API path to match.", "", "").String,
+				Optional:            true,
+			},
+			"method": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP method to match.", "", "").AddStringEnum("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE").AddDefaultValue("GET").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE"),
+				},
+				Default: stringdefault.StaticString("GET"),
+			},
+		},
+	}
+	return DmAssemblyLogicOperationSwitchCaseResourceSchema
 }
 
 func (data DmAssemblyLogicOperationSwitchCase) IsNull() bool {
@@ -121,6 +128,7 @@ func (data DmAssemblyLogicOperationSwitchCase) ToBody(ctx context.Context, pathR
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Execute.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Execute`, data.Execute.ValueString())
 	}

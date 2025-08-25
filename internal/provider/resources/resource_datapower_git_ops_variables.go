@@ -63,7 +63,7 @@ func (r *GitOpsVariablesResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"variables": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Variables", "variable", "").String,
-				NestedObject:        models.DmGitOpsVariableEntryResourceSchema,
+				NestedObject:        models.GetDmGitOpsVariableEntryResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

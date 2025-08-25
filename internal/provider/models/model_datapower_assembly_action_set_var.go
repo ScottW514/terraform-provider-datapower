@@ -92,13 +92,14 @@ func (data AssemblyActionSetVar) ToBody(ctx context.Context, pathRoot string) st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
 	if !data.Variable.IsNull() {
-		var values []DmAssemblyActionSetVar
-		data.Variable.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmAssemblyActionSetVar
+		data.Variable.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Variable`+".-1", val.ToBody(ctx, ""))
 		}
 	}

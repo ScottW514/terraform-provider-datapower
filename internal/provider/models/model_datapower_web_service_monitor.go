@@ -102,6 +102,7 @@ func (data WebServiceMonitor) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -109,9 +110,9 @@ func (data WebServiceMonitor) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`WSDLURL`, data.Wsdlurl.ValueString())
 	}
 	if !data.Operations.IsNull() {
-		var values []DmWSSLMOps
-		data.Operations.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmWSSLMOps
+		data.Operations.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Operations`+".-1", val.ToBody(ctx, ""))
 		}
 	}

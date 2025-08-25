@@ -131,12 +131,12 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"response_schema": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Response schema", "response-schema", "").String,
-				NestedObject:        models.DmAPIResponseSchemaResourceSchema,
+				NestedObject:        models.GetDmAPIResponseSchemaResourceSchema(),
 				Optional:            true,
 			},
 			"parameter": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify applicable parameters for the API operation. This setting overrides the setting in the API path configuration for the same parameter.", "parameter", "").String,
-				NestedObject:        models.DmAPIParameterResourceSchema,
+				NestedObject:        models.GetDmAPIParameterResourceSchema(),
 				Optional:            true,
 			},
 			"remove_security": schema.BoolAttribute{

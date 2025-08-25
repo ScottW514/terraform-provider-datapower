@@ -53,59 +53,74 @@ var DmOAuthRSSetHeaderObjectDefault = map[string]attr.Value{
 	"scope":    types.BoolValue(false),
 	"miscinfo": types.BoolValue(false),
 }
-var DmOAuthRSSetHeaderDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"owner": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmOAuthRSSetHeaderDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmOAuthRSSetHeaderDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"owner": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"clientid": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"scope": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Scope", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"miscinfo": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Customized Info", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"clientid": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"scope": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Scope", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"miscinfo": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Customized Info", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmOAuthRSSetHeaderDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmOAuthRSSetHeaderDataSourceSchema
 }
-var DmOAuthRSSetHeaderResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmOAuthRSSetHeaderObjectType,
-			DmOAuthRSSetHeaderObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"owner": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmOAuthRSSetHeaderResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmOAuthRSSetHeaderResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmOAuthRSSetHeaderObjectType,
+				DmOAuthRSSetHeaderObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"owner": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"clientid": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"scope": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Scope", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"miscinfo": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Customized Info", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"clientid": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"scope": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Scope", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"miscinfo": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Customized Info", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmOAuthRSSetHeaderResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmOAuthRSSetHeaderResourceSchema.Required = true
+	} else {
+		DmOAuthRSSetHeaderResourceSchema.Optional = true
+		DmOAuthRSSetHeaderResourceSchema.Computed = true
+	}
+	return DmOAuthRSSetHeaderResourceSchema
 }
 
 func (data DmOAuthRSSetHeader) IsNull() bool {
@@ -123,27 +138,13 @@ func (data DmOAuthRSSetHeader) IsNull() bool {
 	}
 	return true
 }
-func GetDmOAuthRSSetHeaderDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmOAuthRSSetHeaderDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmOAuthRSSetHeaderDataSourceSchema
-}
-
-func GetDmOAuthRSSetHeaderResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmOAuthRSSetHeaderResourceSchema.Required = true
-	} else {
-		DmOAuthRSSetHeaderResourceSchema.Optional = true
-		DmOAuthRSSetHeaderResourceSchema.Computed = true
-	}
-	DmOAuthRSSetHeaderResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmOAuthRSSetHeaderResourceSchema
-}
 
 func (data DmOAuthRSSetHeader) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Owner.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`owner`, tfutils.StringFromBool(data.Owner, ""))
 	}

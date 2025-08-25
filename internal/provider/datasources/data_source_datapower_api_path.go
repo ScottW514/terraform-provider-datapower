@@ -95,7 +95,7 @@ func (d *APIPathDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 						},
 						"parameter": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the applicable parameters for all operations. The setting can be overridden for the same parameter by the setting in the API operation configuration.",
-							NestedObject:        models.DmAPIParameterDataSourceSchema,
+							NestedObject:        models.GetDmAPIParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

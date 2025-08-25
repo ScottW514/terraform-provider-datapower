@@ -102,6 +102,7 @@ func (data AssemblyActionGraphQLCostAnalysis) ToBody(ctx context.Context, pathRo
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

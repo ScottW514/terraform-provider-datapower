@@ -46,31 +46,38 @@ var DmASFrontProtocolObjectDefault = map[string]attr.Value{
 	"front_protocol": types.StringNull(),
 	"mdn_receiver":   types.BoolValue(false),
 }
-var DmASFrontProtocolDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"front_protocol": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol handler.", "front-protocol", "").String,
-			Computed:            true,
+
+func GetDmASFrontProtocolDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmASFrontProtocolDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"front_protocol": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol handler.", "front-protocol", "").String,
+				Computed:            true,
+			},
+			"mdn_receiver": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to set the handler as the default MDN receiver.", "mdn-receiver", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"mdn_receiver": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to set the handler as the default MDN receiver.", "mdn-receiver", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmASFrontProtocolDataSourceSchema
 }
-var DmASFrontProtocolResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"front_protocol": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol handler.", "front-protocol", "").String,
-			Required:            true,
+func GetDmASFrontProtocolResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmASFrontProtocolResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"front_protocol": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol handler.", "front-protocol", "").String,
+				Required:            true,
+			},
+			"mdn_receiver": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to set the handler as the default MDN receiver.", "mdn-receiver", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"mdn_receiver": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to set the handler as the default MDN receiver.", "mdn-receiver", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	return DmASFrontProtocolResourceSchema
 }
 
 func (data DmASFrontProtocol) IsNull() bool {
@@ -88,6 +95,7 @@ func (data DmASFrontProtocol) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.FrontProtocol.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`FrontProtocol`, data.FrontProtocol.ValueString())
 	}

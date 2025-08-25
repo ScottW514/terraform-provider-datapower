@@ -71,22 +71,22 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - sasl_plaintext
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - sasl_ssl
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - plaintext
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - ssl
@@ -97,22 +97,22 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - sasl_plaintext
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - sasl_ssl
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - plaintext
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - ssl
@@ -126,22 +126,22 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - sasl_plaintext
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - sasl_ssl
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - plaintext
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - ssl
@@ -163,22 +163,22 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - ssl
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - sasl_ssl
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - plaintext
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Protocol
       value:
       - sasl_plaintext

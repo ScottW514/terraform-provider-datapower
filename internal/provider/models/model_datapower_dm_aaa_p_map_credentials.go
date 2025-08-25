@@ -32,6 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,28 @@ type DmAAAPMapCredentials struct {
 	McCustomUrl types.String `tfsdk:"mc_custom_url"`
 	McMapUrl    types.String `tfsdk:"mc_map_url"`
 	McMapXPath  types.String `tfsdk:"mc_map_x_path"`
+}
+
+var DmAAAPMapCredentialsMCCustomURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mc_method",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"custom"},
+}
+var DmAAAPMapCredentialsMCMapURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mc_method",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"xmlfile"},
+}
+var DmAAAPMapCredentialsMCMapXPathCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mc_method",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"xpath"},
 }
 
 var DmAAAPMapCredentialsObjectType = map[string]attr.Type{
@@ -55,56 +78,80 @@ var DmAAAPMapCredentialsObjectDefault = map[string]attr.Value{
 	"mc_map_url":    types.StringNull(),
 	"mc_map_x_path": types.StringNull(),
 }
-var DmAAAPMapCredentialsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"mc_method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to map credentials.", "method", "").AddStringEnum("none", "custom", "xmlfile", "xpath", "ws-secureconversation", "TFIM").AddDefaultValue("none").String,
-			Computed:            true,
-		},
-		"mc_custom_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").String,
-			Computed:            true,
-		},
-		"mc_map_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").String,
-			Computed:            true,
-		},
-		"mc_map_x_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").String,
-			Computed:            true,
-		},
-	},
-}
-var DmAAAPMapCredentialsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmAAAPMapCredentialsObjectType,
-			DmAAAPMapCredentialsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"mc_method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to map credentials.", "method", "").AddStringEnum("none", "custom", "xmlfile", "xpath", "ws-secureconversation", "TFIM").AddDefaultValue("none").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("none", "custom", "xmlfile", "xpath", "ws-secureconversation", "TFIM"),
+
+func GetDmAAAPMapCredentialsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmAAAPMapCredentialsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"mc_method": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to map credentials.", "method", "").AddStringEnum("none", "custom", "xmlfile", "xpath", "ws-secureconversation", "TFIM").AddDefaultValue("none").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("none"),
+			"mc_custom_url": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").String,
+				Computed:            true,
+			},
+			"mc_map_url": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").String,
+				Computed:            true,
+			},
+			"mc_map_x_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").String,
+				Computed:            true,
+			},
 		},
-		"mc_custom_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").String,
-			Optional:            true,
+	}
+	DmAAAPMapCredentialsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmAAAPMapCredentialsDataSourceSchema
+}
+func GetDmAAAPMapCredentialsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmAAAPMapCredentialsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmAAAPMapCredentialsObjectType,
+				DmAAAPMapCredentialsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"mc_method": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to map credentials.", "method", "").AddStringEnum("none", "custom", "xmlfile", "xpath", "ws-secureconversation", "TFIM").AddDefaultValue("none").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("none", "custom", "xmlfile", "xpath", "ws-secureconversation", "TFIM"),
+				},
+				Default: stringdefault.StaticString("none"),
+			},
+			"mc_custom_url": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCCustomURLCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"mc_map_url": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCMapURLCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"mc_map_x_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCMapXPathCondVal, validators.Evaluation{}, false),
+				},
+			},
 		},
-		"mc_map_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").String,
-			Optional:            true,
-		},
-		"mc_map_x_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	DmAAAPMapCredentialsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmAAAPMapCredentialsResourceSchema.Required = true
+	} else {
+		DmAAAPMapCredentialsResourceSchema.Optional = true
+		DmAAAPMapCredentialsResourceSchema.Computed = true
+	}
+	return DmAAAPMapCredentialsResourceSchema
 }
 
 func (data DmAAAPMapCredentials) IsNull() bool {
@@ -122,27 +169,13 @@ func (data DmAAAPMapCredentials) IsNull() bool {
 	}
 	return true
 }
-func GetDmAAAPMapCredentialsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmAAAPMapCredentialsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmAAAPMapCredentialsDataSourceSchema
-}
-
-func GetDmAAAPMapCredentialsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmAAAPMapCredentialsResourceSchema.Required = true
-	} else {
-		DmAAAPMapCredentialsResourceSchema.Optional = true
-		DmAAAPMapCredentialsResourceSchema.Computed = true
-	}
-	DmAAAPMapCredentialsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmAAAPMapCredentialsResourceSchema
-}
 
 func (data DmAAAPMapCredentials) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.McMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MCMethod`, data.McMethod.ValueString())
 	}

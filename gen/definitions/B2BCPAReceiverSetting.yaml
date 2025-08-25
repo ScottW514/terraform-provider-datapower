@@ -89,10 +89,10 @@ attributes:
   description: Decryption identification credentials
   cli_alias: decrypt-idcred
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EncryptionRequired
     value:
-    - 'on'
+    - true
 - name: SignatureRequired
   type: Bool
   default: false
@@ -104,10 +104,10 @@ attributes:
   description: Signature validation credentials
   cli_alias: verify-valcred
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SignatureRequired
     value:
-    - 'on'
+    - true
 - name: DefaultSignerCert
   type: String
   reference_to: CryptoCertificate
@@ -116,7 +116,7 @@ attributes:
     is not supported.
   cli_alias: default-signer-cert
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SignatureRequired
     value:
-    - 'on'
+    - true

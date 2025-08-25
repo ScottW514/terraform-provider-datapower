@@ -40,6 +40,7 @@ resource "datapower_style_policy_action" "test" {
 - `aaa` (String) AAA policy
   - CLI Alias: `aaa-policy`
   - Reference to: `datapower_aaa_policy:id`
+  - Required When: `type`=`aaa`
 - `action_debug` (Boolean) Enable GatewayScript debug
   - CLI Alias: `debug`
   - Default value: `false`
@@ -53,11 +54,13 @@ resource "datapower_style_policy_action" "test" {
 - `checkpoint_event` (String) Event
   - CLI Alias: `event`
   - Choices: `Request`, `Response`, `Fault`, `AuthComplete`
+  - Required When: `type`=`checkpoint`
 - `condition` (Attributes List) Specify the conditions to check and action to run when a match is found A single condition maps an XPath expression to search for in the input context to an action to run when the condition is found. When no match is found, other conditions can be checked.
   - CLI Alias: `condition` (see [below for nested schema](#nestedatt--condition))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `destination` (String) Specify the location of the resource, which might be either the source or the destination. Specify the location as either a URL or as a variable that expands to a URL.
   - CLI Alias: `destination`
+  - Required When: `type`=`results-async`|`fetch`|`route-set`
 - `dfdl_input_root_name` (String) Specify the root element in the DFDL model from which to start a parse. This property is only meaningful in the context of a DFDL parse. <p>For the input root name, specify the global xsd:element in the XSD file to use to begin the parsing of binary input. The input root name can be selected from the specified XSD file or specified as a variable. For a variable, it must resolve to a valid namespace URL with the name between braces ({}) as a prefix to the local part. For instance, if in the DFDL Schema, the target namespace is "http://example.com/messages" and the local element is &lt;xsd:element name="Message">...&lt;/xsd:element>, the variable must resolve to {http://example.com/messages}Message.</p><p>The schema author might specify the root parse element by using the ibmSchExtn:docRoot="true" element within the schema. For instance, &lt;xsd:element ibmSchExtn:docRoot="true" name="Message">...&lt;/xsd:element>. In this case, the input root name shows in the selection as the element name followed by (@ibmSchExtn:docRoot="true"). Use of another value for the DFDL input root name overrides the value that is specified in the schema.</p>
   - CLI Alias: `input-root-name`
 - `dynamic_schema` (String) Dynamic schema
@@ -69,12 +72,15 @@ resource "datapower_style_policy_action" "test" {
 - `error_mode` (String) Error mode
   - CLI Alias: `error-mode`
   - Choices: `abort`, `continue`, `alternative`
+  - Required When: `type`=`on-error`
 - `error_output` (String) Error output
   - CLI Alias: `error-output`
 - `gateway_script_location` (String) Specify the location of the GatewayScript file. The file location can be specified in one of the following formats. <ul><li>As a URL, where the file is in the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> directory.</li><li>As a context variable that expands to a URL, such as <tt>var://context/contextName/varName</tt> .</li><li>As a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context content runs as GatewayScript.</li></ul>
   - CLI Alias: `gatewayscript-location`
+  - Required When: `type`=`gatewayscript`|`jose-sign`|`jose-verify`|`jose-encrypt`|`jose-decrypt`
 - `input` (String) Specify the input context for the action, which identifies the context that contains the document to act. Enter the context name, the string <tt>PIPE</tt> for streaming mode, or the string <tt>INPUT</tt> to identify the original input of the policy rule.
   - CLI Alias: `input`
+  - Required When: `type`!=`rewrite`|`route-set`|`on-error`|`method-rewrite`
 - `input_conversion` (String) Input conversion
   - CLI Alias: `input-conversion`
   - Reference to: `datapower_http_input_conversion_map:id`
@@ -84,21 +90,26 @@ resource "datapower_style_policy_action" "test" {
   - CLI Alias: `input-language`
   - Choices: `xml`, `dfdl`, `xsd`, `json`
   - Default value: `xml`
+  - Required When: `type`=`xformng`
 - `iterator_count` (Number) Specify the number of times to run the loop action. Enter a value in the range 1 - 32768.
   - CLI Alias: `iterator-count`
   - Range: `1`-`32768`
+  - Required When: (`type`=`for-each` AND `iterator_type`=`COUNT`)
 - `iterator_expression` (String) XPath expression
   - CLI Alias: `iterator-expression`
+  - Required When: (`type`=`for-each` AND `iterator_type`=`XPATH`)
 - `iterator_type` (String) Iterator type
   - CLI Alias: `iterator-type`
   - Choices: `XPATH`, `COUNT`
   - Default value: `XPATH`
+  - Required When: `type`=`for-each`
 - `jose_decrypt_type` (String) Identifier Type
   - CLI Alias: `jose-decrypt-type`
   - Choices: `identifiers`, `single-key`, `single-sskey`, `direct-key`
 - `jose_serialization_type` (String) Serialization
   - CLI Alias: `serialization`
   - Choices: `compact`, `json`, `json_flat`
+  - Required When: `type`=`jose-sign`|`jose-encrypt`
 - `jose_verify_type` (String) Identifier type
   - CLI Alias: `jose-verify-type`
   - Choices: `identifiers`, `single-cert`, `single-sskey`
@@ -107,38 +118,48 @@ resource "datapower_style_policy_action" "test" {
 - `jwe_direct_key_object` (String) Direct Key
   - CLI Alias: `direct-key`
   - Reference to: `datapower_crypto_sskey:id`
+  - Required When: (`type`=`jose-decrypt` AND `jose_decrypt_type`=`direct-key`)
 - `jwe_enc_algorithm` (String) Algorithm
   - CLI Alias: `jwe-enc`
   - Choices: `A128CBC-HS256`, `A192CBC-HS384`, `A256CBC-HS512`, `A128GCM`, `A192GCM`, `A256GCM`
+  - Required When: `type`=`jose-encrypt`
 - `jwe_header_object` (String) JWE Header
   - CLI Alias: `jwe-header`
   - Reference to: `datapower_jwe_header:id`
+  - Required When: `type`=`jose-encrypt`
 - `jws_signature_object` (String) Signature
   - CLI Alias: `jws-signature`
   - Reference to: `datapower_jws_signature:id`
+  - Required When: `type`=`jose-sign`
 - `jws_verify_strip_signature` (Boolean) Strip Signature
   - CLI Alias: `strip-signature`
   - Default value: `true`
 - `log_level` (String) Log level
   - CLI Alias: `log-level`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
+  - Required When: `type`=`log`
 - `log_type` (String) Log type
   - CLI Alias: `log-type`
   - Reference to: `datapower_log_label:id`
+  - Required When: `type`=`log`
 - `loop_action` (String) Loop action
   - CLI Alias: `loop-action`
+  - Required When: `type`=`for-each`
 - `method_rewrite_type` (String) Method
   - CLI Alias: `http-method`
   - Choices: `POST`, `GET`, `PUT`, `PATCH`, `DELETE`, `HEAD`
   - Default value: `GET`
+  - Required When: `type`=`method-rewrite`|`fetch`
 - `method_type` (String) Method
   - CLI Alias: `http-method-limited`
   - Choices: `POST`, `GET`, `PUT`, `PATCH`, `DELETE`, `HEAD`
   - Default value: `POST`
+  - Required When: (`type`=`results-async` OR (`type`=`results` AND `destination`!=``))
 - `method_type2` (String) Method
   - CLI Alias: `http-method-limited2`
   - Choices: `POST`, `GET`, `PUT`, `PATCH`, `DELETE`, `HEAD`
   - Default value: `POST`
+  - Required When: `type`=`log`
 - `multiple_outputs` (Boolean) Specify whether to place parallel outputs into separate contexts. A results action can target several targets simultaneously by specifying a variable that contains an XML nodeset as the results target. <ul><li>When enabled, the context for the output context is ignored. The status of the individual attempts to reach the targets are recorded in separate contexts by appending a number. For example, the resultant context name is <tt>ctx_1</tt> for the <tt>ctx</tt> context name.</li><li>When not enabled, only one result is kept. <ul><li>In require-all mode, keep the first target that failed and has no remaining attempts or the last target to succeed.</li><li>In attempt-all mode, the last target attempted.</li><li>In first-available mode, the first target to succeed or the last to fail.</li></ul></li></ul>
   - CLI Alias: `multiple-outputs`
   - Default value: `false`
@@ -155,6 +176,7 @@ resource "datapower_style_policy_action" "test" {
   - Default value: `false`
 - `output` (String) Specify the output context for the action, which identifies the context that receives the document when the action completes. Enter the context name, the string <tt>PIPE</tt> for streaming mode, or the string <tt>OUTPUT</tt> to identify the final output of the policy rule.
   - CLI Alias: `output`
+  - Required When: `type`=`xformpi`|`xformbin`|`xformng`|`cryptobin`|`xform`|`convert-http`|`fetch`|`extract`|`call`|`gatewayscript`|`jose-sign`|`jose-verify`|`jose-encrypt`|`jose-decrypt`
 - `output_descriptor` (String) Specify the output descriptor as understood by the output language. When DFDL, the output descriptor must be a URL to a DFDL schema to serialize the output.
   - CLI Alias: `output-descriptor`
 - `output_language` (String) Output language
@@ -166,6 +188,7 @@ resource "datapower_style_policy_action" "test" {
   - Choices: `default`, `binary`, `xml`
 - `parse_metrics_result_location` (String) Parse metrics result location
   - CLI Alias: `parse-settings-result-location`
+  - Required When: (`type`=`parse` AND `parse_metrics_result_type`!=`none`)
 - `parse_metrics_result_type` (String) Parse metrics result type
   - CLI Alias: `parse-settings-result-type`
   - Choices: `none`, `xml`, `json`, `graphql`
@@ -175,11 +198,13 @@ resource "datapower_style_policy_action" "test" {
 - `policy` (String) URL rewrite policy
   - CLI Alias: `urlrewrite-policy`
   - Reference to: `datapower_url_rewrite_policy:id`
+  - Required When: `type`=`rewrite`
 - `policy_key` (String) <b>Do not modify this value.</b> The DataPower Gateway uses this identifier to store the output from the action. The output can be used for external monitoring.
   - CLI Alias: `policy-key`
 - `recipient_identifier` (List of String) Recipient Identifiers
   - CLI Alias: `recipient-identifier`
   - Reference to: `datapower_jose_recipient_identifier:id`
+  - Required When: (`type`=`jose-decrypt` AND `jose_decrypt_type`=`identifiers`)
 - `results_mode` (String) Specify the processing mode for multiple targets. The default behavior, is first available.
   - CLI Alias: `results-mode`
   - Choices: `first-available`, `require-all`, `attempt-all`
@@ -191,22 +216,28 @@ resource "datapower_style_policy_action" "test" {
   - Default value: `1000`
 - `rule` (String) Processing rule
   - CLI Alias: `rule`
+  - Required When: `type`=`call`
 - `schema_url` (String) Specify XML schema for document validation regardless of any <tt>xsi:schemaLocation</tt> attributes contained with the document. Identify the schema with one of the following formats. <ul><li>Use a URL, for example, <tt>store:///valHigh.xsd</tt></li><li>Use a context variable that expands to a URL, for example, <tt>var://context/contextName/varName</tt></li><li>Use a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context runs as a schema validation.</li></ul>
   - CLI Alias: `schema-url`
 - `signature_identifier` (List of String) Signature Identifiers
   - CLI Alias: `signature-identifier`
   - Reference to: `datapower_jose_signature_identifier:id`
+  - Required When: (`type`=`jose-verify` AND `jose_verify_type`=`identifiers`)
 - `single_certificate` (String) Certificate
   - CLI Alias: `single-cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: (`type`=`jose-verify` AND `jose_verify_type`=`single-cert`)
 - `single_key` (String) Private Key
   - CLI Alias: `single-key`
   - Reference to: `datapower_crypto_key:id`
+  - Required When: (`type`=`jose-decrypt` AND `jose_decrypt_type`=`single-key`)
 - `single_ss_key` (String) Shared Secret Key
   - CLI Alias: `single-sskey`
   - Reference to: `datapower_crypto_sskey:id`
+  - Required When: ((`type`=`jose-decrypt` AND `jose_decrypt_type`=`single-sskey`) OR (`type`=`jose-verify` AND `jose_verify_type`=`single-sskey`))
 - `slm_policy` (String) SLM policy
   - CLI Alias: `slm`
+  - Required When: `type`=`slm`
 - `soap_validation` (String) Specify which parts of the SOAP message to validate. This setting does not affect the validation of the input context to ensure that it is a valid document.
   - CLI Alias: `soap-validation`
   - Choices: `body`, `body-or-detail`, `ignore-faults`, `envelope`
@@ -214,12 +245,15 @@ resource "datapower_style_policy_action" "test" {
 - `sql_data_source` (String) SQL Data Source
   - CLI Alias: `sql-source`
   - Reference to: `datapower_sql_data_source:id`
+  - Required When: `type`=`sql`
 - `sql_source_type` (String) SQL input method
   - CLI Alias: `sql-source-type`
   - Choices: `static`, `variable`, `stylesheet`, `static_internal`
   - Default value: `static`
+  - Required When: `type`=`sql`
 - `sql_text` (String) SQL text
   - CLI Alias: `sql-text`
+  - Required When: (`sql_source_type`=`static` AND `type`=`sql`)
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
@@ -236,10 +270,12 @@ resource "datapower_style_policy_action" "test" {
   - Default value: `false`
 - `transform` (String) Specify the location of the XSL stylesheet or transform file. The location uses one of the following formats. <ul><li>Use a URL, for example, <tt>store:///myTest.xsl</tt></li><li>Use a context variable that expands to a URL, for example, <tt>var://context/contextName/varName</tt></li><li>Use a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context runs as a stylesheet.</li></ul>
   - CLI Alias: `transform`
+  - Required When: (`type`=`filter`|`cryptobin` OR (`type`=`xformng` AND `transform_language`!=`none`))
 - `transform_language` (String) Transform language
   - CLI Alias: `transform-language`
   - Choices: `none`, `xquery`
   - Default value: `none`
+  - Required When: `type`=`xformng`
 - `tx_audit_log` (String) ITX audit log
   - CLI Alias: `tx-audit-log`
 - `tx_map` (String) Specify the location of the Transformation Extender map file. The generated map file is either on the DataPower Gateway or on a remote HTTP or HTTPS server. Use one of the following formats. <ul><li>When the file is local, use &lt;directory>:///&lt;file></li><li>When the file is remote, use HTTP://&lt;path_qualified_file> or HTTPS://&lt;path_qualified_file></li></ul>

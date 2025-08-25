@@ -102,6 +102,7 @@ func (data MessageMatching) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -118,16 +119,16 @@ func (data MessageMatching) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`HTTPMethod`, data.HttpMethod.ValueString())
 	}
 	if !data.HttpHeader.IsNull() {
-		var values []DmHTTPHeader
-		data.HttpHeader.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmHTTPHeader
+		data.HttpHeader.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeader`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.HttpHeaderExclude.IsNull() {
-		var values []DmHTTPHeader
-		data.HttpHeaderExclude.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmHTTPHeader
+		data.HttpHeaderExclude.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeaderExclude`+".-1", val.ToBody(ctx, ""))
 		}
 	}

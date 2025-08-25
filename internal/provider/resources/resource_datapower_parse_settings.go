@@ -100,7 +100,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 5368709121),
 				},
 				Default: int64default.StaticInt64(4194304),
@@ -110,7 +109,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4096),
 				},
 				Default: int64default.StaticInt64(512),
@@ -120,7 +118,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(4096),
@@ -130,7 +127,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 8192),
 				},
 				Default: int64default.StaticInt64(256),
@@ -140,7 +136,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 5368709121),
 				},
 				Default: int64default.StaticInt64(8192),
@@ -150,7 +145,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 262143),
 				},
 				Default: int64default.StaticInt64(1024),
@@ -160,7 +154,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(1024),
@@ -170,7 +163,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1048575),
 				},
 				Default: int64default.StaticInt64(1024),
@@ -180,7 +172,6 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 256),
 				},
 				Default: int64default.StaticInt64(128),

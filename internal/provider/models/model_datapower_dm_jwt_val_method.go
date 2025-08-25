@@ -50,49 +50,64 @@ var DmJWTValMethodObjectDefault = map[string]attr.Value{
 	"verify":     types.BoolValue(false),
 	"customized": types.BoolValue(false),
 }
-var DmJWTValMethodDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"decrypt": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Decrypt the encrypted JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmJWTValMethodDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmJWTValMethodDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"decrypt": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Decrypt the encrypted JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"verify": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Verify the signed JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"customized": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the custom processing mechanism to validate the JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"verify": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Verify the signed JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"customized": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use the custom processing mechanism to validate the JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmJWTValMethodDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmJWTValMethodDataSourceSchema
 }
-var DmJWTValMethodResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmJWTValMethodObjectType,
-			DmJWTValMethodObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"decrypt": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Decrypt the encrypted JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmJWTValMethodResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmJWTValMethodResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmJWTValMethodObjectType,
+				DmJWTValMethodObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"decrypt": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Decrypt the encrypted JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"verify": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Verify the signed JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"customized": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the custom processing mechanism to validate the JWT", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"verify": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Verify the signed JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"customized": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use the custom processing mechanism to validate the JWT", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmJWTValMethodResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmJWTValMethodResourceSchema.Required = true
+	} else {
+		DmJWTValMethodResourceSchema.Optional = true
+		DmJWTValMethodResourceSchema.Computed = true
+	}
+	return DmJWTValMethodResourceSchema
 }
 
 func (data DmJWTValMethod) IsNull() bool {
@@ -107,27 +122,13 @@ func (data DmJWTValMethod) IsNull() bool {
 	}
 	return true
 }
-func GetDmJWTValMethodDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmJWTValMethodDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmJWTValMethodDataSourceSchema
-}
-
-func GetDmJWTValMethodResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmJWTValMethodResourceSchema.Required = true
-	} else {
-		DmJWTValMethodResourceSchema.Optional = true
-		DmJWTValMethodResourceSchema.Computed = true
-	}
-	DmJWTValMethodResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmJWTValMethodResourceSchema
-}
 
 func (data DmJWTValMethod) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Decrypt.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`decrypt`, tfutils.StringFromBool(data.Decrypt, ""))
 	}

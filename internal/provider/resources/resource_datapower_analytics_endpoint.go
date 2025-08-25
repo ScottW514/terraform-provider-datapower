@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AnalyticsEndpointResource{}
@@ -90,19 +91,24 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.AnalyticsEndpointSSLClientCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AnalyticsEndpointSSLClientCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"request_topic": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Request topic", "request-topic", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Request topic", "request-topic", "").AddRequiredWhen(models.AnalyticsEndpointRequestTopicCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AnalyticsEndpointRequestTopicCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"max_records": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of records that can be buffered for each API gateway. The collected analytics data for an API gateway is offloaded when 80% of this value or the defined interval is reached. The value must be a power of 2. Enter a value in the range 256 - 65536. The default value is 1024.", "max-records", "").AddIntegerRange(256, 65536).AddDefaultValue("1024").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(256, 65536),
 				},
 				Default: int64default.StaticInt64(1024),
@@ -112,7 +118,6 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(4, 1024),
 				},
 				Default: int64default.StaticInt64(512),
@@ -122,7 +127,6 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 1024),
 				},
 				Default: int64default.StaticInt64(512),
@@ -132,7 +136,6 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 3600),
 				},
 				Default: int64default.StaticInt64(600),
@@ -142,7 +145,6 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 100),
 				},
 				Default: int64default.StaticInt64(1),
@@ -154,34 +156,48 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Default:             booldefault.StaticBool(false),
 			},
 			"management_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of management platform endpoint to retrieve a JWT. The URL must use the <tt>http</tt> or <tt>https</tt> protocol.", "management-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of management platform endpoint to retrieve a JWT. The URL must use the <tt>http</tt> or <tt>https</tt> protocol.", "management-url", "").AddRequiredWhen(models.AnalyticsEndpointManagementURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AnalyticsEndpointManagementURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"management_url_ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Management platform TLS client profile", "management-ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Management platform TLS client profile", "management-ssl-client", "ssl_client_profile").AddRequiredWhen(models.AnalyticsEndpointManagementURL_SSLClientCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AnalyticsEndpointManagementURL_SSLClientCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"client_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "clientid", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "clientid", "").AddRequiredWhen(models.AnalyticsEndpointClientIDCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AnalyticsEndpointClientIDCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"client_secret_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client secret", "client-secret-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Client secret", "client-secret-alias", "password_alias").AddRequiredWhen(models.AnalyticsEndpointClientSecretAliasCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 127),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointClientSecretAliasCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"grant_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.", "grant-type", "").AddStringEnum("implicit", "password", "application", "accessCode").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.", "grant-type", "").AddStringEnum("implicit", "password", "application", "accessCode").AddRequiredWhen(models.AnalyticsEndpointGrantTypeCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("implicit", "password", "application", "accessCode"),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointGrantTypeCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"scope": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.", "scope", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.", "scope", "").AddRequiredWhen(models.AnalyticsEndpointScopeCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AnalyticsEndpointScopeCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"persistent_connection": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to negotiate persistent connections. By default, persistent connections are enabled. The HTTP/2 protocol controls persistent connections and reuse. Therefore, these settings are ignored.", "persistent-connection", "").AddDefaultValue("true").String,
@@ -194,7 +210,6 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(90),
@@ -204,7 +219,6 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(60),

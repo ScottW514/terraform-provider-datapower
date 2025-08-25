@@ -77,6 +77,7 @@ func (data URLMap) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -84,9 +85,9 @@ func (data URLMap) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.UrlMapRule.IsNull() {
-		var values []DmURLMapRule
-		data.UrlMapRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmURLMapRule
+		data.UrlMapRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`URLMapRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}

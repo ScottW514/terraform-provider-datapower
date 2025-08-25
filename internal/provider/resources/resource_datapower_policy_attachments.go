@@ -101,12 +101,12 @@ func (r *PolicyAttachmentsResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"ignored_policy_attachment_points": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Disable all policies attached by policy references at a configured attachment point leaving other policy references intact.", "ignore-attachment-point", "").String,
-				NestedObject:        models.DmPolicyAttachmentPointResourceSchema,
+				NestedObject:        models.GetDmPolicyAttachmentPointResourceSchema(),
 				Optional:            true,
 			},
 			"external_policy": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Associate an external policy with a service.", "external-policy", "").String,
-				NestedObject:        models.DmExternalAttachedPolicyResourceSchema,
+				NestedObject:        models.GetDmExternalAttachedPolicyResourceSchema(),
 				Optional:            true,
 			},
 			"sla_enforcement_mode": schema.StringAttribute{

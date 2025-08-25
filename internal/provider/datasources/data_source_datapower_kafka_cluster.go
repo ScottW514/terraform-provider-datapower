@@ -86,7 +86,7 @@ func (d *KafkaClusterDataSource) Schema(ctx context.Context, req datasource.Sche
 						},
 						"endpoint": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify the endpoints for the bootstrap process. A bootstrap server uses a host name or IP address and a port to define an endpoint address. You can add multiple nondefault bootstrap servers. For failover capability, the endpoints must be members of the same cluster.",
-							NestedObject:        models.DmKafkaEndpointDataSourceSchema,
+							NestedObject:        models.GetDmKafkaEndpointDataSourceSchema(),
 							Computed:            true,
 						},
 						"sasl_mechanism": schema.StringAttribute{
@@ -127,7 +127,7 @@ func (d *KafkaClusterDataSource) Schema(ctx context.Context, req datasource.Sche
 						},
 						"property": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify extra property to configure the connection to the Kafka server. Use this property for each extra property that is required. Some properties are unsupported and will cause a configuration failure.",
-							NestedObject:        models.DmKafkaPropertyDataSourceSchema,
+							NestedObject:        models.GetDmKafkaPropertyDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

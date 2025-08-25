@@ -45,29 +45,36 @@ var DmOpenTelemetryExporterHeaderObjectDefault = map[string]attr.Value{
 	"header_name":  types.StringNull(),
 	"header_value": types.StringNull(),
 }
-var DmOpenTelemetryExporterHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"header_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
-			Computed:            true,
+
+func GetDmOpenTelemetryExporterHeaderDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmOpenTelemetryExporterHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"header_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+				Computed:            true,
+			},
+			"header_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+				Computed:            true,
+			},
 		},
-		"header_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmOpenTelemetryExporterHeaderDataSourceSchema
 }
-var DmOpenTelemetryExporterHeaderResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"header_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
-			Optional:            true,
+func GetDmOpenTelemetryExporterHeaderResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmOpenTelemetryExporterHeaderResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"header_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+				Optional:            true,
+			},
+			"header_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+				Required:            true,
+			},
 		},
-		"header_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmOpenTelemetryExporterHeaderResourceSchema
 }
 
 func (data DmOpenTelemetryExporterHeader) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmOpenTelemetryExporterHeader) ToBody(ctx context.Context, pathRoot s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.HeaderName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`headerName`, data.HeaderName.ValueString())
 	}

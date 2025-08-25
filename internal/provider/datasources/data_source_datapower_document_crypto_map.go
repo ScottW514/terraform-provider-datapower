@@ -87,7 +87,7 @@ func (d *DocumentCryptoMapDataSource) Schema(ctx context.Context, req datasource
 						},
 						"name_space_mappings": schema.ListNestedAttribute{
 							MarkdownDescription: "The prefix and URI for namespaces that might be encountered in requests.",
-							NestedObject:        models.DmNamespaceMappingDataSourceSchema,
+							NestedObject:        models.GetDmNamespaceMappingDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

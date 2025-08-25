@@ -18,7 +18,7 @@ attributes:
   reference_to: SSLClientProfile
   description: Specify the TLS client profile to secure connections with targets
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLClientConfigType
     value:
     - client

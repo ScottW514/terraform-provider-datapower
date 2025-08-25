@@ -104,7 +104,6 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(2, 4),
 				},
 				Default: int64default.StaticInt64(3),
@@ -138,7 +137,6 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1024, 32768),
 				},
 				Default: int64default.StaticInt64(4096),
@@ -148,7 +146,6 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1024, 32768),
 				},
 				Default: int64default.StaticInt64(4096),
@@ -158,7 +155,6 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 600),
 				},
 				Default: int64default.StaticInt64(7),
@@ -168,7 +164,6 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 60),
 				},
 				Default: int64default.StaticInt64(3),

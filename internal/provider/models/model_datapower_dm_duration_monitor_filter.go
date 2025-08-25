@@ -48,37 +48,44 @@ var DmDurationMonitorFilterObjectDefault = map[string]attr.Value{
 	"value":  types.Int64Null(),
 	"action": types.StringNull(),
 }
-var DmDurationMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the logs when the threshold action is taken.", "", "").String,
-			Computed:            true,
+
+func GetDmDurationMonitorFilterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmDurationMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the logs when the threshold action is taken.", "", "").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the threshold value in milliseconds.", "", "").String,
+				Computed:            true,
+			},
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.", "", "filter_action").String,
+				Computed:            true,
+			},
 		},
-		"value": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the threshold value in milliseconds.", "", "").String,
-			Computed:            true,
-		},
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.", "", "filter_action").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmDurationMonitorFilterDataSourceSchema
 }
-var DmDurationMonitorFilterResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the logs when the threshold action is taken.", "", "").String,
-			Required:            true,
+func GetDmDurationMonitorFilterResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmDurationMonitorFilterResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the logs when the threshold action is taken.", "", "").String,
+				Required:            true,
+			},
+			"value": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the threshold value in milliseconds.", "", "").String,
+				Required:            true,
+			},
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.", "", "filter_action").String,
+				Required:            true,
+			},
 		},
-		"value": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the threshold value in milliseconds.", "", "").String,
-			Required:            true,
-		},
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.", "", "filter_action").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmDurationMonitorFilterResourceSchema
 }
 
 func (data DmDurationMonitorFilter) IsNull() bool {
@@ -99,6 +106,7 @@ func (data DmDurationMonitorFilter) ToBody(ctx context.Context, pathRoot string)
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

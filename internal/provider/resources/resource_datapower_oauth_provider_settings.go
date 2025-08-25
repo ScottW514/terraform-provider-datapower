@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &OAuthProviderSettingsResource{}
@@ -112,22 +113,31 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 			"supported_grant_types":  models.GetDmOAuthProviderGrantTypeResourceSchema("Specify the supported grant types. Each grant type defines a method to grant authorization to client applications.", "supported-grant-types", "", false),
 			"supported_client_types": models.GetDmAllowedClientTypeResourceSchema("Supported client types", "supported-client-types", "", false),
 			"apic_provider_base_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .", "apic-provider-base-path", "").AddDefaultValue("/").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .", "apic-provider-base-path", "").AddDefaultValue("/").AddRequiredWhen(models.OAuthProviderSettingsAPICProviderBasePathCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsAPICProviderBasePathCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("/"),
 			},
 			"apic_authorize_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .", "apic-authorize-endpoint", "").AddDefaultValue("/oauth2/authorize").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .", "apic-authorize-endpoint", "").AddDefaultValue("/oauth2/authorize").AddRequiredWhen(models.OAuthProviderSettingsAPICAuthorizeEndpointCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/oauth2/authorize"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsAPICAuthorizeEndpointCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("/oauth2/authorize"),
 			},
 			"apic_token_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .", "apic-token-endpoint", "").AddDefaultValue("/oauth2/token").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .", "apic-token-endpoint", "").AddDefaultValue("/oauth2/token").AddRequiredWhen(models.OAuthProviderSettingsAPICTokenEndpointCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/oauth2/token"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsAPICTokenEndpointCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("/oauth2/token"),
 			},
 			"apic_enable_introspection": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.", "apic-enable-introspection", "").AddDefaultValue("false").String,
@@ -136,38 +146,44 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 				Default:             booldefault.StaticBool(false),
 			},
 			"apic_introspect_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .", "apic-introspect-endpoint", "").AddDefaultValue("/oauth2/introspect").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .", "apic-introspect-endpoint", "").AddDefaultValue("/oauth2/introspect").AddRequiredWhen(models.OAuthProviderSettingsAPICIntrospectEndpointCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/oauth2/introspect"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsAPICIntrospectEndpointCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("/oauth2/introspect"),
 			},
 			"apic_token_secret": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Token secret", "apic-token-secret", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Token secret", "apic-token-secret", "crypto_sskey").AddRequiredWhen(models.OAuthProviderSettingsAPICTokenSecretCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsAPICTokenSecretCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"apic_one_time_use_accesstoken": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("One-time use access token", "apic-enable-one-time-use-access-token", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("One-time use access token", "apic-enable-one-time-use-access-token", "").AddDefaultValue("false").AddRequiredWhen(models.OAuthProviderSettingsAPICOneTimeUseAccesstokenCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"apic_access_token_ttl": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in seconds that an access token remains valid. The default value is 3600.", "apic-access-token-ttl", "").AddIntegerRange(1, 63244800).AddDefaultValue("3600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in seconds that an access token remains valid. The default value is 3600.", "apic-access-token-ttl", "").AddIntegerRange(1, 63244800).AddDefaultValue("3600").AddRequiredWhen(models.OAuthProviderSettingsAPICAccessTokenTTLCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 63244800),
+					validators.ConditionalRequiredInt64(models.OAuthProviderSettingsAPICAccessTokenTTLCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(3600),
 			},
 			"apic_auth_code_ttl": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in seconds that an authorization code remains valid. The default value is 300.", "apic-auth-code-ttl", "").AddIntegerRange(1, 600).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in seconds that an authorization code remains valid. The default value is 300.", "apic-auth-code-ttl", "").AddIntegerRange(1, 600).AddDefaultValue("300").AddRequiredWhen(models.OAuthProviderSettingsAPICAuthCodeTTLCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 600),
+					validators.ConditionalRequiredInt64(models.OAuthProviderSettingsAPICAuthCodeTTLCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(300),
 			},
@@ -184,22 +200,22 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 				Default:             booldefault.StaticBool(true),
 			},
 			"apic_refresh_token_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of refresh tokens to allow to be generated. The default value is 10.", "apic-refresh-token-limit", "").AddIntegerRange(1, 4096).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of refresh tokens to allow to be generated. The default value is 10.", "apic-refresh-token-limit", "").AddIntegerRange(1, 4096).AddDefaultValue("10").AddRequiredWhen(models.OAuthProviderSettingsAPICRefreshTokenLimitCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 4096),
+					validators.ConditionalRequiredInt64(models.OAuthProviderSettingsAPICRefreshTokenLimitCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(10),
 			},
 			"apic_refresh_token_ttl": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in seconds that a refresh token remains valid. The default value is 5400.", "apic-refresh-token-ttl", "").AddIntegerRange(2, 252979200).AddDefaultValue("5400").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in seconds that a refresh token remains valid. The default value is 5400.", "apic-refresh-token-ttl", "").AddIntegerRange(2, 252979200).AddDefaultValue("5400").AddRequiredWhen(models.OAuthProviderSettingsAPICRefreshTokenTTLCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(2, 252979200),
+					validators.ConditionalRequiredInt64(models.OAuthProviderSettingsAPICRefreshTokenTTLCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(5400),
 			},
@@ -208,7 +224,6 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 2529792000),
 				},
 				Default: int64default.StaticInt64(0),
@@ -226,8 +241,11 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 				Default:             booldefault.StaticBool(false),
 			},
 			"advanced_scope_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to send scope information for validation. This external endpoint is where the specified scope is verified. You must define this property for advanced scope validation.", "advanced-scope-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to send scope information for validation. This external endpoint is where the specified scope is verified. You must define this property for advanced scope validation.", "advanced-scope-url", "").AddRequiredWhen(models.OAuthProviderSettingsAdvancedScopeURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsAdvancedScopeURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"adv_scope_tls_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS profile to access advanced scope URL", "advanced-scope-tls-profile", "ssl_client_profile").String,
@@ -296,8 +314,11 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 			},
 			"metadata_from": models.GetDmMetadataFromTypeResourceSchema("Obtain metadata from", "metadata-from", "", false),
 			"metadata_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to a remote server where the custom metadata is stored. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "metadata-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to a remote server where the custom metadata is stored. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "metadata-url", "").AddRequiredWhen(models.OAuthProviderSettingsMetadataURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsMetadataURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"metadata_ssl_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS profile to access metadata URL", "metadata-ssl-profile", "ssl_client_profile").String,
@@ -316,8 +337,11 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 				Default:             stringdefault.StaticString("X-API-OAuth-Metadata-For-Payload"),
 			},
 			"external_revocation_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify an external endpoint through which the token management is accomplished. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "external-revocation-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify an external endpoint through which the token management is accomplished. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "external-revocation-url", "").AddRequiredWhen(models.OAuthProviderSettingsExternalRevocationURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsExternalRevocationURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"external_revocation_ssl_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("External management TLS client profile", "external-revocation-ssl-profile", "ssl_client_profile").String,
@@ -354,7 +378,6 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4294967295),
 				},
 				Default: int64default.StaticInt64(900),
@@ -381,40 +404,50 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 				Default: stringdefault.StaticString("native"),
 			},
 			"api_security_token_manager": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("API security token manager", "api-security-token-manager", "api_security_token_manager").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("API security token manager", "api-security-token-manager", "api_security_token_manager").AddDefaultValue("default").AddRequiredWhen(models.OAuthProviderSettingsAPISecurityTokenManagerCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("default"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsAPISecurityTokenManagerCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("default"),
 			},
 			"enable_application_revocation": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable revocation by application. Enabling application revocation allows the application to revoke consent before the token expires.", "apic-app-revoke-enable", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable revocation by application. Enabling application revocation allows the application to revoke consent before the token expires.", "apic-app-revoke-enable", "").AddDefaultValue("false").AddRequiredWhen(models.OAuthProviderSettingsEnableApplicationRevocationCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"application_revocation_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Application revocation endpoint", "apic-app-revoke-endpoint", "").AddDefaultValue("/oauth2/revoke").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Application revocation endpoint", "apic-app-revoke-endpoint", "").AddDefaultValue("/oauth2/revoke").AddRequiredWhen(models.OAuthProviderSettingsApplicationRevocationEndpointCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/oauth2/revoke"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsApplicationRevocationEndpointCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("/oauth2/revoke"),
 			},
 			"enable_owner_revocation": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable revocation by resource owner. Enabling resource owner revocation allows the resource owner to revoke consent before the token expires.", "apic-owner-revoke-enable", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable revocation by resource owner. Enabling resource owner revocation allows the resource owner to revoke consent before the token expires.", "apic-owner-revoke-enable", "").AddDefaultValue("false").AddRequiredWhen(models.OAuthProviderSettingsEnableOwnerRevocationCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"owner_revocation_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Resource owner revocation endpoint", "apic-owner-revoke-endpoint", "").AddDefaultValue("/oauth2/issued").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource owner revocation endpoint", "apic-owner-revoke-endpoint", "").AddDefaultValue("/oauth2/issued").AddRequiredWhen(models.OAuthProviderSettingsOwnerRevocationEndpointCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/oauth2/issued"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsOwnerRevocationEndpointCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("/oauth2/issued"),
 			},
 			"token_validation_req": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Token validation requirement", "token-validation-requirement", "").AddStringEnum("connected", "active", "custom").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Token validation requirement", "token-validation-requirement", "").AddStringEnum("connected", "active", "custom").AddRequiredWhen(models.OAuthProviderSettingsTokenValidationReqCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("connected", "active", "custom"),
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsTokenValidationReqCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"third_party_azurl": schema.StringAttribute{
@@ -426,25 +459,29 @@ func (r *OAuthProviderSettingsResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"third_party_introspect_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint for token-introspection operation. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "third-party-introspect-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint for token-introspection operation. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "third-party-introspect-url", "").AddRequiredWhen(models.OAuthProviderSettingsThirdPartyIntrospectURLCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsThirdPartyIntrospectURLCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"third_party_introspect_cache_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cache type", "third-party-introspect-cache-type", "").AddStringEnum("Protocol", "NoCache", "TimeToLive").AddDefaultValue("NoCache").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Cache type", "third-party-introspect-cache-type", "").AddStringEnum("Protocol", "NoCache", "TimeToLive").AddDefaultValue("NoCache").AddRequiredWhen(models.OAuthProviderSettingsThirdPartyIntrospectCacheTypeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("Protocol", "NoCache", "TimeToLive"),
+					validators.ConditionalRequiredString(models.OAuthProviderSettingsThirdPartyIntrospectCacheTypeCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("NoCache"),
 			},
 			"third_party_introspect_cache_time_to_live": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds for third-party provider responses in the cache. The default value is 900.", "third-party-introspect-cache-ttl", "").AddIntegerRange(0, 4294967295).AddDefaultValue("900").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds for third-party provider responses in the cache. The default value is 900.", "third-party-introspect-cache-ttl", "").AddIntegerRange(0, 4294967295).AddDefaultValue("900").AddRequiredWhen(models.OAuthProviderSettingsThirdPartyIntrospectCacheTimeToLiveCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 4294967295),
+					validators.ConditionalRequiredInt64(models.OAuthProviderSettingsThirdPartyIntrospectCacheTimeToLiveCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(900),
 			},

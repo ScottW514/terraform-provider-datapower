@@ -90,7 +90,7 @@ func (d *B2BGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"as_front_protocol": schema.ListNestedAttribute{
 							MarkdownDescription: "Protocol handlers",
-							NestedObject:        models.DmASFrontProtocolDataSourceSchema,
+							NestedObject:        models.GetDmASFrontProtocolDataSourceSchema(),
 							Computed:            true,
 						},
 						"as1mdn_email": schema.StringAttribute{
@@ -111,12 +111,12 @@ func (d *B2BGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"b2b_profiles": schema.ListNestedAttribute{
 							MarkdownDescription: "Active partner profiles",
-							NestedObject:        models.DmB2BActiveProfileDataSourceSchema,
+							NestedObject:        models.GetDmB2BActiveProfileDataSourceSchema(),
 							Computed:            true,
 						},
 						"b2b_groups": schema.ListNestedAttribute{
 							MarkdownDescription: "Active profile groups",
-							NestedObject:        models.DmB2BActiveGroupDataSourceSchema,
+							NestedObject:        models.GetDmB2BActiveGroupDataSourceSchema(),
 							Computed:            true,
 						},
 						"document_routing_preprocessor_type": schema.StringAttribute{
@@ -191,7 +191,7 @@ func (d *B2BGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 						},
 						"cpa_entries": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify CPA entries. Each CPA entry binds an ebXML messaging service (ebMS) to provide partnership interactions between the internal and partner.",
-							NestedObject:        models.DmB2BCPAEntryDataSourceSchema,
+							NestedObject:        models.GetDmB2BCPAEntryDataSourceSchema(),
 							Computed:            true,
 						},
 						"sql_data_source": schema.StringAttribute{

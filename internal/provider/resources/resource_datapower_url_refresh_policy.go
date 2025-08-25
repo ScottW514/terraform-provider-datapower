@@ -84,7 +84,7 @@ func (r *URLRefreshPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"url_refresh_rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit or delete a refresh rule", "rule", "").String,
-				NestedObject:        models.DmURLRefreshRuleResourceSchema,
+				NestedObject:        models.GetDmURLRefreshRuleResourceSchema(),
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -45,6 +45,7 @@ import (
 	"github.com/tidwall/sjson"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 {{- $name := .Name}}
@@ -53,7 +54,7 @@ type {{.Name}} struct {
     {{- if .Type}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
         {{- if .WriteOnly}}
-	{{toGoName .TfName}}Update types.Bool `tfsdk:"{{.TfName}}_update"`
+	{{toGoName .TfName}}Version types.Int64 `tfsdk:"{{.TfName}}_version"`
         {{- end}}
     {{- else if .DmType}}
 	{{toGoName .TfName}} *{{.DmType}} `tfsdk:"{{.TfName}}"`
@@ -64,19 +65,105 @@ type {{.Name}} struct {
 {{- end}}
 }
 
-{{- if hasWriteOnlyAttribute .Attributes}}
+{{- if .WriteOnlyAttrs}}
 type {{.Name}}WO struct {
     {{- range .Attributes}}
         {{- if and .Type (not .WriteOnly)}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
         {{- else if and .DmType (not .WriteOnly)}}
-	{{toGoName .TfName}} *{{.DmType}} `tfsdk:"{{.TfName}}"`
+	{{toGoName .TfName}} *{{.DmType}}{{if .WriteOnlyAttrs}}WO{{end}} `tfsdk:"{{.TfName}}"`
         {{- end}}
     {{- end}}
     {{- if not .ModelOnly}}
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
     {{- end}}
 }
+{{- end}}
+
+{{$root := .}}
+{{- range .Attributes}}
+    {{- if and (len .RequiredWhen)}}
+var {{$root.Name}}{{.Name}}CondVal = validators.Evaluation{
+        {{- range .RequiredWhen}}
+    Evaluation: "{{.Evaluation}}",
+            {{- if len .Conditions}}
+    Conditions: []validators.Evaluation{
+                {{- range .Conditions}}
+        {
+            Evaluation: "{{.Evaluation}}",
+                    {{- if len .Conditions}}
+            Conditions: []validators.Evaluation{
+                        {{- range .Conditions}}
+                {
+                    Evaluation: "{{.Evaluation}}",
+                            {{- if len .Conditions}}
+                    Conditions: []validators.Evaluation{
+                                {{- range .Conditions}}
+                        {
+                            Evaluation: "{{.Evaluation}}",
+                                    {{- if len .Conditions}}
+                            Conditions: []validators.Evaluation{
+                                        {{- range .Conditions}}
+                                {
+                                    Evaluation: "{{.Evaluation}}",
+                                    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
+                                    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
+                                    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
+                                            {{- if .AttrPath}}
+                                    AttrPath: {{quote .AttrPath}},
+                                            {{- end}}
+                                    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
+                                },
+                                        {{- end}}
+                            },
+                                    {{- else if not (strContains .Evaluation "logical")}}
+                            Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
+                            AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
+                            AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
+                                        {{- if .AttrPath}}
+                            AttrPath: {{quote .AttrPath}},
+                                        {{- end}}
+                            Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
+                                    {{- end}}
+                        },
+                                {{- end}}
+                    },
+                            {{- else if not (strContains .Evaluation "logical")}}
+                    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
+                    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
+                    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
+                                {{- if .AttrPath}}
+                    AttrPath: {{quote .AttrPath}},
+                                {{- end}}
+                    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
+                            {{- end}}
+                },
+                        {{- end}}
+            },
+                    {{- else if not (strContains .Evaluation "logical")}}
+            Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
+            AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
+            AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
+                        {{- if .AttrPath}}
+            AttrPath: {{quote .AttrPath}},
+                        {{- end}}
+            Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
+                    {{- end}}
+        },
+                {{- end}}
+    },
+            {{- else if not (strContains .Evaluation "logical")}}
+    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
+    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
+    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
+                {{- if .AttrPath}}
+    AttrPath: {{quote .AttrPath}},
+                {{- end}}
+    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
+            {{- end}}
+        {{- end}}
+}
+    {{- end}}
 {{- end}}
 
 var {{.Name}}ObjectType = map[string]attr.Type{
@@ -91,7 +178,7 @@ var {{.Name}}ObjectType = map[string]attr.Type{
     "{{.TfName}}": types.ObjectType{ AttrTypes: {{.DmType}}ObjectType },
     {{- end}}
     {{- if .WriteOnly}}
-	"{{.TfName}}_update": types.BoolType,
+	"{{.TfName}}_version": types.Int64Type,
     {{- end}}
 {{- end}}
 {{- if not .ModelOnly}}
@@ -99,18 +186,18 @@ var {{.Name}}ObjectType = map[string]attr.Type{
 {{- end}}
 }
 
-{{- if hasWriteOnlyAttribute .Attributes}}
+{{- if .WriteOnlyAttrs}}
 var {{.Name}}ObjectTypeWO = map[string]attr.Type{
     {{- range .Attributes}}
         {{- if not .WriteOnly}}
             {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
     "{{.TfName}}": types.{{.Type}}Type,
             {{- else if isObjectList .}}
-    "{{.TfName}}": types.ListType{ElemType: types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType } } ,
+    "{{.TfName}}": types.ListType{ElemType: types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} } } ,
             {{- else if eq .Type "List"}}
     "{{.TfName}}": types.ListType{ElemType: types.{{.ElementType}}Type },
             {{- else}}
-    "{{.TfName}}": types.ObjectType{ AttrTypes: {{.DmType}}ObjectType },
+    "{{.TfName}}": types.ObjectType{ AttrTypes: {{.DmType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} },
             {{- end}}
         {{- end}}
     {{- end}}
@@ -125,9 +212,6 @@ var {{.Name}}ObjectDefault = map[string]attr.Value{
     {{- range .Attributes}}
     "{{.TfName}}": 
         {{- if not (isObject .)}}types.{{.Type}}{{if len .Default}}Value({{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}}),{{else}}Null(),{{end}}
-        {{- if .WriteOnly}}
-	"{{.TfName}}_update": types.BoolValue(false),
-        {{- end}}
         {{- else}}
     types.ObjectValueMust({{.DmType}}ObjectType, {{.DmType}}ObjectDefault),
         {{- end}}
@@ -137,87 +221,125 @@ var {{.Name}}ObjectDefault = map[string]attr.Value{
     {{- $root := . }}
     {{- range .DataResource}}
         {{- $dataResource := .}}
-var {{$root.Name}}{{$dataResource}}Schema = {{$dataResource}}Schema.{{if $root.ListItem}}NestedAttributeObject{{else}}SingleNestedAttribute{{end}}{
+func Get{{$root.Name}}{{$dataResource}}Schema({{if not $root.ListItem}}description string, cliAlias string, referenceTo string{{if eq $dataResource "Resource"}}, required bool{{end}}{{end}}) {{$dataResource}}Schema.{{if $root.ListItem}}NestedAttributeObject{{else}}SingleNestedAttribute{{end}}{
+    var {{$root.Name}}{{$dataResource}}Schema = {{$dataResource}}Schema.{{if $root.ListItem}}NestedAttributeObject{{else}}SingleNestedAttribute{{end}}{
         {{- if and (eq $dataResource "DataSource") (not $root.ListItem)}}
-    Computed:            true,
+        Computed:            true,
         {{- end}}
         {{- if and (eq $dataResource "Resource") (not $root.ListItem)}}
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			{{$root.Name}}ObjectType,
-			{{$root.Name}}ObjectDefault,
-		)),
+	    Default: objectdefault.StaticValue(
+		    types.ObjectValueMust(
+			    {{$root.Name}}ObjectType,
+			    {{$root.Name}}ObjectDefault,
+		    )),
         {{- end}}
-    Attributes: map[string]{{$dataResource}}Schema.Attribute{
+        Attributes: map[string]{{$dataResource}}Schema.Attribute{
         {{- range  $root.Attributes}}
-            {{- if .Type}}
-        "{{.TfName}}": {{$dataResource}}Schema.{{if eq .Type "Object"}}SingleNested{{- if ne .ElementType "String"}}Nested{{end}}{{else}}{{.Type}}{{end}}Attribute{
-            MarkdownDescription: tfutils.NewAttributeDescription({{quote .Description}}, {{quote .CliAlias}}, {{quote (snakeCase .ReferenceTo)}})
+            {{- if and .Type (or (not .WriteOnly) (and .WriteOnly (eq $dataResource "Resource")) )}}
+            "{{.TfName}}": {{$dataResource}}Schema.{{if eq .Type "Object"}}SingleNested{{- if ne .ElementType "String"}}Nested{{end}}{{else}}{{.Type}}{{end}}Attribute{
+                MarkdownDescription: tfutils.NewAttributeDescription({{quote .Description}}, {{quote .CliAlias}}, {{quote (toTfName .ReferenceTo)}})
                 {{- if len .Enum -}}
-                .AddStringEnum({{range .Enum}}"{{.}}", {{end}})
+                    .AddStringEnum({{range .Enum}}"{{.}}", {{end}})
                 {{- end -}}
                 {{- if or (ne .Minimum 0) (ne .Maximum 0) -}}
-                .AddIntegerRange({{.Minimum}}, {{.Maximum}})
+                    .AddIntegerRange({{.Minimum}}, {{.Maximum}})
                 {{- end -}}
                 {{- if .Default -}}
-                .AddDefaultValue({{quote .Default}})
+                    .AddDefaultValue({{quote .Default}})
                 {{- end -}}
-                .String,
+                    .String,
                 {{- if or (len .Default) .Computed (eq $dataResource "DataSource")}}
-            Computed:            true,
+                Computed:            true,
                 {{- end}}
                 {{- if and .Sensitive (eq .ElementType "String")}}
-            Sensitive:            true,
+                Sensitive:            true,
                 {{- end}}
                 {{- if and .WriteOnly (eq $dataResource "Resource")}}
-            WriteOnly:           true,
+                WriteOnly:           true,
                 {{- end}}
                 {{- if eq $dataResource "Resource"}}
                     {{- if and .Required (not (len .Default)) }}
-            Required:            true,
+                Required:            true,
                     {{- else}}
-            Optional:            true,
+                Optional:            true,
                     {{- end}}
-                    {{- if len .Enum}}
-            Validators: []validator.String{
-                stringvalidator.OneOf({{range .Enum}}"{{.}}", {{end}}),
-            },
-                    {{- else if or (len .StringPatterns) (len .StringExclude) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
-            Validators: []validator.String{
-                        {{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
-                stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+                    {{- if and (ne .Type "Bool") (or (len .Enum) (len .StringPatterns) (len .StringExclude) (ne .StringMinLength 0) (ne .StringMaxLength 0) (len .RequiredWhen) (ne .Minimum 0) (ne .Maximum 0))}}
+                Validators: []validator.{{.Type}}{
+                        {{- if eq .Type "String"}}
+                            {{- if len .Enum}}
+                    stringvalidator.OneOf({{range .Enum}}"{{.}}", {{end}}),
+                            {{- else}}
+                                {{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
+                    stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+                                {{- end}}
+                                {{- range .StringPatterns}}
+                    stringvalidator.RegexMatches(regexp.MustCompile({{quote .}}), "Must match :" + {{quote .}}),
+                                {{- end}}
+                                {{- if len .StringExclude}}
+                    stringvalidator.NoneOf([]string{ {{range .StringExclude}}{{quote .}},{{end}} }...),
+                                {{- end}}
+                            {{- end}}
+                        {{- else if eq .Type "Int64"}}
+                            {{- if or (ne .Minimum 0) (ne .Maximum 0)}}
+                    int64validator.Between({{.Minimum}}, {{.Maximum}}),
+                            {{- end}}
                         {{- end}}
-                        {{- range .StringPatterns}}
-                stringvalidator.RegexMatches(regexp.MustCompile({{quote .}}), "Must match :" + {{quote .}}),
+                        {{- if and (len .RequiredWhen)}}
+                    validators.ConditionalRequired{{.Type}}({{$root.Name}}{{.Name}}CondVal, validators.Evaluation{}, {{if len .Default}}true{{else}}false{{end}}),
                         {{- end}}
-                        {{- if len .StringExclude}}
-                stringvalidator.NoneOf([]string{ {{range .StringExclude}}{{quote .}},{{end}} }...),
-                        {{- end}}
-            },
-                    {{- else if or (ne .Minimum 0) (ne .Maximum 0)}}
-            Validators: []validator.Int64{
-                int64validator.Between({{.Minimum}}, {{.Maximum}}),
-            },
+                },
                     {{- end}}
                     {{- if and (len .Default) (eq .Type "Int64")}}
-            Default:             int64default.StaticInt64({{.Default}}),
+                Default:             int64default.StaticInt64({{.Default}}),
                     {{- else if and (len .Default) (eq .Type "Bool")}}
-            Default:             booldefault.StaticBool({{.Default}}),
+                Default:             booldefault.StaticBool({{.Default}}),
                     {{- else if and (len .Default) (eq .Type "String")}}
-            Default:             stringdefault.StaticString({{quote .Default}}),
+                Default:             stringdefault.StaticString({{quote .Default}}),
                     {{- end}}
                 {{- end}}
                 {{- if or .Computed .Internal}}
-            PlanModifiers: []planmodifier.{{.Type}}{
-                {{snakeCase .Type}}planmodifier.UseStateForUnknown(),
-            },
+                PlanModifiers: []planmodifier.{{.Type}}{
+                {{lower .Type}}planmodifier.UseStateForUnknown(),
+                },
                 {{- end}}
+            },
+            {{- else if and .DmType (or (not .WriteOnly) (and .WriteOnly (eq $dataResource "Resource")) )}}
+            "{{.TfName}}": Get{{.DmType}}{{$dataResource}}Schema({{quote .Description}}, {{quote .CliAlias}}, {{quote (toTfName .ReferenceTo)}}{{if eq $dataResource "Resource"}}, {{if .Required}}true{{else}}false{{end}}{{end}}),
+            {{- end}}
+        	{{- if and .WriteOnly (eq $dataResource "Resource")}}
+			"{{.TfName}}_version": {{$dataResource}}Schema.Int64Attribute{
+				MarkdownDescription: "Changes to this value trigger an update to `write_only` value.",
+                Optional:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(
+						validators.Evaluation{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "{{.TfName}}",
+							AttrType:    "String",
+							AttrDefault: "",
+							Value:       []string{""},
+						}, validators.Evaluation{}, false),
+				},
+			},
+	        {{- end}}
+        {{- end}}
         },
-            {{- else if .DmType}}
-        "{{.TfName}}": Get{{.DmType}}{{$dataResource}}Schema({{quote .Description}}, {{quote .CliAlias}}, {{quote (snakeCase .ReferenceTo)}}{{if eq $dataResource "Resource"}}, {{if .Required}}true{{else}}false{{end}}{{end}}),
+    }
+
+        {{- if not $root.ListItem}}
+            {{- if eq $dataResource "Resource"}}
+    {{$root.Name}}{{$dataResource}}Schema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+    if required {
+       {{$root.Name}}{{$dataResource}}Schema.Required = true
+    } else {
+        {{$root.Name}}{{$dataResource}}Schema.Optional = true
+		{{$root.Name}}{{$dataResource}}Schema.Computed = true
+    }
+            {{- else}}
+    {{$root.Name}}{{$dataResource}}Schema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
             {{- end}}
         {{- end}}
-    },
+    return {{$root.Name}}{{$dataResource}}Schema
 }
     {{- end}}
 {{- end}}
@@ -235,7 +357,7 @@ func (data {{.Name}}) GetPath() string {
     {{- end}}
     return rest_path
 }
-    {{- if hasWriteOnlyAttribute .Attributes}}
+    {{- if .WriteOnlyAttrs}}
 
 func (data {{.Name}}WO) GetPath() string {
     rest_path := {{quote .RestEndpoint}}
@@ -269,46 +391,28 @@ func (data {{.Name}}) IsNull() bool {
 	return true
 }
 
-{{- if hasWriteOnlyAttribute .Attributes}}
+{{- if .WriteOnlyAttrs}}
 func (data {{.Name}}WO) IsNull() bool {
-{{- range .Attributes}}
-    {{- if not .WriteOnly}}
-        {{- if .Type}}
+    {{- range .Attributes}}
+        {{- if not .WriteOnly}}
+            {{- if .Type}}
     if !data.{{toGoName .TfName}}.IsNull() {
         return false
     }
-        {{- else if .DmType}}
+            {{- else if .DmType}}
     if data.{{toGoName .TfName}} != nil {
         if !data.{{toGoName .TfName}}.IsNull() {
             return false
         }
     }
+            {{- end}}
         {{- end}}
     {{- end}}
-{{- end}}
 	return true
 }
 {{- end}}
 
-{{- if and (.ModelOnly) (not .ListItem)}}
-func Get{{.Name}}DataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-    {{.Name}}DataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-    return {{.Name}}DataSourceSchema
-}
-
-func Get{{.Name}}ResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-    if required {
-        {{.Name}}ResourceSchema.Required = true
-    } else {
-        {{.Name}}ResourceSchema.Optional = true
-		{{.Name}}ResourceSchema.Computed = true
-    }
-    {{.Name}}ResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-    return {{.Name}}ResourceSchema
-}
-{{- end}}
-
-func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string) string {
+func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string{{if .WriteOnlyAttrs}}, config *{{.Name}}{{end}}) string {
     if pathRoot != "" {
         pathRoot = pathRoot + "."
     }
@@ -318,26 +422,38 @@ func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string) string {
 {{- else if eq .Name "Domain"}}
 		body, _ = sjson.Set(body, "{{.Name}}.name", data.AppDomain.ValueString())
 {{- end}}
+{{$root := .}}
 {{- range .Attributes}}
     {{- if not .Internal}}
         {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
             {{- if and (ne .Name "AppDomain")}}
+                {{- if .WriteOnly}}
+	if !data.{{toGoName .TfName}}.IsNull() || !data.{{toGoName .TfName}}Version.IsNull() {
+        if data.{{toGoName .TfName}}.IsNull() && config != nil {
+            data.{{toGoName .TfName}} = config.{{toGoName .TfName}}
+        }
+                {{- else}}
 	if !data.{{toGoName .TfName}}.IsNull() {
+                {{- end}}
 		body, _ = sjson.Set(body, pathRoot+{{.Path}}, {{if eq .Type "Bool"}}tfutils.StringFromBool(data.{{toGoName .TfName}}, {{quote .BoolType}}){{else}}data.{{toGoName .TfName}}.Value{{.Type}}(){{end}})
 	}
-        {{- end}}
+            {{- end}}
         {{- else if isList .}}
 	if !data.{{toGoName .TfName}}.IsNull() {
-		var values []{{if isStringList .}}string{{else}}{{.ElementType}}{{end}}
-		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
-		for _, val := range values {
-			body, _ = sjson.Set{{if ne .ElementType "String"}}Raw{{end}}(body, pathRoot+{{.Path}}+".-1", {{if eq .ElementType "String"}}map[string]string{"value": val}{{else}}val.ToBody(ctx, ""){{end}})
+		var dataValues []{{if isStringList .}}string{{else}}{{.ElementType}}{{end}}
+		data.{{toGoName .TfName}}.ElementsAs(ctx, &dataValues, false)
+            {{- if .WriteOnlyAttrs}}
+		var configValues []{{if isStringList .}}string{{else}}{{.ElementType}}{{end}}
+		config.{{toGoName .TfName}}.ElementsAs(ctx, &configValues, false)
+            {{- end}}
+		for {{if .WriteOnlyAttrs}}idx{{else}}_{{end}}, val := range dataValues {
+			body, _ = sjson.Set{{if ne .ElementType "String"}}Raw{{end}}(body, pathRoot+{{.Path}}+".-1", {{if eq .ElementType "String"}}map[string]string{"value": val}{{else}}val.ToBody(ctx, ""{{if .WriteOnlyAttrs}}, &configValues[idx]{{end}}){{end}})
 		}
 	}
         {{- else if isObject .}}
 	if data.{{toGoName .TfName}} != nil {
         if !data.{{toGoName .TfName}}.IsNull() {
-    		body, _ = sjson.SetRaw(body, pathRoot+{{.Path}}, data.{{toGoName .TfName}}.ToBody(ctx, ""))
+    		body, _ = sjson.SetRaw(body, pathRoot+{{.Path}}, data.{{toGoName .TfName}}.ToBody(ctx, ""{{if .WriteOnlyAttrs}}, &config.{{.Name}}{{end}}))
         }
 	}
         {{- end}}
@@ -375,10 +491,10 @@ func (data *{{.Name}}) FromBody(ctx context.Context, pathRoot string, res gjson.
             {{- if eq .ElementType "String"}}
 		data.{{toGoName .TfName}} = tfutils.ParseStringListFromGJSON(value)
             {{- else}}
-        l := []{{.ElementType}}{}
+        l := []{{.ElementType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
         if value := res.Get(`{{.Name}}`); value.Exists() {
             for _, v := range value.Array() {
-                item := {{.ElementType}}{}
+                item := {{.ElementType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
                 item.FromBody(ctx, "", v)
                 if !item.IsNull() {
                     l = append(l, item)
@@ -386,17 +502,17 @@ func (data *{{.Name}}) FromBody(ctx context.Context, pathRoot string, res gjson.
             }
         }
         if len(l) > 0 {
-            data.{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: {{.ElementType}}ObjectType}, l)
+            data.{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}}, l)
         } else {
-            data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType})
+            data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}})
         }
             {{- end}}
 	} else {
-		data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if eq .ElementType "String"}}types.StringType{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType }{{- end}})
+		data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if eq .ElementType "String"}}types.StringType{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} }{{- end}})
 	}
         {{- else if isObject .}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-        data.{{toGoName .TfName}} = &{{.DmType}}{}
+        data.{{toGoName .TfName}} = &{{.DmType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
     	data.{{toGoName .TfName}}.FromBody(ctx, "", value)
 	} else {
     	data.{{toGoName .TfName}} = nil
@@ -406,7 +522,7 @@ func (data *{{.Name}}) FromBody(ctx context.Context, pathRoot string, res gjson.
 {{- end}}
 }
 
-{{- if hasWriteOnlyAttribute .Attributes}}
+{{- if .WriteOnlyAttrs}}
 func (data *{{.Name}}WO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
     if pathRoot != "" {
         pathRoot = pathRoot + "."
@@ -437,10 +553,10 @@ func (data *{{.Name}}WO) FromBody(ctx context.Context, pathRoot string, res gjso
                     {{- if eq .ElementType "String"}}
 		data.{{toGoName .TfName}} = tfutils.ParseStringListFromGJSON(value)
                     {{- else}}
-        l := []{{.ElementType}}{}
+        l := []{{.ElementType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
         if value := res.Get(`{{.Name}}`); value.Exists() {
             for _, v := range value.Array() {
-                item := {{.ElementType}}{}
+                item := {{.ElementType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
                 item.FromBody(ctx, "", v)
                 if !item.IsNull() {
                     l = append(l, item)
@@ -448,17 +564,17 @@ func (data *{{.Name}}WO) FromBody(ctx context.Context, pathRoot string, res gjso
             }
         }
         if len(l) > 0 {
-            data.{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: {{.ElementType}}ObjectType}, l)
+            data.{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}}, l)
         } else {
-            data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType})
+            data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}})
         }
                     {{- end}}
 	} else {
-		data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}types.{{.ElementType}}Type{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType }{{- end}})
+		data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}types.{{.ElementType}}Type{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} }{{- end}})
 	}
                 {{- else if isObject .}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-        data.{{toGoName .TfName}} = &{{.DmType}}{}
+        data.{{toGoName .TfName}} = &{{.DmType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
     	data.{{toGoName .TfName}}.FromBody(ctx, "", value)
 	} else {
     	data.{{toGoName .TfName}} = nil

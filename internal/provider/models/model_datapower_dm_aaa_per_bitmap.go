@@ -62,89 +62,104 @@ var DmAAAPERBitmapObjectDefault = map[string]attr.Value{
 	"x_path":         types.BoolValue(false),
 	"metadata":       types.BoolValue(false),
 }
-var DmAAAPERBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"target_url": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL sent to back end", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmAAAPERBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmAAAPERBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"target_url": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("URL sent to back end", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"original_url": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("URL sent by client", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"request_uri": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("URI of top level element in message", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"request_opname": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Local name of request element", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"http_method": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP operation (GET or POST)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"x_path": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"metadata": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"original_url": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL sent by client", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"request_uri": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URI of top level element in message", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"request_opname": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local name of request element", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"http_method": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP operation (GET or POST)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"x_path": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"metadata": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmAAAPERBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmAAAPERBitmapDataSourceSchema
 }
-var DmAAAPERBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmAAAPERBitmapObjectType,
-			DmAAAPERBitmapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"target_url": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL sent to back end", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmAAAPERBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmAAAPERBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmAAAPERBitmapObjectType,
+				DmAAAPERBitmapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"target_url": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("URL sent to back end", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"original_url": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("URL sent by client", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"request_uri": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("URI of top level element in message", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"request_opname": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Local name of request element", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"http_method": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTP operation (GET or POST)", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"x_path": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"metadata": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"original_url": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL sent by client", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"request_uri": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URI of top level element in message", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"request_opname": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local name of request element", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"http_method": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP operation (GET or POST)", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"x_path": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"metadata": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmAAAPERBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmAAAPERBitmapResourceSchema.Required = true
+	} else {
+		DmAAAPERBitmapResourceSchema.Optional = true
+		DmAAAPERBitmapResourceSchema.Computed = true
+	}
+	return DmAAAPERBitmapResourceSchema
 }
 
 func (data DmAAAPERBitmap) IsNull() bool {
@@ -171,27 +186,13 @@ func (data DmAAAPERBitmap) IsNull() bool {
 	}
 	return true
 }
-func GetDmAAAPERBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmAAAPERBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmAAAPERBitmapDataSourceSchema
-}
-
-func GetDmAAAPERBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmAAAPERBitmapResourceSchema.Required = true
-	} else {
-		DmAAAPERBitmapResourceSchema.Optional = true
-		DmAAAPERBitmapResourceSchema.Computed = true
-	}
-	DmAAAPERBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmAAAPERBitmapResourceSchema
-}
 
 func (data DmAAAPERBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.TargetUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`target-url`, tfutils.StringFromBool(data.TargetUrl, ""))
 	}

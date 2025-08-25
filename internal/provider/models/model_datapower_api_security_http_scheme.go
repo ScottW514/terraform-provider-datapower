@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,33 @@ type APISecurityHTTPScheme struct {
 	BearerValidationEndpoint   types.String                `tfsdk:"bearer_validation_endpoint"`
 	BearerValidationTlsProfile types.String                `tfsdk:"bearer_validation_tls_profile"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var APISecurityHTTPSchemeBearerValidationMethodCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "scheme",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"bearer"},
+}
+var APISecurityHTTPSchemeBearerValidationEndpointCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "scheme",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"bearer"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "bearer_validation_method",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"external-url"},
+		},
+	},
 }
 
 var APISecurityHTTPSchemeObjectType = map[string]attr.Type{
@@ -97,6 +125,7 @@ func (data APISecurityHTTPScheme) ToBody(ctx context.Context, pathRoot string) s
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

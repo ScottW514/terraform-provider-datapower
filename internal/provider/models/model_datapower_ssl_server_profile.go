@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -61,6 +62,26 @@ type SSLServerProfile struct {
 	SigAlgs                      types.List                  `tfsdk:"sig_algs"`
 	RequireClosureNotification   types.Bool                  `tfsdk:"require_closure_notification"`
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SSLServerProfileValcredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "request_client_auth",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "validate_client_cert",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
 }
 
 var SSLServerProfileObjectType = map[string]attr.Type{
@@ -191,6 +212,7 @@ func (data SSLServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -203,9 +225,9 @@ func (data SSLServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.Ciphers.IsNull() {
-		var values []string
-		data.Ciphers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Ciphers.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Ciphers`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -263,9 +285,9 @@ func (data SSLServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`PreferServerCiphers`, tfutils.StringFromBool(data.PreferServerCiphers, ""))
 	}
 	if !data.EllipticCurves.IsNull() {
-		var values []string
-		data.EllipticCurves.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.EllipticCurves.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`EllipticCurves`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -273,9 +295,9 @@ func (data SSLServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`PrioritizeChaCha`, tfutils.StringFromBool(data.PrioritizeChaCha, ""))
 	}
 	if !data.SigAlgs.IsNull() {
-		var values []string
-		data.SigAlgs.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.SigAlgs.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`SigAlgs`+".-1", map[string]string{"value": val})
 		}
 	}

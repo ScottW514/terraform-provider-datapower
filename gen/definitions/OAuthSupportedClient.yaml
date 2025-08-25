@@ -15,6 +15,7 @@ description: '<p>An OAuth client profile is the basic building block for an OAut
 cli_alias: oauth-supported-client
 cmd_group: crypto
 rest_endpoint: /mgmt/config/{domain}/OAuthSupportedClient
+write_only_attrs: true
 attributes:
 - name: Id
   tf_name: id
@@ -68,10 +69,10 @@ attributes:
     request.</li></ul></p>'
   cli_alias: customized-process-url
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Customized
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
   file_locations:
@@ -84,10 +85,10 @@ attributes:
   cli_alias: oauth-role
   test_value: '{"azsvr": true}'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Customized
     value:
-    - 'off'
+    - false
   ignored_when:
   - evaluation: logical-true
 - name: AZGrant
@@ -99,10 +100,10 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
@@ -124,16 +125,16 @@ attributes:
   required_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Customized
         value:
-        - 'off'
+        - false
       - evaluation: property-value-in-list
         attribute: OAuthRole
         value:
@@ -147,24 +148,24 @@ attributes:
         - jwt
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Customized
         value:
-        - 'off'
+        - false
       - evaluation: property-value-in-list
         attribute: OAuthRole
         value:
         - rssvr
       - evaluation: logical-or
         conditions:
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: UseValidationUrl
           value:
-          - 'on'
-        - evaluation: property-equals
+          - true
+        - evaluation: property-value-in-list
           attribute: CheckClientCredential
           value:
-          - 'on'
+          - true
   ignored_when:
   - evaluation: logical-true
 - name: CheckClientCredential
@@ -176,10 +177,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: OAuthRole
       value:
@@ -192,10 +193,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: OAuthRole
       value:
@@ -212,13 +213,13 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ClientType
         value:
         - confidential
@@ -256,14 +257,14 @@ attributes:
           - rssvr
         - evaluation: logical-or
           conditions:
-          - evaluation: property-equals
+          - evaluation: property-value-in-list
             attribute: UseValidationUrl
             value:
-            - 'on'
-          - evaluation: property-equals
+            - true
+          - evaluation: property-value-in-list
             attribute: CheckClientCredential
             value:
-            - 'on'
+            - true
   ignored_when:
   - evaluation: logical-true
 - name: ClientValCred
@@ -275,13 +276,13 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ClientType
         value:
         - confidential
@@ -295,7 +296,7 @@ attributes:
           attribute: AZGrant
           value:
           - client
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ClientAuthenMethod
       value:
       - ssl
@@ -325,10 +326,10 @@ attributes:
           attribute: OAuthRole
           value:
           - azsvr
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: CheckClientCredential
           value:
-          - 'on'
+          - true
   ignored_when:
   - evaluation: logical-true
 - name: GenerateClientSecret
@@ -344,17 +345,17 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
       - azsvr
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ClientType
         value:
         - confidential
@@ -368,7 +369,7 @@ attributes:
           attribute: AZGrant
           value:
           - client
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ClientSecret
       value:
       - ''
@@ -380,7 +381,7 @@ attributes:
       - password
       - client
       - jwt
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ClientAuthenMethod
       value:
       - secret
@@ -397,13 +398,13 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ClientType
         value:
         - confidential
@@ -417,7 +418,7 @@ attributes:
           attribute: AZGrant
           value:
           - client
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ClientAuthenMethod
       value:
       - secret
@@ -429,10 +430,10 @@ attributes:
           attribute: OAuthRole
           value:
           - azsvr
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: GenerateClientSecret
           value:
-          - 'off'
+          - false
         - evaluation: property-value-in-list
           attribute: AZGrant
           value:
@@ -454,14 +455,14 @@ attributes:
           - azsvr
         - evaluation: logical-or
           conditions:
-          - evaluation: property-equals
+          - evaluation: property-value-in-list
             attribute: CheckClientCredential
             value:
-            - 'on'
-          - evaluation: property-equals
+            - true
+          - evaluation: property-value-in-list
             attribute: UseValidationUrl
             value:
-            - 'on'
+            - true
   ignored_when:
   - evaluation: logical-true
   string_max_length: 127
@@ -479,10 +480,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
@@ -493,10 +494,10 @@ attributes:
         attribute: OAuthRole
         value:
         - rssvr
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UseValidationUrl
         value:
-        - 'on'
+        - true
 - name: ValidationURL
   type: String
   example: https://example.com/validate-token
@@ -505,18 +506,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
       - rssvr
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseValidationUrl
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
   string_max_length: 255
@@ -530,10 +531,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: OAuthRole
       value:
@@ -555,13 +556,14 @@ attributes:
     redirection URI can be an application URL; for example, <tt>mobiletrafficapp://</tt>
     that is defined with the <tt>^mobiletrafficapp:\/\/?</tt> PCRE.</p>
   cli_alias: redirect-uri
+  test_value: '["^https://example.com/redirect$"]'
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
@@ -574,20 +576,20 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: OAuthRole
       value:
       - azsvr
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Customized
         value:
-        - 'off'
+        - false
       - evaluation: property-value-not-in-list
         attribute: AZGrant
         value:
@@ -610,47 +612,48 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
         attribute: OAuthRole
         value:
         - azsvr
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UseValidationUrl
         value:
-        - 'on'
+        - true
 - name: Scope
   type: String
   example: ^MyPicture$|^MyVideo$
   description: Specifies the PCRE to check the scope. The minimum length of the expression
     is 1 character. The maximum length of the expression is 1023 characters.
   cli_alias: scope
+  test_value: '"*"'
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: CustomScopeCheck
       value:
-      - 'off'
+      - false
     - evaluation: logical-or
       conditions:
       - evaluation: property-value-in-list
         attribute: OAuthRole
         value:
         - azsvr
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UseValidationUrl
         value:
-        - 'off'
+        - false
   ignored_when:
   - evaluation: logical-true
   string_max_length: 1023
@@ -665,24 +668,24 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: CustomScopeCheck
       value:
-      - 'on'
+      - true
     - evaluation: logical-or
       conditions:
       - evaluation: property-value-in-list
         attribute: OAuthRole
         value:
         - azsvr
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: UseValidationUrl
         value:
-        - 'off'
+        - false
   ignored_when:
   - evaluation: logical-true
   file_locations:
@@ -696,10 +699,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: OAuthRole
       value:
@@ -719,10 +722,10 @@ attributes:
     conditions:
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Customized
         value:
-        - 'off'
+        - false
       - evaluation: logical-or
         conditions:
         - evaluation: property-value-in-list
@@ -735,16 +738,16 @@ attributes:
             attribute: OAuthRole
             value:
             - azsrv
-          - evaluation: property-equals
+          - evaluation: property-value-in-list
             attribute: UseValidationUrl
             value:
-            - 'off'
+            - false
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Customized
         value:
-        - 'on'
+        - true
       - evaluation: property-value-in-list
         attribute: AZGrant
         value:
@@ -762,10 +765,10 @@ attributes:
             attribute: OAuthRole
             value:
             - azsvr
-          - evaluation: property-equals
+          - evaluation: property-value-in-list
             attribute: UseValidationUrl
             value:
-            - 'off'
+            - false
   ignored_when:
   - evaluation: logical-true
 - name: LocalAZPageUrl
@@ -786,10 +789,10 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Customized
         value:
-        - 'on'
+        - true
       - evaluation: property-value-in-list
         attribute: OAuthRole
         value:
@@ -821,10 +824,10 @@ attributes:
     conditions:
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: Customized
         value:
-        - 'on'
+        - true
       - evaluation: property-value-in-list
         attribute: OAuthRole
         value:
@@ -851,10 +854,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
@@ -876,10 +879,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
@@ -888,7 +891,9 @@ attributes:
   - evaluation: logical-true
 - name: RefreshTokenAllowed
   type: Int64
+  minimum: 0
   maximum: 4096
+  default: 0
   description: <p>Sets the maximum number of refresh tokens that can be generated
     for a specific permission set. A permission set is defined as a combination of
     the resource owner, application, and protected resources. For example, <tt>jack,mobileapp1,scope1</tt>
@@ -901,10 +906,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
@@ -929,10 +934,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
@@ -943,7 +948,7 @@ attributes:
       - code
       - password
       - jwt
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: RefreshTokenAllowed
       value:
       - '0'
@@ -959,10 +964,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
@@ -973,7 +978,7 @@ attributes:
       - code
       - password
       - jwt
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: RefreshTokenAllowed
       value:
       - '0'
@@ -999,10 +1004,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: OAuthRole
       value:
@@ -1016,18 +1021,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
       - azsvr
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: CustomResourceOwner
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
   file_locations:
@@ -1072,19 +1077,19 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
-    - evaluation: property-equals
+      - false
+    - evaluation: property-value-in-list
       attribute: Caching
       value:
       - custom
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: Customized
     value:
-    - 'on'
+    - true
   file_locations:
   - local
   - store
@@ -1096,10 +1101,10 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: OAuthRole
       value:
@@ -1115,18 +1120,18 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
       - rssvr
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseValidationUrl
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true
 - name: ValidationURLSSLClient
@@ -1137,19 +1142,19 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
       - rssvr
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: UseValidationUrl
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: ValidationURLSSLClientType
       value:
       - client
@@ -1167,10 +1172,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:
@@ -1192,13 +1197,13 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: logical-or
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: ClientType
         value:
         - confidential
@@ -1212,7 +1217,7 @@ attributes:
           attribute: AZGrant
           value:
           - client
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: ClientAuthenMethod
       value:
       - jwt
@@ -1242,10 +1247,10 @@ attributes:
           attribute: OAuthRole
           value:
           - azsvr
-        - evaluation: property-equals
+        - evaluation: property-value-in-list
           attribute: CheckClientCredential
           value:
-          - 'on'
+          - true
   ignored_when:
   - evaluation: logical-true
 - name: OIDCIDTokenGenerator
@@ -1263,10 +1268,10 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: Customized
       value:
-      - 'off'
+      - false
     - evaluation: property-value-in-list
       attribute: OAuthRole
       value:

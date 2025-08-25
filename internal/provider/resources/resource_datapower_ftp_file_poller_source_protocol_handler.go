@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &FTPFilePollerSourceProtocolHandlerResource{}
@@ -96,7 +97,6 @@ func (r *FTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(25, 100000000),
 				},
 				Default: int64default.StaticInt64(60000),
@@ -140,22 +140,27 @@ func (r *FTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context,
 				Default:             booldefault.StaticBool(true),
 			},
 			"result_name_pattern": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>When Generate Result File is on, enter the PCRE to use as the match pattern to build the name of the result file. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and the desired result file name is <tt>NNNNNN.result</tt> , then the match pattern would be <tt>\"([0-9]{6})\\.input$\"</tt> and the result pattern would be <tt>\"$1.result\"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>\"(.*)\"</tt> and the result pattern would be <tt>\"../result/$1\"</tt> .</p>", "result-name-pattern", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>When Generate Result File is on, enter the PCRE to use as the match pattern to build the name of the result file. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and the desired result file name is <tt>NNNNNN.result</tt> , then the match pattern would be <tt>\"([0-9]{6})\\.input$\"</tt> and the result pattern would be <tt>\"$1.result\"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>\"(.*)\"</tt> and the result pattern would be <tt>\"../result/$1\"</tt> .</p>", "result-name-pattern", "").AddRequiredWhen(models.FTPFilePollerSourceProtocolHandlerResultNamePatternCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.FTPFilePollerSourceProtocolHandlerResultNamePatternCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"processing_seize_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to wait to process a file that is in the processing state. Enter a value in the range 0 - 1000. The default value is 0, which means disabled.</p><p>Processing seizure allows failure handling of a poller when more than one poller polls the same target. If another poller renames a file and does not process and rename or delete it in the specified time, another poller can take over processing. A poller attempts to take over processing when the following conditions are met when compared to the processing seize pattern.</p><ol><li>The seize pattern includes the portion of the file name with the configured processing suffix to match.</li><li>The time stamp is further in the past than the wait time specified by the timeout.</li></ol><p>When these conditions are met, another poller renames the file with a fresh time stamp and processes the file. The processing assumes that the rename operation succeeded.</p>", "processing-seize-timeout", "").AddIntegerRange(0, 1000).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1000),
 				},
 				Default: int64default.StaticInt64(0),
 			},
 			"processing_seize_pattern": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the PCRE to find files that were renamed to indicate that they are in the \"being processed\" state but the processing was never completed.</p><p>The seize pattern contains two phrases. The first phrase is the portion of the file name with the configured processing suffix. The second phrase is the time stamp.</p><p>For example: <tt>(.*.processing).*[.*]([0-9]*)</tt> . This assumes that <tt>$1.processing</tt> was supplied as the renaming pattern.</p>", "processing-seize-pattern", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the PCRE to find files that were renamed to indicate that they are in the \"being processed\" state but the processing was never completed.</p><p>The seize pattern contains two phrases. The first phrase is the portion of the file name with the configured processing suffix. The second phrase is the time stamp.</p><p>For example: <tt>(.*.processing).*[.*]([0-9]*)</tt> . This assumes that <tt>$1.processing</tt> was supplied as the renaming pattern.</p>", "processing-seize-pattern", "").AddRequiredWhen(models.FTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.FTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("An XML Manager manages the compilation and caching of stylesheets and documents. The XML Manager can also control the size and depth of messages processed by this host. Specify an existing XML Manager. More than one service may use the same XML Manager.", "xml-manager", "xml_manager").AddDefaultValue("default").String,
@@ -168,7 +173,6 @@ func (r *FTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 100),
 				},
 				Default: int64default.StaticInt64(0),

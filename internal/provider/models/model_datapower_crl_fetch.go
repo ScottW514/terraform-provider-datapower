@@ -65,13 +65,14 @@ func (data CRLFetch) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "CRLFetch.name", path.Base("/mgmt/config/default/CRLFetch/CRL-Settings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
 	if !data.CrlFetchConfig.IsNull() {
-		var values []DmCRLFetchConfig
-		data.CrlFetchConfig.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmCRLFetchConfig
+		data.CrlFetchConfig.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`CRLFetchConfig`+".-1", val.ToBody(ctx, ""))
 		}
 	}

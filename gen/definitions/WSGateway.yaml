@@ -111,10 +111,10 @@ attributes:
   description: TLS server type
   cli_alias: ssl-config-type
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: AutoCreateSources
     value:
-    - 'off'
+    - false
 - name: SSLServer
   type: String
   reference_to: SSLServerProfile
@@ -123,11 +123,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AutoCreateSources
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: SSLServerConfigType
       value:
       - server
@@ -139,11 +139,11 @@ attributes:
   ignored_when:
   - evaluation: logical-or
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AutoCreateSources
       value:
-      - 'off'
-    - evaluation: property-does-not-equal
+      - false
+    - evaluation: property-value-not-in-list
       attribute: SSLServerConfigType
       value:
       - sni
@@ -351,10 +351,10 @@ attributes:
     incurs a performance penalty.</p>
   cli_alias: wsmagent-monitor-capture-mode
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: WSMAgentMonitor
     value:
-    - 'off'
+    - false
 - name: ProcessRespRulesOnOneWayMEP
   type: Bool
   default: false
@@ -426,7 +426,7 @@ attributes:
     Gateway and its targets.
   cli_alias: ssl-client
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: SSLClientConfigType
     value:
     - proxy
@@ -510,7 +510,7 @@ attributes:
     button.</p>
   cli_alias: backend-url
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: Type
     value:
     - static-backend
@@ -579,7 +579,7 @@ attributes:
     strip.
   cli_alias: request-attachments
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: RequestType
     value:
     - unprocessed
@@ -596,7 +596,7 @@ attributes:
     is strip.
   cli_alias: response-attachments
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ResponseType
     value:
     - unprocessed
@@ -613,7 +613,7 @@ attributes:
       attribute: RequestAttachments
       value:
       - unprocessed
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: RequestType
       value:
       - unprocessed
@@ -632,7 +632,7 @@ attributes:
       attribute: ResponseAttachments
       value:
       - unprocessed
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseType
       value:
       - unprocessed
@@ -653,11 +653,11 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: RequestAttachments
       value:
       - streaming
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseAttachments
       value:
       - streaming
@@ -755,10 +755,10 @@ attributes:
     on the XML Manager.
   cli_alias: element-depth
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ParserLimitsAttributeCount
@@ -769,10 +769,10 @@ attributes:
     Manager.
   cli_alias: attribute-count
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ParserLimitsMaxNodeSize
@@ -788,10 +788,10 @@ attributes:
     defined value.
   cli_alias: max-node-size
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ParserLimitsExternalReferences
@@ -805,10 +805,10 @@ attributes:
     references, such as an external entity or external DTD definition.
   cli_alias: external-references
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ParserLimitsMaxPrefixes
@@ -821,10 +821,10 @@ attributes:
     The default value is 1024. A value of 0 indicates that the limit is 1024.
   cli_alias: max-prefixes
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ParserLimitsMaxNamespaces
@@ -836,10 +836,10 @@ attributes:
     value is 1024. A value of 0 indicates that the limit is 1024.
   cli_alias: max-namespaces
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ParserLimitsMaxLocalNames
@@ -851,10 +851,10 @@ attributes:
     value is 60000. A value of 0 indicates that the limit is 60000.
   cli_alias: max-local-names
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ParserLimitsAttachmentByteCount
@@ -865,10 +865,10 @@ attributes:
     If this value is 0, no limit is enforced.
   cli_alias: attachment-byte-count
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: ParserLimitsAttachmentPackageByteCount
@@ -879,10 +879,10 @@ attributes:
     enforced.
   cli_alias: attachment-package-byte-count
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: GatewayParserLimits
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: DebugMode
@@ -908,10 +908,10 @@ attributes:
     Enter a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DebugMode
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: DebugTrigger
@@ -924,10 +924,10 @@ attributes:
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: DebugMode
     value:
-    - 'on'
+    - true
 - name: FlowControl
   type: Bool
   default: false
@@ -964,11 +964,11 @@ attributes:
   ignored_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: RequestType
       value:
       - soap
-    - evaluation: property-does-not-equal
+    - evaluation: property-value-not-in-list
       attribute: ResponseType
       value:
       - soap
@@ -1268,7 +1268,7 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSAForce
       value:
-      - 'on'
+      - true
 - name: WSADefaultFaultTo
   type: String
   default: http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous
@@ -1376,7 +1376,7 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: WSAGenStyle
       value:
       - async
@@ -1445,7 +1445,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: WSRMEnabled
     value:
-    - 'on'
+    - true
 - name: WSRMAAAPolicy
   type: String
   reference_to: AAAPolicy
@@ -1467,7 +1467,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: WSRMEnabled
     value:
-    - 'on'
+    - true
 - name: WSRMDestinationAcceptCreateSequence
   type: Bool
   default: true
@@ -1484,7 +1484,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: WSRMEnabled
     value:
-    - 'on'
+    - true
 - name: WSRMDestinationMaximumSequences
   type: Int64
   minimum: 1
@@ -1505,11 +1505,11 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: WSRMDestinationAcceptCreateSequence
       value:
-      - 'on'
+      - true
 - name: WSRMDestinationInOrder
   type: Bool
   default: false
@@ -1528,17 +1528,17 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
         attribute: WSRMDestinationAcceptCreateSequence
         value:
-        - 'on'
+        - true
       - evaluation: property-value-not-in-list
         attribute: WSRMSourceMakeOffer
         value:
-        - 'on'
+        - true
 - name: WSRMDestinationMaximumInOrderQueueLength
   type: Int64
   minimum: 1
@@ -1555,11 +1555,11 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: WSRMDestinationInOrder
       value:
-      - 'off'
+      - false
 - name: WSRMDestinationAcceptOffers
   type: Bool
   default: false
@@ -1575,11 +1575,11 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: WSRMDestinationAcceptCreateSequence
       value:
-      - 'on'
+      - true
 - name: WSRMFrontForce
   type: Bool
   default: false
@@ -1596,11 +1596,11 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: WSRMDestinationAcceptCreateSequence
       value:
-      - 'on'
+      - true
 - name: WSRMBackForce
   type: Bool
   default: false
@@ -1618,17 +1618,17 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
         attribute: WSRMDestinationAcceptCreateSequence
         value:
-        - 'on'
+        - true
       - evaluation: property-value-not-in-list
         attribute: WSRMSourceMakeOffer
         value:
-        - 'on'
+        - true
 - name: WSRMBackCreateSequence
   type: Bool
   default: false
@@ -1641,7 +1641,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: WSRMEnabled
     value:
-    - 'on'
+    - true
 - name: WSRMFrontCreateSequence
   type: Bool
   default: false
@@ -1659,7 +1659,7 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: WSAMode
       value:
@@ -1682,11 +1682,11 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: property-value-not-in-list
       attribute: WSRMBackCreateSequence
       value:
-      - 'on'
+      - true
 - name: WSRMUsesSequenceSSL
   type: Bool
   default: false
@@ -1711,21 +1711,21 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'on'
+        - true
       - evaluation: property-value-not-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'on'
+        - true
       - evaluation: property-value-not-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'on'
+        - true
 - name: WSRMFrontAcksTo
   type: String
   description: <p>Selects a particular front-side protocol handler to request to receive
@@ -1752,17 +1752,17 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'on'
+        - true
       - evaluation: property-value-not-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'on'
+        - true
 - name: WSRMBackAcksTo
   type: String
   description: <p>Selects a particular handler to receive asynchronous WS-ReliableMessaging
@@ -1786,17 +1786,17 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'on'
+        - true
       - evaluation: property-value-not-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'on'
+        - true
 - name: WSRMSourceMaximumSequences
   type: Int64
   minimum: 1
@@ -1818,21 +1818,21 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
       - evaluation: property-value-not-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'on'
+        - true
       - evaluation: property-value-not-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'on'
-      - evaluation: property-equals
+        - true
+      - evaluation: property-value-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'off'
+        - false
 - name: WSRMSourceRetransmissionInterval
   type: Int64
   minimum: 2
@@ -1852,21 +1852,21 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'off'
+        - false
 - name: WSRMSourceExponentialBackoff
   type: Bool
   default: true
@@ -1882,21 +1882,21 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'off'
+        - false
 - name: WSRMSourceMaximumRetransmissions
   type: Int64
   minimum: 1
@@ -1914,21 +1914,21 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'off'
+        - false
 - name: WSRMSourceMaximumQueueLength
   type: Int64
   minimum: 1
@@ -1946,21 +1946,21 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'off'
+        - false
 - name: WSRMSourceRequestAckCount
   type: Int64
   minimum: 1
@@ -1978,21 +1978,21 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'off'
+        - false
 - name: WSRMSourceInactivityClose
   type: Int64
   minimum: 10
@@ -2012,21 +2012,21 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: WSRMEnabled
       value:
-      - 'on'
+      - true
     - evaluation: logical-and
       conditions:
-      - evaluation: property-equals
+      - evaluation: property-value-in-list
         attribute: WSRMDestinationAcceptOffers
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMFrontCreateSequence
         value:
-        - 'off'
-      - evaluation: property-equals
+        - false
+      - evaluation: property-value-in-list
         attribute: WSRMBackCreateSequence
         value:
-        - 'off'
+        - false
 - name: ForcePolicyExec
   type: Bool
   default: false
@@ -2056,10 +2056,10 @@ attributes:
     does not delay error messages.
   cli_alias: delay-errors
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: RewriteErrors
     value:
-    - 'on'
+    - true
 - name: DelayErrorsDuration
   type: Int64
   minimum: 250
@@ -2074,13 +2074,13 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: DelayErrors
       value:
-      - 'on'
-    - evaluation: property-equals
+      - true
+    - evaluation: property-value-in-list
       attribute: RewriteErrors
       value:
-      - 'on'
+      - true
   ignored_when:
   - evaluation: logical-true

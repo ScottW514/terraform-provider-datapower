@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -52,6 +53,21 @@ type AMQPBroker struct {
 	ReportingInterval types.Int64                 `tfsdk:"reporting_interval"`
 	SslClient         types.String                `tfsdk:"ssl_client"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AMQPBrokerUserNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "authorization",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"plain"},
+}
+var AMQPBrokerPasswordAliasCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "authorization",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"plain"},
 }
 
 var AMQPBrokerObjectType = map[string]attr.Type{
@@ -142,6 +158,7 @@ func (data AMQPBroker) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

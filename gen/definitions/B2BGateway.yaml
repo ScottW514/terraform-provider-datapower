@@ -109,10 +109,12 @@ attributes:
   description: Active partner profiles
   cli_alias: b2b-profile
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: B2BGroups
     value:
     - ''
+  test_value: '[{partner_profile="AccTest_B2BProfile"}]'
+  test_bed_value: '[{partner_profile=datapower_b2b_profile.acc_test.id}]'
 - name: B2BGroups
   type: List
   element_type: DmB2BActiveGroup
@@ -160,6 +162,7 @@ attributes:
   - purgeonly
   required: true
   default: archpurge
+  test_value: '"purgeonly"'
   description: Purge mode
   cli_alias: arch-mode
 - name: ArchiveLocation
@@ -169,12 +172,12 @@ attributes:
     policies in the XML manager enable image (binary) data transfer.
   cli_alias: arch-dir
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ArchiveMode
     value:
     - archpurge
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ArchiveMode
     value:
     - archpurge
@@ -184,12 +187,12 @@ attributes:
     appends the current timestamp.
   cli_alias: arch-file
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ArchiveMode
     value:
     - archpurge
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ArchiveMode
     value:
     - archpurge
@@ -204,7 +207,7 @@ attributes:
     archival. The default value is 1024.
   cli_alias: arch-minimum-size
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ArchiveMode
     value:
     - archpurge
@@ -225,7 +228,7 @@ attributes:
     after archival. The minimum value is 1. The default value is 100.
   cli_alias: arch-minimum-documents
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ArchiveMode
     value:
     - archpurge
@@ -264,17 +267,17 @@ attributes:
     - 10000. The default value is 200.
   cli_alias: arch-shaping-threshold
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ArchiveMonitor
     value:
-    - 'off'
+    - false
 - name: ArchiveBackupDocuments
   dm_type: DmB2BBackupMsgType
   description: Specify the types of documents to archive. This property does not indicate
     the inbound or outbound transaction to archive.
   cli_alias: arch-backup-documents
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: ArchiveMode
     value:
     - archpurge
@@ -312,10 +315,10 @@ attributes:
     a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DebugMode
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: CPAEntries

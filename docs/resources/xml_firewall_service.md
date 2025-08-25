@@ -60,6 +60,7 @@ resource "datapower_xml_firewall_service" "test" {
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
+  - Required When: `debug_mode`=`true`
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
@@ -76,6 +77,7 @@ resource "datapower_xml_firewall_service" "test" {
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
+  - Required When: (`delay_errors`=`true` AND `rewrite_errors`=`true`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `disallow_empty_response` (Boolean) If set, only responses with message bodies are allowed (that is, not 304 and so forth).
   - CLI Alias: `disallow-empty-reply`
@@ -158,38 +160,48 @@ resource "datapower_xml_firewall_service" "test" {
   - CLI Alias: `attachment-byte-count`
   - Range: `0`-`4294967295`
   - Default value: `2000000000`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_attachment_package_byte_count` (Number) Defines the maximum number of bytes allowed for all parts of an attachment package, including the root part. Attachment packages that exceed this size will result in a failure of the transaction. If this value is 0, no limit is enforced.
   - CLI Alias: `attachment-package-byte-count`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_attribute_count` (Number) Defines the maximum number of attributes of a given element. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager.
   - CLI Alias: `attribute-count`
   - Range: `0`-`65535`
   - Default value: `128`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_bytes_scanned` (Number) Defines the maximum number of bytes scanned by the XML parser. This applies to any XML document that is parsed. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. If this value is 0, no limit is enforced.
   - CLI Alias: `bytes-scanned`
   - Default value: `4194304`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_element_depth` (Number) Defines the maximum depth of element nesting in XML parser. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager.
   - CLI Alias: `element-depth`
   - Range: `0`-`65535`
   - Default value: `512`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_external_references` (String) Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.
   - CLI Alias: `external-references`
   - Choices: `forbid`, `ignore`, `allow`
   - Default value: `forbid`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_max_local_names` (Number) Enter an integer that defines the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.
   - CLI Alias: `max-local-names`
   - Range: `0`-`4294967295`
   - Default value: `60000`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_max_namespaces` (Number) Enter an integer that defines the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.
   - CLI Alias: `max-namespaces`
   - Default value: `1024`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_max_node_size` (Number) Defines the maximum size any one node may consume. The default is 32 MB. Sizes which are powers of two result in the best performance. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. Although you set an explicit value, the DataPower Gateway uses a value that is the rounded-down, largest power of two that is smaller than the defined value.
   - CLI Alias: `max-node-size`
   - Range: `1024`-`4294967295`
   - Default value: `33554432`
+  - Required When: `firewall_parser_limits`=`true`
 - `parser_limits_max_prefixes` (Number) Enter an integer that defines the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the rage 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.
   - CLI Alias: `max-prefixes`
   - Range: `0`-`4294967295`
   - Default value: `1024`
+  - Required When: `firewall_parser_limits`=`true`
 - `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
@@ -199,9 +211,11 @@ resource "datapower_xml_firewall_service" "test" {
   - Default value: `http://www.datapower.com/param/query`
 - `remote_address` (String) Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.
   - CLI Alias: `remote-ip-address`
+  - Required When: `type`=`static-backend`
 - `remote_port` (Number) Specify the port number to monitor. Used only when Type is static-backend.
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
+  - Required When: `type`=`static-backend`
 - `request_attachments` (String) Select how to treat client requests with attachments. The default is Strip.
   - CLI Alias: `request-attachments`
   - Choices: `strip`, `reject`, `allow`, `streaming`, `unprocessed`

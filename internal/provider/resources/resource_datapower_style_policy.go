@@ -103,7 +103,7 @@ func (r *StylePolicyResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"policy_maps": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A list of processing rules their corresponding matching rule that this policy will evaluate. If a match is found, the corresponding processing rule is run. The policy runs the first processing rule with a successful match. Therefore, the order of rules in this list is important.", "match", "").String,
-				NestedObject:        models.DmPolicyMapResourceSchema,
+				NestedObject:        models.GetDmPolicyMapResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

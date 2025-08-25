@@ -45,29 +45,36 @@ var DmODRConnPropertyObjectDefault = map[string]attr.Value{
 	"conn_group_prop_name":  types.StringNull(),
 	"conn_group_prop_value": types.StringNull(),
 }
-var DmODRConnPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"conn_group_prop_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The name for a connector group property.", "odr-conn-prop-name", "").String,
-			Computed:            true,
+
+func GetDmODRConnPropertyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmODRConnPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"conn_group_prop_name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The name for a connector group property.", "odr-conn-prop-name", "").String,
+				Computed:            true,
+			},
+			"conn_group_prop_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The value for the connector group property.", "odr-conn-prop-value", "").String,
+				Computed:            true,
+			},
 		},
-		"conn_group_prop_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The value for the connector group property.", "odr-conn-prop-value", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmODRConnPropertyDataSourceSchema
 }
-var DmODRConnPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"conn_group_prop_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The name for a connector group property.", "odr-conn-prop-name", "").String,
-			Required:            true,
+func GetDmODRConnPropertyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmODRConnPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"conn_group_prop_name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The name for a connector group property.", "odr-conn-prop-name", "").String,
+				Required:            true,
+			},
+			"conn_group_prop_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The value for the connector group property.", "odr-conn-prop-value", "").String,
+				Required:            true,
+			},
 		},
-		"conn_group_prop_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("The value for the connector group property.", "odr-conn-prop-value", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmODRConnPropertyResourceSchema
 }
 
 func (data DmODRConnProperty) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmODRConnProperty) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.ConnGroupPropName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ConnGroupPropName`, data.ConnGroupPropName.ValueString())
 	}

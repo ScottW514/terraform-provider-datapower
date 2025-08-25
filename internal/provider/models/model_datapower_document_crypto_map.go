@@ -87,6 +87,7 @@ func (data DocumentCryptoMap) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -94,16 +95,16 @@ func (data DocumentCryptoMap) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`Operation`, data.Operation.ValueString())
 	}
 	if !data.XPath.IsNull() {
-		var values []string
-		data.XPath.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.XPath.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`XPath`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.NameSpaceMappings.IsNull() {
-		var values []DmNamespaceMapping
-		data.NameSpaceMappings.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmNamespaceMapping
+		data.NameSpaceMappings.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`+".-1", val.ToBody(ctx, ""))
 		}
 	}

@@ -107,13 +107,14 @@ func (data CryptoValCred) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
 	if !data.Certificate.IsNull() {
-		var values []string
-		data.Certificate.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.Certificate.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`Certificate`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -130,9 +131,9 @@ func (data CryptoValCred) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`CRLDPHandling`, data.CrldpHandling.ValueString())
 	}
 	if !data.InitialPolicySet.IsNull() {
-		var values []string
-		data.InitialPolicySet.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.InitialPolicySet.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`InitialPolicySet`+".-1", map[string]string{"value": val})
 		}
 	}

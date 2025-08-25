@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &KafkaClusterResource{}
@@ -97,28 +98,33 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"endpoint": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoints for the bootstrap process. A bootstrap server uses a host name or IP address and a port to define an endpoint address. You can add multiple nondefault bootstrap servers. For failover capability, the endpoints must be members of the same cluster.", "endpoint", "").String,
-				NestedObject:        models.DmKafkaEndpointResourceSchema,
+				NestedObject:        models.GetDmKafkaEndpointResourceSchema(),
 				Required:            true,
 			},
 			"sasl_mechanism": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.", "sasl-mechanism", "").AddStringEnum("plain", "scram-sha-256", "scram-sha-512").AddDefaultValue("plain").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.", "sasl-mechanism", "").AddStringEnum("plain", "scram-sha-256", "scram-sha-512").AddDefaultValue("plain").AddRequiredWhen(models.KafkaClusterSASLMechanismCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("plain", "scram-sha-256", "scram-sha-512"),
+					validators.ConditionalRequiredString(models.KafkaClusterSASLMechanismCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("plain"),
 			},
 			"user_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").AddRequiredWhen(models.KafkaClusterUserNameCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+					validators.ConditionalRequiredString(models.KafkaClusterUserNameCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "password_alias").AddRequiredWhen(models.KafkaClusterPasswordAliasCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.KafkaClusterPasswordAliasCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"autocommit": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to commit offsets at the defined interval or at process-completion. <ul><li>When enabled, commits offsets at the defined interval. The default interval is 5 seconds. To change the interval, set the <tt>auto.commit.interval.ms</tt> property.</li><li>When disabled, commits offsets at process-completion. You can use the batch size setting for the Kafka handle to define the number of messages to attempt to receive from the consumer.</li></ul>", "autocommit", "").AddDefaultValue("true").String,
@@ -127,15 +133,17 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.KafkaClusterSSLClientCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.KafkaClusterSSLClientCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"memory_threshold": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory to allocate in bytes. Enter a value in the range 10485760 - 1073741824. The default value is 268435456.", "memory-threshold", "").AddIntegerRange(10485760, 1073741824).AddDefaultValue("268435456").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10485760, 1073741824),
 				},
 				Default: int64default.StaticInt64(268435456),
@@ -145,7 +153,6 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 1073741824),
 				},
 				Default: int64default.StaticInt64(1048576),
@@ -161,14 +168,13 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(10),
 			},
 			"property": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify extra property to configure the connection to the Kafka server. Use this property for each extra property that is required. Some properties are unsupported and will cause a configuration failure.", "property", "").String,
-				NestedObject:        models.DmKafkaPropertyResourceSchema,
+				NestedObject:        models.GetDmKafkaPropertyResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -53,59 +53,74 @@ var DmHeaderRetentionBitmapObjectDefault = map[string]attr.Value{
 	"range":            types.BoolValue(false),
 	"mqmd":             types.BoolValue(false),
 }
-var DmHeaderRetentionBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"te": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TE", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmHeaderRetentionBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmHeaderRetentionBitmapDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"te": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("TE", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"accept__encoding": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Accept-Encoding", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"range": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Range", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"mqmd": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("MQMD", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"accept__encoding": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Accept-Encoding", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"range": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Range", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"mqmd": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("MQMD", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmHeaderRetentionBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmHeaderRetentionBitmapDataSourceSchema
 }
-var DmHeaderRetentionBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmHeaderRetentionBitmapObjectType,
-			DmHeaderRetentionBitmapObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"te": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TE", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmHeaderRetentionBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmHeaderRetentionBitmapResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmHeaderRetentionBitmapObjectType,
+				DmHeaderRetentionBitmapObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"te": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("TE", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"accept__encoding": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Accept-Encoding", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"range": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Range", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"mqmd": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("MQMD", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"accept__encoding": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Accept-Encoding", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"range": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Range", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"mqmd": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("MQMD", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmHeaderRetentionBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmHeaderRetentionBitmapResourceSchema.Required = true
+	} else {
+		DmHeaderRetentionBitmapResourceSchema.Optional = true
+		DmHeaderRetentionBitmapResourceSchema.Computed = true
+	}
+	return DmHeaderRetentionBitmapResourceSchema
 }
 
 func (data DmHeaderRetentionBitmap) IsNull() bool {
@@ -123,27 +138,13 @@ func (data DmHeaderRetentionBitmap) IsNull() bool {
 	}
 	return true
 }
-func GetDmHeaderRetentionBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmHeaderRetentionBitmapDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmHeaderRetentionBitmapDataSourceSchema
-}
-
-func GetDmHeaderRetentionBitmapResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmHeaderRetentionBitmapResourceSchema.Required = true
-	} else {
-		DmHeaderRetentionBitmapResourceSchema.Optional = true
-		DmHeaderRetentionBitmapResourceSchema.Computed = true
-	}
-	DmHeaderRetentionBitmapResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmHeaderRetentionBitmapResourceSchema
-}
 
 func (data DmHeaderRetentionBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Te.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TE`, tfutils.StringFromBool(data.Te, ""))
 	}

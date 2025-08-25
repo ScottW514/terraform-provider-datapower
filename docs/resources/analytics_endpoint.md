@@ -40,9 +40,11 @@ resource "datapower_analytics_endpoint" "test" {
 
 - `client_id` (String) Client ID
   - CLI Alias: `clientid`
+  - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
 - `client_secret_alias` (String) Client secret
   - CLI Alias: `client-secret-alias`
   - Reference to: `datapower_password_alias:id`
+  - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
 - `delivery_connections` (Number) Specify the number of connections to establish per delivery to the remote server to offload analytics data. Each connection can carry a bulk activity log. Enter a value in the range 1 - 100. The default value is 1.
   - CLI Alias: `delivery-connections`
   - Range: `1`-`100`
@@ -54,15 +56,18 @@ resource "datapower_analytics_endpoint" "test" {
 - `grant_type` (String) Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.
   - CLI Alias: `grant-type`
   - Choices: `implicit`, `password`, `application`, `accessCode`
+  - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
 - `interval` (Number) Specify the interval in seconds between offloads. Data is offloaded at this interval or when an API gateway reaches 80% of the value set for maximum records. Enter a value in the range 1 - 3600. The default value is 600
   - CLI Alias: `interval`
   - Range: `1`-`3600`
   - Default value: `600`
 - `management_url` (String) Specify the URL of management platform endpoint to retrieve a JWT. The URL must use the <tt>http</tt> or <tt>https</tt> protocol.
   - CLI Alias: `management-url`
+  - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
 - `management_url_ssl_client` (String) Management platform TLS client profile
   - CLI Alias: `management-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: (`enable_jwt`=`true` AND `management_url` protocol=`https` AND `analytics_server_url` protocol=`http`|`https`)
 - `max_delivery_memory_mb` (Number) Specify the maximum size for each delivery in MB. Enter a value in the range 1 - 1024. The default value is 512.
   - CLI Alias: `max-delivery-size`
   - Range: `1`-`1024`
@@ -84,11 +89,14 @@ resource "datapower_analytics_endpoint" "test" {
   - Default value: `60`
 - `request_topic` (String) Request topic
   - CLI Alias: `request-topic`
+  - Required When: `analytics_server_url` protocol=`dpkafka`
 - `scope` (String) Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.
   - CLI Alias: `scope`
+  - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: `analytics_server_url` protocol=`https`
 - `timeout` (Number) Specify the intra-transaction timeout for connections, which is the maximum idle time to allow in a transaction. This timer monitors idle time in the data transfer process. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 90.
   - CLI Alias: `timeout`
   - Range: `1`-`86400`

@@ -42,6 +42,7 @@ resource "datapower_dns_name_service" "test" {
 - `max_retries` (Number) For the first alive algorithm, specify the maximum number of resolution attempts to send a query to the list of name servers before an error is returned. By default, an unacknowledged resolution request is attempted 3 times.
   - CLI Alias: `retries`
   - Default value: `2`
+  - Required When: `load_balance_algorithm`=`first-alive`
 - `name_servers` (Attributes List) Specify the list of DNS servers to contact to resolve hostnames. If you define multiple servers, ensure that the sequence to contact the servers is your preferred order.
   - CLI Alias: `name-server` (see [below for nested schema](#nestedatt--name_servers))
 - `search_domains` (Attributes List) Specify the list of search domains to resolve partial hostnames.
@@ -51,6 +52,7 @@ resource "datapower_dns_name_service" "test" {
 - `timeout` (Number) For the first alive algorithm, specify the duration in seconds that the resolver waits for a response from a DNS server. After expiry, the resolver attempts the query to a different DNS server. The default value is 5.
   - CLI Alias: `timeout`
   - Default value: `5`
+  - Required When: `load_balance_algorithm`=`first-alive`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

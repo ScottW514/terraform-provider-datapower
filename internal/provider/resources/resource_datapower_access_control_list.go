@@ -80,7 +80,7 @@ func (r *AccessControlListResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"access_control_entry": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify allow and deny clauses.", "entry", "").String,
-				NestedObject:        models.DmACEResourceSchema,
+				NestedObject:        models.GetDmACEResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

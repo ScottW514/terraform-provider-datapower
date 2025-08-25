@@ -46,9 +46,6 @@ resource "datapower_sql_data_source" "test" {
   - CLI Alias: `db`
   - Choices: `DB2`, `Oracle`, `Sybase`, `MSSQLServer`, `DB2v9`, `IMS`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `password_alias` (String) Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.
-  - CLI Alias: `password-alias`
-  - Reference to: `datapower_password_alias:id`
 - `query_timeout` (Number) Specify the duration in seconds to wait for an SQL request to complete. Enter a value in the range 0 - 4294967295. The default value is 0, which uses the standard timeout in the user agent. <p>The duration is from when the service sends the request to when the service receives the results.</p><p>The query timeout must be greater than the connection timeout. With this configuration, the initial query has time to establish the connection to the remote data server.</p>
   - CLI Alias: `query-timeout`
 - `username` (String) Specify the user to establish the connection to the SQL database. The server maintains this information.
@@ -64,14 +61,17 @@ resource "datapower_sql_data_source" "test" {
   - CLI Alias: `db2-encryption-method`
   - Choices: `NoEncryption`, `SSL`
   - Default value: `NoEncryption`
+  - Required When: `database`=`DB2`
 - `encryption_method_mssql` (String) Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.
   - CLI Alias: `mssql-encryption-method`
   - Choices: `NoEncryption`, `SSL`, `RequestSSL`, `LoginSSL`
   - Default value: `NoEncryption`
+  - Required When: `database`=`MSSQLServer`
 - `encryption_method_oracle` (String) Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.
   - CLI Alias: `oracle-encryption-method`
   - Choices: `NoEncryption`, `SSL`
   - Default value: `NoEncryption`
+  - Required When: `database`=`Oracle`
 - `host_name_in_certificate` (String) Specify the hostname that the certificate must contain for hostname validation. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.
   - CLI Alias: `hostname-in-certificate`
 - `idle_timeout` (Number) Specify the duration that a connection from the connection pool can remain idle before the connection is released. Enter a value in the range 0 - 4294967295. The default value is 180. The value of 0 disables the timer.
@@ -98,11 +98,17 @@ resource "datapower_sql_data_source" "test" {
   - CLI Alias: `oracle-datasource-type`
   - Choices: `SID`, `ServiceName`
   - Default value: `SID`
+  - Required When: `database`=`Oracle`
+- `password_alias` (String) Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.
+  - CLI Alias: `password-alias`
+  - Reference to: `datapower_password_alias:id`
+  - Required When: NOT(`database`=`DB2` AND `encryption_method_db2`!=`NoEncryption` AND `keystore_ref`!=``)
 - `sql_data_source_config_nv_pairs` (Attributes List) Specify configuration parameters for the data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some parameters in the configuration file are informational and define characteristics about the environment. These parameters cannot be modified.
   - CLI Alias: `sql-config-param` (see [below for nested schema](#nestedatt--sql_data_source_config_nv_pairs))
 - `truststore_ref` (String) Truststore
   - CLI Alias: `truststore`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Required When: ((`database`=`Oracle` AND `encryption_method_oracle`!=`NoEncryption`) OR (`database`=`MSSQLServer` AND `encryption_method_mssql`!=`NoEncryption`) OR (`database`=`DB2` AND `encryption_method_db2`!=`NoEncryption`))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `validate_host_name` (Boolean) Specify whether to validate the hostname against the hostname in the server certificate. Hostname validate uses the value of the data source host. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.

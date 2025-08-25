@@ -92,6 +92,7 @@ func (data SLMPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -102,9 +103,9 @@ func (data SLMPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`ExecutionPolicy`, data.ExecutionPolicy.ValueString())
 	}
 	if !data.Statement.IsNull() {
-		var values []DmSLMStatement
-		data.Statement.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmSLMStatement
+		data.Statement.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`Statement`+".-1", val.ToBody(ctx, ""))
 		}
 	}

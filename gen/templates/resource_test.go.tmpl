@@ -44,7 +44,7 @@ func TestAccResource{{.Name}}(t *testing.T) {
 {{- $name := .Name }}
 {{- range .Attributes}}
 	{{- if and .Default (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool"))}}
-		resource.TestCheckResourceAttr("datapower_{{snakeCase $name}}.test", "{{.TfName}}", {{if .TestValue}}{{if ne .Type "String"}}{{quote .TestValue}}{{else}}{{.TestValue}}{{end}}{{else}}{{quote .Default}}{{end}}),
+		resource.TestCheckResourceAttr("datapower_{{toTfName $name}}.test", "{{.TfName}}", {{if .TestValue}}{{if ne .Type "String"}}{{quote .TestValue}}{{else}}{{.TestValue}}{{end}}{{else}}{{quote .Default}}{{end}}),
 	{{- end}}
 {{- end}}
 		}...),

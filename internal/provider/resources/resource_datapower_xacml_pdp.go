@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &XACMLPDPResource{}
@@ -92,14 +93,18 @@ func (r *XACMLPDPResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default:             booldefault.StaticBool(false),
 			},
 			"general_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.", "general-policy", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.", "general-policy", "").AddRequiredWhen(models.XACMLPDPGeneralPolicyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.XACMLPDPGeneralPolicyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"combining_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the policy-combining algorithm when not using a top-level comprehensive XACML policy file. The default is First Applicable.", "combining-alg", "").AddStringEnum("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the policy-combining algorithm when not using a top-level comprehensive XACML policy file. The default is First Applicable.", "combining-alg", "").AddStringEnum("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable").AddRequiredWhen(models.XACMLPDPCombiningAlgCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable"),
+					validators.ConditionalRequiredString(models.XACMLPDPCombiningAlgCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"dependent_policy": schema.ListAttribute{
@@ -116,7 +121,6 @@ func (r *XACMLPDPResource) Schema(ctx context.Context, req resource.SchemaReques
 				MarkdownDescription: tfutils.NewAttributeDescription("This sets the explicit time to live (TTL) for cached XACML policies, either raw or compiled. The default value 0 means the cache never expire unless PDP explicitly refreshes the policies. The maximum TTL is 31 days (2,678,400 seconds).", "cache-ttl", "").AddIntegerRange(0, 2678400).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 2678400),
 				},
 			},

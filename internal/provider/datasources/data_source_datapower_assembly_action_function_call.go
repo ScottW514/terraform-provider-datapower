@@ -82,7 +82,7 @@ func (d *AssemblyActionFunctionCallDataSource) Schema(ctx context.Context, req d
 						},
 						"parameter": schema.ListNestedAttribute{
 							MarkdownDescription: "Parameters",
-							NestedObject:        models.DmAssemblyActionFunctionCallParameterDataSourceSchema,
+							NestedObject:        models.GetDmAssemblyActionFunctionCallParameterDataSourceSchema(),
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

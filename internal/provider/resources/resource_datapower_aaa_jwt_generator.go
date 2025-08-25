@@ -27,6 +27,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -40,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AAAJWTGeneratorResource{}
@@ -100,72 +102,93 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 31622400),
 				},
 				Default: int64default.StaticInt64(3600),
 			},
 			"additional_claims": models.GetDmJWTClaimsResourceSchema("<p>Additional JWT claims, such as audience \"aud\" claim, not before \"nbf\" claim, issued at \"iat\" claim, JWT ID \"jit\" claim, \"nonce\" claim, and custom claim, can be added for JWT.</p><p>The subject, \"sub\" claim is added by default. You can override the subject claim value by specifying the \"sub\" claim in the Custom claims field.</p>", "add-claims", "", false),
 			"audience": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The audience, \"aud\", claim identifies the recipients that the JWT is intended for. The maximum length of the Audience claim is 256 characters.", "aud", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The audience, \"aud\", claim identifies the recipients that the JWT is intended for. The maximum length of the Audience claim is 256 characters.", "aud", "").AddRequiredWhen(models.AAAJWTGeneratorAudienceCondVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(),
+					validators.ConditionalRequiredList(models.AAAJWTGeneratorAudienceCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"not_before": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The not before claim, \"nbf\", indicates the time before which the JWT must not be accepted for processing. Enter a value in the range 0 - 480. The default value is 0.", "nbf", "").AddIntegerRange(0, 480).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The not before claim, \"nbf\", indicates the time before which the JWT must not be accepted for processing. Enter a value in the range 0 - 480. The default value is 0.", "nbf", "").AddIntegerRange(0, 480).AddRequiredWhen(models.AAAJWTGeneratorNotBeforeCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 480),
+					validators.ConditionalRequiredInt64(models.AAAJWTGeneratorNotBeforeCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"custom_claims": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The GatewayScript or XSLT file is processed to specify the custom claim. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> or <tt>store:</tt> directory.", "custom-claims", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The GatewayScript or XSLT file is processed to specify the custom claim. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> or <tt>store:</tt> directory.", "custom-claims", "").AddRequiredWhen(models.AAAJWTGeneratorCustomClaimsCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTGeneratorCustomClaimsCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"gen_method": models.GetDmJWTGenMethodResourceSchema("The signing and encryption methods can be used to secure and generate a JWT.", "generate-method", "", false),
 			"sign_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.", "sign-alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").AddDefaultValue("RS256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.", "sign-alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").AddDefaultValue("RS256").AddRequiredWhen(models.AAAJWTGeneratorSignAlgorithmCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512"),
+					validators.ConditionalRequiredString(models.AAAJWTGeneratorSignAlgorithmCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("RS256"),
 			},
 			"sign_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.", "sign-key", "crypto_key").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.", "sign-key", "crypto_key").AddRequiredWhen(models.AAAJWTGeneratorSignKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTGeneratorSignKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"sign_ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.", "sign-sskey", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.", "sign-sskey", "crypto_sskey").AddRequiredWhen(models.AAAJWTGeneratorSignSSKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTGeneratorSignSSKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"enc_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Various encryption algorithms can be used to encrypt the JWT, such as A128CBC-HS256, A192CBC-HS384, A256CBC-HS512, A128GCM, A192GCM, and A256GCM. The default value is A128CBC-HS256.", "enc", "").AddStringEnum("A128CBC-HS256", "A192CBC-HS384", "A256CBC-HS512", "A128GCM", "A192GCM", "A256GCM").AddDefaultValue("A128CBC-HS256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Various encryption algorithms can be used to encrypt the JWT, such as A128CBC-HS256, A192CBC-HS384, A256CBC-HS512, A128GCM, A192GCM, and A256GCM. The default value is A128CBC-HS256.", "enc", "").AddStringEnum("A128CBC-HS256", "A192CBC-HS384", "A256CBC-HS512", "A128GCM", "A192GCM", "A256GCM").AddDefaultValue("A128CBC-HS256").AddRequiredWhen(models.AAAJWTGeneratorEncAlgorithmCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("A128CBC-HS256", "A192CBC-HS384", "A256CBC-HS512", "A128GCM", "A192GCM", "A256GCM"),
+					validators.ConditionalRequiredString(models.AAAJWTGeneratorEncAlgorithmCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("A128CBC-HS256"),
 			},
 			"encrypt_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Various key management algorithms can be used to encrypt the JWT, such as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default value is RSA1_5.", "enc-alg", "").AddStringEnum("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir").AddDefaultValue("RSA1_5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Various key management algorithms can be used to encrypt the JWT, such as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default value is RSA1_5.", "enc-alg", "").AddStringEnum("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir").AddDefaultValue("RSA1_5").AddRequiredWhen(models.AAAJWTGeneratorEncryptAlgorithmCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir"),
+					validators.ConditionalRequiredString(models.AAAJWTGeneratorEncryptAlgorithmCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("RSA1_5"),
 			},
 			"encrypt_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The certificate alias can be used to encrypt the JWT. You can get the certificate alias by configuring the Crypto Certificate.", "enc-cert", "crypto_certificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The certificate alias can be used to encrypt the JWT. You can get the certificate alias by configuring the Crypto Certificate.", "enc-cert", "crypto_certificate").AddRequiredWhen(models.AAAJWTGeneratorEncryptCertificateCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTGeneratorEncryptCertificateCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"encrypt_ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.", "enc-sskey", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.", "enc-sskey", "crypto_sskey").AddRequiredWhen(models.AAAJWTGeneratorEncryptSSKeyCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.AAAJWTGeneratorEncryptSSKeyCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

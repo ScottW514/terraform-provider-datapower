@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &APIConnectGatewayServiceResource{}
@@ -109,14 +110,20 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				Default:             int64default.StaticInt64(9443),
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance that manages data across the gateway peers. The following restrictions apply. <ul><li>When TLS and peer group mode are enabled, all peers must use the same crypto material.</li><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li></ul>", "gateway-peering", "gateway_peering").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance that manages data across the gateway peers. The following restrictions apply. <ul><li>When TLS and peer group mode are enabled, all peers must use the same crypto material.</li><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li></ul>", "gateway-peering", "gateway_peering").AddRequiredWhen(models.APIConnectGatewayServiceGatewayPeeringCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceGatewayPeeringCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"gateway_peering_manager": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.", "gateway-peering-manager", "gateway_peering_manager").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.", "gateway-peering-manager", "gateway_peering_manager").AddDefaultValue("default").AddRequiredWhen(models.APIConnectGatewayServiceGatewayPeeringManagerCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("default"),
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceGatewayPeeringManagerCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("default"),
 			},
 			"v5_compatibility_mode": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>", "v5-compatibility-mode", "").AddDefaultValue("true").String,
@@ -130,21 +137,28 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				Optional:            true,
 			},
 			"v5c_slm_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.", "slm-mode", "").AddStringEnum("autounicast", "unicast", "multicast").AddDefaultValue("autounicast").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.", "slm-mode", "").AddStringEnum("autounicast", "unicast", "multicast").AddDefaultValue("autounicast").AddRequiredWhen(models.APIConnectGatewayServiceV5CSlmModeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("autounicast", "unicast", "multicast"),
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceV5CSlmModeCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("autounicast"),
 			},
 			"ip_multicast": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.", "ip-multicast", "ip_multicast").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.", "ip-multicast", "ip_multicast").AddRequiredWhen(models.APIConnectGatewayServiceIPMulticastCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceIPMulticastCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"ip_unicast": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.", "ip-unicast", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.", "ip-unicast", "").AddRequiredWhen(models.APIConnectGatewayServiceIPUnicastCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceIPUnicastCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"jwt_validation_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT validation mode. This property does not control whether a token is validated. This property controls whether transactions fail when validation fails.", "jwt-validate-mode", "").AddStringEnum("request", "require").AddDefaultValue("request").String,

@@ -98,7 +98,7 @@ attributes:
     is changed to this value if the no match policy is 'set'.
   cli_alias: unvalidated-fixup-map
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: DefaultFixup
     value:
     - set
@@ -123,15 +123,15 @@ attributes:
     XML patterns file with PCRE patterns to be used by the XSS filter.
   cli_alias: unvalidated-xss-patternsfile
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: DefaultXSS
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-does-not-equal
+  - evaluation: property-value-not-in-list
     attribute: DefaultXSS
     value:
-    - 'on'
+    - true
   file_locations:
   - local
   - store

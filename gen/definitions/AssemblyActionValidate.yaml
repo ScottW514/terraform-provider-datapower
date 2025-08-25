@@ -58,7 +58,7 @@ attributes:
   test_bed_value: datapower_api_schema.acc_test.id
   cli_alias: schema
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ValidateAgainst
     value:
     - url
@@ -85,7 +85,7 @@ attributes:
     schema.
   cli_alias: definition
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ValidateAgainst
     value:
     - definition

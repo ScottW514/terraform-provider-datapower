@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &APIDefinitionResource{}
@@ -156,8 +157,11 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"graph_ql_schema": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema location", "graphql-schema", "api_schema").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema location", "graphql-schema", "api_schema").AddRequiredWhen(models.APIDefinitionGraphQLSchemaCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.APIDefinitionGraphQLSchemaCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"wsdl_advertised_schema_location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("WSDL advertised schema location", "wsdl-advertised-schema-location", "").String,
@@ -179,11 +183,14 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(false),
 			},
 			"api_mutual_tls_source": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the sources to obtain the client certificate for mutual TLS. Because you can define multiple ways to obtain the source, ensure that you sequence the methods appropriately.", "api-mutual-tls-source", "").AddStringEnum("header", "tls_cert").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the sources to obtain the client certificate for mutual TLS. Because you can define multiple ways to obtain the source, ensure that you sequence the methods appropriately.", "api-mutual-tls-source", "").AddStringEnum("header", "tls_cert").AddRequiredWhen(models.APIDefinitionAPIMutualTLSSourceCondVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
-					listvalidator.ValueStringsAre(stringvalidator.OneOf("header", "tls_cert")),
+					listvalidator.ValueStringsAre(
+						stringvalidator.OneOf("header", "tls_cert"),
+					),
+					validators.ConditionalRequiredList(models.APIDefinitionAPIMutualTLSSourceCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"api_mutual_tls_header_name": schema.StringAttribute{
@@ -194,12 +201,12 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"properties": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify custom entries for API properties. An API property is a type of context variable whose value is dependent on the collection that the API is provisioned in. Collection-specific API properties allow you to use the same API definition in different collections when a property in a collection requires a unique or different value. A custom property entry defines a property and its value for one collection. For each custom property or property that needs a different value for another collection, add another entry.", "property", "").String,
-				NestedObject:        models.DmAPIPropertyResourceSchema,
+				NestedObject:        models.GetDmAPIPropertyResourceSchema(),
 				Optional:            true,
 			},
 			"schemas": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schemas that define data types for request or message validation. An API data type consists of a name and its API schema.", "schema", "").String,
-				NestedObject:        models.DmAPIDataTypeDefinitionResourceSchema,
+				NestedObject:        models.GetDmAPIDataTypeDefinitionResourceSchema(),
 				Optional:            true,
 			},
 			"cors_toggle": schema.BoolAttribute{

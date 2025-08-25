@@ -98,6 +98,7 @@ func (data WebServicesAgent) ToBody(ctx context.Context, pathRoot string) string
 	}
 	body := ""
 	body, _ = sjson.Set(body, "WebServicesAgent.name", path.Base("/mgmt/config/{domain}/WebServicesAgent/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

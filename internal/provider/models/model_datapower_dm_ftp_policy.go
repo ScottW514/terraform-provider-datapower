@@ -69,120 +69,127 @@ var DmFTPPolicyObjectDefault = map[string]attr.Value{
 	"quoted_commands": types.StringNull(),
 	"size_check":      types.StringValue("size-check-optional"),
 }
-var DmFTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Computed:            true,
+
+func GetDmFTPPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmFTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"reg_exp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Computed:            true,
+			},
+			"passive": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of FTP passive mode to control in which direction FTP data connections are made.", "", "").AddStringEnum("pasv-off", "pasv-opt", "pasv-req").AddDefaultValue("pasv-req").String,
+				Computed:            true,
+			},
+			"auth_tls": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of TLS to secure FTP command connections.", "", "").AddStringEnum("auth-off", "auth-tls-opt", "auth-tls-req", "auth-tls-imp").AddDefaultValue("auth-off").String,
+				Computed:            true,
+			},
+			"use_ccc": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").String,
+				Computed:            true,
+			},
+			"encrypt_data": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").String,
+				Computed:            true,
+			},
+			"data_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default file transfer data type. In most cases, the value of binary is appropriate.", "", "").AddStringEnum("ascii", "binary").AddDefaultValue("binary").String,
+				Computed:            true,
+			},
+			"slash_stou": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to create a unique file if the name contains a trailing slash. Some FTP servers provide the STOU command. Use the command only if the FTP server supports this command. The STOU command allows the server to choose the unique file name in the current directory. Using the STOU command does not require the client to choose a unique file name. When enabled and a URL is given to write that ends in a /, the server uses the STOU command instead of the STOR command.", "", "").AddStringEnum("slash-stou-off", "slash-stou-on").AddDefaultValue("slash-stou-on").String,
+				Computed:            true,
+			},
+			"quoted_commands": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of FTP commands to send to the server before each FTP STOR, STOU, or RETR command. Useful with \"SITE\" commands, such as \"SITE RECFM=FB\" for the MVS domain on a z/OS system. These commands cannot be data-transfer related, such as STOU, RETR, PORT, PASV, etc.", "", "ftp_quote_commands").String,
+				Computed:            true,
+			},
+			"size_check": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check the file size after file transfer. Uses the SIZE command, and compares the returned number to the number of bytes transferred \"over the wire\" for the file transfer. If the numbers are not equal, the file transfer is marked as failing. If the FTP server does not support the SIZE command, no error results. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate SIZE responses for files transferred in ASCII mode. If you get such errors, you can disable this feature. Alternately you can reconfigure vsftpd.", "", "").AddStringEnum("size-check-optional", "size-check-disabled").AddDefaultValue("size-check-optional").String,
+				Computed:            true,
+			},
 		},
-		"passive": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of FTP passive mode to control in which direction FTP data connections are made.", "", "").AddStringEnum("pasv-off", "pasv-opt", "pasv-req").AddDefaultValue("pasv-req").String,
-			Computed:            true,
-		},
-		"auth_tls": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of TLS to secure FTP command connections.", "", "").AddStringEnum("auth-off", "auth-tls-opt", "auth-tls-req", "auth-tls-imp").AddDefaultValue("auth-off").String,
-			Computed:            true,
-		},
-		"use_ccc": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").String,
-			Computed:            true,
-		},
-		"encrypt_data": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").String,
-			Computed:            true,
-		},
-		"data_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default file transfer data type. In most cases, the value of binary is appropriate.", "", "").AddStringEnum("ascii", "binary").AddDefaultValue("binary").String,
-			Computed:            true,
-		},
-		"slash_stou": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to create a unique file if the name contains a trailing slash. Some FTP servers provide the STOU command. Use the command only if the FTP server supports this command. The STOU command allows the server to choose the unique file name in the current directory. Using the STOU command does not require the client to choose a unique file name. When enabled and a URL is given to write that ends in a /, the server uses the STOU command instead of the STOR command.", "", "").AddStringEnum("slash-stou-off", "slash-stou-on").AddDefaultValue("slash-stou-on").String,
-			Computed:            true,
-		},
-		"quoted_commands": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of FTP commands to send to the server before each FTP STOR, STOU, or RETR command. Useful with \"SITE\" commands, such as \"SITE RECFM=FB\" for the MVS domain on a z/OS system. These commands cannot be data-transfer related, such as STOU, RETR, PORT, PASV, etc.", "", "ftp_quote_commands").String,
-			Computed:            true,
-		},
-		"size_check": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check the file size after file transfer. Uses the SIZE command, and compares the returned number to the number of bytes transferred \"over the wire\" for the file transfer. If the numbers are not equal, the file transfer is marked as failing. If the FTP server does not support the SIZE command, no error results. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate SIZE responses for files transferred in ASCII mode. If you get such errors, you can disable this feature. Alternately you can reconfigure vsftpd.", "", "").AddStringEnum("size-check-optional", "size-check-disabled").AddDefaultValue("size-check-optional").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmFTPPolicyDataSourceSchema
 }
-var DmFTPPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
-			Required:            true,
-		},
-		"passive": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of FTP passive mode to control in which direction FTP data connections are made.", "", "").AddStringEnum("pasv-off", "pasv-opt", "pasv-req").AddDefaultValue("pasv-req").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("pasv-off", "pasv-opt", "pasv-req"),
+func GetDmFTPPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmFTPPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"reg_exp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				Required:            true,
 			},
-			Default: stringdefault.StaticString("pasv-req"),
-		},
-		"auth_tls": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of TLS to secure FTP command connections.", "", "").AddStringEnum("auth-off", "auth-tls-opt", "auth-tls-req", "auth-tls-imp").AddDefaultValue("auth-off").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("auth-off", "auth-tls-opt", "auth-tls-req", "auth-tls-imp"),
+			"passive": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of FTP passive mode to control in which direction FTP data connections are made.", "", "").AddStringEnum("pasv-off", "pasv-opt", "pasv-req").AddDefaultValue("pasv-req").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("pasv-off", "pasv-opt", "pasv-req"),
+				},
+				Default: stringdefault.StaticString("pasv-req"),
 			},
-			Default: stringdefault.StaticString("auth-off"),
-		},
-		"use_ccc": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("ccc-off", "ccc-opt", "ccc-req"),
+			"auth_tls": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of TLS to secure FTP command connections.", "", "").AddStringEnum("auth-off", "auth-tls-opt", "auth-tls-req", "auth-tls-imp").AddDefaultValue("auth-off").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("auth-off", "auth-tls-opt", "auth-tls-req", "auth-tls-imp"),
+				},
+				Default: stringdefault.StaticString("auth-off"),
 			},
-			Default: stringdefault.StaticString("ccc-off"),
-		},
-		"encrypt_data": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("enc-data-off", "enc-data-opt", "enc-data-req"),
+			"use_ccc": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("ccc-off", "ccc-opt", "ccc-req"),
+				},
+				Default: stringdefault.StaticString("ccc-off"),
 			},
-			Default: stringdefault.StaticString("enc-data-off"),
-		},
-		"data_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default file transfer data type. In most cases, the value of binary is appropriate.", "", "").AddStringEnum("ascii", "binary").AddDefaultValue("binary").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("ascii", "binary"),
+			"encrypt_data": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("enc-data-off", "enc-data-opt", "enc-data-req"),
+				},
+				Default: stringdefault.StaticString("enc-data-off"),
 			},
-			Default: stringdefault.StaticString("binary"),
-		},
-		"slash_stou": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to create a unique file if the name contains a trailing slash. Some FTP servers provide the STOU command. Use the command only if the FTP server supports this command. The STOU command allows the server to choose the unique file name in the current directory. Using the STOU command does not require the client to choose a unique file name. When enabled and a URL is given to write that ends in a /, the server uses the STOU command instead of the STOR command.", "", "").AddStringEnum("slash-stou-off", "slash-stou-on").AddDefaultValue("slash-stou-on").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("slash-stou-off", "slash-stou-on"),
+			"data_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default file transfer data type. In most cases, the value of binary is appropriate.", "", "").AddStringEnum("ascii", "binary").AddDefaultValue("binary").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("ascii", "binary"),
+				},
+				Default: stringdefault.StaticString("binary"),
 			},
-			Default: stringdefault.StaticString("slash-stou-on"),
-		},
-		"quoted_commands": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of FTP commands to send to the server before each FTP STOR, STOU, or RETR command. Useful with \"SITE\" commands, such as \"SITE RECFM=FB\" for the MVS domain on a z/OS system. These commands cannot be data-transfer related, such as STOU, RETR, PORT, PASV, etc.", "", "ftp_quote_commands").String,
-			Optional:            true,
-		},
-		"size_check": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check the file size after file transfer. Uses the SIZE command, and compares the returned number to the number of bytes transferred \"over the wire\" for the file transfer. If the numbers are not equal, the file transfer is marked as failing. If the FTP server does not support the SIZE command, no error results. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate SIZE responses for files transferred in ASCII mode. If you get such errors, you can disable this feature. Alternately you can reconfigure vsftpd.", "", "").AddStringEnum("size-check-optional", "size-check-disabled").AddDefaultValue("size-check-optional").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("size-check-optional", "size-check-disabled"),
+			"slash_stou": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to create a unique file if the name contains a trailing slash. Some FTP servers provide the STOU command. Use the command only if the FTP server supports this command. The STOU command allows the server to choose the unique file name in the current directory. Using the STOU command does not require the client to choose a unique file name. When enabled and a URL is given to write that ends in a /, the server uses the STOU command instead of the STOR command.", "", "").AddStringEnum("slash-stou-off", "slash-stou-on").AddDefaultValue("slash-stou-on").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("slash-stou-off", "slash-stou-on"),
+				},
+				Default: stringdefault.StaticString("slash-stou-on"),
 			},
-			Default: stringdefault.StaticString("size-check-optional"),
+			"quoted_commands": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of FTP commands to send to the server before each FTP STOR, STOU, or RETR command. Useful with \"SITE\" commands, such as \"SITE RECFM=FB\" for the MVS domain on a z/OS system. These commands cannot be data-transfer related, such as STOU, RETR, PORT, PASV, etc.", "", "ftp_quote_commands").String,
+				Optional:            true,
+			},
+			"size_check": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check the file size after file transfer. Uses the SIZE command, and compares the returned number to the number of bytes transferred \"over the wire\" for the file transfer. If the numbers are not equal, the file transfer is marked as failing. If the FTP server does not support the SIZE command, no error results. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate SIZE responses for files transferred in ASCII mode. If you get such errors, you can disable this feature. Alternately you can reconfigure vsftpd.", "", "").AddStringEnum("size-check-optional", "size-check-disabled").AddDefaultValue("size-check-optional").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("size-check-optional", "size-check-disabled"),
+				},
+				Default: stringdefault.StaticString("size-check-optional"),
+			},
 		},
-	},
+	}
+	return DmFTPPolicyResourceSchema
 }
 
 func (data DmFTPPolicy) IsNull() bool {
@@ -221,6 +228,7 @@ func (data DmFTPPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.RegExp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}

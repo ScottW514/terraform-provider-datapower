@@ -53,59 +53,74 @@ var DmGssChecksumFlagsObjectDefault = map[string]attr.Value{
 	"conf":     types.BoolValue(false),
 	"integ":    types.BoolValue(false),
 }
-var DmGssChecksumFlagsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"replay": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("REPLAY", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmGssChecksumFlagsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmGssChecksumFlagsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"replay": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("REPLAY", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"sequence": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SEQUENCE", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"conf": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("CONF", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"integ": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("INTEG", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"sequence": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SEQUENCE", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"conf": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CONF", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"integ": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("INTEG", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmGssChecksumFlagsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmGssChecksumFlagsDataSourceSchema
 }
-var DmGssChecksumFlagsResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmGssChecksumFlagsObjectType,
-			DmGssChecksumFlagsObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"replay": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("REPLAY", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmGssChecksumFlagsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmGssChecksumFlagsResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmGssChecksumFlagsObjectType,
+				DmGssChecksumFlagsObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"replay": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("REPLAY", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"sequence": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("SEQUENCE", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"conf": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("CONF", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"integ": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("INTEG", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"sequence": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SEQUENCE", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"conf": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CONF", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"integ": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("INTEG", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmGssChecksumFlagsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmGssChecksumFlagsResourceSchema.Required = true
+	} else {
+		DmGssChecksumFlagsResourceSchema.Optional = true
+		DmGssChecksumFlagsResourceSchema.Computed = true
+	}
+	return DmGssChecksumFlagsResourceSchema
 }
 
 func (data DmGssChecksumFlags) IsNull() bool {
@@ -123,27 +138,13 @@ func (data DmGssChecksumFlags) IsNull() bool {
 	}
 	return true
 }
-func GetDmGssChecksumFlagsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmGssChecksumFlagsDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmGssChecksumFlagsDataSourceSchema
-}
-
-func GetDmGssChecksumFlagsResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmGssChecksumFlagsResourceSchema.Required = true
-	} else {
-		DmGssChecksumFlagsResourceSchema.Optional = true
-		DmGssChecksumFlagsResourceSchema.Computed = true
-	}
-	DmGssChecksumFlagsResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmGssChecksumFlagsResourceSchema
-}
 
 func (data DmGssChecksumFlags) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Replay.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`REPLAY`, tfutils.StringFromBool(data.Replay, ""))
 	}

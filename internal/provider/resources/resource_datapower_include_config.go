@@ -94,7 +94,7 @@ func (r *IncludeConfigResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(true),
 			},
 			"interface_detection": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to wait for the associated IP interface to be operational. This setting only affects configuration files from remote servers. When enabled, remote files are processed asynchronously after the associated IP interface is operational.", "interface-detection", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to wait for the associated IP interface to be operational. This setting only affects configuration files from remote servers. When enabled, remote files are processed asynchronously after the associated IP interface is operational.", "interface-detection", "").AddDefaultValue("false").AddRequiredWhen(models.IncludeConfigInterfaceDetectionCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

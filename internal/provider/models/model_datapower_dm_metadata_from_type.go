@@ -50,49 +50,64 @@ var DmMetadataFromTypeObjectDefault = map[string]attr.Value{
 	"authentication_url": types.BoolValue(true),
 	"external_url":       types.BoolValue(false),
 }
-var DmMetadataFromTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"none": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmMetadataFromTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmMetadataFromTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"none": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"authentication_url": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authentication URL", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"external_url": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("External metadata URL", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"authentication_url": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authentication URL", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"external_url": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("External metadata URL", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmMetadataFromTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmMetadataFromTypeDataSourceSchema
 }
-var DmMetadataFromTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmMetadataFromTypeObjectType,
-			DmMetadataFromTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"none": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
+func GetDmMetadataFromTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmMetadataFromTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmMetadataFromTypeObjectType,
+				DmMetadataFromTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"none": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"authentication_url": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Authentication URL", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"external_url": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("External metadata URL", "", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"authentication_url": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authentication URL", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"external_url": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("External metadata URL", "", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmMetadataFromTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmMetadataFromTypeResourceSchema.Required = true
+	} else {
+		DmMetadataFromTypeResourceSchema.Optional = true
+		DmMetadataFromTypeResourceSchema.Computed = true
+	}
+	return DmMetadataFromTypeResourceSchema
 }
 
 func (data DmMetadataFromType) IsNull() bool {
@@ -107,27 +122,13 @@ func (data DmMetadataFromType) IsNull() bool {
 	}
 	return true
 }
-func GetDmMetadataFromTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmMetadataFromTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmMetadataFromTypeDataSourceSchema
-}
-
-func GetDmMetadataFromTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmMetadataFromTypeResourceSchema.Required = true
-	} else {
-		DmMetadataFromTypeResourceSchema.Optional = true
-		DmMetadataFromTypeResourceSchema.Computed = true
-	}
-	DmMetadataFromTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmMetadataFromTypeResourceSchema
-}
 
 func (data DmMetadataFromType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.None.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`none`, tfutils.StringFromBool(data.None, ""))
 	}

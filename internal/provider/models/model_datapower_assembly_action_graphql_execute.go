@@ -112,6 +112,7 @@ func (data AssemblyActionGraphQLExecute) ToBody(ctx context.Context, pathRoot st
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -125,9 +126,9 @@ func (data AssemblyActionGraphQLExecute) ToBody(ctx context.Context, pathRoot st
 		body, _ = sjson.Set(body, pathRoot+`Output`, data.Output.ValueString())
 	}
 	if !data.TargetMapRule.IsNull() {
-		var values []DmTargetMapRule
-		data.TargetMapRule.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmTargetMapRule
+		data.TargetMapRule.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`TargetMapRule`+".-1", val.ToBody(ctx, ""))
 		}
 	}

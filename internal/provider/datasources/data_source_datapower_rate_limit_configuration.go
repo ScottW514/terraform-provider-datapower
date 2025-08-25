@@ -62,7 +62,7 @@ func (d *RateLimitConfigurationDataSource) Schema(ctx context.Context, req datas
 			},
 			"parameters": schema.ListNestedAttribute{
 				MarkdownDescription: "Parameters",
-				NestedObject:        models.DmRateLimitConfigurationNameValuePairDataSourceSchema,
+				NestedObject:        models.GetDmRateLimitConfigurationNameValuePairDataSourceSchema(),
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

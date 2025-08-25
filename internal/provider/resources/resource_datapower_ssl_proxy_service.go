@@ -99,7 +99,6 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "local-port", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
@@ -111,7 +110,6 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: tfutils.NewAttributeDescription("Remote port", "remote-port", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 			},
@@ -120,7 +118,6 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(0),
@@ -130,7 +127,6 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(0),
@@ -140,7 +136,6 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 86400),
 				},
 				Default: int64default.StaticInt64(0),
@@ -150,7 +145,6 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(0, 65535),
 				},
 				Default: int64default.StaticInt64(100),

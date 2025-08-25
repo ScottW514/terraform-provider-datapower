@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -50,6 +51,14 @@ type SocialLoginPolicy struct {
 	ValidateJwtToken          types.Bool                  `tfsdk:"validate_jwt_token"`
 	JwtValidator              types.String                `tfsdk:"jwt_validator"`
 	DependencyActions         []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SocialLoginPolicyJWTValidatorCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validate_jwt_token",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
 }
 
 var SocialLoginPolicyObjectType = map[string]attr.Type{
@@ -132,6 +141,7 @@ func (data SocialLoginPolicy) ToBody(ctx context.Context, pathRoot string) strin
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}

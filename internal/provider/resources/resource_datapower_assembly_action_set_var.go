@@ -81,7 +81,7 @@ func (r *AssemblyActionSetVarResource) Schema(ctx context.Context, req resource.
 			},
 			"variable": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Variables", "variable", "").String,
-				NestedObject:        models.DmAssemblyActionSetVarResourceSchema,
+				NestedObject:        models.GetDmAssemblyActionSetVarResourceSchema(),
 				Required:            true,
 			},
 			"user_summary": schema.StringAttribute{

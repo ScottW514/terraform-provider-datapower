@@ -81,10 +81,10 @@ attributes:
     value is 0, which means unlimited reuse.'
   cli_alias: max-persistent-reuse
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: PersistentConnections
     value:
-    - 'off'
+    - false
 - name: AllowCompression
   type: Bool
   default: false
@@ -102,7 +102,7 @@ attributes:
     allows GET methods.
   cli_alias: websocket-upgrade
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: HTTPVersion
     value:
     - HTTP/1.0
@@ -117,11 +117,11 @@ attributes:
   required_when:
   - evaluation: logical-and
     conditions:
-    - evaluation: property-equals
+    - evaluation: property-value-in-list
       attribute: AllowWebSocketUpgrade
       value:
-      - 'on'
-    - evaluation: property-does-not-equal
+      - true
+    - evaluation: property-value-not-in-list
       attribute: HTTPVersion
       value:
       - HTTP/1.0

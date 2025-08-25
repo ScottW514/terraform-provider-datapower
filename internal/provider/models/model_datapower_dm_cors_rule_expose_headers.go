@@ -50,47 +50,62 @@ var DmCORSRuleExposeHeadersObjectDefault = map[string]attr.Value{
 	"backend":    types.BoolValue(false),
 	"custom":     types.StringNull(),
 }
-var DmCORSRuleExposeHeadersDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"predefined": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Append the gateway-predefined value.", "predefined", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmCORSRuleExposeHeadersDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmCORSRuleExposeHeadersDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"predefined": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Append the gateway-predefined value.", "predefined", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"backend": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Append the value in the response from the target endpoint.", "backend", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"custom": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Append a custom string as the value.", "custom", "").String,
+				Computed:            true,
+			},
 		},
-		"backend": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Append the value in the response from the target endpoint.", "backend", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"custom": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Append a custom string as the value.", "custom", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmCORSRuleExposeHeadersDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmCORSRuleExposeHeadersDataSourceSchema
 }
-var DmCORSRuleExposeHeadersResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmCORSRuleExposeHeadersObjectType,
-			DmCORSRuleExposeHeadersObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"predefined": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Append the gateway-predefined value.", "predefined", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmCORSRuleExposeHeadersResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmCORSRuleExposeHeadersResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmCORSRuleExposeHeadersObjectType,
+				DmCORSRuleExposeHeadersObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"predefined": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Append the gateway-predefined value.", "predefined", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"backend": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Append the value in the response from the target endpoint.", "backend", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"custom": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Append a custom string as the value.", "custom", "").String,
+				Optional:            true,
+			},
 		},
-		"backend": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Append the value in the response from the target endpoint.", "backend", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"custom": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Append a custom string as the value.", "custom", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	DmCORSRuleExposeHeadersResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmCORSRuleExposeHeadersResourceSchema.Required = true
+	} else {
+		DmCORSRuleExposeHeadersResourceSchema.Optional = true
+		DmCORSRuleExposeHeadersResourceSchema.Computed = true
+	}
+	return DmCORSRuleExposeHeadersResourceSchema
 }
 
 func (data DmCORSRuleExposeHeaders) IsNull() bool {
@@ -105,27 +120,13 @@ func (data DmCORSRuleExposeHeaders) IsNull() bool {
 	}
 	return true
 }
-func GetDmCORSRuleExposeHeadersDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmCORSRuleExposeHeadersDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmCORSRuleExposeHeadersDataSourceSchema
-}
-
-func GetDmCORSRuleExposeHeadersResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmCORSRuleExposeHeadersResourceSchema.Required = true
-	} else {
-		DmCORSRuleExposeHeadersResourceSchema.Optional = true
-		DmCORSRuleExposeHeadersResourceSchema.Computed = true
-	}
-	DmCORSRuleExposeHeadersResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmCORSRuleExposeHeadersResourceSchema
-}
 
 func (data DmCORSRuleExposeHeaders) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Predefined.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Predefined`, tfutils.StringFromBool(data.Predefined, ""))
 	}

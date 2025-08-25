@@ -75,6 +75,7 @@ func (data LunaHASettings) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "LunaHASettings.name", path.Base("/mgmt/config/default/LunaHASettings/LunaHASettings"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

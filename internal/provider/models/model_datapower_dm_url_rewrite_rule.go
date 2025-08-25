@@ -32,6 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,21 @@ type DmURLRewriteRule struct {
 	StylesheetUnescape types.Bool   `tfsdk:"stylesheet_unescape"`
 	Header             types.String `tfsdk:"header"`
 	NormalizeUrl       types.Bool   `tfsdk:"normalize_url"`
+}
+
+var DmURLRewriteRuleInputReplaceRegexpCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"header-rewrite"},
+}
+var DmURLRewriteRuleHeaderCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"header-rewrite"},
 }
 
 var DmURLRewriteRuleObjectType = map[string]attr.Type{
@@ -67,88 +83,101 @@ var DmURLRewriteRuleObjectDefault = map[string]attr.Value{
 	"header":               types.StringValue("none"),
 	"normalize_url":        types.BoolValue(false),
 }
-var DmURLRewriteRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the type of rule for the URL Rewrite Policy.", "type", "").AddStringEnum("rewrite", "absolute-rewrite", "post-body", "header-rewrite", "content-type").String,
-			Computed:            true,
-		},
-		"match_regexp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a PCRE that defines the match condition that triggers the rewrite rule. Depending on the rule type, a candidate URL or header field is matched against the expression.</p><ul><li>For <b>absolute-rewrite</b> , <b>content-type</b> , and <b>post-body</b> , defines the expression to be matched against the URL. For example, .* or * matches any string, while (.*)xsl=(.*)\\?(.*) matches a text subpattern followed by xsl= followed by a text subpattern followed by a ? followed by a text subpattern.</li><li>For <b>header-rewrite</b> , defines the expression to be matched against the contents of a specific header field. For example, *.* matches any value.</li></ul><p>PCRE documentation is available at http://www.pcre.org</p>", "match", "").String,
-			Computed:            true,
-		},
-		"input_replace_regexp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a Perl-style replacement that defines the rewritten URL, header field, or HTTP POST body.</p><ul><li>For <b>absolute-rewrite</b> , defines the rewritten URL. If the match pattern is *, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To replace the second text subpattern only, specify $1xsl=ident.xsl$3. <p>If a rewritten URL begins with a host name or port that is different from the configured remote address, the host name or port portion of the rewritten URL is ignored.</p></li><li>For <b>content-type</b> , define the replace value for the Content-Type header.</li><li>For <b>header-rewrite</b> , define the replacement value for the specified header.</li><li>For <b>post-body</b> , define the rewritten body of the HTTP POST. If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To omit the second text subpattern only, specify $1$3.</li></ul>", "input-expression", "").String,
-			Computed:            true,
-		},
-		"style_replace_regexp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a Perl-style replacement that identifies the replacement stylesheet. This option is available for <b>absolute-rewrite</b> and <b>post-body</b> only.</p><p>If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To retain the second text subpattern only and not use the third text subpattern, specify http://mantis:8000$2.</p>", "stylesheet-expression", "").String,
-			Computed:            true,
-		},
-		"input_unescape": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Replace URL-encoded characters (for example, \"%2F\") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.", "input-unescape", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"stylesheet_unescape": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Replace URL-encoded characters (for example, \"%2F\") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.", "stylesheet-unescape", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"header": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name HTTP Header to Rewrite", "", "").AddDefaultValue("none").String,
-			Computed:            true,
-		},
-		"normalize_url": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Normalize URL by converting '\\' to '/' and compressing '.' and '..'", "normalize-url", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
-}
-var DmURLRewriteRuleResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select the type of rule for the URL Rewrite Policy.", "type", "").AddStringEnum("rewrite", "absolute-rewrite", "post-body", "header-rewrite", "content-type").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("rewrite", "absolute-rewrite", "post-body", "header-rewrite", "content-type"),
+
+func GetDmURLRewriteRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmURLRewriteRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the type of rule for the URL Rewrite Policy.", "type", "").AddStringEnum("rewrite", "absolute-rewrite", "post-body", "header-rewrite", "content-type").String,
+				Computed:            true,
+			},
+			"match_regexp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a PCRE that defines the match condition that triggers the rewrite rule. Depending on the rule type, a candidate URL or header field is matched against the expression.</p><ul><li>For <b>absolute-rewrite</b> , <b>content-type</b> , and <b>post-body</b> , defines the expression to be matched against the URL. For example, .* or * matches any string, while (.*)xsl=(.*)\\?(.*) matches a text subpattern followed by xsl= followed by a text subpattern followed by a ? followed by a text subpattern.</li><li>For <b>header-rewrite</b> , defines the expression to be matched against the contents of a specific header field. For example, *.* matches any value.</li></ul><p>PCRE documentation is available at http://www.pcre.org</p>", "match", "").String,
+				Computed:            true,
+			},
+			"input_replace_regexp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a Perl-style replacement that defines the rewritten URL, header field, or HTTP POST body.</p><ul><li>For <b>absolute-rewrite</b> , defines the rewritten URL. If the match pattern is *, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To replace the second text subpattern only, specify $1xsl=ident.xsl$3. <p>If a rewritten URL begins with a host name or port that is different from the configured remote address, the host name or port portion of the rewritten URL is ignored.</p></li><li>For <b>content-type</b> , define the replace value for the Content-Type header.</li><li>For <b>header-rewrite</b> , define the replacement value for the specified header.</li><li>For <b>post-body</b> , define the rewritten body of the HTTP POST. If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To omit the second text subpattern only, specify $1$3.</li></ul>", "input-expression", "").String,
+				Computed:            true,
+			},
+			"style_replace_regexp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a Perl-style replacement that identifies the replacement stylesheet. This option is available for <b>absolute-rewrite</b> and <b>post-body</b> only.</p><p>If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To retain the second text subpattern only and not use the third text subpattern, specify http://mantis:8000$2.</p>", "stylesheet-expression", "").String,
+				Computed:            true,
+			},
+			"input_unescape": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Replace URL-encoded characters (for example, \"%2F\") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.", "input-unescape", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"stylesheet_unescape": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Replace URL-encoded characters (for example, \"%2F\") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.", "stylesheet-unescape", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"header": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name HTTP Header to Rewrite", "", "").AddDefaultValue("none").String,
+				Computed:            true,
+			},
+			"normalize_url": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Normalize URL by converting '\\' to '/' and compressing '.' and '..'", "normalize-url", "").AddDefaultValue("false").String,
+				Computed:            true,
 			},
 		},
-		"match_regexp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a PCRE that defines the match condition that triggers the rewrite rule. Depending on the rule type, a candidate URL or header field is matched against the expression.</p><ul><li>For <b>absolute-rewrite</b> , <b>content-type</b> , and <b>post-body</b> , defines the expression to be matched against the URL. For example, .* or * matches any string, while (.*)xsl=(.*)\\?(.*) matches a text subpattern followed by xsl= followed by a text subpattern followed by a ? followed by a text subpattern.</li><li>For <b>header-rewrite</b> , defines the expression to be matched against the contents of a specific header field. For example, *.* matches any value.</li></ul><p>PCRE documentation is available at http://www.pcre.org</p>", "match", "").String,
-			Required:            true,
+	}
+	return DmURLRewriteRuleDataSourceSchema
+}
+func GetDmURLRewriteRuleResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmURLRewriteRuleResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the type of rule for the URL Rewrite Policy.", "type", "").AddStringEnum("rewrite", "absolute-rewrite", "post-body", "header-rewrite", "content-type").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("rewrite", "absolute-rewrite", "post-body", "header-rewrite", "content-type"),
+				},
+			},
+			"match_regexp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a PCRE that defines the match condition that triggers the rewrite rule. Depending on the rule type, a candidate URL or header field is matched against the expression.</p><ul><li>For <b>absolute-rewrite</b> , <b>content-type</b> , and <b>post-body</b> , defines the expression to be matched against the URL. For example, .* or * matches any string, while (.*)xsl=(.*)\\?(.*) matches a text subpattern followed by xsl= followed by a text subpattern followed by a ? followed by a text subpattern.</li><li>For <b>header-rewrite</b> , defines the expression to be matched against the contents of a specific header field. For example, *.* matches any value.</li></ul><p>PCRE documentation is available at http://www.pcre.org</p>", "match", "").String,
+				Required:            true,
+			},
+			"input_replace_regexp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a Perl-style replacement that defines the rewritten URL, header field, or HTTP POST body.</p><ul><li>For <b>absolute-rewrite</b> , defines the rewritten URL. If the match pattern is *, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To replace the second text subpattern only, specify $1xsl=ident.xsl$3. <p>If a rewritten URL begins with a host name or port that is different from the configured remote address, the host name or port portion of the rewritten URL is ignored.</p></li><li>For <b>content-type</b> , define the replace value for the Content-Type header.</li><li>For <b>header-rewrite</b> , define the replacement value for the specified header.</li><li>For <b>post-body</b> , define the rewritten body of the HTTP POST. If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To omit the second text subpattern only, specify $1$3.</li></ul>", "input-expression", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmURLRewriteRuleInputReplaceRegexpCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"style_replace_regexp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a Perl-style replacement that identifies the replacement stylesheet. This option is available for <b>absolute-rewrite</b> and <b>post-body</b> only.</p><p>If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To retain the second text subpattern only and not use the third text subpattern, specify http://mantis:8000$2.</p>", "stylesheet-expression", "").String,
+				Optional:            true,
+			},
+			"input_unescape": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Replace URL-encoded characters (for example, \"%2F\") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.", "input-unescape", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"stylesheet_unescape": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Replace URL-encoded characters (for example, \"%2F\") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.", "stylesheet-unescape", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"header": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Name HTTP Header to Rewrite", "", "").AddDefaultValue("none").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmURLRewriteRuleHeaderCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("none"),
+			},
+			"normalize_url": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Normalize URL by converting '\\' to '/' and compressing '.' and '..'", "normalize-url", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 		},
-		"input_replace_regexp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a Perl-style replacement that defines the rewritten URL, header field, or HTTP POST body.</p><ul><li>For <b>absolute-rewrite</b> , defines the rewritten URL. If the match pattern is *, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To replace the second text subpattern only, specify $1xsl=ident.xsl$3. <p>If a rewritten URL begins with a host name or port that is different from the configured remote address, the host name or port portion of the rewritten URL is ignored.</p></li><li>For <b>content-type</b> , define the replace value for the Content-Type header.</li><li>For <b>header-rewrite</b> , define the replacement value for the specified header.</li><li>For <b>post-body</b> , define the rewritten body of the HTTP POST. If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To omit the second text subpattern only, specify $1$3.</li></ul>", "input-expression", "").String,
-			Optional:            true,
-		},
-		"style_replace_regexp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify a Perl-style replacement that identifies the replacement stylesheet. This option is available for <b>absolute-rewrite</b> and <b>post-body</b> only.</p><p>If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To retain the second text subpattern only and not use the third text subpattern, specify http://mantis:8000$2.</p>", "stylesheet-expression", "").String,
-			Optional:            true,
-		},
-		"input_unescape": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Replace URL-encoded characters (for example, \"%2F\") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.", "input-unescape", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"stylesheet_unescape": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Replace URL-encoded characters (for example, \"%2F\") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.", "stylesheet-unescape", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"header": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name HTTP Header to Rewrite", "", "").AddDefaultValue("none").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("none"),
-		},
-		"normalize_url": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Normalize URL by converting '\\' to '/' and compressing '.' and '..'", "normalize-url", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	return DmURLRewriteRuleResourceSchema
 }
 
 func (data DmURLRewriteRule) IsNull() bool {
@@ -184,6 +213,7 @@ func (data DmURLRewriteRule) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Type.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Type`, data.Type.ValueString())
 	}

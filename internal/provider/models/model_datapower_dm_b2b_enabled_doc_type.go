@@ -53,59 +53,74 @@ var DmB2BEnabledDocTypeObjectDefault = map[string]attr.Value{
 	"enable_edifact": types.BoolValue(true),
 	"enable_binary":  types.BoolValue(true),
 }
-var DmB2BEnabledDocTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"enable_xml": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XML", "", "").AddDefaultValue("true").String,
-			Computed:            true,
+
+func GetDmB2BEnabledDocTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmB2BEnabledDocTypeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"enable_xml": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("XML", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"enable_x12": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X12", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"enable_edifact": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("EDIFACT", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"enable_binary": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Binary", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
 		},
-		"enable_x12": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X12", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"enable_edifact": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("EDIFACT", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"enable_binary": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Binary", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmB2BEnabledDocTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmB2BEnabledDocTypeDataSourceSchema
 }
-var DmB2BEnabledDocTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmB2BEnabledDocTypeObjectType,
-			DmB2BEnabledDocTypeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"enable_xml": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XML", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
+func GetDmB2BEnabledDocTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmB2BEnabledDocTypeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmB2BEnabledDocTypeObjectType,
+				DmB2BEnabledDocTypeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"enable_xml": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("XML", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"enable_x12": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("X12", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"enable_edifact": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("EDIFACT", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"enable_binary": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Binary", "", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
 		},
-		"enable_x12": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("X12", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"enable_edifact": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("EDIFACT", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"enable_binary": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Binary", "", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-	},
+	}
+	DmB2BEnabledDocTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmB2BEnabledDocTypeResourceSchema.Required = true
+	} else {
+		DmB2BEnabledDocTypeResourceSchema.Optional = true
+		DmB2BEnabledDocTypeResourceSchema.Computed = true
+	}
+	return DmB2BEnabledDocTypeResourceSchema
 }
 
 func (data DmB2BEnabledDocType) IsNull() bool {
@@ -123,27 +138,13 @@ func (data DmB2BEnabledDocType) IsNull() bool {
 	}
 	return true
 }
-func GetDmB2BEnabledDocTypeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmB2BEnabledDocTypeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmB2BEnabledDocTypeDataSourceSchema
-}
-
-func GetDmB2BEnabledDocTypeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmB2BEnabledDocTypeResourceSchema.Required = true
-	} else {
-		DmB2BEnabledDocTypeResourceSchema.Optional = true
-		DmB2BEnabledDocTypeResourceSchema.Computed = true
-	}
-	DmB2BEnabledDocTypeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmB2BEnabledDocTypeResourceSchema
-}
 
 func (data DmB2BEnabledDocType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.EnableXml.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EnableXML`, tfutils.StringFromBool(data.EnableXml, ""))
 	}

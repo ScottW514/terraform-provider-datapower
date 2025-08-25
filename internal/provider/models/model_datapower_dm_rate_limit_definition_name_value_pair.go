@@ -45,29 +45,36 @@ var DmRateLimitDefinitionNameValuePairObjectDefault = map[string]attr.Value{
 	"name":  types.StringNull(),
 	"value": types.StringNull(),
 }
-var DmRateLimitDefinitionNameValuePairDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
-			Computed:            true,
+
+func GetDmRateLimitDefinitionNameValuePairDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmRateLimitDefinitionNameValuePairDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
+				Computed:            true,
+			},
+			"value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the parameter.", "value", "").String,
+				Computed:            true,
+			},
 		},
-		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the parameter.", "value", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmRateLimitDefinitionNameValuePairDataSourceSchema
 }
-var DmRateLimitDefinitionNameValuePairResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
-			Required:            true,
+func GetDmRateLimitDefinitionNameValuePairResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmRateLimitDefinitionNameValuePairResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
+				Required:            true,
+			},
+			"value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the parameter.", "value", "").String,
+				Required:            true,
+			},
 		},
-		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the parameter.", "value", "").String,
-			Required:            true,
-		},
-	},
+	}
+	return DmRateLimitDefinitionNameValuePairResourceSchema
 }
 
 func (data DmRateLimitDefinitionNameValuePair) IsNull() bool {
@@ -85,6 +92,7 @@ func (data DmRateLimitDefinitionNameValuePair) ToBody(ctx context.Context, pathR
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

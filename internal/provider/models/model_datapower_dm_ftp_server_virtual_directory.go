@@ -48,35 +48,42 @@ var DmFTPServerVirtualDirectoryObjectDefault = map[string]attr.Value{
 	"virtual_path":       types.StringNull(),
 	"response_directory": types.StringNull(),
 }
-var DmFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"virtual_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in virtual file system where the FTP client can find this directory.", "", "").String,
-			Computed:            true,
+
+func GetDmFTPServerVirtualDirectoryDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"virtual_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in virtual file system where the FTP client can find this directory.", "", "").String,
+				Computed:            true,
+			},
+			"response_directory": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system to store responses.", "", "").String,
+				Computed:            true,
+			},
 		},
-		"response_directory": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system to store responses.", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmFTPServerVirtualDirectoryDataSourceSchema
 }
-var DmFTPServerVirtualDirectoryResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"virtual_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in virtual file system where the FTP client can find this directory.", "", "").String,
-			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.RegexMatches(regexp.MustCompile("^/[^/]+(/[^/]+)*$"), "Must match :"+"^/[^/]+(/[^/]+)*$"),
+func GetDmFTPServerVirtualDirectoryResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmFTPServerVirtualDirectoryResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"virtual_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in virtual file system where the FTP client can find this directory.", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^/[^/]+(/[^/]+)*$"), "Must match :"+"^/[^/]+(/[^/]+)*$"),
+				},
+			},
+			"response_directory": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system to store responses.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^(|/[^/]+(/[^/]+)*)$"), "Must match :"+"^(|/[^/]+(/[^/]+)*)$"),
+				},
 			},
 		},
-		"response_directory": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system to store responses.", "", "").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.RegexMatches(regexp.MustCompile("^(|/[^/]+(/[^/]+)*)$"), "Must match :"+"^(|/[^/]+(/[^/]+)*)$"),
-			},
-		},
-	},
+	}
+	return DmFTPServerVirtualDirectoryResourceSchema
 }
 
 func (data DmFTPServerVirtualDirectory) IsNull() bool {
@@ -94,6 +101,7 @@ func (data DmFTPServerVirtualDirectory) ToBody(ctx context.Context, pathRoot str
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.VirtualPath.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`VirtualPath`, data.VirtualPath.ValueString())
 	}

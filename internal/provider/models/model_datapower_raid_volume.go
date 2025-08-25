@@ -70,6 +70,7 @@ func (data RaidVolume) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	body, _ = sjson.Set(body, "RaidVolume.name", path.Base("/mgmt/config/default/RaidVolume/raid0"))
+
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}

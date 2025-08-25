@@ -96,7 +96,6 @@ func (r *WebAppSessionPolicyResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 864000),
 				},
 				Default: int64default.StaticInt64(3600),

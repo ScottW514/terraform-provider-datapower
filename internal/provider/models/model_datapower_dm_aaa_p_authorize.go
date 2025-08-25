@@ -35,6 +35,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -93,6 +94,290 @@ type DmAAAPAuthorize struct {
 	AzsmHeaderFlow             *DmSMFlow    `tfsdk:"azsm_header_flow"`
 	AzsmCookieAttributes       types.String `tfsdk:"azsm_cookie_attributes"`
 	AzCacheControl             types.String `tfsdk:"az_cache_control"`
+}
+
+var DmAAAPAuthorizeAZCustomURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"custom"},
+}
+var DmAAAPAuthorizeAZMapURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"xmlfile"},
+}
+var DmAAAPAuthorizeAZHostCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"ldap", "oblix", "netegrity"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "azldap_load_balance_group",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var DmAAAPAuthorizeAZPortCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"ldap", "oblix", "netegrity"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "azldap_load_balance_group",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var DmAAAPAuthorizeAZLDAPGroupCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZSAMLURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"saml-attr", "saml-authz"},
+}
+var DmAAAPAuthorizeAZSAMLTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"saml-attr", "saml-authz", "use-authen-attr"},
+}
+var DmAAAPAuthorizeAZSAMLXPathCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "azsaml_type",
+			AttrType:    "String",
+			AttrDefault: "any",
+			Value:       []string{"xpath"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"saml-attr", "saml-authz", "use-authen-attr"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZClearTrustServerURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"cleartrust"},
+}
+var DmAAAPAuthorizeAZXACMLVersionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"xacml"},
+}
+var DmAAAPAuthorizeAZXACMLPEPTypeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"xacml"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "azxacml_version",
+			AttrType:    "String",
+			AttrDefault: "2",
+			Value:       []string{"1.0"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZXACMLUseOnBoxPDPCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"xacml"},
+}
+var DmAAAPAuthorizeAZXACMLPDPCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"xacml"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "azxacml_use_on_box_pdp",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZXACMLExternalPDPUrlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"xacml"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "azxacml_use_on_box_pdp",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZXACMLBindingXSLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"xacml"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "azxacml_binding_method",
+			AttrType:    "String",
+			AttrDefault: "custom",
+			Value:       []string{"dp-pdp"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZXACMLUseSAML2CondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"xacml"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "azxacml_version",
+			AttrType:    "String",
+			AttrDefault: "2",
+			Value:       []string{"2.0"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "azxacml_use_on_box_pdp",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZTAMServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"tivoli"},
+}
+var DmAAAPAuthorizeAZXACMLUseSOAPCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"xacml"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "azxacml_use_on_box_pdp",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZZOSNSSConfigCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"zosnss"},
+}
+var DmAAAPAuthorizeAZOAuthEnforceScopeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"oauth"},
+}
+var DmAAAPAuthorizeAZOAuthExportHeadersCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"oauth"},
+}
+var DmAAAPAuthorizeAZTAMPACReturnCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"tivoli"},
+}
+var DmAAAPAuthorizeAZTAMPACUseCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"tivoli"},
+}
+var DmAAAPAuthorizeAZSMRequestTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"netegrity"},
 }
 
 var DmAAAPAuthorizeObjectType = map[string]attr.Type{
@@ -205,528 +490,586 @@ var DmAAAPAuthorizeObjectDefault = map[string]attr.Value{
 	"azsm_cookie_attributes":         types.StringNull(),
 	"az_cache_control":               types.StringValue("default"),
 }
-var DmAAAPAuthorizeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"az_method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the authorization method.", "method", "").AddStringEnum("anyauthenticated", "passthrough", "tivoli", "netegrity", "oblix", "cleartrust", "custom", "ldap", "saml-authz", "saml-attr", "use-authen-attr", "xacml", "xmlfile", "zosnss", "oauth").AddDefaultValue("anyauthenticated").String,
-			Computed:            true,
+
+func GetDmAAAPAuthorizeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmAAAPAuthorizeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"az_method": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the authorization method.", "method", "").AddStringEnum("anyauthenticated", "passthrough", "tivoli", "netegrity", "oblix", "cleartrust", "custom", "ldap", "saml-authz", "saml-attr", "use-authen-attr", "xacml", "xmlfile", "zosnss", "oauth").AddDefaultValue("anyauthenticated").String,
+				Computed:            true,
+			},
+			"az_custom_url": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file for custom authorization.", "custom-url", "").String,
+				Computed:            true,
+			},
+			"az_map_url": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA information file.", "xmlfile-url", "").String,
+				Computed:            true,
+			},
+			"az_host": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the authorization server.", "remote-host", "").String,
+				Computed:            true,
+			},
+			"az_port": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server.", "remote-port", "").AddDefaultValue("0").String,
+				Computed:            true,
+			},
+			"azldap_group": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN of the required LDAP group.", "ldap-group-dn", "").String,
+				Computed:            true,
+			},
+			"az_valcred": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "crypto_val_cred").String,
+				Computed:            true,
+			},
+			"azsamlurl": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the SAML server.", "saml-server-url", "").String,
+				Computed:            true,
+			},
+			"azsaml_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to match SAML attributes and values. The default value is any.", "saml-type", "").AddStringEnum("xpath", "any", "all", "any-value", "all-values").AddDefaultValue("any").String,
+				Computed:            true,
+			},
+			"azsamlx_path": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to run against the SAML statement.", "saml-xpath", "").String,
+				Computed:            true,
+			},
+			"azsaml_name_qualifier": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of the <tt>NameQualifier</tt> attribute of the <tt>NameIdentifier</tt> in the generated SAML query. Although the <tt>NameQualifier</tt> attribute is an optional attribute, some SAML implementations require it to be present.", "saml-name-qualifier", "").String,
+				Computed:            true,
+			},
+			"az_cache_allow": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to control the caching of AAA authorization results. The default value is absolute. A protocol TTL is available only with SAML or OAuth with a Federated Identity Manager endpoint. Federated Identity Manager integration is deprecated.", "cache-type", "").AddStringEnum("absolute", "disabled", "maximum", "minimum").AddDefaultValue("absolute").String,
+				Computed:            true,
+			},
+			"az_cache_ttl": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to cache authorization decisions. Enter a value in the range 1 - 86400. The default value is 3.", "cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("3").String,
+				Computed:            true,
+			},
+			"az_netegrity_base_uri": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.", "netegrity-base-uri", "").String,
+				Computed:            true,
+			},
+			"az_netegrity_op_name_extension": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the extension for URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.", "netegrity-opname-ext", "").String,
+				Computed:            true,
+			},
+			"az_clear_trust_server_url": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the ClearTrust server for authorization.", "cleartrust-server-url", "").String,
+				Computed:            true,
+			},
+			"azsaml_version": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the version to use for SAML messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2.0", "1.1", "1.0").AddDefaultValue("1.1").String,
+				Computed:            true,
+			},
+			"azldap_load_balance_group": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the load balancer group that contains the LDAP servers.", "ldap-lbgroup", "load_balancer_group").String,
+				Computed:            true,
+			},
+			"azldap_bind_dn": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN to bind to the LDAP server.", "ldap-bind-dn", "").String,
+				Computed:            true,
+			},
+			"azldap_group_attribute": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute name of the LDAP group to check for membership. The authorizing identity must exist as an attribute value in the group.", "ldap-group-attr", "").AddDefaultValue("member").String,
+				Computed:            true,
+			},
+			"azldap_search_scope": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope of the search relative to the input. The default value is subtree.", "ldap-search-scope", "").AddStringEnum("subtree", "one-level", "base").AddDefaultValue("subtree").String,
+				Computed:            true,
+			},
+			"azldap_search_filter": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LDAP search filter for the search. The default value is <tt>(objectClass=*)</tt> .", "ldap-search-filter", "").AddDefaultValue("(objectClass=*)").String,
+				Computed:            true,
+			},
+			"azxacml_version": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XACML version for communication between the PDP and the AAA policy. The AAA policy acts as an XACML policy enforcement point (PEP). The default value is 2.0.", "xacml-version", "").AddStringEnum("2", "1").AddDefaultValue("2").String,
+				Computed:            true,
+			},
+			"azxacmlpep_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the AAA policy processes the PDP authorization response. The AAA policy acts as an XACML PEP. The default value is deny-based PEP.", "xacml-pep-type", "").AddStringEnum("base", "deny-biased", "permit-biased").AddDefaultValue("deny-biased").String,
+				Computed:            true,
+			},
+			"azxacml_use_on_box_pdp": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the on-box XACML policy decision point (PDP). By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.", "xacml-use-builtin", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"azxacmlpdp": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XACML policy decision point (PDP) configuration.", "xacml-pdp", "xacml_pdp").String,
+				Computed:            true,
+			},
+			"azxacml_external_pdp_url": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL for the external XACML PDP service. The AAA policy sends the authorization request to and receives the authorization response from this service.", "xacml-url", "").String,
+				Computed:            true,
+			},
+			"azxacml_binding_method": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the XACML context request. The default value is custom processing.", "xacml-binding-method", "").AddStringEnum("dp-pdp", "custom").AddDefaultValue("custom").String,
+				Computed:            true,
+			},
+			"azxacml_binding_object": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("XACML binding", "xacml-binding-object", "").String,
+				Computed:            true,
+			},
+			"azxacml_binding_xsl": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.", "xacml-binding-custom-url", "").String,
+				Computed:            true,
+			},
+			"azxacml_custom_obligation": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that can fulfill XACML obligations. he file must understand the obligations from the PDP and take the appropriate action to fulfill the obligations that are based on the request context. <ul><li>For fulfilled obligations, the output is &lt; <tt>xsl:value-of select=\"true()\"</tt> />.</li><li>For unfulfilled obligations, the output is &lt; <tt>xsl:value-of select=\"false()\"</tt> />.</li></ul>", "xacml-obligation-custom-url", "").String,
+				Computed:            true,
+			},
+			"azxacml_use_saml2": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use SAML2.0 Profile to communicate with the external PDP service. By default, the PEP does not use SAML2.0 Profile. <ul><li>When enabled, the PEP communicates with the external PDP service by using &lt; <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> > as defined by SAML2.0 Profile. You can combine this setting with SOAP enveloping if <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> must be wrapped by a SOAP <tt>Body</tt> element.</li><li>When disabled, the PEP does not use SAML2.0 Profile to communicate with the external PDP service.</li></ul>", "xacml-use-saml2", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"aztam_server": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IBM Security Access Manager client.", "tam", "tam").String,
+				Computed:            true,
+			},
+			"aztam_default_action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default Access Manager action. The default value is T (traverse).", "tam-action-default", "").AddStringEnum("T", "c", "g", "m", "d", "b", "s", "v", "a", "BypassPOP", "tt", "r", "x", "l", "N", "W", "Add", "BypassAuthzRule", "_WebService_i", "_PDMQ_D", "_PDMQ_E").AddDefaultValue("T").String,
+				Computed:            true,
+			},
+			"aztam_action_resource_map": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the XML file that contains the resource-action map. Each entry in the resource-action map defines a PCRE pattern to match the resource, the action to run, and whether to map the action to WebSEAL. This file is in the <tt>local:</tt> or <tt>store:</tt> directory.", "tam-action-map", "").String,
+				Computed:            true,
+			},
+			"azxacml_use_soap": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the external PDP requires a SOAP envelope. By default, a SOAP envelope is not required. If the stylesheet or GatewayScript file for custom binding generates the SOAP envelope, retain the default value.", "xacml-use-soap", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"azzosnss_config": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the z/OS NSS client for SAF communication.", "zos-nss-az", "zos_nss_client").String,
+				Computed:            true,
+			},
+			"azsaf_default_action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default action. The default value is r (Read).", "zos-nss-default-action", "").AddStringEnum("r", "u", "a", "c").AddDefaultValue("r").String,
+				Computed:            true,
+			},
+			"azldap_attributes": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of the extra user attributes to retrieve from the LDAP registry. The attributes that are retrieved from the registry and stored in the var://context/ldap/auxiliary-attributes context variable for future use, such as in the AAA postprocessing phase. To specify multiple attributes, use a comma as the delimiter. For example, enter <tt>email, cn, userPassword</tt> to retrieve these attributes from the registry.", "az-ldap-attributes", "").String,
+				Computed:            true,
+			},
+			"az_skew_time": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>", "az-skew-time", "").AddDefaultValue("0").String,
+				Computed:            true,
+			},
+			"azo_auth_enforce_scope": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to enforce the scope of the access token. The scope is returned by the server as part of the validation process. By default, the scope is enforced by the resource server. <ul><li>When enabled, the mapped resource is enforced by the DataPower Gateway against the scope.</li><li>When disabled, the remote resource server enforces the scope.</li></ul>", "az-oauth-enforce-scope", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"azo_auth_export_headers": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to export response attributes that Federated Identity Manager might return a set of response headers. AAA processing places the response attributes as input to the postprocessing phase for use in a custom stylesheet or GatewayScript file. To access the node in the postprocessing input, specify <tt>/container/ResponseAttributes</tt> as the XPath expression. By default, all response attributes are exported to HTTP headers.", "az-oauth-export-headers", "").AddDefaultValue("true").String,
+				Computed:            true,
+			},
+			"aztampac_return": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authorization. You can use the PAC in the postprocessing phase. By default, does not return a PAC token.</p><p>This property is mutually exclusive to the same property in the authentication phase. If you select this property for both authentication and authorization, the setting is automatically cleared for authorization when applied.</p>", "tam-pac-return", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"aztampac_use": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use the existing identity or the PAC token for authorization. By default, uses the exiting identity.</p><p>When enabled, use the PAC token that was returned in the authentication or map credentials phase. You can use the PAC token in the postprocessing phase.</p>", "use-tam-pac", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"azldap_read_timeout": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to wait for a response from LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.</p><p>If you configure an LDAP connection pool and assign it to the AAA policy's XML manager, the AAA policy can use the connection pool. The LDAP read timer of the AAA policy can work with the idle timer of the LDAP connection pool to remove idle connections from the connection pool.</p>", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
+				Computed:            true,
+			},
+			"azssl_client_config_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				Computed:            true,
+			},
+			"azssl_client_profile": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the client profile type to secure connections.", "ssl-client", "ssl_client_profile").String,
+				Computed:            true,
+			},
+			"azldap_bind_password_alias": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to bind to the LDAP server.", "ldap-bind-password-alias", "password_alias").String,
+				Computed:            true,
+			},
+			"azsm_request_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of request to make. By default, the request against the CA Single Sign-On web agent.", "sm-request-type", "").AddStringEnum("webagent", "webservice").AddDefaultValue("webagent").String,
+				Computed:            true,
+			},
+			"azsm_cookie_flow": GetDmSMFlowDataSourceSchema("Specify which flows to include the authorization session cookie.", "sm-cookie-flow", ""),
+			"azsm_header_flow": GetDmSMFlowDataSourceSchema("Specify which flows to include the CA Single Sign-On HTTP headers that are generated during authorization. The CA Single Sign-On HTTP headers has a prefix of <tt>SM_</tt> .", "sm-header-flow", ""),
+			"azsm_cookie_attributes": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.", "cookie-attributes", "cookie_attribute_policy").String,
+				Computed:            true,
+			},
+			"az_cache_control": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage the caching of authorization failures. By default, all failures are cached.", "cache-control", "").AddStringEnum("default", "disable-all", "disable-ldap-failures").AddDefaultValue("default").String,
+				Computed:            true,
+			},
 		},
-		"az_custom_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file for custom authorization.", "custom-url", "").String,
-			Computed:            true,
-		},
-		"az_map_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA information file.", "xmlfile-url", "").String,
-			Computed:            true,
-		},
-		"az_host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the authorization server.", "remote-host", "").String,
-			Computed:            true,
-		},
-		"az_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server.", "remote-port", "").AddDefaultValue("0").String,
-			Computed:            true,
-		},
-		"azldap_group": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN of the required LDAP group.", "ldap-group-dn", "").String,
-			Computed:            true,
-		},
-		"az_valcred": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "crypto_val_cred").String,
-			Computed:            true,
-		},
-		"azsamlurl": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the SAML server.", "saml-server-url", "").String,
-			Computed:            true,
-		},
-		"azsaml_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to match SAML attributes and values. The default value is any.", "saml-type", "").AddStringEnum("xpath", "any", "all", "any-value", "all-values").AddDefaultValue("any").String,
-			Computed:            true,
-		},
-		"azsamlx_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to run against the SAML statement.", "saml-xpath", "").String,
-			Computed:            true,
-		},
-		"azsaml_name_qualifier": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of the <tt>NameQualifier</tt> attribute of the <tt>NameIdentifier</tt> in the generated SAML query. Although the <tt>NameQualifier</tt> attribute is an optional attribute, some SAML implementations require it to be present.", "saml-name-qualifier", "").String,
-			Computed:            true,
-		},
-		"az_cache_allow": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to control the caching of AAA authorization results. The default value is absolute. A protocol TTL is available only with SAML or OAuth with a Federated Identity Manager endpoint. Federated Identity Manager integration is deprecated.", "cache-type", "").AddStringEnum("absolute", "disabled", "maximum", "minimum").AddDefaultValue("absolute").String,
-			Computed:            true,
-		},
-		"az_cache_ttl": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to cache authorization decisions. Enter a value in the range 1 - 86400. The default value is 3.", "cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("3").String,
-			Computed:            true,
-		},
-		"az_netegrity_base_uri": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.", "netegrity-base-uri", "").String,
-			Computed:            true,
-		},
-		"az_netegrity_op_name_extension": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the extension for URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.", "netegrity-opname-ext", "").String,
-			Computed:            true,
-		},
-		"az_clear_trust_server_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the ClearTrust server for authorization.", "cleartrust-server-url", "").String,
-			Computed:            true,
-		},
-		"azsaml_version": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the version to use for SAML messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2.0", "1.1", "1.0").AddDefaultValue("1.1").String,
-			Computed:            true,
-		},
-		"azldap_load_balance_group": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the load balancer group that contains the LDAP servers.", "ldap-lbgroup", "load_balancer_group").String,
-			Computed:            true,
-		},
-		"azldap_bind_dn": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN to bind to the LDAP server.", "ldap-bind-dn", "").String,
-			Computed:            true,
-		},
-		"azldap_group_attribute": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute name of the LDAP group to check for membership. The authorizing identity must exist as an attribute value in the group.", "ldap-group-attr", "").AddDefaultValue("member").String,
-			Computed:            true,
-		},
-		"azldap_search_scope": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope of the search relative to the input. The default value is subtree.", "ldap-search-scope", "").AddStringEnum("subtree", "one-level", "base").AddDefaultValue("subtree").String,
-			Computed:            true,
-		},
-		"azldap_search_filter": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the LDAP search filter for the search. The default value is <tt>(objectClass=*)</tt> .", "ldap-search-filter", "").AddDefaultValue("(objectClass=*)").String,
-			Computed:            true,
-		},
-		"azxacml_version": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XACML version for communication between the PDP and the AAA policy. The AAA policy acts as an XACML policy enforcement point (PEP). The default value is 2.0.", "xacml-version", "").AddStringEnum("2", "1").AddDefaultValue("2").String,
-			Computed:            true,
-		},
-		"azxacmlpep_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how the AAA policy processes the PDP authorization response. The AAA policy acts as an XACML PEP. The default value is deny-based PEP.", "xacml-pep-type", "").AddStringEnum("base", "deny-biased", "permit-biased").AddDefaultValue("deny-biased").String,
-			Computed:            true,
-		},
-		"azxacml_use_on_box_pdp": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the on-box XACML policy decision point (PDP). By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.", "xacml-use-builtin", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"azxacmlpdp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XACML policy decision point (PDP) configuration.", "xacml-pdp", "xacml_pdp").String,
-			Computed:            true,
-		},
-		"azxacml_external_pdp_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL for the external XACML PDP service. The AAA policy sends the authorization request to and receives the authorization response from this service.", "xacml-url", "").String,
-			Computed:            true,
-		},
-		"azxacml_binding_method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the XACML context request. The default value is custom processing.", "xacml-binding-method", "").AddStringEnum("dp-pdp", "custom").AddDefaultValue("custom").String,
-			Computed:            true,
-		},
-		"azxacml_binding_object": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XACML binding", "xacml-binding-object", "").String,
-			Computed:            true,
-		},
-		"azxacml_binding_xsl": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.", "xacml-binding-custom-url", "").String,
-			Computed:            true,
-		},
-		"azxacml_custom_obligation": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that can fulfill XACML obligations. he file must understand the obligations from the PDP and take the appropriate action to fulfill the obligations that are based on the request context. <ul><li>For fulfilled obligations, the output is &lt; <tt>xsl:value-of select=\"true()\"</tt> />.</li><li>For unfulfilled obligations, the output is &lt; <tt>xsl:value-of select=\"false()\"</tt> />.</li></ul>", "xacml-obligation-custom-url", "").String,
-			Computed:            true,
-		},
-		"azxacml_use_saml2": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use SAML2.0 Profile to communicate with the external PDP service. By default, the PEP does not use SAML2.0 Profile. <ul><li>When enabled, the PEP communicates with the external PDP service by using &lt; <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> > as defined by SAML2.0 Profile. You can combine this setting with SOAP enveloping if <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> must be wrapped by a SOAP <tt>Body</tt> element.</li><li>When disabled, the PEP does not use SAML2.0 Profile to communicate with the external PDP service.</li></ul>", "xacml-use-saml2", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"aztam_server": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IBM Security Access Manager client.", "tam", "tam").String,
-			Computed:            true,
-		},
-		"aztam_default_action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default Access Manager action. The default value is T (traverse).", "tam-action-default", "").AddStringEnum("T", "c", "g", "m", "d", "b", "s", "v", "a", "BypassPOP", "tt", "r", "x", "l", "N", "W", "Add", "BypassAuthzRule", "_WebService_i", "_PDMQ_D", "_PDMQ_E").AddDefaultValue("T").String,
-			Computed:            true,
-		},
-		"aztam_action_resource_map": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the XML file that contains the resource-action map. Each entry in the resource-action map defines a PCRE pattern to match the resource, the action to run, and whether to map the action to WebSEAL. This file is in the <tt>local:</tt> or <tt>store:</tt> directory.", "tam-action-map", "").String,
-			Computed:            true,
-		},
-		"azxacml_use_soap": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the external PDP requires a SOAP envelope. By default, a SOAP envelope is not required. If the stylesheet or GatewayScript file for custom binding generates the SOAP envelope, retain the default value.", "xacml-use-soap", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"azzosnss_config": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the z/OS NSS client for SAF communication.", "zos-nss-az", "zos_nss_client").String,
-			Computed:            true,
-		},
-		"azsaf_default_action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default action. The default value is r (Read).", "zos-nss-default-action", "").AddStringEnum("r", "u", "a", "c").AddDefaultValue("r").String,
-			Computed:            true,
-		},
-		"azldap_attributes": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of the extra user attributes to retrieve from the LDAP registry. The attributes that are retrieved from the registry and stored in the var://context/ldap/auxiliary-attributes context variable for future use, such as in the AAA postprocessing phase. To specify multiple attributes, use a comma as the delimiter. For example, enter <tt>email, cn, userPassword</tt> to retrieve these attributes from the registry.", "az-ldap-attributes", "").String,
-			Computed:            true,
-		},
-		"az_skew_time": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>", "az-skew-time", "").AddDefaultValue("0").String,
-			Computed:            true,
-		},
-		"azo_auth_enforce_scope": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to enforce the scope of the access token. The scope is returned by the server as part of the validation process. By default, the scope is enforced by the resource server. <ul><li>When enabled, the mapped resource is enforced by the DataPower Gateway against the scope.</li><li>When disabled, the remote resource server enforces the scope.</li></ul>", "az-oauth-enforce-scope", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"azo_auth_export_headers": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to export response attributes that Federated Identity Manager might return a set of response headers. AAA processing places the response attributes as input to the postprocessing phase for use in a custom stylesheet or GatewayScript file. To access the node in the postprocessing input, specify <tt>/container/ResponseAttributes</tt> as the XPath expression. By default, all response attributes are exported to HTTP headers.", "az-oauth-export-headers", "").AddDefaultValue("true").String,
-			Computed:            true,
-		},
-		"aztampac_return": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authorization. You can use the PAC in the postprocessing phase. By default, does not return a PAC token.</p><p>This property is mutually exclusive to the same property in the authentication phase. If you select this property for both authentication and authorization, the setting is automatically cleared for authorization when applied.</p>", "tam-pac-return", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"aztampac_use": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use the existing identity or the PAC token for authorization. By default, uses the exiting identity.</p><p>When enabled, use the PAC token that was returned in the authentication or map credentials phase. You can use the PAC token in the postprocessing phase.</p>", "use-tam-pac", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"azldap_read_timeout": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to wait for a response from LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.</p><p>If you configure an LDAP connection pool and assign it to the AAA policy's XML manager, the AAA policy can use the connection pool. The LDAP read timer of the AAA policy can work with the idle timer of the LDAP connection pool to remove idle connections from the connection pool.</p>", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
-			Computed:            true,
-		},
-		"azssl_client_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
-			Computed:            true,
-		},
-		"azssl_client_profile": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the client profile type to secure connections.", "ssl-client", "ssl_client_profile").String,
-			Computed:            true,
-		},
-		"azldap_bind_password_alias": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to bind to the LDAP server.", "ldap-bind-password-alias", "password_alias").String,
-			Computed:            true,
-		},
-		"azsm_request_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of request to make. By default, the request against the CA Single Sign-On web agent.", "sm-request-type", "").AddStringEnum("webagent", "webservice").AddDefaultValue("webagent").String,
-			Computed:            true,
-		},
-		"azsm_cookie_flow": GetDmSMFlowDataSourceSchema("Specify which flows to include the authorization session cookie.", "sm-cookie-flow", ""),
-		"azsm_header_flow": GetDmSMFlowDataSourceSchema("Specify which flows to include the CA Single Sign-On HTTP headers that are generated during authorization. The CA Single Sign-On HTTP headers has a prefix of <tt>SM_</tt> .", "sm-header-flow", ""),
-		"azsm_cookie_attributes": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.", "cookie-attributes", "cookie_attribute_policy").String,
-			Computed:            true,
-		},
-		"az_cache_control": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage the caching of authorization failures. By default, all failures are cached.", "cache-control", "").AddStringEnum("default", "disable-all", "disable-ldap-failures").AddDefaultValue("default").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmAAAPAuthorizeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmAAAPAuthorizeDataSourceSchema
 }
-var DmAAAPAuthorizeResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmAAAPAuthorizeObjectType,
-			DmAAAPAuthorizeObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"az_method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the authorization method.", "method", "").AddStringEnum("anyauthenticated", "passthrough", "tivoli", "netegrity", "oblix", "cleartrust", "custom", "ldap", "saml-authz", "saml-attr", "use-authen-attr", "xacml", "xmlfile", "zosnss", "oauth").AddDefaultValue("anyauthenticated").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("anyauthenticated", "passthrough", "tivoli", "netegrity", "oblix", "cleartrust", "custom", "ldap", "saml-authz", "saml-attr", "use-authen-attr", "xacml", "xmlfile", "zosnss", "oauth"),
+func GetDmAAAPAuthorizeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmAAAPAuthorizeResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmAAAPAuthorizeObjectType,
+				DmAAAPAuthorizeObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"az_method": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the authorization method.", "method", "").AddStringEnum("anyauthenticated", "passthrough", "tivoli", "netegrity", "oblix", "cleartrust", "custom", "ldap", "saml-authz", "saml-attr", "use-authen-attr", "xacml", "xmlfile", "zosnss", "oauth").AddDefaultValue("anyauthenticated").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("anyauthenticated", "passthrough", "tivoli", "netegrity", "oblix", "cleartrust", "custom", "ldap", "saml-authz", "saml-attr", "use-authen-attr", "xacml", "xmlfile", "zosnss", "oauth"),
+				},
+				Default: stringdefault.StaticString("anyauthenticated"),
 			},
-			Default: stringdefault.StaticString("anyauthenticated"),
-		},
-		"az_custom_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file for custom authorization.", "custom-url", "").String,
-			Optional:            true,
-		},
-		"az_map_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA information file.", "xmlfile-url", "").String,
-			Optional:            true,
-		},
-		"az_host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the authorization server.", "remote-host", "").String,
-			Optional:            true,
-		},
-		"az_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server.", "remote-port", "").AddDefaultValue("0").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             int64default.StaticInt64(0),
-		},
-		"azldap_group": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN of the required LDAP group.", "ldap-group-dn", "").String,
-			Optional:            true,
-		},
-		"az_valcred": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("", "", "crypto_val_cred").String,
-			Optional:            true,
-		},
-		"azsamlurl": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the SAML server.", "saml-server-url", "").String,
-			Optional:            true,
-		},
-		"azsaml_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to match SAML attributes and values. The default value is any.", "saml-type", "").AddStringEnum("xpath", "any", "all", "any-value", "all-values").AddDefaultValue("any").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("xpath", "any", "all", "any-value", "all-values"),
+			"az_custom_url": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file for custom authorization.", "custom-url", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZCustomURLCondVal, validators.Evaluation{}, false),
+				},
 			},
-			Default: stringdefault.StaticString("any"),
-		},
-		"azsamlx_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to run against the SAML statement.", "saml-xpath", "").String,
-			Optional:            true,
-		},
-		"azsaml_name_qualifier": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of the <tt>NameQualifier</tt> attribute of the <tt>NameIdentifier</tt> in the generated SAML query. Although the <tt>NameQualifier</tt> attribute is an optional attribute, some SAML implementations require it to be present.", "saml-name-qualifier", "").String,
-			Optional:            true,
-		},
-		"az_cache_allow": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to control the caching of AAA authorization results. The default value is absolute. A protocol TTL is available only with SAML or OAuth with a Federated Identity Manager endpoint. Federated Identity Manager integration is deprecated.", "cache-type", "").AddStringEnum("absolute", "disabled", "maximum", "minimum").AddDefaultValue("absolute").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("absolute", "disabled", "maximum", "minimum"),
+			"az_map_url": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA information file.", "xmlfile-url", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZMapURLCondVal, validators.Evaluation{}, false),
+				},
 			},
-			Default: stringdefault.StaticString("absolute"),
-		},
-		"az_cache_ttl": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to cache authorization decisions. Enter a value in the range 1 - 86400. The default value is 3.", "cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("3").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 86400),
+			"az_host": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the authorization server.", "remote-host", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZHostCondVal, validators.Evaluation{}, false),
+				},
 			},
-			Default: int64default.StaticInt64(3),
-		},
-		"az_netegrity_base_uri": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.", "netegrity-base-uri", "").String,
-			Optional:            true,
-		},
-		"az_netegrity_op_name_extension": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the extension for URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.", "netegrity-opname-ext", "").String,
-			Optional:            true,
-		},
-		"az_clear_trust_server_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the ClearTrust server for authorization.", "cleartrust-server-url", "").String,
-			Optional:            true,
-		},
-		"azsaml_version": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the version to use for SAML messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2.0", "1.1", "1.0").AddDefaultValue("1.1").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("2.0", "1.1", "1.0"),
+			"az_port": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server.", "remote-port", "").AddDefaultValue("0").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(DmAAAPAuthorizeAZPortCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(0),
 			},
-			Default: stringdefault.StaticString("1.1"),
-		},
-		"azldap_load_balance_group": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the load balancer group that contains the LDAP servers.", "ldap-lbgroup", "load_balancer_group").String,
-			Optional:            true,
-		},
-		"azldap_bind_dn": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN to bind to the LDAP server.", "ldap-bind-dn", "").String,
-			Optional:            true,
-		},
-		"azldap_group_attribute": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute name of the LDAP group to check for membership. The authorizing identity must exist as an attribute value in the group.", "ldap-group-attr", "").AddDefaultValue("member").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("member"),
-		},
-		"azldap_search_scope": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope of the search relative to the input. The default value is subtree.", "ldap-search-scope", "").AddStringEnum("subtree", "one-level", "base").AddDefaultValue("subtree").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("subtree", "one-level", "base"),
+			"azldap_group": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN of the required LDAP group.", "ldap-group-dn", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZLDAPGroupCondVal, validators.Evaluation{}, false),
+				},
 			},
-			Default: stringdefault.StaticString("subtree"),
-		},
-		"azldap_search_filter": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the LDAP search filter for the search. The default value is <tt>(objectClass=*)</tt> .", "ldap-search-filter", "").AddDefaultValue("(objectClass=*)").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("(objectClass=*)"),
-		},
-		"azxacml_version": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XACML version for communication between the PDP and the AAA policy. The AAA policy acts as an XACML policy enforcement point (PEP). The default value is 2.0.", "xacml-version", "").AddStringEnum("2", "1").AddDefaultValue("2").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("2", "1"),
+			"az_valcred": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "crypto_val_cred").String,
+				Optional:            true,
 			},
-			Default: stringdefault.StaticString("2"),
-		},
-		"azxacmlpep_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how the AAA policy processes the PDP authorization response. The AAA policy acts as an XACML PEP. The default value is deny-based PEP.", "xacml-pep-type", "").AddStringEnum("base", "deny-biased", "permit-biased").AddDefaultValue("deny-biased").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("base", "deny-biased", "permit-biased"),
+			"azsamlurl": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the SAML server.", "saml-server-url", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZSAMLURLCondVal, validators.Evaluation{}, false),
+				},
 			},
-			Default: stringdefault.StaticString("deny-biased"),
-		},
-		"azxacml_use_on_box_pdp": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the on-box XACML policy decision point (PDP). By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.", "xacml-use-builtin", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"azxacmlpdp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XACML policy decision point (PDP) configuration.", "xacml-pdp", "xacml_pdp").String,
-			Optional:            true,
-		},
-		"azxacml_external_pdp_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL for the external XACML PDP service. The AAA policy sends the authorization request to and receives the authorization response from this service.", "xacml-url", "").String,
-			Optional:            true,
-		},
-		"azxacml_binding_method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the XACML context request. The default value is custom processing.", "xacml-binding-method", "").AddStringEnum("dp-pdp", "custom").AddDefaultValue("custom").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("dp-pdp", "custom"),
+			"azsaml_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to match SAML attributes and values. The default value is any.", "saml-type", "").AddStringEnum("xpath", "any", "all", "any-value", "all-values").AddDefaultValue("any").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("xpath", "any", "all", "any-value", "all-values"),
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZSAMLTypeCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("any"),
 			},
-			Default: stringdefault.StaticString("custom"),
-		},
-		"azxacml_binding_object": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XACML binding", "xacml-binding-object", "").String,
-			Optional:            true,
-		},
-		"azxacml_binding_xsl": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.", "xacml-binding-custom-url", "").String,
-			Optional:            true,
-		},
-		"azxacml_custom_obligation": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that can fulfill XACML obligations. he file must understand the obligations from the PDP and take the appropriate action to fulfill the obligations that are based on the request context. <ul><li>For fulfilled obligations, the output is &lt; <tt>xsl:value-of select=\"true()\"</tt> />.</li><li>For unfulfilled obligations, the output is &lt; <tt>xsl:value-of select=\"false()\"</tt> />.</li></ul>", "xacml-obligation-custom-url", "").String,
-			Optional:            true,
-		},
-		"azxacml_use_saml2": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use SAML2.0 Profile to communicate with the external PDP service. By default, the PEP does not use SAML2.0 Profile. <ul><li>When enabled, the PEP communicates with the external PDP service by using &lt; <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> > as defined by SAML2.0 Profile. You can combine this setting with SOAP enveloping if <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> must be wrapped by a SOAP <tt>Body</tt> element.</li><li>When disabled, the PEP does not use SAML2.0 Profile to communicate with the external PDP service.</li></ul>", "xacml-use-saml2", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"aztam_server": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IBM Security Access Manager client.", "tam", "tam").String,
-			Optional:            true,
-		},
-		"aztam_default_action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default Access Manager action. The default value is T (traverse).", "tam-action-default", "").AddStringEnum("T", "c", "g", "m", "d", "b", "s", "v", "a", "BypassPOP", "tt", "r", "x", "l", "N", "W", "Add", "BypassAuthzRule", "_WebService_i", "_PDMQ_D", "_PDMQ_E").AddDefaultValue("T").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("T", "c", "g", "m", "d", "b", "s", "v", "a", "BypassPOP", "tt", "r", "x", "l", "N", "W", "Add", "BypassAuthzRule", "_WebService_i", "_PDMQ_D", "_PDMQ_E"),
+			"azsamlx_path": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to run against the SAML statement.", "saml-xpath", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZSAMLXPathCondVal, validators.Evaluation{}, false),
+				},
 			},
-			Default: stringdefault.StaticString("T"),
-		},
-		"aztam_action_resource_map": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the XML file that contains the resource-action map. Each entry in the resource-action map defines a PCRE pattern to match the resource, the action to run, and whether to map the action to WebSEAL. This file is in the <tt>local:</tt> or <tt>store:</tt> directory.", "tam-action-map", "").String,
-			Optional:            true,
-		},
-		"azxacml_use_soap": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the external PDP requires a SOAP envelope. By default, a SOAP envelope is not required. If the stylesheet or GatewayScript file for custom binding generates the SOAP envelope, retain the default value.", "xacml-use-soap", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"azzosnss_config": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the z/OS NSS client for SAF communication.", "zos-nss-az", "zos_nss_client").String,
-			Optional:            true,
-		},
-		"azsaf_default_action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default action. The default value is r (Read).", "zos-nss-default-action", "").AddStringEnum("r", "u", "a", "c").AddDefaultValue("r").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("r", "u", "a", "c"),
+			"azsaml_name_qualifier": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of the <tt>NameQualifier</tt> attribute of the <tt>NameIdentifier</tt> in the generated SAML query. Although the <tt>NameQualifier</tt> attribute is an optional attribute, some SAML implementations require it to be present.", "saml-name-qualifier", "").String,
+				Optional:            true,
 			},
-			Default: stringdefault.StaticString("r"),
-		},
-		"azldap_attributes": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of the extra user attributes to retrieve from the LDAP registry. The attributes that are retrieved from the registry and stored in the var://context/ldap/auxiliary-attributes context variable for future use, such as in the AAA postprocessing phase. To specify multiple attributes, use a comma as the delimiter. For example, enter <tt>email, cn, userPassword</tt> to retrieve these attributes from the registry.", "az-ldap-attributes", "").String,
-			Optional:            true,
-		},
-		"az_skew_time": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>", "az-skew-time", "").AddDefaultValue("0").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             int64default.StaticInt64(0),
-		},
-		"azo_auth_enforce_scope": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to enforce the scope of the access token. The scope is returned by the server as part of the validation process. By default, the scope is enforced by the resource server. <ul><li>When enabled, the mapped resource is enforced by the DataPower Gateway against the scope.</li><li>When disabled, the remote resource server enforces the scope.</li></ul>", "az-oauth-enforce-scope", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"azo_auth_export_headers": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to export response attributes that Federated Identity Manager might return a set of response headers. AAA processing places the response attributes as input to the postprocessing phase for use in a custom stylesheet or GatewayScript file. To access the node in the postprocessing input, specify <tt>/container/ResponseAttributes</tt> as the XPath expression. By default, all response attributes are exported to HTTP headers.", "az-oauth-export-headers", "").AddDefaultValue("true").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(true),
-		},
-		"aztampac_return": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authorization. You can use the PAC in the postprocessing phase. By default, does not return a PAC token.</p><p>This property is mutually exclusive to the same property in the authentication phase. If you select this property for both authentication and authorization, the setting is automatically cleared for authorization when applied.</p>", "tam-pac-return", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"aztampac_use": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use the existing identity or the PAC token for authorization. By default, uses the exiting identity.</p><p>When enabled, use the PAC token that was returned in the authentication or map credentials phase. You can use the PAC token in the postprocessing phase.</p>", "use-tam-pac", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"azldap_read_timeout": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to wait for a response from LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.</p><p>If you configure an LDAP connection pool and assign it to the AAA policy's XML manager, the AAA policy can use the connection pool. The LDAP read timer of the AAA policy can work with the idle timer of the LDAP connection pool to remove idle connections from the connection pool.</p>", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(0, 86400),
+			"az_cache_allow": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to control the caching of AAA authorization results. The default value is absolute. A protocol TTL is available only with SAML or OAuth with a Federated Identity Manager endpoint. Federated Identity Manager integration is deprecated.", "cache-type", "").AddStringEnum("absolute", "disabled", "maximum", "minimum").AddDefaultValue("absolute").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("absolute", "disabled", "maximum", "minimum"),
+				},
+				Default: stringdefault.StaticString("absolute"),
 			},
-			Default: int64default.StaticInt64(60),
-		},
-		"azssl_client_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("client"),
+			"az_cache_ttl": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to cache authorization decisions. Enter a value in the range 1 - 86400. The default value is 3.", "cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("3").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 86400),
+				},
+				Default: int64default.StaticInt64(3),
 			},
-			Default: stringdefault.StaticString("client"),
-		},
-		"azssl_client_profile": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the client profile type to secure connections.", "ssl-client", "ssl_client_profile").String,
-			Optional:            true,
-		},
-		"azldap_bind_password_alias": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to bind to the LDAP server.", "ldap-bind-password-alias", "password_alias").String,
-			Optional:            true,
-		},
-		"azsm_request_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of request to make. By default, the request against the CA Single Sign-On web agent.", "sm-request-type", "").AddStringEnum("webagent", "webservice").AddDefaultValue("webagent").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("webagent", "webservice"),
+			"az_netegrity_base_uri": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.", "netegrity-base-uri", "").String,
+				Optional:            true,
 			},
-			Default: stringdefault.StaticString("webagent"),
-		},
-		"azsm_cookie_flow": GetDmSMFlowResourceSchema("Specify which flows to include the authorization session cookie.", "sm-cookie-flow", "", false),
-		"azsm_header_flow": GetDmSMFlowResourceSchema("Specify which flows to include the CA Single Sign-On HTTP headers that are generated during authorization. The CA Single Sign-On HTTP headers has a prefix of <tt>SM_</tt> .", "sm-header-flow", "", false),
-		"azsm_cookie_attributes": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.", "cookie-attributes", "cookie_attribute_policy").String,
-			Optional:            true,
-		},
-		"az_cache_control": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage the caching of authorization failures. By default, all failures are cached.", "cache-control", "").AddStringEnum("default", "disable-all", "disable-ldap-failures").AddDefaultValue("default").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("default", "disable-all", "disable-ldap-failures"),
+			"az_netegrity_op_name_extension": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the extension for URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.", "netegrity-opname-ext", "").String,
+				Optional:            true,
 			},
-			Default: stringdefault.StaticString("default"),
+			"az_clear_trust_server_url": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the ClearTrust server for authorization.", "cleartrust-server-url", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZClearTrustServerURLCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"azsaml_version": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the version to use for SAML messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2.0", "1.1", "1.0").AddDefaultValue("1.1").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("2.0", "1.1", "1.0"),
+				},
+				Default: stringdefault.StaticString("1.1"),
+			},
+			"azldap_load_balance_group": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the load balancer group that contains the LDAP servers.", "ldap-lbgroup", "load_balancer_group").String,
+				Optional:            true,
+			},
+			"azldap_bind_dn": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN to bind to the LDAP server.", "ldap-bind-dn", "").String,
+				Optional:            true,
+			},
+			"azldap_group_attribute": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute name of the LDAP group to check for membership. The authorizing identity must exist as an attribute value in the group.", "ldap-group-attr", "").AddDefaultValue("member").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("member"),
+			},
+			"azldap_search_scope": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope of the search relative to the input. The default value is subtree.", "ldap-search-scope", "").AddStringEnum("subtree", "one-level", "base").AddDefaultValue("subtree").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("subtree", "one-level", "base"),
+				},
+				Default: stringdefault.StaticString("subtree"),
+			},
+			"azldap_search_filter": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LDAP search filter for the search. The default value is <tt>(objectClass=*)</tt> .", "ldap-search-filter", "").AddDefaultValue("(objectClass=*)").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             stringdefault.StaticString("(objectClass=*)"),
+			},
+			"azxacml_version": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XACML version for communication between the PDP and the AAA policy. The AAA policy acts as an XACML policy enforcement point (PEP). The default value is 2.0.", "xacml-version", "").AddStringEnum("2", "1").AddDefaultValue("2").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("2", "1"),
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZXACMLVersionCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("2"),
+			},
+			"azxacmlpep_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the AAA policy processes the PDP authorization response. The AAA policy acts as an XACML PEP. The default value is deny-based PEP.", "xacml-pep-type", "").AddStringEnum("base", "deny-biased", "permit-biased").AddDefaultValue("deny-biased").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("base", "deny-biased", "permit-biased"),
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZXACMLPEPTypeCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("deny-biased"),
+			},
+			"azxacml_use_on_box_pdp": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the on-box XACML policy decision point (PDP). By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.", "xacml-use-builtin", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"azxacmlpdp": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XACML policy decision point (PDP) configuration.", "xacml-pdp", "xacml_pdp").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZXACMLPDPCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"azxacml_external_pdp_url": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL for the external XACML PDP service. The AAA policy sends the authorization request to and receives the authorization response from this service.", "xacml-url", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZXACMLExternalPDPUrlCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"azxacml_binding_method": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the XACML context request. The default value is custom processing.", "xacml-binding-method", "").AddStringEnum("dp-pdp", "custom").AddDefaultValue("custom").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("dp-pdp", "custom"),
+				},
+				Default: stringdefault.StaticString("custom"),
+			},
+			"azxacml_binding_object": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("XACML binding", "xacml-binding-object", "").String,
+				Optional:            true,
+			},
+			"azxacml_binding_xsl": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.", "xacml-binding-custom-url", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZXACMLBindingXSLCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"azxacml_custom_obligation": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that can fulfill XACML obligations. he file must understand the obligations from the PDP and take the appropriate action to fulfill the obligations that are based on the request context. <ul><li>For fulfilled obligations, the output is &lt; <tt>xsl:value-of select=\"true()\"</tt> />.</li><li>For unfulfilled obligations, the output is &lt; <tt>xsl:value-of select=\"false()\"</tt> />.</li></ul>", "xacml-obligation-custom-url", "").String,
+				Optional:            true,
+			},
+			"azxacml_use_saml2": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use SAML2.0 Profile to communicate with the external PDP service. By default, the PEP does not use SAML2.0 Profile. <ul><li>When enabled, the PEP communicates with the external PDP service by using &lt; <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> > as defined by SAML2.0 Profile. You can combine this setting with SOAP enveloping if <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> must be wrapped by a SOAP <tt>Body</tt> element.</li><li>When disabled, the PEP does not use SAML2.0 Profile to communicate with the external PDP service.</li></ul>", "xacml-use-saml2", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"aztam_server": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IBM Security Access Manager client.", "tam", "tam").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZTAMServerCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"aztam_default_action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default Access Manager action. The default value is T (traverse).", "tam-action-default", "").AddStringEnum("T", "c", "g", "m", "d", "b", "s", "v", "a", "BypassPOP", "tt", "r", "x", "l", "N", "W", "Add", "BypassAuthzRule", "_WebService_i", "_PDMQ_D", "_PDMQ_E").AddDefaultValue("T").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("T", "c", "g", "m", "d", "b", "s", "v", "a", "BypassPOP", "tt", "r", "x", "l", "N", "W", "Add", "BypassAuthzRule", "_WebService_i", "_PDMQ_D", "_PDMQ_E"),
+				},
+				Default: stringdefault.StaticString("T"),
+			},
+			"aztam_action_resource_map": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the XML file that contains the resource-action map. Each entry in the resource-action map defines a PCRE pattern to match the resource, the action to run, and whether to map the action to WebSEAL. This file is in the <tt>local:</tt> or <tt>store:</tt> directory.", "tam-action-map", "").String,
+				Optional:            true,
+			},
+			"azxacml_use_soap": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the external PDP requires a SOAP envelope. By default, a SOAP envelope is not required. If the stylesheet or GatewayScript file for custom binding generates the SOAP envelope, retain the default value.", "xacml-use-soap", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"azzosnss_config": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the z/OS NSS client for SAF communication.", "zos-nss-az", "zos_nss_client").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZZOSNSSConfigCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"azsaf_default_action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default action. The default value is r (Read).", "zos-nss-default-action", "").AddStringEnum("r", "u", "a", "c").AddDefaultValue("r").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("r", "u", "a", "c"),
+				},
+				Default: stringdefault.StaticString("r"),
+			},
+			"azldap_attributes": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of the extra user attributes to retrieve from the LDAP registry. The attributes that are retrieved from the registry and stored in the var://context/ldap/auxiliary-attributes context variable for future use, such as in the AAA postprocessing phase. To specify multiple attributes, use a comma as the delimiter. For example, enter <tt>email, cn, userPassword</tt> to retrieve these attributes from the registry.", "az-ldap-attributes", "").String,
+				Optional:            true,
+			},
+			"az_skew_time": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>", "az-skew-time", "").AddDefaultValue("0").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             int64default.StaticInt64(0),
+			},
+			"azo_auth_enforce_scope": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to enforce the scope of the access token. The scope is returned by the server as part of the validation process. By default, the scope is enforced by the resource server. <ul><li>When enabled, the mapped resource is enforced by the DataPower Gateway against the scope.</li><li>When disabled, the remote resource server enforces the scope.</li></ul>", "az-oauth-enforce-scope", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"azo_auth_export_headers": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to export response attributes that Federated Identity Manager might return a set of response headers. AAA processing places the response attributes as input to the postprocessing phase for use in a custom stylesheet or GatewayScript file. To access the node in the postprocessing input, specify <tt>/container/ResponseAttributes</tt> as the XPath expression. By default, all response attributes are exported to HTTP headers.", "az-oauth-export-headers", "").AddDefaultValue("true").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(true),
+			},
+			"aztampac_return": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authorization. You can use the PAC in the postprocessing phase. By default, does not return a PAC token.</p><p>This property is mutually exclusive to the same property in the authentication phase. If you select this property for both authentication and authorization, the setting is automatically cleared for authorization when applied.</p>", "tam-pac-return", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"aztampac_use": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use the existing identity or the PAC token for authorization. By default, uses the exiting identity.</p><p>When enabled, use the PAC token that was returned in the authentication or map credentials phase. You can use the PAC token in the postprocessing phase.</p>", "use-tam-pac", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"azldap_read_timeout": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to wait for a response from LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.</p><p>If you configure an LDAP connection pool and assign it to the AAA policy's XML manager, the AAA policy can use the connection pool. The LDAP read timer of the AAA policy can work with the idle timer of the LDAP connection pool to remove idle connections from the connection pool.</p>", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(0, 86400),
+				},
+				Default: int64default.StaticInt64(60),
+			},
+			"azssl_client_config_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("client"),
+				},
+				Default: stringdefault.StaticString("client"),
+			},
+			"azssl_client_profile": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the client profile type to secure connections.", "ssl-client", "ssl_client_profile").String,
+				Optional:            true,
+			},
+			"azldap_bind_password_alias": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to bind to the LDAP server.", "ldap-bind-password-alias", "password_alias").String,
+				Optional:            true,
+			},
+			"azsm_request_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of request to make. By default, the request against the CA Single Sign-On web agent.", "sm-request-type", "").AddStringEnum("webagent", "webservice").AddDefaultValue("webagent").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("webagent", "webservice"),
+					validators.ConditionalRequiredString(DmAAAPAuthorizeAZSMRequestTypeCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("webagent"),
+			},
+			"azsm_cookie_flow": GetDmSMFlowResourceSchema("Specify which flows to include the authorization session cookie.", "sm-cookie-flow", "", false),
+			"azsm_header_flow": GetDmSMFlowResourceSchema("Specify which flows to include the CA Single Sign-On HTTP headers that are generated during authorization. The CA Single Sign-On HTTP headers has a prefix of <tt>SM_</tt> .", "sm-header-flow", "", false),
+			"azsm_cookie_attributes": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.", "cookie-attributes", "cookie_attribute_policy").String,
+				Optional:            true,
+			},
+			"az_cache_control": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage the caching of authorization failures. By default, all failures are cached.", "cache-control", "").AddStringEnum("default", "disable-all", "disable-ldap-failures").AddDefaultValue("default").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("default", "disable-all", "disable-ldap-failures"),
+				},
+				Default: stringdefault.StaticString("default"),
+			},
 		},
-	},
+	}
+	DmAAAPAuthorizeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmAAAPAuthorizeResourceSchema.Required = true
+	} else {
+		DmAAAPAuthorizeResourceSchema.Optional = true
+		DmAAAPAuthorizeResourceSchema.Computed = true
+	}
+	return DmAAAPAuthorizeResourceSchema
 }
 
 func (data DmAAAPAuthorize) IsNull() bool {
@@ -895,27 +1238,13 @@ func (data DmAAAPAuthorize) IsNull() bool {
 	}
 	return true
 }
-func GetDmAAAPAuthorizeDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmAAAPAuthorizeDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmAAAPAuthorizeDataSourceSchema
-}
-
-func GetDmAAAPAuthorizeResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmAAAPAuthorizeResourceSchema.Required = true
-	} else {
-		DmAAAPAuthorizeResourceSchema.Optional = true
-		DmAAAPAuthorizeResourceSchema.Computed = true
-	}
-	DmAAAPAuthorizeResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmAAAPAuthorizeResourceSchema
-}
 
 func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.AzMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZMethod`, data.AzMethod.ValueString())
 	}

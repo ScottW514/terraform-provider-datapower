@@ -84,7 +84,7 @@ func (r *SAMLAttributesResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"saml_attribute": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Define an attribute by selecting the source type and specifying the data source and SAML attribute name.", "attribute", "").String,
-				NestedObject:        models.DmSAMLAttributeResourceSchema,
+				NestedObject:        models.GetDmSAMLAttributeResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -35,13 +35,13 @@ import (
 )
 
 type DomainSettings struct {
-	AppDomain         types.String                `tfsdk:"app_domain"`
-	Enabled           types.Bool                  `tfsdk:"enabled"`
-	UserSummary       types.String                `tfsdk:"user_summary"`
-	PasswordTreatment types.String                `tfsdk:"password_treatment"`
-	Passphrase        types.String                `tfsdk:"passphrase"`
-	PassphraseUpdate  types.Bool                  `tfsdk:"passphrase_update"`
-	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	Enabled             types.Bool                  `tfsdk:"enabled"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	PasswordTreatment   types.String                `tfsdk:"password_treatment"`
+	PassphraseWo        types.String                `tfsdk:"passphrase_wo"`
+	PassphraseWoVersion types.Int64                 `tfsdk:"passphrase_wo_version"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 type DomainSettingsWO struct {
 	AppDomain         types.String                `tfsdk:"app_domain"`
@@ -52,13 +52,13 @@ type DomainSettingsWO struct {
 }
 
 var DomainSettingsObjectType = map[string]attr.Type{
-	"app_domain":         types.StringType,
-	"enabled":            types.BoolType,
-	"user_summary":       types.StringType,
-	"password_treatment": types.StringType,
-	"passphrase":         types.StringType,
-	"passphrase_update":  types.BoolType,
-	"dependency_actions": actions.ActionsListType,
+	"app_domain":            types.StringType,
+	"enabled":               types.BoolType,
+	"user_summary":          types.StringType,
+	"password_treatment":    types.StringType,
+	"passphrase_wo":         types.StringType,
+	"passphrase_wo_version": types.Int64Type,
+	"dependency_actions":    actions.ActionsListType,
 }
 var DomainSettingsObjectTypeWO = map[string]attr.Type{
 	"app_domain":         types.StringType,
@@ -93,7 +93,7 @@ func (data DomainSettings) IsNull() bool {
 	if !data.PasswordTreatment.IsNull() {
 		return false
 	}
-	if !data.Passphrase.IsNull() {
+	if !data.PassphraseWo.IsNull() {
 		return false
 	}
 	return true
@@ -114,12 +114,13 @@ func (data DomainSettingsWO) IsNull() bool {
 	return true
 }
 
-func (data DomainSettings) ToBody(ctx context.Context, pathRoot string) string {
+func (data DomainSettings) ToBody(ctx context.Context, pathRoot string, config *DomainSettings) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
 	body, _ = sjson.Set(body, "DomainSettings.name", path.Base("/mgmt/config/{domain}/DomainSettings/default"))
+
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}
@@ -129,8 +130,11 @@ func (data DomainSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.PasswordTreatment.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PasswordTreatment`, data.PasswordTreatment.ValueString())
 	}
-	if !data.Passphrase.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Passphrase`, data.Passphrase.ValueString())
+	if !data.PassphraseWo.IsNull() || !data.PassphraseWoVersion.IsNull() {
+		if data.PassphraseWo.IsNull() && config != nil {
+			data.PassphraseWo = config.PassphraseWo
+		}
+		body, _ = sjson.Set(body, pathRoot+`Passphrase`, data.PassphraseWo.ValueString())
 	}
 	return body
 }
@@ -155,9 +159,9 @@ func (data *DomainSettings) FromBody(ctx context.Context, pathRoot string, res g
 		data.PasswordTreatment = types.StringValue("masked")
 	}
 	if value := res.Get(pathRoot + `Passphrase`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Passphrase = tfutils.ParseStringFromGJSON(value)
+		data.PassphraseWo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Passphrase = types.StringNull()
+		data.PassphraseWo = types.StringNull()
 	}
 }
 func (data *DomainSettingsWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -200,10 +204,10 @@ func (data *DomainSettings) UpdateFromBody(ctx context.Context, pathRoot string,
 	} else if data.PasswordTreatment.ValueString() != "masked" {
 		data.PasswordTreatment = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `Passphrase`); value.Exists() && !data.Passphrase.IsNull() {
-		data.Passphrase = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `Passphrase`); value.Exists() && !data.PassphraseWo.IsNull() {
+		data.PassphraseWo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Passphrase = types.StringNull()
+		data.PassphraseWo = types.StringNull()
 	}
 }
 func (data *DomainSettings) UpdateUnknownFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -231,11 +235,11 @@ func (data *DomainSettings) UpdateUnknownFromBody(ctx context.Context, pathRoot 
 			data.PasswordTreatment = types.StringNull()
 		}
 	}
-	if data.Passphrase.IsUnknown() {
-		if value := res.Get(pathRoot + `Passphrase`); value.Exists() && !data.Passphrase.IsNull() {
-			data.Passphrase = tfutils.ParseStringFromGJSON(value)
+	if data.PassphraseWo.IsUnknown() {
+		if value := res.Get(pathRoot + `Passphrase`); value.Exists() && !data.PassphraseWo.IsNull() {
+			data.PassphraseWo = tfutils.ParseStringFromGJSON(value)
 		} else {
-			data.Passphrase = types.StringNull()
+			data.PassphraseWo = types.StringNull()
 		}
 	}
 }

@@ -156,6 +156,7 @@ Read-Only:
   - Reference to: `datapower_b2b_profile:id`
 - `profile_dest` (String) Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.
   - CLI Alias: `destination`
+  - Default value: `default`
 - `profile_enabled` (Boolean) Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.
   - CLI Alias: `enabled`
   - Default value: `true`

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -109,6 +110,117 @@ type XMLFirewallService struct {
 	DebugTrigger                           types.List                  `tfsdk:"debug_trigger"`
 	LocalAddress                           types.String                `tfsdk:"local_address"`
 	DependencyActions                      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var XMLFirewallServiceDelayErrorsDurationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "delay_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rewrite_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var XMLFirewallServiceParserLimitsBytesScannedCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsElementDepthCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsAttributeCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsMaxNodeSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsMaxPrefixesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsMaxNamespacesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsMaxLocalNamesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsAttachmentByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsAttachmentPackageByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceParserLimitsExternalReferencesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceRemoteAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "dynamic-backend",
+	Value:       []string{"static-backend"},
+}
+var XMLFirewallServiceRemotePortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "dynamic-backend",
+	Value:       []string{"static-backend"},
+}
+var XMLFirewallServiceDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
 }
 
 var XMLFirewallServiceObjectType = map[string]attr.Type{
@@ -429,6 +541,7 @@ func (data XMLFirewallService) ToBody(ctx context.Context, pathRoot string) stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -457,9 +570,9 @@ func (data XMLFirewallService) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`FWCred`, data.FwCred.ValueString())
 	}
 	if !data.ServiceMonitors.IsNull() {
-		var values []string
-		data.ServiceMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.ServiceMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`ServiceMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -616,23 +729,23 @@ func (data XMLFirewallService) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`DoChunkedUpload`, tfutils.StringFromBool(data.DoChunkedUpload, ""))
 	}
 	if !data.HeaderInjection.IsNull() {
-		var values []DmHeaderInjection
-		data.HeaderInjection.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmHeaderInjection
+		data.HeaderInjection.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.HeaderSuppression.IsNull() {
-		var values []DmHeaderSuppression
-		data.HeaderSuppression.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmHeaderSuppression
+		data.HeaderSuppression.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.StylesheetParameters.IsNull() {
-		var values []DmStylesheetParameter
-		data.StylesheetParameters.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmStylesheetParameter
+		data.StylesheetParameters.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
 		}
 	}
@@ -646,16 +759,16 @@ func (data XMLFirewallService) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`ForcePolicyExec`, tfutils.StringFromBool(data.ForcePolicyExec, ""))
 	}
 	if !data.CountMonitors.IsNull() {
-		var values []string
-		data.CountMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.CountMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`CountMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
 	if !data.DurationMonitors.IsNull() {
-		var values []string
-		data.DurationMonitors.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []string
+		data.DurationMonitors.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`DurationMonitors`+".-1", map[string]string{"value": val})
 		}
 	}
@@ -669,9 +782,9 @@ func (data XMLFirewallService) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`DebugHistory`, data.DebugHistory.ValueInt64())
 	}
 	if !data.DebugTrigger.IsNull() {
-		var values []DmMSDebugTriggerType
-		data.DebugTrigger.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmMSDebugTriggerType
+		data.DebugTrigger.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
 		}
 	}

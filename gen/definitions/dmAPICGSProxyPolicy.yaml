@@ -14,15 +14,15 @@ attributes:
   example: localhost
   test_value: '"localhost"'
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProxyPolicyEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProxyPolicyEnable
     value:
-    - 'off'
+    - false
 - name: RemotePort
   type: Int64
   required: true
@@ -31,12 +31,12 @@ attributes:
   example: 8080
   test_value: 8080
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProxyPolicyEnable
     value:
-    - 'on'
+    - true
   ignored_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: ProxyPolicyEnable
     value:
-    - 'off'
+    - false

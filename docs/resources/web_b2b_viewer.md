@@ -56,6 +56,7 @@ resource "datapower_web_b2b_viewer" "test" {
 - `sslsni_server` (String) Custom TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Required When: `ssl_server_config_type`=`sni`
 - `user_agent` (String) Custom user agent
   - CLI Alias: `user-agent`
   - Reference to: `datapower_http_user_agent:id`

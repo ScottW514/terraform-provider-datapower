@@ -35,6 +35,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -52,6 +53,70 @@ type DmTAMRASTrace struct {
 	GsKitTraceEnable   types.Bool   `tfsdk:"gs_kit_trace_enable"`
 	GsKitTraceFile     types.String `tfsdk:"gs_kit_trace_file"`
 	GsKitTraceFlush    types.Bool   `tfsdk:"gs_kit_trace_flush"`
+}
+
+var DmTAMRASTraceTAMTraceFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmTAMRASTraceTAMTraceSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmTAMRASTraceTAMTraceTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmTAMRASTraceTAMTraceComponentsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmTAMRASTraceLDAPTraceFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmTAMRASTraceLDAPTraceSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmTAMRASTraceLDAPTraceLevelCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmTAMRASTraceGSKitTraceFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gs_kit_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmTAMRASTraceGSKitTraceFlushCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gs_kit_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var DmTAMRASTraceObjectType = map[string]attr.Type{
@@ -82,143 +147,174 @@ var DmTAMRASTraceObjectDefault = map[string]attr.Value{
 	"gs_kit_trace_file":    types.StringNull(),
 	"gs_kit_trace_flush":   types.BoolValue(false),
 }
-var DmTAMRASTraceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
-	Computed: true,
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"tam_trace_enable": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable tracing in the client libraries for the Access Manager client.", "enable-tam-trace", "").AddDefaultValue("false").String,
-			Computed:            true,
+
+func GetDmTAMRASTraceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
+	var DmTAMRASTraceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
+		Computed: true,
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"tam_trace_enable": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable tracing in the client libraries for the Access Manager client.", "enable-tam-trace", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"tam_trace_file": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "tam-trace-file", "").String,
+				Computed:            true,
+			},
+			"tam_trace_size": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.", "tam-trace-size", "").AddIntegerRange(100, 1000000).AddDefaultValue("100").String,
+				Computed:            true,
+			},
+			"tam_trace_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the format of trace messages in the file.", "tam-trace-type", "").AddStringEnum("textfile", "utf8file", "xmlfile").String,
+				Computed:            true,
+			},
+			"tam_trace_components": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.", "tam-trace-components", "").AddDefaultValue("*:*.9").String,
+				Computed:            true,
+			},
+			"ldap_trace_enable": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable LDAP tracing in the client libraries for the Access Manager client.", "enable-ldap-trace", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"ldap_trace_file": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "ldap-trace-file", "").String,
+				Computed:            true,
+			},
+			"ldap_trace_size": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.", "ldap-trace-size", "").AddIntegerRange(10000, 10000000).AddDefaultValue("10000").String,
+				Computed:            true,
+			},
+			"ldap_trace_level": DataSourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.", "ldap-trace-level", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
+				Computed:            true,
+			},
+			"gs_kit_trace_enable": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable GSKit tracing in the client libraries for the Access Manager client.", "enable-gskit-trace", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
+			"gs_kit_trace_file": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.", "gskit-trace-file", "").String,
+				Computed:            true,
+			},
+			"gs_kit_trace_flush": DataSourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.", "gskit-trace-flush", "").AddDefaultValue("false").String,
+				Computed:            true,
+			},
 		},
-		"tam_trace_file": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "tam-trace-file", "").String,
-			Computed:            true,
-		},
-		"tam_trace_size": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.", "tam-trace-size", "").AddIntegerRange(100, 1000000).AddDefaultValue("100").String,
-			Computed:            true,
-		},
-		"tam_trace_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the format of trace messages in the file.", "tam-trace-type", "").AddStringEnum("textfile", "utf8file", "xmlfile").String,
-			Computed:            true,
-		},
-		"tam_trace_components": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.", "tam-trace-components", "").AddDefaultValue("*:*.9").String,
-			Computed:            true,
-		},
-		"ldap_trace_enable": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable LDAP tracing in the client libraries for the Access Manager client.", "enable-ldap-trace", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"ldap_trace_file": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "ldap-trace-file", "").String,
-			Computed:            true,
-		},
-		"ldap_trace_size": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.", "ldap-trace-size", "").AddIntegerRange(10000, 10000000).AddDefaultValue("10000").String,
-			Computed:            true,
-		},
-		"ldap_trace_level": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.", "ldap-trace-level", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
-			Computed:            true,
-		},
-		"gs_kit_trace_enable": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable GSKit tracing in the client libraries for the Access Manager client.", "enable-gskit-trace", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"gs_kit_trace_file": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.", "gskit-trace-file", "").String,
-			Computed:            true,
-		},
-		"gs_kit_trace_flush": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.", "gskit-trace-flush", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-	},
+	}
+	DmTAMRASTraceDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	return DmTAMRASTraceDataSourceSchema
 }
-var DmTAMRASTraceResourceSchema = ResourceSchema.SingleNestedAttribute{
-	Default: objectdefault.StaticValue(
-		types.ObjectValueMust(
-			DmTAMRASTraceObjectType,
-			DmTAMRASTraceObjectDefault,
-		)),
-	Attributes: map[string]ResourceSchema.Attribute{
-		"tam_trace_enable": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable tracing in the client libraries for the Access Manager client.", "enable-tam-trace", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"tam_trace_file": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "tam-trace-file", "").String,
-			Optional:            true,
-		},
-		"tam_trace_size": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.", "tam-trace-size", "").AddIntegerRange(100, 1000000).AddDefaultValue("100").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(100, 1000000),
+func GetDmTAMRASTraceResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.SingleNestedAttribute {
+	var DmTAMRASTraceResourceSchema = ResourceSchema.SingleNestedAttribute{
+		Default: objectdefault.StaticValue(
+			types.ObjectValueMust(
+				DmTAMRASTraceObjectType,
+				DmTAMRASTraceObjectDefault,
+			)),
+		Attributes: map[string]ResourceSchema.Attribute{
+			"tam_trace_enable": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable tracing in the client libraries for the Access Manager client.", "enable-tam-trace", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
 			},
-			Default: int64default.StaticInt64(100),
-		},
-		"tam_trace_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the format of trace messages in the file.", "tam-trace-type", "").AddStringEnum("textfile", "utf8file", "xmlfile").String,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("textfile", "utf8file", "xmlfile"),
+			"tam_trace_file": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "tam-trace-file", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceFileCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"tam_trace_size": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.", "tam-trace-size", "").AddIntegerRange(100, 1000000).AddDefaultValue("100").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(100, 1000000),
+					validators.ConditionalRequiredInt64(DmTAMRASTraceTAMTraceSizeCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(100),
+			},
+			"tam_trace_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the format of trace messages in the file.", "tam-trace-type", "").AddStringEnum("textfile", "utf8file", "xmlfile").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("textfile", "utf8file", "xmlfile"),
+					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceTypeCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"tam_trace_components": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.", "tam-trace-components", "").AddDefaultValue("*:*.9").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceComponentsCondVal, validators.Evaluation{}, true),
+				},
+				Default: stringdefault.StaticString("*:*.9"),
+			},
+			"ldap_trace_enable": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable LDAP tracing in the client libraries for the Access Manager client.", "enable-ldap-trace", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"ldap_trace_file": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "ldap-trace-file", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmTAMRASTraceLDAPTraceFileCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"ldap_trace_size": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.", "ldap-trace-size", "").AddIntegerRange(10000, 10000000).AddDefaultValue("10000").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(10000, 10000000),
+					validators.ConditionalRequiredInt64(DmTAMRASTraceLDAPTraceSizeCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(10000),
+			},
+			"ldap_trace_level": ResourceSchema.Int64Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.", "ldap-trace-level", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(DmTAMRASTraceLDAPTraceLevelCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(1),
+			},
+			"gs_kit_trace_enable": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable GSKit tracing in the client libraries for the Access Manager client.", "enable-gskit-trace", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
+			},
+			"gs_kit_trace_file": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.", "gskit-trace-file", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmTAMRASTraceGSKitTraceFileCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"gs_kit_trace_flush": ResourceSchema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.", "gskit-trace-flush", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Optional:            true,
+				Default:             booldefault.StaticBool(false),
 			},
 		},
-		"tam_trace_components": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.", "tam-trace-components", "").AddDefaultValue("*:*.9").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             stringdefault.StaticString("*:*.9"),
-		},
-		"ldap_trace_enable": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable LDAP tracing in the client libraries for the Access Manager client.", "enable-ldap-trace", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"ldap_trace_file": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "ldap-trace-file", "").String,
-			Optional:            true,
-		},
-		"ldap_trace_size": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.", "ldap-trace-size", "").AddIntegerRange(10000, 10000000).AddDefaultValue("10000").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(10000, 10000000),
-			},
-			Default: int64default.StaticInt64(10000),
-		},
-		"ldap_trace_level": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.", "ldap-trace-level", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.Int64{
-				int64validator.Between(1, 65535),
-			},
-			Default: int64default.StaticInt64(1),
-		},
-		"gs_kit_trace_enable": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable GSKit tracing in the client libraries for the Access Manager client.", "enable-gskit-trace", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-		"gs_kit_trace_file": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.", "gskit-trace-file", "").String,
-			Optional:            true,
-		},
-		"gs_kit_trace_flush": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.", "gskit-trace-flush", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
-	},
+	}
+	DmTAMRASTraceResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
+	if required {
+		DmTAMRASTraceResourceSchema.Required = true
+	} else {
+		DmTAMRASTraceResourceSchema.Optional = true
+		DmTAMRASTraceResourceSchema.Computed = true
+	}
+	return DmTAMRASTraceResourceSchema
 }
 
 func (data DmTAMRASTrace) IsNull() bool {
@@ -260,27 +356,13 @@ func (data DmTAMRASTrace) IsNull() bool {
 	}
 	return true
 }
-func GetDmTAMRASTraceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.NestedAttribute {
-	DmTAMRASTraceDataSourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
-	return DmTAMRASTraceDataSourceSchema
-}
-
-func GetDmTAMRASTraceResourceSchema(description string, cliAlias string, referenceTo string, required bool) ResourceSchema.NestedAttribute {
-	if required {
-		DmTAMRASTraceResourceSchema.Required = true
-	} else {
-		DmTAMRASTraceResourceSchema.Optional = true
-		DmTAMRASTraceResourceSchema.Computed = true
-	}
-	DmTAMRASTraceResourceSchema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, "").String
-	return DmTAMRASTraceResourceSchema
-}
 
 func (data DmTAMRASTrace) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.TamTraceEnable.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TAMTraceEnable`, tfutils.StringFromBool(data.TamTraceEnable, ""))
 	}

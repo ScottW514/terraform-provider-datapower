@@ -27,22 +27,20 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/tidwall/gjson"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
-var _ resource.ResourceWithModifyPlan = &DomainSettingsResource{}
+var _ resource.Resource = &DomainSettingsResource{}
 
 func NewDomainSettingsResource() resource.Resource {
 	return &DomainSettingsResource{}
@@ -90,7 +88,7 @@ func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.Schema
 				},
 				Default: stringdefault.StaticString("masked"),
 			},
-			"passphrase": schema.StringAttribute{
+			"passphrase_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Passphrase", "passphrase", "").String,
 				Optional:            true,
 				WriteOnly:           true,
@@ -99,12 +97,19 @@ func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.Schema
 					stringvalidator.LengthBetween(8, 24),
 				},
 			},
-			"passphrase_update": schema.BoolAttribute{
-				MarkdownDescription: "Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.",
+			"passphrase_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Changes to this value trigger an update to `write_only` value.",
 				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(false),
-				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(
+						validators.Evaluation{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "passphrase_wo",
+							AttrType:    "String",
+							AttrDefault: "",
+							Value:       []string{""},
+						}, validators.Evaluation{}, false),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},
@@ -123,7 +128,7 @@ func (r *DomainSettingsResource) Create(ctx context.Context, req resource.Create
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-	var data models.DomainSettings
+	var data, config models.DomainSettings
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -133,17 +138,12 @@ func (r *DomainSettingsResource) Create(ctx context.Context, req resource.Create
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	var config models.DomainSettings
-
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	data.Passphrase = config.Passphrase
-	resp.Diagnostics.Append(resp.Private.SetKey(ctx, "DomainSettings.Passphrase", []byte("{\"value\": \""+tfutils.GenerateHash(config.Passphrase.ValueString())+"\"}"))...)
 
-	body := data.ToBody(ctx, `DomainSettings`)
+	body := data.ToBody(ctx, `DomainSettings`, &config)
 	_, err := r.pData.Client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
@@ -206,18 +206,11 @@ func (r *DomainSettingsResource) Update(ctx context.Context, req resource.Update
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	if data.PassphraseUpdate.IsUnknown() {
-		data.Passphrase = config.Passphrase
-		data.PassphraseUpdate = types.BoolValue(false)
-		resp.Diagnostics.Append(resp.Private.SetKey(ctx, "DomainSettings.Passphrase", []byte("{\"value\": \""+tfutils.GenerateHash(config.Passphrase.ValueString())+"\"}"))...)
-	}
-	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `DomainSettings`))
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `DomainSettings`, &config))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
@@ -251,33 +244,6 @@ func (r *DomainSettingsResource) Delete(ctx context.Context, req resource.Delete
 	}
 
 	resp.State.RemoveResource(ctx)
-}
-func (r *DomainSettingsResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
-	if req.Plan.Raw.IsNull() {
-		return
-	}
-	var data, config models.DomainSettings
-
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	var val []byte
-	var diags diag.Diagnostics
-	val, diags = req.Private.GetKey(ctx, "DomainSettings.Passphrase")
-	resp.Diagnostics.Append(diags...)
-	if val != nil {
-		if hash := gjson.GetBytes(val, "value"); hash.Exists() && !tfutils.VerifyHash(config.Passphrase.ValueString(), hash.String()) {
-			data.PassphraseUpdate = types.BoolUnknown()
-		}
-	}
-
-	resp.Diagnostics.Append(resp.Plan.Set(ctx, &data)...)
 }
 
 func (r *DomainSettingsResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {

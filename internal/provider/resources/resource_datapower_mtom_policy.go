@@ -101,7 +101,7 @@ func (r *MTOMPolicyResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"rule": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Each MTOM rule describes which message elements to optimize. A single XPath expression selects one or more elements for optimization.", "rule", "").String,
-				NestedObject:        models.DmMtomRuleResourceSchema,
+				NestedObject:        models.GetDmMtomRuleResourceSchema(),
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

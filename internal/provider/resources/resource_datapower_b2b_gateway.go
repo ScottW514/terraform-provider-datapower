@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &B2BGatewayResource{}
@@ -105,7 +106,7 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"as_front_protocol": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Protocol handlers", "as-fsph", "").String,
-				NestedObject:        models.DmASFrontProtocolResourceSchema,
+				NestedObject:        models.GetDmASFrontProtocolResourceSchema(),
 				Optional:            true,
 			},
 			"as1mdn_email": schema.StringAttribute{
@@ -125,13 +126,16 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"b2b_profiles": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Active partner profiles", "b2b-profile", "").String,
-				NestedObject:        models.DmB2BActiveProfileResourceSchema,
+				MarkdownDescription: tfutils.NewAttributeDescription("Active partner profiles", "b2b-profile", "").AddRequiredWhen(models.B2BGatewayB2BProfilesCondVal.String()).String,
+				NestedObject:        models.GetDmB2BActiveProfileResourceSchema(),
 				Optional:            true,
+				Validators: []validator.List{
+					validators.ConditionalRequiredList(models.B2BGatewayB2BProfilesCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"b2b_groups": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Active profile groups", "b2b-group", "").String,
-				NestedObject:        models.DmB2BActiveGroupResourceSchema,
+				NestedObject:        models.GetDmB2BActiveGroupResourceSchema(),
 				Optional:            true,
 			},
 			"document_routing_preprocessor_type": schema.StringAttribute{
@@ -165,15 +169,19 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: stringdefault.StaticString("archpurge"),
 			},
 			"archive_location": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location for archive file. Enter the fully qualified name of the directory. To copy the archive file to an FTP server, ensure that the FTP policies in the XML manager enable image (binary) data transfer.", "arch-dir", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location for archive file. Enter the fully qualified name of the directory. To copy the archive file to an FTP server, ensure that the FTP policies in the XML manager enable image (binary) data transfer.", "arch-dir", "").AddRequiredWhen(models.B2BGatewayArchiveLocationCondVal.String()).String,
 				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(models.B2BGatewayArchiveLocationCondVal, validators.Evaluation{}, false),
+				},
 			},
 			"archive_file_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base file name for archive file. When archiving, the operation appends the current timestamp.", "arch-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base file name for archive file. When archiving, the operation appends the current timestamp.", "arch-file", "").AddRequiredWhen(models.B2BGatewayArchiveFileNameCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 128),
 					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9.-]+$"), "Must match :"+"^[_a-zA-Z0-9.-]+$"),
+					validators.ConditionalRequiredString(models.B2BGatewayArchiveFileNameCondVal, validators.Evaluation{}, false),
 				},
 			},
 			"archive_minimum_size": schema.Int64Attribute{
@@ -187,7 +195,6 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 3650),
 				},
 				Default: int64default.StaticInt64(90),
@@ -197,7 +204,6 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 65535),
 				},
 				Default: int64default.StaticInt64(100),
@@ -207,7 +213,6 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 1440),
 				},
 				Default: int64default.StaticInt64(60),
@@ -217,7 +222,6 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 4294967295),
 				},
 				Default: int64default.StaticInt64(25165824),
@@ -233,7 +237,6 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 10000),
 				},
 				Default: int64default.StaticInt64(200),
@@ -260,18 +263,18 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of transactions to capture for diagnostics. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of transactions to capture for diagnostics. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.B2BGatewayDebugHistoryCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(10, 250),
+					validators.ConditionalRequiredInt64(models.B2BGatewayDebugHistoryCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"cpa_entries": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify CPA entries. Each CPA entry binds an ebXML messaging service (ebMS) to provide partnership interactions between the internal and partner.", "cpa-entry", "").String,
-				NestedObject:        models.DmB2BCPAEntryResourceSchema,
+				NestedObject:        models.GetDmB2BCPAEntryResourceSchema(),
 				Optional:            true,
 			},
 			"sql_data_source": schema.StringAttribute{
@@ -283,7 +286,6 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-
 					int64validator.Between(1, 86400),
 				},
 				Default: int64default.StaticInt64(120),

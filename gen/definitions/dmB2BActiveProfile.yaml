@@ -18,6 +18,7 @@ attributes:
   cli_alias: enabled
 - name: ProfileDest
   type: String
+  default: default
   description: Specify the destination for the profile. The default is <tt>default</tt>
     , which uses the setting in the B2B partner profile. This setting overrides the
     setting in the B2B partner profile. This setting does not modify the destination

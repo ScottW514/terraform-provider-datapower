@@ -77,6 +77,7 @@ func (data B2BProfileGroup) ToBody(ctx context.Context, pathRoot string) string 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -84,9 +85,9 @@ func (data B2BProfileGroup) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.B2bProfiles.IsNull() {
-		var values []DmB2BGroupedProfile
-		data.B2bProfiles.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmB2BGroupedProfile
+		data.B2bProfiles.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`+".-1", val.ToBody(ctx, ""))
 		}
 	}

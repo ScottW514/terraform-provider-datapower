@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,6 +43,14 @@ type DmWSOperationReliableMessaging struct {
 	ReliableMessagingWsdlComponentValue types.String        `tfsdk:"reliable_messaging_wsdl_component_value"`
 	ReliableMessagingSubscription       types.String        `tfsdk:"reliable_messaging_subscription"`
 	ReliableMessagingFragmentId         types.String        `tfsdk:"reliable_messaging_fragment_id"`
+}
+
+var DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "reliable_messaging_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
 }
 
 var DmWSOperationReliableMessagingObjectType = map[string]attr.Type{
@@ -60,65 +69,75 @@ var DmWSOperationReliableMessagingObjectDefault = map[string]attr.Value{
 	"reliable_messaging_subscription":         types.StringNull(),
 	"reliable_messaging_fragment_id":          types.StringNull(),
 }
-var DmWSOperationReliableMessagingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"options": GetDmWSRMPolicyBitmapDataSourceSchema("Reliable Messaging Options", "", ""),
-		"delivery_assurance_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
-			Computed:            true,
+
+func GetDmWSOperationReliableMessagingDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmWSOperationReliableMessagingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"options": GetDmWSRMPolicyBitmapDataSourceSchema("Reliable Messaging Options", "", ""),
+			"delivery_assurance_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
+				Computed:            true,
+			},
+			"reliable_messaging_wsdl_component_type": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+			},
+			"reliable_messaging_wsdl_component_value": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Computed:            true,
+			},
+			"reliable_messaging_subscription": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Computed:            true,
+			},
+			"reliable_messaging_fragment_id": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Computed:            true,
+			},
 		},
-		"reliable_messaging_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-		},
-		"reliable_messaging_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Computed:            true,
-		},
-		"reliable_messaging_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Computed:            true,
-		},
-		"reliable_messaging_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Computed:            true,
-		},
-	},
+	}
+	return DmWSOperationReliableMessagingDataSourceSchema
 }
-var DmWSOperationReliableMessagingResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"options": GetDmWSRMPolicyBitmapResourceSchema("Reliable Messaging Options", "", "", false),
-		"delivery_assurance_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("exactly-once"),
+func GetDmWSOperationReliableMessagingResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmWSOperationReliableMessagingResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"options": GetDmWSRMPolicyBitmapResourceSchema("Reliable Messaging Options", "", "", false),
+			"delivery_assurance_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("exactly-once"),
+				},
+				Default: stringdefault.StaticString("exactly-once"),
 			},
-			Default: stringdefault.StaticString("exactly-once"),
-		},
-		"reliable_messaging_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+			"reliable_messaging_wsdl_component_type": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid"),
+				},
+				Default: stringdefault.StaticString("all"),
 			},
-			Default: stringdefault.StaticString("all"),
+			"reliable_messaging_wsdl_component_value": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				Optional:            true,
+			},
+			"reliable_messaging_subscription": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					validators.ConditionalRequiredString(DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal, validators.Evaluation{}, false),
+				},
+			},
+			"reliable_messaging_fragment_id": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				Optional:            true,
+			},
 		},
-		"reliable_messaging_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
-			Optional:            true,
-		},
-		"reliable_messaging_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
-			Optional:            true,
-		},
-		"reliable_messaging_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
-			Optional:            true,
-		},
-	},
+	}
+	return DmWSOperationReliableMessagingResourceSchema
 }
 
 func (data DmWSOperationReliableMessaging) IsNull() bool {
@@ -150,6 +169,7 @@ func (data DmWSOperationReliableMessaging) ToBody(ctx context.Context, pathRoot 
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if data.Options != nil {
 		if !data.Options.IsNull() {
 			body, _ = sjson.SetRaw(body, pathRoot+`Options`, data.Options.ToBody(ctx, ""))

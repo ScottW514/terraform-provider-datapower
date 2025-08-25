@@ -78,7 +78,7 @@ func (d *AccessControlListDataSource) Schema(ctx context.Context, req datasource
 						},
 						"access_control_entry": schema.ListNestedAttribute{
 							MarkdownDescription: "Specify allow and deny clauses.",
-							NestedObject:        models.DmACEDataSourceSchema,
+							NestedObject:        models.GetDmACEDataSourceSchema(),
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

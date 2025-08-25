@@ -16,8 +16,9 @@ The file system usage monitor is a utility that checks file systems to determine
 
 ```terraform
 resource "datapower_file_system_usage_monitor" "test" {
-  polling_interval = 60
-  all_system       = true
+  polling_interval   = 60
+  all_system         = true
+  all_queue_managers = true
 }
 ```
 
@@ -30,10 +31,14 @@ resource "datapower_file_system_usage_monitor" "test" {
   - CLI Alias: `all-qm-critical`
   - Range: `0`-`100`
   - Default value: `90`
+  - Required When: `all_queue_managers`=`true`
 - `all_qm_warning_threshold` (Number) Specify the usage threshold to generate a warning event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `all-qm-warning`
   - Range: `0`-`100`
   - Default value: `75`
+  - Required When: `all_queue_managers`=`true`
+- `all_queue_managers` (Boolean) Specify whether the utility checks all or only a subset of queue manager file systems.
+  - Default value: `true`
 - `all_system` (Boolean) Specify whether the utility checks all or only a subset of system file systems. By default, all file systems are scanned. <ul><li>When enabled, you can define specific file systems that override their default thresholds.</li><li>When not enabled, define the file systems to check with their thresholds.</li></ul>
   - CLI Alias: `all-system`
   - Default value: `true`
@@ -41,10 +46,12 @@ resource "datapower_file_system_usage_monitor" "test" {
   - CLI Alias: `all-system-critical`
   - Range: `0`-`100`
   - Default value: `90`
+  - Required When: `all_system`=`true`
 - `all_system_warning_threshold` (Number) Specify the usage threshold to generate a warning event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `all-system-warning`
   - Range: `0`-`100`
   - Default value: `75`
+  - Required When: `all_system`=`true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`

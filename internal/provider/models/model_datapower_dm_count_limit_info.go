@@ -48,34 +48,41 @@ var DmCountLimitInfoObjectDefault = map[string]attr.Value{
 	"name":   types.StringNull(),
 	"action": types.StringValue("inc"),
 }
-var DmCountLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
-	Attributes: map[string]DataSourceSchema.Attribute{
-		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the count limit.", "name", "").String,
-			Computed:            true,
-		},
-		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the count limit.", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
-			Computed:            true,
-		},
-	},
-}
-var DmCountLimitInfoResourceSchema = ResourceSchema.NestedAttributeObject{
-	Attributes: map[string]ResourceSchema.Attribute{
-		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the count limit.", "name", "").String,
-			Required:            true,
-		},
-		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the count limit.", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("inc", "dec"),
+
+func GetDmCountLimitInfoDataSourceSchema() DataSourceSchema.NestedAttributeObject {
+	var DmCountLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
+		Attributes: map[string]DataSourceSchema.Attribute{
+			"name": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the count limit.", "name", "").String,
+				Computed:            true,
 			},
-			Default: stringdefault.StaticString("inc"),
+			"action": DataSourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the count limit.", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
+				Computed:            true,
+			},
 		},
-	},
+	}
+	return DmCountLimitInfoDataSourceSchema
+}
+func GetDmCountLimitInfoResourceSchema() ResourceSchema.NestedAttributeObject {
+	var DmCountLimitInfoResourceSchema = ResourceSchema.NestedAttributeObject{
+		Attributes: map[string]ResourceSchema.Attribute{
+			"name": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the count limit.", "name", "").String,
+				Required:            true,
+			},
+			"action": ResourceSchema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the count limit.", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
+				Computed:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("inc", "dec"),
+				},
+				Default: stringdefault.StaticString("inc"),
+			},
+		},
+	}
+	return DmCountLimitInfoResourceSchema
 }
 
 func (data DmCountLimitInfo) IsNull() bool {
@@ -93,6 +100,7 @@ func (data DmCountLimitInfo) ToBody(ctx context.Context, pathRoot string) string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Name`, data.Name.ValueString())
 	}

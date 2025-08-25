@@ -52,10 +52,10 @@ attributes:
   test_value: '"http://test/uri"'
   cli_alias: general-policy
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EqualPolicies
     value:
-    - 'off'
+    - false
   ignored_when:
   - evaluation: logical-true
 - name: CombiningAlg
@@ -69,10 +69,10 @@ attributes:
     XACML policy file. The default is First Applicable.
   cli_alias: combining-alg
   required_when:
-  - evaluation: property-equals
+  - evaluation: property-value-in-list
     attribute: EqualPolicies
     value:
-    - 'on'
+    - true
   ignored_when:
   - evaluation: logical-true
 - name: DependentPolicy

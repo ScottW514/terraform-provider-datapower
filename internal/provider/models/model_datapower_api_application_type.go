@@ -82,6 +82,7 @@ func (data APIApplicationType) ToBody(ctx context.Context, pathRoot string) stri
 		pathRoot = pathRoot + "."
 	}
 	body := ""
+
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
@@ -92,9 +93,9 @@ func (data APIApplicationType) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`Title`, data.Title.ValueString())
 	}
 	if !data.SupportedOAuthTypes.IsNull() {
-		var values []DmOAuthType
-		data.SupportedOAuthTypes.ElementsAs(ctx, &values, false)
-		for _, val := range values {
+		var dataValues []DmOAuthType
+		data.SupportedOAuthTypes.ElementsAs(ctx, &dataValues, false)
+		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`SupportedOAuthTypes`+".-1", val.ToBody(ctx, ""))
 		}
 	}
