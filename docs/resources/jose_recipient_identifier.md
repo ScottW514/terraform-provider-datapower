@@ -43,7 +43,7 @@ resource "datapower_jose_recipient_identifier" "test" {
   - CLI Alias: `key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: `type`=`key`
-- `ss_key` (String) Use the shared secret key to verify the recipient.
+- `sskey` (String) Use the shared secret key to verify the recipient.
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: `type`=`sskey`

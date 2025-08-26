@@ -183,7 +183,7 @@ Read-Only:
 - `uri` (String) The relative URI to test for each member of the group. XXX in http://www.foobar.com/XXX.
   - CLI Alias: `target-uri`
   - Default value: `/`
-- `x_path` (String) Enter an XPath Expression that verifies the health of the server. The expression is applied to the server's response to the health check POST. If the expression is true, the server is healthy. Otherwise, the server health state is softdown until it passes a health check.
+- `xpath` (String) Enter an XPath Expression that verifies the health of the server. The expression is applied to the server's response to the health check POST. If the expression is true, the server is healthy. Otherwise, the server health state is softdown until it passes a health check.
   - CLI Alias: `xpath`
   - Default value: `/`
 

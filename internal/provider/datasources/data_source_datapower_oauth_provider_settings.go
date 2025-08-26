@@ -98,59 +98,59 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 						},
 						"supported_grant_types":  models.GetDmOAuthProviderGrantTypeDataSourceSchema("Specify the supported grant types. Each grant type defines a method to grant authorization to client applications.", "supported-grant-types", ""),
 						"supported_client_types": models.GetDmAllowedClientTypeDataSourceSchema("Supported client types", "supported-client-types", ""),
-						"apic_provider_base_path": schema.StringAttribute{
+						"api_c_provider_base_path": schema.StringAttribute{
 							MarkdownDescription: "Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .",
 							Computed:            true,
 						},
-						"apic_authorize_endpoint": schema.StringAttribute{
+						"api_c_authorize_endpoint": schema.StringAttribute{
 							MarkdownDescription: "Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .",
 							Computed:            true,
 						},
-						"apic_token_endpoint": schema.StringAttribute{
+						"api_c_token_endpoint": schema.StringAttribute{
 							MarkdownDescription: "Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .",
 							Computed:            true,
 						},
-						"apic_enable_introspection": schema.BoolAttribute{
+						"api_c_enable_introspection": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.",
 							Computed:            true,
 						},
-						"apic_introspect_endpoint": schema.StringAttribute{
+						"api_c_introspect_endpoint": schema.StringAttribute{
 							MarkdownDescription: "Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .",
 							Computed:            true,
 						},
-						"apic_token_secret": schema.StringAttribute{
+						"api_c_token_secret": schema.StringAttribute{
 							MarkdownDescription: "Token secret",
 							Computed:            true,
 						},
-						"apic_one_time_use_accesstoken": schema.BoolAttribute{
+						"api_c_one_time_use_accesstoken": schema.BoolAttribute{
 							MarkdownDescription: "One-time use access token",
 							Computed:            true,
 						},
-						"apic_access_token_ttl": schema.Int64Attribute{
+						"api_c_access_token_ttl": schema.Int64Attribute{
 							MarkdownDescription: "Specify the time in seconds that an access token remains valid. The default value is 3600.",
 							Computed:            true,
 						},
-						"apic_auth_code_ttl": schema.Int64Attribute{
+						"api_c_auth_code_ttl": schema.Int64Attribute{
 							MarkdownDescription: "Specify the time in seconds that an authorization code remains valid. The default value is 300.",
 							Computed:            true,
 						},
-						"apic_enable_refresh_token": schema.BoolAttribute{
+						"api_c_enable_refresh_token": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to enable issuing refresh tokens. Refresh tokens are issued to the client. Refresh tokens are used to obtain a new access token when the current access token becomes invalid, expires, or are used to obtain additional access tokens with identical or narrower scope. By default, this setting is disabled.",
 							Computed:            true,
 						},
-						"apic_one_time_use_refreshtoken": schema.BoolAttribute{
+						"api_c_one_time_use_refreshtoken": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>",
 							Computed:            true,
 						},
-						"apic_refresh_token_limit": schema.Int64Attribute{
+						"api_c_refresh_token_limit": schema.Int64Attribute{
 							MarkdownDescription: "Specify the number of refresh tokens to allow to be generated. The default value is 10.",
 							Computed:            true,
 						},
-						"apic_refresh_token_ttl": schema.Int64Attribute{
+						"api_c_refresh_token_ttl": schema.Int64Attribute{
 							MarkdownDescription: "Specify the time in seconds that a refresh token remains valid. The default value is 5400.",
 							Computed:            true,
 						},
-						"apic_maximum_consent_ttl": schema.Int64Attribute{
+						"api_c_maximum_consent_ttl": schema.Int64Attribute{
 							MarkdownDescription: "Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.",
 							Computed:            true,
 						},
@@ -195,24 +195,24 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							MarkdownDescription: "Specify custom context variables to save headers from the advanced scope validation request. Use a regular expression to include headers from the advanced scope endpoint response.",
 							Computed:            true,
 						},
-						"apic_enable_oidc": schema.BoolAttribute{
+						"api_c_enable_oidc": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to enable OIDC to verify the identity of the user. When enabled, the client application verifies the identity of the user based on the requirement of an OIDC provider before requesting access to client resources. By default, OIDC token generation is enabled. OIDC is only available for implicit and AZ code grant types.",
 							Computed:            true,
 						},
-						"apicoidc_hybrid_response_types": models.GetDmOIDCHybridResponseTypeDataSourceSchema("OIDC Hybrid Flow Response Types", "apic-oidc-hybrid-response-types", ""),
-						"apic_support_pkce": schema.BoolAttribute{
+						"api_c_oidc_hybrid_response_types": models.GetDmOIDCHybridResponseTypeDataSourceSchema("OIDC Hybrid Flow Response Types", "apic-oidc-hybrid-response-types", ""),
+						"api_c_support_pkce": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether the application should enforce PKCE if provided by the client. For more information, see RFC 7636.",
 							Computed:            true,
 						},
-						"apic_require_pkce": schema.BoolAttribute{
+						"api_c_require_pkce": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether the application must enforce PKCE. For more information, see RFC 7636.",
 							Computed:            true,
 						},
-						"apic_support_pkce_plain": schema.BoolAttribute{
+						"api_c_support_pkce_plain": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to support the PKCE <tt>plain</tt> code challenge transform method. For more information, see RFC 7636.",
 							Computed:            true,
 						},
-						"apic_token_type_to_generate": schema.StringAttribute{
+						"api_c_token_type_to_generate": schema.StringAttribute{
 							MarkdownDescription: "Type of token to generate",
 							Computed:            true,
 						},
@@ -302,7 +302,7 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							MarkdownDescription: "Token validation requirement",
 							Computed:            true,
 						},
-						"third_party_azurl": schema.StringAttribute{
+						"third_party_az_url": schema.StringAttribute{
 							MarkdownDescription: "Authorization endpoint",
 							Computed:            true,
 						},

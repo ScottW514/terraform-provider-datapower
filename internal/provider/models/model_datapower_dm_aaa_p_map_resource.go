@@ -41,10 +41,10 @@ type DmAAAPMapResource struct {
 	MrMethod               types.String `tfsdk:"mr_method"`
 	MrCustomUrl            types.String `tfsdk:"mr_custom_url"`
 	MrMapUrl               types.String `tfsdk:"mr_map_url"`
-	MrMapXPath             types.String `tfsdk:"mr_map_x_path"`
-	MrtamMap               types.String `tfsdk:"mrtam_map"`
-	MrtamInstancePrefix    types.String `tfsdk:"mrtam_instance_prefix"`
-	MrtamWebSealDynUrlFile types.String `tfsdk:"mrtam_web_seal_dyn_url_file"`
+	MrMapXpath             types.String `tfsdk:"mr_map_xpath"`
+	MrTamMap               types.String `tfsdk:"mr_tam_map"`
+	MrTamInstancePrefix    types.String `tfsdk:"mr_tam_instance_prefix"`
+	MrTamWebSealDynUrlFile types.String `tfsdk:"mr_tam_web_seal_dyn_url_file"`
 }
 
 var DmAAAPMapResourceMRCustomURLCondVal = validators.Evaluation{
@@ -84,22 +84,22 @@ var DmAAAPMapResourceMRTAMInstancePrefixCondVal = validators.Evaluation{
 }
 
 var DmAAAPMapResourceObjectType = map[string]attr.Type{
-	"mr_method":                   types.StringType,
-	"mr_custom_url":               types.StringType,
-	"mr_map_url":                  types.StringType,
-	"mr_map_x_path":               types.StringType,
-	"mrtam_map":                   types.StringType,
-	"mrtam_instance_prefix":       types.StringType,
-	"mrtam_web_seal_dyn_url_file": types.StringType,
+	"mr_method":                    types.StringType,
+	"mr_custom_url":                types.StringType,
+	"mr_map_url":                   types.StringType,
+	"mr_map_xpath":                 types.StringType,
+	"mr_tam_map":                   types.StringType,
+	"mr_tam_instance_prefix":       types.StringType,
+	"mr_tam_web_seal_dyn_url_file": types.StringType,
 }
 var DmAAAPMapResourceObjectDefault = map[string]attr.Value{
-	"mr_method":                   types.StringValue("none"),
-	"mr_custom_url":               types.StringNull(),
-	"mr_map_url":                  types.StringNull(),
-	"mr_map_x_path":               types.StringNull(),
-	"mrtam_map":                   types.StringValue("WebSEAL"),
-	"mrtam_instance_prefix":       types.StringNull(),
-	"mrtam_web_seal_dyn_url_file": types.StringNull(),
+	"mr_method":                    types.StringValue("none"),
+	"mr_custom_url":                types.StringNull(),
+	"mr_map_url":                   types.StringNull(),
+	"mr_map_xpath":                 types.StringNull(),
+	"mr_tam_map":                   types.StringValue("WebSEAL"),
+	"mr_tam_instance_prefix":       types.StringNull(),
+	"mr_tam_web_seal_dyn_url_file": types.StringNull(),
 }
 
 func GetDmAAAPMapResourceDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
@@ -118,19 +118,19 @@ func GetDmAAAPMapResourceDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map resources.", "xmlfile-url", "").String,
 				Computed:            true,
 			},
-			"mr_map_x_path": DataSourceSchema.StringAttribute{
+			"mr_map_xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the extracted resource.", "xpath", "").String,
 				Computed:            true,
 			},
-			"mrtam_map": DataSourceSchema.StringAttribute{
+			"mr_tam_map": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Access Manager style-mapping resource. Access Manager organizes resources into a hierarchical protected object space. The default value is WebSEAL.", "tam-mapping", "").AddStringEnum("TFIM", "TAMBI", "WebSEAL", "Custom").AddDefaultValue("WebSEAL").String,
 				Computed:            true,
 			},
-			"mrtam_instance_prefix": DataSourceSchema.StringAttribute{
+			"mr_tam_instance_prefix": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the prefix to add based on the mapping style. Each protected object space has a defined convention. These different options help to map extracted resources to a resource string that follow a Tivoli naming convention.</p><ul><li>For the custom mapping style, specify the string to add as the prefix. In other words, use the <i>prefix</i> format.</li><li>For the TAMBI mapping style, specify the queue manager and queue, and separate the queue manager and the queue with a forward slash. In other words, use the <tt>/PDMQ/ <i>prefix</i></tt> format.</li><li>For the TFIM mapping style, specify the name of the Federated Identity Manager domain. In other words, use the <tt>/itfim-wssm/wssm-default/ <i>prefix</i></tt> format.</li><li>For the WebSEAL mapping style, specify the name of the WebSEAL instance. In other words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>", "tam-prefix", "").String,
 				Computed:            true,
 			},
-			"mrtam_web_seal_dyn_url_file": DataSourceSchema.StringAttribute{
+			"mr_tam_web_seal_dyn_url_file": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "webseal-dynurl-file", "").String,
 				Computed:            true,
 			},
@@ -170,14 +170,14 @@ func GetDmAAAPMapResourceResourceSchema(description string, cliAlias string, ref
 					validators.ConditionalRequiredString(DmAAAPMapResourceMRMapURLCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"mr_map_x_path": ResourceSchema.StringAttribute{
+			"mr_map_xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the extracted resource.", "xpath", "").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPMapResourceMRMapXPathCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"mrtam_map": ResourceSchema.StringAttribute{
+			"mr_tam_map": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Access Manager style-mapping resource. Access Manager organizes resources into a hierarchical protected object space. The default value is WebSEAL.", "tam-mapping", "").AddStringEnum("TFIM", "TAMBI", "WebSEAL", "Custom").AddDefaultValue("WebSEAL").String,
 				Computed:            true,
 				Optional:            true,
@@ -187,14 +187,14 @@ func GetDmAAAPMapResourceResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("WebSEAL"),
 			},
-			"mrtam_instance_prefix": ResourceSchema.StringAttribute{
+			"mr_tam_instance_prefix": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the prefix to add based on the mapping style. Each protected object space has a defined convention. These different options help to map extracted resources to a resource string that follow a Tivoli naming convention.</p><ul><li>For the custom mapping style, specify the string to add as the prefix. In other words, use the <i>prefix</i> format.</li><li>For the TAMBI mapping style, specify the queue manager and queue, and separate the queue manager and the queue with a forward slash. In other words, use the <tt>/PDMQ/ <i>prefix</i></tt> format.</li><li>For the TFIM mapping style, specify the name of the Federated Identity Manager domain. In other words, use the <tt>/itfim-wssm/wssm-default/ <i>prefix</i></tt> format.</li><li>For the WebSEAL mapping style, specify the name of the WebSEAL instance. In other words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>", "tam-prefix", "").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPMapResourceMRTAMInstancePrefixCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"mrtam_web_seal_dyn_url_file": ResourceSchema.StringAttribute{
+			"mr_tam_web_seal_dyn_url_file": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "webseal-dynurl-file", "").String,
 				Optional:            true,
 			},
@@ -220,16 +220,16 @@ func (data DmAAAPMapResource) IsNull() bool {
 	if !data.MrMapUrl.IsNull() {
 		return false
 	}
-	if !data.MrMapXPath.IsNull() {
+	if !data.MrMapXpath.IsNull() {
 		return false
 	}
-	if !data.MrtamMap.IsNull() {
+	if !data.MrTamMap.IsNull() {
 		return false
 	}
-	if !data.MrtamInstancePrefix.IsNull() {
+	if !data.MrTamInstancePrefix.IsNull() {
 		return false
 	}
-	if !data.MrtamWebSealDynUrlFile.IsNull() {
+	if !data.MrTamWebSealDynUrlFile.IsNull() {
 		return false
 	}
 	return true
@@ -250,17 +250,17 @@ func (data DmAAAPMapResource) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.MrMapUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MRMapURL`, data.MrMapUrl.ValueString())
 	}
-	if !data.MrMapXPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MRMapXPath`, data.MrMapXPath.ValueString())
+	if !data.MrMapXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MRMapXPath`, data.MrMapXpath.ValueString())
 	}
-	if !data.MrtamMap.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MRTAMMap`, data.MrtamMap.ValueString())
+	if !data.MrTamMap.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MRTAMMap`, data.MrTamMap.ValueString())
 	}
-	if !data.MrtamInstancePrefix.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MRTAMInstancePrefix`, data.MrtamInstancePrefix.ValueString())
+	if !data.MrTamInstancePrefix.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MRTAMInstancePrefix`, data.MrTamInstancePrefix.ValueString())
 	}
-	if !data.MrtamWebSealDynUrlFile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MRTAMWebSEALDynURLFile`, data.MrtamWebSealDynUrlFile.ValueString())
+	if !data.MrTamWebSealDynUrlFile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MRTAMWebSEALDynURLFile`, data.MrTamWebSealDynUrlFile.ValueString())
 	}
 	return body
 }
@@ -285,24 +285,24 @@ func (data *DmAAAPMapResource) FromBody(ctx context.Context, pathRoot string, re
 		data.MrMapUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MRMapXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.MrMapXPath = tfutils.ParseStringFromGJSON(value)
+		data.MrMapXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MrMapXPath = types.StringNull()
+		data.MrMapXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MRTAMMap`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.MrtamMap = tfutils.ParseStringFromGJSON(value)
+		data.MrTamMap = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MrtamMap = types.StringValue("WebSEAL")
+		data.MrTamMap = types.StringValue("WebSEAL")
 	}
 	if value := res.Get(pathRoot + `MRTAMInstancePrefix`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.MrtamInstancePrefix = tfutils.ParseStringFromGJSON(value)
+		data.MrTamInstancePrefix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MrtamInstancePrefix = types.StringNull()
+		data.MrTamInstancePrefix = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MRTAMWebSEALDynURLFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.MrtamWebSealDynUrlFile = tfutils.ParseStringFromGJSON(value)
+		data.MrTamWebSealDynUrlFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MrtamWebSealDynUrlFile = types.StringNull()
+		data.MrTamWebSealDynUrlFile = types.StringNull()
 	}
 }
 
@@ -325,24 +325,24 @@ func (data *DmAAAPMapResource) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.MrMapUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MRMapXPath`); value.Exists() && !data.MrMapXPath.IsNull() {
-		data.MrMapXPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MRMapXPath`); value.Exists() && !data.MrMapXpath.IsNull() {
+		data.MrMapXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MrMapXPath = types.StringNull()
+		data.MrMapXpath = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MRTAMMap`); value.Exists() && !data.MrtamMap.IsNull() {
-		data.MrtamMap = tfutils.ParseStringFromGJSON(value)
-	} else if data.MrtamMap.ValueString() != "WebSEAL" {
-		data.MrtamMap = types.StringNull()
+	if value := res.Get(pathRoot + `MRTAMMap`); value.Exists() && !data.MrTamMap.IsNull() {
+		data.MrTamMap = tfutils.ParseStringFromGJSON(value)
+	} else if data.MrTamMap.ValueString() != "WebSEAL" {
+		data.MrTamMap = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MRTAMInstancePrefix`); value.Exists() && !data.MrtamInstancePrefix.IsNull() {
-		data.MrtamInstancePrefix = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MRTAMInstancePrefix`); value.Exists() && !data.MrTamInstancePrefix.IsNull() {
+		data.MrTamInstancePrefix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MrtamInstancePrefix = types.StringNull()
+		data.MrTamInstancePrefix = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MRTAMWebSEALDynURLFile`); value.Exists() && !data.MrtamWebSealDynUrlFile.IsNull() {
-		data.MrtamWebSealDynUrlFile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MRTAMWebSEALDynURLFile`); value.Exists() && !data.MrTamWebSealDynUrlFile.IsNull() {
+		data.MrTamWebSealDynUrlFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MrtamWebSealDynUrlFile = types.StringNull()
+		data.MrTamWebSealDynUrlFile = types.StringNull()
 	}
 }

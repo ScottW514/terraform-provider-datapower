@@ -41,10 +41,10 @@ type B2BGateway struct {
 	Priority                         types.String                `tfsdk:"priority"`
 	DocStoreLocation                 types.String                `tfsdk:"doc_store_location"`
 	AsFrontProtocol                  types.List                  `tfsdk:"as_front_protocol"`
-	As1mdnEmail                      types.String                `tfsdk:"as1mdn_email"`
-	As1mdnsmtpServerConnection       types.String                `tfsdk:"as1mdnsmtp_server_connection"`
-	As2mdnurl                        types.String                `tfsdk:"as2mdnurl"`
-	As3mdnurl                        types.String                `tfsdk:"as3mdnurl"`
+	As1MdnEmail                      types.String                `tfsdk:"as1_mdn_email"`
+	As1MdnSmtpServerConnection       types.String                `tfsdk:"as1_mdn_smtp_server_connection"`
+	As2MdnUrl                        types.String                `tfsdk:"as2_mdn_url"`
+	As3MdnUrl                        types.String                `tfsdk:"as3_mdn_url"`
 	B2bProfiles                      types.List                  `tfsdk:"b2b_profiles"`
 	B2bGroups                        types.List                  `tfsdk:"b2b_groups"`
 	DocumentRoutingPreprocessorType  types.String                `tfsdk:"document_routing_preprocessor_type"`
@@ -61,7 +61,7 @@ type B2BGateway struct {
 	ArchiveMonitor                   types.Bool                  `tfsdk:"archive_monitor"`
 	ShapingThreshold                 types.Int64                 `tfsdk:"shaping_threshold"`
 	ArchiveBackupDocuments           *DmB2BBackupMsgType         `tfsdk:"archive_backup_documents"`
-	XPathRoutingPolicies             types.List                  `tfsdk:"x_path_routing_policies"`
+	XpathRoutingPolicies             types.List                  `tfsdk:"xpath_routing_policies"`
 	XmlManager                       types.String                `tfsdk:"xml_manager"`
 	DebugMode                        types.String                `tfsdk:"debug_mode"`
 	DebugHistory                     types.Int64                 `tfsdk:"debug_history"`
@@ -107,10 +107,10 @@ var B2BGatewayObjectType = map[string]attr.Type{
 	"priority":                            types.StringType,
 	"doc_store_location":                  types.StringType,
 	"as_front_protocol":                   types.ListType{ElemType: types.ObjectType{AttrTypes: DmASFrontProtocolObjectType}},
-	"as1mdn_email":                        types.StringType,
-	"as1mdnsmtp_server_connection":        types.StringType,
-	"as2mdnurl":                           types.StringType,
-	"as3mdnurl":                           types.StringType,
+	"as1_mdn_email":                       types.StringType,
+	"as1_mdn_smtp_server_connection":      types.StringType,
+	"as2_mdn_url":                         types.StringType,
+	"as3_mdn_url":                         types.StringType,
 	"b2b_profiles":                        types.ListType{ElemType: types.ObjectType{AttrTypes: DmB2BActiveProfileObjectType}},
 	"b2b_groups":                          types.ListType{ElemType: types.ObjectType{AttrTypes: DmB2BActiveGroupObjectType}},
 	"document_routing_preprocessor_type":  types.StringType,
@@ -127,7 +127,7 @@ var B2BGatewayObjectType = map[string]attr.Type{
 	"archive_monitor":                     types.BoolType,
 	"shaping_threshold":                   types.Int64Type,
 	"archive_backup_documents":            types.ObjectType{AttrTypes: DmB2BBackupMsgTypeObjectType},
-	"x_path_routing_policies":             types.ListType{ElemType: types.StringType},
+	"xpath_routing_policies":              types.ListType{ElemType: types.StringType},
 	"xml_manager":                         types.StringType,
 	"debug_mode":                          types.StringType,
 	"debug_history":                       types.Int64Type,
@@ -163,16 +163,16 @@ func (data B2BGateway) IsNull() bool {
 	if !data.AsFrontProtocol.IsNull() {
 		return false
 	}
-	if !data.As1mdnEmail.IsNull() {
+	if !data.As1MdnEmail.IsNull() {
 		return false
 	}
-	if !data.As1mdnsmtpServerConnection.IsNull() {
+	if !data.As1MdnSmtpServerConnection.IsNull() {
 		return false
 	}
-	if !data.As2mdnurl.IsNull() {
+	if !data.As2MdnUrl.IsNull() {
 		return false
 	}
-	if !data.As3mdnurl.IsNull() {
+	if !data.As3MdnUrl.IsNull() {
 		return false
 	}
 	if !data.B2bProfiles.IsNull() {
@@ -225,7 +225,7 @@ func (data B2BGateway) IsNull() bool {
 			return false
 		}
 	}
-	if !data.XPathRoutingPolicies.IsNull() {
+	if !data.XpathRoutingPolicies.IsNull() {
 		return false
 	}
 	if !data.XmlManager.IsNull() {
@@ -274,17 +274,17 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 			body, _ = sjson.SetRaw(body, pathRoot+`ASFrontProtocol`+".-1", val.ToBody(ctx, ""))
 		}
 	}
-	if !data.As1mdnEmail.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AS1MDNEmail`, data.As1mdnEmail.ValueString())
+	if !data.As1MdnEmail.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AS1MDNEmail`, data.As1MdnEmail.ValueString())
 	}
-	if !data.As1mdnsmtpServerConnection.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AS1MDNSMTPServerConnection`, data.As1mdnsmtpServerConnection.ValueString())
+	if !data.As1MdnSmtpServerConnection.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AS1MDNSMTPServerConnection`, data.As1MdnSmtpServerConnection.ValueString())
 	}
-	if !data.As2mdnurl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AS2MDNURL`, data.As2mdnurl.ValueString())
+	if !data.As2MdnUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AS2MDNURL`, data.As2MdnUrl.ValueString())
 	}
-	if !data.As3mdnurl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AS3MDNURL`, data.As3mdnurl.ValueString())
+	if !data.As3MdnUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AS3MDNURL`, data.As3MdnUrl.ValueString())
 	}
 	if !data.B2bProfiles.IsNull() {
 		var dataValues []DmB2BActiveProfile
@@ -344,9 +344,9 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 			body, _ = sjson.SetRaw(body, pathRoot+`ArchiveBackupDocuments`, data.ArchiveBackupDocuments.ToBody(ctx, ""))
 		}
 	}
-	if !data.XPathRoutingPolicies.IsNull() {
+	if !data.XpathRoutingPolicies.IsNull() {
 		var dataValues []string
-		data.XPathRoutingPolicies.ElementsAs(ctx, &dataValues, false)
+		data.XpathRoutingPolicies.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`XPathRoutingPolicies`+".-1", map[string]string{"value": val})
 		}
@@ -420,24 +420,24 @@ func (data *B2BGateway) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.AsFrontProtocol = types.ListNull(types.ObjectType{AttrTypes: DmASFrontProtocolObjectType})
 	}
 	if value := res.Get(pathRoot + `AS1MDNEmail`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.As1mdnEmail = tfutils.ParseStringFromGJSON(value)
+		data.As1MdnEmail = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As1mdnEmail = types.StringNull()
+		data.As1MdnEmail = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AS1MDNSMTPServerConnection`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.As1mdnsmtpServerConnection = tfutils.ParseStringFromGJSON(value)
+		data.As1MdnSmtpServerConnection = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As1mdnsmtpServerConnection = types.StringNull()
+		data.As1MdnSmtpServerConnection = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AS2MDNURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.As2mdnurl = tfutils.ParseStringFromGJSON(value)
+		data.As2MdnUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As2mdnurl = types.StringNull()
+		data.As2MdnUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AS3MDNURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.As3mdnurl = tfutils.ParseStringFromGJSON(value)
+		data.As3MdnUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As3mdnurl = types.StringNull()
+		data.As3MdnUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `B2BProfiles`); value.Exists() {
 		l := []DmB2BActiveProfile{}
@@ -549,9 +549,9 @@ func (data *B2BGateway) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.ArchiveBackupDocuments = nil
 	}
 	if value := res.Get(pathRoot + `XPathRoutingPolicies`); value.Exists() {
-		data.XPathRoutingPolicies = tfutils.ParseStringListFromGJSON(value)
+		data.XpathRoutingPolicies = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.XPathRoutingPolicies = types.ListNull(types.StringType)
+		data.XpathRoutingPolicies = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `XMLManager`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.XmlManager = tfutils.ParseStringFromGJSON(value)
@@ -640,25 +640,25 @@ func (data *B2BGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	} else {
 		data.AsFrontProtocol = types.ListNull(types.ObjectType{AttrTypes: DmASFrontProtocolObjectType})
 	}
-	if value := res.Get(pathRoot + `AS1MDNEmail`); value.Exists() && !data.As1mdnEmail.IsNull() {
-		data.As1mdnEmail = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AS1MDNEmail`); value.Exists() && !data.As1MdnEmail.IsNull() {
+		data.As1MdnEmail = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As1mdnEmail = types.StringNull()
+		data.As1MdnEmail = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AS1MDNSMTPServerConnection`); value.Exists() && !data.As1mdnsmtpServerConnection.IsNull() {
-		data.As1mdnsmtpServerConnection = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AS1MDNSMTPServerConnection`); value.Exists() && !data.As1MdnSmtpServerConnection.IsNull() {
+		data.As1MdnSmtpServerConnection = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As1mdnsmtpServerConnection = types.StringNull()
+		data.As1MdnSmtpServerConnection = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AS2MDNURL`); value.Exists() && !data.As2mdnurl.IsNull() {
-		data.As2mdnurl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AS2MDNURL`); value.Exists() && !data.As2MdnUrl.IsNull() {
+		data.As2MdnUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As2mdnurl = types.StringNull()
+		data.As2MdnUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AS3MDNURL`); value.Exists() && !data.As3mdnurl.IsNull() {
-		data.As3mdnurl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AS3MDNURL`); value.Exists() && !data.As3MdnUrl.IsNull() {
+		data.As3MdnUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As3mdnurl = types.StringNull()
+		data.As3MdnUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `B2BProfiles`); value.Exists() && !data.B2bProfiles.IsNull() {
 		l := []DmB2BActiveProfile{}
@@ -764,10 +764,10 @@ func (data *B2BGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	} else {
 		data.ArchiveBackupDocuments = nil
 	}
-	if value := res.Get(pathRoot + `XPathRoutingPolicies`); value.Exists() && !data.XPathRoutingPolicies.IsNull() {
-		data.XPathRoutingPolicies = tfutils.ParseStringListFromGJSON(value)
+	if value := res.Get(pathRoot + `XPathRoutingPolicies`); value.Exists() && !data.XpathRoutingPolicies.IsNull() {
+		data.XpathRoutingPolicies = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.XPathRoutingPolicies = types.ListNull(types.StringType)
+		data.XpathRoutingPolicies = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `XMLManager`); value.Exists() && !data.XmlManager.IsNull() {
 		data.XmlManager = tfutils.ParseStringFromGJSON(value)

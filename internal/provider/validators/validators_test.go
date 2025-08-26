@@ -64,7 +64,7 @@ func TestAccValOAuthSupportedClient(t *testing.T) {
 resource "datapower_oauth_supported_client" "test" {
   id = "ValTestOAuthSupportedClient"
   app_domain = "acceptance_test"
-  o_auth_role = {"azsvr": true}
+  oauth_role = {"azsvr": true}
   az_grant = {"code": true}
   generate_client_secret = false
   client_secret_wo = "secret"

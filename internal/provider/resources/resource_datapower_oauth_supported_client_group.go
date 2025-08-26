@@ -102,7 +102,7 @@ func (r *OAuthSupportedClientGroupResource) Schema(ctx context.Context, req reso
 				},
 				Default: stringdefault.StaticString("custom"),
 			},
-			"o_auth_role": models.GetDmOAuthRoleResourceSchema("Identifies the roles of clients in the group. This property is mutually exclusive to the <b>Customized OAuth</b> property.", "oauth-role", "", false),
+			"oauth_role": models.GetDmOAuthRoleResourceSchema("Identifies the roles of clients in the group. This property is mutually exclusive to the <b>Customized OAuth</b> property.", "oauth-role", "", false),
 			"client": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Manages the group of OAuth clients. Use the controls to add or remove clients from the group.", "client", "oauth_supported_client").AddRequiredWhen(models.OAuthSupportedClientGroupClientCondVal.String()).String,
 				ElementType:         types.StringType,

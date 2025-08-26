@@ -53,7 +53,7 @@ type EBMS2SourceProtocolHandler struct {
 	CredentialCharset     types.String                `tfsdk:"credential_charset"`
 	SslServerConfigType   types.String                `tfsdk:"ssl_server_config_type"`
 	SslServer             types.String                `tfsdk:"ssl_server"`
-	SslsniServer          types.String                `tfsdk:"sslsni_server"`
+	SslSniServer          types.String                `tfsdk:"ssl_sni_server"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
@@ -77,7 +77,7 @@ var EBMS2SourceProtocolHandlerObjectType = map[string]attr.Type{
 	"credential_charset":     types.StringType,
 	"ssl_server_config_type": types.StringType,
 	"ssl_server":             types.StringType,
-	"sslsni_server":          types.StringType,
+	"ssl_sni_server":         types.StringType,
 	"dependency_actions":     actions.ActionsListType,
 }
 
@@ -146,7 +146,7 @@ func (data EBMS2SourceProtocolHandler) IsNull() bool {
 	if !data.SslServer.IsNull() {
 		return false
 	}
-	if !data.SslsniServer.IsNull() {
+	if !data.SslSniServer.IsNull() {
 		return false
 	}
 	return true
@@ -212,8 +212,8 @@ func (data EBMS2SourceProtocolHandler) ToBody(ctx context.Context, pathRoot stri
 	if !data.SslServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServer`, data.SslServer.ValueString())
 	}
-	if !data.SslsniServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslsniServer.ValueString())
+	if !data.SslSniServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslSniServer.ValueString())
 	}
 	return body
 }
@@ -313,9 +313,9 @@ func (data *EBMS2SourceProtocolHandler) FromBody(ctx context.Context, pathRoot s
 		data.SslServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 }
 
@@ -413,9 +413,9 @@ func (data *EBMS2SourceProtocolHandler) UpdateFromBody(ctx context.Context, path
 	} else {
 		data.SslServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslsniServer.IsNull() {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslSniServer.IsNull() {
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 }

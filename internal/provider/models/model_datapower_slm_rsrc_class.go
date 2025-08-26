@@ -42,7 +42,7 @@ type SLMRsrcClass struct {
 	RsrcMatchType               types.String                `tfsdk:"rsrc_match_type"`
 	RsrcValue                   types.List                  `tfsdk:"rsrc_value"`
 	Stylesheet                  types.String                `tfsdk:"stylesheet"`
-	XPathFilter                 types.String                `tfsdk:"x_path_filter"`
+	XpathFilter                 types.String                `tfsdk:"xpath_filter"`
 	Subscription                types.String                `tfsdk:"subscription"`
 	WsrrSubscription            types.String                `tfsdk:"wsrr_subscription"`
 	WsrrSavedSearchSubscription types.String                `tfsdk:"wsrr_saved_search_subscription"`
@@ -100,7 +100,7 @@ var SLMRsrcClassObjectType = map[string]attr.Type{
 	"rsrc_match_type":                types.StringType,
 	"rsrc_value":                     types.ListType{ElemType: types.StringType},
 	"stylesheet":                     types.StringType,
-	"x_path_filter":                  types.StringType,
+	"xpath_filter":                   types.StringType,
 	"subscription":                   types.StringType,
 	"wsrr_subscription":              types.StringType,
 	"wsrr_saved_search_subscription": types.StringType,
@@ -136,7 +136,7 @@ func (data SLMRsrcClass) IsNull() bool {
 	if !data.Stylesheet.IsNull() {
 		return false
 	}
-	if !data.XPathFilter.IsNull() {
+	if !data.XpathFilter.IsNull() {
 		return false
 	}
 	if !data.Subscription.IsNull() {
@@ -179,8 +179,8 @@ func (data SLMRsrcClass) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Stylesheet.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Stylesheet`, data.Stylesheet.ValueString())
 	}
-	if !data.XPathFilter.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPathFilter`, data.XPathFilter.ValueString())
+	if !data.XpathFilter.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPathFilter`, data.XpathFilter.ValueString())
 	}
 	if !data.Subscription.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Subscription`, data.Subscription.ValueString())
@@ -229,9 +229,9 @@ func (data *SLMRsrcClass) FromBody(ctx context.Context, pathRoot string, res gjs
 		data.Stylesheet = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XPathFilter`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPathFilter = tfutils.ParseStringFromGJSON(value)
+		data.XpathFilter = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathFilter = types.StringNull()
+		data.XpathFilter = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Subscription`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Subscription = tfutils.ParseStringFromGJSON(value)
@@ -284,10 +284,10 @@ func (data *SLMRsrcClass) UpdateFromBody(ctx context.Context, pathRoot string, r
 	} else {
 		data.Stylesheet = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPathFilter`); value.Exists() && !data.XPathFilter.IsNull() {
-		data.XPathFilter = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPathFilter`); value.Exists() && !data.XpathFilter.IsNull() {
+		data.XpathFilter = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathFilter = types.StringNull()
+		data.XpathFilter = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Subscription`); value.Exists() && !data.Subscription.IsNull() {
 		data.Subscription = tfutils.ParseStringFromGJSON(value)

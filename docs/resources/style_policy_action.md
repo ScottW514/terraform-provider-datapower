@@ -231,7 +231,7 @@ resource "datapower_style_policy_action" "test" {
   - CLI Alias: `single-key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: (`type`=`jose-decrypt` AND `jose_decrypt_type`=`single-key`)
-- `single_ss_key` (String) Shared Secret Key
+- `single_sskey` (String) Shared Secret Key
   - CLI Alias: `single-sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: ((`type`=`jose-decrypt` AND `jose_decrypt_type`=`single-sskey`) OR (`type`=`jose-verify` AND `jose_verify_type`=`single-sskey`))
@@ -305,7 +305,7 @@ resource "datapower_style_policy_action" "test" {
   - CLI Alias: `wsdl-port`
 - `wsdl_url` (String) Specify the URL of the WSDL file that defines the operations to use during the validate action. The WSDL file can reside on the local system or on the network. By default, the WSDL validation always applies to the entire input message, which can be modified by compile options on the XML manager. <p>Identify the WSDL with one of the following formats.</p><ul><li>Use a URL, for example, <tt>local:///myTest.wsdl</tt></li><li>Use a context variable that expands to a URL, for example, <tt>var://context/contextName/varName</tt></li><li>Use a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context runs as a WSDL validation.</li></ul>
   - CLI Alias: `wsdl-url`
-- `x_path` (String) Specify the XPath expression to apply to the input context. Enter the XPath expression or a variable in the <tt>var://context/name</tt> format that expands to an XPath expression.
+- `xpath` (String) Specify the XPath expression to apply to the input context. Enter the XPath expression or a variable in the <tt>var://context/name</tt> format that expands to an XPath expression.
   - CLI Alias: `xpath`
 
 <a id="nestedatt--condition"></a>

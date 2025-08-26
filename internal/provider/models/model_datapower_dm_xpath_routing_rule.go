@@ -34,29 +34,29 @@ import (
 )
 
 type DmXPathRoutingRule struct {
-	XPath types.String `tfsdk:"x_path"`
+	Xpath types.String `tfsdk:"xpath"`
 	Host  types.String `tfsdk:"host"`
 	Port  types.Int64  `tfsdk:"port"`
 	Ssl   types.Bool   `tfsdk:"ssl"`
 }
 
 var DmXPathRoutingRuleObjectType = map[string]attr.Type{
-	"x_path": types.StringType,
-	"host":   types.StringType,
-	"port":   types.Int64Type,
-	"ssl":    types.BoolType,
+	"xpath": types.StringType,
+	"host":  types.StringType,
+	"port":  types.Int64Type,
+	"ssl":   types.BoolType,
 }
 var DmXPathRoutingRuleObjectDefault = map[string]attr.Value{
-	"x_path": types.StringNull(),
-	"host":   types.StringNull(),
-	"port":   types.Int64Null(),
-	"ssl":    types.BoolValue(false),
+	"xpath": types.StringNull(),
+	"host":  types.StringNull(),
+	"port":  types.Int64Null(),
+	"ssl":   types.BoolValue(false),
 }
 
 func GetDmXPathRoutingRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmXPathRoutingRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
-			"x_path": DataSourceSchema.StringAttribute{
+			"xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>", "", "").String,
 				Computed:            true,
 			},
@@ -79,7 +79,7 @@ func GetDmXPathRoutingRuleDataSourceSchema() DataSourceSchema.NestedAttributeObj
 func GetDmXPathRoutingRuleResourceSchema() ResourceSchema.NestedAttributeObject {
 	var DmXPathRoutingRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 		Attributes: map[string]ResourceSchema.Attribute{
-			"x_path": ResourceSchema.StringAttribute{
+			"xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>", "", "").String,
 				Required:            true,
 			},
@@ -103,7 +103,7 @@ func GetDmXPathRoutingRuleResourceSchema() ResourceSchema.NestedAttributeObject 
 }
 
 func (data DmXPathRoutingRule) IsNull() bool {
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	if !data.Host.IsNull() {
@@ -124,8 +124,8 @@ func (data DmXPathRoutingRule) ToBody(ctx context.Context, pathRoot string) stri
 	}
 	body := ""
 
-	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
+	if !data.Xpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPath`, data.Xpath.ValueString())
 	}
 	if !data.Host.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Host`, data.Host.ValueString())
@@ -144,9 +144,9 @@ func (data *DmXPathRoutingRule) FromBody(ctx context.Context, pathRoot string, r
 		pathRoot = pathRoot + "."
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Host`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Host = tfutils.ParseStringFromGJSON(value)
@@ -169,10 +169,10 @@ func (data *DmXPathRoutingRule) UpdateFromBody(ctx context.Context, pathRoot str
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Host`); value.Exists() && !data.Host.IsNull() {
 		data.Host = tfutils.ParseStringFromGJSON(value)

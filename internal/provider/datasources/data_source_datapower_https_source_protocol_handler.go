@@ -153,7 +153,7 @@ func (d *HTTPSSourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.",
 							Computed:            true,
 						},
-						"sslsni_server": schema.StringAttribute{
+						"ssl_sni_server": schema.StringAttribute{
 							MarkdownDescription: "Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.",
 							Computed:            true,
 						},

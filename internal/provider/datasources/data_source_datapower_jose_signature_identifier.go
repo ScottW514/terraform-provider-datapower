@@ -84,7 +84,7 @@ func (d *JOSESignatureIdentifierDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Key material type used to verify the signature.",
 							Computed:            true,
 						},
-						"ss_key": schema.StringAttribute{
+						"sskey": schema.StringAttribute{
 							MarkdownDescription: "Use the shared secret key to verify the signature.",
 							Computed:            true,
 						},

@@ -197,7 +197,7 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-server", "ssl_server_profile").String,
 				Optional:            true,
 			},
-			"sslsni_server": schema.StringAttribute{
+			"ssl_sni_server": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-sni-server", "ssl_sni_server_profile").String,
 				Optional:            true,
 			},

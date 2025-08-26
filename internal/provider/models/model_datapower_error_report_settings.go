@@ -52,7 +52,7 @@ type ErrorReportSettings struct {
 	FtpServer             types.String                `tfsdk:"ftp_server"`
 	FtpPath               types.String                `tfsdk:"ftp_path"`
 	FtpUserAgent          types.String                `tfsdk:"ftp_user_agent"`
-	NfsMount              types.String                `tfsdk:"nfs_mount"`
+	NfSmOunt              types.String                `tfsdk:"nf_sm_ount"`
 	NfsPath               types.String                `tfsdk:"nfs_path"`
 	RaidVolume            types.String                `tfsdk:"raid_volume"`
 	RaidPath              types.String                `tfsdk:"raid_path"`
@@ -232,7 +232,7 @@ var ErrorReportSettingsObjectType = map[string]attr.Type{
 	"ftp_server":               types.StringType,
 	"ftp_path":                 types.StringType,
 	"ftp_user_agent":           types.StringType,
-	"nfs_mount":                types.StringType,
+	"nf_sm_ount":               types.StringType,
 	"nfs_path":                 types.StringType,
 	"raid_volume":              types.StringType,
 	"raid_path":                types.StringType,
@@ -300,7 +300,7 @@ func (data ErrorReportSettings) IsNull() bool {
 	if !data.FtpUserAgent.IsNull() {
 		return false
 	}
-	if !data.NfsMount.IsNull() {
+	if !data.NfSmOunt.IsNull() {
 		return false
 	}
 	if !data.NfsPath.IsNull() {
@@ -379,8 +379,8 @@ func (data ErrorReportSettings) ToBody(ctx context.Context, pathRoot string) str
 	if !data.FtpUserAgent.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`FTPUserAgent`, data.FtpUserAgent.ValueString())
 	}
-	if !data.NfsMount.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`NFSMount`, data.NfsMount.ValueString())
+	if !data.NfSmOunt.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`NFSMount`, data.NfSmOunt.ValueString())
 	}
 	if !data.NfsPath.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`NFSPath`, data.NfsPath.ValueString())
@@ -492,9 +492,9 @@ func (data *ErrorReportSettings) FromBody(ctx context.Context, pathRoot string, 
 		data.FtpUserAgent = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `NFSMount`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.NfsMount = tfutils.ParseStringFromGJSON(value)
+		data.NfSmOunt = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.NfsMount = types.StringNull()
+		data.NfSmOunt = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `NFSPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.NfsPath = tfutils.ParseStringFromGJSON(value)
@@ -612,10 +612,10 @@ func (data *ErrorReportSettings) UpdateFromBody(ctx context.Context, pathRoot st
 	} else {
 		data.FtpUserAgent = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `NFSMount`); value.Exists() && !data.NfsMount.IsNull() {
-		data.NfsMount = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `NFSMount`); value.Exists() && !data.NfSmOunt.IsNull() {
+		data.NfSmOunt = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.NfsMount = types.StringNull()
+		data.NfSmOunt = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `NFSPath`); value.Exists() && !data.NfsPath.IsNull() {
 		data.NfsPath = tfutils.ParseStringFromGJSON(value)

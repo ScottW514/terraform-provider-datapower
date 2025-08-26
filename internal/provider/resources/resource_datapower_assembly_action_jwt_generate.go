@@ -88,7 +88,7 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Computed:            true,
 				Default:             stringdefault.StaticString("generated.jwt"),
 			},
-			"jwtid_claims": schema.BoolAttribute{
+			"jwt_id_claims": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to add a JWT ID (jti) claim to the JWT. When enabled, a UUID is generated and set as the value of the JWT ID claim.", "jti-claim", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,

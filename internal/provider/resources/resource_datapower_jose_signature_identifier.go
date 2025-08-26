@@ -92,7 +92,7 @@ func (r *JOSESignatureIdentifierResource) Schema(ctx context.Context, req resour
 					stringvalidator.OneOf("certificate", "sskey"),
 				},
 			},
-			"ss_key": schema.StringAttribute{
+			"sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the signature.", "sskey", "crypto_sskey").AddRequiredWhen(models.JOSESignatureIdentifierSSKeyCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

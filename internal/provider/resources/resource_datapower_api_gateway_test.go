@@ -38,7 +38,7 @@ func TestAccResourceAPIGateway(t *testing.T) {
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_api_gateway.test", "cache_memory_size", "2147483647"),
 			resource.TestCheckResourceAttr("datapower_api_gateway.test", "cache_size", "256"),
-			resource.TestCheckResourceAttr("datapower_api_gateway.test", "sha1_caching", "true"),
+			resource.TestCheckResourceAttr("datapower_api_gateway.test", "sha1caching", "true"),
 			resource.TestCheckResourceAttr("datapower_api_gateway.test", "static_document_calls", "true"),
 			resource.TestCheckResourceAttr("datapower_api_gateway.test", "doc_cache_max_docs", "5000"),
 			resource.TestCheckResourceAttr("datapower_api_gateway.test", "doc_max_writes", "32768"),

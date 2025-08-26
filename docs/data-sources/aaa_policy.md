@@ -39,13 +39,13 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `ausmhttp_header` (List of String) Specify HTTP headers from CA Single Sign-On authentication responses. These headers are included as request or response headers based on the CA Single Sign-on header flow.
+- `au_sm_http_header` (List of String) Specify HTTP headers from CA Single Sign-On authentication responses. These headers are included as request or response headers based on the CA Single Sign-on header flow.
 - `authenticate` (Attributes) Specify the method to authenticate the extracted identity. For some methods, you must define more properties.
   - CLI Alias: `authenticate` (see [below for nested schema](#nestedatt--result--authenticate))
 - `authorize` (Attributes) Specify the method to authorize the identity to resources. For some methods, you must define more properties.
   - CLI Alias: `authorize` (see [below for nested schema](#nestedatt--result--authorize))
 - `authorized_counter` (String) Specify the monitor for authorized messages. Ensure that this count monitor is configured with an XPath as the measure.
-- `azsmhttp_header` (List of String) Specify HTTP headers from CA Single Sign-On authorization responses. These headers are included as request or response headers based on the CA Single Sign-On header flow.
+- `az_sm_http_header` (List of String) Specify HTTP headers from CA Single Sign-On authorization responses. These headers are included as request or response headers based on the CA Single Sign-On header flow.
 - `do_s_valve` (Number) <p>Specify the number of times to process the same request to protect against a denial of service (DoS) attack. Enter a value in the range 1 - 1000. The default value is 3.</p><p>With the default value, AAA processes only the first 3 signature and each signature can contain up to 3 reference URIs. Additional signatures or reference URIs are ignored.</p><p>XML processing includes encryption, decryption, message signing, and signature validation. The AAA policy supports only identity extraction with subject DN from certificate in message signature and authorization with signer certificate for digitally signed messages.</p>
 - `dyn_config` (String) Specify how to obtain the AAA policy configuration dynamically. With dynamic configuration, you can configure the AAA policy at run time. When enabled, the configuration of AAA is determined dynamically based on the template AAA policy and the parameters that the dynamic configuration custom URL returns. By default, uses no template.
 - `dyn_config_custom_url` (String) <p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>
@@ -56,7 +56,7 @@ Read-Only:
 - `extract_resource` (Attributes) Specify the methods to extract the identity of a requested resource. For some methods, you must define more properties.
   - CLI Alias: `extract-resource` (see [below for nested schema](#nestedatt--result--extract_resource))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `lda_psuffix` (String) Specify the LDAP suffix to add to the username to form the base distinguished name (DN) for authentication. The suffix and the username are separated with a comma. If the suffix is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the DN is <tt>CN=Bob,O=example.com</tt> .
+- `ldap_suffix` (String) Specify the LDAP suffix to add to the username to form the base distinguished name (DN) for authentication. The suffix and the username are separated with a comma. If the suffix is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the DN is <tt>CN=Bob,O=example.com</tt> .
 - `ldap_version` (String) Specify the LDAP version to access the LDAP server. The default value is v2.
 - `log_allowed` (Boolean) Whether to log successful AAA operations. When enabled and if needed, modify the default logging level from informational.
 - `log_allowed_level` (String) Set the logging level for successful AAA operations. The default level is informational.
@@ -139,6 +139,43 @@ Read-Only:
 - `au_kerberos_principal` (String) Specify the principal name that must appear as the server name in the Kerberos ticket.This value must be a full principal name, including the Kerberos realm. For example, <tt>foo/bar@REALM</tt> .
   - CLI Alias: `kerberos-principal`
 - `au_kerberos_verify_signature` (Boolean) - Default value: `true`
+- `au_ldap_attributes` (String) Specify the list of the extra user attributes to retrieve from the LDAP user store and kept in a <tt>var://context/ldap/auxiliary-attributes</tt> context variable for future use, such as AAA postprocessing. To define the list of LDAP attributes as the auxiliary information for AAA, use the comma (,) as the delimiter. For example, <tt>email, cn, userPassword</tt> .
+  - CLI Alias: `au-ldap-attributes`
+- `au_ldap_bind_dn` (String) Specify the DN to bind to the LDAP server for an LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.
+  - CLI Alias: `ldap-bind-dn`
+- `au_ldap_bind_password_alias` (String) Specify the alias for the password to bind to the LDAP server for the LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.
+  - CLI Alias: `ldap-bind-password-alias`
+  - Reference to: `datapower_password_alias:id`
+- `au_ldap_load_balance_group` (String) Specify the name of the load balancer group that contains the LDAP servers.
+  - CLI Alias: `ldap-lbgroup`
+  - Reference to: `datapower_load_balancer_group:id`
+- `au_ldap_prefix` (String) Specify the prefix to construct the LDAP lookup DN. The default value is <tt>cn=</tt> .
+  - CLI Alias: `ldap-prefix`
+  - Default value: `cn=`
+- `au_ldap_read_timeout` (Number) Specify the duration in seconds to wait for a response from the LDAP server before the LDAP connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out. <p>If you configure an LDAP connection pool and assign it to the XML manager, the service can use this LDAP connection pool. The LDAP read timer can work with the idle timer of the LDAP connection pool to remove idle connections from the LDAP connection pool.</p>
+  - CLI Alias: `ldap-readtimeout`
+  - Range: `0`-`86400`
+  - Default value: `60`
+- `au_ldap_search_attribute` (String) Specify the attribute to use in the LDAP search. The default value is userPassword.
+  - CLI Alias: `ldap-search-attr`
+  - Default value: `userPassword`
+- `au_ldap_search_for_dn` (Boolean) Specify whether to retrieve the user DN with an LDAP search. By default, the login name that the user presents is used with the LDAP prefix and LDAP suffix to construct the user DN.
+  - CLI Alias: `ldap-search-for-dn`
+  - Default value: `false`
+- `au_ldap_search_parameters` (String) Specify the name of an LDAP search parameters that retrieves the user DN.
+  - CLI Alias: `ldap-search-param`
+  - Reference to: `datapower_ldap_search_parameters:id`
+- `au_ldap_suffix` (String) Specify the suffix used to construct the LDAP lookup DN.
+  - CLI Alias: `ldap-suffix`
+- `au_ltpa_key_file` (String) <p>Specify the LTPA key file that contains the crypto material to create an LTPA token that can be consumed by WebSphere (both version 1 and version 2) or Domino.</p><ul><li>For WebSphere token creation, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino token creation, the key file contains only the base 64-encoded Domino shared secret.</li></ul>
+  - CLI Alias: `lpta-key-file`
+- `au_ltpa_key_file_password_alias` (String) Specify the password alias of the password that decrypts the LTPA key file. This password decrypts certain entries in a WebSphere LTPA key file. This password is not applicable to Domino key files.
+  - CLI Alias: `ltpa-key-password-alias`
+  - Reference to: `datapower_password_alias:id`
+- `au_ltpa_stash_file` (String) Specify stash file file that contains the password for the LTPA key file.
+  - CLI Alias: `lpta-stash-file`
+- `au_ltpa_token_versions_bitmap` (Attributes) Specify which versions of LTPA tokens are acceptable.
+  - CLI Alias: `lpta-version` (see [below for nested schema](#nestedatt--result--authenticate--au_ltpa_token_versions_bitmap))
 - `au_map_url` (String) Specify the location of the AAA information file. This file contains a list of authenticated identities and the various values needed to authenticate successfully.
   - CLI Alias: `xmlfile-url`
 - `au_method` (String) Specify the method to authenticate the extracted identity.
@@ -152,7 +189,16 @@ Read-Only:
   - Default value: `389`
 - `au_remote_token_process_service` (String) <p>Specify the URL for a service that can process the remote security token. This service accepts the WS-Security token as the request of the SOAP call and, if successful, provides the final security token as the response.</p><p>The remote WS-Security token can be signed, encrypted, or encoded DataPower services with different processing actions can process the remote token. Processing can be by decrypting parts of a remote SAML assertion, doing an XSLT transform, or with an AAA policy to assert the token.</p>
   - CLI Alias: `remote-token-url`
-- `au_signed_x_path` (String) Specify the XPath expression for the XML entity that is protected by signature. After the signature validity is verified, this property verifies if the specific XPath expression is part of the signed message.
+- `au_saml2_issuer` (String)
+- `au_saml_artifact_responder` (String) Specify the URL of the SAML artifact responder.
+  - CLI Alias: `saml-artifact-responder`
+- `au_saml_auth_query_server` (String) Specify the URL to access the SAML authentication query server and to post a SAML authentication query.
+  - CLI Alias: `saml-authen-query-url`
+- `au_saml_version` (String) Specify the version of SAML messages. The default value is 1.1.
+  - CLI Alias: `saml-version`
+  - Choices: `2.0`, `1.1`, `1.0`
+  - Default value: `1.1`
+- `au_signed_xpath` (String) Specify the XPath expression for the XML entity that is protected by signature. After the signature validity is verified, this property verifies if the specific XPath expression is part of the signed message.
   - CLI Alias: `signed-xpath`
 - `au_signer_valcred` (String) Specify the name of the validation credentials to verify the signature validity for the incoming message. When validation credentials are set, the signer certificate must be contained in the validation credentials or the signature is rejected as untrusted.
   - CLI Alias: `valcred`
@@ -160,129 +206,83 @@ Read-Only:
 - `au_skew_time` (Number) Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. <p>When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>
   - CLI Alias: `au-skew-time`
   - Default value: `0`
-- `auldap_attributes` (String) Specify the list of the extra user attributes to retrieve from the LDAP user store and kept in a <tt>var://context/ldap/auxiliary-attributes</tt> context variable for future use, such as AAA postprocessing. To define the list of LDAP attributes as the auxiliary information for AAA, use the comma (,) as the delimiter. For example, <tt>email, cn, userPassword</tt> .
-  - CLI Alias: `au-ldap-attributes`
-- `auldap_bind_dn` (String) Specify the DN to bind to the LDAP server for an LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.
-  - CLI Alias: `ldap-bind-dn`
-- `auldap_bind_password_alias` (String) Specify the alias for the password to bind to the LDAP server for the LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.
-  - CLI Alias: `ldap-bind-password-alias`
-  - Reference to: `datapower_password_alias:id`
-- `auldap_load_balance_group` (String) Specify the name of the load balancer group that contains the LDAP servers.
-  - CLI Alias: `ldap-lbgroup`
-  - Reference to: `datapower_load_balancer_group:id`
-- `auldap_prefix` (String) Specify the prefix to construct the LDAP lookup DN. The default value is <tt>cn=</tt> .
-  - CLI Alias: `ldap-prefix`
-  - Default value: `cn=`
-- `auldap_read_timeout` (Number) Specify the duration in seconds to wait for a response from the LDAP server before the LDAP connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out. <p>If you configure an LDAP connection pool and assign it to the XML manager, the service can use this LDAP connection pool. The LDAP read timer can work with the idle timer of the LDAP connection pool to remove idle connections from the LDAP connection pool.</p>
-  - CLI Alias: `ldap-readtimeout`
-  - Range: `0`-`86400`
-  - Default value: `60`
-- `auldap_search_attribute` (String) Specify the attribute to use in the LDAP search. The default value is userPassword.
-  - CLI Alias: `ldap-search-attr`
-  - Default value: `userPassword`
-- `auldap_search_for_dn` (Boolean) Specify whether to retrieve the user DN with an LDAP search. By default, the login name that the user presents is used with the LDAP prefix and LDAP suffix to construct the user DN.
-  - CLI Alias: `ldap-search-for-dn`
-  - Default value: `false`
-- `auldap_search_parameters` (String) Specify the name of an LDAP search parameters that retrieves the user DN.
-  - CLI Alias: `ldap-search-param`
-  - Reference to: `datapower_ldap_search_parameters:id`
-- `auldap_suffix` (String) Specify the suffix used to construct the LDAP lookup DN.
-  - CLI Alias: `ldap-suffix`
-- `aultpa_key_file` (String) <p>Specify the LTPA key file that contains the crypto material to create an LTPA token that can be consumed by WebSphere (both version 1 and version 2) or Domino.</p><ul><li>For WebSphere token creation, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino token creation, the key file contains only the base 64-encoded Domino shared secret.</li></ul>
-  - CLI Alias: `lpta-key-file`
-- `aultpa_key_file_password_alias` (String) Specify the password alias of the password that decrypts the LTPA key file. This password decrypts certain entries in a WebSphere LTPA key file. This password is not applicable to Domino key files.
-  - CLI Alias: `ltpa-key-password-alias`
-  - Reference to: `datapower_password_alias:id`
-- `aultpa_stash_file` (String) Specify stash file file that contains the password for the LTPA key file.
-  - CLI Alias: `lpta-stash-file`
-- `aultpa_token_versions_bitmap` (Attributes) Specify which versions of LTPA tokens are acceptable.
-  - CLI Alias: `lpta-version` (see [below for nested schema](#nestedatt--result--authenticate--aultpa_token_versions_bitmap))
-- `ausaml2_issuer` (String)
-- `ausaml_artifact_responder` (String) Specify the URL of the SAML artifact responder.
-  - CLI Alias: `saml-artifact-responder`
-- `ausaml_auth_query_server` (String) Specify the URL to access the SAML authentication query server and to post a SAML authentication query.
-  - CLI Alias: `saml-authen-query-url`
-- `ausaml_version` (String) Specify the version of SAML messages. The default value is 1.1.
-  - CLI Alias: `saml-version`
-  - Choices: `2.0`, `1.1`, `1.0`
-  - Default value: `1.1`
-- `ausm_cookie_attributes` (String) Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.
+- `au_sm_cookie_attributes` (String) Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.
   - CLI Alias: `cookie-attributes`
   - Reference to: `datapower_cookie_attribute_policy:id`
-- `ausm_cookie_flow` (Attributes) Specify which flow to include the authentication session cookie.
-  - CLI Alias: `sm-cookie-flow` (see [below for nested schema](#nestedatt--result--authenticate--ausm_cookie_flow))
-- `ausm_header_flow` (Attributes) Identifies the flow to include the CA Single Sign-On headers that are generated during authentication. The CA Single Sign-On HTTP headers start with <tt>SM_</tt> .
-  - CLI Alias: `sm-header-flow` (see [below for nested schema](#nestedatt--result--authenticate--ausm_header_flow))
-- `ausm_request_type` (String) Specify the type of request to make. By default, the request is against the CA Single Sign-On web agent.
+- `au_sm_cookie_flow` (Attributes) Specify which flow to include the authentication session cookie.
+  - CLI Alias: `sm-cookie-flow` (see [below for nested schema](#nestedatt--result--authenticate--au_sm_cookie_flow))
+- `au_sm_header_flow` (Attributes) Identifies the flow to include the CA Single Sign-On headers that are generated during authentication. The CA Single Sign-On HTTP headers start with <tt>SM_</tt> .
+  - CLI Alias: `sm-header-flow` (see [below for nested schema](#nestedatt--result--authenticate--au_sm_header_flow))
+- `au_sm_request_type` (String) Specify the type of request to make. By default, the request is against the CA Single Sign-On web agent.
   - CLI Alias: `sm-request-type`
   - Choices: `webagent`, `webservice`
   - Default value: `webagent`
-- `aussl_client_config_type` (String) Specify the TLS profile type to secure connections.
+- `au_ssl_client_config_type` (String) Specify the TLS profile type to secure connections.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
-- `aussl_client_profile` (String) Specify the TLS client profile to secure connections.
+- `au_ssl_client_profile` (String) Specify the TLS client profile to secure connections.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
-- `aussl_valcred` (String) Specify the validation credentials that contain the certificate to validate the remote TLS peer.
+- `au_ssl_valcred` (String) Specify the validation credentials that contain the certificate to validate the remote TLS peer.
   - CLI Alias: `valcred`
   - Reference to: `datapower_crypto_val_cred:id`
-- `autam_server` (String) Specify the name of the Access Manager client.
-  - CLI Alias: `tam`
-  - Reference to: `datapower_tam:id`
-- `autampac_return` (Boolean) Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authentication for further use. You can use the PAC in the postprocessing phase. By default, The default the PAC token is not returned.
+- `au_tam_pac_return` (Boolean) Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authentication for further use. You can use the PAC in the postprocessing phase. By default, The default the PAC token is not returned.
   - CLI Alias: `tam-pac-return`
   - Default value: `false`
-- `auws_trust_applies_to_header` (String) Specify the value for the WS-Addressing <tt>AppliesTo</tt> header. The <tt>header</tt> element is included in the WS-Trust request security token message sent to the WS-Trust server.
+- `au_tam_server` (String) Specify the name of the Access Manager client.
+  - CLI Alias: `tam`
+  - Reference to: `datapower_tam:id`
+- `au_ws_trust_applies_to_header` (String) Specify the value for the WS-Addressing <tt>AppliesTo</tt> header. The <tt>header</tt> element is included in the WS-Trust request security token message sent to the WS-Trust server.
   - CLI Alias: `trust-applies-to-header`
-- `auws_trust_client_entropy_size` (Number) Specify the size in bytes of the WS-Trust client entropy material. The size refers to the length of the entropy before base 64-encoding. Enter a value in the range 8 - 128. The default value is 32.
+- `au_ws_trust_client_entropy_size` (Number) Specify the size in bytes of the WS-Trust client entropy material. The size refers to the length of the entropy before base 64-encoding. Enter a value in the range 8 - 128. The default value is 32.
   - CLI Alias: `trust-client-entropy-size`
   - Range: `8`-`128`
   - Default value: `32`
-- `auws_trust_encryption_certificate` (String) Specify the certificate to encrypt WS-Trust elements for recipient. If client entropy is configured, the certificate public key encrypts the material for the recipient. If client entropy is configured and this certificate is not specified, use a TLS profile to secure the message exchange.
+- `au_ws_trust_encryption_certificate` (String) Specify the certificate to encrypt WS-Trust elements for recipient. If client entropy is configured, the certificate public key encrypts the material for the recipient. If client entropy is configured and this certificate is not specified, use a TLS profile to secure the message exchange.
   - CLI Alias: `trust-encryption-certificate`
   - Reference to: `datapower_crypto_certificate:id`
-- `auws_trust_require_applies_to_header` (Boolean) Specify whether to require a WS-Addressing <tt>AppliesTo</tt> header in the message exchange. By default, the header is not required.
+- `au_ws_trust_require_applies_to_header` (Boolean) Specify whether to require a WS-Addressing <tt>AppliesTo</tt> header in the message exchange. By default, the header is not required.
   - CLI Alias: `trust-require-applies-to-header`
   - Default value: `false`
-- `auws_trust_require_client_entropy` (Boolean) <p>Specify whether to require client entropy in the WS-Trust request. When required, a WS-Trust entropy element is sent by the client as part of the security token request exchange. By default, entropy is not required.</p><ul><li>If a WS-Trust encryption certificate is used, the client entropy material is encrypted.</li><li>If a WS-Trust encryption certificate is not used, a WS-Trust <tt>BinarySecret</tt> element contains the entropy material. In this case, use a TLS profile to secure the exchange with the WS-Trust server.</li></ul>
+- `au_ws_trust_require_client_entropy` (Boolean) <p>Specify whether to require client entropy in the WS-Trust request. When required, a WS-Trust entropy element is sent by the client as part of the security token request exchange. By default, entropy is not required.</p><ul><li>If a WS-Trust encryption certificate is used, the client entropy material is encrypted.</li><li>If a WS-Trust encryption certificate is not used, a WS-Trust <tt>BinarySecret</tt> element contains the entropy material. In this case, use a TLS profile to secure the exchange with the WS-Trust server.</li></ul>
   - CLI Alias: `trust-require-client-entropy`
   - Default value: `false`
-- `auws_trust_require_rstc` (Boolean) Specify whether the message exchange with the client requires a WS-Trust <tt>RequestSecurityToken</tt> or WS-Trust <tt>RequestSecurityTokenCollection</tt> element to be sent by the client. By default, the element is not required.
+- `au_ws_trust_require_rstc` (Boolean) Specify whether the message exchange with the client requires a WS-Trust <tt>RequestSecurityToken</tt> or WS-Trust <tt>RequestSecurityTokenCollection</tt> element to be sent by the client. By default, the element is not required.
   - CLI Alias: `trust-require-rstc`
   - Default value: `false`
-- `auws_trust_require_server_entropy` (Boolean) Specify whether to require server entropy in the WS-Trust response. When required, a WS-Trust <tt>entropy</tt> element must be returned to the client as part of the security token request exchange. By default, entropy is not required.
+- `au_ws_trust_require_server_entropy` (Boolean) Specify whether to require server entropy in the WS-Trust response. When required, a WS-Trust <tt>entropy</tt> element must be returned to the client as part of the security token request exchange. By default, entropy is not required.
   - CLI Alias: `trust-require-server-entropy`
   - Default value: `false`
-- `auws_trust_server_entropy_size` (Number) Specify the minimum size in bytes for the WS-Trust server entropy. The size refers to the length of the entropy before base 64-encoding. Enter any value in the range 8 - 128. The default value is 32.
+- `au_ws_trust_server_entropy_size` (Number) Specify the minimum size in bytes for the WS-Trust server entropy. The size refers to the length of the entropy before base 64-encoding. Enter any value in the range 8 - 128. The default value is 32.
   - CLI Alias: `trust-server-entropy-size`
   - Range: `8`-`128`
   - Default value: `32`
-- `auws_trust_url` (String) Specify the URL to access the WS-Trust server.
+- `au_ws_trust_url` (String) Specify the URL to access the WS-Trust server.
   - CLI Alias: `ws-trust-url`
-- `auws_trust_version` (String) Specify the version of the WS-Trust and the WS-SecureConversation specifications to use when WS-Trust authentication sends a request to the remote STS. Usually these specifications are updated together. The default value is 1.2.
+- `au_ws_trust_version` (String) Specify the version of the WS-Trust and the WS-SecureConversation specifications to use when WS-Trust authentication sends a request to the remote STS. Usually these specifications are updated together. The default value is 1.2.
   - CLI Alias: `ws-trust-version`
   - Choices: `1.3`, `1.2`, `1.1`
   - Default value: `1.2`
-- `auzosnss_config` (String) Specify the name of the z/OS NSS client for SAF communication.
+- `au_zos_nss_config` (String) Specify the name of the z/OS NSS client for SAF communication.
   - CLI Alias: `zos-nss-au`
   - Reference to: `datapower_zos_nss_client:id`
 
-<a id="nestedatt--result--authenticate--aultpa_token_versions_bitmap"></a>
-### Nested Schema for `result.authenticate.aultpa_token_versions_bitmap`
+<a id="nestedatt--result--authenticate--au_ltpa_token_versions_bitmap"></a>
+### Nested Schema for `result.authenticate.au_ltpa_token_versions_bitmap`
 
 Read-Only:
 
 - `ltpa` (Boolean) WebSphere version 1
   - Default value: `false`
-- `ltpa2` (Boolean) WebSphere version 2
+- `ltpa_2` (Boolean) WebSphere version 2
   - Default value: `true`
 - `ltpa_domino` (Boolean) Domino
   - Default value: `false`
 
 
-<a id="nestedatt--result--authenticate--ausm_cookie_flow"></a>
-### Nested Schema for `result.authenticate.ausm_cookie_flow`
+<a id="nestedatt--result--authenticate--au_sm_cookie_flow"></a>
+### Nested Schema for `result.authenticate.au_sm_cookie_flow`
 
 Read-Only:
 
@@ -292,8 +292,8 @@ Read-Only:
   - Default value: `false`
 
 
-<a id="nestedatt--result--authenticate--ausm_header_flow"></a>
-### Nested Schema for `result.authenticate.ausm_header_flow`
+<a id="nestedatt--result--authenticate--au_sm_header_flow"></a>
+### Nested Schema for `result.authenticate.au_sm_header_flow`
 
 Read-Only:
 
@@ -327,6 +327,32 @@ Read-Only:
   - CLI Alias: `custom-url`
 - `az_host` (String) Specify the host name or IP address of the authorization server.
   - CLI Alias: `remote-host`
+- `az_ldap_attributes` (String) Specify the list of the extra user attributes to retrieve from the LDAP registry. The attributes that are retrieved from the registry and stored in the var://context/ldap/auxiliary-attributes context variable for future use, such as in the AAA postprocessing phase. To specify multiple attributes, use a comma as the delimiter. For example, enter <tt>email, cn, userPassword</tt> to retrieve these attributes from the registry.
+  - CLI Alias: `az-ldap-attributes`
+- `az_ldap_bind_dn` (String) Specify the DN to bind to the LDAP server.
+  - CLI Alias: `ldap-bind-dn`
+- `az_ldap_bind_password_alias` (String) Specify the password alias to bind to the LDAP server.
+  - CLI Alias: `ldap-bind-password-alias`
+  - Reference to: `datapower_password_alias:id`
+- `az_ldap_group` (String) Specify the DN of the required LDAP group.
+  - CLI Alias: `ldap-group-dn`
+- `az_ldap_group_attribute` (String) Specify the attribute name of the LDAP group to check for membership. The authorizing identity must exist as an attribute value in the group.
+  - CLI Alias: `ldap-group-attr`
+  - Default value: `member`
+- `az_ldap_load_balance_group` (String) Specify the load balancer group that contains the LDAP servers.
+  - CLI Alias: `ldap-lbgroup`
+  - Reference to: `datapower_load_balancer_group:id`
+- `az_ldap_read_timeout` (Number) <p>Specify the duration in seconds to wait for a response from LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.</p><p>If you configure an LDAP connection pool and assign it to the AAA policy's XML manager, the AAA policy can use the connection pool. The LDAP read timer of the AAA policy can work with the idle timer of the LDAP connection pool to remove idle connections from the connection pool.</p>
+  - CLI Alias: `ldap-readtimeout`
+  - Range: `0`-`86400`
+  - Default value: `60`
+- `az_ldap_search_filter` (String) Specify the LDAP search filter for the search. The default value is <tt>(objectClass=*)</tt> .
+  - CLI Alias: `ldap-search-filter`
+  - Default value: `(objectClass=*)`
+- `az_ldap_search_scope` (String) Specify the scope of the search relative to the input. The default value is subtree.
+  - CLI Alias: `ldap-search-scope`
+  - Choices: `subtree`, `one-level`, `base`
+  - Default value: `subtree`
 - `az_map_url` (String) Specify the location of the AAA information file.
   - CLI Alias: `xmlfile-url`
 - `az_method` (String) Specify the authorization method.
@@ -337,134 +363,108 @@ Read-Only:
   - CLI Alias: `netegrity-base-uri`
 - `az_netegrity_op_name_extension` (String) Specify the extension for URI sent to CA Single Sign-On (formerly Netegrity SiteMinder) server. The CA Single Sign-On base URI is combined with the host, port, and CA Single Sign-On operation name extension to form the URL for attempting CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension form, where NetegrityOpNameExtension is concatenated directly with the operation name.
   - CLI Alias: `netegrity-opname-ext`
+- `az_oauth_enforce_scope` (Boolean) Specify how to enforce the scope of the access token. The scope is returned by the server as part of the validation process. By default, the scope is enforced by the resource server. <ul><li>When enabled, the mapped resource is enforced by the DataPower Gateway against the scope.</li><li>When disabled, the remote resource server enforces the scope.</li></ul>
+  - CLI Alias: `az-oauth-enforce-scope`
+  - Default value: `false`
+- `az_oauth_export_headers` (Boolean) Specify whether to export response attributes that Federated Identity Manager might return a set of response headers. AAA processing places the response attributes as input to the postprocessing phase for use in a custom stylesheet or GatewayScript file. To access the node in the postprocessing input, specify <tt>/container/ResponseAttributes</tt> as the XPath expression. By default, all response attributes are exported to HTTP headers.
+  - CLI Alias: `az-oauth-export-headers`
+  - Default value: `true`
 - `az_port` (Number) Specify the listening port on the authorization server.
   - CLI Alias: `remote-port`
   - Default value: `0`
-- `az_skew_time` (Number) <p>Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>
-  - CLI Alias: `az-skew-time`
-  - Default value: `0`
-- `az_valcred` (String) - Reference to: `datapower_crypto_val_cred:id`
-- `azldap_attributes` (String) Specify the list of the extra user attributes to retrieve from the LDAP registry. The attributes that are retrieved from the registry and stored in the var://context/ldap/auxiliary-attributes context variable for future use, such as in the AAA postprocessing phase. To specify multiple attributes, use a comma as the delimiter. For example, enter <tt>email, cn, userPassword</tt> to retrieve these attributes from the registry.
-  - CLI Alias: `az-ldap-attributes`
-- `azldap_bind_dn` (String) Specify the DN to bind to the LDAP server.
-  - CLI Alias: `ldap-bind-dn`
-- `azldap_bind_password_alias` (String) Specify the password alias to bind to the LDAP server.
-  - CLI Alias: `ldap-bind-password-alias`
-  - Reference to: `datapower_password_alias:id`
-- `azldap_group` (String) Specify the DN of the required LDAP group.
-  - CLI Alias: `ldap-group-dn`
-- `azldap_group_attribute` (String) Specify the attribute name of the LDAP group to check for membership. The authorizing identity must exist as an attribute value in the group.
-  - CLI Alias: `ldap-group-attr`
-  - Default value: `member`
-- `azldap_load_balance_group` (String) Specify the load balancer group that contains the LDAP servers.
-  - CLI Alias: `ldap-lbgroup`
-  - Reference to: `datapower_load_balancer_group:id`
-- `azldap_read_timeout` (Number) <p>Specify the duration in seconds to wait for a response from LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.</p><p>If you configure an LDAP connection pool and assign it to the AAA policy's XML manager, the AAA policy can use the connection pool. The LDAP read timer of the AAA policy can work with the idle timer of the LDAP connection pool to remove idle connections from the connection pool.</p>
-  - CLI Alias: `ldap-readtimeout`
-  - Range: `0`-`86400`
-  - Default value: `60`
-- `azldap_search_filter` (String) Specify the LDAP search filter for the search. The default value is <tt>(objectClass=*)</tt> .
-  - CLI Alias: `ldap-search-filter`
-  - Default value: `(objectClass=*)`
-- `azldap_search_scope` (String) Specify the scope of the search relative to the input. The default value is subtree.
-  - CLI Alias: `ldap-search-scope`
-  - Choices: `subtree`, `one-level`, `base`
-  - Default value: `subtree`
-- `azo_auth_enforce_scope` (Boolean) Specify how to enforce the scope of the access token. The scope is returned by the server as part of the validation process. By default, the scope is enforced by the resource server. <ul><li>When enabled, the mapped resource is enforced by the DataPower Gateway against the scope.</li><li>When disabled, the remote resource server enforces the scope.</li></ul>
-  - CLI Alias: `az-oauth-enforce-scope`
-  - Default value: `false`
-- `azo_auth_export_headers` (Boolean) Specify whether to export response attributes that Federated Identity Manager might return a set of response headers. AAA processing places the response attributes as input to the postprocessing phase for use in a custom stylesheet or GatewayScript file. To access the node in the postprocessing input, specify <tt>/container/ResponseAttributes</tt> as the XPath expression. By default, all response attributes are exported to HTTP headers.
-  - CLI Alias: `az-oauth-export-headers`
-  - Default value: `true`
-- `azsaf_default_action` (String) Specify the default action. The default value is r (Read).
+- `az_saf_default_action` (String) Specify the default action. The default value is r (Read).
   - CLI Alias: `zos-nss-default-action`
   - Choices: `r`, `u`, `a`, `c`
   - Default value: `r`
-- `azsaml_name_qualifier` (String) Specifies the value of the <tt>NameQualifier</tt> attribute of the <tt>NameIdentifier</tt> in the generated SAML query. Although the <tt>NameQualifier</tt> attribute is an optional attribute, some SAML implementations require it to be present.
+- `az_saml_name_qualifier` (String) Specifies the value of the <tt>NameQualifier</tt> attribute of the <tt>NameIdentifier</tt> in the generated SAML query. Although the <tt>NameQualifier</tt> attribute is an optional attribute, some SAML implementations require it to be present.
   - CLI Alias: `saml-name-qualifier`
-- `azsaml_type` (String) Specify how to match SAML attributes and values. The default value is any.
+- `az_saml_type` (String) Specify how to match SAML attributes and values. The default value is any.
   - CLI Alias: `saml-type`
   - Choices: `xpath`, `any`, `all`, `any-value`, `all-values`
   - Default value: `any`
-- `azsaml_version` (String) Specify the version to use for SAML messages. The default value is 1.1.
+- `az_saml_url` (String) Specify the URL of the SAML server.
+  - CLI Alias: `saml-server-url`
+- `az_saml_version` (String) Specify the version to use for SAML messages. The default value is 1.1.
   - CLI Alias: `saml-version`
   - Choices: `2.0`, `1.1`, `1.0`
   - Default value: `1.1`
-- `azsamlurl` (String) Specify the URL of the SAML server.
-  - CLI Alias: `saml-server-url`
-- `azsamlx_path` (String) Specify the XPath expression to run against the SAML statement.
+- `az_saml_xpath` (String) Specify the XPath expression to run against the SAML statement.
   - CLI Alias: `saml-xpath`
-- `azsm_cookie_attributes` (String) Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.
+- `az_skew_time` (Number) <p>Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>
+  - CLI Alias: `az-skew-time`
+  - Default value: `0`
+- `az_sm_cookie_attributes` (String) Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.
   - CLI Alias: `cookie-attributes`
   - Reference to: `datapower_cookie_attribute_policy:id`
-- `azsm_cookie_flow` (Attributes) Specify which flows to include the authorization session cookie.
-  - CLI Alias: `sm-cookie-flow` (see [below for nested schema](#nestedatt--result--authorize--azsm_cookie_flow))
-- `azsm_header_flow` (Attributes) Specify which flows to include the CA Single Sign-On HTTP headers that are generated during authorization. The CA Single Sign-On HTTP headers has a prefix of <tt>SM_</tt> .
-  - CLI Alias: `sm-header-flow` (see [below for nested schema](#nestedatt--result--authorize--azsm_header_flow))
-- `azsm_request_type` (String) Specify the type of request to make. By default, the request against the CA Single Sign-On web agent.
+- `az_sm_cookie_flow` (Attributes) Specify which flows to include the authorization session cookie.
+  - CLI Alias: `sm-cookie-flow` (see [below for nested schema](#nestedatt--result--authorize--az_sm_cookie_flow))
+- `az_sm_header_flow` (Attributes) Specify which flows to include the CA Single Sign-On HTTP headers that are generated during authorization. The CA Single Sign-On HTTP headers has a prefix of <tt>SM_</tt> .
+  - CLI Alias: `sm-header-flow` (see [below for nested schema](#nestedatt--result--authorize--az_sm_header_flow))
+- `az_sm_request_type` (String) Specify the type of request to make. By default, the request against the CA Single Sign-On web agent.
   - CLI Alias: `sm-request-type`
   - Choices: `webagent`, `webservice`
   - Default value: `webagent`
-- `azssl_client_config_type` (String) Specify the TLS profile type to secure connections.
+- `az_ssl_client_config_type` (String) Specify the TLS profile type to secure connections.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
-- `azssl_client_profile` (String) Specify the client profile type to secure connections.
+- `az_ssl_client_profile` (String) Specify the client profile type to secure connections.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
-- `aztam_action_resource_map` (String) Specify the location of the XML file that contains the resource-action map. Each entry in the resource-action map defines a PCRE pattern to match the resource, the action to run, and whether to map the action to WebSEAL. This file is in the <tt>local:</tt> or <tt>store:</tt> directory.
+- `az_tam_action_resource_map` (String) Specify the location of the XML file that contains the resource-action map. Each entry in the resource-action map defines a PCRE pattern to match the resource, the action to run, and whether to map the action to WebSEAL. This file is in the <tt>local:</tt> or <tt>store:</tt> directory.
   - CLI Alias: `tam-action-map`
-- `aztam_default_action` (String) Specify the default Access Manager action. The default value is T (traverse).
+- `az_tam_default_action` (String) Specify the default Access Manager action. The default value is T (traverse).
   - CLI Alias: `tam-action-default`
   - Choices: `T`, `c`, `g`, `m`, `d`, `b`, `s`, `v`, `a`, `BypassPOP`, `tt`, `r`, `x`, `l`, `N`, `W`, `Add`, `BypassAuthzRule`, `_WebService_i`, `_PDMQ_D`, `_PDMQ_E`
   - Default value: `T`
-- `aztam_server` (String) Specify the IBM Security Access Manager client.
-  - CLI Alias: `tam`
-  - Reference to: `datapower_tam:id`
-- `aztampac_return` (Boolean) <p>Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authorization. You can use the PAC in the postprocessing phase. By default, does not return a PAC token.</p><p>This property is mutually exclusive to the same property in the authentication phase. If you select this property for both authentication and authorization, the setting is automatically cleared for authorization when applied.</p>
+- `az_tam_pac_return` (Boolean) <p>Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authorization. You can use the PAC in the postprocessing phase. By default, does not return a PAC token.</p><p>This property is mutually exclusive to the same property in the authentication phase. If you select this property for both authentication and authorization, the setting is automatically cleared for authorization when applied.</p>
   - CLI Alias: `tam-pac-return`
   - Default value: `false`
-- `aztampac_use` (Boolean) <p>Specify whether to use the existing identity or the PAC token for authorization. By default, uses the exiting identity.</p><p>When enabled, use the PAC token that was returned in the authentication or map credentials phase. You can use the PAC token in the postprocessing phase.</p>
+- `az_tam_pac_use` (Boolean) <p>Specify whether to use the existing identity or the PAC token for authorization. By default, uses the exiting identity.</p><p>When enabled, use the PAC token that was returned in the authentication or map credentials phase. You can use the PAC token in the postprocessing phase.</p>
   - CLI Alias: `use-tam-pac`
   - Default value: `false`
-- `azxacml_binding_method` (String) Specify the method to generate the XACML context request. The default value is custom processing.
+- `az_tam_server` (String) Specify the IBM Security Access Manager client.
+  - CLI Alias: `tam`
+  - Reference to: `datapower_tam:id`
+- `az_valcred` (String) - Reference to: `datapower_crypto_val_cred:id`
+- `az_xacml_binding_method` (String) Specify the method to generate the XACML context request. The default value is custom processing.
   - CLI Alias: `xacml-binding-method`
   - Choices: `dp-pdp`, `custom`
   - Default value: `custom`
-- `azxacml_binding_object` (String) XACML binding
+- `az_xacml_binding_object` (String) XACML binding
   - CLI Alias: `xacml-binding-object`
-- `azxacml_binding_xsl` (String) Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.
+- `az_xacml_binding_xsl` (String) Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.
   - CLI Alias: `xacml-binding-custom-url`
-- `azxacml_custom_obligation` (String) Specify the location of the stylesheet or GatewayScript file that can fulfill XACML obligations. he file must understand the obligations from the PDP and take the appropriate action to fulfill the obligations that are based on the request context. <ul><li>For fulfilled obligations, the output is &lt; <tt>xsl:value-of select="true()"</tt> />.</li><li>For unfulfilled obligations, the output is &lt; <tt>xsl:value-of select="false()"</tt> />.</li></ul>
+- `az_xacml_custom_obligation` (String) Specify the location of the stylesheet or GatewayScript file that can fulfill XACML obligations. he file must understand the obligations from the PDP and take the appropriate action to fulfill the obligations that are based on the request context. <ul><li>For fulfilled obligations, the output is &lt; <tt>xsl:value-of select="true()"</tt> />.</li><li>For unfulfilled obligations, the output is &lt; <tt>xsl:value-of select="false()"</tt> />.</li></ul>
   - CLI Alias: `xacml-obligation-custom-url`
-- `azxacml_external_pdp_url` (String) Specify the URL for the external XACML PDP service. The AAA policy sends the authorization request to and receives the authorization response from this service.
+- `az_xacml_external_pdp_url` (String) Specify the URL for the external XACML PDP service. The AAA policy sends the authorization request to and receives the authorization response from this service.
   - CLI Alias: `xacml-url`
-- `azxacml_use_on_box_pdp` (Boolean) Specify whether to use the on-box XACML policy decision point (PDP). By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.
-  - CLI Alias: `xacml-use-builtin`
-  - Default value: `true`
-- `azxacml_use_saml2` (Boolean) Specify whether to use SAML2.0 Profile to communicate with the external PDP service. By default, the PEP does not use SAML2.0 Profile. <ul><li>When enabled, the PEP communicates with the external PDP service by using &lt; <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> > as defined by SAML2.0 Profile. You can combine this setting with SOAP enveloping if <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> must be wrapped by a SOAP <tt>Body</tt> element.</li><li>When disabled, the PEP does not use SAML2.0 Profile to communicate with the external PDP service.</li></ul>
-  - CLI Alias: `xacml-use-saml2`
-  - Default value: `false`
-- `azxacml_use_soap` (Boolean) Specify whether the external PDP requires a SOAP envelope. By default, a SOAP envelope is not required. If the stylesheet or GatewayScript file for custom binding generates the SOAP envelope, retain the default value.
-  - CLI Alias: `xacml-use-soap`
-  - Default value: `false`
-- `azxacml_version` (String) Specify the XACML version for communication between the PDP and the AAA policy. The AAA policy acts as an XACML policy enforcement point (PEP). The default value is 2.0.
-  - CLI Alias: `xacml-version`
-  - Choices: `2`, `1`
-  - Default value: `2`
-- `azxacmlpdp` (String) Specify the XACML policy decision point (PDP) configuration.
+- `az_xacml_pdp` (String) Specify the XACML policy decision point (PDP) configuration.
   - CLI Alias: `xacml-pdp`
   - Reference to: `datapower_xacml_pdp:id`
-- `azxacmlpep_type` (String) Specify how the AAA policy processes the PDP authorization response. The AAA policy acts as an XACML PEP. The default value is deny-based PEP.
+- `az_xacml_pep_type` (String) Specify how the AAA policy processes the PDP authorization response. The AAA policy acts as an XACML PEP. The default value is deny-based PEP.
   - CLI Alias: `xacml-pep-type`
   - Choices: `base`, `deny-biased`, `permit-biased`
   - Default value: `deny-biased`
-- `azzosnss_config` (String) Specify the z/OS NSS client for SAF communication.
+- `az_xacml_use_on_box_pdp` (Boolean) Specify whether to use the on-box XACML policy decision point (PDP). By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.
+  - CLI Alias: `xacml-use-builtin`
+  - Default value: `true`
+- `az_xacml_use_saml2` (Boolean) Specify whether to use SAML2.0 Profile to communicate with the external PDP service. By default, the PEP does not use SAML2.0 Profile. <ul><li>When enabled, the PEP communicates with the external PDP service by using &lt; <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> > as defined by SAML2.0 Profile. You can combine this setting with SOAP enveloping if <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> must be wrapped by a SOAP <tt>Body</tt> element.</li><li>When disabled, the PEP does not use SAML2.0 Profile to communicate with the external PDP service.</li></ul>
+  - CLI Alias: `xacml-use-saml2`
+  - Default value: `false`
+- `az_xacml_use_soap` (Boolean) Specify whether the external PDP requires a SOAP envelope. By default, a SOAP envelope is not required. If the stylesheet or GatewayScript file for custom binding generates the SOAP envelope, retain the default value.
+  - CLI Alias: `xacml-use-soap`
+  - Default value: `false`
+- `az_xacml_version` (String) Specify the XACML version for communication between the PDP and the AAA policy. The AAA policy acts as an XACML policy enforcement point (PEP). The default value is 2.0.
+  - CLI Alias: `xacml-version`
+  - Choices: `2`, `1`
+  - Default value: `2`
+- `az_zos_nss_config` (String) Specify the z/OS NSS client for SAF communication.
   - CLI Alias: `zos-nss-az`
   - Reference to: `datapower_zos_nss_client:id`
 
-<a id="nestedatt--result--authorize--azsm_cookie_flow"></a>
-### Nested Schema for `result.authorize.azsm_cookie_flow`
+<a id="nestedatt--result--authorize--az_sm_cookie_flow"></a>
+### Nested Schema for `result.authorize.az_sm_cookie_flow`
 
 Read-Only:
 
@@ -474,8 +474,8 @@ Read-Only:
   - Default value: `false`
 
 
-<a id="nestedatt--result--authorize--azsm_header_flow"></a>
-### Nested Schema for `result.authorize.azsm_header_flow`
+<a id="nestedatt--result--authorize--az_sm_header_flow"></a>
+### Nested Schema for `result.authorize.az_sm_header_flow`
 
 Read-Only:
 
@@ -506,9 +506,15 @@ Read-Only:
 - `ei_forms_login_policy` (String) Specify the HTML forms-based login policy. This policy defines the forms that collect user and password information.
   - CLI Alias: `forms-login-policy`
   - Reference to: `datapower_forms_login_policy:id`
+- `ei_jwt_validator` (String) Specify the JWT validator to validate the JWT.
+  - CLI Alias: `validate-jwt`
+  - Reference to: `datapower_aaa_jwt_validator:id`
 - `ei_metadata` (String) <p>Specify the processing metadata, which defines items such as variables and protocol headers.</p><ul><li>When specified, processing returns only the defined metadata items.</li><li>When not specified, processing returns all metadata items for the current processing rule.</li></ul>
   - CLI Alias: `metadata`
   - Reference to: `datapower_processing_metadata:id`
+- `ei_oauth_client_group` (String) Specify the name of the OAuth client group.
+  - CLI Alias: `oauth-client-group`
+  - Reference to: `datapower_oauth_supported_client_group:id`
 - `ei_password_retrieval_aaa_info_url` (String) Specify the location of AAA information file to obtain the password.
   - CLI Alias: `password-retrieval-xmlfile-url`
 - `ei_password_retrieval_custom_url` (String) Specify the location of custom file to obtain the password.
@@ -519,32 +525,26 @@ Read-Only:
   - Default value: `xmlfile`
 - `ei_remote_token_process_service` (String) <p>Specify the URL of the service that can process the remote security token as a SOAP call and, if successful, respond with the final security token.</p><p>The remote WS-Security token can be signed, encrypted, or encoded. A service with different actions can process the remote token. For example, this token can decrypt pieces of a remote SAML assertion, run an XSLT transform, or the AAA policy can assert the token.</p>
   - CLI Alias: `remote-token-url`
+- `ei_saml_response_val_cred` (String) Specify the validation credentials to verify the signature of the SAML response.
+  - CLI Alias: `saml-response-valcred`
+  - Reference to: `datapower_crypto_val_cred:id`
 - `ei_signer_dn_valcred` (String) Specify the validation credentials to verify the signer certificate.
   - CLI Alias: `valcred`
   - Reference to: `datapower_crypto_val_cred:id`
 - `ei_social_login_policy` (String) Specify the social login policy. To choose a policy at run time, set the value with the <tt>var:///context/AAA/social-login-policy-name</tt> variable. When the value is set with a variable before the AAA action, the variable takes precedence over this value.
   - CLI Alias: `social-login-policy`
   - Reference to: `datapower_social_login_policy:id`
-- `ei_use_ws_sec` (Boolean) <p>Specify whether to use the WS-Security token first. By default, this feature is not enabled.</p><ul><li>When enabled, use the token from the appropriate WS-Security <tt>Security</tt> header. For example, use when an LTPA token is extracted from a <tt>Cookie</tt> header and you want to use the one that is available from the <tt>Security</tt> header.</li><li>When not enabled, use the token that is extracted somewhere other than the WS-Security <tt>Security</tt> header.</li></ul>
-  - CLI Alias: `use-wssec-token`
-  - Default value: `false`
-- `eijwt_validator` (String) Specify the JWT validator to validate the JWT.
-  - CLI Alias: `validate-jwt`
-  - Reference to: `datapower_aaa_jwt_validator:id`
-- `eio_auth_client_group` (String) Specify the name of the OAuth client group.
-  - CLI Alias: `oauth-client-group`
-  - Reference to: `datapower_oauth_supported_client_group:id`
-- `eisaml_response_val_cred` (String) Specify the validation credentials to verify the signature of the SAML response.
-  - CLI Alias: `saml-response-valcred`
-  - Reference to: `datapower_crypto_val_cred:id`
-- `eissl_client_config_type` (String) Specify the TLS profile type to secure connections.
+- `ei_ssl_client_config_type` (String) Specify the TLS profile type to secure connections.
   - CLI Alias: `ssl-client-type`
   - Choices: `proxy`, `client`
   - Default value: `proxy`
-- `eissl_client_profile` (String) Specify the TLS client profile to secure connections to targets
+- `ei_ssl_client_profile` (String) Specify the TLS client profile to secure connections to targets
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
-- `eix_path` (String) Specify the XPath expression to apply to the message. The extracted identity uses the string value for this expression.
+- `ei_use_ws_sec` (Boolean) <p>Specify whether to use the WS-Security token first. By default, this feature is not enabled.</p><ul><li>When enabled, use the token from the appropriate WS-Security <tt>Security</tt> header. For example, use when an LTPA token is extracted from a <tt>Cookie</tt> header and you want to use the one that is available from the <tt>Security</tt> header.</li><li>When not enabled, use the token that is extracted somewhere other than the WS-Security <tt>Security</tt> header.</li></ul>
+  - CLI Alias: `use-wssec-token`
+  - Default value: `false`
+- `ei_xpath` (String) Specify the XPath expression to apply to the message. The extracted identity uses the string value for this expression.
   - CLI Alias: `xpath`
 
 <a id="nestedatt--result--extract_identity--ei_bitmap"></a>
@@ -611,7 +611,7 @@ Read-Only:
 - `er_metadata` (String) Specify the name of the configuration for processing metadata.
   - CLI Alias: `metadata`
   - Reference to: `datapower_processing_metadata:id`
-- `erx_path` (String) Specify the XPath expression to apply to the incoming message.
+- `er_xpath` (String) Specify the XPath expression to apply to the incoming message.
   - CLI Alias: `xpath`
 
 <a id="nestedatt--result--extract_resource--er_bitmap"></a>
@@ -631,7 +631,7 @@ Read-Only:
   - Default value: `false`
 - `target_url` (Boolean) URL sent to back end
   - Default value: `false`
-- `x_path` (Boolean) XPath expression
+- `xpath` (Boolean) XPath expression
   - Default value: `false`
 
 
@@ -645,7 +645,7 @@ Read-Only:
 - `ltpa_user_attribute_static_value` (String) Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.
 - `ltpa_user_attribute_type` (String) Specify the type of attribute.
   - Choices: `static`, `xpath`
-- `ltpa_user_attribute_x_path_value` (String) Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.
+- `ltpa_user_attribute_xpath_value` (String) Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.
 
 
 <a id="nestedatt--result--map_credentials"></a>
@@ -657,7 +657,7 @@ Read-Only:
   - CLI Alias: `custom-url`
 - `mc_map_url` (String) Specify the location of the AAA XML file that defines how to map credentials.
   - CLI Alias: `xmlfile-url`
-- `mc_map_x_path` (String) Specify the XPath expression to map credentials.
+- `mc_map_xpath` (String) Specify the XPath expression to map credentials.
   - CLI Alias: `xpath`
 - `mc_method` (String) Specify the method to map credentials.
   - CLI Alias: `method`
@@ -674,19 +674,19 @@ Read-Only:
   - CLI Alias: `custom-url`
 - `mr_map_url` (String) Specify the location of the AAA XML file that defines how to map resources.
   - CLI Alias: `xmlfile-url`
-- `mr_map_x_path` (String) Specify the XPath expression to apply to the extracted resource.
+- `mr_map_xpath` (String) Specify the XPath expression to apply to the extracted resource.
   - CLI Alias: `xpath`
 - `mr_method` (String) Specify the method to map resources.
   - CLI Alias: `method`
   - Choices: `none`, `custom`, `xmlfile`, `xpath`, `tivoli`
   - Default value: `none`
-- `mrtam_instance_prefix` (String) <p>Specify the prefix to add based on the mapping style. Each protected object space has a defined convention. These different options help to map extracted resources to a resource string that follow a Tivoli naming convention.</p><ul><li>For the custom mapping style, specify the string to add as the prefix. In other words, use the <i>prefix</i> format.</li><li>For the TAMBI mapping style, specify the queue manager and queue, and separate the queue manager and the queue with a forward slash. In other words, use the <tt>/PDMQ/ <i>prefix</i></tt> format.</li><li>For the TFIM mapping style, specify the name of the Federated Identity Manager domain. In other words, use the <tt>/itfim-wssm/wssm-default/ <i>prefix</i></tt> format.</li><li>For the WebSEAL mapping style, specify the name of the WebSEAL instance. In other words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>
+- `mr_tam_instance_prefix` (String) <p>Specify the prefix to add based on the mapping style. Each protected object space has a defined convention. These different options help to map extracted resources to a resource string that follow a Tivoli naming convention.</p><ul><li>For the custom mapping style, specify the string to add as the prefix. In other words, use the <i>prefix</i> format.</li><li>For the TAMBI mapping style, specify the queue manager and queue, and separate the queue manager and the queue with a forward slash. In other words, use the <tt>/PDMQ/ <i>prefix</i></tt> format.</li><li>For the TFIM mapping style, specify the name of the Federated Identity Manager domain. In other words, use the <tt>/itfim-wssm/wssm-default/ <i>prefix</i></tt> format.</li><li>For the WebSEAL mapping style, specify the name of the WebSEAL instance. In other words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>
   - CLI Alias: `tam-prefix`
-- `mrtam_map` (String) Specify the Access Manager style-mapping resource. Access Manager organizes resources into a hierarchical protected object space. The default value is WebSEAL.
+- `mr_tam_map` (String) Specify the Access Manager style-mapping resource. Access Manager organizes resources into a hierarchical protected object space. The default value is WebSEAL.
   - CLI Alias: `tam-mapping`
   - Choices: `TFIM`, `TAMBI`, `WebSEAL`, `Custom`
   - Default value: `WebSEAL`
-- `mrtam_web_seal_dyn_url_file` (String) Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.
+- `mr_tam_web_seal_dyn_url_file` (String) Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.
   - CLI Alias: `webseal-dynurl-file`
 
 
@@ -717,6 +717,16 @@ Read-Only:
 - `pp_enabled` (Boolean) Specify whether to run a custom stylesheet or GatewayScript file.
   - CLI Alias: `custom-processing`
   - Default value: `false`
+- `pp_hmac_signing_alg` (String) Specify the HMAC algorithm to sign the token. This property is available to request a WS-Security UsernameToken in postprocessing and WS-Security Derived-Key UsernameToken is added to the message with an HMAC signature. The default value is hmac-sha1.
+  - CLI Alias: `hmac-signing-algorithm`
+  - Choices: `hmac-sha1`, `hmac-sha224`, `hmac-sha256`, `hmac-sha384`, `hmac-sha512`, `hmac-ripemd160`, `hmac-md5`
+  - Default value: `hmac-sha1`
+- `pp_jwt` (Boolean) Specify whether to generate a JWT token.
+  - CLI Alias: `jwt`
+  - Default value: `false`
+- `pp_jwt_generator` (String) Specify the JWT generator.
+  - CLI Alias: `generate-jwt`
+  - Reference to: `datapower_aaa_jwt_generator:id`
 - `pp_kerberos_bst_value_type` (String) Specify the value for the <tt>ValueType</tt> attribute of the WS-Security BinarySecurityToken. The Kerberos AP-REQ message contains the <tt>ValueType</tt> attribute. The default value is for WSS Kerberos Token Profile 1.1 (GSS).
   - CLI Alias: `kerberos-value-type`
   - Choices: `http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ`, `http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ`, `http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ1510`, `http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ1510`, `http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ4120`, `http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ4120`, `http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ`, `http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ`, `http://www.docs.oasis-open.org/wss/2004/07/oasis-000000-wss-kerberos-token-profile-1.0#Kerberosv5_AP_REQ`
@@ -756,12 +766,35 @@ Read-Only:
 - `pp_kerberos_ticket` (Boolean) Specify whether to include a WS-Security Kerberos AP-REQ BinarySecurityToken for the specified client and server principals in the WS-Security header. By default, token are not included.
   - CLI Alias: `kerberos-include-token`
   - Default value: `false`
-- `pp_kerberos_use_s4u2_proxy` (Boolean) Specify whether to use constrained delegation, namely S4U2Proxy, when a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token is generated. By default, does not use constrained delegation. When enabled, uses constrained delegation.
+- `pp_kerberos_use_s4u2proxy` (Boolean) Specify whether to use constrained delegation, namely S4U2Proxy, when a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token is generated. By default, does not use constrained delegation. When enabled, uses constrained delegation.
   - CLI Alias: `kerberos-use-s4u2proxy`
   - Default value: `false`
-- `pp_kerberos_use_s4u2_self_and_s4u2_proxy` (Boolean) <p>Specify whether to use protocol transition, namely S4U2Self, and then use constrained delegation, namely S4U2Proxy.</p><ul><li>Use S4U2Self to convert a non-Kerberos token to a Kerberos token to the DataPower Gateway itself.</li><li>Use S4U2Proxy to generate a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token.</li></ul><p>By default, does not use protocol transition and constrained delegation. When enabled, uses protocol transition and constrained delegation.</p>
+- `pp_kerberos_use_s4u2self_and_s4u2proxy` (Boolean) <p>Specify whether to use protocol transition, namely S4U2Self, and then use constrained delegation, namely S4U2Proxy.</p><ul><li>Use S4U2Self to convert a non-Kerberos token to a Kerberos token to the DataPower Gateway itself.</li><li>Use S4U2Proxy to generate a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token.</li></ul><p>By default, does not use protocol transition and constrained delegation. When enabled, uses protocol transition and constrained delegation.</p>
   - CLI Alias: `kerberos-use-s4u2self`
   - Default value: `false`
+- `pp_ltpa` (Boolean) Specify whether to generate an LTPA token.
+  - CLI Alias: `lpta-generate-token`
+  - Default value: `false`
+- `pp_ltpa_expiry` (Number) Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.
+  - CLI Alias: `lpta-expiry`
+  - Range: `1`-`628992000`
+  - Default value: `600`
+- `pp_ltpa_insert_cookie` (Boolean) Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.
+  - CLI Alias: `ltpa-insert-cookie`
+  - Default value: `true`
+- `pp_ltpa_key_file` (String) Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>
+  - CLI Alias: `lpta-key-file`
+- `pp_ltpa_key_file_password` (String) Use the LTPA key file password alias.
+  - CLI Alias: `lpta-key-file-password`
+- `pp_ltpa_key_file_password_alias` (String) Specify the the alias for password of the LTPA key file.
+  - CLI Alias: `ltpa-key-file-password-alias`
+  - Reference to: `datapower_password_alias:id`
+- `pp_ltpa_stash_file` (String) Specify the location of the file that contains the LTPA key file password.
+  - CLI Alias: `lpta-stash-file`
+- `pp_ltpa_version` (String) Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.
+  - CLI Alias: `lpta-version`
+  - Choices: `LTPA`, `LTPA1FIPS`, `LTPA2`, `LTPA2WAS7`, `LTPADomino`
+  - Default value: `LTPA2`
 - `pp_one_time_use` (Boolean) Specify whether the destination system or relying party should cache the generated token. The generated token might contain the property for this characteristic, which is especially practical for SAML assertions. By default, the destination system can cache the generated token. When enabled, he destination system should not cache the generated token.
   - CLI Alias: `one-time-use`
   - Default value: `false`
@@ -769,6 +802,75 @@ Read-Only:
   - CLI Alias: `result-wrapup`
   - Choices: `wssec-replace`, `wssec-new`, `wssec-inject`, `soap-body`, `none`
   - Default value: `wssec-replace`
+- `pp_saml_assertion_type` (Attributes) Specify the supported SAML statement types. By default, supports both attributes and authentication statements.
+  - CLI Alias: `saml-assertion-type` (see [below for nested schema](#nestedatt--result--post_process--pp_saml_assertion_type))
+- `pp_saml_attributes` (String) Specify the name of an existing SAML attributes. The SAML attributes define the information to put in the SAML assertion to generate the attribute statement. Each SAML attribute requires the name, format or namespace, and value. The value can be from a DataPower variable.
+  - CLI Alias: `saml-attributes`
+  - Reference to: `datapower_saml_attributes:id`
+- `pp_saml_audience` (String) Specify URI references that identify an intended audience. Enter any number of the audience URIs to process the generated SAML assertion. If the value is an empty string, the SAML audience is not restricted. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \+.
+  - CLI Alias: `saml-audience`
+- `pp_saml_auth_assertion` (Boolean) Specify whether to generate a SAML assertion that contains a SAML authentication statement for the authenticated user identity.
+  - CLI Alias: `saml-generate-assertion`
+  - Default value: `false`
+- `pp_saml_authz_action` (String) Specify the standard action that the subject can take on the resource. The SAML specification defines the list of action identifiers with corresponding namespace URIs. By default, all HTTP operations, where <tt>urn:oasis:names:tc:SAML:1.0:action:ghpp</tt> is the namespace URI.
+  - CLI Alias: `saml-authz-action`
+  - Choices: `AllHTTP`, `POST`, `GET`, `PUT`, `HEAD`, `General`, `Read`, `Write`, `Execute`, `Delete`, `Control`, `NegatedRead`, `NegatedWrite`, `NegatedExecute`, `NegatedDelete`, `NegatedControl`
+  - Default value: `AllHTTP`
+- `pp_saml_identity_provider` (Boolean) <p>Specify whether to generate a SAML assertion. The SAML assertion can contain an authentication statement, an authorization statement, an attribute statement, or any combination of these statements. The SAML attribute value can be a user LDAP Attribute value that can be retrieved in the following ways.</p><ul><li>Directly by the LDAP authentication or authorization method with the list of LDAP attribute names that are defined by user auxiliary LDAP attributes.</li><li>Indirectly with the <tt>var://context/ldap/auxiliary-attributes</tt> variable in a stylesheet or GatewayScript file. A call with <tt>dp:ldap-search</tt> to the user registry, and put the <tt>attribute-value</tt> elements of search result to the variable.</li></ul><p>To sign the SAML assertion, configure a WS-Security sign action or SAML enveloped sign action after the AAA action in the processing rule.</p>
+  - CLI Alias: `generate-saml-assertion`
+  - Default value: `false`
+- `pp_saml_name_id` (Boolean) Specify whether the SAML Subject element contains the name identifier. By default, the SAML subject contains the name identifier. When disabled, the SAML subject does not contain the name identifier. Use this value if the subject confirmation method is holder-of-key because the key represent the same entity as the subject.
+  - CLI Alias: `saml-nid`
+  - Default value: `true`
+- `pp_saml_name_id_format` (String) Specify the URI reference that represents the classification of string-based identifier information. Any standard or arbitrary URI is allowed. If the value is an empty string, the DataPower Gateway attempts to determine the value from the AAA context. Some SAML protocols require a specified value, such as <tt>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</tt> or <tt>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</tt> .
+  - CLI Alias: `saml-nid-format`
+- `pp_saml_name_qualifier` (String) Specify the value of the NameQualifier attribute of the NameIdentifier in the generated SAML assertion. Although the attribute is an optional attribute, some SAML implementations require that this attribute must be present.
+  - CLI Alias: `saml-name-qualifier`
+- `pp_saml_omit_not_before` (Boolean) whether to omit the <tt>NotBefore</tt> attribute in the SAML assertion. When omitted, the assertion is considered valid even before the time it was issued. By default, the <tt>NotBefore</tt> attribute is not omitted. When enabled, the <tt>NotBefore</tt> attribute in the SAML assertion is omitted. This behavior might be required to respond to an <tt>AuthnRequest</tt> .
+  - CLI Alias: `saml-omit-notbefore`
+  - Default value: `false`
+- `pp_saml_protocol` (String) Specify the SAML protocol to wrap up the SAML assertion. By default, the SAML assertion can be put to WS-Security wrap-up later.
+  - CLI Alias: `saml-protocol`
+  - Choices: `assertion`, `response`
+  - Default value: `assertion`
+- `pp_saml_proxy` (Boolean) <p>Specify whether to allow SAML proxy restriction. The generated SAML assertion provides limitations that the asserting party imposes on relying parties that want to act as asserting parties.</p><ul><li>A relying party that acts as an asserting party can issue subsequent assertions that are based on the information in the original assertion.</li><li>The relying party cannot issue an assertion that violates these restrictions.</li></ul><p>By default, proxy restrictions are not allowd. When enabled, proxy restrictions are allows.</p>
+  - CLI Alias: `saml-proxy`
+  - Default value: `false`
+- `pp_saml_proxy_audience` (String) Specify the set of audiences (proxy) to whom the asserting party permits new assertions to be issued based on this assertion. If the value is an empty string, the audience for the <tt>ProxyRestriction</tt> is not issued with this SAML assertion. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \+.
+  - CLI Alias: `saml-proxy-audience`
+- `pp_saml_proxy_count` (Number) Specify the maximum number of indirections that the asserting party permits between this assertion and an assertion that was issued. Enter a value in the range 0 - 65535. The default value is 0. A value of 0 indicates that a relying party must not issue an assertion to another relying party based on this assertion. If greater than zero, any assertion that is issued must itself contain a <tt>ProxyRestriction</tt> element with a <tt>Count</tt> value of at most one less than this value.
+  - CLI Alias: `saml-proxy-count`
+  - Range: `0`-`65535`
+  - Default value: `0`
+- `pp_saml_recipient` (String) Specify a URI that identifies the entity or location that an attesting entity can present the assertion to. Any standard or arbitrary URI is allowed. If the value is an empty string, the optional attribute is not generated. This setting is applicable for only SAML 2.0.
+  - CLI Alias: `saml-recipient`
+- `pp_saml_response_destination` (String) Specify the destination for a SAML response. This information can prevent malicious forwarding of requests to unintended recipients, which is a required protection by some protocol bindings. If it is present, the actual recipient must check that the URI reference identifies the location at which the message was received. If it does not check that the URI reference identifies the location, the request must be discarded. Some protocol bindings might require the use of this attribute.
+  - CLI Alias: `saml-response-destination`
+- `pp_saml_send_slo` (Boolean) <p>Specify whether to send a SAML Logout (SLO) request to revoke the SAML Assertion token that is used for single-sign-on (SSO). The SLO is a request-response that the DataPower&#174; Gateway handles differently when it is working as a service provider (SP) or identity provider (IdP).</p><ul><li>When an SP, the DataPower Gateway sends an SLO request to the SAML SLO endpoint (IdP). On response, the DataPower Gateway processes the SLO response for its status.</li><li>When an IdP, the request to the DataPower Gateway contains the SLO request. Postprocessing validates against the SAML metadata file and sends the corresponding endpoint the SLO response.</li></ul>
+  - CLI Alias: `saml-send-slo`
+  - Default value: `false`
+- `pp_saml_server_name` (String) <p>Specify the value of the <tt>saml:Issuer</tt> of the generated SAML assertion or SAML SLO request. The default value is XS.</p><ul><li>If generating an SAML assertion, identifies the server that makes the assertion.</li><li>If sending an SLO request, identifies the issuer that sends the request.</li></ul>
+  - CLI Alias: `saml-server-name`
+  - Default value: `XS`
+- `pp_saml_skew` (Number) Specify the acceptable skew interval in seconds. The IdP and SP system clocks can have a skew time. When the SAML assertion is generated, the expiration takes the skew time setting into account. <ul><li>When <tt>NotBefore</tt> has the value of <tt>(CurrentTime - SkewTime)</tt> .</li><li>When <tt>NotOnOrAfter</tt> has the value of <tt>(CurrentTime + Validity + SkewTime)</tt> .</li></ul>
+  - CLI Alias: `saml-skew`
+  - Default value: `0`
+- `pp_saml_slo_endpoint` (String) Specify the endpoint URL for SAML 2.0 Single Logout (SLO) messages. This endpoint is the authority that authenticated the assertion subject.
+  - CLI Alias: `saml-slo-endpoint`
+- `pp_saml_subject_confirm` (String) Specify the method that allows the destination system to confirm the subject of the SAML assertion. By default, the subject is bearer.
+  - CLI Alias: `saml-subject-confirm`
+  - Choices: `bearer`, `hok`, `sv`
+  - Default value: `bearer`
+- `pp_saml_use_ws_sec` (Boolean) Specify where to insert the SAML assertion. By default, the assertion is inserted as a child element of the SOAP header. When enabled, the assertion is inserted in a WS-Security-compliant header as defined by the WS-Security SAML token profile.
+  - CLI Alias: `saml-in-wssec`
+  - Default value: `false`
+- `pp_saml_validity` (Number) Specify the validity duration of the SAML assertion in seconds. This value and the skew time are for fine control of the validity duration. The default value is 0.
+  - CLI Alias: `saml-validity`
+  - Default value: `0`
+- `pp_saml_version` (String) Specify the protocol level of SAML messages. The version affects the identity extraction from the original message and the format of messages. The default value is 1.1.
+  - CLI Alias: `saml-version`
+  - Choices: `2`, `1.1`, `1`
+  - Default value: `2`
 - `pp_shared_secret_key` (String) Specify the shared secret key as the WS-Trust key source.
   - CLI Alias: `ws-trust-shared-key`
   - Reference to: `datapower_crypto_sskey:id`
@@ -776,6 +878,22 @@ Read-Only:
   - CLI Alias: `message-digest-algorithm`
   - Choices: `sha1`, `sha256`, `sha512`, `ripemd160`, `sha224`, `sha384`, `md5`
   - Default value: `sha1`
+- `pp_ssl_client_config_type` (String) Specify the TLS client type to secure connections.
+  - CLI Alias: `ssl-client-type`
+  - Choices: `proxy`, `client`
+  - Default value: `proxy`
+- `pp_ssl_client_profile` (String) Specify the TLS client profile to secure connections.
+  - CLI Alias: `ssl-client`
+  - Reference to: `datapower_ssl_client_profile:id`
+- `pp_tam_header` (String) Specify the name of the HTTP header to store the token in. The default value is iv_creds, which is HTTP header that WebSEAL uses to write headers.
+  - CLI Alias: `tam-header`
+  - Default value: `iv-creds`
+- `pp_tam_header_size` (Number) Specify the maximum size in bytes of HTTP headers. A value of 0 disables this function. If the value is nonzero, the PAC token is split across multiple headers of the specified length. The default value is 0.
+  - CLI Alias: `tam-header-size`
+  - Default value: `0`
+- `pp_tam_pac_propagate` (Boolean) Specify whether to add the Access Manager privilege attribute certificate (PAC) token to an HTTP header. The PAC token was returned from the previous authentication or authorization phase. By default, does not add the PAC token. When enabled, adds the PAC token.
+  - CLI Alias: `propagate-tam-pac`
+  - Default value: `false`
 - `pp_timestamp` (Boolean) Specify whether to generate a WS-Trust token time stamp for the security token response.
   - CLI Alias: `ws-trust-add-timestamp`
   - Default value: `true`
@@ -786,175 +904,57 @@ Read-Only:
 - `pp_use_ws_sec` (Boolean) Specify whether the token can be wrapped by the WS-Security <tt>wsse:Security</tt> header. This setting for the LTPA token. By default, the token cannot be wrapped by this header. When enabled, generate a WS-Security header that contains the token.
   - CLI Alias: `wssec-header-wrap-token`
   - Default value: `false`
-- `pphmac_signing_alg` (String) Specify the HMAC algorithm to sign the token. This property is available to request a WS-Security UsernameToken in postprocessing and WS-Security Derived-Key UsernameToken is added to the message with an HMAC signature. The default value is hmac-sha1.
-  - CLI Alias: `hmac-signing-algorithm`
-  - Choices: `hmac-sha1`, `hmac-sha224`, `hmac-sha256`, `hmac-sha384`, `hmac-sha512`, `hmac-ripemd160`, `hmac-md5`
-  - Default value: `hmac-sha1`
+- `pp_ws_derived_key_username_token` (Boolean) Specify whether to generate a derived key from a password. By default, a derived key is not generated. When enabled, the process adds a WS-Security derived-key UsernameToken to the message and adds an HMAC signature with the derived-key. The username and password are taken from the output of the map credentials phase.
+  - CLI Alias: `wssec-use-derived-key`
+  - Default value: `false`
+- `pp_ws_derived_key_username_token_iterations` (Number) Specify the number of hashing cycles during the generation of a derived key from a password. The minimum value is 2. The default value is 1000.
+  - CLI Alias: `wssec-derived-key-hash-iter`
+  - Range: `2`-`65535`
+  - Default value: `1000`
+- `pp_ws_sc_key_source` (String) Specify the source of the key. For WS-Trust postprocessing, the DataPower Gateway works as an on-box WS-Trust security token service that is backed by WS-SecureConversation. A symmetric shared secret key is needed to initialize the WS-SecureConversation SecurityContext. By default, a random key is generated.
+  - CLI Alias: `ws-trust-key-source`
+  - Choices: `client-entropy`, `in-kerberos`, `in-encryptedkey`, `static`, `random`
+  - Default value: `random`
+- `pp_ws_trust` (Boolean) Specify whether to generate the appropriate security token response for a valid WS-Trust SecurityContextToken request.
+  - CLI Alias: `ws-trust-generate-resp`
+  - Default value: `false`
+- `pp_ws_trust_header` (Boolean) Specify whether to return the WS-Trust token as a SOAP header. By default, the token is put in the SOAP body. When enabled, return the token as a SOAP header by wrapping the <tt>wst:RequestedSecurityToken</tt> by a <tt>wst:IssuedToken</tt> .
+  - CLI Alias: `ws-trust-in-header`
+  - Default value: `false`
+- `pp_ws_trust_never_expire` (Boolean) Specify whether the WS-Trust security context expires. By default, the security context expires. When enabled, the security context never expires.However, you can change the duration afterward with an explicit duration in seconds before expiry.
+  - CLI Alias: `ws-trust-never-expire`
+  - Default value: `false`
+- `pp_ws_trust_new_instance` (Boolean) Specify whether the STS renewal request issues a new instance for WS-Trust renewal. By default, the STS renewal request renews the existing instance. When enabled, the STS renewal request creates a new instance.
+  - CLI Alias: `ws-trust-new-instance`
+  - Default value: `false`
+- `pp_ws_trust_new_key` (Boolean) Specify whether to update the context key for WS-Trust renewal.By default, the SCT renewal request uses the existing shared secret key. When enabled, the SCT renewal request does not use the existing shared secret key.
+  - CLI Alias: `ws-trust-new-key`
+  - Default value: `false`
+- `pp_ws_trust_renewal_wait` (Number) Specify the duration to allow the STS to keep an expired SecurityContext token in seconds. After a WS-Trust token expires, it can be removed from the STS and cannot be renewed. Therefore, the token must be renewed before expiry. Enter a value in the range of 0 - 2678400. The default value is 0. <p>The token is issued or renewed with a 1-hour wait time in the following situation.</p><ul><li>The WS-Trust request asks that the issued token can be renewed after expiration.</li><li>This setting has a value of 0.</li></ul>
+  - CLI Alias: `ws-trust-renewal-wait`
+  - Range: `0`-`2678400`
+  - Default value: `0`
+- `pp_ws_username_token` (Boolean) Specify whether to add a WS-Security UsernameToken. The username and password are taken from the output of the map credentials phase.
+  - CLI Alias: `wssec-add-user-name-token`
+  - Default value: `false`
+- `pp_ws_username_token_allow_replacement` (Boolean) Specify whether to retain the original token, not generate a new one, if the message already contains a UsernameToken. By default, the original otken is retained. When enabled, the generated token replaces any existing ones.
+  - CLI Alias: `wssec-replace-existing`
+  - Default value: `false`
+- `pp_ws_username_token_include_pwd` (Boolean) Specify whether the WS-Security UsernameToken must include the password. By default, the token must contain the password.
+  - CLI Alias: `wssec-user-name-token-contains-pwd`
+  - Default value: `true`
+- `pp_ws_username_token_password_type` (String) Specify the type of password that the UsernameToken provides. By default, use the digest of the password as defined in the "Web Services Security UsernameToken Profile 1.0" specification.
+  - CLI Alias: `wssec-user-name-token-type`
+  - Choices: `Text`, `Digest`
+  - Default value: `Digest`
 - `ppicrx_token` (Boolean) Specify whether to generate an Extended Identity Context Reference (ICRX) for z/OS identity propagation from the authenticated credentials. When generated, the WS-Security binary token with an ICRX token is inserted into the WS-Security header. You can use this token interoperability with the CICS Transaction Server for z/OS identity propagation support.
   - CLI Alias: `generate-icrx`
   - Default value: `false`
 - `ppicrx_user_realm` (String) Specify the realm of a user for ICRX identity propagation. The ICRX realm is defined in the SAF configuration. Generally, this value is the equivalent of the prefix for a DN in a user registry.
   - CLI Alias: `icrx-user-realm`
-- `ppjwt` (Boolean) Specify whether to generate a JWT token.
-  - CLI Alias: `jwt`
-  - Default value: `false`
-- `ppjwt_generator` (String) Specify the JWT generator.
-  - CLI Alias: `generate-jwt`
-  - Reference to: `datapower_aaa_jwt_generator:id`
-- `ppltpa` (Boolean) Specify whether to generate an LTPA token.
-  - CLI Alias: `lpta-generate-token`
-  - Default value: `false`
-- `ppltpa_expiry` (Number) Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.
-  - CLI Alias: `lpta-expiry`
-  - Range: `1`-`628992000`
-  - Default value: `600`
-- `ppltpa_insert_cookie` (Boolean) Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.
-  - CLI Alias: `ltpa-insert-cookie`
-  - Default value: `true`
-- `ppltpa_key_file` (String) Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>
-  - CLI Alias: `lpta-key-file`
-- `ppltpa_key_file_password` (String) Use the LTPA key file password alias.
-  - CLI Alias: `lpta-key-file-password`
-- `ppltpa_key_file_password_alias` (String) Specify the the alias for password of the LTPA key file.
-  - CLI Alias: `ltpa-key-file-password-alias`
-  - Reference to: `datapower_password_alias:id`
-- `ppltpa_stash_file` (String) Specify the location of the file that contains the LTPA key file password.
-  - CLI Alias: `lpta-stash-file`
-- `ppltpa_version` (String) Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.
-  - CLI Alias: `lpta-version`
-  - Choices: `LTPA`, `LTPA1FIPS`, `LTPA2`, `LTPA2WAS7`, `LTPADomino`
-  - Default value: `LTPA2`
-- `ppsaml_assertion_type` (Attributes) Specify the supported SAML statement types. By default, supports both attributes and authentication statements.
-  - CLI Alias: `saml-assertion-type` (see [below for nested schema](#nestedatt--result--post_process--ppsaml_assertion_type))
-- `ppsaml_attributes` (String) Specify the name of an existing SAML attributes. The SAML attributes define the information to put in the SAML assertion to generate the attribute statement. Each SAML attribute requires the name, format or namespace, and value. The value can be from a DataPower variable.
-  - CLI Alias: `saml-attributes`
-  - Reference to: `datapower_saml_attributes:id`
-- `ppsaml_audience` (String) Specify URI references that identify an intended audience. Enter any number of the audience URIs to process the generated SAML assertion. If the value is an empty string, the SAML audience is not restricted. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \+.
-  - CLI Alias: `saml-audience`
-- `ppsaml_auth_assertion` (Boolean) Specify whether to generate a SAML assertion that contains a SAML authentication statement for the authenticated user identity.
-  - CLI Alias: `saml-generate-assertion`
-  - Default value: `false`
-- `ppsaml_authz_action` (String) Specify the standard action that the subject can take on the resource. The SAML specification defines the list of action identifiers with corresponding namespace URIs. By default, all HTTP operations, where <tt>urn:oasis:names:tc:SAML:1.0:action:ghpp</tt> is the namespace URI.
-  - CLI Alias: `saml-authz-action`
-  - Choices: `AllHTTP`, `POST`, `GET`, `PUT`, `HEAD`, `General`, `Read`, `Write`, `Execute`, `Delete`, `Control`, `NegatedRead`, `NegatedWrite`, `NegatedExecute`, `NegatedDelete`, `NegatedControl`
-  - Default value: `AllHTTP`
-- `ppsaml_identity_provider` (Boolean) <p>Specify whether to generate a SAML assertion. The SAML assertion can contain an authentication statement, an authorization statement, an attribute statement, or any combination of these statements. The SAML attribute value can be a user LDAP Attribute value that can be retrieved in the following ways.</p><ul><li>Directly by the LDAP authentication or authorization method with the list of LDAP attribute names that are defined by user auxiliary LDAP attributes.</li><li>Indirectly with the <tt>var://context/ldap/auxiliary-attributes</tt> variable in a stylesheet or GatewayScript file. A call with <tt>dp:ldap-search</tt> to the user registry, and put the <tt>attribute-value</tt> elements of search result to the variable.</li></ul><p>To sign the SAML assertion, configure a WS-Security sign action or SAML enveloped sign action after the AAA action in the processing rule.</p>
-  - CLI Alias: `generate-saml-assertion`
-  - Default value: `false`
-- `ppsaml_name_id` (Boolean) Specify whether the SAML Subject element contains the name identifier. By default, the SAML subject contains the name identifier. When disabled, the SAML subject does not contain the name identifier. Use this value if the subject confirmation method is holder-of-key because the key represent the same entity as the subject.
-  - CLI Alias: `saml-nid`
-  - Default value: `true`
-- `ppsaml_name_id_format` (String) Specify the URI reference that represents the classification of string-based identifier information. Any standard or arbitrary URI is allowed. If the value is an empty string, the DataPower Gateway attempts to determine the value from the AAA context. Some SAML protocols require a specified value, such as <tt>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</tt> or <tt>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</tt> .
-  - CLI Alias: `saml-nid-format`
-- `ppsaml_name_qualifier` (String) Specify the value of the NameQualifier attribute of the NameIdentifier in the generated SAML assertion. Although the attribute is an optional attribute, some SAML implementations require that this attribute must be present.
-  - CLI Alias: `saml-name-qualifier`
-- `ppsaml_omit_not_before` (Boolean) whether to omit the <tt>NotBefore</tt> attribute in the SAML assertion. When omitted, the assertion is considered valid even before the time it was issued. By default, the <tt>NotBefore</tt> attribute is not omitted. When enabled, the <tt>NotBefore</tt> attribute in the SAML assertion is omitted. This behavior might be required to respond to an <tt>AuthnRequest</tt> .
-  - CLI Alias: `saml-omit-notbefore`
-  - Default value: `false`
-- `ppsaml_protocol` (String) Specify the SAML protocol to wrap up the SAML assertion. By default, the SAML assertion can be put to WS-Security wrap-up later.
-  - CLI Alias: `saml-protocol`
-  - Choices: `assertion`, `response`
-  - Default value: `assertion`
-- `ppsaml_proxy` (Boolean) <p>Specify whether to allow SAML proxy restriction. The generated SAML assertion provides limitations that the asserting party imposes on relying parties that want to act as asserting parties.</p><ul><li>A relying party that acts as an asserting party can issue subsequent assertions that are based on the information in the original assertion.</li><li>The relying party cannot issue an assertion that violates these restrictions.</li></ul><p>By default, proxy restrictions are not allowd. When enabled, proxy restrictions are allows.</p>
-  - CLI Alias: `saml-proxy`
-  - Default value: `false`
-- `ppsaml_proxy_audience` (String) Specify the set of audiences (proxy) to whom the asserting party permits new assertions to be issued based on this assertion. If the value is an empty string, the audience for the <tt>ProxyRestriction</tt> is not issued with this SAML assertion. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \+.
-  - CLI Alias: `saml-proxy-audience`
-- `ppsaml_proxy_count` (Number) Specify the maximum number of indirections that the asserting party permits between this assertion and an assertion that was issued. Enter a value in the range 0 - 65535. The default value is 0. A value of 0 indicates that a relying party must not issue an assertion to another relying party based on this assertion. If greater than zero, any assertion that is issued must itself contain a <tt>ProxyRestriction</tt> element with a <tt>Count</tt> value of at most one less than this value.
-  - CLI Alias: `saml-proxy-count`
-  - Range: `0`-`65535`
-  - Default value: `0`
-- `ppsaml_recipient` (String) Specify a URI that identifies the entity or location that an attesting entity can present the assertion to. Any standard or arbitrary URI is allowed. If the value is an empty string, the optional attribute is not generated. This setting is applicable for only SAML 2.0.
-  - CLI Alias: `saml-recipient`
-- `ppsaml_response_destination` (String) Specify the destination for a SAML response. This information can prevent malicious forwarding of requests to unintended recipients, which is a required protection by some protocol bindings. If it is present, the actual recipient must check that the URI reference identifies the location at which the message was received. If it does not check that the URI reference identifies the location, the request must be discarded. Some protocol bindings might require the use of this attribute.
-  - CLI Alias: `saml-response-destination`
-- `ppsaml_send_slo` (Boolean) <p>Specify whether to send a SAML Logout (SLO) request to revoke the SAML Assertion token that is used for single-sign-on (SSO). The SLO is a request-response that the DataPower&#174; Gateway handles differently when it is working as a service provider (SP) or identity provider (IdP).</p><ul><li>When an SP, the DataPower Gateway sends an SLO request to the SAML SLO endpoint (IdP). On response, the DataPower Gateway processes the SLO response for its status.</li><li>When an IdP, the request to the DataPower Gateway contains the SLO request. Postprocessing validates against the SAML metadata file and sends the corresponding endpoint the SLO response.</li></ul>
-  - CLI Alias: `saml-send-slo`
-  - Default value: `false`
-- `ppsaml_server_name` (String) <p>Specify the value of the <tt>saml:Issuer</tt> of the generated SAML assertion or SAML SLO request. The default value is XS.</p><ul><li>If generating an SAML assertion, identifies the server that makes the assertion.</li><li>If sending an SLO request, identifies the issuer that sends the request.</li></ul>
-  - CLI Alias: `saml-server-name`
-  - Default value: `XS`
-- `ppsaml_skew` (Number) Specify the acceptable skew interval in seconds. The IdP and SP system clocks can have a skew time. When the SAML assertion is generated, the expiration takes the skew time setting into account. <ul><li>When <tt>NotBefore</tt> has the value of <tt>(CurrentTime - SkewTime)</tt> .</li><li>When <tt>NotOnOrAfter</tt> has the value of <tt>(CurrentTime + Validity + SkewTime)</tt> .</li></ul>
-  - CLI Alias: `saml-skew`
-  - Default value: `0`
-- `ppsaml_subject_confirm` (String) Specify the method that allows the destination system to confirm the subject of the SAML assertion. By default, the subject is bearer.
-  - CLI Alias: `saml-subject-confirm`
-  - Choices: `bearer`, `hok`, `sv`
-  - Default value: `bearer`
-- `ppsaml_use_ws_sec` (Boolean) Specify where to insert the SAML assertion. By default, the assertion is inserted as a child element of the SOAP header. When enabled, the assertion is inserted in a WS-Security-compliant header as defined by the WS-Security SAML token profile.
-  - CLI Alias: `saml-in-wssec`
-  - Default value: `false`
-- `ppsaml_validity` (Number) Specify the validity duration of the SAML assertion in seconds. This value and the skew time are for fine control of the validity duration. The default value is 0.
-  - CLI Alias: `saml-validity`
-  - Default value: `0`
-- `ppsaml_version` (String) Specify the protocol level of SAML messages. The version affects the identity extraction from the original message and the format of messages. The default value is 1.1.
-  - CLI Alias: `saml-version`
-  - Choices: `2`, `1.1`, `1`
-  - Default value: `2`
-- `ppsamlslo_endpoint` (String) Specify the endpoint URL for SAML 2.0 Single Logout (SLO) messages. This endpoint is the authority that authenticated the assertion subject.
-  - CLI Alias: `saml-slo-endpoint`
-- `ppssl_client_config_type` (String) Specify the TLS client type to secure connections.
-  - CLI Alias: `ssl-client-type`
-  - Choices: `proxy`, `client`
-  - Default value: `proxy`
-- `ppssl_client_profile` (String) Specify the TLS client profile to secure connections.
-  - CLI Alias: `ssl-client`
-  - Reference to: `datapower_ssl_client_profile:id`
-- `pptam_header` (String) Specify the name of the HTTP header to store the token in. The default value is iv_creds, which is HTTP header that WebSEAL uses to write headers.
-  - CLI Alias: `tam-header`
-  - Default value: `iv-creds`
-- `pptam_header_size` (Number) Specify the maximum size in bytes of HTTP headers. A value of 0 disables this function. If the value is nonzero, the PAC token is split across multiple headers of the specified length. The default value is 0.
-  - CLI Alias: `tam-header-size`
-  - Default value: `0`
-- `pptampac_propagate` (Boolean) Specify whether to add the Access Manager privilege attribute certificate (PAC) token to an HTTP header. The PAC token was returned from the previous authentication or authorization phase. By default, does not add the PAC token. When enabled, adds the PAC token.
-  - CLI Alias: `propagate-tam-pac`
-  - Default value: `false`
-- `ppws_derived_key_username_token` (Boolean) Specify whether to generate a derived key from a password. By default, a derived key is not generated. When enabled, the process adds a WS-Security derived-key UsernameToken to the message and adds an HMAC signature with the derived-key. The username and password are taken from the output of the map credentials phase.
-  - CLI Alias: `wssec-use-derived-key`
-  - Default value: `false`
-- `ppws_derived_key_username_token_iterations` (Number) Specify the number of hashing cycles during the generation of a derived key from a password. The minimum value is 2. The default value is 1000.
-  - CLI Alias: `wssec-derived-key-hash-iter`
-  - Range: `2`-`65535`
-  - Default value: `1000`
-- `ppws_trust` (Boolean) Specify whether to generate the appropriate security token response for a valid WS-Trust SecurityContextToken request.
-  - CLI Alias: `ws-trust-generate-resp`
-  - Default value: `false`
-- `ppws_trust_header` (Boolean) Specify whether to return the WS-Trust token as a SOAP header. By default, the token is put in the SOAP body. When enabled, return the token as a SOAP header by wrapping the <tt>wst:RequestedSecurityToken</tt> by a <tt>wst:IssuedToken</tt> .
-  - CLI Alias: `ws-trust-in-header`
-  - Default value: `false`
-- `ppws_trust_never_expire` (Boolean) Specify whether the WS-Trust security context expires. By default, the security context expires. When enabled, the security context never expires.However, you can change the duration afterward with an explicit duration in seconds before expiry.
-  - CLI Alias: `ws-trust-never-expire`
-  - Default value: `false`
-- `ppws_trust_new_instance` (Boolean) Specify whether the STS renewal request issues a new instance for WS-Trust renewal. By default, the STS renewal request renews the existing instance. When enabled, the STS renewal request creates a new instance.
-  - CLI Alias: `ws-trust-new-instance`
-  - Default value: `false`
-- `ppws_trust_new_key` (Boolean) Specify whether to update the context key for WS-Trust renewal.By default, the SCT renewal request uses the existing shared secret key. When enabled, the SCT renewal request does not use the existing shared secret key.
-  - CLI Alias: `ws-trust-new-key`
-  - Default value: `false`
-- `ppws_trust_renewal_wait` (Number) Specify the duration to allow the STS to keep an expired SecurityContext token in seconds. After a WS-Trust token expires, it can be removed from the STS and cannot be renewed. Therefore, the token must be renewed before expiry. Enter a value in the range of 0 - 2678400. The default value is 0. <p>The token is issued or renewed with a 1-hour wait time in the following situation.</p><ul><li>The WS-Trust request asks that the issued token can be renewed after expiration.</li><li>This setting has a value of 0.</li></ul>
-  - CLI Alias: `ws-trust-renewal-wait`
-  - Range: `0`-`2678400`
-  - Default value: `0`
-- `ppws_username_token` (Boolean) Specify whether to add a WS-Security UsernameToken. The username and password are taken from the output of the map credentials phase.
-  - CLI Alias: `wssec-add-user-name-token`
-  - Default value: `false`
-- `ppws_username_token_allow_replacement` (Boolean) Specify whether to retain the original token, not generate a new one, if the message already contains a UsernameToken. By default, the original otken is retained. When enabled, the generated token replaces any existing ones.
-  - CLI Alias: `wssec-replace-existing`
-  - Default value: `false`
-- `ppws_username_token_include_pwd` (Boolean) Specify whether the WS-Security UsernameToken must include the password. By default, the token must contain the password.
-  - CLI Alias: `wssec-user-name-token-contains-pwd`
-  - Default value: `true`
-- `ppws_username_token_password_type` (String) Specify the type of password that the UsernameToken provides. By default, use the digest of the password as defined in the "Web Services Security UsernameToken Profile 1.0" specification.
-  - CLI Alias: `wssec-user-name-token-type`
-  - Choices: `Text`, `Digest`
-  - Default value: `Digest`
-- `ppwssc_key_source` (String) Specify the source of the key. For WS-Trust postprocessing, the DataPower Gateway works as an on-box WS-Trust security token service that is backed by WS-SecureConversation. A symmetric shared secret key is needed to initialize the WS-SecureConversation SecurityContext. By default, a random key is generated.
-  - CLI Alias: `ws-trust-key-source`
-  - Choices: `client-entropy`, `in-kerberos`, `in-encryptedkey`, `static`, `random`
-  - Default value: `random`
 
-<a id="nestedatt--result--post_process--ppsaml_assertion_type"></a>
-### Nested Schema for `result.post_process.ppsaml_assertion_type`
+<a id="nestedatt--result--post_process--pp_saml_assertion_type"></a>
+### Nested Schema for `result.post_process.pp_saml_assertion_type`
 
 Read-Only:
 

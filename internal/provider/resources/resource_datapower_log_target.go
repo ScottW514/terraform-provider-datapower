@@ -193,7 +193,7 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 					validators.ConditionalRequiredString(models.LogTargetURLCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"nfs_mount": schema.StringAttribute{
+			"nf_sm_ount": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("NFS static mount", "nfs-static-mount", "nfs_static_mount").AddRequiredWhen(models.LogTargetNFSMountCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

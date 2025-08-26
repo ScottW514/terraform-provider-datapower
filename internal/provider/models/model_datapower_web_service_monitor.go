@@ -36,7 +36,7 @@ import (
 type WebServiceMonitor struct {
 	Id                types.String                `tfsdk:"id"`
 	AppDomain         types.String                `tfsdk:"app_domain"`
-	Wsdlurl           types.String                `tfsdk:"wsdlurl"`
+	WsdlUrl           types.String                `tfsdk:"wsdl_url"`
 	Operations        types.List                  `tfsdk:"operations"`
 	EndpointName      types.String                `tfsdk:"endpoint_name"`
 	EndpointUrl       types.String                `tfsdk:"endpoint_url"`
@@ -49,7 +49,7 @@ type WebServiceMonitor struct {
 var WebServiceMonitorObjectType = map[string]attr.Type{
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
-	"wsdlurl":            types.StringType,
+	"wsdl_url":           types.StringType,
 	"operations":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSSLMOpsObjectType}},
 	"endpoint_name":      types.StringType,
 	"endpoint_url":       types.StringType,
@@ -73,7 +73,7 @@ func (data WebServiceMonitor) IsNull() bool {
 	if !data.AppDomain.IsNull() {
 		return false
 	}
-	if !data.Wsdlurl.IsNull() {
+	if !data.WsdlUrl.IsNull() {
 		return false
 	}
 	if !data.Operations.IsNull() {
@@ -106,8 +106,8 @@ func (data WebServiceMonitor) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
-	if !data.Wsdlurl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSDLURL`, data.Wsdlurl.ValueString())
+	if !data.WsdlUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSDLURL`, data.WsdlUrl.ValueString())
 	}
 	if !data.Operations.IsNull() {
 		var dataValues []DmWSSLMOps
@@ -144,9 +144,9 @@ func (data *WebServiceMonitor) FromBody(ctx context.Context, pathRoot string, re
 		data.Id = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSDLURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Wsdlurl = tfutils.ParseStringFromGJSON(value)
+		data.WsdlUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Wsdlurl = types.StringNull()
+		data.WsdlUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Operations`); value.Exists() {
 		l := []DmWSSLMOps{}
@@ -203,10 +203,10 @@ func (data *WebServiceMonitor) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.Id = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSDLURL`); value.Exists() && !data.Wsdlurl.IsNull() {
-		data.Wsdlurl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `WSDLURL`); value.Exists() && !data.WsdlUrl.IsNull() {
+		data.WsdlUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Wsdlurl = types.StringNull()
+		data.WsdlUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Operations`); value.Exists() && !data.Operations.IsNull() {
 		l := []DmWSSLMOps{}

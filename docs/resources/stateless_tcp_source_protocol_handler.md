@@ -54,7 +54,7 @@ resource "datapower_stateless_tcp_source_protocol_handler" "test" {
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
-- `sslsni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
+- `ssl_sni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
 - `user_summary` (String) Comments

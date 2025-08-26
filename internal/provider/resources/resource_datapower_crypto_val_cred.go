@@ -107,7 +107,7 @@ func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaR
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"crldp_handling": schema.StringAttribute{
+			"crl_dp_handling": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.", "crldp", "").AddStringEnum("ignore", "require").AddDefaultValue("ignore").String,
 				Optional:            true,
 				Computed:            true,

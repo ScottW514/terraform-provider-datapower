@@ -69,10 +69,10 @@ resource "datapower_as3_source_protocol_handler" "test" {
   - CLI Alias: `default-directory`
   - Default value: `/`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `disable_pasvip_check` (Boolean) Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
+- `disable_pasv_ip_check` (Boolean) Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `passive-promiscuous`
   - Default value: `false`
-- `disable_portip_check` (Boolean) Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
+- `disable_port_ip_check` (Boolean) Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `port-promiscuous`
   - Default value: `false`
 - `filesystem_type` (String) Specify the file system type that the FTP server presents.
@@ -120,7 +120,7 @@ resource "datapower_as3_source_protocol_handler" "test" {
   - CLI Alias: `require-tls`
   - Choices: `off`, `explicit`, `implicit`
   - Default value: `off`
-- `response_nfs_mount` (String) Response NFS mount
+- `response_nf_sm_ount` (String) Response NFS mount
   - CLI Alias: `response-nfs-mount`
   - Reference to: `datapower_nfs_static_mount:id`
 - `response_storage` (String) Response storage
@@ -147,7 +147,7 @@ resource "datapower_as3_source_protocol_handler" "test" {
   - Choices: `server`, `sni`
   - Default value: `server`
   - Required When: `require_tls`=`explicit`|`implicit`
-- `sslsni_server` (String) TLS SNI server profile
+- `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
   - Required When: (`require_tls`=`explicit`|`implicit` AND `ssl_server_config_type`=`sni`)

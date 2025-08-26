@@ -16,10 +16,10 @@ An API OAuth security definition defines the applicable settings for an OAuth pr
 
 ```terraform
 resource "datapower_api_security_oauth" "test" {
-  id              = "ResTestAPISecurityOAuth"
-  app_domain      = "acceptance_test"
-  o_auth_provider = "AccTest_OAuthProviderSettings"
-  o_auth_flow     = "implicit"
+  id             = "ResTestAPISecurityOAuth"
+  app_domain     = "acceptance_test"
+  oauth_provider = "AccTest_OAuthProviderSettings"
+  oauth_flow     = "implicit"
 }
 ```
 
@@ -34,19 +34,19 @@ resource "datapower_api_security_oauth" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `o_auth_adv_scope_tls_profile` (String) OAuth TLS profile
+- `oauth_adv_scope_tls_profile` (String) OAuth TLS profile
   - CLI Alias: `oauth-advanced-scope-tls-profile`
   - Reference to: `datapower_ssl_client_profile:id`
-- `o_auth_adv_scope_url` (String) Specify the URL that overrides the advanced scope URL in the OAuth provider settings. The value must be a properly formatted URL.
+- `oauth_adv_scope_url` (String) Specify the URL that overrides the advanced scope URL in the OAuth provider settings. The value must be a properly formatted URL.
   - CLI Alias: `oauth-advanced-scope-url`
-- `o_auth_flow` (String) Specify the OAuth flow to enforce to protect the target. The value must be among the supported grant types that are defined by the referenced OAuth provider.
+- `oauth_flow` (String) Specify the OAuth flow to enforce to protect the target. The value must be among the supported grant types that are defined by the referenced OAuth provider.
   - CLI Alias: `oauth-flow`
   - Choices: `implicit`, `password`, `application`, `accessCode`
   - Default value: `implicit`
-- `o_auth_provider` (String) OAuth provider
+- `oauth_provider` (String) OAuth provider
   - CLI Alias: `oauth-provider`
   - Reference to: `datapower_oauth_provider_settings:id`
-- `o_auth_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <ul><li>The allowed scopes for this configuration must be a subset of the allowed scopes set for the API OAuth security definition.</li><li>The allowed scopes for the API OAuth security definition must be a subset of the allowed scopes set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
+- `oauth_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <ul><li>The allowed scopes for this configuration must be a subset of the allowed scopes set for the API OAuth security definition.</li><li>The allowed scopes for the API OAuth security definition must be a subset of the allowed scopes set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
   - CLI Alias: `oauth-scope`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

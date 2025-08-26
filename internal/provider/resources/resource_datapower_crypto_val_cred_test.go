@@ -39,7 +39,7 @@ func TestAccResourceCryptoValCred(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_crypto_val_cred.test", "cert_validation_mode", "legacy"),
 			resource.TestCheckResourceAttr("datapower_crypto_val_cred.test", "use_crl", "true"),
 			resource.TestCheckResourceAttr("datapower_crypto_val_cred.test", "require_crl", "false"),
-			resource.TestCheckResourceAttr("datapower_crypto_val_cred.test", "crldp_handling", "ignore"),
+			resource.TestCheckResourceAttr("datapower_crypto_val_cred.test", "crl_dp_handling", "ignore"),
 			resource.TestCheckResourceAttr("datapower_crypto_val_cred.test", "explicit_policy", "false"),
 			resource.TestCheckResourceAttr("datapower_crypto_val_cred.test", "check_dates", "true"),
 		}...),

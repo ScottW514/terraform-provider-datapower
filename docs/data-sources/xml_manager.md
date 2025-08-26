@@ -60,7 +60,7 @@ Read-Only:
 - `scheduled_rule` (Attributes List) Certain applications might require the running of a scheduled processing rule. Integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager. (see [below for nested schema](#nestedatt--result--scheduled_rule))
 - `schema_validation` (Attributes List) (see [below for nested schema](#nestedatt--result--schema_validation))
 - `search_results` (Boolean) Configures optimization of '//' in XPath expressions
-- `sha1_caching` (Boolean) Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
+- `sha1caching` (Boolean) Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
 - `static_document_calls` (Boolean) The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable to allow all document calls to operate independently.
 - `url_refresh_policy` (String) Optionally, assigns a Stylesheet Refresh Policy to the XML manager. Stylesheets cached by this manager are refreshed in accordance with policy rules.
 - `user_agent` (String) Identifies the User Agent configuration the XML manager uses to connect to external servers to retrieve resources.
@@ -118,7 +118,7 @@ Read-Only:
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`
   - Default value: `protocol`
-- `xc10_grid` (String) The eXtreme Scale grid configuration to use for caching documents.
+- `xc10grid` (String) The eXtreme Scale grid configuration to use for caching documents.
   - CLI Alias: `xc10-grid`
 
 

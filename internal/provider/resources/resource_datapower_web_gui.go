@@ -114,7 +114,7 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server profile", "ssl-server", "ssl_server_profile").String,
 				Optional:            true,
 			},
-			"sslsni_server": schema.StringAttribute{
+			"ssl_sni_server": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.WebGUISSLSNIServerCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

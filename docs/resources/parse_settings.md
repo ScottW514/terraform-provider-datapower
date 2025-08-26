@@ -52,7 +52,7 @@ resource "datapower_parse_settings" "test" {
   - CLI Alias: `number-length`
   - Range: `0`-`256`
   - Default value: `128`
-- `strict_utf8_encoding` (Boolean) Specify whether to enforce strict UTF-8 encoding throughout the entire JSON document. When enabled, the entire document is checked for valid UTF-8 encoding. When disabled, only the first few bytes are checked for proper encoding and the rest of the document is assumed to be in the same encoding.
+- `strict_utf8encoding` (Boolean) Specify whether to enforce strict UTF-8 encoding throughout the entire JSON document. When enabled, the entire document is checked for valid UTF-8 encoding. When disabled, only the first few bytes are checked for proper encoding and the rest of the document is assumed to be in the same encoding.
   - CLI Alias: `strict-utf8-encoding`
   - Default value: `false`
 - `unique_names` (Number) Specify the maximum number of unique names. A document is rejected when its number of unique names exceeds the maximum number. Enter a value in the range 0 - 1048575. The default value is 1024. A value of 0 indicates an unlimited. When 0, the action does not return the number of unique names. This setting applies to XML and JSON documents. <ul><li>For XML, applies to the number of unique XML local names.</li><li>For JSON, applies to the number of unique JSON labels.</li></ul>

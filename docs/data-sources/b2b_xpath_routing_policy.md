@@ -39,11 +39,11 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `date_time_x_path` (String) Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.
-- `document_idx_path` (String) Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.
+- `date_time_xpath` (String) Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.
+- `document_id_xpath` (String) Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `receiver_x_path` (String) Receiver XPath
-- `sender_x_path` (String) Sender XPath
+- `receiver_xpath` (String) Receiver XPath
+- `sender_xpath` (String) Sender XPath
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -36,8 +36,8 @@ import (
 type AssemblyActionOAuth struct {
 	Id                             types.String                             `tfsdk:"id"`
 	AppDomain                      types.String                             `tfsdk:"app_domain"`
-	OAuthProviderSettingsReference *DmDynamicOAuthProviderSettingsReference `tfsdk:"o_auth_provider_settings_reference"`
-	SupportedOAuthComponents       *DmOAuthComponents                       `tfsdk:"supported_o_auth_components"`
+	OauthProviderSettingsReference *DmDynamicOAuthProviderSettingsReference `tfsdk:"oauth_provider_settings_reference"`
+	SupportedOauthComponents       *DmOAuthComponents                       `tfsdk:"supported_oauth_components"`
 	UserSummary                    types.String                             `tfsdk:"user_summary"`
 	Title                          types.String                             `tfsdk:"title"`
 	CorrelationPath                types.String                             `tfsdk:"correlation_path"`
@@ -46,15 +46,15 @@ type AssemblyActionOAuth struct {
 }
 
 var AssemblyActionOAuthObjectType = map[string]attr.Type{
-	"id":                                 types.StringType,
-	"app_domain":                         types.StringType,
-	"o_auth_provider_settings_reference": types.ObjectType{AttrTypes: DmDynamicOAuthProviderSettingsReferenceObjectType},
-	"supported_o_auth_components":        types.ObjectType{AttrTypes: DmOAuthComponentsObjectType},
-	"user_summary":                       types.StringType,
-	"title":                              types.StringType,
-	"correlation_path":                   types.StringType,
-	"action_debug":                       types.BoolType,
-	"dependency_actions":                 actions.ActionsListType,
+	"id":                                types.StringType,
+	"app_domain":                        types.StringType,
+	"oauth_provider_settings_reference": types.ObjectType{AttrTypes: DmDynamicOAuthProviderSettingsReferenceObjectType},
+	"supported_oauth_components":        types.ObjectType{AttrTypes: DmOAuthComponentsObjectType},
+	"user_summary":                      types.StringType,
+	"title":                             types.StringType,
+	"correlation_path":                  types.StringType,
+	"action_debug":                      types.BoolType,
+	"dependency_actions":                actions.ActionsListType,
 }
 
 func (data AssemblyActionOAuth) GetPath() string {
@@ -71,13 +71,13 @@ func (data AssemblyActionOAuth) IsNull() bool {
 	if !data.AppDomain.IsNull() {
 		return false
 	}
-	if data.OAuthProviderSettingsReference != nil {
-		if !data.OAuthProviderSettingsReference.IsNull() {
+	if data.OauthProviderSettingsReference != nil {
+		if !data.OauthProviderSettingsReference.IsNull() {
 			return false
 		}
 	}
-	if data.SupportedOAuthComponents != nil {
-		if !data.SupportedOAuthComponents.IsNull() {
+	if data.SupportedOauthComponents != nil {
+		if !data.SupportedOauthComponents.IsNull() {
 			return false
 		}
 	}
@@ -105,14 +105,14 @@ func (data AssemblyActionOAuth) ToBody(ctx context.Context, pathRoot string) str
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
-	if data.OAuthProviderSettingsReference != nil {
-		if !data.OAuthProviderSettingsReference.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`OAuthProviderSettingsReference`, data.OAuthProviderSettingsReference.ToBody(ctx, ""))
+	if data.OauthProviderSettingsReference != nil {
+		if !data.OauthProviderSettingsReference.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`OAuthProviderSettingsReference`, data.OauthProviderSettingsReference.ToBody(ctx, ""))
 		}
 	}
-	if data.SupportedOAuthComponents != nil {
-		if !data.SupportedOAuthComponents.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`SupportedOAuthComponents`, data.SupportedOAuthComponents.ToBody(ctx, ""))
+	if data.SupportedOauthComponents != nil {
+		if !data.SupportedOauthComponents.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`SupportedOAuthComponents`, data.SupportedOauthComponents.ToBody(ctx, ""))
 		}
 	}
 	if !data.UserSummary.IsNull() {
@@ -140,16 +140,16 @@ func (data *AssemblyActionOAuth) FromBody(ctx context.Context, pathRoot string, 
 		data.Id = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthProviderSettingsReference`); value.Exists() {
-		data.OAuthProviderSettingsReference = &DmDynamicOAuthProviderSettingsReference{}
-		data.OAuthProviderSettingsReference.FromBody(ctx, "", value)
+		data.OauthProviderSettingsReference = &DmDynamicOAuthProviderSettingsReference{}
+		data.OauthProviderSettingsReference.FromBody(ctx, "", value)
 	} else {
-		data.OAuthProviderSettingsReference = nil
+		data.OauthProviderSettingsReference = nil
 	}
 	if value := res.Get(pathRoot + `SupportedOAuthComponents`); value.Exists() {
-		data.SupportedOAuthComponents = &DmOAuthComponents{}
-		data.SupportedOAuthComponents.FromBody(ctx, "", value)
+		data.SupportedOauthComponents = &DmOAuthComponents{}
+		data.SupportedOauthComponents.FromBody(ctx, "", value)
 	} else {
-		data.SupportedOAuthComponents = nil
+		data.SupportedOauthComponents = nil
 	}
 	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.UserSummary = tfutils.ParseStringFromGJSON(value)
@@ -183,14 +183,14 @@ func (data *AssemblyActionOAuth) UpdateFromBody(ctx context.Context, pathRoot st
 		data.Id = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthProviderSettingsReference`); value.Exists() {
-		data.OAuthProviderSettingsReference.UpdateFromBody(ctx, "", value)
+		data.OauthProviderSettingsReference.UpdateFromBody(ctx, "", value)
 	} else {
-		data.OAuthProviderSettingsReference = nil
+		data.OauthProviderSettingsReference = nil
 	}
 	if value := res.Get(pathRoot + `SupportedOAuthComponents`); value.Exists() {
-		data.SupportedOAuthComponents.UpdateFromBody(ctx, "", value)
+		data.SupportedOauthComponents.UpdateFromBody(ctx, "", value)
 	} else {
-		data.SupportedOAuthComponents = nil
+		data.SupportedOauthComponents = nil
 	}
 	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && !data.UserSummary.IsNull() {
 		data.UserSummary = tfutils.ParseStringFromGJSON(value)

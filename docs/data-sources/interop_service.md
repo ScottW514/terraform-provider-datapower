@@ -38,7 +38,7 @@ data "datapower_interop_service" "test" {
 - `local_port` (Number) Local port
 - `ssl_server` (String) TLS server profile
 - `ssl_server_config_type` (String) TLS server type
-- `sslsni_server` (String) TLS SNI server profile
+- `ssl_sni_server` (String) TLS SNI server profile
 - `user_summary` (String) Comments
 - `xml_manager` (String) XML manager
 

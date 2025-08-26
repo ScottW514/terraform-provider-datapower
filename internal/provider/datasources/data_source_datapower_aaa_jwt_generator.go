@@ -111,7 +111,7 @@ func (d *AAAJWTGeneratorDataSource) Schema(ctx context.Context, req datasource.S
 							MarkdownDescription: "The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.",
 							Computed:            true,
 						},
-						"sign_ss_key": schema.StringAttribute{
+						"sign_sskey": schema.StringAttribute{
 							MarkdownDescription: "The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.",
 							Computed:            true,
 						},
@@ -127,7 +127,7 @@ func (d *AAAJWTGeneratorDataSource) Schema(ctx context.Context, req datasource.S
 							MarkdownDescription: "The certificate alias can be used to encrypt the JWT. You can get the certificate alias by configuring the Crypto Certificate.",
 							Computed:            true,
 						},
-						"encrypt_ss_key": schema.StringAttribute{
+						"encrypt_sskey": schema.StringAttribute{
 							MarkdownDescription: "The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.",
 							Computed:            true,
 						},

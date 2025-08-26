@@ -56,9 +56,9 @@ type MQManager struct {
 	TotalConnectionLimit   types.Int64                 `tfsdk:"total_connection_limit"`
 	InitialConnections     types.Int64                 `tfsdk:"initial_connections"`
 	SharingConversations   types.Int64                 `tfsdk:"sharing_conversations"`
-	SsLkey                 types.String                `tfsdk:"ss_lkey"`
+	SslKey                 types.String                `tfsdk:"ssl_key"`
 	PermitInsecureServers  types.Bool                  `tfsdk:"permit_insecure_servers"`
-	SsLcipher              types.String                `tfsdk:"ss_lcipher"`
+	SslCipher              types.String                `tfsdk:"ssl_cipher"`
 	SslCertLabel           types.String                `tfsdk:"ssl_cert_label"`
 	ConvertInput           types.Bool                  `tfsdk:"convert_input"`
 	AutoRetry              types.Bool                  `tfsdk:"auto_retry"`
@@ -115,9 +115,9 @@ var MQManagerObjectType = map[string]attr.Type{
 	"total_connection_limit":   types.Int64Type,
 	"initial_connections":      types.Int64Type,
 	"sharing_conversations":    types.Int64Type,
-	"ss_lkey":                  types.StringType,
+	"ssl_key":                  types.StringType,
 	"permit_insecure_servers":  types.BoolType,
-	"ss_lcipher":               types.StringType,
+	"ssl_cipher":               types.StringType,
 	"ssl_cert_label":           types.StringType,
 	"convert_input":            types.BoolType,
 	"auto_retry":               types.BoolType,
@@ -208,13 +208,13 @@ func (data MQManager) IsNull() bool {
 	if !data.SharingConversations.IsNull() {
 		return false
 	}
-	if !data.SsLkey.IsNull() {
+	if !data.SslKey.IsNull() {
 		return false
 	}
 	if !data.PermitInsecureServers.IsNull() {
 		return false
 	}
-	if !data.SsLcipher.IsNull() {
+	if !data.SslCipher.IsNull() {
 		return false
 	}
 	if !data.SslCertLabel.IsNull() {
@@ -334,14 +334,14 @@ func (data MQManager) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.SharingConversations.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SharingConversations`, data.SharingConversations.ValueInt64())
 	}
-	if !data.SsLkey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLkey`, data.SsLkey.ValueString())
+	if !data.SslKey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLkey`, data.SslKey.ValueString())
 	}
 	if !data.PermitInsecureServers.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PermitInsecureServers`, tfutils.StringFromBool(data.PermitInsecureServers, ""))
 	}
-	if !data.SsLcipher.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLcipher`, data.SsLcipher.ValueString())
+	if !data.SslCipher.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLcipher`, data.SslCipher.ValueString())
 	}
 	if !data.SslCertLabel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLCertLabel`, data.SslCertLabel.ValueString())
@@ -499,9 +499,9 @@ func (data *MQManager) FromBody(ctx context.Context, pathRoot string, res gjson.
 		data.SharingConversations = types.Int64Value(1)
 	}
 	if value := res.Get(pathRoot + `SSLkey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SsLkey = tfutils.ParseStringFromGJSON(value)
+		data.SslKey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsLkey = types.StringNull()
+		data.SslKey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PermitInsecureServers`); value.Exists() {
 		data.PermitInsecureServers = tfutils.BoolFromString(value.String())
@@ -509,9 +509,9 @@ func (data *MQManager) FromBody(ctx context.Context, pathRoot string, res gjson.
 		data.PermitInsecureServers = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `SSLcipher`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SsLcipher = tfutils.ParseStringFromGJSON(value)
+		data.SslCipher = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsLcipher = types.StringValue("none")
+		data.SslCipher = types.StringValue("none")
 	}
 	if value := res.Get(pathRoot + `SSLCertLabel`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslCertLabel = tfutils.ParseStringFromGJSON(value)
@@ -699,20 +699,20 @@ func (data *MQManager) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	} else if data.SharingConversations.ValueInt64() != 1 {
 		data.SharingConversations = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `SSLkey`); value.Exists() && !data.SsLkey.IsNull() {
-		data.SsLkey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSLkey`); value.Exists() && !data.SslKey.IsNull() {
+		data.SslKey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsLkey = types.StringNull()
+		data.SslKey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PermitInsecureServers`); value.Exists() && !data.PermitInsecureServers.IsNull() {
 		data.PermitInsecureServers = tfutils.BoolFromString(value.String())
 	} else if data.PermitInsecureServers.ValueBool() {
 		data.PermitInsecureServers = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `SSLcipher`); value.Exists() && !data.SsLcipher.IsNull() {
-		data.SsLcipher = tfutils.ParseStringFromGJSON(value)
-	} else if data.SsLcipher.ValueString() != "none" {
-		data.SsLcipher = types.StringNull()
+	if value := res.Get(pathRoot + `SSLcipher`); value.Exists() && !data.SslCipher.IsNull() {
+		data.SslCipher = tfutils.ParseStringFromGJSON(value)
+	} else if data.SslCipher.ValueString() != "none" {
+		data.SslCipher = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLCertLabel`); value.Exists() && !data.SslCertLabel.IsNull() {
 		data.SslCertLabel = tfutils.ParseStringFromGJSON(value)

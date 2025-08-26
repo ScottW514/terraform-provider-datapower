@@ -138,7 +138,7 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Designates a set of stylesheets or schemas that will never use XML hardware acceleration. XML hardware acceleration will be used only if the first action in a processing policy is a schema validation against a fixed schema. Any schemas specified here will not use XML hardware acceleration even if hardware resources are available.</p><p>When XML hardware acceleration is disabled in the Systems Settings, the XML Hardware Acceleration Disallowed Rule has no effect.</p>", "disallow-xg4", "url_map").String,
 				Optional:            true,
 			},
-			"wsi_validation": schema.StringAttribute{
+			"ws_i_validation": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default is Ignore.", "wsi-validate", "").AddStringEnum("ignore", "warn", "fail").AddDefaultValue("ignore").String,
 				Optional:            true,
 				Computed:            true,

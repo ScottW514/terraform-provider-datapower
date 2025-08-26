@@ -102,8 +102,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 					validators.ConditionalRequiredString(models.OAuthSupportedClientCustomizedProcessUrlCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"o_auth_role": models.GetDmOAuthRoleResourceSchema("Identifies the role of the client when interacting with a request to access a protected resource.", "oauth-role", "", false),
-			"az_grant":    models.GetDmOAuthAZGrantTypeResourceSchema("Identifies the method to obtain the access token for authorization based on the grant type.", "az-grant", "", false),
+			"oauth_role": models.GetDmOAuthRoleResourceSchema("Identifies the role of the client when interacting with a request to access a protected resource.", "oauth-role", "", false),
+			"az_grant":   models.GetDmOAuthAZGrantTypeResourceSchema("Identifies the method to obtain the access token for authorization based on the grant type.", "az-grant", "", false),
 			"client_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Sets the type of client based on its ability to authenticate securely with authorization server endpoints. The client type is based on the definitions that the authorization server endpoints use for secure authentication and acceptable exposure of client credentials. If the client can securely authenticate, its classification is <tt>confidential</tt> .", "client-type", "").AddStringEnum("confidential", "public").AddDefaultValue("confidential").AddRequiredWhen(models.OAuthSupportedClientClientTypeCondVal.String()).String,
 				Optional:            true,
@@ -316,7 +316,7 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 					validators.ConditionalRequiredString(models.OAuthSupportedClientResourceOwnerUrlCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"additional_o_auth_process_url": schema.StringAttribute{
+			"additional_oauth_process_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the location of the stylesheet or GatewayScript file to process after generating a code, after generating an access token, or after generating an access token but before sending it to the resource server. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>You can use custom additional OAuth processing in the following situations.</p><ul><li>An authorization form request allows custom processing to handle the consent form with the <tt>authorization_form</tt> operation. This operations allows custom handling of the consent form.</li><li>An authorization request after successfully generating a code for an authorization code grant with the <tt>authorization_request</tt> operation. Processing returns a node set. This information becomes part of the query string and is returned to the OAuth client during authorization code grant type.</li><li>An access request after successfully generating an access token with the <tt>access_request</tt> operation. Processing returns a node set. This information becomes part of the JSON object that contains the access token.</li><li>A resource request after successfully verifying an access token but before sending the request to the resource server with the <tt>resource_request</tt> operation.</li><li>A revoke request allows custom handling of a revocation request with the <tt>revoke_request</tt> operation. For example, this operation provides a way to persist the revocation information in a persistent store off the DataPower Gateway.</li><li>A check revocation request verifies whether an access request was revoked previously with the <tt>check_revocation_request</tt> operation. For example, this operation can be used to check against the persistent store off the DataPower Gateway to determine whether an access permission was revoked previously.</li><li>A pre-approval request allows the consent form to be by-passed in either an authorization code or implicit grant type with the <tt>preapproved_check</tt> operation. Depending on the result of this operation, the client's request is approved, denied, or the consent form to be presented.</li><li>A validation request allows custom handling of a validation request grant type with the <tt>validate_request</tt> operation. The response must be in a node set that can be converted into a JSON response, in responding to a validation request.</li><li>A miscinfo request allows the OAuth client to add miscellaneous information to the token with the <tt>miscinfo_request</tt> operation. The authorization server adds the response to the token and returns it to the OAuth client. The maximum number of characters in this information is 512.</li></ul>", "additional-oauth-process-url", "").AddRequiredWhen(models.OAuthSupportedClientAdditionalOAuthProcessUrlCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -324,7 +324,7 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 				},
 			},
 			"rs_set_header": models.GetDmOAuthRSSetHeaderResourceSchema("Identifies which HTTP headers to create and send to the remote resource server.", "rs-set-header", "", false),
-			"validation_urlssl_client_type": schema.StringAttribute{
+			"validation_url_ssl_client_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "validation-url-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddRequiredWhen(models.OAuthSupportedClientValidationURLSSLClientTypeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,
@@ -334,7 +334,7 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 				},
 				Default: stringdefault.StaticString("client"),
 			},
-			"validation_urlssl_client": schema.StringAttribute{
+			"validation_url_ssl_client": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TLS Client Profile for the validation URL.", "validation-url-ssl-client", "ssl_client_profile").AddRequiredWhen(models.OAuthSupportedClientValidationURLSSLClientCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -355,14 +355,14 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 					validators.ConditionalRequiredString(models.OAuthSupportedClientClientJWTValidatorCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"oidcid_token_generator": schema.StringAttribute{
+			"oidc_id_token_generator": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the JWT generator configuration that generates an ID token. The JWT generator configuration must meet the following requirements.</p><ul><li>Must configure \"Issuer\" for the \"iss\" claim.</li><li>Must support \"Issued at\" for the \"iat\" claim.</li><li>Must support signing of the JWT.</li></ul><p>The following items are added to the JWT.</p><ul><li>Authenticated resource owner is added as the value of the \"sub\" claim.</li><li>Client ID is added as part of the \"aud\" claim.</li><li>\"Validity period\" is used to generate the value of the \"exp\" claim.</li><li>Requested \"nonce\" is used for the \"nonce\" claim.</li></ul>", "idtoken-generator", "aaa_jwt_generator").AddRequiredWhen(models.OAuthSupportedClientOIDCIDTokenGeneratorCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.OAuthSupportedClientOIDCIDTokenGeneratorCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"o_auth_features":    models.GetDmOAuthFeaturesResourceSchema("Specify which features to enable.", "oauth-features", "", false),
+			"oauth_features":     models.GetDmOAuthFeaturesResourceSchema("Specify which features to enable.", "oauth-features", "", false),
 			"dependency_actions": actions.ActionsSchema,
 		},
 	}

@@ -112,7 +112,7 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				MarkdownDescription: tfutils.NewAttributeDescription("If this property references a AAA policy, then that AAA policy will be run as a filter on this transaction and the success of that AAA run will be required to continue processing. Any input to this transaction as XML, application/www-url-encoded, or multipart/form-data MIME types will be automatically provided to the AAA processing policy.", "aaa-policy", "aaa_policy").String,
 				Optional:            true,
 			},
-			"ss_key": schema.StringAttribute{
+			"sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the Shared Secret Key for both signing or encrypting.", "ss-key", "crypto_sskey").String,
 				Optional:            true,
 			},

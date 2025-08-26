@@ -87,7 +87,7 @@ resource "datapower_api_gateway" "test" {
   - CLI Alias: `proxy` (see [below for nested schema](#nestedatt--proxy_policies))
 - `scheduled_rule` (Attributes List) Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.
   - CLI Alias: `schedule-rule` (see [below for nested schema](#nestedatt--scheduled_rule))
-- `sha1_caching` (Boolean) Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
+- `sha1caching` (Boolean) Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
   - CLI Alias: `xsl-checksummed-cache`
   - Default value: `true`
 - `share_rate_limit_count` (String) Share rate limit count
@@ -251,7 +251,7 @@ Optional:
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`
   - Default value: `protocol`
-- `xc10_grid` (String) The eXtreme Scale grid configuration to use for caching documents.
+- `xc10grid` (String) The eXtreme Scale grid configuration to use for caching documents.
   - CLI Alias: `xc10-grid`
 
 

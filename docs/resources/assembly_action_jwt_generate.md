@@ -59,7 +59,7 @@ resource "datapower_assembly_action_jwt_generate" "test" {
 - `jwt` (String) Specify the variable to store the generated JWT. The default value is <tt>generated.jwt</tt> . When the variable is not set, the generated JWT is written to the Authorization Header as a Bearer token.
   - CLI Alias: `jwt`
   - Default value: `generated.jwt`
-- `jwtid_claims` (Boolean) Specify whether to add a JWT ID (jti) claim to the JWT. When enabled, a UUID is generated and set as the value of the JWT ID claim.
+- `jwt_id_claims` (Boolean) Specify whether to add a JWT ID (jti) claim to the JWT. When enabled, a UUID is generated and set as the value of the JWT ID claim.
   - CLI Alias: `jti-claim`
   - Default value: `false`
 - `key_encrypt_algorithm` (String) Specify the key encryption algorithm to use. Use one of the following values. <ul><li><tt>RSA1_5</tt> - RSAES-PKCS1-V1_5</li><li><tt>RSA-OAEP</tt> - RSAES OAEP using default parameters</li><li><tt>RSA-OAEP-256</tt> - RSAES OAEP using SHA-256 and MGF1 with SHA-256</li><li><tt>A128KW</tt> - AES Key Wrap with default initial value using 128 bit key</li><li><tt>A192KW</tt> - AES Key Wrap with default initial value using 192 bit key</li><li><tt>A256KW</tt> - AES Key Wrap with default initial value using 256 bit key</li><li><tt>dir</tt> - Direct use of a shared symmetric key as the CEK</li><li>An inline parameter to read at runtime</li></ul>

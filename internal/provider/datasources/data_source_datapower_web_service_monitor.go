@@ -76,7 +76,7 @@ func (d *WebServiceMonitorDataSource) Schema(ctx context.Context, req datasource
 							MarkdownDescription: "The name of the application domain the object belongs to",
 							Computed:            true,
 						},
-						"wsdlurl": schema.StringAttribute{
+						"wsdl_url": schema.StringAttribute{
 							MarkdownDescription: "Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.",
 							Computed:            true,
 						},

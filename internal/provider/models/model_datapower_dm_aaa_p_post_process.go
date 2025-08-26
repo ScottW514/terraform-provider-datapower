@@ -43,75 +43,75 @@ import (
 type DmAAAPPostProcess struct {
 	PpEnabled                             types.Bool           `tfsdk:"pp_enabled"`
 	PpCustomUrl                           types.String         `tfsdk:"pp_custom_url"`
-	PpsamlAuthAssertion                   types.Bool           `tfsdk:"ppsaml_auth_assertion"`
-	PpsamlServerName                      types.String         `tfsdk:"ppsaml_server_name"`
-	PpsamlNameQualifier                   types.String         `tfsdk:"ppsaml_name_qualifier"`
+	PpSamlAuthAssertion                   types.Bool           `tfsdk:"pp_saml_auth_assertion"`
+	PpSamlServerName                      types.String         `tfsdk:"pp_saml_server_name"`
+	PpSamlNameQualifier                   types.String         `tfsdk:"pp_saml_name_qualifier"`
 	PpKerberosTicket                      types.Bool           `tfsdk:"pp_kerberos_ticket"`
 	PpKerberosClient                      types.String         `tfsdk:"pp_kerberos_client"`
 	PpKerberosClientPassword              types.String         `tfsdk:"pp_kerberos_client_password"`
 	PpKerberosServer                      types.String         `tfsdk:"pp_kerberos_server"`
-	PpwsTrust                             types.Bool           `tfsdk:"ppws_trust"`
+	PpWsTrust                             types.Bool           `tfsdk:"pp_ws_trust"`
 	PpTimestamp                           types.Bool           `tfsdk:"pp_timestamp"`
 	PpTimestampExpiry                     types.Int64          `tfsdk:"pp_timestamp_expiry"`
 	PpAllowRenewal                        types.Bool           `tfsdk:"pp_allow_renewal"`
-	PpsamlVersion                         types.String         `tfsdk:"ppsaml_version"`
-	PpsamlSendSlo                         types.Bool           `tfsdk:"ppsaml_send_slo"`
-	PpsamlsloEndpoint                     types.String         `tfsdk:"ppsamlslo_endpoint"`
-	PpwsUsernameToken                     types.Bool           `tfsdk:"ppws_username_token"`
-	PpwsUsernameTokenPasswordType         types.String         `tfsdk:"ppws_username_token_password_type"`
-	PpsamlValidity                        types.Int64          `tfsdk:"ppsaml_validity"`
-	PpsamlSkew                            types.Int64          `tfsdk:"ppsaml_skew"`
-	PpwsUsernameTokenIncludePwd           types.Bool           `tfsdk:"ppws_username_token_include_pwd"`
-	Ppltpa                                types.Bool           `tfsdk:"ppltpa"`
-	PpltpaVersion                         types.String         `tfsdk:"ppltpa_version"`
-	PpltpaExpiry                          types.Int64          `tfsdk:"ppltpa_expiry"`
-	PpltpaKeyFile                         types.String         `tfsdk:"ppltpa_key_file"`
-	PpltpaKeyFilePassword                 types.String         `tfsdk:"ppltpa_key_file_password"`
-	PpltpaStashFile                       types.String         `tfsdk:"ppltpa_stash_file"`
+	PpSamlVersion                         types.String         `tfsdk:"pp_saml_version"`
+	PpSamlSendSlo                         types.Bool           `tfsdk:"pp_saml_send_slo"`
+	PpSamlSloEndpoint                     types.String         `tfsdk:"pp_saml_slo_endpoint"`
+	PpWsUsernameToken                     types.Bool           `tfsdk:"pp_ws_username_token"`
+	PpWsUsernameTokenPasswordType         types.String         `tfsdk:"pp_ws_username_token_password_type"`
+	PpSamlValidity                        types.Int64          `tfsdk:"pp_saml_validity"`
+	PpSamlSkew                            types.Int64          `tfsdk:"pp_saml_skew"`
+	PpWsUsernameTokenIncludePwd           types.Bool           `tfsdk:"pp_ws_username_token_include_pwd"`
+	PpLtpa                                types.Bool           `tfsdk:"pp_ltpa"`
+	PpLtpaVersion                         types.String         `tfsdk:"pp_ltpa_version"`
+	PpLtpaExpiry                          types.Int64          `tfsdk:"pp_ltpa_expiry"`
+	PpLtpaKeyFile                         types.String         `tfsdk:"pp_ltpa_key_file"`
+	PpLtpaKeyFilePassword                 types.String         `tfsdk:"pp_ltpa_key_file_password"`
+	PpLtpaStashFile                       types.String         `tfsdk:"pp_ltpa_stash_file"`
 	PpKerberosSpnegoToken                 types.Bool           `tfsdk:"pp_kerberos_spnego_token"`
 	PpKerberosBstValueType                types.String         `tfsdk:"pp_kerberos_bst_value_type"`
-	PpsamlUseWsSec                        types.Bool           `tfsdk:"ppsaml_use_ws_sec"`
+	PpSamlUseWsSec                        types.Bool           `tfsdk:"pp_saml_use_ws_sec"`
 	PpKerberosClientKeytab                types.String         `tfsdk:"pp_kerberos_client_keytab"`
 	PpUseWsSec                            types.Bool           `tfsdk:"pp_use_ws_sec"`
 	PpActorRoleId                         types.String         `tfsdk:"pp_actor_role_id"`
-	PpwsDerivedKeyUsernameToken           types.Bool           `tfsdk:"ppws_derived_key_username_token"`
-	PpwsDerivedKeyUsernameTokenIterations types.Int64          `tfsdk:"ppws_derived_key_username_token_iterations"`
-	PpwsUsernameTokenAllowReplacement     types.Bool           `tfsdk:"ppws_username_token_allow_replacement"`
-	PphmacSigningAlg                      types.String         `tfsdk:"pphmac_signing_alg"`
+	PpWsDerivedKeyUsernameToken           types.Bool           `tfsdk:"pp_ws_derived_key_username_token"`
+	PpWsDerivedKeyUsernameTokenIterations types.Int64          `tfsdk:"pp_ws_derived_key_username_token_iterations"`
+	PpWsUsernameTokenAllowReplacement     types.Bool           `tfsdk:"pp_ws_username_token_allow_replacement"`
+	PpHmacSigningAlg                      types.String         `tfsdk:"pp_hmac_signing_alg"`
 	PpSigningHashAlg                      types.String         `tfsdk:"pp_signing_hash_alg"`
-	PpwsTrustHeader                       types.Bool           `tfsdk:"ppws_trust_header"`
-	PpwsscKeySource                       types.String         `tfsdk:"ppwssc_key_source"`
+	PpWsTrustHeader                       types.Bool           `tfsdk:"pp_ws_trust_header"`
+	PpWsScKeySource                       types.String         `tfsdk:"pp_ws_sc_key_source"`
 	PpSharedSecretKey                     types.String         `tfsdk:"pp_shared_secret_key"`
-	PpwsTrustRenewalWait                  types.Int64          `tfsdk:"ppws_trust_renewal_wait"`
-	PpwsTrustNewInstance                  types.Bool           `tfsdk:"ppws_trust_new_instance"`
-	PpwsTrustNewKey                       types.Bool           `tfsdk:"ppws_trust_new_key"`
-	PpwsTrustNeverExpire                  types.Bool           `tfsdk:"ppws_trust_never_expire"`
+	PpWsTrustRenewalWait                  types.Int64          `tfsdk:"pp_ws_trust_renewal_wait"`
+	PpWsTrustNewInstance                  types.Bool           `tfsdk:"pp_ws_trust_new_instance"`
+	PpWsTrustNewKey                       types.Bool           `tfsdk:"pp_ws_trust_new_key"`
+	PpWsTrustNeverExpire                  types.Bool           `tfsdk:"pp_ws_trust_never_expire"`
 	PpicrxToken                           types.Bool           `tfsdk:"ppicrx_token"`
 	PpicrxUserRealm                       types.String         `tfsdk:"ppicrx_user_realm"`
-	PpsamlIdentityProvider                types.Bool           `tfsdk:"ppsaml_identity_provider"`
-	PpsamlProtocol                        types.String         `tfsdk:"ppsaml_protocol"`
-	PpsamlResponseDestination             types.String         `tfsdk:"ppsaml_response_destination"`
+	PpSamlIdentityProvider                types.Bool           `tfsdk:"pp_saml_identity_provider"`
+	PpSamlProtocol                        types.String         `tfsdk:"pp_saml_protocol"`
+	PpSamlResponseDestination             types.String         `tfsdk:"pp_saml_response_destination"`
 	PpResultWrapup                        types.String         `tfsdk:"pp_result_wrapup"`
-	PpsamlAssertionType                   *DmSAMLStatementType `tfsdk:"ppsaml_assertion_type"`
-	PpsamlSubjectConfirm                  types.String         `tfsdk:"ppsaml_subject_confirm"`
-	PpsamlNameId                          types.Bool           `tfsdk:"ppsaml_name_id"`
-	PpsamlNameIdFormat                    types.String         `tfsdk:"ppsaml_name_id_format"`
-	PpsamlRecipient                       types.String         `tfsdk:"ppsaml_recipient"`
-	PpsamlAudience                        types.String         `tfsdk:"ppsaml_audience"`
-	PpsamlOmitNotBefore                   types.Bool           `tfsdk:"ppsaml_omit_not_before"`
+	PpSamlAssertionType                   *DmSAMLStatementType `tfsdk:"pp_saml_assertion_type"`
+	PpSamlSubjectConfirm                  types.String         `tfsdk:"pp_saml_subject_confirm"`
+	PpSamlNameId                          types.Bool           `tfsdk:"pp_saml_name_id"`
+	PpSamlNameIdFormat                    types.String         `tfsdk:"pp_saml_name_id_format"`
+	PpSamlRecipient                       types.String         `tfsdk:"pp_saml_recipient"`
+	PpSamlAudience                        types.String         `tfsdk:"pp_saml_audience"`
+	PpSamlOmitNotBefore                   types.Bool           `tfsdk:"pp_saml_omit_not_before"`
 	PpOneTimeUse                          types.Bool           `tfsdk:"pp_one_time_use"`
-	PpsamlProxy                           types.Bool           `tfsdk:"ppsaml_proxy"`
-	PpsamlProxyAudience                   types.String         `tfsdk:"ppsaml_proxy_audience"`
-	PpsamlProxyCount                      types.Int64          `tfsdk:"ppsaml_proxy_count"`
-	PpsamlAuthzAction                     types.String         `tfsdk:"ppsaml_authz_action"`
-	PpsamlAttributes                      types.String         `tfsdk:"ppsaml_attributes"`
-	PpltpaInsertCookie                    types.Bool           `tfsdk:"ppltpa_insert_cookie"`
-	PptampacPropagate                     types.Bool           `tfsdk:"pptampac_propagate"`
-	PptamHeader                           types.String         `tfsdk:"pptam_header"`
-	PptamHeaderSize                       types.Int64          `tfsdk:"pptam_header_size"`
-	PpKerberosUseS4u2Proxy                types.Bool           `tfsdk:"pp_kerberos_use_s4u2_proxy"`
+	PpSamlProxy                           types.Bool           `tfsdk:"pp_saml_proxy"`
+	PpSamlProxyAudience                   types.String         `tfsdk:"pp_saml_proxy_audience"`
+	PpSamlProxyCount                      types.Int64          `tfsdk:"pp_saml_proxy_count"`
+	PpSamlAuthzAction                     types.String         `tfsdk:"pp_saml_authz_action"`
+	PpSamlAttributes                      types.String         `tfsdk:"pp_saml_attributes"`
+	PpLtpaInsertCookie                    types.Bool           `tfsdk:"pp_ltpa_insert_cookie"`
+	PpTamPacPropagate                     types.Bool           `tfsdk:"pp_tam_pac_propagate"`
+	PpTamHeader                           types.String         `tfsdk:"pp_tam_header"`
+	PpTamHeaderSize                       types.Int64          `tfsdk:"pp_tam_header_size"`
+	PpKerberosUseS4u2proxy                types.Bool           `tfsdk:"pp_kerberos_use_s4u2proxy"`
 	PpCookieAttributes                    types.String         `tfsdk:"pp_cookie_attributes"`
-	PpKerberosUseS4u2SelfAndS4u2Proxy     types.Bool           `tfsdk:"pp_kerberos_use_s4u2_self_and_s4u2_proxy"`
+	PpKerberosUseS4u2selfAndS4u2proxy     types.Bool           `tfsdk:"pp_kerberos_use_s4u2self_and_s4u2proxy"`
 	PpKerberosClientSource                types.String         `tfsdk:"pp_kerberos_client_source"`
 	PpKerberosSelf                        types.String         `tfsdk:"pp_kerberos_self"`
 	PpKerberosSelfKeytab                  types.String         `tfsdk:"pp_kerberos_self_keytab"`
@@ -120,11 +120,11 @@ type DmAAAPPostProcess struct {
 	PpKerberosServerSource                types.String         `tfsdk:"pp_kerberos_server_source"`
 	PpKerberosServerCustomUrl             types.String         `tfsdk:"pp_kerberos_server_custom_url"`
 	PpKerberosServerCtxVar                types.String         `tfsdk:"pp_kerberos_server_ctx_var"`
-	PpsslClientConfigType                 types.String         `tfsdk:"ppssl_client_config_type"`
-	PpsslClientProfile                    types.String         `tfsdk:"ppssl_client_profile"`
-	PpltpaKeyFilePasswordAlias            types.String         `tfsdk:"ppltpa_key_file_password_alias"`
-	Ppjwt                                 types.Bool           `tfsdk:"ppjwt"`
-	PpjwtGenerator                        types.String         `tfsdk:"ppjwt_generator"`
+	PpSslClientConfigType                 types.String         `tfsdk:"pp_ssl_client_config_type"`
+	PpSslClientProfile                    types.String         `tfsdk:"pp_ssl_client_profile"`
+	PpLtpaKeyFilePasswordAlias            types.String         `tfsdk:"pp_ltpa_key_file_password_alias"`
+	PpJwt                                 types.Bool           `tfsdk:"pp_jwt"`
+	PpJwtGenerator                        types.String         `tfsdk:"pp_jwt_generator"`
 }
 
 var DmAAAPPostProcessPPCustomURLCondVal = validators.Evaluation{
@@ -161,7 +161,7 @@ var DmAAAPPostProcessPPKerberosClientCondVal = validators.Evaluation{
 			Conditions: []validators.Evaluation{
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "pp_kerberos_use_s4u2_proxy",
+					Attribute:   "pp_kerberos_use_s4u2proxy",
 					AttrType:    "Bool",
 					AttrDefault: "false",
 					Value:       []string{"false"},
@@ -171,7 +171,7 @@ var DmAAAPPostProcessPPKerberosClientCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "pp_kerberos_use_s4u2_proxy",
+							Attribute:   "pp_kerberos_use_s4u2proxy",
 							AttrType:    "Bool",
 							AttrDefault: "false",
 							Value:       []string{"true"},
@@ -193,7 +193,7 @@ var DmAAAPPostProcessPPKerberosClientCondVal = validators.Evaluation{
 			Conditions: []validators.Evaluation{
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+					Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 					AttrType:    "Bool",
 					AttrDefault: "false",
 					Value:       []string{"false"},
@@ -203,7 +203,7 @@ var DmAAAPPostProcessPPKerberosClientCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+							Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 							AttrType:    "Bool",
 							AttrDefault: "false",
 							Value:       []string{"true"},
@@ -262,7 +262,7 @@ var DmAAAPPostProcessPPKerberosServerCondVal = validators.Evaluation{
 }
 var DmAAAPPostProcessPPLTPAKeyFileCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "ppltpa",
+	Attribute:   "pp_ltpa",
 	AttrType:    "Bool",
 	AttrDefault: "false",
 	Value:       []string{"true"},
@@ -301,7 +301,7 @@ var DmAAAPPostProcessPPKerberosClientKeytabCondVal = validators.Evaluation{
 			Conditions: []validators.Evaluation{
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "pp_kerberos_use_s4u2_proxy",
+					Attribute:   "pp_kerberos_use_s4u2proxy",
 					AttrType:    "Bool",
 					AttrDefault: "false",
 					Value:       []string{"false"},
@@ -311,7 +311,7 @@ var DmAAAPPostProcessPPKerberosClientKeytabCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "pp_kerberos_use_s4u2_proxy",
+							Attribute:   "pp_kerberos_use_s4u2proxy",
 							AttrType:    "Bool",
 							AttrDefault: "false",
 							Value:       []string{"true"},
@@ -333,7 +333,7 @@ var DmAAAPPostProcessPPKerberosClientKeytabCondVal = validators.Evaluation{
 			Conditions: []validators.Evaluation{
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+					Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 					AttrType:    "Bool",
 					AttrDefault: "false",
 					Value:       []string{"false"},
@@ -343,7 +343,7 @@ var DmAAAPPostProcessPPKerberosClientKeytabCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+							Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 							AttrType:    "Bool",
 							AttrDefault: "false",
 							Value:       []string{"true"},
@@ -367,14 +367,14 @@ var DmAAAPPostProcessPPWSDerivedKeyUsernameTokenCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_username_token",
+			Attribute:   "pp_ws_username_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_username_token_include_pwd",
+			Attribute:   "pp_ws_username_token_include_pwd",
 			AttrType:    "Bool",
 			AttrDefault: "true",
 			Value:       []string{"false"},
@@ -386,21 +386,21 @@ var DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsCondVal = validators.E
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_username_token",
+			Attribute:   "pp_ws_username_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_username_token_include_pwd",
+			Attribute:   "pp_ws_username_token_include_pwd",
 			AttrType:    "Bool",
 			AttrDefault: "true",
 			Value:       []string{"false"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_derived_key_username_token",
+			Attribute:   "pp_ws_derived_key_username_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -412,21 +412,21 @@ var DmAAAPPostProcessPPHMACSigningAlgCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_username_token",
+			Attribute:   "pp_ws_username_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_username_token_include_pwd",
+			Attribute:   "pp_ws_username_token_include_pwd",
 			AttrType:    "Bool",
 			AttrDefault: "true",
 			Value:       []string{"false"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_derived_key_username_token",
+			Attribute:   "pp_ws_derived_key_username_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -438,21 +438,21 @@ var DmAAAPPostProcessPPSigningHashAlgCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_username_token",
+			Attribute:   "pp_ws_username_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_username_token_include_pwd",
+			Attribute:   "pp_ws_username_token_include_pwd",
 			AttrType:    "Bool",
 			AttrDefault: "true",
 			Value:       []string{"false"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppws_derived_key_username_token",
+			Attribute:   "pp_ws_derived_key_username_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -461,7 +461,7 @@ var DmAAAPPostProcessPPSigningHashAlgCondVal = validators.Evaluation{
 }
 var DmAAAPPostProcessPPSAMLAssertionTypeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "ppsaml_identity_provider",
+	Attribute:   "pp_saml_identity_provider",
 	AttrType:    "Bool",
 	AttrDefault: "false",
 	Value:       []string{"true"},
@@ -471,14 +471,14 @@ var DmAAAPPostProcessPPSAMLAttributesCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppsaml_identity_provider",
+			Attribute:   "pp_saml_identity_provider",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppsaml_assertion_type",
+			Attribute:   "pp_saml_assertion_type",
 			AttrType:    "DmSAMLStatementType",
 			AttrDefault: "authentication+attribute",
 			Value:       []string{"attribute"},
@@ -487,14 +487,14 @@ var DmAAAPPostProcessPPSAMLAttributesCondVal = validators.Evaluation{
 }
 var DmAAAPPostProcessPPTAMHeaderCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "pptampac_propagate",
+	Attribute:   "pp_tam_pac_propagate",
 	AttrType:    "Bool",
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
 var DmAAAPPostProcessPPTAMHeaderSizeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "pptampac_propagate",
+	Attribute:   "pp_tam_pac_propagate",
 	AttrType:    "Bool",
 	AttrDefault: "false",
 	Value:       []string{"true"},
@@ -531,7 +531,7 @@ var DmAAAPPostProcessPPKerberosClientSourceCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+			Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -570,7 +570,7 @@ var DmAAAPPostProcessPPKerberosSelfCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+			Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -609,7 +609,7 @@ var DmAAAPPostProcessPPKerberosSelfKeytabCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+			Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -648,7 +648,7 @@ var DmAAAPPostProcessPPKerberosClientCustomURLCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+			Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -694,7 +694,7 @@ var DmAAAPPostProcessPPKerberosClientCtxVarCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "pp_kerberos_use_s4u2_self_and_s4u2_proxy",
+			Attribute:   "pp_kerberos_use_s4u2self_and_s4u2proxy",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -794,7 +794,7 @@ var DmAAAPPostProcessPPLTPAKeyFilePasswordAliasCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "ppltpa_key_file_password",
+			Attribute:   "pp_ltpa_key_file_password",
 			AttrType:    "String",
 			AttrDefault: "",
 			Value:       []string{""},
@@ -804,14 +804,14 @@ var DmAAAPPostProcessPPLTPAKeyFilePasswordAliasCondVal = validators.Evaluation{
 			Conditions: []validators.Evaluation{
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "ppltpa",
+					Attribute:   "pp_ltpa",
 					AttrType:    "Bool",
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "ppltpa_version",
+					Attribute:   "pp_ltpa_version",
 					AttrType:    "String",
 					AttrDefault: "LTPA2",
 					Value:       []string{"LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7"},
@@ -822,183 +822,183 @@ var DmAAAPPostProcessPPLTPAKeyFilePasswordAliasCondVal = validators.Evaluation{
 }
 var DmAAAPPostProcessPPJWTGeneratorCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "ppjwt",
+	Attribute:   "pp_jwt",
 	AttrType:    "Bool",
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
 
 var DmAAAPPostProcessObjectType = map[string]attr.Type{
-	"pp_enabled":                                 types.BoolType,
-	"pp_custom_url":                              types.StringType,
-	"ppsaml_auth_assertion":                      types.BoolType,
-	"ppsaml_server_name":                         types.StringType,
-	"ppsaml_name_qualifier":                      types.StringType,
-	"pp_kerberos_ticket":                         types.BoolType,
-	"pp_kerberos_client":                         types.StringType,
-	"pp_kerberos_client_password":                types.StringType,
-	"pp_kerberos_server":                         types.StringType,
-	"ppws_trust":                                 types.BoolType,
-	"pp_timestamp":                               types.BoolType,
-	"pp_timestamp_expiry":                        types.Int64Type,
-	"pp_allow_renewal":                           types.BoolType,
-	"ppsaml_version":                             types.StringType,
-	"ppsaml_send_slo":                            types.BoolType,
-	"ppsamlslo_endpoint":                         types.StringType,
-	"ppws_username_token":                        types.BoolType,
-	"ppws_username_token_password_type":          types.StringType,
-	"ppsaml_validity":                            types.Int64Type,
-	"ppsaml_skew":                                types.Int64Type,
-	"ppws_username_token_include_pwd":            types.BoolType,
-	"ppltpa":                                     types.BoolType,
-	"ppltpa_version":                             types.StringType,
-	"ppltpa_expiry":                              types.Int64Type,
-	"ppltpa_key_file":                            types.StringType,
-	"ppltpa_key_file_password":                   types.StringType,
-	"ppltpa_stash_file":                          types.StringType,
-	"pp_kerberos_spnego_token":                   types.BoolType,
-	"pp_kerberos_bst_value_type":                 types.StringType,
-	"ppsaml_use_ws_sec":                          types.BoolType,
-	"pp_kerberos_client_keytab":                  types.StringType,
-	"pp_use_ws_sec":                              types.BoolType,
-	"pp_actor_role_id":                           types.StringType,
-	"ppws_derived_key_username_token":            types.BoolType,
-	"ppws_derived_key_username_token_iterations": types.Int64Type,
-	"ppws_username_token_allow_replacement":      types.BoolType,
-	"pphmac_signing_alg":                         types.StringType,
-	"pp_signing_hash_alg":                        types.StringType,
-	"ppws_trust_header":                          types.BoolType,
-	"ppwssc_key_source":                          types.StringType,
-	"pp_shared_secret_key":                       types.StringType,
-	"ppws_trust_renewal_wait":                    types.Int64Type,
-	"ppws_trust_new_instance":                    types.BoolType,
-	"ppws_trust_new_key":                         types.BoolType,
-	"ppws_trust_never_expire":                    types.BoolType,
-	"ppicrx_token":                               types.BoolType,
-	"ppicrx_user_realm":                          types.StringType,
-	"ppsaml_identity_provider":                   types.BoolType,
-	"ppsaml_protocol":                            types.StringType,
-	"ppsaml_response_destination":                types.StringType,
-	"pp_result_wrapup":                           types.StringType,
-	"ppsaml_assertion_type":                      types.ObjectType{AttrTypes: DmSAMLStatementTypeObjectType},
-	"ppsaml_subject_confirm":                     types.StringType,
-	"ppsaml_name_id":                             types.BoolType,
-	"ppsaml_name_id_format":                      types.StringType,
-	"ppsaml_recipient":                           types.StringType,
-	"ppsaml_audience":                            types.StringType,
-	"ppsaml_omit_not_before":                     types.BoolType,
-	"pp_one_time_use":                            types.BoolType,
-	"ppsaml_proxy":                               types.BoolType,
-	"ppsaml_proxy_audience":                      types.StringType,
-	"ppsaml_proxy_count":                         types.Int64Type,
-	"ppsaml_authz_action":                        types.StringType,
-	"ppsaml_attributes":                          types.StringType,
-	"ppltpa_insert_cookie":                       types.BoolType,
-	"pptampac_propagate":                         types.BoolType,
-	"pptam_header":                               types.StringType,
-	"pptam_header_size":                          types.Int64Type,
-	"pp_kerberos_use_s4u2_proxy":                 types.BoolType,
-	"pp_cookie_attributes":                       types.StringType,
-	"pp_kerberos_use_s4u2_self_and_s4u2_proxy":   types.BoolType,
-	"pp_kerberos_client_source":                  types.StringType,
-	"pp_kerberos_self":                           types.StringType,
-	"pp_kerberos_self_keytab":                    types.StringType,
-	"pp_kerberos_client_custom_url":              types.StringType,
-	"pp_kerberos_client_ctx_var":                 types.StringType,
-	"pp_kerberos_server_source":                  types.StringType,
-	"pp_kerberos_server_custom_url":              types.StringType,
-	"pp_kerberos_server_ctx_var":                 types.StringType,
-	"ppssl_client_config_type":                   types.StringType,
-	"ppssl_client_profile":                       types.StringType,
-	"ppltpa_key_file_password_alias":             types.StringType,
-	"ppjwt":                                      types.BoolType,
-	"ppjwt_generator":                            types.StringType,
+	"pp_enabled":                                  types.BoolType,
+	"pp_custom_url":                               types.StringType,
+	"pp_saml_auth_assertion":                      types.BoolType,
+	"pp_saml_server_name":                         types.StringType,
+	"pp_saml_name_qualifier":                      types.StringType,
+	"pp_kerberos_ticket":                          types.BoolType,
+	"pp_kerberos_client":                          types.StringType,
+	"pp_kerberos_client_password":                 types.StringType,
+	"pp_kerberos_server":                          types.StringType,
+	"pp_ws_trust":                                 types.BoolType,
+	"pp_timestamp":                                types.BoolType,
+	"pp_timestamp_expiry":                         types.Int64Type,
+	"pp_allow_renewal":                            types.BoolType,
+	"pp_saml_version":                             types.StringType,
+	"pp_saml_send_slo":                            types.BoolType,
+	"pp_saml_slo_endpoint":                        types.StringType,
+	"pp_ws_username_token":                        types.BoolType,
+	"pp_ws_username_token_password_type":          types.StringType,
+	"pp_saml_validity":                            types.Int64Type,
+	"pp_saml_skew":                                types.Int64Type,
+	"pp_ws_username_token_include_pwd":            types.BoolType,
+	"pp_ltpa":                                     types.BoolType,
+	"pp_ltpa_version":                             types.StringType,
+	"pp_ltpa_expiry":                              types.Int64Type,
+	"pp_ltpa_key_file":                            types.StringType,
+	"pp_ltpa_key_file_password":                   types.StringType,
+	"pp_ltpa_stash_file":                          types.StringType,
+	"pp_kerberos_spnego_token":                    types.BoolType,
+	"pp_kerberos_bst_value_type":                  types.StringType,
+	"pp_saml_use_ws_sec":                          types.BoolType,
+	"pp_kerberos_client_keytab":                   types.StringType,
+	"pp_use_ws_sec":                               types.BoolType,
+	"pp_actor_role_id":                            types.StringType,
+	"pp_ws_derived_key_username_token":            types.BoolType,
+	"pp_ws_derived_key_username_token_iterations": types.Int64Type,
+	"pp_ws_username_token_allow_replacement":      types.BoolType,
+	"pp_hmac_signing_alg":                         types.StringType,
+	"pp_signing_hash_alg":                         types.StringType,
+	"pp_ws_trust_header":                          types.BoolType,
+	"pp_ws_sc_key_source":                         types.StringType,
+	"pp_shared_secret_key":                        types.StringType,
+	"pp_ws_trust_renewal_wait":                    types.Int64Type,
+	"pp_ws_trust_new_instance":                    types.BoolType,
+	"pp_ws_trust_new_key":                         types.BoolType,
+	"pp_ws_trust_never_expire":                    types.BoolType,
+	"ppicrx_token":                                types.BoolType,
+	"ppicrx_user_realm":                           types.StringType,
+	"pp_saml_identity_provider":                   types.BoolType,
+	"pp_saml_protocol":                            types.StringType,
+	"pp_saml_response_destination":                types.StringType,
+	"pp_result_wrapup":                            types.StringType,
+	"pp_saml_assertion_type":                      types.ObjectType{AttrTypes: DmSAMLStatementTypeObjectType},
+	"pp_saml_subject_confirm":                     types.StringType,
+	"pp_saml_name_id":                             types.BoolType,
+	"pp_saml_name_id_format":                      types.StringType,
+	"pp_saml_recipient":                           types.StringType,
+	"pp_saml_audience":                            types.StringType,
+	"pp_saml_omit_not_before":                     types.BoolType,
+	"pp_one_time_use":                             types.BoolType,
+	"pp_saml_proxy":                               types.BoolType,
+	"pp_saml_proxy_audience":                      types.StringType,
+	"pp_saml_proxy_count":                         types.Int64Type,
+	"pp_saml_authz_action":                        types.StringType,
+	"pp_saml_attributes":                          types.StringType,
+	"pp_ltpa_insert_cookie":                       types.BoolType,
+	"pp_tam_pac_propagate":                        types.BoolType,
+	"pp_tam_header":                               types.StringType,
+	"pp_tam_header_size":                          types.Int64Type,
+	"pp_kerberos_use_s4u2proxy":                   types.BoolType,
+	"pp_cookie_attributes":                        types.StringType,
+	"pp_kerberos_use_s4u2self_and_s4u2proxy":      types.BoolType,
+	"pp_kerberos_client_source":                   types.StringType,
+	"pp_kerberos_self":                            types.StringType,
+	"pp_kerberos_self_keytab":                     types.StringType,
+	"pp_kerberos_client_custom_url":               types.StringType,
+	"pp_kerberos_client_ctx_var":                  types.StringType,
+	"pp_kerberos_server_source":                   types.StringType,
+	"pp_kerberos_server_custom_url":               types.StringType,
+	"pp_kerberos_server_ctx_var":                  types.StringType,
+	"pp_ssl_client_config_type":                   types.StringType,
+	"pp_ssl_client_profile":                       types.StringType,
+	"pp_ltpa_key_file_password_alias":             types.StringType,
+	"pp_jwt":                                      types.BoolType,
+	"pp_jwt_generator":                            types.StringType,
 }
 var DmAAAPPostProcessObjectDefault = map[string]attr.Value{
-	"pp_enabled":                                 types.BoolValue(false),
-	"pp_custom_url":                              types.StringNull(),
-	"ppsaml_auth_assertion":                      types.BoolValue(false),
-	"ppsaml_server_name":                         types.StringValue("XS"),
-	"ppsaml_name_qualifier":                      types.StringNull(),
-	"pp_kerberos_ticket":                         types.BoolValue(false),
-	"pp_kerberos_client":                         types.StringNull(),
-	"pp_kerberos_client_password":                types.StringNull(),
-	"pp_kerberos_server":                         types.StringNull(),
-	"ppws_trust":                                 types.BoolValue(false),
-	"pp_timestamp":                               types.BoolValue(true),
-	"pp_timestamp_expiry":                        types.Int64Value(0),
-	"pp_allow_renewal":                           types.BoolValue(false),
-	"ppsaml_version":                             types.StringValue("2"),
-	"ppsaml_send_slo":                            types.BoolValue(false),
-	"ppsamlslo_endpoint":                         types.StringNull(),
-	"ppws_username_token":                        types.BoolValue(false),
-	"ppws_username_token_password_type":          types.StringValue("Digest"),
-	"ppsaml_validity":                            types.Int64Value(0),
-	"ppsaml_skew":                                types.Int64Value(0),
-	"ppws_username_token_include_pwd":            types.BoolValue(true),
-	"ppltpa":                                     types.BoolValue(false),
-	"ppltpa_version":                             types.StringValue("LTPA2"),
-	"ppltpa_expiry":                              types.Int64Value(600),
-	"ppltpa_key_file":                            types.StringNull(),
-	"ppltpa_key_file_password":                   types.StringNull(),
-	"ppltpa_stash_file":                          types.StringNull(),
-	"pp_kerberos_spnego_token":                   types.BoolValue(false),
-	"pp_kerberos_bst_value_type":                 types.StringValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ"),
-	"ppsaml_use_ws_sec":                          types.BoolValue(false),
-	"pp_kerberos_client_keytab":                  types.StringNull(),
-	"pp_use_ws_sec":                              types.BoolValue(false),
-	"pp_actor_role_id":                           types.StringNull(),
-	"ppws_derived_key_username_token":            types.BoolValue(false),
-	"ppws_derived_key_username_token_iterations": types.Int64Value(1000),
-	"ppws_username_token_allow_replacement":      types.BoolValue(false),
-	"pphmac_signing_alg":                         types.StringValue("hmac-sha1"),
-	"pp_signing_hash_alg":                        types.StringValue("sha1"),
-	"ppws_trust_header":                          types.BoolValue(false),
-	"ppwssc_key_source":                          types.StringValue("random"),
-	"pp_shared_secret_key":                       types.StringNull(),
-	"ppws_trust_renewal_wait":                    types.Int64Value(0),
-	"ppws_trust_new_instance":                    types.BoolValue(false),
-	"ppws_trust_new_key":                         types.BoolValue(false),
-	"ppws_trust_never_expire":                    types.BoolValue(false),
-	"ppicrx_token":                               types.BoolValue(false),
-	"ppicrx_user_realm":                          types.StringNull(),
-	"ppsaml_identity_provider":                   types.BoolValue(false),
-	"ppsaml_protocol":                            types.StringValue("assertion"),
-	"ppsaml_response_destination":                types.StringNull(),
-	"pp_result_wrapup":                           types.StringValue("wssec-replace"),
-	"ppsaml_assertion_type":                      types.ObjectValueMust(DmSAMLStatementTypeObjectType, DmSAMLStatementTypeObjectDefault),
-	"ppsaml_subject_confirm":                     types.StringValue("bearer"),
-	"ppsaml_name_id":                             types.BoolValue(true),
-	"ppsaml_name_id_format":                      types.StringNull(),
-	"ppsaml_recipient":                           types.StringNull(),
-	"ppsaml_audience":                            types.StringNull(),
-	"ppsaml_omit_not_before":                     types.BoolValue(false),
-	"pp_one_time_use":                            types.BoolValue(false),
-	"ppsaml_proxy":                               types.BoolValue(false),
-	"ppsaml_proxy_audience":                      types.StringNull(),
-	"ppsaml_proxy_count":                         types.Int64Value(0),
-	"ppsaml_authz_action":                        types.StringValue("AllHTTP"),
-	"ppsaml_attributes":                          types.StringNull(),
-	"ppltpa_insert_cookie":                       types.BoolValue(true),
-	"pptampac_propagate":                         types.BoolValue(false),
-	"pptam_header":                               types.StringValue("iv-creds"),
-	"pptam_header_size":                          types.Int64Value(0),
-	"pp_kerberos_use_s4u2_proxy":                 types.BoolValue(false),
-	"pp_cookie_attributes":                       types.StringNull(),
-	"pp_kerberos_use_s4u2_self_and_s4u2_proxy":   types.BoolValue(false),
-	"pp_kerberos_client_source":                  types.StringValue("mc-output"),
-	"pp_kerberos_self":                           types.StringNull(),
-	"pp_kerberos_self_keytab":                    types.StringNull(),
-	"pp_kerberos_client_custom_url":              types.StringNull(),
-	"pp_kerberos_client_ctx_var":                 types.StringNull(),
-	"pp_kerberos_server_source":                  types.StringValue("as-is-string"),
-	"pp_kerberos_server_custom_url":              types.StringNull(),
-	"pp_kerberos_server_ctx_var":                 types.StringNull(),
-	"ppssl_client_config_type":                   types.StringValue("proxy"),
-	"ppssl_client_profile":                       types.StringNull(),
-	"ppltpa_key_file_password_alias":             types.StringNull(),
-	"ppjwt":                                      types.BoolValue(false),
-	"ppjwt_generator":                            types.StringNull(),
+	"pp_enabled":                                  types.BoolValue(false),
+	"pp_custom_url":                               types.StringNull(),
+	"pp_saml_auth_assertion":                      types.BoolValue(false),
+	"pp_saml_server_name":                         types.StringValue("XS"),
+	"pp_saml_name_qualifier":                      types.StringNull(),
+	"pp_kerberos_ticket":                          types.BoolValue(false),
+	"pp_kerberos_client":                          types.StringNull(),
+	"pp_kerberos_client_password":                 types.StringNull(),
+	"pp_kerberos_server":                          types.StringNull(),
+	"pp_ws_trust":                                 types.BoolValue(false),
+	"pp_timestamp":                                types.BoolValue(true),
+	"pp_timestamp_expiry":                         types.Int64Value(0),
+	"pp_allow_renewal":                            types.BoolValue(false),
+	"pp_saml_version":                             types.StringValue("2"),
+	"pp_saml_send_slo":                            types.BoolValue(false),
+	"pp_saml_slo_endpoint":                        types.StringNull(),
+	"pp_ws_username_token":                        types.BoolValue(false),
+	"pp_ws_username_token_password_type":          types.StringValue("Digest"),
+	"pp_saml_validity":                            types.Int64Value(0),
+	"pp_saml_skew":                                types.Int64Value(0),
+	"pp_ws_username_token_include_pwd":            types.BoolValue(true),
+	"pp_ltpa":                                     types.BoolValue(false),
+	"pp_ltpa_version":                             types.StringValue("LTPA2"),
+	"pp_ltpa_expiry":                              types.Int64Value(600),
+	"pp_ltpa_key_file":                            types.StringNull(),
+	"pp_ltpa_key_file_password":                   types.StringNull(),
+	"pp_ltpa_stash_file":                          types.StringNull(),
+	"pp_kerberos_spnego_token":                    types.BoolValue(false),
+	"pp_kerberos_bst_value_type":                  types.StringValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ"),
+	"pp_saml_use_ws_sec":                          types.BoolValue(false),
+	"pp_kerberos_client_keytab":                   types.StringNull(),
+	"pp_use_ws_sec":                               types.BoolValue(false),
+	"pp_actor_role_id":                            types.StringNull(),
+	"pp_ws_derived_key_username_token":            types.BoolValue(false),
+	"pp_ws_derived_key_username_token_iterations": types.Int64Value(1000),
+	"pp_ws_username_token_allow_replacement":      types.BoolValue(false),
+	"pp_hmac_signing_alg":                         types.StringValue("hmac-sha1"),
+	"pp_signing_hash_alg":                         types.StringValue("sha1"),
+	"pp_ws_trust_header":                          types.BoolValue(false),
+	"pp_ws_sc_key_source":                         types.StringValue("random"),
+	"pp_shared_secret_key":                        types.StringNull(),
+	"pp_ws_trust_renewal_wait":                    types.Int64Value(0),
+	"pp_ws_trust_new_instance":                    types.BoolValue(false),
+	"pp_ws_trust_new_key":                         types.BoolValue(false),
+	"pp_ws_trust_never_expire":                    types.BoolValue(false),
+	"ppicrx_token":                                types.BoolValue(false),
+	"ppicrx_user_realm":                           types.StringNull(),
+	"pp_saml_identity_provider":                   types.BoolValue(false),
+	"pp_saml_protocol":                            types.StringValue("assertion"),
+	"pp_saml_response_destination":                types.StringNull(),
+	"pp_result_wrapup":                            types.StringValue("wssec-replace"),
+	"pp_saml_assertion_type":                      types.ObjectValueMust(DmSAMLStatementTypeObjectType, DmSAMLStatementTypeObjectDefault),
+	"pp_saml_subject_confirm":                     types.StringValue("bearer"),
+	"pp_saml_name_id":                             types.BoolValue(true),
+	"pp_saml_name_id_format":                      types.StringNull(),
+	"pp_saml_recipient":                           types.StringNull(),
+	"pp_saml_audience":                            types.StringNull(),
+	"pp_saml_omit_not_before":                     types.BoolValue(false),
+	"pp_one_time_use":                             types.BoolValue(false),
+	"pp_saml_proxy":                               types.BoolValue(false),
+	"pp_saml_proxy_audience":                      types.StringNull(),
+	"pp_saml_proxy_count":                         types.Int64Value(0),
+	"pp_saml_authz_action":                        types.StringValue("AllHTTP"),
+	"pp_saml_attributes":                          types.StringNull(),
+	"pp_ltpa_insert_cookie":                       types.BoolValue(true),
+	"pp_tam_pac_propagate":                        types.BoolValue(false),
+	"pp_tam_header":                               types.StringValue("iv-creds"),
+	"pp_tam_header_size":                          types.Int64Value(0),
+	"pp_kerberos_use_s4u2proxy":                   types.BoolValue(false),
+	"pp_cookie_attributes":                        types.StringNull(),
+	"pp_kerberos_use_s4u2self_and_s4u2proxy":      types.BoolValue(false),
+	"pp_kerberos_client_source":                   types.StringValue("mc-output"),
+	"pp_kerberos_self":                            types.StringNull(),
+	"pp_kerberos_self_keytab":                     types.StringNull(),
+	"pp_kerberos_client_custom_url":               types.StringNull(),
+	"pp_kerberos_client_ctx_var":                  types.StringNull(),
+	"pp_kerberos_server_source":                   types.StringValue("as-is-string"),
+	"pp_kerberos_server_custom_url":               types.StringNull(),
+	"pp_kerberos_server_ctx_var":                  types.StringNull(),
+	"pp_ssl_client_config_type":                   types.StringValue("proxy"),
+	"pp_ssl_client_profile":                       types.StringNull(),
+	"pp_ltpa_key_file_password_alias":             types.StringNull(),
+	"pp_jwt":                                      types.BoolValue(false),
+	"pp_jwt_generator":                            types.StringNull(),
 }
 
 func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
@@ -1013,15 +1013,15 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the custom file for the postprocessing activity.", "custom-url", "").String,
 				Computed:            true,
 			},
-			"ppsaml_auth_assertion": DataSourceSchema.BoolAttribute{
+			"pp_saml_auth_assertion": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a SAML assertion that contains a SAML authentication statement for the authenticated user identity.", "saml-generate-assertion", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppsaml_server_name": DataSourceSchema.StringAttribute{
+			"pp_saml_server_name": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the value of the <tt>saml:Issuer</tt> of the generated SAML assertion or SAML SLO request. The default value is XS.</p><ul><li>If generating an SAML assertion, identifies the server that makes the assertion.</li><li>If sending an SLO request, identifies the issuer that sends the request.</li></ul>", "saml-server-name", "").AddDefaultValue("XS").String,
 				Computed:            true,
 			},
-			"ppsaml_name_qualifier": DataSourceSchema.StringAttribute{
+			"pp_saml_name_qualifier": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the NameQualifier attribute of the NameIdentifier in the generated SAML assertion. Although the attribute is an optional attribute, some SAML implementations require that this attribute must be present.", "saml-name-qualifier", "").String,
 				Computed:            true,
 			},
@@ -1041,7 +1041,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the server identity (sname of the Kerberos ticket) for the Kerberos server principal.", "kerberos-server", "").String,
 				Computed:            true,
 			},
-			"ppws_trust": DataSourceSchema.BoolAttribute{
+			"pp_ws_trust": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate the appropriate security token response for a valid WS-Trust SecurityContextToken request.", "ws-trust-generate-resp", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -1057,59 +1057,59 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether WS-Trust tokens can have their lifetime period reset without a new bootstrapping authentication event. If the WS-Trust request asks to renew the issued token, this setting is ignored.", "ws-trust-allow-renewal", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppsaml_version": DataSourceSchema.StringAttribute{
+			"pp_saml_version": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol level of SAML messages. The version affects the identity extraction from the original message and the format of messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2", "1.1", "1").AddDefaultValue("2").String,
 				Computed:            true,
 			},
-			"ppsaml_send_slo": DataSourceSchema.BoolAttribute{
+			"pp_saml_send_slo": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to send a SAML Logout (SLO) request to revoke the SAML Assertion token that is used for single-sign-on (SSO). The SLO is a request-response that the DataPower&#174; Gateway handles differently when it is working as a service provider (SP) or identity provider (IdP).</p><ul><li>When an SP, the DataPower Gateway sends an SLO request to the SAML SLO endpoint (IdP). On response, the DataPower Gateway processes the SLO response for its status.</li><li>When an IdP, the request to the DataPower Gateway contains the SLO request. Postprocessing validates against the SAML metadata file and sends the corresponding endpoint the SLO response.</li></ul>", "saml-send-slo", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppsamlslo_endpoint": DataSourceSchema.StringAttribute{
+			"pp_saml_slo_endpoint": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint URL for SAML 2.0 Single Logout (SLO) messages. This endpoint is the authority that authenticated the assertion subject.", "saml-slo-endpoint", "").String,
 				Computed:            true,
 			},
-			"ppws_username_token": DataSourceSchema.BoolAttribute{
+			"pp_ws_username_token": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to add a WS-Security UsernameToken. The username and password are taken from the output of the map credentials phase.", "wssec-add-user-name-token", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppws_username_token_password_type": DataSourceSchema.StringAttribute{
+			"pp_ws_username_token_password_type": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of password that the UsernameToken provides. By default, use the digest of the password as defined in the \"Web Services Security UsernameToken Profile 1.0\" specification.", "wssec-user-name-token-type", "").AddStringEnum("Text", "Digest").AddDefaultValue("Digest").String,
 				Computed:            true,
 			},
-			"ppsaml_validity": DataSourceSchema.Int64Attribute{
+			"pp_saml_validity": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration of the SAML assertion in seconds. This value and the skew time are for fine control of the validity duration. The default value is 0.", "saml-validity", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
-			"ppsaml_skew": DataSourceSchema.Int64Attribute{
+			"pp_saml_skew": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the acceptable skew interval in seconds. The IdP and SP system clocks can have a skew time. When the SAML assertion is generated, the expiration takes the skew time setting into account. <ul><li>When <tt>NotBefore</tt> has the value of <tt>(CurrentTime - SkewTime)</tt> .</li><li>When <tt>NotOnOrAfter</tt> has the value of <tt>(CurrentTime + Validity + SkewTime)</tt> .</li></ul>", "saml-skew", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
-			"ppws_username_token_include_pwd": DataSourceSchema.BoolAttribute{
+			"pp_ws_username_token_include_pwd": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Security UsernameToken must include the password. By default, the token must contain the password.", "wssec-user-name-token-contains-pwd", "").AddDefaultValue("true").String,
 				Computed:            true,
 			},
-			"ppltpa": DataSourceSchema.BoolAttribute{
+			"pp_ltpa": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate an LTPA token.", "lpta-generate-token", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppltpa_version": DataSourceSchema.StringAttribute{
+			"pp_ltpa_version": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.", "lpta-version", "").AddStringEnum("LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7", "LTPADomino").AddDefaultValue("LTPA2").String,
 				Computed:            true,
 			},
-			"ppltpa_expiry": DataSourceSchema.Int64Attribute{
+			"pp_ltpa_expiry": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.", "lpta-expiry", "").AddIntegerRange(1, 628992000).AddDefaultValue("600").String,
 				Computed:            true,
 			},
-			"ppltpa_key_file": DataSourceSchema.StringAttribute{
+			"pp_ltpa_key_file": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").String,
 				Computed:            true,
 			},
-			"ppltpa_key_file_password": DataSourceSchema.StringAttribute{
+			"pp_ltpa_key_file_password": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use the LTPA key file password alias.", "lpta-key-file-password", "").String,
 				Computed:            true,
 			},
-			"ppltpa_stash_file": DataSourceSchema.StringAttribute{
+			"pp_ltpa_stash_file": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the file that contains the LTPA key file password.", "lpta-stash-file", "").String,
 				Computed:            true,
 			},
@@ -1121,7 +1121,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the <tt>ValueType</tt> attribute of the WS-Security BinarySecurityToken. The Kerberos AP-REQ message contains the <tt>ValueType</tt> attribute. The default value is for WSS Kerberos Token Profile 1.1 (GSS).", "kerberos-value-type", "").AddStringEnum("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://www.docs.oasis-open.org/wss/2004/07/oasis-000000-wss-kerberos-token-profile-1.0#Kerberosv5_AP_REQ").AddDefaultValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ").String,
 				Computed:            true,
 			},
-			"ppsaml_use_ws_sec": DataSourceSchema.BoolAttribute{
+			"pp_saml_use_ws_sec": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to insert the SAML assertion. By default, the assertion is inserted as a child element of the SOAP header. When enabled, the assertion is inserted in a WS-Security-compliant header as defined by the WS-Security SAML token profile.", "saml-in-wssec", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -1137,19 +1137,19 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier for the SOAP 1.1 actor or SOAP 1.2 role for processing a WS-Security Security header. The DataPower Gateway works as that actor or role in consuming the input and generating the output for the next SOAP endpoint. This setting is meaningful when a SOAP message is being used for WS-Security 1.0 or 1.1. <table border=\"1\"><tr><td valign=\"left\">http://schemas.xmlsoap.org/soap/actor/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/none</td><td>No one can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</td><td>The ultimate receiver of the message can process the Security header. This value is the default value if such setting is not configured.</td></tr><tr><td valign=\"left\">&lt;blank or empty string></td><td>The empty string \"\" (without quotation marks) indicates that no actor or role identifier is configured. If no actor or role setting is configured, the ultimate receiver is assumed during message processing, and no actor or role attribute is added during the generation of the Security header. <p>This value does not generate an attribute with an empty value, which is the behavior as defined by the USE_MESSAGE_BASE_URI constant string. There cannot be more than one Security header that omits the actor or role identifier.</p></td></tr><tr><td valign=\"left\">USE_MESSAGE_BASE_URI</td><td>The constant value indicates that the actor or role identifier is the base URL of the message. If the SOAP message is transported over HTTP, the base URI is the Request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">any other customized string</td><td>You can input any string to identify the actor or role of the Security header.</td></tr></table>", "wssec-actor-role-id", "").String,
 				Computed:            true,
 			},
-			"ppws_derived_key_username_token": DataSourceSchema.BoolAttribute{
+			"pp_ws_derived_key_username_token": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a derived key from a password. By default, a derived key is not generated. When enabled, the process adds a WS-Security derived-key UsernameToken to the message and adds an HMAC signature with the derived-key. The username and password are taken from the output of the map credentials phase.", "wssec-use-derived-key", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppws_derived_key_username_token_iterations": DataSourceSchema.Int64Attribute{
+			"pp_ws_derived_key_username_token_iterations": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of hashing cycles during the generation of a derived key from a password. The minimum value is 2. The default value is 1000.", "wssec-derived-key-hash-iter", "").AddIntegerRange(2, 65535).AddDefaultValue("1000").String,
 				Computed:            true,
 			},
-			"ppws_username_token_allow_replacement": DataSourceSchema.BoolAttribute{
+			"pp_ws_username_token_allow_replacement": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retain the original token, not generate a new one, if the message already contains a UsernameToken. By default, the original otken is retained. When enabled, the generated token replaces any existing ones.", "wssec-replace-existing", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"pphmac_signing_alg": DataSourceSchema.StringAttribute{
+			"pp_hmac_signing_alg": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HMAC algorithm to sign the token. This property is available to request a WS-Security UsernameToken in postprocessing and WS-Security Derived-Key UsernameToken is added to the message with an HMAC signature. The default value is hmac-sha1.", "hmac-signing-algorithm", "").AddStringEnum("hmac-sha1", "hmac-sha224", "hmac-sha256", "hmac-sha384", "hmac-sha512", "hmac-ripemd160", "hmac-md5").AddDefaultValue("hmac-sha1").String,
 				Computed:            true,
 			},
@@ -1157,11 +1157,11 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm for the message digest for the generation of a digital signature. This algorithm is for only the UsernameToken postprocessing method. The default value is sha1.", "message-digest-algorithm", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").String,
 				Computed:            true,
 			},
-			"ppws_trust_header": DataSourceSchema.BoolAttribute{
+			"pp_ws_trust_header": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the WS-Trust token as a SOAP header. By default, the token is put in the SOAP body. When enabled, return the token as a SOAP header by wrapping the <tt>wst:RequestedSecurityToken</tt> by a <tt>wst:IssuedToken</tt> .", "ws-trust-in-header", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppwssc_key_source": DataSourceSchema.StringAttribute{
+			"pp_ws_sc_key_source": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the source of the key. For WS-Trust postprocessing, the DataPower Gateway works as an on-box WS-Trust security token service that is backed by WS-SecureConversation. A symmetric shared secret key is needed to initialize the WS-SecureConversation SecurityContext. By default, a random key is generated.", "ws-trust-key-source", "").AddStringEnum("client-entropy", "in-kerberos", "in-encryptedkey", "static", "random").AddDefaultValue("random").String,
 				Computed:            true,
 			},
@@ -1169,19 +1169,19 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret key as the WS-Trust key source.", "ws-trust-shared-key", "crypto_sskey").String,
 				Computed:            true,
 			},
-			"ppws_trust_renewal_wait": DataSourceSchema.Int64Attribute{
+			"pp_ws_trust_renewal_wait": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration to allow the STS to keep an expired SecurityContext token in seconds. After a WS-Trust token expires, it can be removed from the STS and cannot be renewed. Therefore, the token must be renewed before expiry. Enter a value in the range of 0 - 2678400. The default value is 0. <p>The token is issued or renewed with a 1-hour wait time in the following situation.</p><ul><li>The WS-Trust request asks that the issued token can be renewed after expiration.</li><li>This setting has a value of 0.</li></ul>", "ws-trust-renewal-wait", "").AddIntegerRange(0, 2678400).AddDefaultValue("0").String,
 				Computed:            true,
 			},
-			"ppws_trust_new_instance": DataSourceSchema.BoolAttribute{
+			"pp_ws_trust_new_instance": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the STS renewal request issues a new instance for WS-Trust renewal. By default, the STS renewal request renews the existing instance. When enabled, the STS renewal request creates a new instance.", "ws-trust-new-instance", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppws_trust_new_key": DataSourceSchema.BoolAttribute{
+			"pp_ws_trust_new_key": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to update the context key for WS-Trust renewal.By default, the SCT renewal request uses the existing shared secret key. When enabled, the SCT renewal request does not use the existing shared secret key.", "ws-trust-new-key", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppws_trust_never_expire": DataSourceSchema.BoolAttribute{
+			"pp_ws_trust_never_expire": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Trust security context expires. By default, the security context expires. When enabled, the security context never expires.However, you can change the duration afterward with an explicit duration in seconds before expiry.", "ws-trust-never-expire", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -1193,15 +1193,15 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the realm of a user for ICRX identity propagation. The ICRX realm is defined in the SAF configuration. Generally, this value is the equivalent of the prefix for a DN in a user registry.", "icrx-user-realm", "").String,
 				Computed:            true,
 			},
-			"ppsaml_identity_provider": DataSourceSchema.BoolAttribute{
+			"pp_saml_identity_provider": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to generate a SAML assertion. The SAML assertion can contain an authentication statement, an authorization statement, an attribute statement, or any combination of these statements. The SAML attribute value can be a user LDAP Attribute value that can be retrieved in the following ways.</p><ul><li>Directly by the LDAP authentication or authorization method with the list of LDAP attribute names that are defined by user auxiliary LDAP attributes.</li><li>Indirectly with the <tt>var://context/ldap/auxiliary-attributes</tt> variable in a stylesheet or GatewayScript file. A call with <tt>dp:ldap-search</tt> to the user registry, and put the <tt>attribute-value</tt> elements of search result to the variable.</li></ul><p>To sign the SAML assertion, configure a WS-Security sign action or SAML enveloped sign action after the AAA action in the processing rule.</p>", "generate-saml-assertion", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppsaml_protocol": DataSourceSchema.StringAttribute{
+			"pp_saml_protocol": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SAML protocol to wrap up the SAML assertion. By default, the SAML assertion can be put to WS-Security wrap-up later.", "saml-protocol", "").AddStringEnum("assertion", "response").AddDefaultValue("assertion").String,
 				Computed:            true,
 			},
-			"ppsaml_response_destination": DataSourceSchema.StringAttribute{
+			"pp_saml_response_destination": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for a SAML response. This information can prevent malicious forwarding of requests to unintended recipients, which is a required protection by some protocol bindings. If it is present, the actual recipient must check that the URI reference identifies the location at which the message was received. If it does not check that the URI reference identifies the location, the request must be discarded. Some protocol bindings might require the use of this attribute.", "saml-response-destination", "").String,
 				Computed:            true,
 			},
@@ -1209,28 +1209,28 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the result. When the DataPower Gateway is configured for SOAP or WS-Security processing, different output methods can be used. By default, generates the results to an existing WS-Security message and replaces the same token in the requesting message.", "result-wrapup", "").AddStringEnum("wssec-replace", "wssec-new", "wssec-inject", "soap-body", "none").AddDefaultValue("wssec-replace").String,
 				Computed:            true,
 			},
-			"ppsaml_assertion_type": GetDmSAMLStatementTypeDataSourceSchema("Specify the supported SAML statement types. By default, supports both attributes and authentication statements.", "saml-assertion-type", ""),
-			"ppsaml_subject_confirm": DataSourceSchema.StringAttribute{
+			"pp_saml_assertion_type": GetDmSAMLStatementTypeDataSourceSchema("Specify the supported SAML statement types. By default, supports both attributes and authentication statements.", "saml-assertion-type", ""),
+			"pp_saml_subject_confirm": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method that allows the destination system to confirm the subject of the SAML assertion. By default, the subject is bearer.", "saml-subject-confirm", "").AddStringEnum("bearer", "hok", "sv").AddDefaultValue("bearer").String,
 				Computed:            true,
 			},
-			"ppsaml_name_id": DataSourceSchema.BoolAttribute{
+			"pp_saml_name_id": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the SAML Subject element contains the name identifier. By default, the SAML subject contains the name identifier. When disabled, the SAML subject does not contain the name identifier. Use this value if the subject confirmation method is holder-of-key because the key represent the same entity as the subject.", "saml-nid", "").AddDefaultValue("true").String,
 				Computed:            true,
 			},
-			"ppsaml_name_id_format": DataSourceSchema.StringAttribute{
+			"pp_saml_name_id_format": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI reference that represents the classification of string-based identifier information. Any standard or arbitrary URI is allowed. If the value is an empty string, the DataPower Gateway attempts to determine the value from the AAA context. Some SAML protocols require a specified value, such as <tt>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</tt> or <tt>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</tt> .", "saml-nid-format", "").String,
 				Computed:            true,
 			},
-			"ppsaml_recipient": DataSourceSchema.StringAttribute{
+			"pp_saml_recipient": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a URI that identifies the entity or location that an attesting entity can present the assertion to. Any standard or arbitrary URI is allowed. If the value is an empty string, the optional attribute is not generated. This setting is applicable for only SAML 2.0.", "saml-recipient", "").String,
 				Computed:            true,
 			},
-			"ppsaml_audience": DataSourceSchema.StringAttribute{
+			"pp_saml_audience": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify URI references that identify an intended audience. Enter any number of the audience URIs to process the generated SAML assertion. If the value is an empty string, the SAML audience is not restricted. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-audience", "").String,
 				Computed:            true,
 			},
-			"ppsaml_omit_not_before": DataSourceSchema.BoolAttribute{
+			"pp_saml_omit_not_before": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("whether to omit the <tt>NotBefore</tt> attribute in the SAML assertion. When omitted, the assertion is considered valid even before the time it was issued. By default, the <tt>NotBefore</tt> attribute is not omitted. When enabled, the <tt>NotBefore</tt> attribute in the SAML assertion is omitted. This behavior might be required to respond to an <tt>AuthnRequest</tt> .", "saml-omit-notbefore", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -1238,43 +1238,43 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the destination system or relying party should cache the generated token. The generated token might contain the property for this characteristic, which is especially practical for SAML assertions. By default, the destination system can cache the generated token. When enabled, he destination system should not cache the generated token.", "one-time-use", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppsaml_proxy": DataSourceSchema.BoolAttribute{
+			"pp_saml_proxy": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to allow SAML proxy restriction. The generated SAML assertion provides limitations that the asserting party imposes on relying parties that want to act as asserting parties.</p><ul><li>A relying party that acts as an asserting party can issue subsequent assertions that are based on the information in the original assertion.</li><li>The relying party cannot issue an assertion that violates these restrictions.</li></ul><p>By default, proxy restrictions are not allowd. When enabled, proxy restrictions are allows.</p>", "saml-proxy", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppsaml_proxy_audience": DataSourceSchema.StringAttribute{
+			"pp_saml_proxy_audience": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the set of audiences (proxy) to whom the asserting party permits new assertions to be issued based on this assertion. If the value is an empty string, the audience for the <tt>ProxyRestriction</tt> is not issued with this SAML assertion. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-proxy-audience", "").String,
 				Computed:            true,
 			},
-			"ppsaml_proxy_count": DataSourceSchema.Int64Attribute{
+			"pp_saml_proxy_count": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of indirections that the asserting party permits between this assertion and an assertion that was issued. Enter a value in the range 0 - 65535. The default value is 0. A value of 0 indicates that a relying party must not issue an assertion to another relying party based on this assertion. If greater than zero, any assertion that is issued must itself contain a <tt>ProxyRestriction</tt> element with a <tt>Count</tt> value of at most one less than this value.", "saml-proxy-count", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
 				Computed:            true,
 			},
-			"ppsaml_authz_action": DataSourceSchema.StringAttribute{
+			"pp_saml_authz_action": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the standard action that the subject can take on the resource. The SAML specification defines the list of action identifiers with corresponding namespace URIs. By default, all HTTP operations, where <tt>urn:oasis:names:tc:SAML:1.0:action:ghpp</tt> is the namespace URI.", "saml-authz-action", "").AddStringEnum("AllHTTP", "POST", "GET", "PUT", "HEAD", "General", "Read", "Write", "Execute", "Delete", "Control", "NegatedRead", "NegatedWrite", "NegatedExecute", "NegatedDelete", "NegatedControl").AddDefaultValue("AllHTTP").String,
 				Computed:            true,
 			},
-			"ppsaml_attributes": DataSourceSchema.StringAttribute{
+			"pp_saml_attributes": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an existing SAML attributes. The SAML attributes define the information to put in the SAML assertion to generate the attribute statement. Each SAML attribute requires the name, format or namespace, and value. The value can be from a DataPower variable.", "saml-attributes", "saml_attributes").String,
 				Computed:            true,
 			},
-			"ppltpa_insert_cookie": DataSourceSchema.BoolAttribute{
+			"pp_ltpa_insert_cookie": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.", "ltpa-insert-cookie", "").AddDefaultValue("true").String,
 				Computed:            true,
 			},
-			"pptampac_propagate": DataSourceSchema.BoolAttribute{
+			"pp_tam_pac_propagate": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to add the Access Manager privilege attribute certificate (PAC) token to an HTTP header. The PAC token was returned from the previous authentication or authorization phase. By default, does not add the PAC token. When enabled, adds the PAC token.", "propagate-tam-pac", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"pptam_header": DataSourceSchema.StringAttribute{
+			"pp_tam_header": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the HTTP header to store the token in. The default value is iv_creds, which is HTTP header that WebSEAL uses to write headers.", "tam-header", "").AddDefaultValue("iv-creds").String,
 				Computed:            true,
 			},
-			"pptam_header_size": DataSourceSchema.Int64Attribute{
+			"pp_tam_header_size": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in bytes of HTTP headers. A value of 0 disables this function. If the value is nonzero, the PAC token is split across multiple headers of the specified length. The default value is 0.", "tam-header-size", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
-			"pp_kerberos_use_s4u2_proxy": DataSourceSchema.BoolAttribute{
+			"pp_kerberos_use_s4u2proxy": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use constrained delegation, namely S4U2Proxy, when a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token is generated. By default, does not use constrained delegation. When enabled, uses constrained delegation.", "kerberos-use-s4u2proxy", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -1282,7 +1282,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy to include standard or custom attributes in the cookie. The response message that contains a <tt>Set-Cookie</tt> header is updated with the attributes defined in this policy.", "cookie-attributes", "cookie_attribute_policy").String,
 				Computed:            true,
 			},
-			"pp_kerberos_use_s4u2_self_and_s4u2_proxy": DataSourceSchema.BoolAttribute{
+			"pp_kerberos_use_s4u2self_and_s4u2proxy": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use protocol transition, namely S4U2Self, and then use constrained delegation, namely S4U2Proxy.</p><ul><li>Use S4U2Self to convert a non-Kerberos token to a Kerberos token to the DataPower Gateway itself.</li><li>Use S4U2Proxy to generate a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token.</li></ul><p>By default, does not use protocol transition and constrained delegation. When enabled, uses protocol transition and constrained delegation.</p>", "kerberos-use-s4u2self", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -1318,23 +1318,23 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos server principal. This context variable must be specified in the <tt>var://context/name format</tt> . For example, <tt>var:///context/AAA/krb-server-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-server-ctx-var", "").String,
 				Computed:            true,
 			},
-			"ppssl_client_config_type": DataSourceSchema.StringAttribute{
+			"pp_ssl_client_config_type": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client type to secure connections.", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
 				Computed:            true,
 			},
-			"ppssl_client_profile": DataSourceSchema.StringAttribute{
+			"pp_ssl_client_profile": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").String,
 				Computed:            true,
 			},
-			"ppltpa_key_file_password_alias": DataSourceSchema.StringAttribute{
+			"pp_ltpa_key_file_password_alias": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the the alias for password of the LTPA key file.", "ltpa-key-file-password-alias", "password_alias").String,
 				Computed:            true,
 			},
-			"ppjwt": DataSourceSchema.BoolAttribute{
+			"pp_jwt": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a JWT token.", "jwt", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ppjwt_generator": DataSourceSchema.StringAttribute{
+			"pp_jwt_generator": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT generator.", "generate-jwt", "aaa_jwt_generator").String,
 				Computed:            true,
 			},
@@ -1364,19 +1364,19 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 					validators.ConditionalRequiredString(DmAAAPPostProcessPPCustomURLCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ppsaml_auth_assertion": ResourceSchema.BoolAttribute{
+			"pp_saml_auth_assertion": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a SAML assertion that contains a SAML authentication statement for the authenticated user identity.", "saml-generate-assertion", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppsaml_server_name": ResourceSchema.StringAttribute{
+			"pp_saml_server_name": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the value of the <tt>saml:Issuer</tt> of the generated SAML assertion or SAML SLO request. The default value is XS.</p><ul><li>If generating an SAML assertion, identifies the server that makes the assertion.</li><li>If sending an SLO request, identifies the issuer that sends the request.</li></ul>", "saml-server-name", "").AddDefaultValue("XS").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             stringdefault.StaticString("XS"),
 			},
-			"ppsaml_name_qualifier": ResourceSchema.StringAttribute{
+			"pp_saml_name_qualifier": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the NameQualifier attribute of the NameIdentifier in the generated SAML assertion. Although the attribute is an optional attribute, some SAML implementations require that this attribute must be present.", "saml-name-qualifier", "").String,
 				Optional:            true,
 			},
@@ -1404,7 +1404,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ppws_trust": ResourceSchema.BoolAttribute{
+			"pp_ws_trust": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate the appropriate security token response for a valid WS-Trust SecurityContextToken request.", "ws-trust-generate-resp", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -1431,7 +1431,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppsaml_version": ResourceSchema.StringAttribute{
+			"pp_saml_version": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol level of SAML messages. The version affects the identity extraction from the original message and the format of messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2", "1.1", "1").AddDefaultValue("2").String,
 				Computed:            true,
 				Optional:            true,
@@ -1440,23 +1440,23 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("2"),
 			},
-			"ppsaml_send_slo": ResourceSchema.BoolAttribute{
+			"pp_saml_send_slo": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to send a SAML Logout (SLO) request to revoke the SAML Assertion token that is used for single-sign-on (SSO). The SLO is a request-response that the DataPower&#174; Gateway handles differently when it is working as a service provider (SP) or identity provider (IdP).</p><ul><li>When an SP, the DataPower Gateway sends an SLO request to the SAML SLO endpoint (IdP). On response, the DataPower Gateway processes the SLO response for its status.</li><li>When an IdP, the request to the DataPower Gateway contains the SLO request. Postprocessing validates against the SAML metadata file and sends the corresponding endpoint the SLO response.</li></ul>", "saml-send-slo", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppsamlslo_endpoint": ResourceSchema.StringAttribute{
+			"pp_saml_slo_endpoint": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint URL for SAML 2.0 Single Logout (SLO) messages. This endpoint is the authority that authenticated the assertion subject.", "saml-slo-endpoint", "").String,
 				Optional:            true,
 			},
-			"ppws_username_token": ResourceSchema.BoolAttribute{
+			"pp_ws_username_token": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to add a WS-Security UsernameToken. The username and password are taken from the output of the map credentials phase.", "wssec-add-user-name-token", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppws_username_token_password_type": ResourceSchema.StringAttribute{
+			"pp_ws_username_token_password_type": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of password that the UsernameToken provides. By default, use the digest of the password as defined in the \"Web Services Security UsernameToken Profile 1.0\" specification.", "wssec-user-name-token-type", "").AddStringEnum("Text", "Digest").AddDefaultValue("Digest").String,
 				Computed:            true,
 				Optional:            true,
@@ -1465,31 +1465,31 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("Digest"),
 			},
-			"ppsaml_validity": ResourceSchema.Int64Attribute{
+			"pp_saml_validity": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration of the SAML assertion in seconds. This value and the skew time are for fine control of the validity duration. The default value is 0.", "saml-validity", "").AddDefaultValue("0").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             int64default.StaticInt64(0),
 			},
-			"ppsaml_skew": ResourceSchema.Int64Attribute{
+			"pp_saml_skew": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the acceptable skew interval in seconds. The IdP and SP system clocks can have a skew time. When the SAML assertion is generated, the expiration takes the skew time setting into account. <ul><li>When <tt>NotBefore</tt> has the value of <tt>(CurrentTime - SkewTime)</tt> .</li><li>When <tt>NotOnOrAfter</tt> has the value of <tt>(CurrentTime + Validity + SkewTime)</tt> .</li></ul>", "saml-skew", "").AddDefaultValue("0").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             int64default.StaticInt64(0),
 			},
-			"ppws_username_token_include_pwd": ResourceSchema.BoolAttribute{
+			"pp_ws_username_token_include_pwd": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Security UsernameToken must include the password. By default, the token must contain the password.", "wssec-user-name-token-contains-pwd", "").AddDefaultValue("true").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
-			"ppltpa": ResourceSchema.BoolAttribute{
+			"pp_ltpa": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate an LTPA token.", "lpta-generate-token", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppltpa_version": ResourceSchema.StringAttribute{
+			"pp_ltpa_version": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.", "lpta-version", "").AddStringEnum("LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7", "LTPADomino").AddDefaultValue("LTPA2").String,
 				Computed:            true,
 				Optional:            true,
@@ -1498,7 +1498,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("LTPA2"),
 			},
-			"ppltpa_expiry": ResourceSchema.Int64Attribute{
+			"pp_ltpa_expiry": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.", "lpta-expiry", "").AddIntegerRange(1, 628992000).AddDefaultValue("600").String,
 				Computed:            true,
 				Optional:            true,
@@ -1507,18 +1507,18 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: int64default.StaticInt64(600),
 			},
-			"ppltpa_key_file": ResourceSchema.StringAttribute{
+			"pp_ltpa_key_file": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPPostProcessPPLTPAKeyFileCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ppltpa_key_file_password": ResourceSchema.StringAttribute{
+			"pp_ltpa_key_file_password": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use the LTPA key file password alias.", "lpta-key-file-password", "").String,
 				Optional:            true,
 			},
-			"ppltpa_stash_file": ResourceSchema.StringAttribute{
+			"pp_ltpa_stash_file": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the file that contains the LTPA key file password.", "lpta-stash-file", "").String,
 				Optional:            true,
 			},
@@ -1538,7 +1538,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ"),
 			},
-			"ppsaml_use_ws_sec": ResourceSchema.BoolAttribute{
+			"pp_saml_use_ws_sec": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to insert the SAML assertion. By default, the assertion is inserted as a child element of the SOAP header. When enabled, the assertion is inserted in a WS-Security-compliant header as defined by the WS-Security SAML token profile.", "saml-in-wssec", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -1561,13 +1561,13 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier for the SOAP 1.1 actor or SOAP 1.2 role for processing a WS-Security Security header. The DataPower Gateway works as that actor or role in consuming the input and generating the output for the next SOAP endpoint. This setting is meaningful when a SOAP message is being used for WS-Security 1.0 or 1.1. <table border=\"1\"><tr><td valign=\"left\">http://schemas.xmlsoap.org/soap/actor/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/none</td><td>No one can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</td><td>The ultimate receiver of the message can process the Security header. This value is the default value if such setting is not configured.</td></tr><tr><td valign=\"left\">&lt;blank or empty string></td><td>The empty string \"\" (without quotation marks) indicates that no actor or role identifier is configured. If no actor or role setting is configured, the ultimate receiver is assumed during message processing, and no actor or role attribute is added during the generation of the Security header. <p>This value does not generate an attribute with an empty value, which is the behavior as defined by the USE_MESSAGE_BASE_URI constant string. There cannot be more than one Security header that omits the actor or role identifier.</p></td></tr><tr><td valign=\"left\">USE_MESSAGE_BASE_URI</td><td>The constant value indicates that the actor or role identifier is the base URL of the message. If the SOAP message is transported over HTTP, the base URI is the Request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">any other customized string</td><td>You can input any string to identify the actor or role of the Security header.</td></tr></table>", "wssec-actor-role-id", "").String,
 				Optional:            true,
 			},
-			"ppws_derived_key_username_token": ResourceSchema.BoolAttribute{
+			"pp_ws_derived_key_username_token": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a derived key from a password. By default, a derived key is not generated. When enabled, the process adds a WS-Security derived-key UsernameToken to the message and adds an HMAC signature with the derived-key. The username and password are taken from the output of the map credentials phase.", "wssec-use-derived-key", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppws_derived_key_username_token_iterations": ResourceSchema.Int64Attribute{
+			"pp_ws_derived_key_username_token_iterations": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of hashing cycles during the generation of a derived key from a password. The minimum value is 2. The default value is 1000.", "wssec-derived-key-hash-iter", "").AddIntegerRange(2, 65535).AddDefaultValue("1000").String,
 				Computed:            true,
 				Optional:            true,
@@ -1577,13 +1577,13 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: int64default.StaticInt64(1000),
 			},
-			"ppws_username_token_allow_replacement": ResourceSchema.BoolAttribute{
+			"pp_ws_username_token_allow_replacement": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retain the original token, not generate a new one, if the message already contains a UsernameToken. By default, the original otken is retained. When enabled, the generated token replaces any existing ones.", "wssec-replace-existing", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"pphmac_signing_alg": ResourceSchema.StringAttribute{
+			"pp_hmac_signing_alg": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HMAC algorithm to sign the token. This property is available to request a WS-Security UsernameToken in postprocessing and WS-Security Derived-Key UsernameToken is added to the message with an HMAC signature. The default value is hmac-sha1.", "hmac-signing-algorithm", "").AddStringEnum("hmac-sha1", "hmac-sha224", "hmac-sha256", "hmac-sha384", "hmac-sha512", "hmac-ripemd160", "hmac-md5").AddDefaultValue("hmac-sha1").String,
 				Computed:            true,
 				Optional:            true,
@@ -1603,13 +1603,13 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("sha1"),
 			},
-			"ppws_trust_header": ResourceSchema.BoolAttribute{
+			"pp_ws_trust_header": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the WS-Trust token as a SOAP header. By default, the token is put in the SOAP body. When enabled, return the token as a SOAP header by wrapping the <tt>wst:RequestedSecurityToken</tt> by a <tt>wst:IssuedToken</tt> .", "ws-trust-in-header", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppwssc_key_source": ResourceSchema.StringAttribute{
+			"pp_ws_sc_key_source": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the source of the key. For WS-Trust postprocessing, the DataPower Gateway works as an on-box WS-Trust security token service that is backed by WS-SecureConversation. A symmetric shared secret key is needed to initialize the WS-SecureConversation SecurityContext. By default, a random key is generated.", "ws-trust-key-source", "").AddStringEnum("client-entropy", "in-kerberos", "in-encryptedkey", "static", "random").AddDefaultValue("random").String,
 				Computed:            true,
 				Optional:            true,
@@ -1622,7 +1622,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret key as the WS-Trust key source.", "ws-trust-shared-key", "crypto_sskey").String,
 				Optional:            true,
 			},
-			"ppws_trust_renewal_wait": ResourceSchema.Int64Attribute{
+			"pp_ws_trust_renewal_wait": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration to allow the STS to keep an expired SecurityContext token in seconds. After a WS-Trust token expires, it can be removed from the STS and cannot be renewed. Therefore, the token must be renewed before expiry. Enter a value in the range of 0 - 2678400. The default value is 0. <p>The token is issued or renewed with a 1-hour wait time in the following situation.</p><ul><li>The WS-Trust request asks that the issued token can be renewed after expiration.</li><li>This setting has a value of 0.</li></ul>", "ws-trust-renewal-wait", "").AddIntegerRange(0, 2678400).AddDefaultValue("0").String,
 				Computed:            true,
 				Optional:            true,
@@ -1631,19 +1631,19 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: int64default.StaticInt64(0),
 			},
-			"ppws_trust_new_instance": ResourceSchema.BoolAttribute{
+			"pp_ws_trust_new_instance": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the STS renewal request issues a new instance for WS-Trust renewal. By default, the STS renewal request renews the existing instance. When enabled, the STS renewal request creates a new instance.", "ws-trust-new-instance", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppws_trust_new_key": ResourceSchema.BoolAttribute{
+			"pp_ws_trust_new_key": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to update the context key for WS-Trust renewal.By default, the SCT renewal request uses the existing shared secret key. When enabled, the SCT renewal request does not use the existing shared secret key.", "ws-trust-new-key", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppws_trust_never_expire": ResourceSchema.BoolAttribute{
+			"pp_ws_trust_never_expire": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Trust security context expires. By default, the security context expires. When enabled, the security context never expires.However, you can change the duration afterward with an explicit duration in seconds before expiry.", "ws-trust-never-expire", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -1659,13 +1659,13 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the realm of a user for ICRX identity propagation. The ICRX realm is defined in the SAF configuration. Generally, this value is the equivalent of the prefix for a DN in a user registry.", "icrx-user-realm", "").String,
 				Optional:            true,
 			},
-			"ppsaml_identity_provider": ResourceSchema.BoolAttribute{
+			"pp_saml_identity_provider": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to generate a SAML assertion. The SAML assertion can contain an authentication statement, an authorization statement, an attribute statement, or any combination of these statements. The SAML attribute value can be a user LDAP Attribute value that can be retrieved in the following ways.</p><ul><li>Directly by the LDAP authentication or authorization method with the list of LDAP attribute names that are defined by user auxiliary LDAP attributes.</li><li>Indirectly with the <tt>var://context/ldap/auxiliary-attributes</tt> variable in a stylesheet or GatewayScript file. A call with <tt>dp:ldap-search</tt> to the user registry, and put the <tt>attribute-value</tt> elements of search result to the variable.</li></ul><p>To sign the SAML assertion, configure a WS-Security sign action or SAML enveloped sign action after the AAA action in the processing rule.</p>", "generate-saml-assertion", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppsaml_protocol": ResourceSchema.StringAttribute{
+			"pp_saml_protocol": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SAML protocol to wrap up the SAML assertion. By default, the SAML assertion can be put to WS-Security wrap-up later.", "saml-protocol", "").AddStringEnum("assertion", "response").AddDefaultValue("assertion").String,
 				Computed:            true,
 				Optional:            true,
@@ -1674,7 +1674,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("assertion"),
 			},
-			"ppsaml_response_destination": ResourceSchema.StringAttribute{
+			"pp_saml_response_destination": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for a SAML response. This information can prevent malicious forwarding of requests to unintended recipients, which is a required protection by some protocol bindings. If it is present, the actual recipient must check that the URI reference identifies the location at which the message was received. If it does not check that the URI reference identifies the location, the request must be discarded. Some protocol bindings might require the use of this attribute.", "saml-response-destination", "").String,
 				Optional:            true,
 			},
@@ -1687,8 +1687,8 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("wssec-replace"),
 			},
-			"ppsaml_assertion_type": GetDmSAMLStatementTypeResourceSchema("Specify the supported SAML statement types. By default, supports both attributes and authentication statements.", "saml-assertion-type", "", false),
-			"ppsaml_subject_confirm": ResourceSchema.StringAttribute{
+			"pp_saml_assertion_type": GetDmSAMLStatementTypeResourceSchema("Specify the supported SAML statement types. By default, supports both attributes and authentication statements.", "saml-assertion-type", "", false),
+			"pp_saml_subject_confirm": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method that allows the destination system to confirm the subject of the SAML assertion. By default, the subject is bearer.", "saml-subject-confirm", "").AddStringEnum("bearer", "hok", "sv").AddDefaultValue("bearer").String,
 				Computed:            true,
 				Optional:            true,
@@ -1697,25 +1697,25 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("bearer"),
 			},
-			"ppsaml_name_id": ResourceSchema.BoolAttribute{
+			"pp_saml_name_id": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the SAML Subject element contains the name identifier. By default, the SAML subject contains the name identifier. When disabled, the SAML subject does not contain the name identifier. Use this value if the subject confirmation method is holder-of-key because the key represent the same entity as the subject.", "saml-nid", "").AddDefaultValue("true").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
-			"ppsaml_name_id_format": ResourceSchema.StringAttribute{
+			"pp_saml_name_id_format": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI reference that represents the classification of string-based identifier information. Any standard or arbitrary URI is allowed. If the value is an empty string, the DataPower Gateway attempts to determine the value from the AAA context. Some SAML protocols require a specified value, such as <tt>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</tt> or <tt>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</tt> .", "saml-nid-format", "").String,
 				Optional:            true,
 			},
-			"ppsaml_recipient": ResourceSchema.StringAttribute{
+			"pp_saml_recipient": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a URI that identifies the entity or location that an attesting entity can present the assertion to. Any standard or arbitrary URI is allowed. If the value is an empty string, the optional attribute is not generated. This setting is applicable for only SAML 2.0.", "saml-recipient", "").String,
 				Optional:            true,
 			},
-			"ppsaml_audience": ResourceSchema.StringAttribute{
+			"pp_saml_audience": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify URI references that identify an intended audience. Enter any number of the audience URIs to process the generated SAML assertion. If the value is an empty string, the SAML audience is not restricted. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-audience", "").String,
 				Optional:            true,
 			},
-			"ppsaml_omit_not_before": ResourceSchema.BoolAttribute{
+			"pp_saml_omit_not_before": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("whether to omit the <tt>NotBefore</tt> attribute in the SAML assertion. When omitted, the assertion is considered valid even before the time it was issued. By default, the <tt>NotBefore</tt> attribute is not omitted. When enabled, the <tt>NotBefore</tt> attribute in the SAML assertion is omitted. This behavior might be required to respond to an <tt>AuthnRequest</tt> .", "saml-omit-notbefore", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -1727,17 +1727,17 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppsaml_proxy": ResourceSchema.BoolAttribute{
+			"pp_saml_proxy": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to allow SAML proxy restriction. The generated SAML assertion provides limitations that the asserting party imposes on relying parties that want to act as asserting parties.</p><ul><li>A relying party that acts as an asserting party can issue subsequent assertions that are based on the information in the original assertion.</li><li>The relying party cannot issue an assertion that violates these restrictions.</li></ul><p>By default, proxy restrictions are not allowd. When enabled, proxy restrictions are allows.</p>", "saml-proxy", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppsaml_proxy_audience": ResourceSchema.StringAttribute{
+			"pp_saml_proxy_audience": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the set of audiences (proxy) to whom the asserting party permits new assertions to be issued based on this assertion. If the value is an empty string, the audience for the <tt>ProxyRestriction</tt> is not issued with this SAML assertion. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-proxy-audience", "").String,
 				Optional:            true,
 			},
-			"ppsaml_proxy_count": ResourceSchema.Int64Attribute{
+			"pp_saml_proxy_count": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of indirections that the asserting party permits between this assertion and an assertion that was issued. Enter a value in the range 0 - 65535. The default value is 0. A value of 0 indicates that a relying party must not issue an assertion to another relying party based on this assertion. If greater than zero, any assertion that is issued must itself contain a <tt>ProxyRestriction</tt> element with a <tt>Count</tt> value of at most one less than this value.", "saml-proxy-count", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
 				Computed:            true,
 				Optional:            true,
@@ -1746,7 +1746,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: int64default.StaticInt64(0),
 			},
-			"ppsaml_authz_action": ResourceSchema.StringAttribute{
+			"pp_saml_authz_action": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the standard action that the subject can take on the resource. The SAML specification defines the list of action identifiers with corresponding namespace URIs. By default, all HTTP operations, where <tt>urn:oasis:names:tc:SAML:1.0:action:ghpp</tt> is the namespace URI.", "saml-authz-action", "").AddStringEnum("AllHTTP", "POST", "GET", "PUT", "HEAD", "General", "Read", "Write", "Execute", "Delete", "Control", "NegatedRead", "NegatedWrite", "NegatedExecute", "NegatedDelete", "NegatedControl").AddDefaultValue("AllHTTP").String,
 				Computed:            true,
 				Optional:            true,
@@ -1755,26 +1755,26 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("AllHTTP"),
 			},
-			"ppsaml_attributes": ResourceSchema.StringAttribute{
+			"pp_saml_attributes": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an existing SAML attributes. The SAML attributes define the information to put in the SAML assertion to generate the attribute statement. Each SAML attribute requires the name, format or namespace, and value. The value can be from a DataPower variable.", "saml-attributes", "saml_attributes").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPPostProcessPPSAMLAttributesCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ppltpa_insert_cookie": ResourceSchema.BoolAttribute{
+			"pp_ltpa_insert_cookie": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.", "ltpa-insert-cookie", "").AddDefaultValue("true").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
-			"pptampac_propagate": ResourceSchema.BoolAttribute{
+			"pp_tam_pac_propagate": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to add the Access Manager privilege attribute certificate (PAC) token to an HTTP header. The PAC token was returned from the previous authentication or authorization phase. By default, does not add the PAC token. When enabled, adds the PAC token.", "propagate-tam-pac", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"pptam_header": ResourceSchema.StringAttribute{
+			"pp_tam_header": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the HTTP header to store the token in. The default value is iv_creds, which is HTTP header that WebSEAL uses to write headers.", "tam-header", "").AddDefaultValue("iv-creds").String,
 				Computed:            true,
 				Optional:            true,
@@ -1783,7 +1783,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("iv-creds"),
 			},
-			"pptam_header_size": ResourceSchema.Int64Attribute{
+			"pp_tam_header_size": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in bytes of HTTP headers. A value of 0 disables this function. If the value is nonzero, the PAC token is split across multiple headers of the specified length. The default value is 0.", "tam-header-size", "").AddDefaultValue("0").String,
 				Computed:            true,
 				Optional:            true,
@@ -1792,7 +1792,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: int64default.StaticInt64(0),
 			},
-			"pp_kerberos_use_s4u2_proxy": ResourceSchema.BoolAttribute{
+			"pp_kerberos_use_s4u2proxy": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use constrained delegation, namely S4U2Proxy, when a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token is generated. By default, does not use constrained delegation. When enabled, uses constrained delegation.", "kerberos-use-s4u2proxy", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -1802,7 +1802,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy to include standard or custom attributes in the cookie. The response message that contains a <tt>Set-Cookie</tt> header is updated with the attributes defined in this policy.", "cookie-attributes", "cookie_attribute_policy").String,
 				Optional:            true,
 			},
-			"pp_kerberos_use_s4u2_self_and_s4u2_proxy": ResourceSchema.BoolAttribute{
+			"pp_kerberos_use_s4u2self_and_s4u2proxy": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use protocol transition, namely S4U2Self, and then use constrained delegation, namely S4U2Proxy.</p><ul><li>Use S4U2Self to convert a non-Kerberos token to a Kerberos token to the DataPower Gateway itself.</li><li>Use S4U2Proxy to generate a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token.</li></ul><p>By default, does not use protocol transition and constrained delegation. When enabled, uses protocol transition and constrained delegation.</p>", "kerberos-use-s4u2self", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -1870,7 +1870,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerCtxVarCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ppssl_client_config_type": ResourceSchema.StringAttribute{
+			"pp_ssl_client_config_type": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client type to secure connections.", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
 				Computed:            true,
 				Optional:            true,
@@ -1879,24 +1879,24 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				},
 				Default: stringdefault.StaticString("proxy"),
 			},
-			"ppssl_client_profile": ResourceSchema.StringAttribute{
+			"pp_ssl_client_profile": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").String,
 				Optional:            true,
 			},
-			"ppltpa_key_file_password_alias": ResourceSchema.StringAttribute{
+			"pp_ltpa_key_file_password_alias": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the the alias for password of the LTPA key file.", "ltpa-key-file-password-alias", "password_alias").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPPostProcessPPLTPAKeyFilePasswordAliasCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ppjwt": ResourceSchema.BoolAttribute{
+			"pp_jwt": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a JWT token.", "jwt", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ppjwt_generator": ResourceSchema.StringAttribute{
+			"pp_jwt_generator": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT generator.", "generate-jwt", "aaa_jwt_generator").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -1922,13 +1922,13 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpCustomUrl.IsNull() {
 		return false
 	}
-	if !data.PpsamlAuthAssertion.IsNull() {
+	if !data.PpSamlAuthAssertion.IsNull() {
 		return false
 	}
-	if !data.PpsamlServerName.IsNull() {
+	if !data.PpSamlServerName.IsNull() {
 		return false
 	}
-	if !data.PpsamlNameQualifier.IsNull() {
+	if !data.PpSamlNameQualifier.IsNull() {
 		return false
 	}
 	if !data.PpKerberosTicket.IsNull() {
@@ -1943,7 +1943,7 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpKerberosServer.IsNull() {
 		return false
 	}
-	if !data.PpwsTrust.IsNull() {
+	if !data.PpWsTrust.IsNull() {
 		return false
 	}
 	if !data.PpTimestamp.IsNull() {
@@ -1955,46 +1955,46 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpAllowRenewal.IsNull() {
 		return false
 	}
-	if !data.PpsamlVersion.IsNull() {
+	if !data.PpSamlVersion.IsNull() {
 		return false
 	}
-	if !data.PpsamlSendSlo.IsNull() {
+	if !data.PpSamlSendSlo.IsNull() {
 		return false
 	}
-	if !data.PpsamlsloEndpoint.IsNull() {
+	if !data.PpSamlSloEndpoint.IsNull() {
 		return false
 	}
-	if !data.PpwsUsernameToken.IsNull() {
+	if !data.PpWsUsernameToken.IsNull() {
 		return false
 	}
-	if !data.PpwsUsernameTokenPasswordType.IsNull() {
+	if !data.PpWsUsernameTokenPasswordType.IsNull() {
 		return false
 	}
-	if !data.PpsamlValidity.IsNull() {
+	if !data.PpSamlValidity.IsNull() {
 		return false
 	}
-	if !data.PpsamlSkew.IsNull() {
+	if !data.PpSamlSkew.IsNull() {
 		return false
 	}
-	if !data.PpwsUsernameTokenIncludePwd.IsNull() {
+	if !data.PpWsUsernameTokenIncludePwd.IsNull() {
 		return false
 	}
-	if !data.Ppltpa.IsNull() {
+	if !data.PpLtpa.IsNull() {
 		return false
 	}
-	if !data.PpltpaVersion.IsNull() {
+	if !data.PpLtpaVersion.IsNull() {
 		return false
 	}
-	if !data.PpltpaExpiry.IsNull() {
+	if !data.PpLtpaExpiry.IsNull() {
 		return false
 	}
-	if !data.PpltpaKeyFile.IsNull() {
+	if !data.PpLtpaKeyFile.IsNull() {
 		return false
 	}
-	if !data.PpltpaKeyFilePassword.IsNull() {
+	if !data.PpLtpaKeyFilePassword.IsNull() {
 		return false
 	}
-	if !data.PpltpaStashFile.IsNull() {
+	if !data.PpLtpaStashFile.IsNull() {
 		return false
 	}
 	if !data.PpKerberosSpnegoToken.IsNull() {
@@ -2003,7 +2003,7 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpKerberosBstValueType.IsNull() {
 		return false
 	}
-	if !data.PpsamlUseWsSec.IsNull() {
+	if !data.PpSamlUseWsSec.IsNull() {
 		return false
 	}
 	if !data.PpKerberosClientKeytab.IsNull() {
@@ -2015,40 +2015,40 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpActorRoleId.IsNull() {
 		return false
 	}
-	if !data.PpwsDerivedKeyUsernameToken.IsNull() {
+	if !data.PpWsDerivedKeyUsernameToken.IsNull() {
 		return false
 	}
-	if !data.PpwsDerivedKeyUsernameTokenIterations.IsNull() {
+	if !data.PpWsDerivedKeyUsernameTokenIterations.IsNull() {
 		return false
 	}
-	if !data.PpwsUsernameTokenAllowReplacement.IsNull() {
+	if !data.PpWsUsernameTokenAllowReplacement.IsNull() {
 		return false
 	}
-	if !data.PphmacSigningAlg.IsNull() {
+	if !data.PpHmacSigningAlg.IsNull() {
 		return false
 	}
 	if !data.PpSigningHashAlg.IsNull() {
 		return false
 	}
-	if !data.PpwsTrustHeader.IsNull() {
+	if !data.PpWsTrustHeader.IsNull() {
 		return false
 	}
-	if !data.PpwsscKeySource.IsNull() {
+	if !data.PpWsScKeySource.IsNull() {
 		return false
 	}
 	if !data.PpSharedSecretKey.IsNull() {
 		return false
 	}
-	if !data.PpwsTrustRenewalWait.IsNull() {
+	if !data.PpWsTrustRenewalWait.IsNull() {
 		return false
 	}
-	if !data.PpwsTrustNewInstance.IsNull() {
+	if !data.PpWsTrustNewInstance.IsNull() {
 		return false
 	}
-	if !data.PpwsTrustNewKey.IsNull() {
+	if !data.PpWsTrustNewKey.IsNull() {
 		return false
 	}
-	if !data.PpwsTrustNeverExpire.IsNull() {
+	if !data.PpWsTrustNeverExpire.IsNull() {
 		return false
 	}
 	if !data.PpicrxToken.IsNull() {
@@ -2057,78 +2057,78 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpicrxUserRealm.IsNull() {
 		return false
 	}
-	if !data.PpsamlIdentityProvider.IsNull() {
+	if !data.PpSamlIdentityProvider.IsNull() {
 		return false
 	}
-	if !data.PpsamlProtocol.IsNull() {
+	if !data.PpSamlProtocol.IsNull() {
 		return false
 	}
-	if !data.PpsamlResponseDestination.IsNull() {
+	if !data.PpSamlResponseDestination.IsNull() {
 		return false
 	}
 	if !data.PpResultWrapup.IsNull() {
 		return false
 	}
-	if data.PpsamlAssertionType != nil {
-		if !data.PpsamlAssertionType.IsNull() {
+	if data.PpSamlAssertionType != nil {
+		if !data.PpSamlAssertionType.IsNull() {
 			return false
 		}
 	}
-	if !data.PpsamlSubjectConfirm.IsNull() {
+	if !data.PpSamlSubjectConfirm.IsNull() {
 		return false
 	}
-	if !data.PpsamlNameId.IsNull() {
+	if !data.PpSamlNameId.IsNull() {
 		return false
 	}
-	if !data.PpsamlNameIdFormat.IsNull() {
+	if !data.PpSamlNameIdFormat.IsNull() {
 		return false
 	}
-	if !data.PpsamlRecipient.IsNull() {
+	if !data.PpSamlRecipient.IsNull() {
 		return false
 	}
-	if !data.PpsamlAudience.IsNull() {
+	if !data.PpSamlAudience.IsNull() {
 		return false
 	}
-	if !data.PpsamlOmitNotBefore.IsNull() {
+	if !data.PpSamlOmitNotBefore.IsNull() {
 		return false
 	}
 	if !data.PpOneTimeUse.IsNull() {
 		return false
 	}
-	if !data.PpsamlProxy.IsNull() {
+	if !data.PpSamlProxy.IsNull() {
 		return false
 	}
-	if !data.PpsamlProxyAudience.IsNull() {
+	if !data.PpSamlProxyAudience.IsNull() {
 		return false
 	}
-	if !data.PpsamlProxyCount.IsNull() {
+	if !data.PpSamlProxyCount.IsNull() {
 		return false
 	}
-	if !data.PpsamlAuthzAction.IsNull() {
+	if !data.PpSamlAuthzAction.IsNull() {
 		return false
 	}
-	if !data.PpsamlAttributes.IsNull() {
+	if !data.PpSamlAttributes.IsNull() {
 		return false
 	}
-	if !data.PpltpaInsertCookie.IsNull() {
+	if !data.PpLtpaInsertCookie.IsNull() {
 		return false
 	}
-	if !data.PptampacPropagate.IsNull() {
+	if !data.PpTamPacPropagate.IsNull() {
 		return false
 	}
-	if !data.PptamHeader.IsNull() {
+	if !data.PpTamHeader.IsNull() {
 		return false
 	}
-	if !data.PptamHeaderSize.IsNull() {
+	if !data.PpTamHeaderSize.IsNull() {
 		return false
 	}
-	if !data.PpKerberosUseS4u2Proxy.IsNull() {
+	if !data.PpKerberosUseS4u2proxy.IsNull() {
 		return false
 	}
 	if !data.PpCookieAttributes.IsNull() {
 		return false
 	}
-	if !data.PpKerberosUseS4u2SelfAndS4u2Proxy.IsNull() {
+	if !data.PpKerberosUseS4u2selfAndS4u2proxy.IsNull() {
 		return false
 	}
 	if !data.PpKerberosClientSource.IsNull() {
@@ -2155,19 +2155,19 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpKerberosServerCtxVar.IsNull() {
 		return false
 	}
-	if !data.PpsslClientConfigType.IsNull() {
+	if !data.PpSslClientConfigType.IsNull() {
 		return false
 	}
-	if !data.PpsslClientProfile.IsNull() {
+	if !data.PpSslClientProfile.IsNull() {
 		return false
 	}
-	if !data.PpltpaKeyFilePasswordAlias.IsNull() {
+	if !data.PpLtpaKeyFilePasswordAlias.IsNull() {
 		return false
 	}
-	if !data.Ppjwt.IsNull() {
+	if !data.PpJwt.IsNull() {
 		return false
 	}
-	if !data.PpjwtGenerator.IsNull() {
+	if !data.PpJwtGenerator.IsNull() {
 		return false
 	}
 	return true
@@ -2185,14 +2185,14 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.PpCustomUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPCustomURL`, data.PpCustomUrl.ValueString())
 	}
-	if !data.PpsamlAuthAssertion.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLAuthAssertion`, tfutils.StringFromBool(data.PpsamlAuthAssertion, ""))
+	if !data.PpSamlAuthAssertion.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLAuthAssertion`, tfutils.StringFromBool(data.PpSamlAuthAssertion, ""))
 	}
-	if !data.PpsamlServerName.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLServerName`, data.PpsamlServerName.ValueString())
+	if !data.PpSamlServerName.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLServerName`, data.PpSamlServerName.ValueString())
 	}
-	if !data.PpsamlNameQualifier.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameQualifier`, data.PpsamlNameQualifier.ValueString())
+	if !data.PpSamlNameQualifier.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameQualifier`, data.PpSamlNameQualifier.ValueString())
 	}
 	if !data.PpKerberosTicket.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosTicket`, tfutils.StringFromBool(data.PpKerberosTicket, ""))
@@ -2206,8 +2206,8 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.PpKerberosServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosServer`, data.PpKerberosServer.ValueString())
 	}
-	if !data.PpwsTrust.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrust`, tfutils.StringFromBool(data.PpwsTrust, ""))
+	if !data.PpWsTrust.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrust`, tfutils.StringFromBool(data.PpWsTrust, ""))
 	}
 	if !data.PpTimestamp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPTimestamp`, tfutils.StringFromBool(data.PpTimestamp, ""))
@@ -2218,47 +2218,47 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.PpAllowRenewal.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPAllowRenewal`, tfutils.StringFromBool(data.PpAllowRenewal, ""))
 	}
-	if !data.PpsamlVersion.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLVersion`, data.PpsamlVersion.ValueString())
+	if !data.PpSamlVersion.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLVersion`, data.PpSamlVersion.ValueString())
 	}
-	if !data.PpsamlSendSlo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLSendSLO`, tfutils.StringFromBool(data.PpsamlSendSlo, ""))
+	if !data.PpSamlSendSlo.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLSendSLO`, tfutils.StringFromBool(data.PpSamlSendSlo, ""))
 	}
-	if !data.PpsamlsloEndpoint.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLSLOEndpoint`, data.PpsamlsloEndpoint.ValueString())
+	if !data.PpSamlSloEndpoint.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLSLOEndpoint`, data.PpSamlSloEndpoint.ValueString())
 	}
-	if !data.PpwsUsernameToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameToken`, tfutils.StringFromBool(data.PpwsUsernameToken, ""))
+	if !data.PpWsUsernameToken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameToken`, tfutils.StringFromBool(data.PpWsUsernameToken, ""))
 	}
-	if !data.PpwsUsernameTokenPasswordType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenPasswordType`, data.PpwsUsernameTokenPasswordType.ValueString())
+	if !data.PpWsUsernameTokenPasswordType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenPasswordType`, data.PpWsUsernameTokenPasswordType.ValueString())
 	}
-	if !data.PpsamlValidity.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLValidity`, data.PpsamlValidity.ValueInt64())
+	if !data.PpSamlValidity.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLValidity`, data.PpSamlValidity.ValueInt64())
 	}
-	if !data.PpsamlSkew.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLSkew`, data.PpsamlSkew.ValueInt64())
+	if !data.PpSamlSkew.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLSkew`, data.PpSamlSkew.ValueInt64())
 	}
-	if !data.PpwsUsernameTokenIncludePwd.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenIncludePwd`, tfutils.StringFromBool(data.PpwsUsernameTokenIncludePwd, ""))
+	if !data.PpWsUsernameTokenIncludePwd.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenIncludePwd`, tfutils.StringFromBool(data.PpWsUsernameTokenIncludePwd, ""))
 	}
-	if !data.Ppltpa.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPA`, tfutils.StringFromBool(data.Ppltpa, ""))
+	if !data.PpLtpa.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPLTPA`, tfutils.StringFromBool(data.PpLtpa, ""))
 	}
-	if !data.PpltpaVersion.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAVersion`, data.PpltpaVersion.ValueString())
+	if !data.PpLtpaVersion.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPLTPAVersion`, data.PpLtpaVersion.ValueString())
 	}
-	if !data.PpltpaExpiry.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAExpiry`, data.PpltpaExpiry.ValueInt64())
+	if !data.PpLtpaExpiry.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPLTPAExpiry`, data.PpLtpaExpiry.ValueInt64())
 	}
-	if !data.PpltpaKeyFile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAKeyFile`, data.PpltpaKeyFile.ValueString())
+	if !data.PpLtpaKeyFile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPLTPAKeyFile`, data.PpLtpaKeyFile.ValueString())
 	}
-	if !data.PpltpaKeyFilePassword.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAKeyFilePassword`, data.PpltpaKeyFilePassword.ValueString())
+	if !data.PpLtpaKeyFilePassword.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPLTPAKeyFilePassword`, data.PpLtpaKeyFilePassword.ValueString())
 	}
-	if !data.PpltpaStashFile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAStashFile`, data.PpltpaStashFile.ValueString())
+	if !data.PpLtpaStashFile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPLTPAStashFile`, data.PpLtpaStashFile.ValueString())
 	}
 	if !data.PpKerberosSpnegoToken.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosSPNEGOToken`, tfutils.StringFromBool(data.PpKerberosSpnegoToken, ""))
@@ -2266,8 +2266,8 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.PpKerberosBstValueType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosBstValueType`, data.PpKerberosBstValueType.ValueString())
 	}
-	if !data.PpsamlUseWsSec.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLUseWSSec`, tfutils.StringFromBool(data.PpsamlUseWsSec, ""))
+	if !data.PpSamlUseWsSec.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLUseWSSec`, tfutils.StringFromBool(data.PpSamlUseWsSec, ""))
 	}
 	if !data.PpKerberosClientKeytab.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosClientKeytab`, data.PpKerberosClientKeytab.ValueString())
@@ -2278,41 +2278,41 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.PpActorRoleId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPActorRoleID`, data.PpActorRoleId.ValueString())
 	}
-	if !data.PpwsDerivedKeyUsernameToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSDerivedKeyUsernameToken`, tfutils.StringFromBool(data.PpwsDerivedKeyUsernameToken, ""))
+	if !data.PpWsDerivedKeyUsernameToken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSDerivedKeyUsernameToken`, tfutils.StringFromBool(data.PpWsDerivedKeyUsernameToken, ""))
 	}
-	if !data.PpwsDerivedKeyUsernameTokenIterations.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSDerivedKeyUsernameTokenIterations`, data.PpwsDerivedKeyUsernameTokenIterations.ValueInt64())
+	if !data.PpWsDerivedKeyUsernameTokenIterations.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSDerivedKeyUsernameTokenIterations`, data.PpWsDerivedKeyUsernameTokenIterations.ValueInt64())
 	}
-	if !data.PpwsUsernameTokenAllowReplacement.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenAllowReplacement`, tfutils.StringFromBool(data.PpwsUsernameTokenAllowReplacement, ""))
+	if !data.PpWsUsernameTokenAllowReplacement.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenAllowReplacement`, tfutils.StringFromBool(data.PpWsUsernameTokenAllowReplacement, ""))
 	}
-	if !data.PphmacSigningAlg.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPHMACSigningAlg`, data.PphmacSigningAlg.ValueString())
+	if !data.PpHmacSigningAlg.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPHMACSigningAlg`, data.PpHmacSigningAlg.ValueString())
 	}
 	if !data.PpSigningHashAlg.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPSigningHashAlg`, data.PpSigningHashAlg.ValueString())
 	}
-	if !data.PpwsTrustHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustHeader`, tfutils.StringFromBool(data.PpwsTrustHeader, ""))
+	if !data.PpWsTrustHeader.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustHeader`, tfutils.StringFromBool(data.PpWsTrustHeader, ""))
 	}
-	if !data.PpwsscKeySource.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSSCKeySource`, data.PpwsscKeySource.ValueString())
+	if !data.PpWsScKeySource.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSSCKeySource`, data.PpWsScKeySource.ValueString())
 	}
 	if !data.PpSharedSecretKey.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPSharedSecretKey`, data.PpSharedSecretKey.ValueString())
 	}
-	if !data.PpwsTrustRenewalWait.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustRenewalWait`, data.PpwsTrustRenewalWait.ValueInt64())
+	if !data.PpWsTrustRenewalWait.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustRenewalWait`, data.PpWsTrustRenewalWait.ValueInt64())
 	}
-	if !data.PpwsTrustNewInstance.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNewInstance`, tfutils.StringFromBool(data.PpwsTrustNewInstance, ""))
+	if !data.PpWsTrustNewInstance.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNewInstance`, tfutils.StringFromBool(data.PpWsTrustNewInstance, ""))
 	}
-	if !data.PpwsTrustNewKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNewKey`, tfutils.StringFromBool(data.PpwsTrustNewKey, ""))
+	if !data.PpWsTrustNewKey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNewKey`, tfutils.StringFromBool(data.PpWsTrustNewKey, ""))
 	}
-	if !data.PpwsTrustNeverExpire.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNeverExpire`, tfutils.StringFromBool(data.PpwsTrustNeverExpire, ""))
+	if !data.PpWsTrustNeverExpire.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNeverExpire`, tfutils.StringFromBool(data.PpWsTrustNeverExpire, ""))
 	}
 	if !data.PpicrxToken.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPICRXToken`, tfutils.StringFromBool(data.PpicrxToken, ""))
@@ -2320,79 +2320,79 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.PpicrxUserRealm.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPICRXUserRealm`, data.PpicrxUserRealm.ValueString())
 	}
-	if !data.PpsamlIdentityProvider.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLIdentityProvider`, tfutils.StringFromBool(data.PpsamlIdentityProvider, ""))
+	if !data.PpSamlIdentityProvider.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLIdentityProvider`, tfutils.StringFromBool(data.PpSamlIdentityProvider, ""))
 	}
-	if !data.PpsamlProtocol.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLProtocol`, data.PpsamlProtocol.ValueString())
+	if !data.PpSamlProtocol.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLProtocol`, data.PpSamlProtocol.ValueString())
 	}
-	if !data.PpsamlResponseDestination.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLResponseDestination`, data.PpsamlResponseDestination.ValueString())
+	if !data.PpSamlResponseDestination.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLResponseDestination`, data.PpSamlResponseDestination.ValueString())
 	}
 	if !data.PpResultWrapup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPResultWrapup`, data.PpResultWrapup.ValueString())
 	}
-	if data.PpsamlAssertionType != nil {
-		if !data.PpsamlAssertionType.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`PPSAMLAssertionType`, data.PpsamlAssertionType.ToBody(ctx, ""))
+	if data.PpSamlAssertionType != nil {
+		if !data.PpSamlAssertionType.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`PPSAMLAssertionType`, data.PpSamlAssertionType.ToBody(ctx, ""))
 		}
 	}
-	if !data.PpsamlSubjectConfirm.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLSubjectConfirm`, data.PpsamlSubjectConfirm.ValueString())
+	if !data.PpSamlSubjectConfirm.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLSubjectConfirm`, data.PpSamlSubjectConfirm.ValueString())
 	}
-	if !data.PpsamlNameId.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameID`, tfutils.StringFromBool(data.PpsamlNameId, ""))
+	if !data.PpSamlNameId.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameID`, tfutils.StringFromBool(data.PpSamlNameId, ""))
 	}
-	if !data.PpsamlNameIdFormat.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameIDFormat`, data.PpsamlNameIdFormat.ValueString())
+	if !data.PpSamlNameIdFormat.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameIDFormat`, data.PpSamlNameIdFormat.ValueString())
 	}
-	if !data.PpsamlRecipient.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLRecipient`, data.PpsamlRecipient.ValueString())
+	if !data.PpSamlRecipient.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLRecipient`, data.PpSamlRecipient.ValueString())
 	}
-	if !data.PpsamlAudience.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLAudience`, data.PpsamlAudience.ValueString())
+	if !data.PpSamlAudience.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLAudience`, data.PpSamlAudience.ValueString())
 	}
-	if !data.PpsamlOmitNotBefore.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLOmitNotBefore`, tfutils.StringFromBool(data.PpsamlOmitNotBefore, ""))
+	if !data.PpSamlOmitNotBefore.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLOmitNotBefore`, tfutils.StringFromBool(data.PpSamlOmitNotBefore, ""))
 	}
 	if !data.PpOneTimeUse.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPOneTimeUse`, tfutils.StringFromBool(data.PpOneTimeUse, ""))
 	}
-	if !data.PpsamlProxy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxy`, tfutils.StringFromBool(data.PpsamlProxy, ""))
+	if !data.PpSamlProxy.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxy`, tfutils.StringFromBool(data.PpSamlProxy, ""))
 	}
-	if !data.PpsamlProxyAudience.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxyAudience`, data.PpsamlProxyAudience.ValueString())
+	if !data.PpSamlProxyAudience.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxyAudience`, data.PpSamlProxyAudience.ValueString())
 	}
-	if !data.PpsamlProxyCount.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxyCount`, data.PpsamlProxyCount.ValueInt64())
+	if !data.PpSamlProxyCount.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxyCount`, data.PpSamlProxyCount.ValueInt64())
 	}
-	if !data.PpsamlAuthzAction.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLAuthzAction`, data.PpsamlAuthzAction.ValueString())
+	if !data.PpSamlAuthzAction.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLAuthzAction`, data.PpSamlAuthzAction.ValueString())
 	}
-	if !data.PpsamlAttributes.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLAttributes`, data.PpsamlAttributes.ValueString())
+	if !data.PpSamlAttributes.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLAttributes`, data.PpSamlAttributes.ValueString())
 	}
-	if !data.PpltpaInsertCookie.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAInsertCookie`, tfutils.StringFromBool(data.PpltpaInsertCookie, ""))
+	if !data.PpLtpaInsertCookie.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPLTPAInsertCookie`, tfutils.StringFromBool(data.PpLtpaInsertCookie, ""))
 	}
-	if !data.PptampacPropagate.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTAMPACPropagate`, tfutils.StringFromBool(data.PptampacPropagate, ""))
+	if !data.PpTamPacPropagate.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPTAMPACPropagate`, tfutils.StringFromBool(data.PpTamPacPropagate, ""))
 	}
-	if !data.PptamHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTAMHeader`, data.PptamHeader.ValueString())
+	if !data.PpTamHeader.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPTAMHeader`, data.PpTamHeader.ValueString())
 	}
-	if !data.PptamHeaderSize.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTAMHeaderSize`, data.PptamHeaderSize.ValueInt64())
+	if !data.PpTamHeaderSize.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPTAMHeaderSize`, data.PpTamHeaderSize.ValueInt64())
 	}
-	if !data.PpKerberosUseS4u2Proxy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPKerberosUseS4U2Proxy`, tfutils.StringFromBool(data.PpKerberosUseS4u2Proxy, ""))
+	if !data.PpKerberosUseS4u2proxy.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPKerberosUseS4U2Proxy`, tfutils.StringFromBool(data.PpKerberosUseS4u2proxy, ""))
 	}
 	if !data.PpCookieAttributes.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPCookieAttributes`, data.PpCookieAttributes.ValueString())
 	}
-	if !data.PpKerberosUseS4u2SelfAndS4u2Proxy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPKerberosUseS4U2SelfAndS4U2Proxy`, tfutils.StringFromBool(data.PpKerberosUseS4u2SelfAndS4u2Proxy, ""))
+	if !data.PpKerberosUseS4u2selfAndS4u2proxy.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPKerberosUseS4U2SelfAndS4U2Proxy`, tfutils.StringFromBool(data.PpKerberosUseS4u2selfAndS4u2proxy, ""))
 	}
 	if !data.PpKerberosClientSource.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosClientSource`, data.PpKerberosClientSource.ValueString())
@@ -2418,20 +2418,20 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.PpKerberosServerCtxVar.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosServerCtxVar`, data.PpKerberosServerCtxVar.ValueString())
 	}
-	if !data.PpsslClientConfigType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSSLClientConfigType`, data.PpsslClientConfigType.ValueString())
+	if !data.PpSslClientConfigType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSSLClientConfigType`, data.PpSslClientConfigType.ValueString())
 	}
-	if !data.PpsslClientProfile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSSLClientProfile`, data.PpsslClientProfile.ValueString())
+	if !data.PpSslClientProfile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPSSLClientProfile`, data.PpSslClientProfile.ValueString())
 	}
-	if !data.PpltpaKeyFilePasswordAlias.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAKeyFilePasswordAlias`, data.PpltpaKeyFilePasswordAlias.ValueString())
+	if !data.PpLtpaKeyFilePasswordAlias.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPLTPAKeyFilePasswordAlias`, data.PpLtpaKeyFilePasswordAlias.ValueString())
 	}
-	if !data.Ppjwt.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPJWT`, tfutils.StringFromBool(data.Ppjwt, ""))
+	if !data.PpJwt.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPJWT`, tfutils.StringFromBool(data.PpJwt, ""))
 	}
-	if !data.PpjwtGenerator.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPJWTGenerator`, data.PpjwtGenerator.ValueString())
+	if !data.PpJwtGenerator.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`PPJWTGenerator`, data.PpJwtGenerator.ValueString())
 	}
 	return body
 }
@@ -2451,19 +2451,19 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpCustomUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLAuthAssertion`); value.Exists() {
-		data.PpsamlAuthAssertion = tfutils.BoolFromString(value.String())
+		data.PpSamlAuthAssertion = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpsamlAuthAssertion = types.BoolNull()
+		data.PpSamlAuthAssertion = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLServerName`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlServerName = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlServerName = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlServerName = types.StringValue("XS")
+		data.PpSamlServerName = types.StringValue("XS")
 	}
 	if value := res.Get(pathRoot + `PPSAMLNameQualifier`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlNameQualifier = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlNameQualifier = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlNameQualifier = types.StringNull()
+		data.PpSamlNameQualifier = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosTicket`); value.Exists() {
 		data.PpKerberosTicket = tfutils.BoolFromString(value.String())
@@ -2486,9 +2486,9 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpKerberosServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPWSTrust`); value.Exists() {
-		data.PpwsTrust = tfutils.BoolFromString(value.String())
+		data.PpWsTrust = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsTrust = types.BoolNull()
+		data.PpWsTrust = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPTimestamp`); value.Exists() {
 		data.PpTimestamp = tfutils.BoolFromString(value.String())
@@ -2506,74 +2506,74 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpAllowRenewal = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLVersion`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlVersion = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlVersion = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlVersion = types.StringValue("2")
+		data.PpSamlVersion = types.StringValue("2")
 	}
 	if value := res.Get(pathRoot + `PPSAMLSendSLO`); value.Exists() {
-		data.PpsamlSendSlo = tfutils.BoolFromString(value.String())
+		data.PpSamlSendSlo = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpsamlSendSlo = types.BoolNull()
+		data.PpSamlSendSlo = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLSLOEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlsloEndpoint = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlSloEndpoint = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlsloEndpoint = types.StringNull()
+		data.PpSamlSloEndpoint = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPWSUsernameToken`); value.Exists() {
-		data.PpwsUsernameToken = tfutils.BoolFromString(value.String())
+		data.PpWsUsernameToken = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsUsernameToken = types.BoolNull()
+		data.PpWsUsernameToken = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPWSUsernameTokenPasswordType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpwsUsernameTokenPasswordType = tfutils.ParseStringFromGJSON(value)
+		data.PpWsUsernameTokenPasswordType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpwsUsernameTokenPasswordType = types.StringValue("Digest")
+		data.PpWsUsernameTokenPasswordType = types.StringValue("Digest")
 	}
 	if value := res.Get(pathRoot + `PPSAMLValidity`); value.Exists() {
-		data.PpsamlValidity = types.Int64Value(value.Int())
+		data.PpSamlValidity = types.Int64Value(value.Int())
 	} else {
-		data.PpsamlValidity = types.Int64Value(0)
+		data.PpSamlValidity = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `PPSAMLSkew`); value.Exists() {
-		data.PpsamlSkew = types.Int64Value(value.Int())
+		data.PpSamlSkew = types.Int64Value(value.Int())
 	} else {
-		data.PpsamlSkew = types.Int64Value(0)
+		data.PpSamlSkew = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `PPWSUsernameTokenIncludePwd`); value.Exists() {
-		data.PpwsUsernameTokenIncludePwd = tfutils.BoolFromString(value.String())
+		data.PpWsUsernameTokenIncludePwd = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsUsernameTokenIncludePwd = types.BoolNull()
+		data.PpWsUsernameTokenIncludePwd = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPLTPA`); value.Exists() {
-		data.Ppltpa = tfutils.BoolFromString(value.String())
+		data.PpLtpa = tfutils.BoolFromString(value.String())
 	} else {
-		data.Ppltpa = types.BoolNull()
+		data.PpLtpa = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPLTPAVersion`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpltpaVersion = tfutils.ParseStringFromGJSON(value)
+		data.PpLtpaVersion = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaVersion = types.StringValue("LTPA2")
+		data.PpLtpaVersion = types.StringValue("LTPA2")
 	}
 	if value := res.Get(pathRoot + `PPLTPAExpiry`); value.Exists() {
-		data.PpltpaExpiry = types.Int64Value(value.Int())
+		data.PpLtpaExpiry = types.Int64Value(value.Int())
 	} else {
-		data.PpltpaExpiry = types.Int64Value(600)
+		data.PpLtpaExpiry = types.Int64Value(600)
 	}
 	if value := res.Get(pathRoot + `PPLTPAKeyFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpltpaKeyFile = tfutils.ParseStringFromGJSON(value)
+		data.PpLtpaKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaKeyFile = types.StringNull()
+		data.PpLtpaKeyFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPLTPAKeyFilePassword`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpltpaKeyFilePassword = tfutils.ParseStringFromGJSON(value)
+		data.PpLtpaKeyFilePassword = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaKeyFilePassword = types.StringNull()
+		data.PpLtpaKeyFilePassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPLTPAStashFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpltpaStashFile = tfutils.ParseStringFromGJSON(value)
+		data.PpLtpaStashFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaStashFile = types.StringNull()
+		data.PpLtpaStashFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosSPNEGOToken`); value.Exists() {
 		data.PpKerberosSpnegoToken = tfutils.BoolFromString(value.String())
@@ -2586,9 +2586,9 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpKerberosBstValueType = types.StringValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ")
 	}
 	if value := res.Get(pathRoot + `PPSAMLUseWSSec`); value.Exists() {
-		data.PpsamlUseWsSec = tfutils.BoolFromString(value.String())
+		data.PpSamlUseWsSec = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpsamlUseWsSec = types.BoolNull()
+		data.PpSamlUseWsSec = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosClientKeytab`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PpKerberosClientKeytab = tfutils.ParseStringFromGJSON(value)
@@ -2606,24 +2606,24 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpActorRoleId = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPWSDerivedKeyUsernameToken`); value.Exists() {
-		data.PpwsDerivedKeyUsernameToken = tfutils.BoolFromString(value.String())
+		data.PpWsDerivedKeyUsernameToken = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsDerivedKeyUsernameToken = types.BoolNull()
+		data.PpWsDerivedKeyUsernameToken = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPWSDerivedKeyUsernameTokenIterations`); value.Exists() {
-		data.PpwsDerivedKeyUsernameTokenIterations = types.Int64Value(value.Int())
+		data.PpWsDerivedKeyUsernameTokenIterations = types.Int64Value(value.Int())
 	} else {
-		data.PpwsDerivedKeyUsernameTokenIterations = types.Int64Value(1000)
+		data.PpWsDerivedKeyUsernameTokenIterations = types.Int64Value(1000)
 	}
 	if value := res.Get(pathRoot + `PPWSUsernameTokenAllowReplacement`); value.Exists() {
-		data.PpwsUsernameTokenAllowReplacement = tfutils.BoolFromString(value.String())
+		data.PpWsUsernameTokenAllowReplacement = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsUsernameTokenAllowReplacement = types.BoolNull()
+		data.PpWsUsernameTokenAllowReplacement = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPHMACSigningAlg`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PphmacSigningAlg = tfutils.ParseStringFromGJSON(value)
+		data.PpHmacSigningAlg = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PphmacSigningAlg = types.StringValue("hmac-sha1")
+		data.PpHmacSigningAlg = types.StringValue("hmac-sha1")
 	}
 	if value := res.Get(pathRoot + `PPSigningHashAlg`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PpSigningHashAlg = tfutils.ParseStringFromGJSON(value)
@@ -2631,14 +2631,14 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpSigningHashAlg = types.StringValue("sha1")
 	}
 	if value := res.Get(pathRoot + `PPWSTrustHeader`); value.Exists() {
-		data.PpwsTrustHeader = tfutils.BoolFromString(value.String())
+		data.PpWsTrustHeader = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsTrustHeader = types.BoolNull()
+		data.PpWsTrustHeader = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPWSSCKeySource`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpwsscKeySource = tfutils.ParseStringFromGJSON(value)
+		data.PpWsScKeySource = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpwsscKeySource = types.StringValue("random")
+		data.PpWsScKeySource = types.StringValue("random")
 	}
 	if value := res.Get(pathRoot + `PPSharedSecretKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PpSharedSecretKey = tfutils.ParseStringFromGJSON(value)
@@ -2646,24 +2646,24 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpSharedSecretKey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPWSTrustRenewalWait`); value.Exists() {
-		data.PpwsTrustRenewalWait = types.Int64Value(value.Int())
+		data.PpWsTrustRenewalWait = types.Int64Value(value.Int())
 	} else {
-		data.PpwsTrustRenewalWait = types.Int64Value(0)
+		data.PpWsTrustRenewalWait = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `PPWSTrustNewInstance`); value.Exists() {
-		data.PpwsTrustNewInstance = tfutils.BoolFromString(value.String())
+		data.PpWsTrustNewInstance = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsTrustNewInstance = types.BoolNull()
+		data.PpWsTrustNewInstance = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPWSTrustNewKey`); value.Exists() {
-		data.PpwsTrustNewKey = tfutils.BoolFromString(value.String())
+		data.PpWsTrustNewKey = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsTrustNewKey = types.BoolNull()
+		data.PpWsTrustNewKey = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPWSTrustNeverExpire`); value.Exists() {
-		data.PpwsTrustNeverExpire = tfutils.BoolFromString(value.String())
+		data.PpWsTrustNeverExpire = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpwsTrustNeverExpire = types.BoolNull()
+		data.PpWsTrustNeverExpire = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPICRXToken`); value.Exists() {
 		data.PpicrxToken = tfutils.BoolFromString(value.String())
@@ -2676,19 +2676,19 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpicrxUserRealm = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLIdentityProvider`); value.Exists() {
-		data.PpsamlIdentityProvider = tfutils.BoolFromString(value.String())
+		data.PpSamlIdentityProvider = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpsamlIdentityProvider = types.BoolNull()
+		data.PpSamlIdentityProvider = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLProtocol`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlProtocol = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlProtocol = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlProtocol = types.StringValue("assertion")
+		data.PpSamlProtocol = types.StringValue("assertion")
 	}
 	if value := res.Get(pathRoot + `PPSAMLResponseDestination`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlResponseDestination = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlResponseDestination = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlResponseDestination = types.StringNull()
+		data.PpSamlResponseDestination = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPResultWrapup`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PpResultWrapup = tfutils.ParseStringFromGJSON(value)
@@ -2696,40 +2696,40 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpResultWrapup = types.StringValue("wssec-replace")
 	}
 	if value := res.Get(pathRoot + `PPSAMLAssertionType`); value.Exists() {
-		data.PpsamlAssertionType = &DmSAMLStatementType{}
-		data.PpsamlAssertionType.FromBody(ctx, "", value)
+		data.PpSamlAssertionType = &DmSAMLStatementType{}
+		data.PpSamlAssertionType.FromBody(ctx, "", value)
 	} else {
-		data.PpsamlAssertionType = nil
+		data.PpSamlAssertionType = nil
 	}
 	if value := res.Get(pathRoot + `PPSAMLSubjectConfirm`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlSubjectConfirm = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlSubjectConfirm = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlSubjectConfirm = types.StringValue("bearer")
+		data.PpSamlSubjectConfirm = types.StringValue("bearer")
 	}
 	if value := res.Get(pathRoot + `PPSAMLNameID`); value.Exists() {
-		data.PpsamlNameId = tfutils.BoolFromString(value.String())
+		data.PpSamlNameId = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpsamlNameId = types.BoolNull()
+		data.PpSamlNameId = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLNameIDFormat`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlNameIdFormat = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlNameIdFormat = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlNameIdFormat = types.StringNull()
+		data.PpSamlNameIdFormat = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLRecipient`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlRecipient = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlRecipient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlRecipient = types.StringNull()
+		data.PpSamlRecipient = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLAudience`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlAudience = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlAudience = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlAudience = types.StringNull()
+		data.PpSamlAudience = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLOmitNotBefore`); value.Exists() {
-		data.PpsamlOmitNotBefore = tfutils.BoolFromString(value.String())
+		data.PpSamlOmitNotBefore = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpsamlOmitNotBefore = types.BoolNull()
+		data.PpSamlOmitNotBefore = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPOneTimeUse`); value.Exists() {
 		data.PpOneTimeUse = tfutils.BoolFromString(value.String())
@@ -2737,54 +2737,54 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpOneTimeUse = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLProxy`); value.Exists() {
-		data.PpsamlProxy = tfutils.BoolFromString(value.String())
+		data.PpSamlProxy = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpsamlProxy = types.BoolNull()
+		data.PpSamlProxy = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLProxyAudience`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlProxyAudience = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlProxyAudience = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlProxyAudience = types.StringNull()
+		data.PpSamlProxyAudience = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLProxyCount`); value.Exists() {
-		data.PpsamlProxyCount = types.Int64Value(value.Int())
+		data.PpSamlProxyCount = types.Int64Value(value.Int())
 	} else {
-		data.PpsamlProxyCount = types.Int64Value(0)
+		data.PpSamlProxyCount = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `PPSAMLAuthzAction`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlAuthzAction = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlAuthzAction = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlAuthzAction = types.StringValue("AllHTTP")
+		data.PpSamlAuthzAction = types.StringValue("AllHTTP")
 	}
 	if value := res.Get(pathRoot + `PPSAMLAttributes`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsamlAttributes = tfutils.ParseStringFromGJSON(value)
+		data.PpSamlAttributes = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlAttributes = types.StringNull()
+		data.PpSamlAttributes = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPLTPAInsertCookie`); value.Exists() {
-		data.PpltpaInsertCookie = tfutils.BoolFromString(value.String())
+		data.PpLtpaInsertCookie = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpltpaInsertCookie = types.BoolNull()
+		data.PpLtpaInsertCookie = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPTAMPACPropagate`); value.Exists() {
-		data.PptampacPropagate = tfutils.BoolFromString(value.String())
+		data.PpTamPacPropagate = tfutils.BoolFromString(value.String())
 	} else {
-		data.PptampacPropagate = types.BoolNull()
+		data.PpTamPacPropagate = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPTAMHeader`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PptamHeader = tfutils.ParseStringFromGJSON(value)
+		data.PpTamHeader = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PptamHeader = types.StringValue("iv-creds")
+		data.PpTamHeader = types.StringValue("iv-creds")
 	}
 	if value := res.Get(pathRoot + `PPTAMHeaderSize`); value.Exists() {
-		data.PptamHeaderSize = types.Int64Value(value.Int())
+		data.PpTamHeaderSize = types.Int64Value(value.Int())
 	} else {
-		data.PptamHeaderSize = types.Int64Value(0)
+		data.PpTamHeaderSize = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `PPKerberosUseS4U2Proxy`); value.Exists() {
-		data.PpKerberosUseS4u2Proxy = tfutils.BoolFromString(value.String())
+		data.PpKerberosUseS4u2proxy = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpKerberosUseS4u2Proxy = types.BoolNull()
+		data.PpKerberosUseS4u2proxy = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPCookieAttributes`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PpCookieAttributes = tfutils.ParseStringFromGJSON(value)
@@ -2792,9 +2792,9 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpCookieAttributes = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosUseS4U2SelfAndS4U2Proxy`); value.Exists() {
-		data.PpKerberosUseS4u2SelfAndS4u2Proxy = tfutils.BoolFromString(value.String())
+		data.PpKerberosUseS4u2selfAndS4u2proxy = tfutils.BoolFromString(value.String())
 	} else {
-		data.PpKerberosUseS4u2SelfAndS4u2Proxy = types.BoolNull()
+		data.PpKerberosUseS4u2selfAndS4u2proxy = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosClientSource`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PpKerberosClientSource = tfutils.ParseStringFromGJSON(value)
@@ -2837,29 +2837,29 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpKerberosServerCtxVar = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsslClientConfigType = tfutils.ParseStringFromGJSON(value)
+		data.PpSslClientConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsslClientConfigType = types.StringValue("proxy")
+		data.PpSslClientConfigType = types.StringValue("proxy")
 	}
 	if value := res.Get(pathRoot + `PPSSLClientProfile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpsslClientProfile = tfutils.ParseStringFromGJSON(value)
+		data.PpSslClientProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsslClientProfile = types.StringNull()
+		data.PpSslClientProfile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPLTPAKeyFilePasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpltpaKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
+		data.PpLtpaKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaKeyFilePasswordAlias = types.StringNull()
+		data.PpLtpaKeyFilePasswordAlias = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPJWT`); value.Exists() {
-		data.Ppjwt = tfutils.BoolFromString(value.String())
+		data.PpJwt = tfutils.BoolFromString(value.String())
 	} else {
-		data.Ppjwt = types.BoolNull()
+		data.PpJwt = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPJWTGenerator`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpjwtGenerator = tfutils.ParseStringFromGJSON(value)
+		data.PpJwtGenerator = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpjwtGenerator = types.StringNull()
+		data.PpJwtGenerator = types.StringNull()
 	}
 }
 
@@ -2877,20 +2877,20 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.PpCustomUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLAuthAssertion`); value.Exists() && !data.PpsamlAuthAssertion.IsNull() {
-		data.PpsamlAuthAssertion = tfutils.BoolFromString(value.String())
-	} else if data.PpsamlAuthAssertion.ValueBool() {
-		data.PpsamlAuthAssertion = types.BoolNull()
+	if value := res.Get(pathRoot + `PPSAMLAuthAssertion`); value.Exists() && !data.PpSamlAuthAssertion.IsNull() {
+		data.PpSamlAuthAssertion = tfutils.BoolFromString(value.String())
+	} else if data.PpSamlAuthAssertion.ValueBool() {
+		data.PpSamlAuthAssertion = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLServerName`); value.Exists() && !data.PpsamlServerName.IsNull() {
-		data.PpsamlServerName = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpsamlServerName.ValueString() != "XS" {
-		data.PpsamlServerName = types.StringNull()
+	if value := res.Get(pathRoot + `PPSAMLServerName`); value.Exists() && !data.PpSamlServerName.IsNull() {
+		data.PpSamlServerName = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpSamlServerName.ValueString() != "XS" {
+		data.PpSamlServerName = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLNameQualifier`); value.Exists() && !data.PpsamlNameQualifier.IsNull() {
-		data.PpsamlNameQualifier = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSAMLNameQualifier`); value.Exists() && !data.PpSamlNameQualifier.IsNull() {
+		data.PpSamlNameQualifier = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlNameQualifier = types.StringNull()
+		data.PpSamlNameQualifier = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosTicket`); value.Exists() && !data.PpKerberosTicket.IsNull() {
 		data.PpKerberosTicket = tfutils.BoolFromString(value.String())
@@ -2912,10 +2912,10 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.PpKerberosServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPWSTrust`); value.Exists() && !data.PpwsTrust.IsNull() {
-		data.PpwsTrust = tfutils.BoolFromString(value.String())
-	} else if data.PpwsTrust.ValueBool() {
-		data.PpwsTrust = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSTrust`); value.Exists() && !data.PpWsTrust.IsNull() {
+		data.PpWsTrust = tfutils.BoolFromString(value.String())
+	} else if data.PpWsTrust.ValueBool() {
+		data.PpWsTrust = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPTimestamp`); value.Exists() && !data.PpTimestamp.IsNull() {
 		data.PpTimestamp = tfutils.BoolFromString(value.String())
@@ -2932,75 +2932,75 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else if data.PpAllowRenewal.ValueBool() {
 		data.PpAllowRenewal = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLVersion`); value.Exists() && !data.PpsamlVersion.IsNull() {
-		data.PpsamlVersion = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpsamlVersion.ValueString() != "2" {
-		data.PpsamlVersion = types.StringNull()
+	if value := res.Get(pathRoot + `PPSAMLVersion`); value.Exists() && !data.PpSamlVersion.IsNull() {
+		data.PpSamlVersion = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpSamlVersion.ValueString() != "2" {
+		data.PpSamlVersion = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLSendSLO`); value.Exists() && !data.PpsamlSendSlo.IsNull() {
-		data.PpsamlSendSlo = tfutils.BoolFromString(value.String())
-	} else if data.PpsamlSendSlo.ValueBool() {
-		data.PpsamlSendSlo = types.BoolNull()
+	if value := res.Get(pathRoot + `PPSAMLSendSLO`); value.Exists() && !data.PpSamlSendSlo.IsNull() {
+		data.PpSamlSendSlo = tfutils.BoolFromString(value.String())
+	} else if data.PpSamlSendSlo.ValueBool() {
+		data.PpSamlSendSlo = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLSLOEndpoint`); value.Exists() && !data.PpsamlsloEndpoint.IsNull() {
-		data.PpsamlsloEndpoint = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSAMLSLOEndpoint`); value.Exists() && !data.PpSamlSloEndpoint.IsNull() {
+		data.PpSamlSloEndpoint = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlsloEndpoint = types.StringNull()
+		data.PpSamlSloEndpoint = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPWSUsernameToken`); value.Exists() && !data.PpwsUsernameToken.IsNull() {
-		data.PpwsUsernameToken = tfutils.BoolFromString(value.String())
-	} else if data.PpwsUsernameToken.ValueBool() {
-		data.PpwsUsernameToken = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSUsernameToken`); value.Exists() && !data.PpWsUsernameToken.IsNull() {
+		data.PpWsUsernameToken = tfutils.BoolFromString(value.String())
+	} else if data.PpWsUsernameToken.ValueBool() {
+		data.PpWsUsernameToken = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPWSUsernameTokenPasswordType`); value.Exists() && !data.PpwsUsernameTokenPasswordType.IsNull() {
-		data.PpwsUsernameTokenPasswordType = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpwsUsernameTokenPasswordType.ValueString() != "Digest" {
-		data.PpwsUsernameTokenPasswordType = types.StringNull()
+	if value := res.Get(pathRoot + `PPWSUsernameTokenPasswordType`); value.Exists() && !data.PpWsUsernameTokenPasswordType.IsNull() {
+		data.PpWsUsernameTokenPasswordType = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpWsUsernameTokenPasswordType.ValueString() != "Digest" {
+		data.PpWsUsernameTokenPasswordType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLValidity`); value.Exists() && !data.PpsamlValidity.IsNull() {
-		data.PpsamlValidity = types.Int64Value(value.Int())
-	} else if data.PpsamlValidity.ValueInt64() != 0 {
-		data.PpsamlValidity = types.Int64Null()
+	if value := res.Get(pathRoot + `PPSAMLValidity`); value.Exists() && !data.PpSamlValidity.IsNull() {
+		data.PpSamlValidity = types.Int64Value(value.Int())
+	} else if data.PpSamlValidity.ValueInt64() != 0 {
+		data.PpSamlValidity = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `PPSAMLSkew`); value.Exists() && !data.PpsamlSkew.IsNull() {
-		data.PpsamlSkew = types.Int64Value(value.Int())
-	} else if data.PpsamlSkew.ValueInt64() != 0 {
-		data.PpsamlSkew = types.Int64Null()
+	if value := res.Get(pathRoot + `PPSAMLSkew`); value.Exists() && !data.PpSamlSkew.IsNull() {
+		data.PpSamlSkew = types.Int64Value(value.Int())
+	} else if data.PpSamlSkew.ValueInt64() != 0 {
+		data.PpSamlSkew = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `PPWSUsernameTokenIncludePwd`); value.Exists() && !data.PpwsUsernameTokenIncludePwd.IsNull() {
-		data.PpwsUsernameTokenIncludePwd = tfutils.BoolFromString(value.String())
-	} else if !data.PpwsUsernameTokenIncludePwd.ValueBool() {
-		data.PpwsUsernameTokenIncludePwd = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSUsernameTokenIncludePwd`); value.Exists() && !data.PpWsUsernameTokenIncludePwd.IsNull() {
+		data.PpWsUsernameTokenIncludePwd = tfutils.BoolFromString(value.String())
+	} else if !data.PpWsUsernameTokenIncludePwd.ValueBool() {
+		data.PpWsUsernameTokenIncludePwd = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPLTPA`); value.Exists() && !data.Ppltpa.IsNull() {
-		data.Ppltpa = tfutils.BoolFromString(value.String())
-	} else if data.Ppltpa.ValueBool() {
-		data.Ppltpa = types.BoolNull()
+	if value := res.Get(pathRoot + `PPLTPA`); value.Exists() && !data.PpLtpa.IsNull() {
+		data.PpLtpa = tfutils.BoolFromString(value.String())
+	} else if data.PpLtpa.ValueBool() {
+		data.PpLtpa = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPLTPAVersion`); value.Exists() && !data.PpltpaVersion.IsNull() {
-		data.PpltpaVersion = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpltpaVersion.ValueString() != "LTPA2" {
-		data.PpltpaVersion = types.StringNull()
+	if value := res.Get(pathRoot + `PPLTPAVersion`); value.Exists() && !data.PpLtpaVersion.IsNull() {
+		data.PpLtpaVersion = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpLtpaVersion.ValueString() != "LTPA2" {
+		data.PpLtpaVersion = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPLTPAExpiry`); value.Exists() && !data.PpltpaExpiry.IsNull() {
-		data.PpltpaExpiry = types.Int64Value(value.Int())
-	} else if data.PpltpaExpiry.ValueInt64() != 600 {
-		data.PpltpaExpiry = types.Int64Null()
+	if value := res.Get(pathRoot + `PPLTPAExpiry`); value.Exists() && !data.PpLtpaExpiry.IsNull() {
+		data.PpLtpaExpiry = types.Int64Value(value.Int())
+	} else if data.PpLtpaExpiry.ValueInt64() != 600 {
+		data.PpLtpaExpiry = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `PPLTPAKeyFile`); value.Exists() && !data.PpltpaKeyFile.IsNull() {
-		data.PpltpaKeyFile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPLTPAKeyFile`); value.Exists() && !data.PpLtpaKeyFile.IsNull() {
+		data.PpLtpaKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaKeyFile = types.StringNull()
+		data.PpLtpaKeyFile = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPLTPAKeyFilePassword`); value.Exists() && !data.PpltpaKeyFilePassword.IsNull() {
-		data.PpltpaKeyFilePassword = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPLTPAKeyFilePassword`); value.Exists() && !data.PpLtpaKeyFilePassword.IsNull() {
+		data.PpLtpaKeyFilePassword = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaKeyFilePassword = types.StringNull()
+		data.PpLtpaKeyFilePassword = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPLTPAStashFile`); value.Exists() && !data.PpltpaStashFile.IsNull() {
-		data.PpltpaStashFile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPLTPAStashFile`); value.Exists() && !data.PpLtpaStashFile.IsNull() {
+		data.PpLtpaStashFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaStashFile = types.StringNull()
+		data.PpLtpaStashFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosSPNEGOToken`); value.Exists() && !data.PpKerberosSpnegoToken.IsNull() {
 		data.PpKerberosSpnegoToken = tfutils.BoolFromString(value.String())
@@ -3012,10 +3012,10 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else if data.PpKerberosBstValueType.ValueString() != "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ" {
 		data.PpKerberosBstValueType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLUseWSSec`); value.Exists() && !data.PpsamlUseWsSec.IsNull() {
-		data.PpsamlUseWsSec = tfutils.BoolFromString(value.String())
-	} else if data.PpsamlUseWsSec.ValueBool() {
-		data.PpsamlUseWsSec = types.BoolNull()
+	if value := res.Get(pathRoot + `PPSAMLUseWSSec`); value.Exists() && !data.PpSamlUseWsSec.IsNull() {
+		data.PpSamlUseWsSec = tfutils.BoolFromString(value.String())
+	} else if data.PpSamlUseWsSec.ValueBool() {
+		data.PpSamlUseWsSec = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosClientKeytab`); value.Exists() && !data.PpKerberosClientKeytab.IsNull() {
 		data.PpKerberosClientKeytab = tfutils.ParseStringFromGJSON(value)
@@ -3032,65 +3032,65 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.PpActorRoleId = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPWSDerivedKeyUsernameToken`); value.Exists() && !data.PpwsDerivedKeyUsernameToken.IsNull() {
-		data.PpwsDerivedKeyUsernameToken = tfutils.BoolFromString(value.String())
-	} else if data.PpwsDerivedKeyUsernameToken.ValueBool() {
-		data.PpwsDerivedKeyUsernameToken = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSDerivedKeyUsernameToken`); value.Exists() && !data.PpWsDerivedKeyUsernameToken.IsNull() {
+		data.PpWsDerivedKeyUsernameToken = tfutils.BoolFromString(value.String())
+	} else if data.PpWsDerivedKeyUsernameToken.ValueBool() {
+		data.PpWsDerivedKeyUsernameToken = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPWSDerivedKeyUsernameTokenIterations`); value.Exists() && !data.PpwsDerivedKeyUsernameTokenIterations.IsNull() {
-		data.PpwsDerivedKeyUsernameTokenIterations = types.Int64Value(value.Int())
-	} else if data.PpwsDerivedKeyUsernameTokenIterations.ValueInt64() != 1000 {
-		data.PpwsDerivedKeyUsernameTokenIterations = types.Int64Null()
+	if value := res.Get(pathRoot + `PPWSDerivedKeyUsernameTokenIterations`); value.Exists() && !data.PpWsDerivedKeyUsernameTokenIterations.IsNull() {
+		data.PpWsDerivedKeyUsernameTokenIterations = types.Int64Value(value.Int())
+	} else if data.PpWsDerivedKeyUsernameTokenIterations.ValueInt64() != 1000 {
+		data.PpWsDerivedKeyUsernameTokenIterations = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `PPWSUsernameTokenAllowReplacement`); value.Exists() && !data.PpwsUsernameTokenAllowReplacement.IsNull() {
-		data.PpwsUsernameTokenAllowReplacement = tfutils.BoolFromString(value.String())
-	} else if data.PpwsUsernameTokenAllowReplacement.ValueBool() {
-		data.PpwsUsernameTokenAllowReplacement = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSUsernameTokenAllowReplacement`); value.Exists() && !data.PpWsUsernameTokenAllowReplacement.IsNull() {
+		data.PpWsUsernameTokenAllowReplacement = tfutils.BoolFromString(value.String())
+	} else if data.PpWsUsernameTokenAllowReplacement.ValueBool() {
+		data.PpWsUsernameTokenAllowReplacement = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPHMACSigningAlg`); value.Exists() && !data.PphmacSigningAlg.IsNull() {
-		data.PphmacSigningAlg = tfutils.ParseStringFromGJSON(value)
-	} else if data.PphmacSigningAlg.ValueString() != "hmac-sha1" {
-		data.PphmacSigningAlg = types.StringNull()
+	if value := res.Get(pathRoot + `PPHMACSigningAlg`); value.Exists() && !data.PpHmacSigningAlg.IsNull() {
+		data.PpHmacSigningAlg = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpHmacSigningAlg.ValueString() != "hmac-sha1" {
+		data.PpHmacSigningAlg = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSigningHashAlg`); value.Exists() && !data.PpSigningHashAlg.IsNull() {
 		data.PpSigningHashAlg = tfutils.ParseStringFromGJSON(value)
 	} else if data.PpSigningHashAlg.ValueString() != "sha1" {
 		data.PpSigningHashAlg = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPWSTrustHeader`); value.Exists() && !data.PpwsTrustHeader.IsNull() {
-		data.PpwsTrustHeader = tfutils.BoolFromString(value.String())
-	} else if data.PpwsTrustHeader.ValueBool() {
-		data.PpwsTrustHeader = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSTrustHeader`); value.Exists() && !data.PpWsTrustHeader.IsNull() {
+		data.PpWsTrustHeader = tfutils.BoolFromString(value.String())
+	} else if data.PpWsTrustHeader.ValueBool() {
+		data.PpWsTrustHeader = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPWSSCKeySource`); value.Exists() && !data.PpwsscKeySource.IsNull() {
-		data.PpwsscKeySource = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpwsscKeySource.ValueString() != "random" {
-		data.PpwsscKeySource = types.StringNull()
+	if value := res.Get(pathRoot + `PPWSSCKeySource`); value.Exists() && !data.PpWsScKeySource.IsNull() {
+		data.PpWsScKeySource = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpWsScKeySource.ValueString() != "random" {
+		data.PpWsScKeySource = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSharedSecretKey`); value.Exists() && !data.PpSharedSecretKey.IsNull() {
 		data.PpSharedSecretKey = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.PpSharedSecretKey = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPWSTrustRenewalWait`); value.Exists() && !data.PpwsTrustRenewalWait.IsNull() {
-		data.PpwsTrustRenewalWait = types.Int64Value(value.Int())
-	} else if data.PpwsTrustRenewalWait.ValueInt64() != 0 {
-		data.PpwsTrustRenewalWait = types.Int64Null()
+	if value := res.Get(pathRoot + `PPWSTrustRenewalWait`); value.Exists() && !data.PpWsTrustRenewalWait.IsNull() {
+		data.PpWsTrustRenewalWait = types.Int64Value(value.Int())
+	} else if data.PpWsTrustRenewalWait.ValueInt64() != 0 {
+		data.PpWsTrustRenewalWait = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `PPWSTrustNewInstance`); value.Exists() && !data.PpwsTrustNewInstance.IsNull() {
-		data.PpwsTrustNewInstance = tfutils.BoolFromString(value.String())
-	} else if data.PpwsTrustNewInstance.ValueBool() {
-		data.PpwsTrustNewInstance = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSTrustNewInstance`); value.Exists() && !data.PpWsTrustNewInstance.IsNull() {
+		data.PpWsTrustNewInstance = tfutils.BoolFromString(value.String())
+	} else if data.PpWsTrustNewInstance.ValueBool() {
+		data.PpWsTrustNewInstance = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPWSTrustNewKey`); value.Exists() && !data.PpwsTrustNewKey.IsNull() {
-		data.PpwsTrustNewKey = tfutils.BoolFromString(value.String())
-	} else if data.PpwsTrustNewKey.ValueBool() {
-		data.PpwsTrustNewKey = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSTrustNewKey`); value.Exists() && !data.PpWsTrustNewKey.IsNull() {
+		data.PpWsTrustNewKey = tfutils.BoolFromString(value.String())
+	} else if data.PpWsTrustNewKey.ValueBool() {
+		data.PpWsTrustNewKey = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPWSTrustNeverExpire`); value.Exists() && !data.PpwsTrustNeverExpire.IsNull() {
-		data.PpwsTrustNeverExpire = tfutils.BoolFromString(value.String())
-	} else if data.PpwsTrustNeverExpire.ValueBool() {
-		data.PpwsTrustNeverExpire = types.BoolNull()
+	if value := res.Get(pathRoot + `PPWSTrustNeverExpire`); value.Exists() && !data.PpWsTrustNeverExpire.IsNull() {
+		data.PpWsTrustNeverExpire = tfutils.BoolFromString(value.String())
+	} else if data.PpWsTrustNeverExpire.ValueBool() {
+		data.PpWsTrustNeverExpire = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPICRXToken`); value.Exists() && !data.PpicrxToken.IsNull() {
 		data.PpicrxToken = tfutils.BoolFromString(value.String())
@@ -3102,20 +3102,20 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.PpicrxUserRealm = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLIdentityProvider`); value.Exists() && !data.PpsamlIdentityProvider.IsNull() {
-		data.PpsamlIdentityProvider = tfutils.BoolFromString(value.String())
-	} else if data.PpsamlIdentityProvider.ValueBool() {
-		data.PpsamlIdentityProvider = types.BoolNull()
+	if value := res.Get(pathRoot + `PPSAMLIdentityProvider`); value.Exists() && !data.PpSamlIdentityProvider.IsNull() {
+		data.PpSamlIdentityProvider = tfutils.BoolFromString(value.String())
+	} else if data.PpSamlIdentityProvider.ValueBool() {
+		data.PpSamlIdentityProvider = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLProtocol`); value.Exists() && !data.PpsamlProtocol.IsNull() {
-		data.PpsamlProtocol = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpsamlProtocol.ValueString() != "assertion" {
-		data.PpsamlProtocol = types.StringNull()
+	if value := res.Get(pathRoot + `PPSAMLProtocol`); value.Exists() && !data.PpSamlProtocol.IsNull() {
+		data.PpSamlProtocol = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpSamlProtocol.ValueString() != "assertion" {
+		data.PpSamlProtocol = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLResponseDestination`); value.Exists() && !data.PpsamlResponseDestination.IsNull() {
-		data.PpsamlResponseDestination = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSAMLResponseDestination`); value.Exists() && !data.PpSamlResponseDestination.IsNull() {
+		data.PpSamlResponseDestination = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlResponseDestination = types.StringNull()
+		data.PpSamlResponseDestination = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPResultWrapup`); value.Exists() && !data.PpResultWrapup.IsNull() {
 		data.PpResultWrapup = tfutils.ParseStringFromGJSON(value)
@@ -3123,104 +3123,104 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 		data.PpResultWrapup = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPSAMLAssertionType`); value.Exists() {
-		data.PpsamlAssertionType.UpdateFromBody(ctx, "", value)
+		data.PpSamlAssertionType.UpdateFromBody(ctx, "", value)
 	} else {
-		data.PpsamlAssertionType = nil
+		data.PpSamlAssertionType = nil
 	}
-	if value := res.Get(pathRoot + `PPSAMLSubjectConfirm`); value.Exists() && !data.PpsamlSubjectConfirm.IsNull() {
-		data.PpsamlSubjectConfirm = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpsamlSubjectConfirm.ValueString() != "bearer" {
-		data.PpsamlSubjectConfirm = types.StringNull()
+	if value := res.Get(pathRoot + `PPSAMLSubjectConfirm`); value.Exists() && !data.PpSamlSubjectConfirm.IsNull() {
+		data.PpSamlSubjectConfirm = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpSamlSubjectConfirm.ValueString() != "bearer" {
+		data.PpSamlSubjectConfirm = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLNameID`); value.Exists() && !data.PpsamlNameId.IsNull() {
-		data.PpsamlNameId = tfutils.BoolFromString(value.String())
-	} else if !data.PpsamlNameId.ValueBool() {
-		data.PpsamlNameId = types.BoolNull()
+	if value := res.Get(pathRoot + `PPSAMLNameID`); value.Exists() && !data.PpSamlNameId.IsNull() {
+		data.PpSamlNameId = tfutils.BoolFromString(value.String())
+	} else if !data.PpSamlNameId.ValueBool() {
+		data.PpSamlNameId = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLNameIDFormat`); value.Exists() && !data.PpsamlNameIdFormat.IsNull() {
-		data.PpsamlNameIdFormat = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSAMLNameIDFormat`); value.Exists() && !data.PpSamlNameIdFormat.IsNull() {
+		data.PpSamlNameIdFormat = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlNameIdFormat = types.StringNull()
+		data.PpSamlNameIdFormat = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLRecipient`); value.Exists() && !data.PpsamlRecipient.IsNull() {
-		data.PpsamlRecipient = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSAMLRecipient`); value.Exists() && !data.PpSamlRecipient.IsNull() {
+		data.PpSamlRecipient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlRecipient = types.StringNull()
+		data.PpSamlRecipient = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLAudience`); value.Exists() && !data.PpsamlAudience.IsNull() {
-		data.PpsamlAudience = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSAMLAudience`); value.Exists() && !data.PpSamlAudience.IsNull() {
+		data.PpSamlAudience = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlAudience = types.StringNull()
+		data.PpSamlAudience = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLOmitNotBefore`); value.Exists() && !data.PpsamlOmitNotBefore.IsNull() {
-		data.PpsamlOmitNotBefore = tfutils.BoolFromString(value.String())
-	} else if data.PpsamlOmitNotBefore.ValueBool() {
-		data.PpsamlOmitNotBefore = types.BoolNull()
+	if value := res.Get(pathRoot + `PPSAMLOmitNotBefore`); value.Exists() && !data.PpSamlOmitNotBefore.IsNull() {
+		data.PpSamlOmitNotBefore = tfutils.BoolFromString(value.String())
+	} else if data.PpSamlOmitNotBefore.ValueBool() {
+		data.PpSamlOmitNotBefore = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPOneTimeUse`); value.Exists() && !data.PpOneTimeUse.IsNull() {
 		data.PpOneTimeUse = tfutils.BoolFromString(value.String())
 	} else if data.PpOneTimeUse.ValueBool() {
 		data.PpOneTimeUse = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLProxy`); value.Exists() && !data.PpsamlProxy.IsNull() {
-		data.PpsamlProxy = tfutils.BoolFromString(value.String())
-	} else if data.PpsamlProxy.ValueBool() {
-		data.PpsamlProxy = types.BoolNull()
+	if value := res.Get(pathRoot + `PPSAMLProxy`); value.Exists() && !data.PpSamlProxy.IsNull() {
+		data.PpSamlProxy = tfutils.BoolFromString(value.String())
+	} else if data.PpSamlProxy.ValueBool() {
+		data.PpSamlProxy = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLProxyAudience`); value.Exists() && !data.PpsamlProxyAudience.IsNull() {
-		data.PpsamlProxyAudience = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSAMLProxyAudience`); value.Exists() && !data.PpSamlProxyAudience.IsNull() {
+		data.PpSamlProxyAudience = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlProxyAudience = types.StringNull()
+		data.PpSamlProxyAudience = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLProxyCount`); value.Exists() && !data.PpsamlProxyCount.IsNull() {
-		data.PpsamlProxyCount = types.Int64Value(value.Int())
-	} else if data.PpsamlProxyCount.ValueInt64() != 0 {
-		data.PpsamlProxyCount = types.Int64Null()
+	if value := res.Get(pathRoot + `PPSAMLProxyCount`); value.Exists() && !data.PpSamlProxyCount.IsNull() {
+		data.PpSamlProxyCount = types.Int64Value(value.Int())
+	} else if data.PpSamlProxyCount.ValueInt64() != 0 {
+		data.PpSamlProxyCount = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `PPSAMLAuthzAction`); value.Exists() && !data.PpsamlAuthzAction.IsNull() {
-		data.PpsamlAuthzAction = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpsamlAuthzAction.ValueString() != "AllHTTP" {
-		data.PpsamlAuthzAction = types.StringNull()
+	if value := res.Get(pathRoot + `PPSAMLAuthzAction`); value.Exists() && !data.PpSamlAuthzAction.IsNull() {
+		data.PpSamlAuthzAction = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpSamlAuthzAction.ValueString() != "AllHTTP" {
+		data.PpSamlAuthzAction = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSAMLAttributes`); value.Exists() && !data.PpsamlAttributes.IsNull() {
-		data.PpsamlAttributes = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSAMLAttributes`); value.Exists() && !data.PpSamlAttributes.IsNull() {
+		data.PpSamlAttributes = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsamlAttributes = types.StringNull()
+		data.PpSamlAttributes = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPLTPAInsertCookie`); value.Exists() && !data.PpltpaInsertCookie.IsNull() {
-		data.PpltpaInsertCookie = tfutils.BoolFromString(value.String())
-	} else if !data.PpltpaInsertCookie.ValueBool() {
-		data.PpltpaInsertCookie = types.BoolNull()
+	if value := res.Get(pathRoot + `PPLTPAInsertCookie`); value.Exists() && !data.PpLtpaInsertCookie.IsNull() {
+		data.PpLtpaInsertCookie = tfutils.BoolFromString(value.String())
+	} else if !data.PpLtpaInsertCookie.ValueBool() {
+		data.PpLtpaInsertCookie = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPTAMPACPropagate`); value.Exists() && !data.PptampacPropagate.IsNull() {
-		data.PptampacPropagate = tfutils.BoolFromString(value.String())
-	} else if data.PptampacPropagate.ValueBool() {
-		data.PptampacPropagate = types.BoolNull()
+	if value := res.Get(pathRoot + `PPTAMPACPropagate`); value.Exists() && !data.PpTamPacPropagate.IsNull() {
+		data.PpTamPacPropagate = tfutils.BoolFromString(value.String())
+	} else if data.PpTamPacPropagate.ValueBool() {
+		data.PpTamPacPropagate = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPTAMHeader`); value.Exists() && !data.PptamHeader.IsNull() {
-		data.PptamHeader = tfutils.ParseStringFromGJSON(value)
-	} else if data.PptamHeader.ValueString() != "iv-creds" {
-		data.PptamHeader = types.StringNull()
+	if value := res.Get(pathRoot + `PPTAMHeader`); value.Exists() && !data.PpTamHeader.IsNull() {
+		data.PpTamHeader = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpTamHeader.ValueString() != "iv-creds" {
+		data.PpTamHeader = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPTAMHeaderSize`); value.Exists() && !data.PptamHeaderSize.IsNull() {
-		data.PptamHeaderSize = types.Int64Value(value.Int())
-	} else if data.PptamHeaderSize.ValueInt64() != 0 {
-		data.PptamHeaderSize = types.Int64Null()
+	if value := res.Get(pathRoot + `PPTAMHeaderSize`); value.Exists() && !data.PpTamHeaderSize.IsNull() {
+		data.PpTamHeaderSize = types.Int64Value(value.Int())
+	} else if data.PpTamHeaderSize.ValueInt64() != 0 {
+		data.PpTamHeaderSize = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `PPKerberosUseS4U2Proxy`); value.Exists() && !data.PpKerberosUseS4u2Proxy.IsNull() {
-		data.PpKerberosUseS4u2Proxy = tfutils.BoolFromString(value.String())
-	} else if data.PpKerberosUseS4u2Proxy.ValueBool() {
-		data.PpKerberosUseS4u2Proxy = types.BoolNull()
+	if value := res.Get(pathRoot + `PPKerberosUseS4U2Proxy`); value.Exists() && !data.PpKerberosUseS4u2proxy.IsNull() {
+		data.PpKerberosUseS4u2proxy = tfutils.BoolFromString(value.String())
+	} else if data.PpKerberosUseS4u2proxy.ValueBool() {
+		data.PpKerberosUseS4u2proxy = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPCookieAttributes`); value.Exists() && !data.PpCookieAttributes.IsNull() {
 		data.PpCookieAttributes = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.PpCookieAttributes = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPKerberosUseS4U2SelfAndS4U2Proxy`); value.Exists() && !data.PpKerberosUseS4u2SelfAndS4u2Proxy.IsNull() {
-		data.PpKerberosUseS4u2SelfAndS4u2Proxy = tfutils.BoolFromString(value.String())
-	} else if data.PpKerberosUseS4u2SelfAndS4u2Proxy.ValueBool() {
-		data.PpKerberosUseS4u2SelfAndS4u2Proxy = types.BoolNull()
+	if value := res.Get(pathRoot + `PPKerberosUseS4U2SelfAndS4U2Proxy`); value.Exists() && !data.PpKerberosUseS4u2selfAndS4u2proxy.IsNull() {
+		data.PpKerberosUseS4u2selfAndS4u2proxy = tfutils.BoolFromString(value.String())
+	} else if data.PpKerberosUseS4u2selfAndS4u2proxy.ValueBool() {
+		data.PpKerberosUseS4u2selfAndS4u2proxy = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosClientSource`); value.Exists() && !data.PpKerberosClientSource.IsNull() {
 		data.PpKerberosClientSource = tfutils.ParseStringFromGJSON(value)
@@ -3262,29 +3262,29 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.PpKerberosServerCtxVar = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSSLClientConfigType`); value.Exists() && !data.PpsslClientConfigType.IsNull() {
-		data.PpsslClientConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.PpsslClientConfigType.ValueString() != "proxy" {
-		data.PpsslClientConfigType = types.StringNull()
+	if value := res.Get(pathRoot + `PPSSLClientConfigType`); value.Exists() && !data.PpSslClientConfigType.IsNull() {
+		data.PpSslClientConfigType = tfutils.ParseStringFromGJSON(value)
+	} else if data.PpSslClientConfigType.ValueString() != "proxy" {
+		data.PpSslClientConfigType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPSSLClientProfile`); value.Exists() && !data.PpsslClientProfile.IsNull() {
-		data.PpsslClientProfile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPSSLClientProfile`); value.Exists() && !data.PpSslClientProfile.IsNull() {
+		data.PpSslClientProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpsslClientProfile = types.StringNull()
+		data.PpSslClientProfile = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPLTPAKeyFilePasswordAlias`); value.Exists() && !data.PpltpaKeyFilePasswordAlias.IsNull() {
-		data.PpltpaKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPLTPAKeyFilePasswordAlias`); value.Exists() && !data.PpLtpaKeyFilePasswordAlias.IsNull() {
+		data.PpLtpaKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpltpaKeyFilePasswordAlias = types.StringNull()
+		data.PpLtpaKeyFilePasswordAlias = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPJWT`); value.Exists() && !data.Ppjwt.IsNull() {
-		data.Ppjwt = tfutils.BoolFromString(value.String())
-	} else if data.Ppjwt.ValueBool() {
-		data.Ppjwt = types.BoolNull()
+	if value := res.Get(pathRoot + `PPJWT`); value.Exists() && !data.PpJwt.IsNull() {
+		data.PpJwt = tfutils.BoolFromString(value.String())
+	} else if data.PpJwt.ValueBool() {
+		data.PpJwt = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `PPJWTGenerator`); value.Exists() && !data.PpjwtGenerator.IsNull() {
-		data.PpjwtGenerator = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `PPJWTGenerator`); value.Exists() && !data.PpJwtGenerator.IsNull() {
+		data.PpJwtGenerator = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PpjwtGenerator = types.StringNull()
+		data.PpJwtGenerator = types.StringNull()
 	}
 }

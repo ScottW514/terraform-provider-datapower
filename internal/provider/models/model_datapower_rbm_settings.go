@@ -37,44 +37,44 @@ type RBMSettings struct {
 	Enabled                           types.Bool                  `tfsdk:"enabled"`
 	UserSummary                       types.String                `tfsdk:"user_summary"`
 	AuMethod                          types.String                `tfsdk:"au_method"`
-	SshauMethod                       *DmRBMSSHAuthenticateType   `tfsdk:"sshau_method"`
+	SshAuMethod                       *DmRBMSSHAuthenticateType   `tfsdk:"ssh_au_method"`
 	CaPubKeyFile                      types.String                `tfsdk:"ca_pub_key_file"`
 	RevokedKeys                       types.List                  `tfsdk:"revoked_keys"`
-	AuzosnssConfig                    types.String                `tfsdk:"auzosnss_config"`
-	AuoidcScope                       types.String                `tfsdk:"auoidc_scope"`
-	AuoidcClientId                    types.String                `tfsdk:"auoidc_client_id"`
-	AuoidcClientSecret                types.String                `tfsdk:"auoidc_client_secret"`
-	AuoidcIdentityServiceUrl          types.String                `tfsdk:"auoidc_identity_service_url"`
-	AuoidcKeyFetchInterval            types.Int64                 `tfsdk:"auoidc_key_fetch_interval"`
-	AuoidcIdentityServiceUrlsslClient types.String                `tfsdk:"auoidc_identity_service_urlssl_client"`
+	AuZosNssConfig                    types.String                `tfsdk:"au_zos_nss_config"`
+	AuOidcScope                       types.String                `tfsdk:"au_oidc_scope"`
+	AuOidcClientId                    types.String                `tfsdk:"au_oidc_client_id"`
+	AuOidcClientSecret                types.String                `tfsdk:"au_oidc_client_secret"`
+	AuOidcIdentityServiceUrl          types.String                `tfsdk:"au_oidc_identity_service_url"`
+	AuOidcKeyFetchInterval            types.Int64                 `tfsdk:"au_oidc_key_fetch_interval"`
+	AuOidcIdentityServiceUrlSslClient types.String                `tfsdk:"au_oidc_identity_service_url_ssl_client"`
 	AuKerberosKeytab                  types.String                `tfsdk:"au_kerberos_keytab"`
 	AuCustomUrl                       types.String                `tfsdk:"au_custom_url"`
 	AuInfoUrl                         types.String                `tfsdk:"au_info_url"`
-	AusslValcred                      types.String                `tfsdk:"aussl_valcred"`
+	AuSslValcred                      types.String                `tfsdk:"au_ssl_valcred"`
 	AuHost                            types.String                `tfsdk:"au_host"`
 	AuPort                            types.Int64                 `tfsdk:"au_port"`
-	AuldapSearchForDn                 types.Bool                  `tfsdk:"auldap_search_for_dn"`
-	AuldapBindDn                      types.String                `tfsdk:"auldap_bind_dn"`
-	AuldapBindPasswordAlias           types.String                `tfsdk:"auldap_bind_password_alias"`
-	AuldapSearchParameters            types.String                `tfsdk:"auldap_search_parameters"`
-	AuldapPrefix                      types.String                `tfsdk:"auldap_prefix"`
-	AuForceDnldapOrder                types.Bool                  `tfsdk:"au_force_dnldap_order"`
-	LdaPsuffix                        types.String                `tfsdk:"lda_psuffix"`
-	AuldapLoadBalanceGroup            types.String                `tfsdk:"auldap_load_balance_group"`
+	AuLdapSearchForDn                 types.Bool                  `tfsdk:"au_ldap_search_for_dn"`
+	AuLdapBindDn                      types.String                `tfsdk:"au_ldap_bind_dn"`
+	AuLdapBindPasswordAlias           types.String                `tfsdk:"au_ldap_bind_password_alias"`
+	AuLdapSearchParameters            types.String                `tfsdk:"au_ldap_search_parameters"`
+	AuLdapPrefix                      types.String                `tfsdk:"au_ldap_prefix"`
+	AuForceDnLdapOrder                types.Bool                  `tfsdk:"au_force_dn_ldap_order"`
+	LdapSuffix                        types.String                `tfsdk:"ldap_suffix"`
+	AuLdapLoadBalanceGroup            types.String                `tfsdk:"au_ldap_load_balance_group"`
 	AuCacheAllow                      types.String                `tfsdk:"au_cache_allow"`
 	AuCacheTtl                        types.Int64                 `tfsdk:"au_cache_ttl"`
-	AuldapReadTimeout                 types.Int64                 `tfsdk:"auldap_read_timeout"`
+	AuLdapReadTimeout                 types.Int64                 `tfsdk:"au_ldap_read_timeout"`
 	McMethod                          types.String                `tfsdk:"mc_method"`
 	McCustomUrl                       types.String                `tfsdk:"mc_custom_url"`
-	McldapSearchForGroup              types.Bool                  `tfsdk:"mcldap_search_for_group"`
+	McLdapSearchForGroup              types.Bool                  `tfsdk:"mc_ldap_search_for_group"`
 	McHost                            types.String                `tfsdk:"mc_host"`
 	McPort                            types.Int64                 `tfsdk:"mc_port"`
-	McldapLoadBalanceGroup            types.String                `tfsdk:"mcldap_load_balance_group"`
-	McldapBindDn                      types.String                `tfsdk:"mcldap_bind_dn"`
-	McldapBindPasswordAlias           types.String                `tfsdk:"mcldap_bind_password_alias"`
-	McldapSearchParameters            types.String                `tfsdk:"mcldap_search_parameters"`
+	McLdapLoadBalanceGroup            types.String                `tfsdk:"mc_ldap_load_balance_group"`
+	McLdapBindDn                      types.String                `tfsdk:"mc_ldap_bind_dn"`
+	McLdapBindPasswordAlias           types.String                `tfsdk:"mc_ldap_bind_password_alias"`
+	McLdapSearchParameters            types.String                `tfsdk:"mc_ldap_search_parameters"`
 	McInfoUrl                         types.String                `tfsdk:"mc_info_url"`
-	McldapReadTimeout                 types.Int64                 `tfsdk:"mcldap_read_timeout"`
+	McLdapReadTimeout                 types.Int64                 `tfsdk:"mc_ldap_read_timeout"`
 	LdapVersion                       types.String                `tfsdk:"ldap_version"`
 	FallbackLogin                     types.String                `tfsdk:"fallback_login"`
 	FallbackUser                      types.List                  `tfsdk:"fallback_user"`
@@ -92,18 +92,18 @@ type RBMSettings struct {
 	CliTimeout                        types.Int64                 `tfsdk:"cli_timeout"`
 	MaxFailedLogin                    types.Int64                 `tfsdk:"max_failed_login"`
 	LockoutPeriod                     types.Int64                 `tfsdk:"lockout_period"`
-	McForceDnldapOrder                types.Bool                  `tfsdk:"mc_force_dnldap_order"`
+	McForceDnLdapOrder                types.Bool                  `tfsdk:"mc_force_dn_ldap_order"`
 	PasswordHashAlgorithm             types.String                `tfsdk:"password_hash_algorithm"`
-	LdapsslClientConfigType           types.String                `tfsdk:"ldapssl_client_config_type"`
-	LdapsslClientProfile              types.String                `tfsdk:"ldapssl_client_profile"`
-	McldapsslClientConfigType         types.String                `tfsdk:"mcldapssl_client_config_type"`
-	McldapsslClientProfile            types.String                `tfsdk:"mcldapssl_client_profile"`
+	LdapSslClientConfigType           types.String                `tfsdk:"ldap_ssl_client_config_type"`
+	LdapSslClientProfile              types.String                `tfsdk:"ldap_ssl_client_profile"`
+	McLdapSslClientConfigType         types.String                `tfsdk:"mc_ldap_ssl_client_config_type"`
+	McLdapSslClientProfile            types.String                `tfsdk:"mc_ldap_ssl_client_profile"`
 	DependencyActions                 []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var RBMSettingsCAPubKeyFileCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "sshau_method",
+	Attribute:   "ssh_au_method",
 	AttrType:    "DmRBMSSHAuthenticateType",
 	AttrDefault: "",
 	Value:       []string{"certificate"},
@@ -155,7 +155,7 @@ var RBMSettingsAUHostCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "auldap_load_balance_group",
+			Attribute:   "au_ldap_load_balance_group",
 			AttrType:    "String",
 			AttrDefault: "",
 			Value:       []string{""},
@@ -174,7 +174,7 @@ var RBMSettingsAUPortCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "auldap_load_balance_group",
+			Attribute:   "au_ldap_load_balance_group",
 			AttrType:    "String",
 			AttrDefault: "",
 			Value:       []string{""},
@@ -193,7 +193,7 @@ var RBMSettingsAULDAPSearchParametersCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "auldap_search_for_dn",
+			Attribute:   "au_ldap_search_for_dn",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -212,7 +212,7 @@ var RBMSettingsMCHostCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "mcldap_search_for_group",
+			Attribute:   "mc_ldap_search_for_group",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -231,7 +231,7 @@ var RBMSettingsMCPortCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "mcldap_search_for_group",
+			Attribute:   "mc_ldap_search_for_group",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -250,7 +250,7 @@ var RBMSettingsMCLDAPSearchParametersCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "mcldap_search_for_group",
+			Attribute:   "mc_ldap_search_for_group",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -311,71 +311,71 @@ var RBMSettingsNumOldPasswordsCondVal = validators.Evaluation{
 }
 
 var RBMSettingsObjectType = map[string]attr.Type{
-	"enabled":                               types.BoolType,
-	"user_summary":                          types.StringType,
-	"au_method":                             types.StringType,
-	"sshau_method":                          types.ObjectType{AttrTypes: DmRBMSSHAuthenticateTypeObjectType},
-	"ca_pub_key_file":                       types.StringType,
-	"revoked_keys":                          types.ListType{ElemType: types.StringType},
-	"auzosnss_config":                       types.StringType,
-	"auoidc_scope":                          types.StringType,
-	"auoidc_client_id":                      types.StringType,
-	"auoidc_client_secret":                  types.StringType,
-	"auoidc_identity_service_url":           types.StringType,
-	"auoidc_key_fetch_interval":             types.Int64Type,
-	"auoidc_identity_service_urlssl_client": types.StringType,
-	"au_kerberos_keytab":                    types.StringType,
-	"au_custom_url":                         types.StringType,
-	"au_info_url":                           types.StringType,
-	"aussl_valcred":                         types.StringType,
-	"au_host":                               types.StringType,
-	"au_port":                               types.Int64Type,
-	"auldap_search_for_dn":                  types.BoolType,
-	"auldap_bind_dn":                        types.StringType,
-	"auldap_bind_password_alias":            types.StringType,
-	"auldap_search_parameters":              types.StringType,
-	"auldap_prefix":                         types.StringType,
-	"au_force_dnldap_order":                 types.BoolType,
-	"lda_psuffix":                           types.StringType,
-	"auldap_load_balance_group":             types.StringType,
-	"au_cache_allow":                        types.StringType,
-	"au_cache_ttl":                          types.Int64Type,
-	"auldap_read_timeout":                   types.Int64Type,
-	"mc_method":                             types.StringType,
-	"mc_custom_url":                         types.StringType,
-	"mcldap_search_for_group":               types.BoolType,
-	"mc_host":                               types.StringType,
-	"mc_port":                               types.Int64Type,
-	"mcldap_load_balance_group":             types.StringType,
-	"mcldap_bind_dn":                        types.StringType,
-	"mcldap_bind_password_alias":            types.StringType,
-	"mcldap_search_parameters":              types.StringType,
-	"mc_info_url":                           types.StringType,
-	"mcldap_read_timeout":                   types.Int64Type,
-	"ldap_version":                          types.StringType,
-	"fallback_login":                        types.StringType,
-	"fallback_user":                         types.ListType{ElemType: types.StringType},
-	"apply_to_cli":                          types.BoolType,
-	"restrict_admin_to_serial_port":         types.BoolType,
-	"min_password_length":                   types.Int64Type,
-	"require_mixed_case":                    types.BoolType,
-	"require_digit":                         types.BoolType,
-	"require_non_alpha_numeric":             types.BoolType,
-	"disallow_username_substring":           types.BoolType,
-	"do_password_aging":                     types.BoolType,
-	"max_password_age":                      types.Int64Type,
-	"do_password_history":                   types.BoolType,
-	"num_old_passwords":                     types.Int64Type,
-	"cli_timeout":                           types.Int64Type,
-	"max_failed_login":                      types.Int64Type,
-	"lockout_period":                        types.Int64Type,
-	"mc_force_dnldap_order":                 types.BoolType,
-	"password_hash_algorithm":               types.StringType,
-	"ldapssl_client_config_type":            types.StringType,
-	"ldapssl_client_profile":                types.StringType,
-	"mcldapssl_client_config_type":          types.StringType,
-	"mcldapssl_client_profile":              types.StringType,
-	"dependency_actions":                    actions.ActionsListType,
+	"enabled":                                 types.BoolType,
+	"user_summary":                            types.StringType,
+	"au_method":                               types.StringType,
+	"ssh_au_method":                           types.ObjectType{AttrTypes: DmRBMSSHAuthenticateTypeObjectType},
+	"ca_pub_key_file":                         types.StringType,
+	"revoked_keys":                            types.ListType{ElemType: types.StringType},
+	"au_zos_nss_config":                       types.StringType,
+	"au_oidc_scope":                           types.StringType,
+	"au_oidc_client_id":                       types.StringType,
+	"au_oidc_client_secret":                   types.StringType,
+	"au_oidc_identity_service_url":            types.StringType,
+	"au_oidc_key_fetch_interval":              types.Int64Type,
+	"au_oidc_identity_service_url_ssl_client": types.StringType,
+	"au_kerberos_keytab":                      types.StringType,
+	"au_custom_url":                           types.StringType,
+	"au_info_url":                             types.StringType,
+	"au_ssl_valcred":                          types.StringType,
+	"au_host":                                 types.StringType,
+	"au_port":                                 types.Int64Type,
+	"au_ldap_search_for_dn":                   types.BoolType,
+	"au_ldap_bind_dn":                         types.StringType,
+	"au_ldap_bind_password_alias":             types.StringType,
+	"au_ldap_search_parameters":               types.StringType,
+	"au_ldap_prefix":                          types.StringType,
+	"au_force_dn_ldap_order":                  types.BoolType,
+	"ldap_suffix":                             types.StringType,
+	"au_ldap_load_balance_group":              types.StringType,
+	"au_cache_allow":                          types.StringType,
+	"au_cache_ttl":                            types.Int64Type,
+	"au_ldap_read_timeout":                    types.Int64Type,
+	"mc_method":                               types.StringType,
+	"mc_custom_url":                           types.StringType,
+	"mc_ldap_search_for_group":                types.BoolType,
+	"mc_host":                                 types.StringType,
+	"mc_port":                                 types.Int64Type,
+	"mc_ldap_load_balance_group":              types.StringType,
+	"mc_ldap_bind_dn":                         types.StringType,
+	"mc_ldap_bind_password_alias":             types.StringType,
+	"mc_ldap_search_parameters":               types.StringType,
+	"mc_info_url":                             types.StringType,
+	"mc_ldap_read_timeout":                    types.Int64Type,
+	"ldap_version":                            types.StringType,
+	"fallback_login":                          types.StringType,
+	"fallback_user":                           types.ListType{ElemType: types.StringType},
+	"apply_to_cli":                            types.BoolType,
+	"restrict_admin_to_serial_port":           types.BoolType,
+	"min_password_length":                     types.Int64Type,
+	"require_mixed_case":                      types.BoolType,
+	"require_digit":                           types.BoolType,
+	"require_non_alpha_numeric":               types.BoolType,
+	"disallow_username_substring":             types.BoolType,
+	"do_password_aging":                       types.BoolType,
+	"max_password_age":                        types.Int64Type,
+	"do_password_history":                     types.BoolType,
+	"num_old_passwords":                       types.Int64Type,
+	"cli_timeout":                             types.Int64Type,
+	"max_failed_login":                        types.Int64Type,
+	"lockout_period":                          types.Int64Type,
+	"mc_force_dn_ldap_order":                  types.BoolType,
+	"password_hash_algorithm":                 types.StringType,
+	"ldap_ssl_client_config_type":             types.StringType,
+	"ldap_ssl_client_profile":                 types.StringType,
+	"mc_ldap_ssl_client_config_type":          types.StringType,
+	"mc_ldap_ssl_client_profile":              types.StringType,
+	"dependency_actions":                      actions.ActionsListType,
 }
 
 func (data RBMSettings) GetPath() string {
@@ -393,8 +393,8 @@ func (data RBMSettings) IsNull() bool {
 	if !data.AuMethod.IsNull() {
 		return false
 	}
-	if data.SshauMethod != nil {
-		if !data.SshauMethod.IsNull() {
+	if data.SshAuMethod != nil {
+		if !data.SshAuMethod.IsNull() {
 			return false
 		}
 	}
@@ -404,25 +404,25 @@ func (data RBMSettings) IsNull() bool {
 	if !data.RevokedKeys.IsNull() {
 		return false
 	}
-	if !data.AuzosnssConfig.IsNull() {
+	if !data.AuZosNssConfig.IsNull() {
 		return false
 	}
-	if !data.AuoidcScope.IsNull() {
+	if !data.AuOidcScope.IsNull() {
 		return false
 	}
-	if !data.AuoidcClientId.IsNull() {
+	if !data.AuOidcClientId.IsNull() {
 		return false
 	}
-	if !data.AuoidcClientSecret.IsNull() {
+	if !data.AuOidcClientSecret.IsNull() {
 		return false
 	}
-	if !data.AuoidcIdentityServiceUrl.IsNull() {
+	if !data.AuOidcIdentityServiceUrl.IsNull() {
 		return false
 	}
-	if !data.AuoidcKeyFetchInterval.IsNull() {
+	if !data.AuOidcKeyFetchInterval.IsNull() {
 		return false
 	}
-	if !data.AuoidcIdentityServiceUrlsslClient.IsNull() {
+	if !data.AuOidcIdentityServiceUrlSslClient.IsNull() {
 		return false
 	}
 	if !data.AuKerberosKeytab.IsNull() {
@@ -434,7 +434,7 @@ func (data RBMSettings) IsNull() bool {
 	if !data.AuInfoUrl.IsNull() {
 		return false
 	}
-	if !data.AusslValcred.IsNull() {
+	if !data.AuSslValcred.IsNull() {
 		return false
 	}
 	if !data.AuHost.IsNull() {
@@ -443,28 +443,28 @@ func (data RBMSettings) IsNull() bool {
 	if !data.AuPort.IsNull() {
 		return false
 	}
-	if !data.AuldapSearchForDn.IsNull() {
+	if !data.AuLdapSearchForDn.IsNull() {
 		return false
 	}
-	if !data.AuldapBindDn.IsNull() {
+	if !data.AuLdapBindDn.IsNull() {
 		return false
 	}
-	if !data.AuldapBindPasswordAlias.IsNull() {
+	if !data.AuLdapBindPasswordAlias.IsNull() {
 		return false
 	}
-	if !data.AuldapSearchParameters.IsNull() {
+	if !data.AuLdapSearchParameters.IsNull() {
 		return false
 	}
-	if !data.AuldapPrefix.IsNull() {
+	if !data.AuLdapPrefix.IsNull() {
 		return false
 	}
-	if !data.AuForceDnldapOrder.IsNull() {
+	if !data.AuForceDnLdapOrder.IsNull() {
 		return false
 	}
-	if !data.LdaPsuffix.IsNull() {
+	if !data.LdapSuffix.IsNull() {
 		return false
 	}
-	if !data.AuldapLoadBalanceGroup.IsNull() {
+	if !data.AuLdapLoadBalanceGroup.IsNull() {
 		return false
 	}
 	if !data.AuCacheAllow.IsNull() {
@@ -473,7 +473,7 @@ func (data RBMSettings) IsNull() bool {
 	if !data.AuCacheTtl.IsNull() {
 		return false
 	}
-	if !data.AuldapReadTimeout.IsNull() {
+	if !data.AuLdapReadTimeout.IsNull() {
 		return false
 	}
 	if !data.McMethod.IsNull() {
@@ -482,7 +482,7 @@ func (data RBMSettings) IsNull() bool {
 	if !data.McCustomUrl.IsNull() {
 		return false
 	}
-	if !data.McldapSearchForGroup.IsNull() {
+	if !data.McLdapSearchForGroup.IsNull() {
 		return false
 	}
 	if !data.McHost.IsNull() {
@@ -491,22 +491,22 @@ func (data RBMSettings) IsNull() bool {
 	if !data.McPort.IsNull() {
 		return false
 	}
-	if !data.McldapLoadBalanceGroup.IsNull() {
+	if !data.McLdapLoadBalanceGroup.IsNull() {
 		return false
 	}
-	if !data.McldapBindDn.IsNull() {
+	if !data.McLdapBindDn.IsNull() {
 		return false
 	}
-	if !data.McldapBindPasswordAlias.IsNull() {
+	if !data.McLdapBindPasswordAlias.IsNull() {
 		return false
 	}
-	if !data.McldapSearchParameters.IsNull() {
+	if !data.McLdapSearchParameters.IsNull() {
 		return false
 	}
 	if !data.McInfoUrl.IsNull() {
 		return false
 	}
-	if !data.McldapReadTimeout.IsNull() {
+	if !data.McLdapReadTimeout.IsNull() {
 		return false
 	}
 	if !data.LdapVersion.IsNull() {
@@ -560,22 +560,22 @@ func (data RBMSettings) IsNull() bool {
 	if !data.LockoutPeriod.IsNull() {
 		return false
 	}
-	if !data.McForceDnldapOrder.IsNull() {
+	if !data.McForceDnLdapOrder.IsNull() {
 		return false
 	}
 	if !data.PasswordHashAlgorithm.IsNull() {
 		return false
 	}
-	if !data.LdapsslClientConfigType.IsNull() {
+	if !data.LdapSslClientConfigType.IsNull() {
 		return false
 	}
-	if !data.LdapsslClientProfile.IsNull() {
+	if !data.LdapSslClientProfile.IsNull() {
 		return false
 	}
-	if !data.McldapsslClientConfigType.IsNull() {
+	if !data.McLdapSslClientConfigType.IsNull() {
 		return false
 	}
-	if !data.McldapsslClientProfile.IsNull() {
+	if !data.McLdapSslClientProfile.IsNull() {
 		return false
 	}
 	return true
@@ -597,9 +597,9 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AuMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUMethod`, data.AuMethod.ValueString())
 	}
-	if data.SshauMethod != nil {
-		if !data.SshauMethod.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`SSHAUMethod`, data.SshauMethod.ToBody(ctx, ""))
+	if data.SshAuMethod != nil {
+		if !data.SshAuMethod.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`SSHAUMethod`, data.SshAuMethod.ToBody(ctx, ""))
 		}
 	}
 	if !data.CaPubKeyFile.IsNull() {
@@ -612,26 +612,26 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 			body, _ = sjson.Set(body, pathRoot+`RevokedKeys`+".-1", map[string]string{"value": val})
 		}
 	}
-	if !data.AuzosnssConfig.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUZOSNSSConfig`, data.AuzosnssConfig.ValueString())
+	if !data.AuZosNssConfig.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUZOSNSSConfig`, data.AuZosNssConfig.ValueString())
 	}
-	if !data.AuoidcScope.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUOIDCScope`, data.AuoidcScope.ValueString())
+	if !data.AuOidcScope.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUOIDCScope`, data.AuOidcScope.ValueString())
 	}
-	if !data.AuoidcClientId.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUOIDCClientID`, data.AuoidcClientId.ValueString())
+	if !data.AuOidcClientId.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUOIDCClientID`, data.AuOidcClientId.ValueString())
 	}
-	if !data.AuoidcClientSecret.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUOIDCClientSecret`, data.AuoidcClientSecret.ValueString())
+	if !data.AuOidcClientSecret.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUOIDCClientSecret`, data.AuOidcClientSecret.ValueString())
 	}
-	if !data.AuoidcIdentityServiceUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUOIDCIdentityServiceURL`, data.AuoidcIdentityServiceUrl.ValueString())
+	if !data.AuOidcIdentityServiceUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUOIDCIdentityServiceURL`, data.AuOidcIdentityServiceUrl.ValueString())
 	}
-	if !data.AuoidcKeyFetchInterval.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUOIDCKeyFetchInterval`, data.AuoidcKeyFetchInterval.ValueInt64())
+	if !data.AuOidcKeyFetchInterval.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUOIDCKeyFetchInterval`, data.AuOidcKeyFetchInterval.ValueInt64())
 	}
-	if !data.AuoidcIdentityServiceUrlsslClient.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUOIDCIdentityServiceURLSSLClient`, data.AuoidcIdentityServiceUrlsslClient.ValueString())
+	if !data.AuOidcIdentityServiceUrlSslClient.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUOIDCIdentityServiceURLSSLClient`, data.AuOidcIdentityServiceUrlSslClient.ValueString())
 	}
 	if !data.AuKerberosKeytab.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUKerberosKeytab`, data.AuKerberosKeytab.ValueString())
@@ -642,8 +642,8 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AuInfoUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUInfoURL`, data.AuInfoUrl.ValueString())
 	}
-	if !data.AusslValcred.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSSLValcred`, data.AusslValcred.ValueString())
+	if !data.AuSslValcred.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSSLValcred`, data.AuSslValcred.ValueString())
 	}
 	if !data.AuHost.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUHost`, data.AuHost.ValueString())
@@ -651,29 +651,29 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AuPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUPort`, data.AuPort.ValueInt64())
 	}
-	if !data.AuldapSearchForDn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchForDN`, tfutils.StringFromBool(data.AuldapSearchForDn, ""))
+	if !data.AuLdapSearchForDn.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchForDN`, tfutils.StringFromBool(data.AuLdapSearchForDn, ""))
 	}
-	if !data.AuldapBindDn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPBindDN`, data.AuldapBindDn.ValueString())
+	if !data.AuLdapBindDn.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPBindDN`, data.AuLdapBindDn.ValueString())
 	}
-	if !data.AuldapBindPasswordAlias.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPBindPasswordAlias`, data.AuldapBindPasswordAlias.ValueString())
+	if !data.AuLdapBindPasswordAlias.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPBindPasswordAlias`, data.AuLdapBindPasswordAlias.ValueString())
 	}
-	if !data.AuldapSearchParameters.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchParameters`, data.AuldapSearchParameters.ValueString())
+	if !data.AuLdapSearchParameters.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchParameters`, data.AuLdapSearchParameters.ValueString())
 	}
-	if !data.AuldapPrefix.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPPrefix`, data.AuldapPrefix.ValueString())
+	if !data.AuLdapPrefix.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPPrefix`, data.AuLdapPrefix.ValueString())
 	}
-	if !data.AuForceDnldapOrder.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUForceDNLDAPOrder`, tfutils.StringFromBool(data.AuForceDnldapOrder, ""))
+	if !data.AuForceDnLdapOrder.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUForceDNLDAPOrder`, tfutils.StringFromBool(data.AuForceDnLdapOrder, ""))
 	}
-	if !data.LdaPsuffix.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPsuffix`, data.LdaPsuffix.ValueString())
+	if !data.LdapSuffix.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LDAPsuffix`, data.LdapSuffix.ValueString())
 	}
-	if !data.AuldapLoadBalanceGroup.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPLoadBalanceGroup`, data.AuldapLoadBalanceGroup.ValueString())
+	if !data.AuLdapLoadBalanceGroup.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPLoadBalanceGroup`, data.AuLdapLoadBalanceGroup.ValueString())
 	}
 	if !data.AuCacheAllow.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUCacheAllow`, data.AuCacheAllow.ValueString())
@@ -681,8 +681,8 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AuCacheTtl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUCacheTTL`, data.AuCacheTtl.ValueInt64())
 	}
-	if !data.AuldapReadTimeout.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPReadTimeout`, data.AuldapReadTimeout.ValueInt64())
+	if !data.AuLdapReadTimeout.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPReadTimeout`, data.AuLdapReadTimeout.ValueInt64())
 	}
 	if !data.McMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MCMethod`, data.McMethod.ValueString())
@@ -690,8 +690,8 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.McCustomUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MCCustomURL`, data.McCustomUrl.ValueString())
 	}
-	if !data.McldapSearchForGroup.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCLDAPSearchForGroup`, tfutils.StringFromBool(data.McldapSearchForGroup, ""))
+	if !data.McLdapSearchForGroup.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCLDAPSearchForGroup`, tfutils.StringFromBool(data.McLdapSearchForGroup, ""))
 	}
 	if !data.McHost.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MCHost`, data.McHost.ValueString())
@@ -699,23 +699,23 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.McPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MCPort`, data.McPort.ValueInt64())
 	}
-	if !data.McldapLoadBalanceGroup.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCLDAPLoadBalanceGroup`, data.McldapLoadBalanceGroup.ValueString())
+	if !data.McLdapLoadBalanceGroup.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCLDAPLoadBalanceGroup`, data.McLdapLoadBalanceGroup.ValueString())
 	}
-	if !data.McldapBindDn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCLDAPBindDN`, data.McldapBindDn.ValueString())
+	if !data.McLdapBindDn.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCLDAPBindDN`, data.McLdapBindDn.ValueString())
 	}
-	if !data.McldapBindPasswordAlias.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCLDAPBindPasswordAlias`, data.McldapBindPasswordAlias.ValueString())
+	if !data.McLdapBindPasswordAlias.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCLDAPBindPasswordAlias`, data.McLdapBindPasswordAlias.ValueString())
 	}
-	if !data.McldapSearchParameters.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCLDAPSearchParameters`, data.McldapSearchParameters.ValueString())
+	if !data.McLdapSearchParameters.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCLDAPSearchParameters`, data.McLdapSearchParameters.ValueString())
 	}
 	if !data.McInfoUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MCInfoURL`, data.McInfoUrl.ValueString())
 	}
-	if !data.McldapReadTimeout.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCLDAPReadTimeout`, data.McldapReadTimeout.ValueInt64())
+	if !data.McLdapReadTimeout.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCLDAPReadTimeout`, data.McLdapReadTimeout.ValueInt64())
 	}
 	if !data.LdapVersion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPVersion`, data.LdapVersion.ValueString())
@@ -772,23 +772,23 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.LockoutPeriod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LockoutPeriod`, data.LockoutPeriod.ValueInt64())
 	}
-	if !data.McForceDnldapOrder.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCForceDNLDAPOrder`, tfutils.StringFromBool(data.McForceDnldapOrder, ""))
+	if !data.McForceDnLdapOrder.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCForceDNLDAPOrder`, tfutils.StringFromBool(data.McForceDnLdapOrder, ""))
 	}
 	if !data.PasswordHashAlgorithm.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PasswordHashAlgorithm`, data.PasswordHashAlgorithm.ValueString())
 	}
-	if !data.LdapsslClientConfigType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPSSLClientConfigType`, data.LdapsslClientConfigType.ValueString())
+	if !data.LdapSslClientConfigType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LDAPSSLClientConfigType`, data.LdapSslClientConfigType.ValueString())
 	}
-	if !data.LdapsslClientProfile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPSSLClientProfile`, data.LdapsslClientProfile.ValueString())
+	if !data.LdapSslClientProfile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LDAPSSLClientProfile`, data.LdapSslClientProfile.ValueString())
 	}
-	if !data.McldapsslClientConfigType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCLDAPSSLClientConfigType`, data.McldapsslClientConfigType.ValueString())
+	if !data.McLdapSslClientConfigType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCLDAPSSLClientConfigType`, data.McLdapSslClientConfigType.ValueString())
 	}
-	if !data.McldapsslClientProfile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCLDAPSSLClientProfile`, data.McldapsslClientProfile.ValueString())
+	if !data.McLdapSslClientProfile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCLDAPSSLClientProfile`, data.McLdapSslClientProfile.ValueString())
 	}
 	return body
 }
@@ -813,10 +813,10 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.AuMethod = types.StringValue("local")
 	}
 	if value := res.Get(pathRoot + `SSHAUMethod`); value.Exists() {
-		data.SshauMethod = &DmRBMSSHAuthenticateType{}
-		data.SshauMethod.FromBody(ctx, "", value)
+		data.SshAuMethod = &DmRBMSSHAuthenticateType{}
+		data.SshAuMethod.FromBody(ctx, "", value)
 	} else {
-		data.SshauMethod = nil
+		data.SshAuMethod = nil
 	}
 	if value := res.Get(pathRoot + `CAPubKeyFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.CaPubKeyFile = tfutils.ParseStringFromGJSON(value)
@@ -829,39 +829,39 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.RevokedKeys = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `AUZOSNSSConfig`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuzosnssConfig = tfutils.ParseStringFromGJSON(value)
+		data.AuZosNssConfig = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuzosnssConfig = types.StringNull()
+		data.AuZosNssConfig = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUOIDCScope`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuoidcScope = tfutils.ParseStringFromGJSON(value)
+		data.AuOidcScope = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcScope = types.StringValue("openid")
+		data.AuOidcScope = types.StringValue("openid")
 	}
 	if value := res.Get(pathRoot + `AUOIDCClientID`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuoidcClientId = tfutils.ParseStringFromGJSON(value)
+		data.AuOidcClientId = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcClientId = types.StringNull()
+		data.AuOidcClientId = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUOIDCClientSecret`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuoidcClientSecret = tfutils.ParseStringFromGJSON(value)
+		data.AuOidcClientSecret = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcClientSecret = types.StringNull()
+		data.AuOidcClientSecret = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUOIDCIdentityServiceURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuoidcIdentityServiceUrl = tfutils.ParseStringFromGJSON(value)
+		data.AuOidcIdentityServiceUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcIdentityServiceUrl = types.StringNull()
+		data.AuOidcIdentityServiceUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUOIDCKeyFetchInterval`); value.Exists() {
-		data.AuoidcKeyFetchInterval = types.Int64Value(value.Int())
+		data.AuOidcKeyFetchInterval = types.Int64Value(value.Int())
 	} else {
-		data.AuoidcKeyFetchInterval = types.Int64Value(30)
+		data.AuOidcKeyFetchInterval = types.Int64Value(30)
 	}
 	if value := res.Get(pathRoot + `AUOIDCIdentityServiceURLSSLClient`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuoidcIdentityServiceUrlsslClient = tfutils.ParseStringFromGJSON(value)
+		data.AuOidcIdentityServiceUrlSslClient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcIdentityServiceUrlsslClient = types.StringNull()
+		data.AuOidcIdentityServiceUrlSslClient = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUKerberosKeytab`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuKerberosKeytab = tfutils.ParseStringFromGJSON(value)
@@ -879,9 +879,9 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.AuInfoUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSSLValcred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusslValcred = tfutils.ParseStringFromGJSON(value)
+		data.AuSslValcred = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusslValcred = types.StringNull()
+		data.AuSslValcred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUHost`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuHost = tfutils.ParseStringFromGJSON(value)
@@ -894,44 +894,44 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.AuPort = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `AULDAPSearchForDN`); value.Exists() {
-		data.AuldapSearchForDn = tfutils.BoolFromString(value.String())
+		data.AuLdapSearchForDn = tfutils.BoolFromString(value.String())
 	} else {
-		data.AuldapSearchForDn = types.BoolNull()
+		data.AuLdapSearchForDn = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPBindDN`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapBindDn = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapBindDn = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapBindDn = types.StringNull()
+		data.AuLdapBindDn = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPBindPasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapBindPasswordAlias = types.StringNull()
+		data.AuLdapBindPasswordAlias = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPSearchParameters`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapSearchParameters = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapSearchParameters = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapSearchParameters = types.StringNull()
+		data.AuLdapSearchParameters = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPPrefix`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapPrefix = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapPrefix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapPrefix = types.StringValue("cn=")
+		data.AuLdapPrefix = types.StringValue("cn=")
 	}
 	if value := res.Get(pathRoot + `AUForceDNLDAPOrder`); value.Exists() {
-		data.AuForceDnldapOrder = tfutils.BoolFromString(value.String())
+		data.AuForceDnLdapOrder = tfutils.BoolFromString(value.String())
 	} else {
-		data.AuForceDnldapOrder = types.BoolNull()
+		data.AuForceDnLdapOrder = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `LDAPsuffix`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LdaPsuffix = tfutils.ParseStringFromGJSON(value)
+		data.LdapSuffix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdaPsuffix = types.StringNull()
+		data.LdapSuffix = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPLoadBalanceGroup`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapLoadBalanceGroup = types.StringNull()
+		data.AuLdapLoadBalanceGroup = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUCacheAllow`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuCacheAllow = tfutils.ParseStringFromGJSON(value)
@@ -944,9 +944,9 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.AuCacheTtl = types.Int64Value(600)
 	}
 	if value := res.Get(pathRoot + `AULDAPReadTimeout`); value.Exists() {
-		data.AuldapReadTimeout = types.Int64Value(value.Int())
+		data.AuLdapReadTimeout = types.Int64Value(value.Int())
 	} else {
-		data.AuldapReadTimeout = types.Int64Value(60)
+		data.AuLdapReadTimeout = types.Int64Value(60)
 	}
 	if value := res.Get(pathRoot + `MCMethod`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.McMethod = tfutils.ParseStringFromGJSON(value)
@@ -959,9 +959,9 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.McCustomUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCLDAPSearchForGroup`); value.Exists() {
-		data.McldapSearchForGroup = tfutils.BoolFromString(value.String())
+		data.McLdapSearchForGroup = tfutils.BoolFromString(value.String())
 	} else {
-		data.McldapSearchForGroup = types.BoolNull()
+		data.McLdapSearchForGroup = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `MCHost`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.McHost = tfutils.ParseStringFromGJSON(value)
@@ -974,24 +974,24 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.McPort = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `MCLDAPLoadBalanceGroup`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.McldapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
+		data.McLdapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapLoadBalanceGroup = types.StringNull()
+		data.McLdapLoadBalanceGroup = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCLDAPBindDN`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.McldapBindDn = tfutils.ParseStringFromGJSON(value)
+		data.McLdapBindDn = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapBindDn = types.StringNull()
+		data.McLdapBindDn = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCLDAPBindPasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.McldapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
+		data.McLdapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapBindPasswordAlias = types.StringNull()
+		data.McLdapBindPasswordAlias = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCLDAPSearchParameters`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.McldapSearchParameters = tfutils.ParseStringFromGJSON(value)
+		data.McLdapSearchParameters = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapSearchParameters = types.StringNull()
+		data.McLdapSearchParameters = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCInfoURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.McInfoUrl = tfutils.ParseStringFromGJSON(value)
@@ -999,9 +999,9 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.McInfoUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCLDAPReadTimeout`); value.Exists() {
-		data.McldapReadTimeout = types.Int64Value(value.Int())
+		data.McLdapReadTimeout = types.Int64Value(value.Int())
 	} else {
-		data.McldapReadTimeout = types.Int64Value(60)
+		data.McLdapReadTimeout = types.Int64Value(60)
 	}
 	if value := res.Get(pathRoot + `LDAPVersion`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LdapVersion = tfutils.ParseStringFromGJSON(value)
@@ -1089,9 +1089,9 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.LockoutPeriod = types.Int64Value(1)
 	}
 	if value := res.Get(pathRoot + `MCForceDNLDAPOrder`); value.Exists() {
-		data.McForceDnldapOrder = tfutils.BoolFromString(value.String())
+		data.McForceDnLdapOrder = tfutils.BoolFromString(value.String())
 	} else {
-		data.McForceDnldapOrder = types.BoolNull()
+		data.McForceDnLdapOrder = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PasswordHashAlgorithm`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PasswordHashAlgorithm = tfutils.ParseStringFromGJSON(value)
@@ -1099,24 +1099,24 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.PasswordHashAlgorithm = types.StringValue("md5crypt")
 	}
 	if value := res.Get(pathRoot + `LDAPSSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LdapsslClientConfigType = tfutils.ParseStringFromGJSON(value)
+		data.LdapSslClientConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslClientConfigType = types.StringValue("client")
+		data.LdapSslClientConfigType = types.StringValue("client")
 	}
 	if value := res.Get(pathRoot + `LDAPSSLClientProfile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LdapsslClientProfile = tfutils.ParseStringFromGJSON(value)
+		data.LdapSslClientProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslClientProfile = types.StringNull()
+		data.LdapSslClientProfile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCLDAPSSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.McldapsslClientConfigType = tfutils.ParseStringFromGJSON(value)
+		data.McLdapSslClientConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapsslClientConfigType = types.StringValue("client")
+		data.McLdapSslClientConfigType = types.StringValue("client")
 	}
 	if value := res.Get(pathRoot + `MCLDAPSSLClientProfile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.McldapsslClientProfile = tfutils.ParseStringFromGJSON(value)
+		data.McLdapSslClientProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapsslClientProfile = types.StringNull()
+		data.McLdapSslClientProfile = types.StringNull()
 	}
 }
 
@@ -1140,9 +1140,9 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 		data.AuMethod = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSHAUMethod`); value.Exists() {
-		data.SshauMethod.UpdateFromBody(ctx, "", value)
+		data.SshAuMethod.UpdateFromBody(ctx, "", value)
 	} else {
-		data.SshauMethod = nil
+		data.SshAuMethod = nil
 	}
 	if value := res.Get(pathRoot + `CAPubKeyFile`); value.Exists() && !data.CaPubKeyFile.IsNull() {
 		data.CaPubKeyFile = tfutils.ParseStringFromGJSON(value)
@@ -1154,40 +1154,40 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	} else {
 		data.RevokedKeys = types.ListNull(types.StringType)
 	}
-	if value := res.Get(pathRoot + `AUZOSNSSConfig`); value.Exists() && !data.AuzosnssConfig.IsNull() {
-		data.AuzosnssConfig = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUZOSNSSConfig`); value.Exists() && !data.AuZosNssConfig.IsNull() {
+		data.AuZosNssConfig = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuzosnssConfig = types.StringNull()
+		data.AuZosNssConfig = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUOIDCScope`); value.Exists() && !data.AuoidcScope.IsNull() {
-		data.AuoidcScope = tfutils.ParseStringFromGJSON(value)
-	} else if data.AuoidcScope.ValueString() != "openid" {
-		data.AuoidcScope = types.StringNull()
+	if value := res.Get(pathRoot + `AUOIDCScope`); value.Exists() && !data.AuOidcScope.IsNull() {
+		data.AuOidcScope = tfutils.ParseStringFromGJSON(value)
+	} else if data.AuOidcScope.ValueString() != "openid" {
+		data.AuOidcScope = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUOIDCClientID`); value.Exists() && !data.AuoidcClientId.IsNull() {
-		data.AuoidcClientId = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUOIDCClientID`); value.Exists() && !data.AuOidcClientId.IsNull() {
+		data.AuOidcClientId = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcClientId = types.StringNull()
+		data.AuOidcClientId = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUOIDCClientSecret`); value.Exists() && !data.AuoidcClientSecret.IsNull() {
-		data.AuoidcClientSecret = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUOIDCClientSecret`); value.Exists() && !data.AuOidcClientSecret.IsNull() {
+		data.AuOidcClientSecret = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcClientSecret = types.StringNull()
+		data.AuOidcClientSecret = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUOIDCIdentityServiceURL`); value.Exists() && !data.AuoidcIdentityServiceUrl.IsNull() {
-		data.AuoidcIdentityServiceUrl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUOIDCIdentityServiceURL`); value.Exists() && !data.AuOidcIdentityServiceUrl.IsNull() {
+		data.AuOidcIdentityServiceUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcIdentityServiceUrl = types.StringNull()
+		data.AuOidcIdentityServiceUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUOIDCKeyFetchInterval`); value.Exists() && !data.AuoidcKeyFetchInterval.IsNull() {
-		data.AuoidcKeyFetchInterval = types.Int64Value(value.Int())
-	} else if data.AuoidcKeyFetchInterval.ValueInt64() != 30 {
-		data.AuoidcKeyFetchInterval = types.Int64Null()
+	if value := res.Get(pathRoot + `AUOIDCKeyFetchInterval`); value.Exists() && !data.AuOidcKeyFetchInterval.IsNull() {
+		data.AuOidcKeyFetchInterval = types.Int64Value(value.Int())
+	} else if data.AuOidcKeyFetchInterval.ValueInt64() != 30 {
+		data.AuOidcKeyFetchInterval = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `AUOIDCIdentityServiceURLSSLClient`); value.Exists() && !data.AuoidcIdentityServiceUrlsslClient.IsNull() {
-		data.AuoidcIdentityServiceUrlsslClient = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUOIDCIdentityServiceURLSSLClient`); value.Exists() && !data.AuOidcIdentityServiceUrlSslClient.IsNull() {
+		data.AuOidcIdentityServiceUrlSslClient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuoidcIdentityServiceUrlsslClient = types.StringNull()
+		data.AuOidcIdentityServiceUrlSslClient = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUKerberosKeytab`); value.Exists() && !data.AuKerberosKeytab.IsNull() {
 		data.AuKerberosKeytab = tfutils.ParseStringFromGJSON(value)
@@ -1204,10 +1204,10 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	} else {
 		data.AuInfoUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSSLValcred`); value.Exists() && !data.AusslValcred.IsNull() {
-		data.AusslValcred = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSSLValcred`); value.Exists() && !data.AuSslValcred.IsNull() {
+		data.AuSslValcred = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusslValcred = types.StringNull()
+		data.AuSslValcred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUHost`); value.Exists() && !data.AuHost.IsNull() {
 		data.AuHost = tfutils.ParseStringFromGJSON(value)
@@ -1219,45 +1219,45 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	} else {
 		data.AuPort = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `AULDAPSearchForDN`); value.Exists() && !data.AuldapSearchForDn.IsNull() {
-		data.AuldapSearchForDn = tfutils.BoolFromString(value.String())
-	} else if data.AuldapSearchForDn.ValueBool() {
-		data.AuldapSearchForDn = types.BoolNull()
+	if value := res.Get(pathRoot + `AULDAPSearchForDN`); value.Exists() && !data.AuLdapSearchForDn.IsNull() {
+		data.AuLdapSearchForDn = tfutils.BoolFromString(value.String())
+	} else if data.AuLdapSearchForDn.ValueBool() {
+		data.AuLdapSearchForDn = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPBindDN`); value.Exists() && !data.AuldapBindDn.IsNull() {
-		data.AuldapBindDn = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPBindDN`); value.Exists() && !data.AuLdapBindDn.IsNull() {
+		data.AuLdapBindDn = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapBindDn = types.StringNull()
+		data.AuLdapBindDn = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPBindPasswordAlias`); value.Exists() && !data.AuldapBindPasswordAlias.IsNull() {
-		data.AuldapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPBindPasswordAlias`); value.Exists() && !data.AuLdapBindPasswordAlias.IsNull() {
+		data.AuLdapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapBindPasswordAlias = types.StringNull()
+		data.AuLdapBindPasswordAlias = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPSearchParameters`); value.Exists() && !data.AuldapSearchParameters.IsNull() {
-		data.AuldapSearchParameters = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPSearchParameters`); value.Exists() && !data.AuLdapSearchParameters.IsNull() {
+		data.AuLdapSearchParameters = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapSearchParameters = types.StringNull()
+		data.AuLdapSearchParameters = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPPrefix`); value.Exists() && !data.AuldapPrefix.IsNull() {
-		data.AuldapPrefix = tfutils.ParseStringFromGJSON(value)
-	} else if data.AuldapPrefix.ValueString() != "cn=" {
-		data.AuldapPrefix = types.StringNull()
+	if value := res.Get(pathRoot + `AULDAPPrefix`); value.Exists() && !data.AuLdapPrefix.IsNull() {
+		data.AuLdapPrefix = tfutils.ParseStringFromGJSON(value)
+	} else if data.AuLdapPrefix.ValueString() != "cn=" {
+		data.AuLdapPrefix = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUForceDNLDAPOrder`); value.Exists() && !data.AuForceDnldapOrder.IsNull() {
-		data.AuForceDnldapOrder = tfutils.BoolFromString(value.String())
-	} else if data.AuForceDnldapOrder.ValueBool() {
-		data.AuForceDnldapOrder = types.BoolNull()
+	if value := res.Get(pathRoot + `AUForceDNLDAPOrder`); value.Exists() && !data.AuForceDnLdapOrder.IsNull() {
+		data.AuForceDnLdapOrder = tfutils.BoolFromString(value.String())
+	} else if data.AuForceDnLdapOrder.ValueBool() {
+		data.AuForceDnLdapOrder = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `LDAPsuffix`); value.Exists() && !data.LdaPsuffix.IsNull() {
-		data.LdaPsuffix = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `LDAPsuffix`); value.Exists() && !data.LdapSuffix.IsNull() {
+		data.LdapSuffix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdaPsuffix = types.StringNull()
+		data.LdapSuffix = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPLoadBalanceGroup`); value.Exists() && !data.AuldapLoadBalanceGroup.IsNull() {
-		data.AuldapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPLoadBalanceGroup`); value.Exists() && !data.AuLdapLoadBalanceGroup.IsNull() {
+		data.AuLdapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapLoadBalanceGroup = types.StringNull()
+		data.AuLdapLoadBalanceGroup = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUCacheAllow`); value.Exists() && !data.AuCacheAllow.IsNull() {
 		data.AuCacheAllow = tfutils.ParseStringFromGJSON(value)
@@ -1269,10 +1269,10 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	} else if data.AuCacheTtl.ValueInt64() != 600 {
 		data.AuCacheTtl = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `AULDAPReadTimeout`); value.Exists() && !data.AuldapReadTimeout.IsNull() {
-		data.AuldapReadTimeout = types.Int64Value(value.Int())
-	} else if data.AuldapReadTimeout.ValueInt64() != 60 {
-		data.AuldapReadTimeout = types.Int64Null()
+	if value := res.Get(pathRoot + `AULDAPReadTimeout`); value.Exists() && !data.AuLdapReadTimeout.IsNull() {
+		data.AuLdapReadTimeout = types.Int64Value(value.Int())
+	} else if data.AuLdapReadTimeout.ValueInt64() != 60 {
+		data.AuLdapReadTimeout = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `MCMethod`); value.Exists() && !data.McMethod.IsNull() {
 		data.McMethod = tfutils.ParseStringFromGJSON(value)
@@ -1284,10 +1284,10 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	} else {
 		data.McCustomUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCLDAPSearchForGroup`); value.Exists() && !data.McldapSearchForGroup.IsNull() {
-		data.McldapSearchForGroup = tfutils.BoolFromString(value.String())
-	} else if data.McldapSearchForGroup.ValueBool() {
-		data.McldapSearchForGroup = types.BoolNull()
+	if value := res.Get(pathRoot + `MCLDAPSearchForGroup`); value.Exists() && !data.McLdapSearchForGroup.IsNull() {
+		data.McLdapSearchForGroup = tfutils.BoolFromString(value.String())
+	} else if data.McLdapSearchForGroup.ValueBool() {
+		data.McLdapSearchForGroup = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `MCHost`); value.Exists() && !data.McHost.IsNull() {
 		data.McHost = tfutils.ParseStringFromGJSON(value)
@@ -1299,35 +1299,35 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	} else {
 		data.McPort = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `MCLDAPLoadBalanceGroup`); value.Exists() && !data.McldapLoadBalanceGroup.IsNull() {
-		data.McldapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MCLDAPLoadBalanceGroup`); value.Exists() && !data.McLdapLoadBalanceGroup.IsNull() {
+		data.McLdapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapLoadBalanceGroup = types.StringNull()
+		data.McLdapLoadBalanceGroup = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCLDAPBindDN`); value.Exists() && !data.McldapBindDn.IsNull() {
-		data.McldapBindDn = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MCLDAPBindDN`); value.Exists() && !data.McLdapBindDn.IsNull() {
+		data.McLdapBindDn = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapBindDn = types.StringNull()
+		data.McLdapBindDn = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCLDAPBindPasswordAlias`); value.Exists() && !data.McldapBindPasswordAlias.IsNull() {
-		data.McldapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MCLDAPBindPasswordAlias`); value.Exists() && !data.McLdapBindPasswordAlias.IsNull() {
+		data.McLdapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapBindPasswordAlias = types.StringNull()
+		data.McLdapBindPasswordAlias = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCLDAPSearchParameters`); value.Exists() && !data.McldapSearchParameters.IsNull() {
-		data.McldapSearchParameters = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MCLDAPSearchParameters`); value.Exists() && !data.McLdapSearchParameters.IsNull() {
+		data.McLdapSearchParameters = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapSearchParameters = types.StringNull()
+		data.McLdapSearchParameters = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCInfoURL`); value.Exists() && !data.McInfoUrl.IsNull() {
 		data.McInfoUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.McInfoUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCLDAPReadTimeout`); value.Exists() && !data.McldapReadTimeout.IsNull() {
-		data.McldapReadTimeout = types.Int64Value(value.Int())
-	} else if data.McldapReadTimeout.ValueInt64() != 60 {
-		data.McldapReadTimeout = types.Int64Null()
+	if value := res.Get(pathRoot + `MCLDAPReadTimeout`); value.Exists() && !data.McLdapReadTimeout.IsNull() {
+		data.McLdapReadTimeout = types.Int64Value(value.Int())
+	} else if data.McLdapReadTimeout.ValueInt64() != 60 {
+		data.McLdapReadTimeout = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `LDAPVersion`); value.Exists() && !data.LdapVersion.IsNull() {
 		data.LdapVersion = tfutils.ParseStringFromGJSON(value)
@@ -1414,34 +1414,34 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	} else if data.LockoutPeriod.ValueInt64() != 1 {
 		data.LockoutPeriod = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `MCForceDNLDAPOrder`); value.Exists() && !data.McForceDnldapOrder.IsNull() {
-		data.McForceDnldapOrder = tfutils.BoolFromString(value.String())
-	} else if data.McForceDnldapOrder.ValueBool() {
-		data.McForceDnldapOrder = types.BoolNull()
+	if value := res.Get(pathRoot + `MCForceDNLDAPOrder`); value.Exists() && !data.McForceDnLdapOrder.IsNull() {
+		data.McForceDnLdapOrder = tfutils.BoolFromString(value.String())
+	} else if data.McForceDnLdapOrder.ValueBool() {
+		data.McForceDnLdapOrder = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PasswordHashAlgorithm`); value.Exists() && !data.PasswordHashAlgorithm.IsNull() {
 		data.PasswordHashAlgorithm = tfutils.ParseStringFromGJSON(value)
 	} else if data.PasswordHashAlgorithm.ValueString() != "md5crypt" {
 		data.PasswordHashAlgorithm = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `LDAPSSLClientConfigType`); value.Exists() && !data.LdapsslClientConfigType.IsNull() {
-		data.LdapsslClientConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.LdapsslClientConfigType.ValueString() != "client" {
-		data.LdapsslClientConfigType = types.StringNull()
+	if value := res.Get(pathRoot + `LDAPSSLClientConfigType`); value.Exists() && !data.LdapSslClientConfigType.IsNull() {
+		data.LdapSslClientConfigType = tfutils.ParseStringFromGJSON(value)
+	} else if data.LdapSslClientConfigType.ValueString() != "client" {
+		data.LdapSslClientConfigType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `LDAPSSLClientProfile`); value.Exists() && !data.LdapsslClientProfile.IsNull() {
-		data.LdapsslClientProfile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `LDAPSSLClientProfile`); value.Exists() && !data.LdapSslClientProfile.IsNull() {
+		data.LdapSslClientProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslClientProfile = types.StringNull()
+		data.LdapSslClientProfile = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCLDAPSSLClientConfigType`); value.Exists() && !data.McldapsslClientConfigType.IsNull() {
-		data.McldapsslClientConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.McldapsslClientConfigType.ValueString() != "client" {
-		data.McldapsslClientConfigType = types.StringNull()
+	if value := res.Get(pathRoot + `MCLDAPSSLClientConfigType`); value.Exists() && !data.McLdapSslClientConfigType.IsNull() {
+		data.McLdapSslClientConfigType = tfutils.ParseStringFromGJSON(value)
+	} else if data.McLdapSslClientConfigType.ValueString() != "client" {
+		data.McLdapSslClientConfigType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCLDAPSSLClientProfile`); value.Exists() && !data.McldapsslClientProfile.IsNull() {
-		data.McldapsslClientProfile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MCLDAPSSLClientProfile`); value.Exists() && !data.McLdapSslClientProfile.IsNull() {
+		data.McLdapSslClientProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McldapsslClientProfile = types.StringNull()
+		data.McLdapSslClientProfile = types.StringNull()
 	}
 }

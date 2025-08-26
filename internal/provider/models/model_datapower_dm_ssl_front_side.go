@@ -45,7 +45,7 @@ type DmSSLFrontSide struct {
 	CredentialCharset   types.String `tfsdk:"credential_charset"`
 	SslServerConfigType types.String `tfsdk:"ssl_server_config_type"`
 	SslServer           types.String `tfsdk:"ssl_server"`
-	SslsniServer        types.String `tfsdk:"sslsni_server"`
+	SslSniServer        types.String `tfsdk:"ssl_sni_server"`
 }
 
 var DmSSLFrontSideSSLServerConfigTypeCondVal = validators.Evaluation{
@@ -101,7 +101,7 @@ var DmSSLFrontSideObjectType = map[string]attr.Type{
 	"credential_charset":     types.StringType,
 	"ssl_server_config_type": types.StringType,
 	"ssl_server":             types.StringType,
-	"sslsni_server":          types.StringType,
+	"ssl_sni_server":         types.StringType,
 }
 var DmSSLFrontSideObjectDefault = map[string]attr.Value{
 	"local_address":          types.StringValue("0.0.0.0"),
@@ -110,7 +110,7 @@ var DmSSLFrontSideObjectDefault = map[string]attr.Value{
 	"credential_charset":     types.StringValue("protocol"),
 	"ssl_server_config_type": types.StringValue("server"),
 	"ssl_server":             types.StringNull(),
-	"sslsni_server":          types.StringNull(),
+	"ssl_sni_server":         types.StringNull(),
 }
 
 func GetDmSSLFrontSideDataSourceSchema() DataSourceSchema.NestedAttributeObject {
@@ -140,7 +140,7 @@ func GetDmSSLFrontSideDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections between clients and the DataPower Gateway", "ssl-server", "ssl_server_profile").String,
 				Computed:            true,
 			},
-			"sslsni_server": DataSourceSchema.StringAttribute{
+			"ssl_sni_server": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway", "ssl-sni-server", "ssl_sni_server_profile").String,
 				Computed:            true,
 			},
@@ -196,7 +196,7 @@ func GetDmSSLFrontSideResourceSchema() ResourceSchema.NestedAttributeObject {
 					validators.ConditionalRequiredString(DmSSLFrontSideSSLServerCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"sslsni_server": ResourceSchema.StringAttribute{
+			"ssl_sni_server": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway", "ssl-sni-server", "ssl_sni_server_profile").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -227,7 +227,7 @@ func (data DmSSLFrontSide) IsNull() bool {
 	if !data.SslServer.IsNull() {
 		return false
 	}
-	if !data.SslsniServer.IsNull() {
+	if !data.SslSniServer.IsNull() {
 		return false
 	}
 	return true
@@ -257,8 +257,8 @@ func (data DmSSLFrontSide) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.SslServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServer`, data.SslServer.ValueString())
 	}
-	if !data.SslsniServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslsniServer.ValueString())
+	if !data.SslSniServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslSniServer.ValueString())
 	}
 	return body
 }
@@ -298,9 +298,9 @@ func (data *DmSSLFrontSide) FromBody(ctx context.Context, pathRoot string, res g
 		data.SslServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 }
 
@@ -338,9 +338,9 @@ func (data *DmSSLFrontSide) UpdateFromBody(ctx context.Context, pathRoot string,
 	} else {
 		data.SslServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslsniServer.IsNull() {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslSniServer.IsNull() {
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 }

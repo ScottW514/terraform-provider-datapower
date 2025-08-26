@@ -108,7 +108,7 @@ func (d *WXSGridDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 							MarkdownDescription: "Indicates whether the data in the eXtreme Scale data grid is encrypted. If encrypted, the data is encrypted, when writing to, and decrypted, when reading from, the eXtreme Scale data grid.",
 							Computed:            true,
 						},
-						"encrypt_ss_key": schema.StringAttribute{
+						"encrypt_sskey": schema.StringAttribute{
 							MarkdownDescription: "Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.",
 							Computed:            true,
 						},

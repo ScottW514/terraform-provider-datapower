@@ -40,7 +40,7 @@ type DmMSDebugTriggerType struct {
 	OutUrlMatch types.String `tfsdk:"out_url_match"`
 	RuleType    types.String `tfsdk:"rule_type"`
 	RuleMatch   types.String `tfsdk:"rule_match"`
-	XPath       types.String `tfsdk:"x_path"`
+	Xpath       types.String `tfsdk:"xpath"`
 }
 
 var DmMSDebugTriggerTypeObjectType = map[string]attr.Type{
@@ -49,7 +49,7 @@ var DmMSDebugTriggerTypeObjectType = map[string]attr.Type{
 	"out_url_match": types.StringType,
 	"rule_type":     types.StringType,
 	"rule_match":    types.StringType,
-	"x_path":        types.StringType,
+	"xpath":         types.StringType,
 }
 var DmMSDebugTriggerTypeObjectDefault = map[string]attr.Value{
 	"client_ip":     types.StringNull(),
@@ -57,7 +57,7 @@ var DmMSDebugTriggerTypeObjectDefault = map[string]attr.Value{
 	"out_url_match": types.StringNull(),
 	"rule_type":     types.StringNull(),
 	"rule_match":    types.StringNull(),
-	"x_path":        types.StringNull(),
+	"xpath":         types.StringNull(),
 }
 
 func GetDmMSDebugTriggerTypeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
@@ -83,7 +83,7 @@ func GetDmMSDebugTriggerTypeDataSourceSchema() DataSourceSchema.NestedAttributeO
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.", "", "").String,
 				Computed:            true,
 			},
-			"x_path": DataSourceSchema.StringAttribute{
+			"xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.", "", "").String,
 				Computed:            true,
 			},
@@ -117,7 +117,7 @@ func GetDmMSDebugTriggerTypeResourceSchema() ResourceSchema.NestedAttributeObjec
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.", "", "").String,
 				Optional:            true,
 			},
-			"x_path": ResourceSchema.StringAttribute{
+			"xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.", "", "").String,
 				Optional:            true,
 			},
@@ -142,7 +142,7 @@ func (data DmMSDebugTriggerType) IsNull() bool {
 	if !data.RuleMatch.IsNull() {
 		return false
 	}
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	return true
@@ -169,8 +169,8 @@ func (data DmMSDebugTriggerType) ToBody(ctx context.Context, pathRoot string) st
 	if !data.RuleMatch.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RuleMatch`, data.RuleMatch.ValueString())
 	}
-	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
+	if !data.Xpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPath`, data.Xpath.ValueString())
 	}
 	return body
 }
@@ -205,9 +205,9 @@ func (data *DmMSDebugTriggerType) FromBody(ctx context.Context, pathRoot string,
 		data.RuleMatch = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 }
 
@@ -240,9 +240,9 @@ func (data *DmMSDebugTriggerType) UpdateFromBody(ctx context.Context, pathRoot s
 	} else {
 		data.RuleMatch = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 }

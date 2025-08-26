@@ -76,7 +76,7 @@ func (d *XPathRoutingMapDataSource) Schema(ctx context.Context, req datasource.S
 							MarkdownDescription: "The name of the application domain the object belongs to",
 							Computed:            true,
 						},
-						"x_path_routing_rules": schema.ListNestedAttribute{
+						"xpath_routing_rules": schema.ListNestedAttribute{
 							MarkdownDescription: "Rules",
 							NestedObject:        models.GetDmXPathRoutingRuleDataSourceSchema(),
 							Computed:            true,

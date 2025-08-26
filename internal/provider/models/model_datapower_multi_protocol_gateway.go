@@ -52,8 +52,8 @@ type MultiProtocolGateway struct {
 	WsrrSubscriptions                        types.List                  `tfsdk:"wsrr_subscriptions"`
 	PolicyAttachments                        types.String                `tfsdk:"policy_attachments"`
 	PolicyParameter                          types.List                  `tfsdk:"policy_parameter"`
-	WsmAgentMonitor                          types.Bool                  `tfsdk:"wsm_agent_monitor"`
-	WsmAgentMonitorPcm                       types.String                `tfsdk:"wsm_agent_monitor_pcm"`
+	WSmAgentMonitor                          types.Bool                  `tfsdk:"w_sm_agent_monitor"`
+	WSmAgentMonitorPcm                       types.String                `tfsdk:"w_sm_agent_monitor_pcm"`
 	ProxyHttpResponse                        types.Bool                  `tfsdk:"proxy_http_response"`
 	ErrorPolicy                              types.String                `tfsdk:"error_policy"`
 	TransactionTimeout                       types.Int64                 `tfsdk:"transaction_timeout"`
@@ -117,42 +117,42 @@ type MultiProtocolGateway struct {
 	HttpLogCorIdLabel                        types.String                `tfsdk:"http_log_cor_id_label"`
 	LoadBalancerHashHeader                   types.String                `tfsdk:"load_balancer_hash_header"`
 	InOrderMode                              *DmGatewayInOrderMode       `tfsdk:"in_order_mode"`
-	WsaMode                                  types.String                `tfsdk:"wsa_mode"`
-	WsaRequireAaa                            types.Bool                  `tfsdk:"wsa_require_aaa"`
-	WsaRewriteReplyTo                        types.String                `tfsdk:"wsa_rewrite_reply_to"`
-	WsaRewriteFaultTo                        types.String                `tfsdk:"wsa_rewrite_fault_to"`
-	WsaRewriteTo                             types.String                `tfsdk:"wsa_rewrite_to"`
-	WsaStrip                                 types.Bool                  `tfsdk:"wsa_strip"`
-	WsaDefaultReplyTo                        types.String                `tfsdk:"wsa_default_reply_to"`
-	WsaDefaultFaultTo                        types.String                `tfsdk:"wsa_default_fault_to"`
-	WsaForce                                 types.Bool                  `tfsdk:"wsa_force"`
-	WsaGenStyle                              types.String                `tfsdk:"wsa_gen_style"`
-	WsahttpAsyncResponseCode                 types.Int64                 `tfsdk:"wsahttp_async_response_code"`
-	WsaBackProtocol                          types.String                `tfsdk:"wsa_back_protocol"`
-	WsaTimeout                               types.Int64                 `tfsdk:"wsa_timeout"`
-	WsrmEnabled                              types.Bool                  `tfsdk:"wsrm_enabled"`
-	WsrmSequenceExpiration                   types.Int64                 `tfsdk:"wsrm_sequence_expiration"`
-	WsrmaaaPolicy                            types.String                `tfsdk:"wsrmaaa_policy"`
-	WsrmDestinationAcceptCreateSequence      types.Bool                  `tfsdk:"wsrm_destination_accept_create_sequence"`
-	WsrmDestinationMaximumSequences          types.Int64                 `tfsdk:"wsrm_destination_maximum_sequences"`
-	WsrmDestinationInOrder                   types.Bool                  `tfsdk:"wsrm_destination_in_order"`
-	WsrmDestinationMaximumInOrderQueueLength types.Int64                 `tfsdk:"wsrm_destination_maximum_in_order_queue_length"`
-	WsrmDestinationAcceptOffers              types.Bool                  `tfsdk:"wsrm_destination_accept_offers"`
-	WsrmFrontForce                           types.Bool                  `tfsdk:"wsrm_front_force"`
-	WsrmBackForce                            types.Bool                  `tfsdk:"wsrm_back_force"`
-	WsrmBackCreateSequence                   types.Bool                  `tfsdk:"wsrm_back_create_sequence"`
-	WsrmFrontCreateSequence                  types.Bool                  `tfsdk:"wsrm_front_create_sequence"`
-	WsrmSourceMakeOffer                      types.Bool                  `tfsdk:"wsrm_source_make_offer"`
-	WsrmUsesSequenceSsl                      types.Bool                  `tfsdk:"wsrm_uses_sequence_ssl"`
-	WsrmFrontAcksTo                          types.String                `tfsdk:"wsrm_front_acks_to"`
-	WsrmBackAcksTo                           types.String                `tfsdk:"wsrm_back_acks_to"`
-	WsrmSourceMaximumSequences               types.Int64                 `tfsdk:"wsrm_source_maximum_sequences"`
-	WsrmSourceRetransmissionInterval         types.Int64                 `tfsdk:"wsrm_source_retransmission_interval"`
-	WsrmSourceExponentialBackoff             types.Bool                  `tfsdk:"wsrm_source_exponential_backoff"`
-	WsrmSourceMaximumRetransmissions         types.Int64                 `tfsdk:"wsrm_source_maximum_retransmissions"`
-	WsrmSourceMaximumQueueLength             types.Int64                 `tfsdk:"wsrm_source_maximum_queue_length"`
-	WsrmSourceRequestAckCount                types.Int64                 `tfsdk:"wsrm_source_request_ack_count"`
-	WsrmSourceInactivityClose                types.Int64                 `tfsdk:"wsrm_source_inactivity_close"`
+	WsAMode                                  types.String                `tfsdk:"ws_a_mode"`
+	WsARequireAaa                            types.Bool                  `tfsdk:"ws_a_require_aaa"`
+	WsARewriteReplyTo                        types.String                `tfsdk:"ws_a_rewrite_reply_to"`
+	WsARewriteFaultTo                        types.String                `tfsdk:"ws_a_rewrite_fault_to"`
+	WsARewriteTo                             types.String                `tfsdk:"ws_a_rewrite_to"`
+	WsAStrip                                 types.Bool                  `tfsdk:"ws_a_strip"`
+	WsADefaultReplyTo                        types.String                `tfsdk:"ws_a_default_reply_to"`
+	WsADefaultFaultTo                        types.String                `tfsdk:"ws_a_default_fault_to"`
+	WsAForce                                 types.Bool                  `tfsdk:"ws_a_force"`
+	WsAGenStyle                              types.String                `tfsdk:"ws_a_gen_style"`
+	WsAHttpAsyncResponseCode                 types.Int64                 `tfsdk:"ws_a_http_async_response_code"`
+	WsABackProtocol                          types.String                `tfsdk:"ws_a_back_protocol"`
+	WsATimeout                               types.Int64                 `tfsdk:"ws_a_timeout"`
+	WsRmEnabled                              types.Bool                  `tfsdk:"ws_rm_enabled"`
+	WsRmSequenceExpiration                   types.Int64                 `tfsdk:"ws_rm_sequence_expiration"`
+	WsRmAaaPolicy                            types.String                `tfsdk:"ws_rm_aaa_policy"`
+	WsRmDestinationAcceptCreateSequence      types.Bool                  `tfsdk:"ws_rm_destination_accept_create_sequence"`
+	WsRmDestinationMaximumSequences          types.Int64                 `tfsdk:"ws_rm_destination_maximum_sequences"`
+	WsRmDestinationInOrder                   types.Bool                  `tfsdk:"ws_rm_destination_in_order"`
+	WsRmDestinationMaximumInOrderQueueLength types.Int64                 `tfsdk:"ws_rm_destination_maximum_in_order_queue_length"`
+	WsRmDestinationAcceptOffers              types.Bool                  `tfsdk:"ws_rm_destination_accept_offers"`
+	WsRmFrontForce                           types.Bool                  `tfsdk:"ws_rm_front_force"`
+	WsRmBackForce                            types.Bool                  `tfsdk:"ws_rm_back_force"`
+	WsRmBackCreateSequence                   types.Bool                  `tfsdk:"ws_rm_back_create_sequence"`
+	WsRmFrontCreateSequence                  types.Bool                  `tfsdk:"ws_rm_front_create_sequence"`
+	WsRmSourceMakeOffer                      types.Bool                  `tfsdk:"ws_rm_source_make_offer"`
+	WsRmUsesSequenceSsl                      types.Bool                  `tfsdk:"ws_rm_uses_sequence_ssl"`
+	WsRmFrontAcksTo                          types.String                `tfsdk:"ws_rm_front_acks_to"`
+	WsRmBackAcksTo                           types.String                `tfsdk:"ws_rm_back_acks_to"`
+	WsRmSourceMaximumSequences               types.Int64                 `tfsdk:"ws_rm_source_maximum_sequences"`
+	WsRmSourceRetransmissionInterval         types.Int64                 `tfsdk:"ws_rm_source_retransmission_interval"`
+	WsRmSourceExponentialBackoff             types.Bool                  `tfsdk:"ws_rm_source_exponential_backoff"`
+	WsRmSourceMaximumRetransmissions         types.Int64                 `tfsdk:"ws_rm_source_maximum_retransmissions"`
+	WsRmSourceMaximumQueueLength             types.Int64                 `tfsdk:"ws_rm_source_maximum_queue_length"`
+	WsRmSourceRequestAckCount                types.Int64                 `tfsdk:"ws_rm_source_request_ack_count"`
+	WsRmSourceInactivityClose                types.Int64                 `tfsdk:"ws_rm_source_inactivity_close"`
 	ForcePolicyExec                          types.Bool                  `tfsdk:"force_policy_exec"`
 	RewriteErrors                            types.Bool                  `tfsdk:"rewrite_errors"`
 	DelayErrors                              types.Bool                  `tfsdk:"delay_errors"`
@@ -270,7 +270,7 @@ var MultiProtocolGatewayDebugHistoryCondVal = validators.Evaluation{
 }
 var MultiProtocolGatewayWSAHTTPAsyncResponseCodeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "wsa_mode",
+	Attribute:   "ws_a_mode",
 	AttrType:    "String",
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
@@ -280,14 +280,14 @@ var MultiProtocolGatewayWSABackProtocolCondVal = validators.Evaluation{
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "wsa_gen_style",
+			Attribute:   "ws_a_gen_style",
 			AttrType:    "String",
 			AttrDefault: "sync",
 			Value:       []string{"async"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "wsa_mode",
+			Attribute:   "ws_a_mode",
 			AttrType:    "String",
 			AttrDefault: "sync2sync",
 			Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
@@ -315,129 +315,129 @@ var MultiProtocolGatewayDelayErrorsDurationCondVal = validators.Evaluation{
 }
 
 var MultiProtocolGatewayObjectType = map[string]attr.Type{
-	"id":                                             types.StringType,
-	"app_domain":                                     types.StringType,
-	"back_http_version":                              types.StringType,
-	"http2_required":                                 types.BoolType,
-	"request_type":                                   types.StringType,
-	"response_type":                                  types.StringType,
-	"follow_redirects":                               types.BoolType,
-	"rewrite_location_header":                        types.BoolType,
-	"style_policy":                                   types.StringType,
-	"type":                                           types.StringType,
-	"allow_compression":                              types.BoolType,
-	"enable_compressed_payload_passthrough":          types.BoolType,
-	"allow_cache_control_header":                     types.BoolType,
-	"wsrr_saved_search_subscriptions":                types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSRRSavedSearchWSDLSourceObjectType}},
-	"wsrr_subscriptions":                             types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSRRWSDLSourceObjectType}},
-	"policy_attachments":                             types.StringType,
-	"policy_parameter":                               types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSPolicyParametersObjectType}},
-	"wsm_agent_monitor":                              types.BoolType,
-	"wsm_agent_monitor_pcm":                          types.StringType,
-	"proxy_http_response":                            types.BoolType,
-	"error_policy":                                   types.StringType,
-	"transaction_timeout":                            types.Int64Type,
-	"user_summary":                                   types.StringType,
-	"priority":                                       types.StringType,
-	"front_protocol":                                 types.ListType{ElemType: types.StringType},
-	"xml_manager":                                    types.StringType,
-	"url_rewrite_policy":                             types.StringType,
-	"ssl_client_config_type":                         types.StringType,
-	"ssl_client":                                     types.StringType,
-	"fw_cred":                                        types.StringType,
-	"header_injection":                               types.ListType{ElemType: types.ObjectType{AttrTypes: DmHeaderInjectionObjectType}},
-	"header_suppression":                             types.ListType{ElemType: types.ObjectType{AttrTypes: DmHeaderSuppressionObjectType}},
-	"stylesheet_parameters":                          types.ListType{ElemType: types.ObjectType{AttrTypes: DmStylesheetParameterObjectType}},
-	"default_param_namespace":                        types.StringType,
-	"query_param_namespace":                          types.StringType,
-	"backend_url":                                    types.StringType,
-	"propagate_uri":                                  types.BoolType,
-	"service_monitors":                               types.ListType{ElemType: types.StringType},
-	"count_monitors":                                 types.ListType{ElemType: types.StringType},
-	"duration_monitors":                              types.ListType{ElemType: types.StringType},
-	"monitor_processing_policy":                      types.StringType,
-	"request_attachments":                            types.StringType,
-	"response_attachments":                           types.StringType,
-	"request_attachments_flow_control":               types.BoolType,
-	"response_attachments_flow_control":              types.BoolType,
-	"root_part_not_first_action":                     types.StringType,
-	"front_attachment_format":                        types.StringType,
-	"back_attachment_format":                         types.StringType,
-	"mime_front_headers":                             types.BoolType,
-	"mime_back_headers":                              types.BoolType,
-	"stream_output_to_back":                          types.StringType,
-	"stream_output_to_front":                         types.StringType,
-	"max_message_size":                               types.Int64Type,
-	"gateway_parser_limits":                          types.BoolType,
-	"parser_limits_element_depth":                    types.Int64Type,
-	"parser_limits_attribute_count":                  types.Int64Type,
-	"parser_limits_max_node_size":                    types.Int64Type,
-	"parser_limits_external_references":              types.StringType,
-	"parser_limits_max_prefixes":                     types.Int64Type,
-	"parser_limits_max_namespaces":                   types.Int64Type,
-	"parser_limits_max_local_names":                  types.Int64Type,
-	"parser_limits_attachment_byte_count":            types.Int64Type,
-	"parser_limits_attachment_package_byte_count":    types.Int64Type,
-	"debug_mode":                                     types.StringType,
-	"debug_history":                                  types.Int64Type,
-	"debug_trigger":                                  types.ListType{ElemType: types.ObjectType{AttrTypes: DmMSDebugTriggerTypeObjectType}},
-	"flow_control":                                   types.BoolType,
-	"soap_schema_url":                                types.StringType,
-	"front_timeout":                                  types.Int64Type,
-	"back_timeout":                                   types.Int64Type,
-	"front_persistent_timeout":                       types.Int64Type,
-	"back_persistent_timeout":                        types.Int64Type,
-	"include_response_type_encoding":                 types.BoolType,
-	"persistent_connections":                         types.BoolType,
-	"loop_detection":                                 types.BoolType,
-	"do_host_rewriting":                              types.BoolType,
-	"do_chunked_upload":                              types.BoolType,
-	"process_http_errors":                            types.BoolType,
-	"http_client_ip_label":                           types.StringType,
-	"http_log_cor_id_label":                          types.StringType,
-	"load_balancer_hash_header":                      types.StringType,
-	"in_order_mode":                                  types.ObjectType{AttrTypes: DmGatewayInOrderModeObjectType},
-	"wsa_mode":                                       types.StringType,
-	"wsa_require_aaa":                                types.BoolType,
-	"wsa_rewrite_reply_to":                           types.StringType,
-	"wsa_rewrite_fault_to":                           types.StringType,
-	"wsa_rewrite_to":                                 types.StringType,
-	"wsa_strip":                                      types.BoolType,
-	"wsa_default_reply_to":                           types.StringType,
-	"wsa_default_fault_to":                           types.StringType,
-	"wsa_force":                                      types.BoolType,
-	"wsa_gen_style":                                  types.StringType,
-	"wsahttp_async_response_code":                    types.Int64Type,
-	"wsa_back_protocol":                              types.StringType,
-	"wsa_timeout":                                    types.Int64Type,
-	"wsrm_enabled":                                   types.BoolType,
-	"wsrm_sequence_expiration":                       types.Int64Type,
-	"wsrmaaa_policy":                                 types.StringType,
-	"wsrm_destination_accept_create_sequence":        types.BoolType,
-	"wsrm_destination_maximum_sequences":             types.Int64Type,
-	"wsrm_destination_in_order":                      types.BoolType,
-	"wsrm_destination_maximum_in_order_queue_length": types.Int64Type,
-	"wsrm_destination_accept_offers":                 types.BoolType,
-	"wsrm_front_force":                               types.BoolType,
-	"wsrm_back_force":                                types.BoolType,
-	"wsrm_back_create_sequence":                      types.BoolType,
-	"wsrm_front_create_sequence":                     types.BoolType,
-	"wsrm_source_make_offer":                         types.BoolType,
-	"wsrm_uses_sequence_ssl":                         types.BoolType,
-	"wsrm_front_acks_to":                             types.StringType,
-	"wsrm_back_acks_to":                              types.StringType,
-	"wsrm_source_maximum_sequences":                  types.Int64Type,
-	"wsrm_source_retransmission_interval":            types.Int64Type,
-	"wsrm_source_exponential_backoff":                types.BoolType,
-	"wsrm_source_maximum_retransmissions":            types.Int64Type,
-	"wsrm_source_maximum_queue_length":               types.Int64Type,
-	"wsrm_source_request_ack_count":                  types.Int64Type,
-	"wsrm_source_inactivity_close":                   types.Int64Type,
-	"force_policy_exec":                              types.BoolType,
-	"rewrite_errors":                                 types.BoolType,
-	"delay_errors":                                   types.BoolType,
-	"delay_errors_duration":                          types.Int64Type,
-	"dependency_actions":                             actions.ActionsListType,
+	"id":                                              types.StringType,
+	"app_domain":                                      types.StringType,
+	"back_http_version":                               types.StringType,
+	"http2_required":                                  types.BoolType,
+	"request_type":                                    types.StringType,
+	"response_type":                                   types.StringType,
+	"follow_redirects":                                types.BoolType,
+	"rewrite_location_header":                         types.BoolType,
+	"style_policy":                                    types.StringType,
+	"type":                                            types.StringType,
+	"allow_compression":                               types.BoolType,
+	"enable_compressed_payload_passthrough":           types.BoolType,
+	"allow_cache_control_header":                      types.BoolType,
+	"wsrr_saved_search_subscriptions":                 types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSRRSavedSearchWSDLSourceObjectType}},
+	"wsrr_subscriptions":                              types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSRRWSDLSourceObjectType}},
+	"policy_attachments":                              types.StringType,
+	"policy_parameter":                                types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSPolicyParametersObjectType}},
+	"w_sm_agent_monitor":                              types.BoolType,
+	"w_sm_agent_monitor_pcm":                          types.StringType,
+	"proxy_http_response":                             types.BoolType,
+	"error_policy":                                    types.StringType,
+	"transaction_timeout":                             types.Int64Type,
+	"user_summary":                                    types.StringType,
+	"priority":                                        types.StringType,
+	"front_protocol":                                  types.ListType{ElemType: types.StringType},
+	"xml_manager":                                     types.StringType,
+	"url_rewrite_policy":                              types.StringType,
+	"ssl_client_config_type":                          types.StringType,
+	"ssl_client":                                      types.StringType,
+	"fw_cred":                                         types.StringType,
+	"header_injection":                                types.ListType{ElemType: types.ObjectType{AttrTypes: DmHeaderInjectionObjectType}},
+	"header_suppression":                              types.ListType{ElemType: types.ObjectType{AttrTypes: DmHeaderSuppressionObjectType}},
+	"stylesheet_parameters":                           types.ListType{ElemType: types.ObjectType{AttrTypes: DmStylesheetParameterObjectType}},
+	"default_param_namespace":                         types.StringType,
+	"query_param_namespace":                           types.StringType,
+	"backend_url":                                     types.StringType,
+	"propagate_uri":                                   types.BoolType,
+	"service_monitors":                                types.ListType{ElemType: types.StringType},
+	"count_monitors":                                  types.ListType{ElemType: types.StringType},
+	"duration_monitors":                               types.ListType{ElemType: types.StringType},
+	"monitor_processing_policy":                       types.StringType,
+	"request_attachments":                             types.StringType,
+	"response_attachments":                            types.StringType,
+	"request_attachments_flow_control":                types.BoolType,
+	"response_attachments_flow_control":               types.BoolType,
+	"root_part_not_first_action":                      types.StringType,
+	"front_attachment_format":                         types.StringType,
+	"back_attachment_format":                          types.StringType,
+	"mime_front_headers":                              types.BoolType,
+	"mime_back_headers":                               types.BoolType,
+	"stream_output_to_back":                           types.StringType,
+	"stream_output_to_front":                          types.StringType,
+	"max_message_size":                                types.Int64Type,
+	"gateway_parser_limits":                           types.BoolType,
+	"parser_limits_element_depth":                     types.Int64Type,
+	"parser_limits_attribute_count":                   types.Int64Type,
+	"parser_limits_max_node_size":                     types.Int64Type,
+	"parser_limits_external_references":               types.StringType,
+	"parser_limits_max_prefixes":                      types.Int64Type,
+	"parser_limits_max_namespaces":                    types.Int64Type,
+	"parser_limits_max_local_names":                   types.Int64Type,
+	"parser_limits_attachment_byte_count":             types.Int64Type,
+	"parser_limits_attachment_package_byte_count":     types.Int64Type,
+	"debug_mode":                                      types.StringType,
+	"debug_history":                                   types.Int64Type,
+	"debug_trigger":                                   types.ListType{ElemType: types.ObjectType{AttrTypes: DmMSDebugTriggerTypeObjectType}},
+	"flow_control":                                    types.BoolType,
+	"soap_schema_url":                                 types.StringType,
+	"front_timeout":                                   types.Int64Type,
+	"back_timeout":                                    types.Int64Type,
+	"front_persistent_timeout":                        types.Int64Type,
+	"back_persistent_timeout":                         types.Int64Type,
+	"include_response_type_encoding":                  types.BoolType,
+	"persistent_connections":                          types.BoolType,
+	"loop_detection":                                  types.BoolType,
+	"do_host_rewriting":                               types.BoolType,
+	"do_chunked_upload":                               types.BoolType,
+	"process_http_errors":                             types.BoolType,
+	"http_client_ip_label":                            types.StringType,
+	"http_log_cor_id_label":                           types.StringType,
+	"load_balancer_hash_header":                       types.StringType,
+	"in_order_mode":                                   types.ObjectType{AttrTypes: DmGatewayInOrderModeObjectType},
+	"ws_a_mode":                                       types.StringType,
+	"ws_a_require_aaa":                                types.BoolType,
+	"ws_a_rewrite_reply_to":                           types.StringType,
+	"ws_a_rewrite_fault_to":                           types.StringType,
+	"ws_a_rewrite_to":                                 types.StringType,
+	"ws_a_strip":                                      types.BoolType,
+	"ws_a_default_reply_to":                           types.StringType,
+	"ws_a_default_fault_to":                           types.StringType,
+	"ws_a_force":                                      types.BoolType,
+	"ws_a_gen_style":                                  types.StringType,
+	"ws_a_http_async_response_code":                   types.Int64Type,
+	"ws_a_back_protocol":                              types.StringType,
+	"ws_a_timeout":                                    types.Int64Type,
+	"ws_rm_enabled":                                   types.BoolType,
+	"ws_rm_sequence_expiration":                       types.Int64Type,
+	"ws_rm_aaa_policy":                                types.StringType,
+	"ws_rm_destination_accept_create_sequence":        types.BoolType,
+	"ws_rm_destination_maximum_sequences":             types.Int64Type,
+	"ws_rm_destination_in_order":                      types.BoolType,
+	"ws_rm_destination_maximum_in_order_queue_length": types.Int64Type,
+	"ws_rm_destination_accept_offers":                 types.BoolType,
+	"ws_rm_front_force":                               types.BoolType,
+	"ws_rm_back_force":                                types.BoolType,
+	"ws_rm_back_create_sequence":                      types.BoolType,
+	"ws_rm_front_create_sequence":                     types.BoolType,
+	"ws_rm_source_make_offer":                         types.BoolType,
+	"ws_rm_uses_sequence_ssl":                         types.BoolType,
+	"ws_rm_front_acks_to":                             types.StringType,
+	"ws_rm_back_acks_to":                              types.StringType,
+	"ws_rm_source_maximum_sequences":                  types.Int64Type,
+	"ws_rm_source_retransmission_interval":            types.Int64Type,
+	"ws_rm_source_exponential_backoff":                types.BoolType,
+	"ws_rm_source_maximum_retransmissions":            types.Int64Type,
+	"ws_rm_source_maximum_queue_length":               types.Int64Type,
+	"ws_rm_source_request_ack_count":                  types.Int64Type,
+	"ws_rm_source_inactivity_close":                   types.Int64Type,
+	"force_policy_exec":                               types.BoolType,
+	"rewrite_errors":                                  types.BoolType,
+	"delay_errors":                                    types.BoolType,
+	"delay_errors_duration":                           types.Int64Type,
+	"dependency_actions":                              actions.ActionsListType,
 }
 
 func (data MultiProtocolGateway) GetPath() string {
@@ -499,10 +499,10 @@ func (data MultiProtocolGateway) IsNull() bool {
 	if !data.PolicyParameter.IsNull() {
 		return false
 	}
-	if !data.WsmAgentMonitor.IsNull() {
+	if !data.WSmAgentMonitor.IsNull() {
 		return false
 	}
-	if !data.WsmAgentMonitorPcm.IsNull() {
+	if !data.WSmAgentMonitorPcm.IsNull() {
 		return false
 	}
 	if !data.ProxyHttpResponse.IsNull() {
@@ -696,112 +696,112 @@ func (data MultiProtocolGateway) IsNull() bool {
 			return false
 		}
 	}
-	if !data.WsaMode.IsNull() {
+	if !data.WsAMode.IsNull() {
 		return false
 	}
-	if !data.WsaRequireAaa.IsNull() {
+	if !data.WsARequireAaa.IsNull() {
 		return false
 	}
-	if !data.WsaRewriteReplyTo.IsNull() {
+	if !data.WsARewriteReplyTo.IsNull() {
 		return false
 	}
-	if !data.WsaRewriteFaultTo.IsNull() {
+	if !data.WsARewriteFaultTo.IsNull() {
 		return false
 	}
-	if !data.WsaRewriteTo.IsNull() {
+	if !data.WsARewriteTo.IsNull() {
 		return false
 	}
-	if !data.WsaStrip.IsNull() {
+	if !data.WsAStrip.IsNull() {
 		return false
 	}
-	if !data.WsaDefaultReplyTo.IsNull() {
+	if !data.WsADefaultReplyTo.IsNull() {
 		return false
 	}
-	if !data.WsaDefaultFaultTo.IsNull() {
+	if !data.WsADefaultFaultTo.IsNull() {
 		return false
 	}
-	if !data.WsaForce.IsNull() {
+	if !data.WsAForce.IsNull() {
 		return false
 	}
-	if !data.WsaGenStyle.IsNull() {
+	if !data.WsAGenStyle.IsNull() {
 		return false
 	}
-	if !data.WsahttpAsyncResponseCode.IsNull() {
+	if !data.WsAHttpAsyncResponseCode.IsNull() {
 		return false
 	}
-	if !data.WsaBackProtocol.IsNull() {
+	if !data.WsABackProtocol.IsNull() {
 		return false
 	}
-	if !data.WsaTimeout.IsNull() {
+	if !data.WsATimeout.IsNull() {
 		return false
 	}
-	if !data.WsrmEnabled.IsNull() {
+	if !data.WsRmEnabled.IsNull() {
 		return false
 	}
-	if !data.WsrmSequenceExpiration.IsNull() {
+	if !data.WsRmSequenceExpiration.IsNull() {
 		return false
 	}
-	if !data.WsrmaaaPolicy.IsNull() {
+	if !data.WsRmAaaPolicy.IsNull() {
 		return false
 	}
-	if !data.WsrmDestinationAcceptCreateSequence.IsNull() {
+	if !data.WsRmDestinationAcceptCreateSequence.IsNull() {
 		return false
 	}
-	if !data.WsrmDestinationMaximumSequences.IsNull() {
+	if !data.WsRmDestinationMaximumSequences.IsNull() {
 		return false
 	}
-	if !data.WsrmDestinationInOrder.IsNull() {
+	if !data.WsRmDestinationInOrder.IsNull() {
 		return false
 	}
-	if !data.WsrmDestinationMaximumInOrderQueueLength.IsNull() {
+	if !data.WsRmDestinationMaximumInOrderQueueLength.IsNull() {
 		return false
 	}
-	if !data.WsrmDestinationAcceptOffers.IsNull() {
+	if !data.WsRmDestinationAcceptOffers.IsNull() {
 		return false
 	}
-	if !data.WsrmFrontForce.IsNull() {
+	if !data.WsRmFrontForce.IsNull() {
 		return false
 	}
-	if !data.WsrmBackForce.IsNull() {
+	if !data.WsRmBackForce.IsNull() {
 		return false
 	}
-	if !data.WsrmBackCreateSequence.IsNull() {
+	if !data.WsRmBackCreateSequence.IsNull() {
 		return false
 	}
-	if !data.WsrmFrontCreateSequence.IsNull() {
+	if !data.WsRmFrontCreateSequence.IsNull() {
 		return false
 	}
-	if !data.WsrmSourceMakeOffer.IsNull() {
+	if !data.WsRmSourceMakeOffer.IsNull() {
 		return false
 	}
-	if !data.WsrmUsesSequenceSsl.IsNull() {
+	if !data.WsRmUsesSequenceSsl.IsNull() {
 		return false
 	}
-	if !data.WsrmFrontAcksTo.IsNull() {
+	if !data.WsRmFrontAcksTo.IsNull() {
 		return false
 	}
-	if !data.WsrmBackAcksTo.IsNull() {
+	if !data.WsRmBackAcksTo.IsNull() {
 		return false
 	}
-	if !data.WsrmSourceMaximumSequences.IsNull() {
+	if !data.WsRmSourceMaximumSequences.IsNull() {
 		return false
 	}
-	if !data.WsrmSourceRetransmissionInterval.IsNull() {
+	if !data.WsRmSourceRetransmissionInterval.IsNull() {
 		return false
 	}
-	if !data.WsrmSourceExponentialBackoff.IsNull() {
+	if !data.WsRmSourceExponentialBackoff.IsNull() {
 		return false
 	}
-	if !data.WsrmSourceMaximumRetransmissions.IsNull() {
+	if !data.WsRmSourceMaximumRetransmissions.IsNull() {
 		return false
 	}
-	if !data.WsrmSourceMaximumQueueLength.IsNull() {
+	if !data.WsRmSourceMaximumQueueLength.IsNull() {
 		return false
 	}
-	if !data.WsrmSourceRequestAckCount.IsNull() {
+	if !data.WsRmSourceRequestAckCount.IsNull() {
 		return false
 	}
-	if !data.WsrmSourceInactivityClose.IsNull() {
+	if !data.WsRmSourceInactivityClose.IsNull() {
 		return false
 	}
 	if !data.ForcePolicyExec.IsNull() {
@@ -885,11 +885,11 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 			body, _ = sjson.SetRaw(body, pathRoot+`PolicyParameter`+".-1", val.ToBody(ctx, ""))
 		}
 	}
-	if !data.WsmAgentMonitor.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSMAgentMonitor`, tfutils.StringFromBool(data.WsmAgentMonitor, ""))
+	if !data.WSmAgentMonitor.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSMAgentMonitor`, tfutils.StringFromBool(data.WSmAgentMonitor, ""))
 	}
-	if !data.WsmAgentMonitorPcm.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSMAgentMonitorPCM`, data.WsmAgentMonitorPcm.ValueString())
+	if !data.WSmAgentMonitorPcm.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSMAgentMonitorPCM`, data.WSmAgentMonitorPcm.ValueString())
 	}
 	if !data.ProxyHttpResponse.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ProxyHTTPResponse`, tfutils.StringFromBool(data.ProxyHttpResponse, ""))
@@ -1114,113 +1114,113 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 			body, _ = sjson.SetRaw(body, pathRoot+`InOrderMode`, data.InOrderMode.ToBody(ctx, ""))
 		}
 	}
-	if !data.WsaMode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSAMode`, data.WsaMode.ValueString())
+	if !data.WsAMode.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSAMode`, data.WsAMode.ValueString())
 	}
-	if !data.WsaRequireAaa.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSARequireAAA`, tfutils.StringFromBool(data.WsaRequireAaa, ""))
+	if !data.WsARequireAaa.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSARequireAAA`, tfutils.StringFromBool(data.WsARequireAaa, ""))
 	}
-	if !data.WsaRewriteReplyTo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSARewriteReplyTo`, data.WsaRewriteReplyTo.ValueString())
+	if !data.WsARewriteReplyTo.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSARewriteReplyTo`, data.WsARewriteReplyTo.ValueString())
 	}
-	if !data.WsaRewriteFaultTo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSARewriteFaultTo`, data.WsaRewriteFaultTo.ValueString())
+	if !data.WsARewriteFaultTo.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSARewriteFaultTo`, data.WsARewriteFaultTo.ValueString())
 	}
-	if !data.WsaRewriteTo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSARewriteTo`, data.WsaRewriteTo.ValueString())
+	if !data.WsARewriteTo.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSARewriteTo`, data.WsARewriteTo.ValueString())
 	}
-	if !data.WsaStrip.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSAStrip`, tfutils.StringFromBool(data.WsaStrip, ""))
+	if !data.WsAStrip.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSAStrip`, tfutils.StringFromBool(data.WsAStrip, ""))
 	}
-	if !data.WsaDefaultReplyTo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSADefaultReplyTo`, data.WsaDefaultReplyTo.ValueString())
+	if !data.WsADefaultReplyTo.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSADefaultReplyTo`, data.WsADefaultReplyTo.ValueString())
 	}
-	if !data.WsaDefaultFaultTo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSADefaultFaultTo`, data.WsaDefaultFaultTo.ValueString())
+	if !data.WsADefaultFaultTo.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSADefaultFaultTo`, data.WsADefaultFaultTo.ValueString())
 	}
-	if !data.WsaForce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSAForce`, tfutils.StringFromBool(data.WsaForce, ""))
+	if !data.WsAForce.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSAForce`, tfutils.StringFromBool(data.WsAForce, ""))
 	}
-	if !data.WsaGenStyle.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSAGenStyle`, data.WsaGenStyle.ValueString())
+	if !data.WsAGenStyle.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSAGenStyle`, data.WsAGenStyle.ValueString())
 	}
-	if !data.WsahttpAsyncResponseCode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSAHTTPAsyncResponseCode`, data.WsahttpAsyncResponseCode.ValueInt64())
+	if !data.WsAHttpAsyncResponseCode.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSAHTTPAsyncResponseCode`, data.WsAHttpAsyncResponseCode.ValueInt64())
 	}
-	if !data.WsaBackProtocol.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSABackProtocol`, data.WsaBackProtocol.ValueString())
+	if !data.WsABackProtocol.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSABackProtocol`, data.WsABackProtocol.ValueString())
 	}
-	if !data.WsaTimeout.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSATimeout`, data.WsaTimeout.ValueInt64())
+	if !data.WsATimeout.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSATimeout`, data.WsATimeout.ValueInt64())
 	}
-	if !data.WsrmEnabled.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMEnabled`, tfutils.StringFromBool(data.WsrmEnabled, ""))
+	if !data.WsRmEnabled.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMEnabled`, tfutils.StringFromBool(data.WsRmEnabled, ""))
 	}
-	if !data.WsrmSequenceExpiration.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSequenceExpiration`, data.WsrmSequenceExpiration.ValueInt64())
+	if !data.WsRmSequenceExpiration.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSequenceExpiration`, data.WsRmSequenceExpiration.ValueInt64())
 	}
-	if !data.WsrmaaaPolicy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMAAAPolicy`, data.WsrmaaaPolicy.ValueString())
+	if !data.WsRmAaaPolicy.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMAAAPolicy`, data.WsRmAaaPolicy.ValueString())
 	}
-	if !data.WsrmDestinationAcceptCreateSequence.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationAcceptCreateSequence`, tfutils.StringFromBool(data.WsrmDestinationAcceptCreateSequence, ""))
+	if !data.WsRmDestinationAcceptCreateSequence.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationAcceptCreateSequence`, tfutils.StringFromBool(data.WsRmDestinationAcceptCreateSequence, ""))
 	}
-	if !data.WsrmDestinationMaximumSequences.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationMaximumSequences`, data.WsrmDestinationMaximumSequences.ValueInt64())
+	if !data.WsRmDestinationMaximumSequences.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationMaximumSequences`, data.WsRmDestinationMaximumSequences.ValueInt64())
 	}
-	if !data.WsrmDestinationInOrder.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationInOrder`, tfutils.StringFromBool(data.WsrmDestinationInOrder, ""))
+	if !data.WsRmDestinationInOrder.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationInOrder`, tfutils.StringFromBool(data.WsRmDestinationInOrder, ""))
 	}
-	if !data.WsrmDestinationMaximumInOrderQueueLength.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationMaximumInOrderQueueLength`, data.WsrmDestinationMaximumInOrderQueueLength.ValueInt64())
+	if !data.WsRmDestinationMaximumInOrderQueueLength.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationMaximumInOrderQueueLength`, data.WsRmDestinationMaximumInOrderQueueLength.ValueInt64())
 	}
-	if !data.WsrmDestinationAcceptOffers.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationAcceptOffers`, tfutils.StringFromBool(data.WsrmDestinationAcceptOffers, ""))
+	if !data.WsRmDestinationAcceptOffers.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationAcceptOffers`, tfutils.StringFromBool(data.WsRmDestinationAcceptOffers, ""))
 	}
-	if !data.WsrmFrontForce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMFrontForce`, tfutils.StringFromBool(data.WsrmFrontForce, ""))
+	if !data.WsRmFrontForce.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMFrontForce`, tfutils.StringFromBool(data.WsRmFrontForce, ""))
 	}
-	if !data.WsrmBackForce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMBackForce`, tfutils.StringFromBool(data.WsrmBackForce, ""))
+	if !data.WsRmBackForce.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMBackForce`, tfutils.StringFromBool(data.WsRmBackForce, ""))
 	}
-	if !data.WsrmBackCreateSequence.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMBackCreateSequence`, tfutils.StringFromBool(data.WsrmBackCreateSequence, ""))
+	if !data.WsRmBackCreateSequence.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMBackCreateSequence`, tfutils.StringFromBool(data.WsRmBackCreateSequence, ""))
 	}
-	if !data.WsrmFrontCreateSequence.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMFrontCreateSequence`, tfutils.StringFromBool(data.WsrmFrontCreateSequence, ""))
+	if !data.WsRmFrontCreateSequence.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMFrontCreateSequence`, tfutils.StringFromBool(data.WsRmFrontCreateSequence, ""))
 	}
-	if !data.WsrmSourceMakeOffer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMakeOffer`, tfutils.StringFromBool(data.WsrmSourceMakeOffer, ""))
+	if !data.WsRmSourceMakeOffer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMakeOffer`, tfutils.StringFromBool(data.WsRmSourceMakeOffer, ""))
 	}
-	if !data.WsrmUsesSequenceSsl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMUsesSequenceSSL`, tfutils.StringFromBool(data.WsrmUsesSequenceSsl, ""))
+	if !data.WsRmUsesSequenceSsl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMUsesSequenceSSL`, tfutils.StringFromBool(data.WsRmUsesSequenceSsl, ""))
 	}
-	if !data.WsrmFrontAcksTo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMFrontAcksTo`, data.WsrmFrontAcksTo.ValueString())
+	if !data.WsRmFrontAcksTo.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMFrontAcksTo`, data.WsRmFrontAcksTo.ValueString())
 	}
-	if !data.WsrmBackAcksTo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMBackAcksTo`, data.WsrmBackAcksTo.ValueString())
+	if !data.WsRmBackAcksTo.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMBackAcksTo`, data.WsRmBackAcksTo.ValueString())
 	}
-	if !data.WsrmSourceMaximumSequences.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMaximumSequences`, data.WsrmSourceMaximumSequences.ValueInt64())
+	if !data.WsRmSourceMaximumSequences.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMaximumSequences`, data.WsRmSourceMaximumSequences.ValueInt64())
 	}
-	if !data.WsrmSourceRetransmissionInterval.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceRetransmissionInterval`, data.WsrmSourceRetransmissionInterval.ValueInt64())
+	if !data.WsRmSourceRetransmissionInterval.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceRetransmissionInterval`, data.WsRmSourceRetransmissionInterval.ValueInt64())
 	}
-	if !data.WsrmSourceExponentialBackoff.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceExponentialBackoff`, tfutils.StringFromBool(data.WsrmSourceExponentialBackoff, ""))
+	if !data.WsRmSourceExponentialBackoff.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceExponentialBackoff`, tfutils.StringFromBool(data.WsRmSourceExponentialBackoff, ""))
 	}
-	if !data.WsrmSourceMaximumRetransmissions.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMaximumRetransmissions`, data.WsrmSourceMaximumRetransmissions.ValueInt64())
+	if !data.WsRmSourceMaximumRetransmissions.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMaximumRetransmissions`, data.WsRmSourceMaximumRetransmissions.ValueInt64())
 	}
-	if !data.WsrmSourceMaximumQueueLength.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMaximumQueueLength`, data.WsrmSourceMaximumQueueLength.ValueInt64())
+	if !data.WsRmSourceMaximumQueueLength.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMaximumQueueLength`, data.WsRmSourceMaximumQueueLength.ValueInt64())
 	}
-	if !data.WsrmSourceRequestAckCount.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceRequestAckCount`, data.WsrmSourceRequestAckCount.ValueInt64())
+	if !data.WsRmSourceRequestAckCount.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceRequestAckCount`, data.WsRmSourceRequestAckCount.ValueInt64())
 	}
-	if !data.WsrmSourceInactivityClose.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceInactivityClose`, data.WsrmSourceInactivityClose.ValueInt64())
+	if !data.WsRmSourceInactivityClose.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceInactivityClose`, data.WsRmSourceInactivityClose.ValueInt64())
 	}
 	if !data.ForcePolicyExec.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ForcePolicyExec`, tfutils.StringFromBool(data.ForcePolicyExec, ""))
@@ -1364,14 +1364,14 @@ func (data *MultiProtocolGateway) FromBody(ctx context.Context, pathRoot string,
 		data.PolicyParameter = types.ListNull(types.ObjectType{AttrTypes: DmWSPolicyParametersObjectType})
 	}
 	if value := res.Get(pathRoot + `WSMAgentMonitor`); value.Exists() {
-		data.WsmAgentMonitor = tfutils.BoolFromString(value.String())
+		data.WSmAgentMonitor = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsmAgentMonitor = types.BoolNull()
+		data.WSmAgentMonitor = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSMAgentMonitorPCM`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsmAgentMonitorPcm = tfutils.ParseStringFromGJSON(value)
+		data.WSmAgentMonitorPcm = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsmAgentMonitorPcm = types.StringValue("all-messages")
+		data.WSmAgentMonitorPcm = types.StringValue("all-messages")
 	}
 	if value := res.Get(pathRoot + `ProxyHTTPResponse`); value.Exists() {
 		data.ProxyHttpResponse = tfutils.BoolFromString(value.String())
@@ -1746,184 +1746,184 @@ func (data *MultiProtocolGateway) FromBody(ctx context.Context, pathRoot string,
 		data.InOrderMode = nil
 	}
 	if value := res.Get(pathRoot + `WSAMode`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsaMode = tfutils.ParseStringFromGJSON(value)
+		data.WsAMode = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaMode = types.StringValue("sync2sync")
+		data.WsAMode = types.StringValue("sync2sync")
 	}
 	if value := res.Get(pathRoot + `WSARequireAAA`); value.Exists() {
-		data.WsaRequireAaa = tfutils.BoolFromString(value.String())
+		data.WsARequireAaa = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsaRequireAaa = types.BoolNull()
+		data.WsARequireAaa = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSARewriteReplyTo`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsaRewriteReplyTo = tfutils.ParseStringFromGJSON(value)
+		data.WsARewriteReplyTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaRewriteReplyTo = types.StringNull()
+		data.WsARewriteReplyTo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSARewriteFaultTo`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsaRewriteFaultTo = tfutils.ParseStringFromGJSON(value)
+		data.WsARewriteFaultTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaRewriteFaultTo = types.StringNull()
+		data.WsARewriteFaultTo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSARewriteTo`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsaRewriteTo = tfutils.ParseStringFromGJSON(value)
+		data.WsARewriteTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaRewriteTo = types.StringNull()
+		data.WsARewriteTo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSAStrip`); value.Exists() {
-		data.WsaStrip = tfutils.BoolFromString(value.String())
+		data.WsAStrip = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsaStrip = types.BoolNull()
+		data.WsAStrip = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSADefaultReplyTo`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsaDefaultReplyTo = tfutils.ParseStringFromGJSON(value)
+		data.WsADefaultReplyTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaDefaultReplyTo = types.StringValue("http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous")
+		data.WsADefaultReplyTo = types.StringValue("http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous")
 	}
 	if value := res.Get(pathRoot + `WSADefaultFaultTo`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsaDefaultFaultTo = tfutils.ParseStringFromGJSON(value)
+		data.WsADefaultFaultTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaDefaultFaultTo = types.StringValue("http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous")
+		data.WsADefaultFaultTo = types.StringValue("http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous")
 	}
 	if value := res.Get(pathRoot + `WSAForce`); value.Exists() {
-		data.WsaForce = tfutils.BoolFromString(value.String())
+		data.WsAForce = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsaForce = types.BoolNull()
+		data.WsAForce = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSAGenStyle`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsaGenStyle = tfutils.ParseStringFromGJSON(value)
+		data.WsAGenStyle = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaGenStyle = types.StringValue("sync")
+		data.WsAGenStyle = types.StringValue("sync")
 	}
 	if value := res.Get(pathRoot + `WSAHTTPAsyncResponseCode`); value.Exists() {
-		data.WsahttpAsyncResponseCode = types.Int64Value(value.Int())
+		data.WsAHttpAsyncResponseCode = types.Int64Value(value.Int())
 	} else {
-		data.WsahttpAsyncResponseCode = types.Int64Value(204)
+		data.WsAHttpAsyncResponseCode = types.Int64Value(204)
 	}
 	if value := res.Get(pathRoot + `WSABackProtocol`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsaBackProtocol = tfutils.ParseStringFromGJSON(value)
+		data.WsABackProtocol = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaBackProtocol = types.StringNull()
+		data.WsABackProtocol = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSATimeout`); value.Exists() {
-		data.WsaTimeout = types.Int64Value(value.Int())
+		data.WsATimeout = types.Int64Value(value.Int())
 	} else {
-		data.WsaTimeout = types.Int64Value(120)
+		data.WsATimeout = types.Int64Value(120)
 	}
 	if value := res.Get(pathRoot + `WSRMEnabled`); value.Exists() {
-		data.WsrmEnabled = tfutils.BoolFromString(value.String())
+		data.WsRmEnabled = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmEnabled = types.BoolNull()
+		data.WsRmEnabled = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMSequenceExpiration`); value.Exists() {
-		data.WsrmSequenceExpiration = types.Int64Value(value.Int())
+		data.WsRmSequenceExpiration = types.Int64Value(value.Int())
 	} else {
-		data.WsrmSequenceExpiration = types.Int64Value(3600)
+		data.WsRmSequenceExpiration = types.Int64Value(3600)
 	}
 	if value := res.Get(pathRoot + `WSRMAAAPolicy`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsrmaaaPolicy = tfutils.ParseStringFromGJSON(value)
+		data.WsRmAaaPolicy = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsrmaaaPolicy = types.StringNull()
+		data.WsRmAaaPolicy = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSRMDestinationAcceptCreateSequence`); value.Exists() {
-		data.WsrmDestinationAcceptCreateSequence = tfutils.BoolFromString(value.String())
+		data.WsRmDestinationAcceptCreateSequence = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmDestinationAcceptCreateSequence = types.BoolNull()
+		data.WsRmDestinationAcceptCreateSequence = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMDestinationMaximumSequences`); value.Exists() {
-		data.WsrmDestinationMaximumSequences = types.Int64Value(value.Int())
+		data.WsRmDestinationMaximumSequences = types.Int64Value(value.Int())
 	} else {
-		data.WsrmDestinationMaximumSequences = types.Int64Value(400)
+		data.WsRmDestinationMaximumSequences = types.Int64Value(400)
 	}
 	if value := res.Get(pathRoot + `WSRMDestinationInOrder`); value.Exists() {
-		data.WsrmDestinationInOrder = tfutils.BoolFromString(value.String())
+		data.WsRmDestinationInOrder = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmDestinationInOrder = types.BoolNull()
+		data.WsRmDestinationInOrder = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMDestinationMaximumInOrderQueueLength`); value.Exists() {
-		data.WsrmDestinationMaximumInOrderQueueLength = types.Int64Value(value.Int())
+		data.WsRmDestinationMaximumInOrderQueueLength = types.Int64Value(value.Int())
 	} else {
-		data.WsrmDestinationMaximumInOrderQueueLength = types.Int64Value(10)
+		data.WsRmDestinationMaximumInOrderQueueLength = types.Int64Value(10)
 	}
 	if value := res.Get(pathRoot + `WSRMDestinationAcceptOffers`); value.Exists() {
-		data.WsrmDestinationAcceptOffers = tfutils.BoolFromString(value.String())
+		data.WsRmDestinationAcceptOffers = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmDestinationAcceptOffers = types.BoolNull()
+		data.WsRmDestinationAcceptOffers = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMFrontForce`); value.Exists() {
-		data.WsrmFrontForce = tfutils.BoolFromString(value.String())
+		data.WsRmFrontForce = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmFrontForce = types.BoolNull()
+		data.WsRmFrontForce = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMBackForce`); value.Exists() {
-		data.WsrmBackForce = tfutils.BoolFromString(value.String())
+		data.WsRmBackForce = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmBackForce = types.BoolNull()
+		data.WsRmBackForce = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMBackCreateSequence`); value.Exists() {
-		data.WsrmBackCreateSequence = tfutils.BoolFromString(value.String())
+		data.WsRmBackCreateSequence = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmBackCreateSequence = types.BoolNull()
+		data.WsRmBackCreateSequence = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMFrontCreateSequence`); value.Exists() {
-		data.WsrmFrontCreateSequence = tfutils.BoolFromString(value.String())
+		data.WsRmFrontCreateSequence = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmFrontCreateSequence = types.BoolNull()
+		data.WsRmFrontCreateSequence = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMSourceMakeOffer`); value.Exists() {
-		data.WsrmSourceMakeOffer = tfutils.BoolFromString(value.String())
+		data.WsRmSourceMakeOffer = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmSourceMakeOffer = types.BoolNull()
+		data.WsRmSourceMakeOffer = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMUsesSequenceSSL`); value.Exists() {
-		data.WsrmUsesSequenceSsl = tfutils.BoolFromString(value.String())
+		data.WsRmUsesSequenceSsl = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmUsesSequenceSsl = types.BoolNull()
+		data.WsRmUsesSequenceSsl = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMFrontAcksTo`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsrmFrontAcksTo = tfutils.ParseStringFromGJSON(value)
+		data.WsRmFrontAcksTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsrmFrontAcksTo = types.StringNull()
+		data.WsRmFrontAcksTo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSRMBackAcksTo`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsrmBackAcksTo = tfutils.ParseStringFromGJSON(value)
+		data.WsRmBackAcksTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsrmBackAcksTo = types.StringNull()
+		data.WsRmBackAcksTo = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSRMSourceMaximumSequences`); value.Exists() {
-		data.WsrmSourceMaximumSequences = types.Int64Value(value.Int())
+		data.WsRmSourceMaximumSequences = types.Int64Value(value.Int())
 	} else {
-		data.WsrmSourceMaximumSequences = types.Int64Value(400)
+		data.WsRmSourceMaximumSequences = types.Int64Value(400)
 	}
 	if value := res.Get(pathRoot + `WSRMSourceRetransmissionInterval`); value.Exists() {
-		data.WsrmSourceRetransmissionInterval = types.Int64Value(value.Int())
+		data.WsRmSourceRetransmissionInterval = types.Int64Value(value.Int())
 	} else {
-		data.WsrmSourceRetransmissionInterval = types.Int64Value(10)
+		data.WsRmSourceRetransmissionInterval = types.Int64Value(10)
 	}
 	if value := res.Get(pathRoot + `WSRMSourceExponentialBackoff`); value.Exists() {
-		data.WsrmSourceExponentialBackoff = tfutils.BoolFromString(value.String())
+		data.WsRmSourceExponentialBackoff = tfutils.BoolFromString(value.String())
 	} else {
-		data.WsrmSourceExponentialBackoff = types.BoolNull()
+		data.WsRmSourceExponentialBackoff = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `WSRMSourceMaximumRetransmissions`); value.Exists() {
-		data.WsrmSourceMaximumRetransmissions = types.Int64Value(value.Int())
+		data.WsRmSourceMaximumRetransmissions = types.Int64Value(value.Int())
 	} else {
-		data.WsrmSourceMaximumRetransmissions = types.Int64Value(4)
+		data.WsRmSourceMaximumRetransmissions = types.Int64Value(4)
 	}
 	if value := res.Get(pathRoot + `WSRMSourceMaximumQueueLength`); value.Exists() {
-		data.WsrmSourceMaximumQueueLength = types.Int64Value(value.Int())
+		data.WsRmSourceMaximumQueueLength = types.Int64Value(value.Int())
 	} else {
-		data.WsrmSourceMaximumQueueLength = types.Int64Value(30)
+		data.WsRmSourceMaximumQueueLength = types.Int64Value(30)
 	}
 	if value := res.Get(pathRoot + `WSRMSourceRequestAckCount`); value.Exists() {
-		data.WsrmSourceRequestAckCount = types.Int64Value(value.Int())
+		data.WsRmSourceRequestAckCount = types.Int64Value(value.Int())
 	} else {
-		data.WsrmSourceRequestAckCount = types.Int64Value(1)
+		data.WsRmSourceRequestAckCount = types.Int64Value(1)
 	}
 	if value := res.Get(pathRoot + `WSRMSourceInactivityClose`); value.Exists() {
-		data.WsrmSourceInactivityClose = types.Int64Value(value.Int())
+		data.WsRmSourceInactivityClose = types.Int64Value(value.Int())
 	} else {
-		data.WsrmSourceInactivityClose = types.Int64Value(360)
+		data.WsRmSourceInactivityClose = types.Int64Value(360)
 	}
 	if value := res.Get(pathRoot + `ForcePolicyExec`); value.Exists() {
 		data.ForcePolicyExec = tfutils.BoolFromString(value.String())
@@ -2067,15 +2067,15 @@ func (data *MultiProtocolGateway) UpdateFromBody(ctx context.Context, pathRoot s
 	} else {
 		data.PolicyParameter = types.ListNull(types.ObjectType{AttrTypes: DmWSPolicyParametersObjectType})
 	}
-	if value := res.Get(pathRoot + `WSMAgentMonitor`); value.Exists() && !data.WsmAgentMonitor.IsNull() {
-		data.WsmAgentMonitor = tfutils.BoolFromString(value.String())
-	} else if data.WsmAgentMonitor.ValueBool() {
-		data.WsmAgentMonitor = types.BoolNull()
+	if value := res.Get(pathRoot + `WSMAgentMonitor`); value.Exists() && !data.WSmAgentMonitor.IsNull() {
+		data.WSmAgentMonitor = tfutils.BoolFromString(value.String())
+	} else if data.WSmAgentMonitor.ValueBool() {
+		data.WSmAgentMonitor = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSMAgentMonitorPCM`); value.Exists() && !data.WsmAgentMonitorPcm.IsNull() {
-		data.WsmAgentMonitorPcm = tfutils.ParseStringFromGJSON(value)
-	} else if data.WsmAgentMonitorPcm.ValueString() != "all-messages" {
-		data.WsmAgentMonitorPcm = types.StringNull()
+	if value := res.Get(pathRoot + `WSMAgentMonitorPCM`); value.Exists() && !data.WSmAgentMonitorPcm.IsNull() {
+		data.WSmAgentMonitorPcm = tfutils.ParseStringFromGJSON(value)
+	} else if data.WSmAgentMonitorPcm.ValueString() != "all-messages" {
+		data.WSmAgentMonitorPcm = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ProxyHTTPResponse`); value.Exists() && !data.ProxyHttpResponse.IsNull() {
 		data.ProxyHttpResponse = tfutils.BoolFromString(value.String())
@@ -2440,185 +2440,185 @@ func (data *MultiProtocolGateway) UpdateFromBody(ctx context.Context, pathRoot s
 	} else {
 		data.InOrderMode = nil
 	}
-	if value := res.Get(pathRoot + `WSAMode`); value.Exists() && !data.WsaMode.IsNull() {
-		data.WsaMode = tfutils.ParseStringFromGJSON(value)
-	} else if data.WsaMode.ValueString() != "sync2sync" {
-		data.WsaMode = types.StringNull()
+	if value := res.Get(pathRoot + `WSAMode`); value.Exists() && !data.WsAMode.IsNull() {
+		data.WsAMode = tfutils.ParseStringFromGJSON(value)
+	} else if data.WsAMode.ValueString() != "sync2sync" {
+		data.WsAMode = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSARequireAAA`); value.Exists() && !data.WsaRequireAaa.IsNull() {
-		data.WsaRequireAaa = tfutils.BoolFromString(value.String())
-	} else if !data.WsaRequireAaa.ValueBool() {
-		data.WsaRequireAaa = types.BoolNull()
+	if value := res.Get(pathRoot + `WSARequireAAA`); value.Exists() && !data.WsARequireAaa.IsNull() {
+		data.WsARequireAaa = tfutils.BoolFromString(value.String())
+	} else if !data.WsARequireAaa.ValueBool() {
+		data.WsARequireAaa = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSARewriteReplyTo`); value.Exists() && !data.WsaRewriteReplyTo.IsNull() {
-		data.WsaRewriteReplyTo = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `WSARewriteReplyTo`); value.Exists() && !data.WsARewriteReplyTo.IsNull() {
+		data.WsARewriteReplyTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaRewriteReplyTo = types.StringNull()
+		data.WsARewriteReplyTo = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSARewriteFaultTo`); value.Exists() && !data.WsaRewriteFaultTo.IsNull() {
-		data.WsaRewriteFaultTo = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `WSARewriteFaultTo`); value.Exists() && !data.WsARewriteFaultTo.IsNull() {
+		data.WsARewriteFaultTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaRewriteFaultTo = types.StringNull()
+		data.WsARewriteFaultTo = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSARewriteTo`); value.Exists() && !data.WsaRewriteTo.IsNull() {
-		data.WsaRewriteTo = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `WSARewriteTo`); value.Exists() && !data.WsARewriteTo.IsNull() {
+		data.WsARewriteTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaRewriteTo = types.StringNull()
+		data.WsARewriteTo = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSAStrip`); value.Exists() && !data.WsaStrip.IsNull() {
-		data.WsaStrip = tfutils.BoolFromString(value.String())
-	} else if !data.WsaStrip.ValueBool() {
-		data.WsaStrip = types.BoolNull()
+	if value := res.Get(pathRoot + `WSAStrip`); value.Exists() && !data.WsAStrip.IsNull() {
+		data.WsAStrip = tfutils.BoolFromString(value.String())
+	} else if !data.WsAStrip.ValueBool() {
+		data.WsAStrip = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSADefaultReplyTo`); value.Exists() && !data.WsaDefaultReplyTo.IsNull() {
-		data.WsaDefaultReplyTo = tfutils.ParseStringFromGJSON(value)
-	} else if data.WsaDefaultReplyTo.ValueString() != "http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous" {
-		data.WsaDefaultReplyTo = types.StringNull()
+	if value := res.Get(pathRoot + `WSADefaultReplyTo`); value.Exists() && !data.WsADefaultReplyTo.IsNull() {
+		data.WsADefaultReplyTo = tfutils.ParseStringFromGJSON(value)
+	} else if data.WsADefaultReplyTo.ValueString() != "http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous" {
+		data.WsADefaultReplyTo = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSADefaultFaultTo`); value.Exists() && !data.WsaDefaultFaultTo.IsNull() {
-		data.WsaDefaultFaultTo = tfutils.ParseStringFromGJSON(value)
-	} else if data.WsaDefaultFaultTo.ValueString() != "http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous" {
-		data.WsaDefaultFaultTo = types.StringNull()
+	if value := res.Get(pathRoot + `WSADefaultFaultTo`); value.Exists() && !data.WsADefaultFaultTo.IsNull() {
+		data.WsADefaultFaultTo = tfutils.ParseStringFromGJSON(value)
+	} else if data.WsADefaultFaultTo.ValueString() != "http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous" {
+		data.WsADefaultFaultTo = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSAForce`); value.Exists() && !data.WsaForce.IsNull() {
-		data.WsaForce = tfutils.BoolFromString(value.String())
-	} else if data.WsaForce.ValueBool() {
-		data.WsaForce = types.BoolNull()
+	if value := res.Get(pathRoot + `WSAForce`); value.Exists() && !data.WsAForce.IsNull() {
+		data.WsAForce = tfutils.BoolFromString(value.String())
+	} else if data.WsAForce.ValueBool() {
+		data.WsAForce = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSAGenStyle`); value.Exists() && !data.WsaGenStyle.IsNull() {
-		data.WsaGenStyle = tfutils.ParseStringFromGJSON(value)
-	} else if data.WsaGenStyle.ValueString() != "sync" {
-		data.WsaGenStyle = types.StringNull()
+	if value := res.Get(pathRoot + `WSAGenStyle`); value.Exists() && !data.WsAGenStyle.IsNull() {
+		data.WsAGenStyle = tfutils.ParseStringFromGJSON(value)
+	} else if data.WsAGenStyle.ValueString() != "sync" {
+		data.WsAGenStyle = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSAHTTPAsyncResponseCode`); value.Exists() && !data.WsahttpAsyncResponseCode.IsNull() {
-		data.WsahttpAsyncResponseCode = types.Int64Value(value.Int())
-	} else if data.WsahttpAsyncResponseCode.ValueInt64() != 204 {
-		data.WsahttpAsyncResponseCode = types.Int64Null()
+	if value := res.Get(pathRoot + `WSAHTTPAsyncResponseCode`); value.Exists() && !data.WsAHttpAsyncResponseCode.IsNull() {
+		data.WsAHttpAsyncResponseCode = types.Int64Value(value.Int())
+	} else if data.WsAHttpAsyncResponseCode.ValueInt64() != 204 {
+		data.WsAHttpAsyncResponseCode = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSABackProtocol`); value.Exists() && !data.WsaBackProtocol.IsNull() {
-		data.WsaBackProtocol = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `WSABackProtocol`); value.Exists() && !data.WsABackProtocol.IsNull() {
+		data.WsABackProtocol = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsaBackProtocol = types.StringNull()
+		data.WsABackProtocol = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSATimeout`); value.Exists() && !data.WsaTimeout.IsNull() {
-		data.WsaTimeout = types.Int64Value(value.Int())
-	} else if data.WsaTimeout.ValueInt64() != 120 {
-		data.WsaTimeout = types.Int64Null()
+	if value := res.Get(pathRoot + `WSATimeout`); value.Exists() && !data.WsATimeout.IsNull() {
+		data.WsATimeout = types.Int64Value(value.Int())
+	} else if data.WsATimeout.ValueInt64() != 120 {
+		data.WsATimeout = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMEnabled`); value.Exists() && !data.WsrmEnabled.IsNull() {
-		data.WsrmEnabled = tfutils.BoolFromString(value.String())
-	} else if data.WsrmEnabled.ValueBool() {
-		data.WsrmEnabled = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMEnabled`); value.Exists() && !data.WsRmEnabled.IsNull() {
+		data.WsRmEnabled = tfutils.BoolFromString(value.String())
+	} else if data.WsRmEnabled.ValueBool() {
+		data.WsRmEnabled = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMSequenceExpiration`); value.Exists() && !data.WsrmSequenceExpiration.IsNull() {
-		data.WsrmSequenceExpiration = types.Int64Value(value.Int())
-	} else if data.WsrmSequenceExpiration.ValueInt64() != 3600 {
-		data.WsrmSequenceExpiration = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMSequenceExpiration`); value.Exists() && !data.WsRmSequenceExpiration.IsNull() {
+		data.WsRmSequenceExpiration = types.Int64Value(value.Int())
+	} else if data.WsRmSequenceExpiration.ValueInt64() != 3600 {
+		data.WsRmSequenceExpiration = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMAAAPolicy`); value.Exists() && !data.WsrmaaaPolicy.IsNull() {
-		data.WsrmaaaPolicy = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `WSRMAAAPolicy`); value.Exists() && !data.WsRmAaaPolicy.IsNull() {
+		data.WsRmAaaPolicy = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsrmaaaPolicy = types.StringNull()
+		data.WsRmAaaPolicy = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSRMDestinationAcceptCreateSequence`); value.Exists() && !data.WsrmDestinationAcceptCreateSequence.IsNull() {
-		data.WsrmDestinationAcceptCreateSequence = tfutils.BoolFromString(value.String())
-	} else if !data.WsrmDestinationAcceptCreateSequence.ValueBool() {
-		data.WsrmDestinationAcceptCreateSequence = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMDestinationAcceptCreateSequence`); value.Exists() && !data.WsRmDestinationAcceptCreateSequence.IsNull() {
+		data.WsRmDestinationAcceptCreateSequence = tfutils.BoolFromString(value.String())
+	} else if !data.WsRmDestinationAcceptCreateSequence.ValueBool() {
+		data.WsRmDestinationAcceptCreateSequence = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMDestinationMaximumSequences`); value.Exists() && !data.WsrmDestinationMaximumSequences.IsNull() {
-		data.WsrmDestinationMaximumSequences = types.Int64Value(value.Int())
-	} else if data.WsrmDestinationMaximumSequences.ValueInt64() != 400 {
-		data.WsrmDestinationMaximumSequences = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMDestinationMaximumSequences`); value.Exists() && !data.WsRmDestinationMaximumSequences.IsNull() {
+		data.WsRmDestinationMaximumSequences = types.Int64Value(value.Int())
+	} else if data.WsRmDestinationMaximumSequences.ValueInt64() != 400 {
+		data.WsRmDestinationMaximumSequences = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMDestinationInOrder`); value.Exists() && !data.WsrmDestinationInOrder.IsNull() {
-		data.WsrmDestinationInOrder = tfutils.BoolFromString(value.String())
-	} else if data.WsrmDestinationInOrder.ValueBool() {
-		data.WsrmDestinationInOrder = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMDestinationInOrder`); value.Exists() && !data.WsRmDestinationInOrder.IsNull() {
+		data.WsRmDestinationInOrder = tfutils.BoolFromString(value.String())
+	} else if data.WsRmDestinationInOrder.ValueBool() {
+		data.WsRmDestinationInOrder = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMDestinationMaximumInOrderQueueLength`); value.Exists() && !data.WsrmDestinationMaximumInOrderQueueLength.IsNull() {
-		data.WsrmDestinationMaximumInOrderQueueLength = types.Int64Value(value.Int())
-	} else if data.WsrmDestinationMaximumInOrderQueueLength.ValueInt64() != 10 {
-		data.WsrmDestinationMaximumInOrderQueueLength = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMDestinationMaximumInOrderQueueLength`); value.Exists() && !data.WsRmDestinationMaximumInOrderQueueLength.IsNull() {
+		data.WsRmDestinationMaximumInOrderQueueLength = types.Int64Value(value.Int())
+	} else if data.WsRmDestinationMaximumInOrderQueueLength.ValueInt64() != 10 {
+		data.WsRmDestinationMaximumInOrderQueueLength = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMDestinationAcceptOffers`); value.Exists() && !data.WsrmDestinationAcceptOffers.IsNull() {
-		data.WsrmDestinationAcceptOffers = tfutils.BoolFromString(value.String())
-	} else if data.WsrmDestinationAcceptOffers.ValueBool() {
-		data.WsrmDestinationAcceptOffers = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMDestinationAcceptOffers`); value.Exists() && !data.WsRmDestinationAcceptOffers.IsNull() {
+		data.WsRmDestinationAcceptOffers = tfutils.BoolFromString(value.String())
+	} else if data.WsRmDestinationAcceptOffers.ValueBool() {
+		data.WsRmDestinationAcceptOffers = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMFrontForce`); value.Exists() && !data.WsrmFrontForce.IsNull() {
-		data.WsrmFrontForce = tfutils.BoolFromString(value.String())
-	} else if data.WsrmFrontForce.ValueBool() {
-		data.WsrmFrontForce = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMFrontForce`); value.Exists() && !data.WsRmFrontForce.IsNull() {
+		data.WsRmFrontForce = tfutils.BoolFromString(value.String())
+	} else if data.WsRmFrontForce.ValueBool() {
+		data.WsRmFrontForce = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMBackForce`); value.Exists() && !data.WsrmBackForce.IsNull() {
-		data.WsrmBackForce = tfutils.BoolFromString(value.String())
-	} else if data.WsrmBackForce.ValueBool() {
-		data.WsrmBackForce = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMBackForce`); value.Exists() && !data.WsRmBackForce.IsNull() {
+		data.WsRmBackForce = tfutils.BoolFromString(value.String())
+	} else if data.WsRmBackForce.ValueBool() {
+		data.WsRmBackForce = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMBackCreateSequence`); value.Exists() && !data.WsrmBackCreateSequence.IsNull() {
-		data.WsrmBackCreateSequence = tfutils.BoolFromString(value.String())
-	} else if data.WsrmBackCreateSequence.ValueBool() {
-		data.WsrmBackCreateSequence = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMBackCreateSequence`); value.Exists() && !data.WsRmBackCreateSequence.IsNull() {
+		data.WsRmBackCreateSequence = tfutils.BoolFromString(value.String())
+	} else if data.WsRmBackCreateSequence.ValueBool() {
+		data.WsRmBackCreateSequence = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMFrontCreateSequence`); value.Exists() && !data.WsrmFrontCreateSequence.IsNull() {
-		data.WsrmFrontCreateSequence = tfutils.BoolFromString(value.String())
-	} else if data.WsrmFrontCreateSequence.ValueBool() {
-		data.WsrmFrontCreateSequence = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMFrontCreateSequence`); value.Exists() && !data.WsRmFrontCreateSequence.IsNull() {
+		data.WsRmFrontCreateSequence = tfutils.BoolFromString(value.String())
+	} else if data.WsRmFrontCreateSequence.ValueBool() {
+		data.WsRmFrontCreateSequence = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMSourceMakeOffer`); value.Exists() && !data.WsrmSourceMakeOffer.IsNull() {
-		data.WsrmSourceMakeOffer = tfutils.BoolFromString(value.String())
-	} else if data.WsrmSourceMakeOffer.ValueBool() {
-		data.WsrmSourceMakeOffer = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMSourceMakeOffer`); value.Exists() && !data.WsRmSourceMakeOffer.IsNull() {
+		data.WsRmSourceMakeOffer = tfutils.BoolFromString(value.String())
+	} else if data.WsRmSourceMakeOffer.ValueBool() {
+		data.WsRmSourceMakeOffer = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMUsesSequenceSSL`); value.Exists() && !data.WsrmUsesSequenceSsl.IsNull() {
-		data.WsrmUsesSequenceSsl = tfutils.BoolFromString(value.String())
-	} else if data.WsrmUsesSequenceSsl.ValueBool() {
-		data.WsrmUsesSequenceSsl = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMUsesSequenceSSL`); value.Exists() && !data.WsRmUsesSequenceSsl.IsNull() {
+		data.WsRmUsesSequenceSsl = tfutils.BoolFromString(value.String())
+	} else if data.WsRmUsesSequenceSsl.ValueBool() {
+		data.WsRmUsesSequenceSsl = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMFrontAcksTo`); value.Exists() && !data.WsrmFrontAcksTo.IsNull() {
-		data.WsrmFrontAcksTo = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `WSRMFrontAcksTo`); value.Exists() && !data.WsRmFrontAcksTo.IsNull() {
+		data.WsRmFrontAcksTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsrmFrontAcksTo = types.StringNull()
+		data.WsRmFrontAcksTo = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSRMBackAcksTo`); value.Exists() && !data.WsrmBackAcksTo.IsNull() {
-		data.WsrmBackAcksTo = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `WSRMBackAcksTo`); value.Exists() && !data.WsRmBackAcksTo.IsNull() {
+		data.WsRmBackAcksTo = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsrmBackAcksTo = types.StringNull()
+		data.WsRmBackAcksTo = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSRMSourceMaximumSequences`); value.Exists() && !data.WsrmSourceMaximumSequences.IsNull() {
-		data.WsrmSourceMaximumSequences = types.Int64Value(value.Int())
-	} else if data.WsrmSourceMaximumSequences.ValueInt64() != 400 {
-		data.WsrmSourceMaximumSequences = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMSourceMaximumSequences`); value.Exists() && !data.WsRmSourceMaximumSequences.IsNull() {
+		data.WsRmSourceMaximumSequences = types.Int64Value(value.Int())
+	} else if data.WsRmSourceMaximumSequences.ValueInt64() != 400 {
+		data.WsRmSourceMaximumSequences = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMSourceRetransmissionInterval`); value.Exists() && !data.WsrmSourceRetransmissionInterval.IsNull() {
-		data.WsrmSourceRetransmissionInterval = types.Int64Value(value.Int())
-	} else if data.WsrmSourceRetransmissionInterval.ValueInt64() != 10 {
-		data.WsrmSourceRetransmissionInterval = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMSourceRetransmissionInterval`); value.Exists() && !data.WsRmSourceRetransmissionInterval.IsNull() {
+		data.WsRmSourceRetransmissionInterval = types.Int64Value(value.Int())
+	} else if data.WsRmSourceRetransmissionInterval.ValueInt64() != 10 {
+		data.WsRmSourceRetransmissionInterval = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMSourceExponentialBackoff`); value.Exists() && !data.WsrmSourceExponentialBackoff.IsNull() {
-		data.WsrmSourceExponentialBackoff = tfutils.BoolFromString(value.String())
-	} else if !data.WsrmSourceExponentialBackoff.ValueBool() {
-		data.WsrmSourceExponentialBackoff = types.BoolNull()
+	if value := res.Get(pathRoot + `WSRMSourceExponentialBackoff`); value.Exists() && !data.WsRmSourceExponentialBackoff.IsNull() {
+		data.WsRmSourceExponentialBackoff = tfutils.BoolFromString(value.String())
+	} else if !data.WsRmSourceExponentialBackoff.ValueBool() {
+		data.WsRmSourceExponentialBackoff = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `WSRMSourceMaximumRetransmissions`); value.Exists() && !data.WsrmSourceMaximumRetransmissions.IsNull() {
-		data.WsrmSourceMaximumRetransmissions = types.Int64Value(value.Int())
-	} else if data.WsrmSourceMaximumRetransmissions.ValueInt64() != 4 {
-		data.WsrmSourceMaximumRetransmissions = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMSourceMaximumRetransmissions`); value.Exists() && !data.WsRmSourceMaximumRetransmissions.IsNull() {
+		data.WsRmSourceMaximumRetransmissions = types.Int64Value(value.Int())
+	} else if data.WsRmSourceMaximumRetransmissions.ValueInt64() != 4 {
+		data.WsRmSourceMaximumRetransmissions = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMSourceMaximumQueueLength`); value.Exists() && !data.WsrmSourceMaximumQueueLength.IsNull() {
-		data.WsrmSourceMaximumQueueLength = types.Int64Value(value.Int())
-	} else if data.WsrmSourceMaximumQueueLength.ValueInt64() != 30 {
-		data.WsrmSourceMaximumQueueLength = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMSourceMaximumQueueLength`); value.Exists() && !data.WsRmSourceMaximumQueueLength.IsNull() {
+		data.WsRmSourceMaximumQueueLength = types.Int64Value(value.Int())
+	} else if data.WsRmSourceMaximumQueueLength.ValueInt64() != 30 {
+		data.WsRmSourceMaximumQueueLength = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMSourceRequestAckCount`); value.Exists() && !data.WsrmSourceRequestAckCount.IsNull() {
-		data.WsrmSourceRequestAckCount = types.Int64Value(value.Int())
-	} else if data.WsrmSourceRequestAckCount.ValueInt64() != 1 {
-		data.WsrmSourceRequestAckCount = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMSourceRequestAckCount`); value.Exists() && !data.WsRmSourceRequestAckCount.IsNull() {
+		data.WsRmSourceRequestAckCount = types.Int64Value(value.Int())
+	} else if data.WsRmSourceRequestAckCount.ValueInt64() != 1 {
+		data.WsRmSourceRequestAckCount = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSRMSourceInactivityClose`); value.Exists() && !data.WsrmSourceInactivityClose.IsNull() {
-		data.WsrmSourceInactivityClose = types.Int64Value(value.Int())
-	} else if data.WsrmSourceInactivityClose.ValueInt64() != 360 {
-		data.WsrmSourceInactivityClose = types.Int64Null()
+	if value := res.Get(pathRoot + `WSRMSourceInactivityClose`); value.Exists() && !data.WsRmSourceInactivityClose.IsNull() {
+		data.WsRmSourceInactivityClose = types.Int64Value(value.Int())
+	} else if data.WsRmSourceInactivityClose.ValueInt64() != 360 {
+		data.WsRmSourceInactivityClose = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `ForcePolicyExec`); value.Exists() && !data.ForcePolicyExec.IsNull() {
 		data.ForcePolicyExec = tfutils.BoolFromString(value.String())

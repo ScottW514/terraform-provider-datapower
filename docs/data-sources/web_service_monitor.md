@@ -46,7 +46,7 @@ Read-Only:
 - `operations` (Attributes List) Operations to monitor (see [below for nested schema](#nestedatt--result--operations))
 - `transport` (String) Specify the transport type for the endpoint. The transport type must agree with the transport type in the WSDL file.
 - `user_summary` (String) Comments
-- `wsdlurl` (String) Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.
+- `wsdl_url` (String) Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

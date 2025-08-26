@@ -48,7 +48,7 @@ Read-Only:
 - `user_summary` (String) Comments
 - `wsrr_saved_search_subscription` (String) WSRR saved search subscription
 - `wsrr_subscription` (String) WSRR subscription
-- `x_path_filter` (String) XPath filter
+- `xpath_filter` (String) XPath filter
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

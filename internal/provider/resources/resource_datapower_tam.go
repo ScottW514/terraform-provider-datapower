@@ -157,24 +157,24 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ldapssl_port": schema.Int64Attribute{
+			"ldap_ssl_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the listening port that the LDAP server uses for TLS communication. This property does not apply for TLS communication with an Active Directory server.", "ldap-ssl-port", "").AddDefaultValue("636").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(636),
 			},
-			"ldapssl_key_file": schema.StringAttribute{
+			"ldap_ssl_key_file": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select the location of the key file that contains the certificates for TLS communication with the registry server.</p><ul><li>For server-only authentication, the key file must contain the signer certificate for the registry server.</li><li>For mutual authentication, the key file must also contain a personal certificate that the registry server can validate. If the personal certificate is not the default personal certificate in the key file, you must enter the label of the personal certificate.</li></ul><p>This file must be in the cert: or the sharedcert: directory.</p>", "ldap-ssl-key-file", "").AddRequiredWhen(models.TAMLDAPSSLKeyFileCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.TAMLDAPSSLKeyFileCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ldapssl_key_file_password_alias": schema.StringAttribute{
+			"ldap_ssl_key_file_password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.", "ldap-ssl-key-file-password-alias", "password_alias").String,
 				Optional:            true,
 			},
-			"ldapssl_key_file_label": schema.StringAttribute{
+			"ldap_ssl_key_file_label": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>", "ldap-ssl-key-file-dn", "").String,
 				Optional:            true,
 			},
@@ -228,12 +228,12 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				NestedObject:        models.GetDmTAMFedDirResourceSchema(),
 				Optional:            true,
 			},
-			"tamaz_replicas": schema.ListNestedAttribute{
+			"tam_az_replicas": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Replicas indicate the network location of remote authorization servers. You must configure at least one replica. You can configure additional replicas for failover purposes.</p><p><b>Note:</b> If you uploaded a file that was created previously, it must define at least one replica.</p>", "replica", "").String,
 				NestedObject:        models.GetDmTAMAZReplicaResourceSchema(),
 				Optional:            true,
 			},
-			"tamras_trace": models.GetDmTAMRASTraceResourceSchema("<p>Trace logging is a useful debugging tool. By default, trace logging is not enabled. Trace logging collects large amounts of data in a short amount of time and might result in a significant performance degradation. Enable trace logging only at the direction of IBM Support.</p><p>When enabled, the DataPower Gateway creates two trace files for each library. The DataPower Gateway writes the files cyclically. Double the size of the files to obtain the total allowable file size.</p>", "tam-ras-trace", "", false),
+			"tam_ras_trace": models.GetDmTAMRASTraceResourceSchema("<p>Trace logging is a useful debugging tool. By default, trace logging is not enabled. Trace logging collects large amounts of data in a short amount of time and might result in a significant performance degradation. Enable trace logging only at the direction of IBM Support.</p><p>When enabled, the DataPower Gateway creates two trace files for each library. The DataPower Gateway writes the files cyclically. Double the size of the files to obtain the total allowable file size.</p>", "tam-ras-trace", "", false),
 			"auto_retry": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether to attempt starting the Access Manager client after an initial failure. The DataPower Gateway automatically attempts to start the client after a critical error. This property controls the behavior after the initial attempt to restart.</p><ul><li>When enabled, the DataPower Gateway attempts to start the client with the defined configuration.</li><li>When disabled, the client is marked as <tt>down</tt> .</li></ul><p>The default behavior is to not attempt to start the client after an initial failure.</p>", "auto-retry", "").AddDefaultValue("false").String,
 				Optional:            true,

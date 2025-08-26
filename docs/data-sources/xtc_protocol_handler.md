@@ -49,7 +49,7 @@ Read-Only:
 - `ssl_client` (String) TLS client profile
 - `ssl_config_type` (String) TLS type
 - `ssl_server` (String) TLS server profile
-- `sslsni_server` (String) TLS SNI server profile
+- `ssl_sni_server` (String) TLS SNI server profile
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

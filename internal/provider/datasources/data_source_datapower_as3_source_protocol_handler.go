@@ -149,11 +149,11 @@ func (d *AS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req dat
 							MarkdownDescription: "Specify the duration in seconds that the server waits for a client to establish a passive connection. Enter a value in the range 5 - 300. The default value is 60. <p>This setting controls the amount of time in seconds between when the FTP server issues code 227 (Entering Passive Mode) in response to the <tt>PASV</tt> or <tt>EPSV</tt> command from the FTP client and when the FTP client must establish a TCP data connection to the listening port and issue a data transfer command.</p><ul><li>If the data connection is not established within the timeout period, the listening port will be closed. If a data transfer command is issued after the port is closed, the command fails with code 425 and the <tt>Failed to open data connection</tt> message.</li><li>If the data connection is established but no data transfer command is issued within the timeout period, the TCP data connection will be closed. Any data transfer command after the timeout will be treated as if the <tt>PASV</tt> or <tt>EPSV</tt> command was never issued. The command fails with code 425 and the <tt>Require PASV or PORT command first</tt> message.</li></ul>",
 							Computed:            true,
 						},
-						"disable_pasvip_check": schema.BoolAttribute{
+						"disable_pasv_ip_check": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>",
 							Computed:            true,
 						},
-						"disable_portip_check": schema.BoolAttribute{
+						"disable_port_ip_check": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>",
 							Computed:            true,
 						},
@@ -213,7 +213,7 @@ func (d *AS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req dat
 							MarkdownDescription: "Temporary storage size",
 							Computed:            true,
 						},
-						"response_nfs_mount": schema.StringAttribute{
+						"response_nf_sm_ount": schema.StringAttribute{
 							MarkdownDescription: "Response NFS mount",
 							Computed:            true,
 						},
@@ -233,7 +233,7 @@ func (d *AS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req dat
 							MarkdownDescription: "TLS server profile",
 							Computed:            true,
 						},
-						"sslsni_server": schema.StringAttribute{
+						"ssl_sni_server": schema.StringAttribute{
 							MarkdownDescription: "TLS SNI server profile",
 							Computed:            true,
 						},

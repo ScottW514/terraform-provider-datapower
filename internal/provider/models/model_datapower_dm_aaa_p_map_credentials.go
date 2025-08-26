@@ -41,7 +41,7 @@ type DmAAAPMapCredentials struct {
 	McMethod    types.String `tfsdk:"mc_method"`
 	McCustomUrl types.String `tfsdk:"mc_custom_url"`
 	McMapUrl    types.String `tfsdk:"mc_map_url"`
-	McMapXPath  types.String `tfsdk:"mc_map_x_path"`
+	McMapXpath  types.String `tfsdk:"mc_map_xpath"`
 }
 
 var DmAAAPMapCredentialsMCCustomURLCondVal = validators.Evaluation{
@@ -70,13 +70,13 @@ var DmAAAPMapCredentialsObjectType = map[string]attr.Type{
 	"mc_method":     types.StringType,
 	"mc_custom_url": types.StringType,
 	"mc_map_url":    types.StringType,
-	"mc_map_x_path": types.StringType,
+	"mc_map_xpath":  types.StringType,
 }
 var DmAAAPMapCredentialsObjectDefault = map[string]attr.Value{
 	"mc_method":     types.StringValue("none"),
 	"mc_custom_url": types.StringNull(),
 	"mc_map_url":    types.StringNull(),
-	"mc_map_x_path": types.StringNull(),
+	"mc_map_xpath":  types.StringNull(),
 }
 
 func GetDmAAAPMapCredentialsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
@@ -95,7 +95,7 @@ func GetDmAAAPMapCredentialsDataSourceSchema(description string, cliAlias string
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").String,
 				Computed:            true,
 			},
-			"mc_map_x_path": DataSourceSchema.StringAttribute{
+			"mc_map_xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").String,
 				Computed:            true,
 			},
@@ -135,7 +135,7 @@ func GetDmAAAPMapCredentialsResourceSchema(description string, cliAlias string, 
 					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCMapURLCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"mc_map_x_path": ResourceSchema.StringAttribute{
+			"mc_map_xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -164,7 +164,7 @@ func (data DmAAAPMapCredentials) IsNull() bool {
 	if !data.McMapUrl.IsNull() {
 		return false
 	}
-	if !data.McMapXPath.IsNull() {
+	if !data.McMapXpath.IsNull() {
 		return false
 	}
 	return true
@@ -185,8 +185,8 @@ func (data DmAAAPMapCredentials) ToBody(ctx context.Context, pathRoot string) st
 	if !data.McMapUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MCMapURL`, data.McMapUrl.ValueString())
 	}
-	if !data.McMapXPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCMapXPath`, data.McMapXPath.ValueString())
+	if !data.McMapXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MCMapXPath`, data.McMapXpath.ValueString())
 	}
 	return body
 }
@@ -211,9 +211,9 @@ func (data *DmAAAPMapCredentials) FromBody(ctx context.Context, pathRoot string,
 		data.McMapUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCMapXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.McMapXPath = tfutils.ParseStringFromGJSON(value)
+		data.McMapXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McMapXPath = types.StringNull()
+		data.McMapXpath = types.StringNull()
 	}
 }
 
@@ -236,9 +236,9 @@ func (data *DmAAAPMapCredentials) UpdateFromBody(ctx context.Context, pathRoot s
 	} else {
 		data.McMapUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCMapXPath`); value.Exists() && !data.McMapXPath.IsNull() {
-		data.McMapXPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MCMapXPath`); value.Exists() && !data.McMapXpath.IsNull() {
+		data.McMapXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McMapXPath = types.StringNull()
+		data.McMapXpath = types.StringNull()
 	}
 }

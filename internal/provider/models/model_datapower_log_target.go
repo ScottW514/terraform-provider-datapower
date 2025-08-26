@@ -52,7 +52,7 @@ type LogTarget struct {
 	SmtpDomain              types.String                `tfsdk:"smtp_domain"`
 	Size                    types.Int64                 `tfsdk:"size"`
 	Url                     types.String                `tfsdk:"url"`
-	NfsMount                types.String                `tfsdk:"nfs_mount"`
+	NfSmOunt                types.String                `tfsdk:"nf_sm_ount"`
 	LocalFile               types.String                `tfsdk:"local_file"`
 	NfsFile                 types.String                `tfsdk:"nfs_file"`
 	ArchiveMode             types.String                `tfsdk:"archive_mode"`
@@ -105,7 +105,7 @@ type LogTargetWO struct {
 	SmtpDomain          types.String                `tfsdk:"smtp_domain"`
 	Size                types.Int64                 `tfsdk:"size"`
 	Url                 types.String                `tfsdk:"url"`
-	NfsMount            types.String                `tfsdk:"nfs_mount"`
+	NfSmOunt            types.String                `tfsdk:"nf_sm_ount"`
 	LocalFile           types.String                `tfsdk:"local_file"`
 	NfsFile             types.String                `tfsdk:"nfs_file"`
 	ArchiveMode         types.String                `tfsdk:"archive_mode"`
@@ -485,7 +485,7 @@ var LogTargetObjectType = map[string]attr.Type{
 	"smtp_domain":                types.StringType,
 	"size":                       types.Int64Type,
 	"url":                        types.StringType,
-	"nfs_mount":                  types.StringType,
+	"nf_sm_ount":                 types.StringType,
 	"local_file":                 types.StringType,
 	"nfs_file":                   types.StringType,
 	"archive_mode":               types.StringType,
@@ -538,7 +538,7 @@ var LogTargetObjectTypeWO = map[string]attr.Type{
 	"smtp_domain":            types.StringType,
 	"size":                   types.Int64Type,
 	"url":                    types.StringType,
-	"nfs_mount":              types.StringType,
+	"nf_sm_ount":             types.StringType,
 	"local_file":             types.StringType,
 	"nfs_file":               types.StringType,
 	"archive_mode":           types.StringType,
@@ -638,7 +638,7 @@ func (data LogTarget) IsNull() bool {
 	if !data.Url.IsNull() {
 		return false
 	}
-	if !data.NfsMount.IsNull() {
+	if !data.NfSmOunt.IsNull() {
 		return false
 	}
 	if !data.LocalFile.IsNull() {
@@ -788,7 +788,7 @@ func (data LogTargetWO) IsNull() bool {
 	if !data.Url.IsNull() {
 		return false
 	}
-	if !data.NfsMount.IsNull() {
+	if !data.NfSmOunt.IsNull() {
 		return false
 	}
 	if !data.LocalFile.IsNull() {
@@ -942,8 +942,8 @@ func (data LogTarget) ToBody(ctx context.Context, pathRoot string, config *LogTa
 	if !data.Url.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`URL`, data.Url.ValueString())
 	}
-	if !data.NfsMount.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`NFSMount`, data.NfsMount.ValueString())
+	if !data.NfSmOunt.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`NFSMount`, data.NfSmOunt.ValueString())
 	}
 	if !data.LocalFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LocalFile`, data.LocalFile.ValueString())
@@ -1163,9 +1163,9 @@ func (data *LogTarget) FromBody(ctx context.Context, pathRoot string, res gjson.
 		data.Url = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `NFSMount`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.NfsMount = tfutils.ParseStringFromGJSON(value)
+		data.NfSmOunt = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.NfsMount = types.StringNull()
+		data.NfSmOunt = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LocalFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LocalFile = tfutils.ParseStringFromGJSON(value)
@@ -1464,9 +1464,9 @@ func (data *LogTargetWO) FromBody(ctx context.Context, pathRoot string, res gjso
 		data.Url = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `NFSMount`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.NfsMount = tfutils.ParseStringFromGJSON(value)
+		data.NfSmOunt = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.NfsMount = types.StringNull()
+		data.NfSmOunt = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LocalFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LocalFile = tfutils.ParseStringFromGJSON(value)
@@ -1758,10 +1758,10 @@ func (data *LogTarget) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	} else {
 		data.Url = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `NFSMount`); value.Exists() && !data.NfsMount.IsNull() {
-		data.NfsMount = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `NFSMount`); value.Exists() && !data.NfSmOunt.IsNull() {
+		data.NfSmOunt = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.NfsMount = types.StringNull()
+		data.NfSmOunt = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LocalFile`); value.Exists() && !data.LocalFile.IsNull() {
 		data.LocalFile = tfutils.ParseStringFromGJSON(value)
@@ -2085,11 +2085,11 @@ func (data *LogTarget) UpdateUnknownFromBody(ctx context.Context, pathRoot strin
 			data.Url = types.StringNull()
 		}
 	}
-	if data.NfsMount.IsUnknown() {
-		if value := res.Get(pathRoot + `NFSMount`); value.Exists() && !data.NfsMount.IsNull() {
-			data.NfsMount = tfutils.ParseStringFromGJSON(value)
+	if data.NfSmOunt.IsUnknown() {
+		if value := res.Get(pathRoot + `NFSMount`); value.Exists() && !data.NfSmOunt.IsNull() {
+			data.NfSmOunt = tfutils.ParseStringFromGJSON(value)
 		} else {
-			data.NfsMount = types.StringNull()
+			data.NfSmOunt = types.StringNull()
 		}
 	}
 	if data.LocalFile.IsUnknown() {

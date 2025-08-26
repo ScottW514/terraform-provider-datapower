@@ -96,7 +96,7 @@ func (d *XMLManagerDataSource) Schema(ctx context.Context, req datasource.Schema
 							MarkdownDescription: "Enter the maximum number of stylesheets to cache. Enter a value in the range 5 - 250000. The default value is 256. Stylesheets are purged when either the cache size or the cache count is reached.",
 							Computed:            true,
 						},
-						"sha1_caching": schema.BoolAttribute{
+						"sha1caching": schema.BoolAttribute{
 							MarkdownDescription: "Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.",
 							Computed:            true,
 						},

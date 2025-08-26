@@ -37,18 +37,18 @@ type APISecurityOAuthReq struct {
 	Id                  types.String                `tfsdk:"id"`
 	AppDomain           types.String                `tfsdk:"app_domain"`
 	UserSummary         types.String                `tfsdk:"user_summary"`
-	ApiSecurityOAuthDef types.String                `tfsdk:"api_security_o_auth_def"`
-	OAuthAllowedScope   types.String                `tfsdk:"o_auth_allowed_scope"`
+	ApiSecurityOauthDef types.String                `tfsdk:"api_security_oauth_def"`
+	OauthAllowedScope   types.String                `tfsdk:"oauth_allowed_scope"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISecurityOAuthReqObjectType = map[string]attr.Type{
-	"id":                      types.StringType,
-	"app_domain":              types.StringType,
-	"user_summary":            types.StringType,
-	"api_security_o_auth_def": types.StringType,
-	"o_auth_allowed_scope":    types.StringType,
-	"dependency_actions":      actions.ActionsListType,
+	"id":                     types.StringType,
+	"app_domain":             types.StringType,
+	"user_summary":           types.StringType,
+	"api_security_oauth_def": types.StringType,
+	"oauth_allowed_scope":    types.StringType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data APISecurityOAuthReq) GetPath() string {
@@ -68,10 +68,10 @@ func (data APISecurityOAuthReq) IsNull() bool {
 	if !data.UserSummary.IsNull() {
 		return false
 	}
-	if !data.ApiSecurityOAuthDef.IsNull() {
+	if !data.ApiSecurityOauthDef.IsNull() {
 		return false
 	}
-	if !data.OAuthAllowedScope.IsNull() {
+	if !data.OauthAllowedScope.IsNull() {
 		return false
 	}
 	return true
@@ -89,11 +89,11 @@ func (data APISecurityOAuthReq) ToBody(ctx context.Context, pathRoot string) str
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
-	if !data.ApiSecurityOAuthDef.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APISecurityOAuthDef`, data.ApiSecurityOAuthDef.ValueString())
+	if !data.ApiSecurityOauthDef.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APISecurityOAuthDef`, data.ApiSecurityOauthDef.ValueString())
 	}
-	if !data.OAuthAllowedScope.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthAllowedScope`, data.OAuthAllowedScope.ValueString())
+	if !data.OauthAllowedScope.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthAllowedScope`, data.OauthAllowedScope.ValueString())
 	}
 	return body
 }
@@ -113,14 +113,14 @@ func (data *APISecurityOAuthReq) FromBody(ctx context.Context, pathRoot string, 
 		data.UserSummary = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `APISecurityOAuthDef`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ApiSecurityOAuthDef = tfutils.ParseStringFromGJSON(value)
+		data.ApiSecurityOauthDef = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApiSecurityOAuthDef = types.StringNull()
+		data.ApiSecurityOauthDef = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthAllowedScope`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.OAuthAllowedScope = tfutils.ParseStringFromGJSON(value)
+		data.OauthAllowedScope = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthAllowedScope = types.StringNull()
+		data.OauthAllowedScope = types.StringNull()
 	}
 }
 
@@ -138,14 +138,14 @@ func (data *APISecurityOAuthReq) UpdateFromBody(ctx context.Context, pathRoot st
 	} else {
 		data.UserSummary = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `APISecurityOAuthDef`); value.Exists() && !data.ApiSecurityOAuthDef.IsNull() {
-		data.ApiSecurityOAuthDef = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `APISecurityOAuthDef`); value.Exists() && !data.ApiSecurityOauthDef.IsNull() {
+		data.ApiSecurityOauthDef = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApiSecurityOAuthDef = types.StringNull()
+		data.ApiSecurityOauthDef = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `OAuthAllowedScope`); value.Exists() && !data.OAuthAllowedScope.IsNull() {
-		data.OAuthAllowedScope = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `OAuthAllowedScope`); value.Exists() && !data.OauthAllowedScope.IsNull() {
+		data.OauthAllowedScope = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthAllowedScope = types.StringNull()
+		data.OauthAllowedScope = types.StringNull()
 	}
 }

@@ -105,37 +105,6 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 				NestedObject:        models.GetDmFileSystemUsageResourceSchema(),
 				Optional:            true,
 			},
-			"all_queue_managers": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the utility checks all or only a subset of queue manager file systems.", "", "").AddDefaultValue("true").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
-			},
-			"all_qm_warning_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-qm-warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").AddRequiredWhen(models.FileSystemUsageMonitorAllQMWarningThresholdCondVal.String()).String,
-				Optional:            true,
-				Computed:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(0, 100),
-					validators.ConditionalRequiredInt64(models.FileSystemUsageMonitorAllQMWarningThresholdCondVal, validators.Evaluation{}, true),
-				},
-				Default: int64default.StaticInt64(75),
-			},
-			"all_qm_critical_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-qm-critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").AddRequiredWhen(models.FileSystemUsageMonitorAllQMCriticalThresholdCondVal.String()).String,
-				Optional:            true,
-				Computed:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(0, 100),
-					validators.ConditionalRequiredInt64(models.FileSystemUsageMonitorAllQMCriticalThresholdCondVal, validators.Evaluation{}, true),
-				},
-				Default: int64default.StaticInt64(90),
-			},
-			"queue_manager": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the queue manager file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all queue manager file systems.", "qm", "").String,
-				NestedObject:        models.GetDmQMFileSystemUsageResourceSchema(),
-				Optional:            true,
-			},
 			"dependency_actions": actions.ActionsSchema,
 		},
 	}

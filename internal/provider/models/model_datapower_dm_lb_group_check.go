@@ -49,7 +49,7 @@ type DmLBGroupCheck struct {
 	Input                           types.String `tfsdk:"input"`
 	Timeout                         types.Int64  `tfsdk:"timeout"`
 	Frequency                       types.Int64  `tfsdk:"frequency"`
-	XPath                           types.String `tfsdk:"x_path"`
+	Xpath                           types.String `tfsdk:"xpath"`
 	Filter                          types.String `tfsdk:"filter"`
 	EnforceTimeout                  types.Bool   `tfsdk:"enforce_timeout"`
 	IndependentChecks               types.Bool   `tfsdk:"independent_checks"`
@@ -153,7 +153,7 @@ var DmLBGroupCheckObjectType = map[string]attr.Type{
 	"input":                               types.StringType,
 	"timeout":                             types.Int64Type,
 	"frequency":                           types.Int64Type,
-	"x_path":                              types.StringType,
+	"xpath":                               types.StringType,
 	"filter":                              types.StringType,
 	"enforce_timeout":                     types.BoolType,
 	"independent_checks":                  types.BoolType,
@@ -177,7 +177,7 @@ var DmLBGroupCheckObjectDefault = map[string]attr.Value{
 	"input":                               types.StringValue("store:///healthcheck.xml"),
 	"timeout":                             types.Int64Value(10),
 	"frequency":                           types.Int64Value(180),
-	"x_path":                              types.StringValue("/"),
+	"xpath":                               types.StringValue("/"),
 	"filter":                              types.StringValue("store:///healthcheck.xsl"),
 	"enforce_timeout":                     types.BoolValue(false),
 	"independent_checks":                  types.BoolValue(false),
@@ -229,7 +229,7 @@ func GetDmLBGroupCheckDataSourceSchema(description string, cliAlias string, refe
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer between 5 and 86400 to indicate the number of seconds to wait between health check posts. The default is 180.", "frequency", "").AddIntegerRange(5, 86400).AddDefaultValue("180").String,
 				Computed:            true,
 			},
-			"x_path": DataSourceSchema.StringAttribute{
+			"xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter an XPath Expression that verifies the health of the server. The expression is applied to the server's response to the health check POST. If the expression is true, the server is healthy. Otherwise, the server health state is softdown until it passes a health check.", "xpath", "").AddDefaultValue("/").String,
 				Computed:            true,
 			},
@@ -353,7 +353,7 @@ func GetDmLBGroupCheckResourceSchema(description string, cliAlias string, refere
 				},
 				Default: int64default.StaticInt64(180),
 			},
-			"x_path": ResourceSchema.StringAttribute{
+			"xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter an XPath Expression that verifies the health of the server. The expression is applied to the server's response to the health check POST. If the expression is true, the server is healthy. Otherwise, the server health state is softdown until it passes a health check.", "xpath", "").AddDefaultValue("/").String,
 				Computed:            true,
 				Optional:            true,
@@ -483,7 +483,7 @@ func (data DmLBGroupCheck) IsNull() bool {
 	if !data.Frequency.IsNull() {
 		return false
 	}
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	if !data.Filter.IsNull() {
@@ -558,8 +558,8 @@ func (data DmLBGroupCheck) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Frequency.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Frequency`, data.Frequency.ValueInt64())
 	}
-	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
+	if !data.Xpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPath`, data.Xpath.ValueString())
 	}
 	if !data.Filter.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Filter`, data.Filter.ValueString())
@@ -648,9 +648,9 @@ func (data *DmLBGroupCheck) FromBody(ctx context.Context, pathRoot string, res g
 		data.Frequency = types.Int64Value(180)
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringValue("/")
+		data.Xpath = types.StringValue("/")
 	}
 	if value := res.Get(pathRoot + `Filter`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Filter = tfutils.ParseStringFromGJSON(value)
@@ -763,10 +763,10 @@ func (data *DmLBGroupCheck) UpdateFromBody(ctx context.Context, pathRoot string,
 	} else if data.Frequency.ValueInt64() != 180 {
 		data.Frequency = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
-	} else if data.XPath.ValueString() != "/" {
-		data.XPath = types.StringNull()
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
+	} else if data.Xpath.ValueString() != "/" {
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Filter`); value.Exists() && !data.Filter.IsNull() {
 		data.Filter = tfutils.ParseStringFromGJSON(value)

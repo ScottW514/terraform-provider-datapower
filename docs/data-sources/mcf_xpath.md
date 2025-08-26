@@ -41,8 +41,8 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
-- `x_path_expression` (String) XPath Expression
-- `x_path_value` (String) XPath Value
+- `xpath_expression` (String) XPath Expression
+- `xpath_value` (String) XPath Value
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

@@ -41,7 +41,7 @@ type CountMonitor struct {
 	Source            types.String                `tfsdk:"source"`
 	Header            types.String                `tfsdk:"header"`
 	Filter            types.List                  `tfsdk:"filter"`
-	MaxSources        types.Int64                 `tfsdk:"max_sources"`
+	MaxSourceS        types.Int64                 `tfsdk:"max_source_s"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	MessageType       types.String                `tfsdk:"message_type"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
@@ -62,7 +62,7 @@ var CountMonitorObjectType = map[string]attr.Type{
 	"source":             types.StringType,
 	"header":             types.StringType,
 	"filter":             types.ListType{ElemType: types.ObjectType{AttrTypes: DmCountMonitorFilterObjectType}},
-	"max_sources":        types.Int64Type,
+	"max_source_s":       types.Int64Type,
 	"user_summary":       types.StringType,
 	"message_type":       types.StringType,
 	"dependency_actions": actions.ActionsListType,
@@ -94,7 +94,7 @@ func (data CountMonitor) IsNull() bool {
 	if !data.Filter.IsNull() {
 		return false
 	}
-	if !data.MaxSources.IsNull() {
+	if !data.MaxSourceS.IsNull() {
 		return false
 	}
 	if !data.UserSummary.IsNull() {
@@ -131,8 +131,8 @@ func (data CountMonitor) ToBody(ctx context.Context, pathRoot string) string {
 			body, _ = sjson.SetRaw(body, pathRoot+`Filter`+".-1", val.ToBody(ctx, ""))
 		}
 	}
-	if !data.MaxSources.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MaxSources`, data.MaxSources.ValueInt64())
+	if !data.MaxSourceS.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MaxSources`, data.MaxSourceS.ValueInt64())
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
@@ -187,9 +187,9 @@ func (data *CountMonitor) FromBody(ctx context.Context, pathRoot string, res gjs
 		data.Filter = types.ListNull(types.ObjectType{AttrTypes: DmCountMonitorFilterObjectType})
 	}
 	if value := res.Get(pathRoot + `MaxSources`); value.Exists() {
-		data.MaxSources = types.Int64Value(value.Int())
+		data.MaxSourceS = types.Int64Value(value.Int())
 	} else {
-		data.MaxSources = types.Int64Value(10000)
+		data.MaxSourceS = types.Int64Value(10000)
 	}
 	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.UserSummary = tfutils.ParseStringFromGJSON(value)
@@ -244,10 +244,10 @@ func (data *CountMonitor) UpdateFromBody(ctx context.Context, pathRoot string, r
 	} else {
 		data.Filter = types.ListNull(types.ObjectType{AttrTypes: DmCountMonitorFilterObjectType})
 	}
-	if value := res.Get(pathRoot + `MaxSources`); value.Exists() && !data.MaxSources.IsNull() {
-		data.MaxSources = types.Int64Value(value.Int())
-	} else if data.MaxSources.ValueInt64() != 10000 {
-		data.MaxSources = types.Int64Null()
+	if value := res.Get(pathRoot + `MaxSources`); value.Exists() && !data.MaxSourceS.IsNull() {
+		data.MaxSourceS = types.Int64Value(value.Int())
+	} else if data.MaxSourceS.ValueInt64() != 10000 {
+		data.MaxSourceS = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && !data.UserSummary.IsNull() {
 		data.UserSummary = tfutils.ParseStringFromGJSON(value)

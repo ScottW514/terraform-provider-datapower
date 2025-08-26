@@ -80,7 +80,7 @@ func (d *DocumentCryptoMapDataSource) Schema(ctx context.Context, req datasource
 							MarkdownDescription: "Select the operation to perform on the selected document nodes.",
 							Computed:            true,
 						},
-						"x_path": schema.ListAttribute{
+						"xpath": schema.ListAttribute{
 							MarkdownDescription: "<p>Enter the XPath expression identifying the elements on which to operate in the blank field in front of the Add button. Click Add to add the expression to those included in the map.</p><p>Click the XPath Tool button to use the graphically oriented XPath Tool to construct the message. You will need to upload an example document to use this tool. Note that this example should be the encrypted document when the operation is decrypt.</p>",
 							ElementType:         types.StringType,
 							Computed:            true,

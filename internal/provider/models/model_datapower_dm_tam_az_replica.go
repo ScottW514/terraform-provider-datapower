@@ -36,34 +36,34 @@ import (
 )
 
 type DmTAMAZReplica struct {
-	TamazReplica       types.String `tfsdk:"tamaz_replica"`
-	TamazReplicaPort   types.Int64  `tfsdk:"tamaz_replica_port"`
-	TamazReplicaWeight types.Int64  `tfsdk:"tamaz_replica_weight"`
+	TamAzReplica       types.String `tfsdk:"tam_az_replica"`
+	TamAzReplicaPort   types.Int64  `tfsdk:"tam_az_replica_port"`
+	TamAzReplicaWeight types.Int64  `tfsdk:"tam_az_replica_weight"`
 }
 
 var DmTAMAZReplicaObjectType = map[string]attr.Type{
-	"tamaz_replica":        types.StringType,
-	"tamaz_replica_port":   types.Int64Type,
-	"tamaz_replica_weight": types.Int64Type,
+	"tam_az_replica":        types.StringType,
+	"tam_az_replica_port":   types.Int64Type,
+	"tam_az_replica_weight": types.Int64Type,
 }
 var DmTAMAZReplicaObjectDefault = map[string]attr.Value{
-	"tamaz_replica":        types.StringNull(),
-	"tamaz_replica_port":   types.Int64Value(7136),
-	"tamaz_replica_weight": types.Int64Value(10),
+	"tam_az_replica":        types.StringNull(),
+	"tam_az_replica_port":   types.Int64Value(7136),
+	"tam_az_replica_weight": types.Int64Value(10),
 }
 
 func GetDmTAMAZReplicaDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmTAMAZReplicaDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
-			"tamaz_replica": DataSourceSchema.StringAttribute{
+			"tam_az_replica": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP host name of the authorization server replica.", "host", "").String,
 				Computed:            true,
 			},
-			"tamaz_replica_port": DataSourceSchema.Int64Attribute{
+			"tam_az_replica_port": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server replica. The default value is 7136.", "port", "").AddDefaultValue("7136").String,
 				Computed:            true,
 			},
-			"tamaz_replica_weight": DataSourceSchema.Int64Attribute{
+			"tam_az_replica_weight": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.", "weight", "").AddIntegerRange(1, 10).AddDefaultValue("10").String,
 				Computed:            true,
 			},
@@ -74,17 +74,17 @@ func GetDmTAMAZReplicaDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 func GetDmTAMAZReplicaResourceSchema() ResourceSchema.NestedAttributeObject {
 	var DmTAMAZReplicaResourceSchema = ResourceSchema.NestedAttributeObject{
 		Attributes: map[string]ResourceSchema.Attribute{
-			"tamaz_replica": ResourceSchema.StringAttribute{
+			"tam_az_replica": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP host name of the authorization server replica.", "host", "").String,
 				Required:            true,
 			},
-			"tamaz_replica_port": ResourceSchema.Int64Attribute{
+			"tam_az_replica_port": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server replica. The default value is 7136.", "port", "").AddDefaultValue("7136").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             int64default.StaticInt64(7136),
 			},
-			"tamaz_replica_weight": ResourceSchema.Int64Attribute{
+			"tam_az_replica_weight": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.", "weight", "").AddIntegerRange(1, 10).AddDefaultValue("10").String,
 				Computed:            true,
 				Optional:            true,
@@ -99,13 +99,13 @@ func GetDmTAMAZReplicaResourceSchema() ResourceSchema.NestedAttributeObject {
 }
 
 func (data DmTAMAZReplica) IsNull() bool {
-	if !data.TamazReplica.IsNull() {
+	if !data.TamAzReplica.IsNull() {
 		return false
 	}
-	if !data.TamazReplicaPort.IsNull() {
+	if !data.TamAzReplicaPort.IsNull() {
 		return false
 	}
-	if !data.TamazReplicaWeight.IsNull() {
+	if !data.TamAzReplicaWeight.IsNull() {
 		return false
 	}
 	return true
@@ -117,14 +117,14 @@ func (data DmTAMAZReplica) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 
-	if !data.TamazReplica.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TAMAZReplica`, data.TamazReplica.ValueString())
+	if !data.TamAzReplica.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`TAMAZReplica`, data.TamAzReplica.ValueString())
 	}
-	if !data.TamazReplicaPort.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TAMAZReplicaPort`, data.TamazReplicaPort.ValueInt64())
+	if !data.TamAzReplicaPort.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`TAMAZReplicaPort`, data.TamAzReplicaPort.ValueInt64())
 	}
-	if !data.TamazReplicaWeight.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TAMAZReplicaWeight`, data.TamazReplicaWeight.ValueInt64())
+	if !data.TamAzReplicaWeight.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`TAMAZReplicaWeight`, data.TamAzReplicaWeight.ValueInt64())
 	}
 	return body
 }
@@ -134,19 +134,19 @@ func (data *DmTAMAZReplica) FromBody(ctx context.Context, pathRoot string, res g
 		pathRoot = pathRoot + "."
 	}
 	if value := res.Get(pathRoot + `TAMAZReplica`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.TamazReplica = tfutils.ParseStringFromGJSON(value)
+		data.TamAzReplica = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.TamazReplica = types.StringNull()
+		data.TamAzReplica = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `TAMAZReplicaPort`); value.Exists() {
-		data.TamazReplicaPort = types.Int64Value(value.Int())
+		data.TamAzReplicaPort = types.Int64Value(value.Int())
 	} else {
-		data.TamazReplicaPort = types.Int64Value(7136)
+		data.TamAzReplicaPort = types.Int64Value(7136)
 	}
 	if value := res.Get(pathRoot + `TAMAZReplicaWeight`); value.Exists() {
-		data.TamazReplicaWeight = types.Int64Value(value.Int())
+		data.TamAzReplicaWeight = types.Int64Value(value.Int())
 	} else {
-		data.TamazReplicaWeight = types.Int64Value(10)
+		data.TamAzReplicaWeight = types.Int64Value(10)
 	}
 }
 
@@ -154,19 +154,19 @@ func (data *DmTAMAZReplica) UpdateFromBody(ctx context.Context, pathRoot string,
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
-	if value := res.Get(pathRoot + `TAMAZReplica`); value.Exists() && !data.TamazReplica.IsNull() {
-		data.TamazReplica = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `TAMAZReplica`); value.Exists() && !data.TamAzReplica.IsNull() {
+		data.TamAzReplica = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.TamazReplica = types.StringNull()
+		data.TamAzReplica = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `TAMAZReplicaPort`); value.Exists() && !data.TamazReplicaPort.IsNull() {
-		data.TamazReplicaPort = types.Int64Value(value.Int())
-	} else if data.TamazReplicaPort.ValueInt64() != 7136 {
-		data.TamazReplicaPort = types.Int64Null()
+	if value := res.Get(pathRoot + `TAMAZReplicaPort`); value.Exists() && !data.TamAzReplicaPort.IsNull() {
+		data.TamAzReplicaPort = types.Int64Value(value.Int())
+	} else if data.TamAzReplicaPort.ValueInt64() != 7136 {
+		data.TamAzReplicaPort = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `TAMAZReplicaWeight`); value.Exists() && !data.TamazReplicaWeight.IsNull() {
-		data.TamazReplicaWeight = types.Int64Value(value.Int())
-	} else if data.TamazReplicaWeight.ValueInt64() != 10 {
-		data.TamazReplicaWeight = types.Int64Null()
+	if value := res.Get(pathRoot + `TAMAZReplicaWeight`); value.Exists() && !data.TamAzReplicaWeight.IsNull() {
+		data.TamAzReplicaWeight = types.Int64Value(value.Int())
+	} else if data.TamAzReplicaWeight.ValueInt64() != 10 {
+		data.TamAzReplicaWeight = types.Int64Null()
 	}
 }

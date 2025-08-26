@@ -39,7 +39,7 @@ type JWERecipient struct {
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	Algorithm         types.String                `tfsdk:"algorithm"`
-	SsKey             types.String                `tfsdk:"ss_key"`
+	Sskey             types.String                `tfsdk:"sskey"`
 	Certificate       types.String                `tfsdk:"certificate"`
 	UnprotectedHeader types.List                  `tfsdk:"unprotected_header"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
@@ -65,7 +65,7 @@ var JWERecipientObjectType = map[string]attr.Type{
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,
 	"algorithm":          types.StringType,
-	"ss_key":             types.StringType,
+	"sskey":              types.StringType,
 	"certificate":        types.StringType,
 	"unprotected_header": types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
 	"dependency_actions": actions.ActionsListType,
@@ -91,7 +91,7 @@ func (data JWERecipient) IsNull() bool {
 	if !data.Algorithm.IsNull() {
 		return false
 	}
-	if !data.SsKey.IsNull() {
+	if !data.Sskey.IsNull() {
 		return false
 	}
 	if !data.Certificate.IsNull() {
@@ -118,8 +118,8 @@ func (data JWERecipient) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Algorithm.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Algorithm`, data.Algorithm.ValueString())
 	}
-	if !data.SsKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.SsKey.ValueString())
+	if !data.Sskey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.Sskey.ValueString())
 	}
 	if !data.Certificate.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Certificate`, data.Certificate.ValueString())
@@ -154,9 +154,9 @@ func (data *JWERecipient) FromBody(ctx context.Context, pathRoot string, res gjs
 		data.Algorithm = types.StringValue("RSA1_5")
 	}
 	if value := res.Get(pathRoot + `SSKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SsKey = tfutils.ParseStringFromGJSON(value)
+		data.Sskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsKey = types.StringNull()
+		data.Sskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Certificate`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Certificate = tfutils.ParseStringFromGJSON(value)
@@ -203,10 +203,10 @@ func (data *JWERecipient) UpdateFromBody(ctx context.Context, pathRoot string, r
 	} else if data.Algorithm.ValueString() != "RSA1_5" {
 		data.Algorithm = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSKey`); value.Exists() && !data.SsKey.IsNull() {
-		data.SsKey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSKey`); value.Exists() && !data.Sskey.IsNull() {
+		data.Sskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsKey = types.StringNull()
+		data.Sskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Certificate`); value.Exists() && !data.Certificate.IsNull() {
 		data.Certificate = tfutils.ParseStringFromGJSON(value)

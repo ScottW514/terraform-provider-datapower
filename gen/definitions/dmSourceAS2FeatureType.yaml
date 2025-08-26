@@ -2,10 +2,12 @@ name: DmSourceAS2FeatureType
 model_only: true
 attributes:
 - name: HTTP-1.0
+  tf_name: http_1d0
   type: Bool
   default: true
   description: Supports HTTP 1.0 requests
 - name: HTTP-1.1
+  tf_name: http_1d1
   type: Bool
   default: true
   description: Supports HTTP 1.1 requests

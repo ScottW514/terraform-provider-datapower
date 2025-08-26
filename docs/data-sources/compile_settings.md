@@ -52,12 +52,12 @@ Read-Only:
 - `user_summary` (String) Comments
 - `validate_soap_enc_array` (Boolean) Specifies whether to perform extra schema validation following the encoding rules in SOAP 1.1 Section 5. When enabled, members of SOAP arrays are validated, attributes such as @id and @href are allowed even if they are not allowed by the schema, and @href values are checked to ensure that they have a corresponding @id element. By default, the extra validation is not performed.
 - `wildcards_ignore_xsi_type` (Boolean) Specifies whether xs:any elements in the schema validate only child elements by name. The XML Schema specification requires that, if a wildcard matches an element but that element does not have an element declaration, the element is instead validated according to an xsi:type attribute on it. This option ignores those xsi:type attributes. It should be used for cases such as SOAP envelope validation where a further validation step will validate the contents matching the wildcard, possibly using the SOAP 1.1 encoding rules. By default, xsi:type attributes are not ignored.
+- `ws_i_validation` (String) Specifies the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default setting is Warn.
 - `wsdl_strict_soap_version` (Boolean) Specifies whether to strictly follow the SOAP binding in the WSDL. When enabled, only messages bound to SOAP 1.2 appear in SOAP 1.2 envelopes and only messages bound to SOAP 1.1 appear in SOAP 1.1 envelopes. By default, strict SOAP binding is disabled.
 - `wsdl_validate_body` (String) Specifies the validation behavior for the soap:Body. The default setting is Strict.
 - `wsdl_validate_faults` (String) Specifies the validation behavior for the fault detail. The default setting is Strict.
 - `wsdl_validate_headers` (String) Specifies the validation behavior for the soap:Header. The default setting is Lax.
 - `wsdl_wrapped_faults` (Boolean) Specifies whether to require compatibility with RPC-style wrappers. By default, RPC-style wrappers are not required.
-- `wsi_validation` (String) Specifies the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default setting is Warn.
 - `xacml_debug` (Boolean) Specifies whether to compile XACML policies with debug information. Note that the XACML debugging messages are also controlled by the log event in the XACML category. Use the debug log level to view the full XACML debugging messages. By default, XACML policies are not compiled with debug information.
 - `xslt_version` (String) Specifies the XSLT processor version. The default value is XSLT10.
 

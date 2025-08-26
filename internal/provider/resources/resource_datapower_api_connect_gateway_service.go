@@ -125,7 +125,7 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				},
 				Default: stringdefault.StaticString("default"),
 			},
-			"v5_compatibility_mode": schema.BoolAttribute{
+			"v5compatibility_mode": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>", "v5-compatibility-mode", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
@@ -169,7 +169,7 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				},
 				Default: stringdefault.StaticString("request"),
 			},
-			"jwturl": schema.StringAttribute{
+			"jwt_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("JWT URL", "jwt-url", "").String,
 				Optional:            true,
 			},

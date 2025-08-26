@@ -104,7 +104,7 @@ func (d *XSLProxyServiceDataSource) Schema(ctx context.Context, req datasource.S
 							MarkdownDescription: "",
 							Computed:            true,
 						},
-						"sslsni_server": schema.StringAttribute{
+						"ssl_sni_server": schema.StringAttribute{
 							MarkdownDescription: "",
 							Computed:            true,
 						},

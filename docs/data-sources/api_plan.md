@@ -48,7 +48,7 @@ Read-Only:
 - `assembly_rate_limit_definition` (Attributes List) Specify a rate limit definition that the rate limit assembly action enforces. A rate limit definition defines the maximum rate that is allowed in a specified interval and the actions to take when the limit is exceeded. (see [below for nested schema](#nestedatt--result--assembly_rate_limit_definition))
 - `burst_limit` (Attributes List) Specify the burst limit scheme to enforce. This scheme defines the maximum burst rate to allow during a specified interval. The burst limit helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme. (see [below for nested schema](#nestedatt--result--burst_limit))
 - `exclude_operation` (List of String) Exclude operation
-- `graph_ql_schema_options` (List of String) GraphQL schema options
+- `graphql_schema_options` (List of String) GraphQL schema options
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `name` (String) Plan name
 - `override` (List of String) Operation rate limit

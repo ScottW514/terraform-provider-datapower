@@ -38,10 +38,10 @@ Optional:
 
 Read-Only:
 
-- `api_security_o_auth_def` (String) OAuth security definition
+- `api_security_oauth_def` (String) OAuth security definition
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `o_auth_allowed_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
+- `oauth_allowed_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

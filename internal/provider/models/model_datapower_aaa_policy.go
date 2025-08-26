@@ -56,7 +56,7 @@ type AAAPolicy struct {
 	SamlSigningCert               types.String                `tfsdk:"saml_signing_cert"`
 	SamlSigningHashAlg            types.String                `tfsdk:"saml_signing_hash_alg"`
 	SamlSigningAlg                types.String                `tfsdk:"saml_signing_alg"`
-	LdaPsuffix                    types.String                `tfsdk:"lda_psuffix"`
+	LdapSuffix                    types.String                `tfsdk:"ldap_suffix"`
 	LogAllowed                    types.Bool                  `tfsdk:"log_allowed"`
 	LogAllowedLevel               types.String                `tfsdk:"log_allowed_level"`
 	LogRejected                   types.Bool                  `tfsdk:"log_rejected"`
@@ -69,8 +69,8 @@ type AAAPolicy struct {
 	LdapVersion                   types.String                `tfsdk:"ldap_version"`
 	EnforceSoapActor              types.Bool                  `tfsdk:"enforce_soap_actor"`
 	WsSecActorRoleId              types.String                `tfsdk:"ws_sec_actor_role_id"`
-	AusmhttpHeader                types.List                  `tfsdk:"ausmhttp_header"`
-	AzsmhttpHeader                types.List                  `tfsdk:"azsmhttp_header"`
+	AuSmHttpHeader                types.List                  `tfsdk:"au_sm_http_header"`
+	AzSmHttpHeader                types.List                  `tfsdk:"az_sm_http_header"`
 	DynConfig                     types.String                `tfsdk:"dyn_config"`
 	ExternalAaaTemplate           types.String                `tfsdk:"external_aaa_template"`
 	DynConfigCustomUrl            types.String                `tfsdk:"dyn_config_custom_url"`
@@ -128,7 +128,7 @@ var AAAPolicyObjectType = map[string]attr.Type{
 	"saml_signing_cert":                 types.StringType,
 	"saml_signing_hash_alg":             types.StringType,
 	"saml_signing_alg":                  types.StringType,
-	"lda_psuffix":                       types.StringType,
+	"ldap_suffix":                       types.StringType,
 	"log_allowed":                       types.BoolType,
 	"log_allowed_level":                 types.StringType,
 	"log_rejected":                      types.BoolType,
@@ -141,8 +141,8 @@ var AAAPolicyObjectType = map[string]attr.Type{
 	"ldap_version":                      types.StringType,
 	"enforce_soap_actor":                types.BoolType,
 	"ws_sec_actor_role_id":              types.StringType,
-	"ausmhttp_header":                   types.ListType{ElemType: types.StringType},
-	"azsmhttp_header":                   types.ListType{ElemType: types.StringType},
+	"au_sm_http_header":                 types.ListType{ElemType: types.StringType},
+	"az_sm_http_header":                 types.ListType{ElemType: types.StringType},
 	"dyn_config":                        types.StringType,
 	"external_aaa_template":             types.StringType,
 	"dyn_config_custom_url":             types.StringType,
@@ -234,7 +234,7 @@ func (data AAAPolicy) IsNull() bool {
 	if !data.SamlSigningAlg.IsNull() {
 		return false
 	}
-	if !data.LdaPsuffix.IsNull() {
+	if !data.LdapSuffix.IsNull() {
 		return false
 	}
 	if !data.LogAllowed.IsNull() {
@@ -273,10 +273,10 @@ func (data AAAPolicy) IsNull() bool {
 	if !data.WsSecActorRoleId.IsNull() {
 		return false
 	}
-	if !data.AusmhttpHeader.IsNull() {
+	if !data.AuSmHttpHeader.IsNull() {
 		return false
 	}
-	if !data.AzsmhttpHeader.IsNull() {
+	if !data.AzSmHttpHeader.IsNull() {
 		return false
 	}
 	if !data.DynConfig.IsNull() {
@@ -387,8 +387,8 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.SamlSigningAlg.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SAMLSigningAlg`, data.SamlSigningAlg.ValueString())
 	}
-	if !data.LdaPsuffix.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPsuffix`, data.LdaPsuffix.ValueString())
+	if !data.LdapSuffix.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LDAPsuffix`, data.LdapSuffix.ValueString())
 	}
 	if !data.LogAllowed.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LogAllowed`, tfutils.StringFromBool(data.LogAllowed, ""))
@@ -426,16 +426,16 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.WsSecActorRoleId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSSecActorRoleID`, data.WsSecActorRoleId.ValueString())
 	}
-	if !data.AusmhttpHeader.IsNull() {
+	if !data.AuSmHttpHeader.IsNull() {
 		var dataValues []string
-		data.AusmhttpHeader.ElementsAs(ctx, &dataValues, false)
+		data.AuSmHttpHeader.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`AUSMHTTPHeader`+".-1", map[string]string{"value": val})
 		}
 	}
-	if !data.AzsmhttpHeader.IsNull() {
+	if !data.AzSmHttpHeader.IsNull() {
 		var dataValues []string
-		data.AzsmhttpHeader.ElementsAs(ctx, &dataValues, false)
+		data.AzSmHttpHeader.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`AZSMHTTPHeader`+".-1", map[string]string{"value": val})
 		}
@@ -620,9 +620,9 @@ func (data *AAAPolicy) FromBody(ctx context.Context, pathRoot string, res gjson.
 		data.SamlSigningAlg = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LDAPsuffix`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LdaPsuffix = tfutils.ParseStringFromGJSON(value)
+		data.LdapSuffix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdaPsuffix = types.StringNull()
+		data.LdapSuffix = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LogAllowed`); value.Exists() {
 		data.LogAllowed = tfutils.BoolFromString(value.String())
@@ -685,14 +685,14 @@ func (data *AAAPolicy) FromBody(ctx context.Context, pathRoot string, res gjson.
 		data.WsSecActorRoleId = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSMHTTPHeader`); value.Exists() {
-		data.AusmhttpHeader = tfutils.ParseStringListFromGJSON(value)
+		data.AuSmHttpHeader = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.AusmhttpHeader = types.ListNull(types.StringType)
+		data.AuSmHttpHeader = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `AZSMHTTPHeader`); value.Exists() {
-		data.AzsmhttpHeader = tfutils.ParseStringListFromGJSON(value)
+		data.AzSmHttpHeader = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.AzsmhttpHeader = types.ListNull(types.StringType)
+		data.AzSmHttpHeader = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `DynConfig`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.DynConfig = tfutils.ParseStringFromGJSON(value)
@@ -863,10 +863,10 @@ func (data *AAAPolicy) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	} else {
 		data.SamlSigningAlg = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `LDAPsuffix`); value.Exists() && !data.LdaPsuffix.IsNull() {
-		data.LdaPsuffix = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `LDAPsuffix`); value.Exists() && !data.LdapSuffix.IsNull() {
+		data.LdapSuffix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdaPsuffix = types.StringNull()
+		data.LdapSuffix = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LogAllowed`); value.Exists() && !data.LogAllowed.IsNull() {
 		data.LogAllowed = tfutils.BoolFromString(value.String())
@@ -928,15 +928,15 @@ func (data *AAAPolicy) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	} else {
 		data.WsSecActorRoleId = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSMHTTPHeader`); value.Exists() && !data.AusmhttpHeader.IsNull() {
-		data.AusmhttpHeader = tfutils.ParseStringListFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSMHTTPHeader`); value.Exists() && !data.AuSmHttpHeader.IsNull() {
+		data.AuSmHttpHeader = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.AusmhttpHeader = types.ListNull(types.StringType)
+		data.AuSmHttpHeader = types.ListNull(types.StringType)
 	}
-	if value := res.Get(pathRoot + `AZSMHTTPHeader`); value.Exists() && !data.AzsmhttpHeader.IsNull() {
-		data.AzsmhttpHeader = tfutils.ParseStringListFromGJSON(value)
+	if value := res.Get(pathRoot + `AZSMHTTPHeader`); value.Exists() && !data.AzSmHttpHeader.IsNull() {
+		data.AzSmHttpHeader = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.AzsmhttpHeader = types.ListNull(types.StringType)
+		data.AzSmHttpHeader = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `DynConfig`); value.Exists() && !data.DynConfig.IsNull() {
 		data.DynConfig = tfutils.ParseStringFromGJSON(value)

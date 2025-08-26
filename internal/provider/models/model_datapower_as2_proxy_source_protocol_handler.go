@@ -63,7 +63,7 @@ type AS2ProxySourceProtocolHandler struct {
 	HmacPassphraseAlias           types.String                `tfsdk:"hmac_passphrase_alias"`
 	SslServerConfigType           types.String                `tfsdk:"ssl_server_config_type"`
 	SslServer                     types.String                `tfsdk:"ssl_server"`
-	SslsniServer                  types.String                `tfsdk:"sslsni_server"`
+	SslSniServer                  types.String                `tfsdk:"ssl_sni_server"`
 	SslClientConfigType           types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient                     types.String                `tfsdk:"ssl_client"`
 	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
@@ -125,7 +125,7 @@ var AS2ProxySourceProtocolHandlerObjectType = map[string]attr.Type{
 	"hmac_passphrase_alias":            types.StringType,
 	"ssl_server_config_type":           types.StringType,
 	"ssl_server":                       types.StringType,
-	"sslsni_server":                    types.StringType,
+	"ssl_sni_server":                   types.StringType,
 	"ssl_client_config_type":           types.StringType,
 	"ssl_client":                       types.StringType,
 	"dependency_actions":               actions.ActionsListType,
@@ -225,7 +225,7 @@ func (data AS2ProxySourceProtocolHandler) IsNull() bool {
 	if !data.SslServer.IsNull() {
 		return false
 	}
-	if !data.SslsniServer.IsNull() {
+	if !data.SslSniServer.IsNull() {
 		return false
 	}
 	if !data.SslClientConfigType.IsNull() {
@@ -326,8 +326,8 @@ func (data AS2ProxySourceProtocolHandler) ToBody(ctx context.Context, pathRoot s
 	if !data.SslServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServer`, data.SslServer.ValueString())
 	}
-	if !data.SslsniServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslsniServer.ValueString())
+	if !data.SslSniServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslSniServer.ValueString())
 	}
 	if !data.SslClientConfigType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLClientConfigType`, data.SslClientConfigType.ValueString())
@@ -479,9 +479,9 @@ func (data *AS2ProxySourceProtocolHandler) FromBody(ctx context.Context, pathRoo
 		data.SslServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslClientConfigType = tfutils.ParseStringFromGJSON(value)
@@ -634,10 +634,10 @@ func (data *AS2ProxySourceProtocolHandler) UpdateFromBody(ctx context.Context, p
 	} else {
 		data.SslServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslsniServer.IsNull() {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslSniServer.IsNull() {
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLClientConfigType`); value.Exists() && !data.SslClientConfigType.IsNull() {
 		data.SslClientConfigType = tfutils.ParseStringFromGJSON(value)

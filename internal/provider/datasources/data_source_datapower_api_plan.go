@@ -179,7 +179,7 @@ func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 							MarkdownDescription: "Specify the scope to apply the rate limit schemes to. You can apply schemes against the application or client ID. For example, <tt>application1</tt> has <tt>client1</tt> and <tt>client2</tt> , and the rate limit is 10 calls per hour. <ul><li>When against the application, <tt>application1</tt> limits 10 calls per hour from either <tt>client1</tt> or <tt>client2.</tt></li><li>When against the client ID, <tt>application1</tt> limits 10 calls per hour from each <tt>client1</tt> and <tt>client2</tt> .</li></ul>",
 							Computed:            true,
 						},
-						"graph_ql_schema_options": schema.ListAttribute{
+						"graphql_schema_options": schema.ListAttribute{
 							MarkdownDescription: "GraphQL schema options",
 							ElementType:         types.StringType,
 							Computed:            true,

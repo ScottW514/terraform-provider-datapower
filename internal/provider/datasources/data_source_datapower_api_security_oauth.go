@@ -80,23 +80,23 @@ func (d *APISecurityOAuthDataSource) Schema(ctx context.Context, req datasource.
 							MarkdownDescription: "Comments",
 							Computed:            true,
 						},
-						"o_auth_provider": schema.StringAttribute{
+						"oauth_provider": schema.StringAttribute{
 							MarkdownDescription: "OAuth provider",
 							Computed:            true,
 						},
-						"o_auth_flow": schema.StringAttribute{
+						"oauth_flow": schema.StringAttribute{
 							MarkdownDescription: "Specify the OAuth flow to enforce to protect the target. The value must be among the supported grant types that are defined by the referenced OAuth provider.",
 							Computed:            true,
 						},
-						"o_auth_scope": schema.StringAttribute{
+						"oauth_scope": schema.StringAttribute{
 							MarkdownDescription: "Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <ul><li>The allowed scopes for this configuration must be a subset of the allowed scopes set for the API OAuth security definition.</li><li>The allowed scopes for the API OAuth security definition must be a subset of the allowed scopes set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>",
 							Computed:            true,
 						},
-						"o_auth_adv_scope_url": schema.StringAttribute{
+						"oauth_adv_scope_url": schema.StringAttribute{
 							MarkdownDescription: "Specify the URL that overrides the advanced scope URL in the OAuth provider settings. The value must be a properly formatted URL.",
 							Computed:            true,
 						},
-						"o_auth_adv_scope_tls_profile": schema.StringAttribute{
+						"oauth_adv_scope_tls_profile": schema.StringAttribute{
 							MarkdownDescription: "OAuth TLS profile",
 							Computed:            true,
 						},

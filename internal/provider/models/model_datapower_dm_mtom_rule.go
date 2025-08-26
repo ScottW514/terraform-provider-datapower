@@ -33,18 +33,18 @@ import (
 )
 
 type DmMtomRule struct {
-	XPath       types.String `tfsdk:"x_path"`
+	Xpath       types.String `tfsdk:"xpath"`
 	ContentType types.String `tfsdk:"content_type"`
 	ContentId   types.String `tfsdk:"content_id"`
 }
 
 var DmMtomRuleObjectType = map[string]attr.Type{
-	"x_path":       types.StringType,
+	"xpath":        types.StringType,
 	"content_type": types.StringType,
 	"content_id":   types.StringType,
 }
 var DmMtomRuleObjectDefault = map[string]attr.Value{
-	"x_path":       types.StringNull(),
+	"xpath":        types.StringNull(),
 	"content_type": types.StringNull(),
 	"content_id":   types.StringNull(),
 }
@@ -52,7 +52,7 @@ var DmMtomRuleObjectDefault = map[string]attr.Value{
 func GetDmMtomRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmMtomRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
-			"x_path": DataSourceSchema.StringAttribute{
+			"xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("An XPath expression that defines which schema element or schema elements are subject to this rule. Click XPath Tool to launch the XPath expression builder. To use this tool, upload an example document. After the example document is loaded, the tool allows you to select the elements to construct the corresponding XPath expression. After selecting the elements, click Done to return to the MTOM Rules Properties window.", "select", "").String,
 				Computed:            true,
 			},
@@ -71,7 +71,7 @@ func GetDmMtomRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 func GetDmMtomRuleResourceSchema() ResourceSchema.NestedAttributeObject {
 	var DmMtomRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 		Attributes: map[string]ResourceSchema.Attribute{
-			"x_path": ResourceSchema.StringAttribute{
+			"xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("An XPath expression that defines which schema element or schema elements are subject to this rule. Click XPath Tool to launch the XPath expression builder. To use this tool, upload an example document. After the example document is loaded, the tool allows you to select the elements to construct the corresponding XPath expression. After selecting the elements, click Done to return to the MTOM Rules Properties window.", "select", "").String,
 				Required:            true,
 			},
@@ -89,7 +89,7 @@ func GetDmMtomRuleResourceSchema() ResourceSchema.NestedAttributeObject {
 }
 
 func (data DmMtomRule) IsNull() bool {
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	if !data.ContentType.IsNull() {
@@ -107,8 +107,8 @@ func (data DmMtomRule) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 
-	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
+	if !data.Xpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPath`, data.Xpath.ValueString())
 	}
 	if !data.ContentType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ContentType`, data.ContentType.ValueString())
@@ -124,9 +124,9 @@ func (data *DmMtomRule) FromBody(ctx context.Context, pathRoot string, res gjson
 		pathRoot = pathRoot + "."
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ContentType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ContentType = tfutils.ParseStringFromGJSON(value)
@@ -144,10 +144,10 @@ func (data *DmMtomRule) UpdateFromBody(ctx context.Context, pathRoot string, res
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ContentType`); value.Exists() && !data.ContentType.IsNull() {
 		data.ContentType = tfutils.ParseStringFromGJSON(value)

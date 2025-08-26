@@ -37,7 +37,7 @@ import (
 
 type DmAAAPExtractResource struct {
 	ErBitmap   *DmAAAPERBitmap `tfsdk:"er_bitmap"`
-	ErxPath    types.String    `tfsdk:"erx_path"`
+	ErXpath    types.String    `tfsdk:"er_xpath"`
 	ErMetadata types.String    `tfsdk:"er_metadata"`
 }
 
@@ -51,12 +51,12 @@ var DmAAAPExtractResourceERXPathCondVal = validators.Evaluation{
 
 var DmAAAPExtractResourceObjectType = map[string]attr.Type{
 	"er_bitmap":   types.ObjectType{AttrTypes: DmAAAPERBitmapObjectType},
-	"erx_path":    types.StringType,
+	"er_xpath":    types.StringType,
 	"er_metadata": types.StringType,
 }
 var DmAAAPExtractResourceObjectDefault = map[string]attr.Value{
 	"er_bitmap":   types.ObjectValueMust(DmAAAPERBitmapObjectType, DmAAAPERBitmapObjectDefault),
-	"erx_path":    types.StringNull(),
+	"er_xpath":    types.StringNull(),
 	"er_metadata": types.StringNull(),
 }
 
@@ -65,7 +65,7 @@ func GetDmAAAPExtractResourceDataSourceSchema(description string, cliAlias strin
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"er_bitmap": GetDmAAAPERBitmapDataSourceSchema("Specify the methods to extract resource.", "method", ""),
-			"erx_path": DataSourceSchema.StringAttribute{
+			"er_xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
 				Computed:            true,
 			},
@@ -87,7 +87,7 @@ func GetDmAAAPExtractResourceResourceSchema(description string, cliAlias string,
 			)),
 		Attributes: map[string]ResourceSchema.Attribute{
 			"er_bitmap": GetDmAAAPERBitmapResourceSchema("Specify the methods to extract resource.", "method", "", false),
-			"erx_path": ResourceSchema.StringAttribute{
+			"er_xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -116,7 +116,7 @@ func (data DmAAAPExtractResource) IsNull() bool {
 			return false
 		}
 	}
-	if !data.ErxPath.IsNull() {
+	if !data.ErXpath.IsNull() {
 		return false
 	}
 	if !data.ErMetadata.IsNull() {
@@ -136,8 +136,8 @@ func (data DmAAAPExtractResource) ToBody(ctx context.Context, pathRoot string) s
 			body, _ = sjson.SetRaw(body, pathRoot+`ERBitmap`, data.ErBitmap.ToBody(ctx, ""))
 		}
 	}
-	if !data.ErxPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ERXPath`, data.ErxPath.ValueString())
+	if !data.ErXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ERXPath`, data.ErXpath.ValueString())
 	}
 	if !data.ErMetadata.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ERMetadata`, data.ErMetadata.ValueString())
@@ -156,9 +156,9 @@ func (data *DmAAAPExtractResource) FromBody(ctx context.Context, pathRoot string
 		data.ErBitmap = nil
 	}
 	if value := res.Get(pathRoot + `ERXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ErxPath = tfutils.ParseStringFromGJSON(value)
+		data.ErXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ErxPath = types.StringNull()
+		data.ErXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ERMetadata`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ErMetadata = tfutils.ParseStringFromGJSON(value)
@@ -176,10 +176,10 @@ func (data *DmAAAPExtractResource) UpdateFromBody(ctx context.Context, pathRoot 
 	} else {
 		data.ErBitmap = nil
 	}
-	if value := res.Get(pathRoot + `ERXPath`); value.Exists() && !data.ErxPath.IsNull() {
-		data.ErxPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `ERXPath`); value.Exists() && !data.ErXpath.IsNull() {
+		data.ErXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ErxPath = types.StringNull()
+		data.ErXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ERMetadata`); value.Exists() && !data.ErMetadata.IsNull() {
 		data.ErMetadata = tfutils.ParseStringFromGJSON(value)

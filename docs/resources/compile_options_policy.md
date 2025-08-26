@@ -74,6 +74,10 @@ resource "datapower_compile_options_policy" "test" {
 - `wildcards_ignore_xsi_type` (String) Designates a set of schemas where wildcards (xs:any elements) only validate children by element name. The XML Schema specification requires that, if a wildcard matches an element but that element does not have an element declaration, the element is instead validated according to an xsi:type attribute on it. This option ignores those xsi:type attributes. It should be used for cases such as SOAP envelope validation where a further validation step will validate the contents matching the wildcard, possibly using the SOAP 1.1 encoding rules.
   - CLI Alias: `wildcards-ignore-xsi-type`
   - Reference to: `datapower_url_map:id`
+- `ws_i_validation` (String) Select the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default is Ignore.
+  - CLI Alias: `wsi-validate`
+  - Choices: `ignore`, `warn`, `fail`
+  - Default value: `ignore`
 - `wsdl_strict_soap_version` (Boolean) When on, follow the version of the SOAP Binding in the WSDL, allowing only messages bound to SOAP 1.2 to appear in SOAP 1.2 envelopes and messages bound to SOAP 1.1 to appear in SOAP 1.1 envelopes. The default is off.
   - CLI Alias: `wsdl-strict-soap-version`
   - Default value: `false`
@@ -92,10 +96,6 @@ resource "datapower_compile_options_policy" "test" {
 - `wsdl_wrapped_faults` (Boolean) For compatibility, require a rpc-style wrapper around fault details that are specified by type.
   - CLI Alias: `wsdl-wrapped-faults`
   - Default value: `false`
-- `wsi_validation` (String) Select the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default is Ignore.
-  - CLI Alias: `wsi-validate`
-  - Choices: `ignore`, `warn`, `fail`
-  - Default value: `ignore`
 - `xacml_debug` (Boolean) Setting to "on" to make the XACML compiler to put more debugging information when evaluate a policy. Note that the XACML debugging messages are also controlled by the log event in the 'XACML' category. Use the "debug" log level to view the full XACML debugging messages.
   - CLI Alias: `xacml-debug`
   - Default value: `false`

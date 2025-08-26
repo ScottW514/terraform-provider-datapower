@@ -42,7 +42,7 @@ Read-Only:
 - `collective` (String) Specify the Load Balancer Group that contains members in the collective of eXtreme Scale. You must define at least one member in the collective.
 - `encrypt` (Boolean) Indicates whether the data in the eXtreme Scale data grid is encrypted. If encrypted, the data is encrypted, when writing to, and decrypted, when reading from, the eXtreme Scale data grid.
 - `encrypt_alg` (String) Specify the PKCS #7 algorithm for encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.
-- `encrypt_ss_key` (String) Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.
+- `encrypt_sskey` (String) Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.
 - `grid` (String) Specify the name of the eXtreme Scale grid. The value cannot contain whitespace or the following characters: <tt>^ . \ / , # $ @ : ; * ? &lt; > | = + &amp; % [ ] " '</tt> .
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `key_obfuscation` (Boolean) Indicate whether to apply a hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.

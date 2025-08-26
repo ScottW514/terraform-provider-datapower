@@ -43,7 +43,7 @@ type StatelessTCPSourceProtocolHandler struct {
 	Acl                   types.String                `tfsdk:"acl"`
 	SslServerConfigType   types.String                `tfsdk:"ssl_server_config_type"`
 	SslServer             types.String                `tfsdk:"ssl_server"`
-	SslsniServer          types.String                `tfsdk:"sslsni_server"`
+	SslSniServer          types.String                `tfsdk:"ssl_sni_server"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
@@ -57,7 +57,7 @@ var StatelessTCPSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"acl":                    types.StringType,
 	"ssl_server_config_type": types.StringType,
 	"ssl_server":             types.StringType,
-	"sslsni_server":          types.StringType,
+	"ssl_sni_server":         types.StringType,
 	"dependency_actions":     actions.ActionsListType,
 }
 
@@ -96,7 +96,7 @@ func (data StatelessTCPSourceProtocolHandler) IsNull() bool {
 	if !data.SslServer.IsNull() {
 		return false
 	}
-	if !data.SslsniServer.IsNull() {
+	if !data.SslSniServer.IsNull() {
 		return false
 	}
 	return true
@@ -132,8 +132,8 @@ func (data StatelessTCPSourceProtocolHandler) ToBody(ctx context.Context, pathRo
 	if !data.SslServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServer`, data.SslServer.ValueString())
 	}
-	if !data.SslsniServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslsniServer.ValueString())
+	if !data.SslSniServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslSniServer.ValueString())
 	}
 	return body
 }
@@ -183,9 +183,9 @@ func (data *StatelessTCPSourceProtocolHandler) FromBody(ctx context.Context, pat
 		data.SslServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 }
 
@@ -233,9 +233,9 @@ func (data *StatelessTCPSourceProtocolHandler) UpdateFromBody(ctx context.Contex
 	} else {
 		data.SslServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslsniServer.IsNull() {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslSniServer.IsNull() {
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 }

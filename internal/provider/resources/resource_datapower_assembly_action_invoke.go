@@ -125,7 +125,7 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				},
 				Default: stringdefault.StaticString("detect"),
 			},
-			"graph_ql_send_type": schema.StringAttribute{
+			"graphql_send_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.", "graphql-send-type", "").AddStringEnum("detect", "graphql", "json").AddDefaultValue("detect").AddRequiredWhen(models.AssemblyActionInvokeGraphQLSendTypeCondVal.String()).String,
 				Optional:            true,
 				Computed:            true,

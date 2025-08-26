@@ -42,7 +42,7 @@ func TestAccDataSourceAPIGateway(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_api_gateway.test", "result.0.id", "AccTest_APIGateway"),
 					resource.TestCheckResourceAttr("data.datapower_api_gateway.test", "result.0.cache_memory_size", "2147483647"),
 					resource.TestCheckResourceAttr("data.datapower_api_gateway.test", "result.0.cache_size", "256"),
-					resource.TestCheckResourceAttr("data.datapower_api_gateway.test", "result.0.sha1_caching", "true"),
+					resource.TestCheckResourceAttr("data.datapower_api_gateway.test", "result.0.sha1caching", "true"),
 					resource.TestCheckResourceAttr("data.datapower_api_gateway.test", "result.0.static_document_calls", "true"),
 					resource.TestCheckResourceAttr("data.datapower_api_gateway.test", "result.0.doc_cache_max_docs", "5000"),
 					resource.TestCheckResourceAttr("data.datapower_api_gateway.test", "result.0.doc_max_writes", "32768"),

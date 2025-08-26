@@ -101,7 +101,7 @@ Read-Only:
 - `signature_identifier` (List of String) Signature Identifiers
 - `single_certificate` (String) Certificate
 - `single_key` (String) Private Key
-- `single_ss_key` (String) Shared Secret Key
+- `single_sskey` (String) Shared Secret Key
 - `slm_policy` (String) SLM policy
 - `soap_validation` (String) Specify which parts of the SOAP message to validate. This setting does not affect the validation of the input context to ensure that it is a valid document.
 - `sql_data_source` (String) SQL Data Source
@@ -127,7 +127,7 @@ Read-Only:
 - `wsdl_operation_name` (String) Specify the name of the WSDL operation that defines the service traffic to validate. The value must be the unqualified name of the operation or <tt>*</tt> for all operations. When specified and not <tt>*</tt> , only messages that are defined for operations that match the specified name are considered valid.
 - `wsdl_port_q_name` (String) Specify the QName of the WSDL port that defines the service traffic to validate. The value must be a QName in the <tt>{namespace-uri}local-part</tt> format or <tt>*</tt> for all ports. When specified and not <tt>*</tt> , only messages that are defined for the named port are considered valid.
 - `wsdl_url` (String) Specify the URL of the WSDL file that defines the operations to use during the validate action. The WSDL file can reside on the local system or on the network. By default, the WSDL validation always applies to the entire input message, which can be modified by compile options on the XML manager. <p>Identify the WSDL with one of the following formats.</p><ul><li>Use a URL, for example, <tt>local:///myTest.wsdl</tt></li><li>Use a context variable that expands to a URL, for example, <tt>var://context/contextName/varName</tt></li><li>Use a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context runs as a WSDL validation.</li></ul>
-- `x_path` (String) Specify the XPath expression to apply to the input context. Enter the XPath expression or a variable in the <tt>var://context/name</tt> format that expands to an XPath expression.
+- `xpath` (String) Specify the XPath expression to apply to the input context. Enter the XPath expression or a variable in the <tt>var://context/name</tt> format that expands to an XPath expression.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

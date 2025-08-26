@@ -56,7 +56,7 @@ func TestAccResourceB2BProfile(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_b2b_profile.test", "ebms_enable_cpa_binding", "false"),
 			resource.TestCheckResourceAttr("datapower_b2b_profile.test", "ebms_start_parameter", "false"),
 			resource.TestCheckResourceAttr("datapower_b2b_profile.test", "ebms_allow_duplicate_message", "never"),
-			resource.TestCheckResourceAttr("datapower_b2b_profile.test", "mdnssl_client_config_type", "client"),
+			resource.TestCheckResourceAttr("datapower_b2b_profile.test", "mdn_ssl_client_config_type", "client"),
 			resource.TestCheckResourceAttr("datapower_b2b_profile.test", "ebms_ack_ssl_client_config_type", "client"),
 			resource.TestCheckResourceAttr("datapower_b2b_profile.test", "ebms3_outbound_sign", "false"),
 			resource.TestCheckResourceAttr("datapower_b2b_profile.test", "ebms3_outbound_sign_digest_alg", "sha1"),

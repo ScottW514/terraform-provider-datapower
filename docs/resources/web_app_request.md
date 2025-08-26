@@ -101,7 +101,7 @@ resource "datapower_web_app_request" "test" {
   - CLI Alias: `sql-injection-patterns-file`
   - Default value: `store:///SQL-Injection-Patterns.xml`
   - Required When: `sql_injection`=`true`
-- `ss_key` (String) Select the Shared Secret Key for both signing or encrypting.
+- `sskey` (String) Select the Shared Secret Key for both signing or encrypting.
   - CLI Alias: `ss-key`
   - Reference to: `datapower_crypto_sskey:id`
 - `ssl_policy` (String) Select how the client side of the inspected transaction handles SSL. The default value is Allow.
@@ -219,7 +219,7 @@ Optional:
 
 Optional:
 
-- `http_1_0` (Boolean) HTTP 1.0
+- `http_1d0` (Boolean) HTTP 1.0
   - Default value: `true`
-- `http_1_1` (Boolean) HTTP 1.1
+- `http_1d1` (Boolean) HTTP 1.1
   - Default value: `true`

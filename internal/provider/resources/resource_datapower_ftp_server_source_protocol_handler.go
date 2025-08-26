@@ -210,13 +210,13 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				},
 				Default: int64default.StaticInt64(60),
 			},
-			"disable_pasvip_check": schema.BoolAttribute{
+			"disable_pasv_ip_check": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>", "passive-promiscuous", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"disable_portip_check": schema.BoolAttribute{
+			"disable_port_ip_check": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>", "port-promiscuous", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
@@ -326,7 +326,7 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				},
 				Default: int64default.StaticInt64(32),
 			},
-			"response_nfs_mount": schema.StringAttribute{
+			"response_nf_sm_ount": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When the response type is virtual file system and response storage is NFS, specify the NFS static mount to store response files. Each response file has a unique file name in the NFS directory. The name of the response file is not related to the file name that the virtual file system presents to the FTP client. Generally, this NFS directory is not made available through the FTP server. Do not use this directory for any other purpose.", "response-nfs-mount", "nfs_static_mount").String,
 				Optional:            true,
 			},
@@ -354,7 +354,7 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerSSLServerCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"sslsni_server": schema.StringAttribute{
+			"ssl_sni_server": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.FTPServerSourceProtocolHandlerSSLSNIServerCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

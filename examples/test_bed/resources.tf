@@ -162,15 +162,15 @@ resource "datapower_api_security_http_scheme" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
 }
 resource "datapower_api_security_oauth" "acc_test" {
-  id              = "AccTest_APISecurityOAuth"
-  app_domain      = datapower_domain.acc_test.app_domain
-  o_auth_provider = datapower_oauth_provider_settings.acc_test.id
-  o_auth_flow     = "implicit"
+  id             = "AccTest_APISecurityOAuth"
+  app_domain     = datapower_domain.acc_test.app_domain
+  oauth_provider = datapower_oauth_provider_settings.acc_test.id
+  oauth_flow     = "implicit"
 }
 resource "datapower_api_security_oauth_req" "acc_test" {
-  id                      = "AccTest_APISecurityOAuthReq"
-  app_domain              = datapower_domain.acc_test.app_domain
-  api_security_o_auth_def = datapower_api_security_oauth.acc_test.id
+  id                     = "AccTest_APISecurityOAuthReq"
+  app_domain             = datapower_domain.acc_test.app_domain
+  api_security_oauth_def = datapower_api_security_oauth.acc_test.id
 }
 resource "datapower_api_security_requirement" "acc_test" {
   id         = "AccTest_APISecurityRequirement"
@@ -293,9 +293,9 @@ resource "datapower_assembly_action_map" "acc_test" {
   location   = "local:///file"
 }
 resource "datapower_assembly_action_oauth" "acc_test" {
-  id                                 = "AccTest_AssemblyActionOAuth"
-  app_domain                         = datapower_domain.acc_test.app_domain
-  o_auth_provider_settings_reference = { "Default" : datapower_oauth_provider_settings.acc_test.id }
+  id                                = "AccTest_AssemblyActionOAuth"
+  app_domain                        = datapower_domain.acc_test.app_domain
+  oauth_provider_settings_reference = { "Default" : datapower_oauth_provider_settings.acc_test.id }
 }
 resource "datapower_assembly_action_parse" "acc_test" {
   id         = "AccTest_AssemblyActionParse"
@@ -418,9 +418,9 @@ resource "datapower_b2b_gateway" "acc_test" {
   xml_manager                   = "default"
 }
 resource "datapower_b2b_profile" "acc_test" {
-  id            = "AccTest_B2BProfile"
-  app_domain    = datapower_domain.acc_test.app_domain
-  business_i_ds = ["businessid"]
+  id           = "AccTest_B2BProfile"
+  app_domain   = datapower_domain.acc_test.app_domain
+  business_ids = ["businessid"]
   destinations = [{
     dest_name  = "b2bdestinationname"
     dest_url   = "https://localhost"
@@ -435,10 +435,10 @@ resource "datapower_b2b_profile_group" "acc_test" {
   }]
 }
 resource "datapower_b2b_xpath_routing_policy" "acc_test" {
-  id              = "AccTest_B2BXPathRoutingPolicy"
-  app_domain      = datapower_domain.acc_test.app_domain
-  sender_x_path   = "senderpath"
-  receiver_x_path = "senderpath"
+  id             = "AccTest_B2BXPathRoutingPolicy"
+  app_domain     = datapower_domain.acc_test.app_domain
+  sender_xpath   = "senderpath"
+  receiver_xpath = "senderpath"
 }
 resource "datapower_compile_options_policy" "acc_test" {
   id         = "AccTest_CompileOptionsPolicy"
@@ -483,7 +483,7 @@ resource "datapower_count_monitor" "acc_test" {
   app_domain   = datapower_domain.acc_test.app_domain
   measure      = "requests"
   source       = "all"
-  max_sources  = 10000
+  max_source_s = 10000
   message_type = datapower_message_type.acc_test.id
 }
 resource "datapower_crypto_certificate" "acc_test" {
@@ -536,7 +536,7 @@ resource "datapower_document_crypto_map" "acc_test" {
   id         = "AccTest_DocumentCryptoMap"
   app_domain = datapower_domain.acc_test.app_domain
   operation  = "encrypt"
-  x_path     = ["*", ]
+  xpath      = ["*", ]
 }
 resource "datapower_domain" "acc_test" {
   app_domain = "acceptance_test"
@@ -735,10 +735,10 @@ resource "datapower_mcf_http_url" "acc_test" {
   http_url_expression = "*"
 }
 resource "datapower_mcf_xpath" "acc_test" {
-  id                = "AccTest_MCFXPath"
-  app_domain        = datapower_domain.acc_test.app_domain
-  x_path_expression = "*"
-  x_path_value      = "value"
+  id               = "AccTest_MCFXPath"
+  app_domain       = datapower_domain.acc_test.app_domain
+  xpath_expression = "*"
+  xpath_value      = "value"
 }
 resource "datapower_message_content_filters" "acc_test" {
   id         = "AccTest_MessageContentFilters"
@@ -825,15 +825,15 @@ resource "datapower_nfs_static_mount" "acc_test" {
   remote     = "url://test"
 }
 resource "datapower_oauth_provider_settings" "acc_test" {
-  id                = "AccTest_OAuthProviderSettings"
-  app_domain        = datapower_domain.acc_test.app_domain
-  provider_type     = "native"
-  apic_token_secret = datapower_crypto_sskey.acc_test.id
+  id                 = "AccTest_OAuthProviderSettings"
+  app_domain         = datapower_domain.acc_test.app_domain
+  provider_type      = "native"
+  api_c_token_secret = datapower_crypto_sskey.acc_test.id
 }
 resource "datapower_oauth_supported_client" "acc_test" {
   id                       = "AccTest_OAuthSupportedClient"
   app_domain               = datapower_domain.acc_test.app_domain
-  o_auth_role              = { "azsvr" : true }
+  oauth_role               = { "azsvr" : true }
   az_grant                 = { "code" : true }
   generate_client_secret   = false
   client_secret_wo         = "secret"
@@ -939,7 +939,7 @@ resource "datapower_schema_exception_map" "acc_test" {
   app_domain          = datapower_domain.acc_test.app_domain
   original_schema_url = "http://localhost"
   schema_exception_rules = [{
-    x_path         = "*"
+    xpath          = "*"
     exception_type = "AllowEncrypted"
   }]
 }
@@ -1171,7 +1171,7 @@ resource "datapower_web_app_session_policy" "acc_test" {
 resource "datapower_web_service_monitor" "acc_test" {
   id           = "AccTest_WebServiceMonitor"
   app_domain   = datapower_domain.acc_test.app_domain
-  wsdlurl      = "wsdlurl"
+  wsdl_url     = "wsdlurl"
   endpoint_url = "endpointurl"
   frontend_url = "frontendurl"
 }
@@ -1263,11 +1263,11 @@ resource "datapower_xml_manager" "acc_test" {
 resource "datapower_xpath_routing_map" "acc_test" {
   id         = "AccTest_XPathRoutingMap"
   app_domain = datapower_domain.acc_test.app_domain
-  x_path_routing_rules = [{
-    x_path = "*"
-    host   = "localhost"
-    port   = 8888
-    ssl    = false
+  xpath_routing_rules = [{
+    xpath = "*"
+    host  = "localhost"
+    port  = 8888
+    ssl   = false
   }]
 }
 resource "datapower_xsl_coproc_service" "acc_test" {

@@ -40,7 +40,7 @@ type JWSSignature struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	Algorithm         types.String                `tfsdk:"algorithm"`
 	Key               types.String                `tfsdk:"key"`
-	SsKey             types.String                `tfsdk:"ss_key"`
+	Sskey             types.String                `tfsdk:"sskey"`
 	ProtectedHeader   types.List                  `tfsdk:"protected_header"`
 	UnprotectedHeader types.List                  `tfsdk:"unprotected_header"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
@@ -67,7 +67,7 @@ var JWSSignatureObjectType = map[string]attr.Type{
 	"user_summary":       types.StringType,
 	"algorithm":          types.StringType,
 	"key":                types.StringType,
-	"ss_key":             types.StringType,
+	"sskey":              types.StringType,
 	"protected_header":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
 	"unprotected_header": types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
 	"dependency_actions": actions.ActionsListType,
@@ -96,7 +96,7 @@ func (data JWSSignature) IsNull() bool {
 	if !data.Key.IsNull() {
 		return false
 	}
-	if !data.SsKey.IsNull() {
+	if !data.Sskey.IsNull() {
 		return false
 	}
 	if !data.ProtectedHeader.IsNull() {
@@ -126,8 +126,8 @@ func (data JWSSignature) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Key.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Key`, data.Key.ValueString())
 	}
-	if !data.SsKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.SsKey.ValueString())
+	if !data.Sskey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.Sskey.ValueString())
 	}
 	if !data.ProtectedHeader.IsNull() {
 		var dataValues []DmJOSEHeader
@@ -171,9 +171,9 @@ func (data *JWSSignature) FromBody(ctx context.Context, pathRoot string, res gjs
 		data.Key = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SsKey = tfutils.ParseStringFromGJSON(value)
+		data.Sskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsKey = types.StringNull()
+		data.Sskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ProtectedHeader`); value.Exists() {
 		l := []DmJOSEHeader{}
@@ -239,10 +239,10 @@ func (data *JWSSignature) UpdateFromBody(ctx context.Context, pathRoot string, r
 	} else {
 		data.Key = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSKey`); value.Exists() && !data.SsKey.IsNull() {
-		data.SsKey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSKey`); value.Exists() && !data.Sskey.IsNull() {
+		data.Sskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsKey = types.StringNull()
+		data.Sskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ProtectedHeader`); value.Exists() && !data.ProtectedHeader.IsNull() {
 		l := []DmJOSEHeader{}

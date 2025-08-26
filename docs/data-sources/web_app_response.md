@@ -149,7 +149,7 @@ Read-Only:
 
 Read-Only:
 
-- `http_1_0` (Boolean) HTTP 1.0
+- `http_1d0` (Boolean) HTTP 1.0
   - Default value: `true`
-- `http_1_1` (Boolean) HTTP 1.1
+- `http_1d1` (Boolean) HTTP 1.1
   - Default value: `true`

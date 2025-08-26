@@ -32,8 +32,8 @@ resource "datapower_api_application_type" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `supported_o_auth_types` (Attributes List) Supported OAuth types
-  - CLI Alias: `supported-oauth-types` (see [below for nested schema](#nestedatt--supported_o_auth_types))
+- `supported_oauth_types` (Attributes List) Supported OAuth types
+  - CLI Alias: `supported-oauth-types` (see [below for nested schema](#nestedatt--supported_oauth_types))
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments
@@ -56,8 +56,8 @@ Optional:
 - `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
 
 
-<a id="nestedatt--supported_o_auth_types"></a>
-### Nested Schema for `supported_o_auth_types`
+<a id="nestedatt--supported_oauth_types"></a>
+### Nested Schema for `supported_oauth_types`
 
 Optional:
 

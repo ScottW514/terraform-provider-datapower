@@ -14,6 +14,7 @@ attributes:
   default: false
   description: Require PKCE for Authorization Code
 - name: multipleusesrefreshtoken
+  tf_name: multiple_uses_refresh_token
   type: Bool
   default: false
   description: Allow reuse of refresh token

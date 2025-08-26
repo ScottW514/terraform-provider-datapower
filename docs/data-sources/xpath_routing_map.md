@@ -42,7 +42,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `name_space_mappings` (Attributes List) The prefix and URI for namespaces that might be encountered in requests. (see [below for nested schema](#nestedatt--result--name_space_mappings))
 - `user_summary` (String) Comments
-- `x_path_routing_rules` (Attributes List) Rules (see [below for nested schema](#nestedatt--result--x_path_routing_rules))
+- `xpath_routing_rules` (Attributes List) Rules (see [below for nested schema](#nestedatt--result--xpath_routing_rules))
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`
@@ -70,8 +70,8 @@ Read-Only:
 - `uri` (String) The URI (URI:) used to map namespaces that might be encountered in client requests.
 
 
-<a id="nestedatt--result--x_path_routing_rules"></a>
-### Nested Schema for `result.x_path_routing_rules`
+<a id="nestedatt--result--xpath_routing_rules"></a>
+### Nested Schema for `result.xpath_routing_rules`
 
 Read-Only:
 
@@ -79,4 +79,4 @@ Read-Only:
 - `port` (Number) Specify the port to which matching documents should be routed.
 - `ssl` (Boolean) Specify whether the connection to the target destination uses TLS communications. The default is off. When set to on, the DataPower Gateway uses the TLS profile that is specified at the service level to establish TLS communications to the destination host.
   - Default value: `false`
-- `x_path` (String) <p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>
+- `xpath` (String) <p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>

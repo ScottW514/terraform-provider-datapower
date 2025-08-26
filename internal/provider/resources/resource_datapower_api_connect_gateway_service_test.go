@@ -42,7 +42,7 @@ func TestAccResourceAPIConnectGatewayService(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_api_connect_gateway_service.test", "api_gateway_address", "0.0.0.0"),
 			resource.TestCheckResourceAttr("datapower_api_connect_gateway_service.test", "api_gateway_port", "9443"),
 			resource.TestCheckResourceAttr("datapower_api_connect_gateway_service.test", "gateway_peering_manager", "default"),
-			resource.TestCheckResourceAttr("datapower_api_connect_gateway_service.test", "v5_compatibility_mode", "true"),
+			resource.TestCheckResourceAttr("datapower_api_connect_gateway_service.test", "v5compatibility_mode", "true"),
 			resource.TestCheckResourceAttr("datapower_api_connect_gateway_service.test", "v5c_slm_mode", "autounicast"),
 			resource.TestCheckResourceAttr("datapower_api_connect_gateway_service.test", "jwt_validation_mode", "request"),
 		}...),

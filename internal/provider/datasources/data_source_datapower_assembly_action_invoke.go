@@ -104,7 +104,7 @@ func (d *AssemblyActionInvokeDataSource) Schema(ctx context.Context, req datasou
 							MarkdownDescription: "Backend type",
 							Computed:            true,
 						},
-						"graph_ql_send_type": schema.StringAttribute{
+						"graphql_send_type": schema.StringAttribute{
 							MarkdownDescription: "Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.",
 							Computed:            true,
 						},

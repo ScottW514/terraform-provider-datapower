@@ -20,7 +20,7 @@ resource "datapower_count_monitor" "test" {
   app_domain   = "acceptance_test"
   measure      = "requests"
   source       = "all"
-  max_sources  = 10000
+  max_source_s = 10000
   message_type = "AccTest_MessageType"
 }
 ```
@@ -45,7 +45,7 @@ resource "datapower_count_monitor" "test" {
   - CLI Alias: `header`
   - Default value: `X-Client-IP`
   - Required When: `source`=`ip-from-header`
-- `max_sources` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
+- `max_source_s` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
   - CLI Alias: `distinct-sources`
   - Default value: `10000`
 - `measure` (String) Select the action that advances the counter. The default is Requests.

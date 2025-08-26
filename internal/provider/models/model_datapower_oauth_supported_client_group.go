@@ -40,7 +40,7 @@ type OAuthSupportedClientGroup struct {
 	UserSummary        types.String                `tfsdk:"user_summary"`
 	Customized         types.Bool                  `tfsdk:"customized"`
 	CustomizedType     types.String                `tfsdk:"customized_type"`
-	OAuthRole          *DmOAuthRole                `tfsdk:"o_auth_role"`
+	OauthRole          *DmOAuthRole                `tfsdk:"oauth_role"`
 	Client             types.List                  `tfsdk:"client"`
 	TemplateProcessUrl types.String                `tfsdk:"template_process_url"`
 	ClientTemplate     types.String                `tfsdk:"client_template"`
@@ -130,7 +130,7 @@ var OAuthSupportedClientGroupObjectType = map[string]attr.Type{
 	"user_summary":         types.StringType,
 	"customized":           types.BoolType,
 	"customized_type":      types.StringType,
-	"o_auth_role":          types.ObjectType{AttrTypes: DmOAuthRoleObjectType},
+	"oauth_role":           types.ObjectType{AttrTypes: DmOAuthRoleObjectType},
 	"client":               types.ListType{ElemType: types.StringType},
 	"template_process_url": types.StringType,
 	"client_template":      types.StringType,
@@ -160,8 +160,8 @@ func (data OAuthSupportedClientGroup) IsNull() bool {
 	if !data.CustomizedType.IsNull() {
 		return false
 	}
-	if data.OAuthRole != nil {
-		if !data.OAuthRole.IsNull() {
+	if data.OauthRole != nil {
+		if !data.OauthRole.IsNull() {
 			return false
 		}
 	}
@@ -195,9 +195,9 @@ func (data OAuthSupportedClientGroup) ToBody(ctx context.Context, pathRoot strin
 	if !data.CustomizedType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CustomizedType`, data.CustomizedType.ValueString())
 	}
-	if data.OAuthRole != nil {
-		if !data.OAuthRole.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`OAuthRole`, data.OAuthRole.ToBody(ctx, ""))
+	if data.OauthRole != nil {
+		if !data.OauthRole.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`OAuthRole`, data.OauthRole.ToBody(ctx, ""))
 		}
 	}
 	if !data.Client.IsNull() {
@@ -241,10 +241,10 @@ func (data *OAuthSupportedClientGroup) FromBody(ctx context.Context, pathRoot st
 		data.CustomizedType = types.StringValue("custom")
 	}
 	if value := res.Get(pathRoot + `OAuthRole`); value.Exists() {
-		data.OAuthRole = &DmOAuthRole{}
-		data.OAuthRole.FromBody(ctx, "", value)
+		data.OauthRole = &DmOAuthRole{}
+		data.OauthRole.FromBody(ctx, "", value)
 	} else {
-		data.OAuthRole = nil
+		data.OauthRole = nil
 	}
 	if value := res.Get(pathRoot + `Client`); value.Exists() {
 		data.Client = tfutils.ParseStringListFromGJSON(value)
@@ -288,9 +288,9 @@ func (data *OAuthSupportedClientGroup) UpdateFromBody(ctx context.Context, pathR
 		data.CustomizedType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthRole`); value.Exists() {
-		data.OAuthRole.UpdateFromBody(ctx, "", value)
+		data.OauthRole.UpdateFromBody(ctx, "", value)
 	} else {
-		data.OAuthRole = nil
+		data.OauthRole = nil
 	}
 	if value := res.Get(pathRoot + `Client`); value.Exists() && !data.Client.IsNull() {
 		data.Client = tfutils.ParseStringListFromGJSON(value)

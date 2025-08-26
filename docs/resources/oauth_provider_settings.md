@@ -16,10 +16,10 @@ An OAuth provider settings configuration defines how a client application is aut
 
 ```terraform
 resource "datapower_oauth_provider_settings" "test" {
-  id                = "ResTestOAuthProviderSettings"
-  app_domain        = "acceptance_test"
-  provider_type     = "native"
-  apic_token_secret = "AccTest_CryptoSSKey"
+  id                 = "ResTestOAuthProviderSettings"
+  app_domain         = "acceptance_test"
+  provider_type      = "native"
+  api_c_token_secret = "AccTest_CryptoSSKey"
 }
 ```
 
@@ -61,86 +61,86 @@ resource "datapower_oauth_provider_settings" "test" {
 - `advanced_scope_url_override` (Boolean) Use URL from API Security Definition
   - CLI Alias: `advanced-scope-url-from-security`
   - Default value: `false`
+- `api_c_access_token_ttl` (Number) Specify the time in seconds that an access token remains valid. The default value is 3600.
+  - CLI Alias: `apic-access-token-ttl`
+  - Range: `1`-`63244800`
+  - Default value: `3600`
+  - Required When: `provider_type`=`native`
+- `api_c_auth_code_ttl` (Number) Specify the time in seconds that an authorization code remains valid. The default value is 300.
+  - CLI Alias: `apic-auth-code-ttl`
+  - Range: `1`-`600`
+  - Default value: `300`
+  - Required When: (`provider_type`=`native` AND `supported_grant_types`=`access_code`)
+- `api_c_authorize_endpoint` (String) Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .
+  - CLI Alias: `apic-authorize-endpoint`
+  - Default value: `/oauth2/authorize`
+  - Required When: `provider_type`=`native`
+- `api_c_enable_introspection` (Boolean) Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.
+  - CLI Alias: `apic-enable-introspection`
+  - Default value: `false`
+- `api_c_enable_oidc` (Boolean) Specify whether to enable OIDC to verify the identity of the user. When enabled, the client application verifies the identity of the user based on the requirement of an OIDC provider before requesting access to client resources. By default, OIDC token generation is enabled. OIDC is only available for implicit and AZ code grant types.
+  - CLI Alias: `apic-enable-oidc`
+  - Default value: `true`
+- `api_c_enable_refresh_token` (Boolean) Specify whether to enable issuing refresh tokens. Refresh tokens are issued to the client. Refresh tokens are used to obtain a new access token when the current access token becomes invalid, expires, or are used to obtain additional access tokens with identical or narrower scope. By default, this setting is disabled.
+  - CLI Alias: `apic-enable-refresh-token`
+  - Default value: `false`
+- `api_c_introspect_endpoint` (String) Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .
+  - CLI Alias: `apic-introspect-endpoint`
+  - Default value: `/oauth2/introspect`
+  - Required When: (`provider_type`=`native` AND `api_c_enable_introspection`=`true`)
+- `api_c_maximum_consent_ttl` (Number) Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.
+  - CLI Alias: `apic-maximum-consent-ttl`
+  - Range: `0`-`2529792000`
+  - Default value: `0`
+- `api_c_oidc_hybrid_response_types` (Attributes) OIDC Hybrid Flow Response Types
+  - CLI Alias: `apic-oidc-hybrid-response-types` (see [below for nested schema](#nestedatt--api_c_oidc_hybrid_response_types))
+- `api_c_one_time_use_accesstoken` (Boolean) One-time use access token
+  - CLI Alias: `apic-enable-one-time-use-access-token`
+  - Default value: `false`
+  - Required When: `provider_type`=`native`
+- `api_c_one_time_use_refreshtoken` (Boolean) Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>
+  - CLI Alias: `apic-enable-one-time-use-refresh-token`
+  - Default value: `true`
+- `api_c_provider_base_path` (String) Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .
+  - CLI Alias: `apic-provider-base-path`
+  - Default value: `/`
+  - Required When: `provider_type`=`native`
+- `api_c_refresh_token_limit` (Number) Specify the number of refresh tokens to allow to be generated. The default value is 10.
+  - CLI Alias: `apic-refresh-token-limit`
+  - Range: `1`-`4096`
+  - Default value: `10`
+  - Required When: (`provider_type`=`native` AND `api_c_enable_refresh_token`=`true` AND `api_c_one_time_use_refreshtoken`=`true`)
+- `api_c_refresh_token_ttl` (Number) Specify the time in seconds that a refresh token remains valid. The default value is 5400.
+  - CLI Alias: `apic-refresh-token-ttl`
+  - Range: `2`-`252979200`
+  - Default value: `5400`
+  - Required When: (`provider_type`=`native` AND `api_c_enable_refresh_token`=`true`)
+- `api_c_require_pkce` (Boolean) Specify whether the application must enforce PKCE. For more information, see RFC 7636.
+  - CLI Alias: `apic-require-pkce`
+  - Default value: `false`
+- `api_c_support_pkce` (Boolean) Specify whether the application should enforce PKCE if provided by the client. For more information, see RFC 7636.
+  - CLI Alias: `apic-support-pkce`
+  - Default value: `true`
+- `api_c_support_pkce_plain` (Boolean) Specify whether to support the PKCE <tt>plain</tt> code challenge transform method. For more information, see RFC 7636.
+  - CLI Alias: `apic-support-pkce-plain`
+  - Default value: `false`
+- `api_c_token_endpoint` (String) Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .
+  - CLI Alias: `apic-token-endpoint`
+  - Default value: `/oauth2/token`
+  - Required When: `provider_type`=`native`
+- `api_c_token_secret` (String) Token secret
+  - CLI Alias: `apic-token-secret`
+  - Reference to: `datapower_crypto_sskey:id`
+  - Required When: `provider_type`=`native`
+- `api_c_token_type_to_generate` (String) Type of token to generate
+  - CLI Alias: `apic-token-type-to-generate`
+  - Choices: `Bearer`, `jwt`
+  - Default value: `Bearer`
 - `api_security_token_manager` (String) API security token manager
   - CLI Alias: `api-security-token-manager`
   - Reference to: `datapower_api_security_token_manager:id`
   - Default value: `default`
   - Required When: (`enable_token_management`=`true` AND `token_manager_type`=`native` AND `provider_type`=`native`)
-- `apic_access_token_ttl` (Number) Specify the time in seconds that an access token remains valid. The default value is 3600.
-  - CLI Alias: `apic-access-token-ttl`
-  - Range: `1`-`63244800`
-  - Default value: `3600`
-  - Required When: `provider_type`=`native`
-- `apic_auth_code_ttl` (Number) Specify the time in seconds that an authorization code remains valid. The default value is 300.
-  - CLI Alias: `apic-auth-code-ttl`
-  - Range: `1`-`600`
-  - Default value: `300`
-  - Required When: (`provider_type`=`native` AND `supported_grant_types`=`access_code`)
-- `apic_authorize_endpoint` (String) Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .
-  - CLI Alias: `apic-authorize-endpoint`
-  - Default value: `/oauth2/authorize`
-  - Required When: `provider_type`=`native`
-- `apic_enable_introspection` (Boolean) Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.
-  - CLI Alias: `apic-enable-introspection`
-  - Default value: `false`
-- `apic_enable_oidc` (Boolean) Specify whether to enable OIDC to verify the identity of the user. When enabled, the client application verifies the identity of the user based on the requirement of an OIDC provider before requesting access to client resources. By default, OIDC token generation is enabled. OIDC is only available for implicit and AZ code grant types.
-  - CLI Alias: `apic-enable-oidc`
-  - Default value: `true`
-- `apic_enable_refresh_token` (Boolean) Specify whether to enable issuing refresh tokens. Refresh tokens are issued to the client. Refresh tokens are used to obtain a new access token when the current access token becomes invalid, expires, or are used to obtain additional access tokens with identical or narrower scope. By default, this setting is disabled.
-  - CLI Alias: `apic-enable-refresh-token`
-  - Default value: `false`
-- `apic_introspect_endpoint` (String) Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .
-  - CLI Alias: `apic-introspect-endpoint`
-  - Default value: `/oauth2/introspect`
-  - Required When: (`provider_type`=`native` AND `apic_enable_introspection`=`true`)
-- `apic_maximum_consent_ttl` (Number) Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.
-  - CLI Alias: `apic-maximum-consent-ttl`
-  - Range: `0`-`2529792000`
-  - Default value: `0`
-- `apic_one_time_use_accesstoken` (Boolean) One-time use access token
-  - CLI Alias: `apic-enable-one-time-use-access-token`
-  - Default value: `false`
-  - Required When: `provider_type`=`native`
-- `apic_one_time_use_refreshtoken` (Boolean) Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>
-  - CLI Alias: `apic-enable-one-time-use-refresh-token`
-  - Default value: `true`
-- `apic_provider_base_path` (String) Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .
-  - CLI Alias: `apic-provider-base-path`
-  - Default value: `/`
-  - Required When: `provider_type`=`native`
-- `apic_refresh_token_limit` (Number) Specify the number of refresh tokens to allow to be generated. The default value is 10.
-  - CLI Alias: `apic-refresh-token-limit`
-  - Range: `1`-`4096`
-  - Default value: `10`
-  - Required When: (`provider_type`=`native` AND `apic_enable_refresh_token`=`true` AND `apic_one_time_use_refreshtoken`=`true`)
-- `apic_refresh_token_ttl` (Number) Specify the time in seconds that a refresh token remains valid. The default value is 5400.
-  - CLI Alias: `apic-refresh-token-ttl`
-  - Range: `2`-`252979200`
-  - Default value: `5400`
-  - Required When: (`provider_type`=`native` AND `apic_enable_refresh_token`=`true`)
-- `apic_require_pkce` (Boolean) Specify whether the application must enforce PKCE. For more information, see RFC 7636.
-  - CLI Alias: `apic-require-pkce`
-  - Default value: `false`
-- `apic_support_pkce` (Boolean) Specify whether the application should enforce PKCE if provided by the client. For more information, see RFC 7636.
-  - CLI Alias: `apic-support-pkce`
-  - Default value: `true`
-- `apic_support_pkce_plain` (Boolean) Specify whether to support the PKCE <tt>plain</tt> code challenge transform method. For more information, see RFC 7636.
-  - CLI Alias: `apic-support-pkce-plain`
-  - Default value: `false`
-- `apic_token_endpoint` (String) Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .
-  - CLI Alias: `apic-token-endpoint`
-  - Default value: `/oauth2/token`
-  - Required When: `provider_type`=`native`
-- `apic_token_secret` (String) Token secret
-  - CLI Alias: `apic-token-secret`
-  - Reference to: `datapower_crypto_sskey:id`
-  - Required When: `provider_type`=`native`
-- `apic_token_type_to_generate` (String) Type of token to generate
-  - CLI Alias: `apic-token-type-to-generate`
-  - Choices: `Bearer`, `jwt`
-  - Default value: `Bearer`
-- `apicoidc_hybrid_response_types` (Attributes) OIDC Hybrid Flow Response Types
-  - CLI Alias: `apic-oidc-hybrid-response-types` (see [below for nested schema](#nestedatt--apicoidc_hybrid_response_types))
 - `application_revocation_endpoint` (String) Application revocation endpoint
   - CLI Alias: `apic-app-revoke-endpoint`
   - Default value: `/oauth2/revoke`
@@ -220,7 +220,7 @@ resource "datapower_oauth_provider_settings" "test" {
 - `third_party_authorization_header_pass_thru` (Boolean) Specify whether to retain or remove the <tt>Authorization</tt> header for a bearer token. The default behavior is to remove this header.
   - CLI Alias: `third-party-authorization-header-pass-thru`
   - Default value: `false`
-- `third_party_azurl` (String) Authorization endpoint
+- `third_party_az_url` (String) Authorization endpoint
   - CLI Alias: `third-party-az-url`
 - `third_party_basic_auth_header_name` (String) Specify the header name to send the encoded or non-encoded authentication string. For example, <tt>x-introspect-basic-authorization-header</tt> .
   - CLI Alias: `third-party-introspect-basic-auth-headername`
@@ -271,8 +271,8 @@ Optional:
   - Default value: `true`
 
 
-<a id="nestedatt--apicoidc_hybrid_response_types"></a>
-### Nested Schema for `apicoidc_hybrid_response_types`
+<a id="nestedatt--api_c_oidc_hybrid_response_types"></a>
+### Nested Schema for `api_c_oidc_hybrid_response_types`
 
 Optional:
 

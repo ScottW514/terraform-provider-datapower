@@ -36,37 +36,37 @@ import (
 
 type DmOAuthComponents struct {
 	None                     types.Bool `tfsdk:"none"`
-	OAuthValidateRequest     types.Bool `tfsdk:"o_auth_validate_request"`
-	OAuthGenerateAzCode      types.Bool `tfsdk:"o_auth_generate_az_code"`
-	OAuthVerifyAzCode        types.Bool `tfsdk:"o_auth_verify_az_code"`
-	OAuthVerifyRefreshToken  types.Bool `tfsdk:"o_auth_verify_refresh_token"`
-	OAuthCollectMetadata     types.Bool `tfsdk:"o_auth_collect_metadata"`
-	OAuthGenerateAccessToken types.Bool `tfsdk:"o_auth_generate_access_token"`
-	OAuthIntrospectToken     types.Bool `tfsdk:"o_auth_introspect_token"`
-	OAuthRevokeToken         types.Bool `tfsdk:"o_auth_revoke_token"`
+	OauthValidateRequest     types.Bool `tfsdk:"oauth_validate_request"`
+	OauthGenerateAzCode      types.Bool `tfsdk:"oauth_generate_az_code"`
+	OauthVerifyAzCode        types.Bool `tfsdk:"oauth_verify_az_code"`
+	OauthVerifyRefreshToken  types.Bool `tfsdk:"oauth_verify_refresh_token"`
+	OauthCollectMetadata     types.Bool `tfsdk:"oauth_collect_metadata"`
+	OauthGenerateAccessToken types.Bool `tfsdk:"oauth_generate_access_token"`
+	OauthIntrospectToken     types.Bool `tfsdk:"oauth_introspect_token"`
+	OauthRevokeToken         types.Bool `tfsdk:"oauth_revoke_token"`
 }
 
 var DmOAuthComponentsObjectType = map[string]attr.Type{
-	"none":                         types.BoolType,
-	"o_auth_validate_request":      types.BoolType,
-	"o_auth_generate_az_code":      types.BoolType,
-	"o_auth_verify_az_code":        types.BoolType,
-	"o_auth_verify_refresh_token":  types.BoolType,
-	"o_auth_collect_metadata":      types.BoolType,
-	"o_auth_generate_access_token": types.BoolType,
-	"o_auth_introspect_token":      types.BoolType,
-	"o_auth_revoke_token":          types.BoolType,
+	"none":                        types.BoolType,
+	"oauth_validate_request":      types.BoolType,
+	"oauth_generate_az_code":      types.BoolType,
+	"oauth_verify_az_code":        types.BoolType,
+	"oauth_verify_refresh_token":  types.BoolType,
+	"oauth_collect_metadata":      types.BoolType,
+	"oauth_generate_access_token": types.BoolType,
+	"oauth_introspect_token":      types.BoolType,
+	"oauth_revoke_token":          types.BoolType,
 }
 var DmOAuthComponentsObjectDefault = map[string]attr.Value{
-	"none":                         types.BoolValue(false),
-	"o_auth_validate_request":      types.BoolValue(false),
-	"o_auth_generate_az_code":      types.BoolValue(false),
-	"o_auth_verify_az_code":        types.BoolValue(false),
-	"o_auth_verify_refresh_token":  types.BoolValue(false),
-	"o_auth_collect_metadata":      types.BoolValue(false),
-	"o_auth_generate_access_token": types.BoolValue(false),
-	"o_auth_introspect_token":      types.BoolValue(false),
-	"o_auth_revoke_token":          types.BoolValue(false),
+	"none":                        types.BoolValue(false),
+	"oauth_validate_request":      types.BoolValue(false),
+	"oauth_generate_az_code":      types.BoolValue(false),
+	"oauth_verify_az_code":        types.BoolValue(false),
+	"oauth_verify_refresh_token":  types.BoolValue(false),
+	"oauth_collect_metadata":      types.BoolValue(false),
+	"oauth_generate_access_token": types.BoolValue(false),
+	"oauth_introspect_token":      types.BoolValue(false),
+	"oauth_revoke_token":          types.BoolValue(false),
 }
 
 func GetDmOAuthComponentsDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
@@ -77,35 +77,35 @@ func GetDmOAuthComponentsDataSourceSchema(description string, cliAlias string, r
 				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"o_auth_validate_request": DataSourceSchema.BoolAttribute{
+			"oauth_validate_request": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Validate request", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"o_auth_generate_az_code": DataSourceSchema.BoolAttribute{
+			"oauth_generate_az_code": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Generate authorization code", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"o_auth_verify_az_code": DataSourceSchema.BoolAttribute{
+			"oauth_verify_az_code": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Verify authorization code", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"o_auth_verify_refresh_token": DataSourceSchema.BoolAttribute{
+			"oauth_verify_refresh_token": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Verify refresh token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"o_auth_collect_metadata": DataSourceSchema.BoolAttribute{
+			"oauth_collect_metadata": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Collect Metadata", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"o_auth_generate_access_token": DataSourceSchema.BoolAttribute{
+			"oauth_generate_access_token": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Generate access token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"o_auth_introspect_token": DataSourceSchema.BoolAttribute{
+			"oauth_introspect_token": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Introspect token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"o_auth_revoke_token": DataSourceSchema.BoolAttribute{
+			"oauth_revoke_token": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Revoke token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -128,49 +128,49 @@ func GetDmOAuthComponentsResourceSchema(description string, cliAlias string, ref
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"o_auth_validate_request": ResourceSchema.BoolAttribute{
+			"oauth_validate_request": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Validate request", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"o_auth_generate_az_code": ResourceSchema.BoolAttribute{
+			"oauth_generate_az_code": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Generate authorization code", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"o_auth_verify_az_code": ResourceSchema.BoolAttribute{
+			"oauth_verify_az_code": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Verify authorization code", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"o_auth_verify_refresh_token": ResourceSchema.BoolAttribute{
+			"oauth_verify_refresh_token": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Verify refresh token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"o_auth_collect_metadata": ResourceSchema.BoolAttribute{
+			"oauth_collect_metadata": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Collect Metadata", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"o_auth_generate_access_token": ResourceSchema.BoolAttribute{
+			"oauth_generate_access_token": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Generate access token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"o_auth_introspect_token": ResourceSchema.BoolAttribute{
+			"oauth_introspect_token": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Introspect token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"o_auth_revoke_token": ResourceSchema.BoolAttribute{
+			"oauth_revoke_token": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Revoke token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -192,28 +192,28 @@ func (data DmOAuthComponents) IsNull() bool {
 	if !data.None.IsNull() {
 		return false
 	}
-	if !data.OAuthValidateRequest.IsNull() {
+	if !data.OauthValidateRequest.IsNull() {
 		return false
 	}
-	if !data.OAuthGenerateAzCode.IsNull() {
+	if !data.OauthGenerateAzCode.IsNull() {
 		return false
 	}
-	if !data.OAuthVerifyAzCode.IsNull() {
+	if !data.OauthVerifyAzCode.IsNull() {
 		return false
 	}
-	if !data.OAuthVerifyRefreshToken.IsNull() {
+	if !data.OauthVerifyRefreshToken.IsNull() {
 		return false
 	}
-	if !data.OAuthCollectMetadata.IsNull() {
+	if !data.OauthCollectMetadata.IsNull() {
 		return false
 	}
-	if !data.OAuthGenerateAccessToken.IsNull() {
+	if !data.OauthGenerateAccessToken.IsNull() {
 		return false
 	}
-	if !data.OAuthIntrospectToken.IsNull() {
+	if !data.OauthIntrospectToken.IsNull() {
 		return false
 	}
-	if !data.OAuthRevokeToken.IsNull() {
+	if !data.OauthRevokeToken.IsNull() {
 		return false
 	}
 	return true
@@ -228,29 +228,29 @@ func (data DmOAuthComponents) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.None.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`none`, tfutils.StringFromBool(data.None, ""))
 	}
-	if !data.OAuthValidateRequest.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthValidateRequest`, tfutils.StringFromBool(data.OAuthValidateRequest, ""))
+	if !data.OauthValidateRequest.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthValidateRequest`, tfutils.StringFromBool(data.OauthValidateRequest, ""))
 	}
-	if !data.OAuthGenerateAzCode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthGenerateAZCode`, tfutils.StringFromBool(data.OAuthGenerateAzCode, ""))
+	if !data.OauthGenerateAzCode.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthGenerateAZCode`, tfutils.StringFromBool(data.OauthGenerateAzCode, ""))
 	}
-	if !data.OAuthVerifyAzCode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthVerifyAZCode`, tfutils.StringFromBool(data.OAuthVerifyAzCode, ""))
+	if !data.OauthVerifyAzCode.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthVerifyAZCode`, tfutils.StringFromBool(data.OauthVerifyAzCode, ""))
 	}
-	if !data.OAuthVerifyRefreshToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthVerifyRefreshToken`, tfutils.StringFromBool(data.OAuthVerifyRefreshToken, ""))
+	if !data.OauthVerifyRefreshToken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthVerifyRefreshToken`, tfutils.StringFromBool(data.OauthVerifyRefreshToken, ""))
 	}
-	if !data.OAuthCollectMetadata.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthCollectMetadata`, tfutils.StringFromBool(data.OAuthCollectMetadata, ""))
+	if !data.OauthCollectMetadata.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthCollectMetadata`, tfutils.StringFromBool(data.OauthCollectMetadata, ""))
 	}
-	if !data.OAuthGenerateAccessToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthGenerateAccessToken`, tfutils.StringFromBool(data.OAuthGenerateAccessToken, ""))
+	if !data.OauthGenerateAccessToken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthGenerateAccessToken`, tfutils.StringFromBool(data.OauthGenerateAccessToken, ""))
 	}
-	if !data.OAuthIntrospectToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthIntrospectToken`, tfutils.StringFromBool(data.OAuthIntrospectToken, ""))
+	if !data.OauthIntrospectToken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthIntrospectToken`, tfutils.StringFromBool(data.OauthIntrospectToken, ""))
 	}
-	if !data.OAuthRevokeToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthRevokeToken`, tfutils.StringFromBool(data.OAuthRevokeToken, ""))
+	if !data.OauthRevokeToken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthRevokeToken`, tfutils.StringFromBool(data.OauthRevokeToken, ""))
 	}
 	return body
 }
@@ -265,44 +265,44 @@ func (data *DmOAuthComponents) FromBody(ctx context.Context, pathRoot string, re
 		data.None = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `OAuthValidateRequest`); value.Exists() {
-		data.OAuthValidateRequest = tfutils.BoolFromString(value.String())
+		data.OauthValidateRequest = tfutils.BoolFromString(value.String())
 	} else {
-		data.OAuthValidateRequest = types.BoolNull()
+		data.OauthValidateRequest = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `OAuthGenerateAZCode`); value.Exists() {
-		data.OAuthGenerateAzCode = tfutils.BoolFromString(value.String())
+		data.OauthGenerateAzCode = tfutils.BoolFromString(value.String())
 	} else {
-		data.OAuthGenerateAzCode = types.BoolNull()
+		data.OauthGenerateAzCode = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `OAuthVerifyAZCode`); value.Exists() {
-		data.OAuthVerifyAzCode = tfutils.BoolFromString(value.String())
+		data.OauthVerifyAzCode = tfutils.BoolFromString(value.String())
 	} else {
-		data.OAuthVerifyAzCode = types.BoolNull()
+		data.OauthVerifyAzCode = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `OAuthVerifyRefreshToken`); value.Exists() {
-		data.OAuthVerifyRefreshToken = tfutils.BoolFromString(value.String())
+		data.OauthVerifyRefreshToken = tfutils.BoolFromString(value.String())
 	} else {
-		data.OAuthVerifyRefreshToken = types.BoolNull()
+		data.OauthVerifyRefreshToken = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `OAuthCollectMetadata`); value.Exists() {
-		data.OAuthCollectMetadata = tfutils.BoolFromString(value.String())
+		data.OauthCollectMetadata = tfutils.BoolFromString(value.String())
 	} else {
-		data.OAuthCollectMetadata = types.BoolNull()
+		data.OauthCollectMetadata = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `OAuthGenerateAccessToken`); value.Exists() {
-		data.OAuthGenerateAccessToken = tfutils.BoolFromString(value.String())
+		data.OauthGenerateAccessToken = tfutils.BoolFromString(value.String())
 	} else {
-		data.OAuthGenerateAccessToken = types.BoolNull()
+		data.OauthGenerateAccessToken = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `OAuthIntrospectToken`); value.Exists() {
-		data.OAuthIntrospectToken = tfutils.BoolFromString(value.String())
+		data.OauthIntrospectToken = tfutils.BoolFromString(value.String())
 	} else {
-		data.OAuthIntrospectToken = types.BoolNull()
+		data.OauthIntrospectToken = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `OAuthRevokeToken`); value.Exists() {
-		data.OAuthRevokeToken = tfutils.BoolFromString(value.String())
+		data.OauthRevokeToken = tfutils.BoolFromString(value.String())
 	} else {
-		data.OAuthRevokeToken = types.BoolNull()
+		data.OauthRevokeToken = types.BoolNull()
 	}
 }
 
@@ -315,44 +315,44 @@ func (data *DmOAuthComponents) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else if data.None.ValueBool() {
 		data.None = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `OAuthValidateRequest`); value.Exists() && !data.OAuthValidateRequest.IsNull() {
-		data.OAuthValidateRequest = tfutils.BoolFromString(value.String())
-	} else if data.OAuthValidateRequest.ValueBool() {
-		data.OAuthValidateRequest = types.BoolNull()
+	if value := res.Get(pathRoot + `OAuthValidateRequest`); value.Exists() && !data.OauthValidateRequest.IsNull() {
+		data.OauthValidateRequest = tfutils.BoolFromString(value.String())
+	} else if data.OauthValidateRequest.ValueBool() {
+		data.OauthValidateRequest = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `OAuthGenerateAZCode`); value.Exists() && !data.OAuthGenerateAzCode.IsNull() {
-		data.OAuthGenerateAzCode = tfutils.BoolFromString(value.String())
-	} else if data.OAuthGenerateAzCode.ValueBool() {
-		data.OAuthGenerateAzCode = types.BoolNull()
+	if value := res.Get(pathRoot + `OAuthGenerateAZCode`); value.Exists() && !data.OauthGenerateAzCode.IsNull() {
+		data.OauthGenerateAzCode = tfutils.BoolFromString(value.String())
+	} else if data.OauthGenerateAzCode.ValueBool() {
+		data.OauthGenerateAzCode = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `OAuthVerifyAZCode`); value.Exists() && !data.OAuthVerifyAzCode.IsNull() {
-		data.OAuthVerifyAzCode = tfutils.BoolFromString(value.String())
-	} else if data.OAuthVerifyAzCode.ValueBool() {
-		data.OAuthVerifyAzCode = types.BoolNull()
+	if value := res.Get(pathRoot + `OAuthVerifyAZCode`); value.Exists() && !data.OauthVerifyAzCode.IsNull() {
+		data.OauthVerifyAzCode = tfutils.BoolFromString(value.String())
+	} else if data.OauthVerifyAzCode.ValueBool() {
+		data.OauthVerifyAzCode = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `OAuthVerifyRefreshToken`); value.Exists() && !data.OAuthVerifyRefreshToken.IsNull() {
-		data.OAuthVerifyRefreshToken = tfutils.BoolFromString(value.String())
-	} else if data.OAuthVerifyRefreshToken.ValueBool() {
-		data.OAuthVerifyRefreshToken = types.BoolNull()
+	if value := res.Get(pathRoot + `OAuthVerifyRefreshToken`); value.Exists() && !data.OauthVerifyRefreshToken.IsNull() {
+		data.OauthVerifyRefreshToken = tfutils.BoolFromString(value.String())
+	} else if data.OauthVerifyRefreshToken.ValueBool() {
+		data.OauthVerifyRefreshToken = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `OAuthCollectMetadata`); value.Exists() && !data.OAuthCollectMetadata.IsNull() {
-		data.OAuthCollectMetadata = tfutils.BoolFromString(value.String())
-	} else if data.OAuthCollectMetadata.ValueBool() {
-		data.OAuthCollectMetadata = types.BoolNull()
+	if value := res.Get(pathRoot + `OAuthCollectMetadata`); value.Exists() && !data.OauthCollectMetadata.IsNull() {
+		data.OauthCollectMetadata = tfutils.BoolFromString(value.String())
+	} else if data.OauthCollectMetadata.ValueBool() {
+		data.OauthCollectMetadata = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `OAuthGenerateAccessToken`); value.Exists() && !data.OAuthGenerateAccessToken.IsNull() {
-		data.OAuthGenerateAccessToken = tfutils.BoolFromString(value.String())
-	} else if data.OAuthGenerateAccessToken.ValueBool() {
-		data.OAuthGenerateAccessToken = types.BoolNull()
+	if value := res.Get(pathRoot + `OAuthGenerateAccessToken`); value.Exists() && !data.OauthGenerateAccessToken.IsNull() {
+		data.OauthGenerateAccessToken = tfutils.BoolFromString(value.String())
+	} else if data.OauthGenerateAccessToken.ValueBool() {
+		data.OauthGenerateAccessToken = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `OAuthIntrospectToken`); value.Exists() && !data.OAuthIntrospectToken.IsNull() {
-		data.OAuthIntrospectToken = tfutils.BoolFromString(value.String())
-	} else if data.OAuthIntrospectToken.ValueBool() {
-		data.OAuthIntrospectToken = types.BoolNull()
+	if value := res.Get(pathRoot + `OAuthIntrospectToken`); value.Exists() && !data.OauthIntrospectToken.IsNull() {
+		data.OauthIntrospectToken = tfutils.BoolFromString(value.String())
+	} else if data.OauthIntrospectToken.ValueBool() {
+		data.OauthIntrospectToken = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `OAuthRevokeToken`); value.Exists() && !data.OAuthRevokeToken.IsNull() {
-		data.OAuthRevokeToken = tfutils.BoolFromString(value.String())
-	} else if data.OAuthRevokeToken.ValueBool() {
-		data.OAuthRevokeToken = types.BoolNull()
+	if value := res.Get(pathRoot + `OAuthRevokeToken`); value.Exists() && !data.OauthRevokeToken.IsNull() {
+		data.OauthRevokeToken = tfutils.BoolFromString(value.String())
+	} else if data.OauthRevokeToken.ValueBool() {
+		data.OauthRevokeToken = types.BoolNull()
 	}
 }

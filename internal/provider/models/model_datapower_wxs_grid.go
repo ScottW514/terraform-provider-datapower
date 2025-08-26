@@ -45,7 +45,7 @@ type WXSGrid struct {
 	Timeout           types.Int64                 `tfsdk:"timeout"`
 	SslClient         types.String                `tfsdk:"ssl_client"`
 	Encrypt           types.Bool                  `tfsdk:"encrypt"`
-	EncryptSsKey      types.String                `tfsdk:"encrypt_ss_key"`
+	EncryptSskey      types.String                `tfsdk:"encrypt_sskey"`
 	EncryptAlg        types.String                `tfsdk:"encrypt_alg"`
 	KeyObfuscation    types.Bool                  `tfsdk:"key_obfuscation"`
 	KeyObfuscationAlg types.String                `tfsdk:"key_obfuscation_alg"`
@@ -85,7 +85,7 @@ var WXSGridObjectType = map[string]attr.Type{
 	"timeout":             types.Int64Type,
 	"ssl_client":          types.StringType,
 	"encrypt":             types.BoolType,
-	"encrypt_ss_key":      types.StringType,
+	"encrypt_sskey":       types.StringType,
 	"encrypt_alg":         types.StringType,
 	"key_obfuscation":     types.BoolType,
 	"key_obfuscation_alg": types.StringType,
@@ -130,7 +130,7 @@ func (data WXSGrid) IsNull() bool {
 	if !data.Encrypt.IsNull() {
 		return false
 	}
-	if !data.EncryptSsKey.IsNull() {
+	if !data.EncryptSskey.IsNull() {
 		return false
 	}
 	if !data.EncryptAlg.IsNull() {
@@ -178,8 +178,8 @@ func (data WXSGrid) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Encrypt.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Encrypt`, tfutils.StringFromBool(data.Encrypt, ""))
 	}
-	if !data.EncryptSsKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EncryptSSKey`, data.EncryptSsKey.ValueString())
+	if !data.EncryptSskey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`EncryptSSKey`, data.EncryptSskey.ValueString())
 	}
 	if !data.EncryptAlg.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EncryptAlg`, data.EncryptAlg.ValueString())
@@ -243,9 +243,9 @@ func (data *WXSGrid) FromBody(ctx context.Context, pathRoot string, res gjson.Re
 		data.Encrypt = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `EncryptSSKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.EncryptSsKey = tfutils.ParseStringFromGJSON(value)
+		data.EncryptSskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EncryptSsKey = types.StringNull()
+		data.EncryptSskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EncryptAlg`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.EncryptAlg = tfutils.ParseStringFromGJSON(value)
@@ -313,10 +313,10 @@ func (data *WXSGrid) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	} else if data.Encrypt.ValueBool() {
 		data.Encrypt = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `EncryptSSKey`); value.Exists() && !data.EncryptSsKey.IsNull() {
-		data.EncryptSsKey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `EncryptSSKey`); value.Exists() && !data.EncryptSskey.IsNull() {
+		data.EncryptSskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EncryptSsKey = types.StringNull()
+		data.EncryptSskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EncryptAlg`); value.Exists() && !data.EncryptAlg.IsNull() {
 		data.EncryptAlg = tfutils.ParseStringFromGJSON(value)

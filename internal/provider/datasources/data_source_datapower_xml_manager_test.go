@@ -42,7 +42,7 @@ func TestAccDataSourceXMLManager(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_xml_manager.test", "result.0.id", "AccTest_XMLManager"),
 					resource.TestCheckResourceAttr("data.datapower_xml_manager.test", "result.0.cache_memory_size", "2147483647"),
 					resource.TestCheckResourceAttr("data.datapower_xml_manager.test", "result.0.cache_size", "256"),
-					resource.TestCheckResourceAttr("data.datapower_xml_manager.test", "result.0.sha1_caching", "true"),
+					resource.TestCheckResourceAttr("data.datapower_xml_manager.test", "result.0.sha1caching", "true"),
 					resource.TestCheckResourceAttr("data.datapower_xml_manager.test", "result.0.static_document_calls", "true"),
 					resource.TestCheckResourceAttr("data.datapower_xml_manager.test", "result.0.search_results", "true"),
 					resource.TestCheckResourceAttr("data.datapower_xml_manager.test", "result.0.parser_limits_bytes_scanned", "4194304"),

@@ -53,7 +53,7 @@ func TestAccDataSourceMQManager(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_mq_manager.test", "result.0.initial_connections", "1"),
 					resource.TestCheckResourceAttr("data.datapower_mq_manager.test", "result.0.sharing_conversations", "1"),
 					resource.TestCheckResourceAttr("data.datapower_mq_manager.test", "result.0.permit_insecure_servers", "false"),
-					resource.TestCheckResourceAttr("data.datapower_mq_manager.test", "result.0.ss_lcipher", "none"),
+					resource.TestCheckResourceAttr("data.datapower_mq_manager.test", "result.0.ssl_cipher", "none"),
 					resource.TestCheckResourceAttr("data.datapower_mq_manager.test", "result.0.convert_input", "true"),
 					resource.TestCheckResourceAttr("data.datapower_mq_manager.test", "result.0.auto_retry", "true"),
 					resource.TestCheckResourceAttr("data.datapower_mq_manager.test", "result.0.retry_interval", "10"),

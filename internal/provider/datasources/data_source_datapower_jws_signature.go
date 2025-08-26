@@ -88,7 +88,7 @@ func (d *JWSSignatureDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "Private key.",
 							Computed:            true,
 						},
-						"ss_key": schema.StringAttribute{
+						"sskey": schema.StringAttribute{
 							MarkdownDescription: "Shared secret key.",
 							Computed:            true,
 						},

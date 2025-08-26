@@ -70,7 +70,7 @@ type StylePolicyAction struct {
 	DynamicSchema              types.String                     `tfsdk:"dynamic_schema"`
 	DynamicStylesheet          types.String                     `tfsdk:"dynamic_stylesheet"`
 	InputConversion            types.String                     `tfsdk:"input_conversion"`
-	XPath                      types.String                     `tfsdk:"x_path"`
+	Xpath                      types.String                     `tfsdk:"xpath"`
 	Variable                   types.String                     `tfsdk:"variable"`
 	Value                      types.String                     `tfsdk:"value"`
 	SslClientConfigType        types.String                     `tfsdk:"ssl_client_config_type"`
@@ -101,7 +101,7 @@ type StylePolicyAction struct {
 	RecipientIdentifier        types.List                       `tfsdk:"recipient_identifier"`
 	SingleCertificate          types.String                     `tfsdk:"single_certificate"`
 	SingleKey                  types.String                     `tfsdk:"single_key"`
-	SingleSsKey                types.String                     `tfsdk:"single_ss_key"`
+	SingleSskey                types.String                     `tfsdk:"single_sskey"`
 	JweDirectKeyObject         types.String                     `tfsdk:"jwe_direct_key_object"`
 	JwsVerifyStripSignature    types.Bool                       `tfsdk:"jws_verify_strip_signature"`
 	Asynchronous               types.Bool                       `tfsdk:"asynchronous"`
@@ -608,7 +608,7 @@ var StylePolicyActionObjectType = map[string]attr.Type{
 	"dynamic_schema":                 types.StringType,
 	"dynamic_stylesheet":             types.StringType,
 	"input_conversion":               types.StringType,
-	"x_path":                         types.StringType,
+	"xpath":                          types.StringType,
 	"variable":                       types.StringType,
 	"value":                          types.StringType,
 	"ssl_client_config_type":         types.StringType,
@@ -639,7 +639,7 @@ var StylePolicyActionObjectType = map[string]attr.Type{
 	"recipient_identifier":           types.ListType{ElemType: types.StringType},
 	"single_certificate":             types.StringType,
 	"single_key":                     types.StringType,
-	"single_ss_key":                  types.StringType,
+	"single_sskey":                   types.StringType,
 	"jwe_direct_key_object":          types.StringType,
 	"jws_verify_strip_signature":     types.BoolType,
 	"asynchronous":                   types.BoolType,
@@ -780,7 +780,7 @@ func (data StylePolicyAction) IsNull() bool {
 	if !data.InputConversion.IsNull() {
 		return false
 	}
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	if !data.Variable.IsNull() {
@@ -873,7 +873,7 @@ func (data StylePolicyAction) IsNull() bool {
 	if !data.SingleKey.IsNull() {
 		return false
 	}
-	if !data.SingleSsKey.IsNull() {
+	if !data.SingleSskey.IsNull() {
 		return false
 	}
 	if !data.JweDirectKeyObject.IsNull() {
@@ -1063,8 +1063,8 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.InputConversion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`InputConversion`, data.InputConversion.ValueString())
 	}
-	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
+	if !data.Xpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPath`, data.Xpath.ValueString())
 	}
 	if !data.Variable.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Variable`, data.Variable.ValueString())
@@ -1168,8 +1168,8 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.SingleKey.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SingleKey`, data.SingleKey.ValueString())
 	}
-	if !data.SingleSsKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SingleSSKey`, data.SingleSsKey.ValueString())
+	if !data.SingleSskey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SingleSSKey`, data.SingleSskey.ValueString())
 	}
 	if !data.JweDirectKeyObject.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`JWEDirectKeyObject`, data.JweDirectKeyObject.ValueString())
@@ -1452,9 +1452,9 @@ func (data *StylePolicyAction) FromBody(ctx context.Context, pathRoot string, re
 		data.InputConversion = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Variable`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Variable = tfutils.ParseStringFromGJSON(value)
@@ -1621,9 +1621,9 @@ func (data *StylePolicyAction) FromBody(ctx context.Context, pathRoot string, re
 		data.SingleKey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SingleSSKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SingleSsKey = tfutils.ParseStringFromGJSON(value)
+		data.SingleSskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SingleSsKey = types.StringNull()
+		data.SingleSskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `JWEDirectKeyObject`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.JweDirectKeyObject = tfutils.ParseStringFromGJSON(value)
@@ -1949,10 +1949,10 @@ func (data *StylePolicyAction) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.InputConversion = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Variable`); value.Exists() && !data.Variable.IsNull() {
 		data.Variable = tfutils.ParseStringFromGJSON(value)
@@ -2116,10 +2116,10 @@ func (data *StylePolicyAction) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.SingleKey = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SingleSSKey`); value.Exists() && !data.SingleSsKey.IsNull() {
-		data.SingleSsKey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SingleSSKey`); value.Exists() && !data.SingleSskey.IsNull() {
+		data.SingleSskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SingleSsKey = types.StringNull()
+		data.SingleSskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `JWEDirectKeyObject`); value.Exists() && !data.JweDirectKeyObject.IsNull() {
 		data.JweDirectKeyObject = tfutils.ParseStringFromGJSON(value)

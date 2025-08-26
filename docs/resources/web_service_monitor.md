@@ -18,7 +18,7 @@ A service level monitor (SLM) for a web service watches web services traffic to 
 resource "datapower_web_service_monitor" "test" {
   id           = "ResTestWebServiceMonitor"
   app_domain   = "acceptance_test"
-  wsdlurl      = "wsdlurl"
+  wsdl_url     = "wsdlurl"
   endpoint_url = "endpointurl"
   frontend_url = "frontendurl"
 }
@@ -35,7 +35,7 @@ resource "datapower_web_service_monitor" "test" {
 - `frontend_url` (String) Specify the URL that clients use to access the web service. This value cannot be the same value as the endpoint URL.. Wildcards are supported.
   - CLI Alias: `frontend-url`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `wsdlurl` (String) Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.
+- `wsdl_url` (String) Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.
   - CLI Alias: `wsdl`
 
 ### Optional

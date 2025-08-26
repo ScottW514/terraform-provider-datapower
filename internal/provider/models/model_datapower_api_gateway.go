@@ -42,7 +42,7 @@ type APIGateway struct {
 	UrlRefreshPolicy               types.String                `tfsdk:"url_refresh_policy"`
 	CacheMemorySize                types.Int64                 `tfsdk:"cache_memory_size"`
 	CacheSize                      types.Int64                 `tfsdk:"cache_size"`
-	Sha1Caching                    types.Bool                  `tfsdk:"sha1_caching"`
+	Sha1caching                    types.Bool                  `tfsdk:"sha1caching"`
 	StaticDocumentCalls            types.Bool                  `tfsdk:"static_document_calls"`
 	VirtualServers                 types.List                  `tfsdk:"virtual_servers"`
 	DocCacheMaxDocs                types.Int64                 `tfsdk:"doc_cache_max_docs"`
@@ -73,7 +73,7 @@ var APIGatewayObjectType = map[string]attr.Type{
 	"url_refresh_policy":                types.StringType,
 	"cache_memory_size":                 types.Int64Type,
 	"cache_size":                        types.Int64Type,
-	"sha1_caching":                      types.BoolType,
+	"sha1caching":                       types.BoolType,
 	"static_document_calls":             types.BoolType,
 	"virtual_servers":                   types.ListType{ElemType: types.StringType},
 	"doc_cache_max_docs":                types.Int64Type,
@@ -127,7 +127,7 @@ func (data APIGateway) IsNull() bool {
 	if !data.CacheSize.IsNull() {
 		return false
 	}
-	if !data.Sha1Caching.IsNull() {
+	if !data.Sha1caching.IsNull() {
 		return false
 	}
 	if !data.StaticDocumentCalls.IsNull() {
@@ -218,8 +218,8 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.CacheSize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CacheSize`, data.CacheSize.ValueInt64())
 	}
-	if !data.Sha1Caching.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SHA1Caching`, tfutils.StringFromBool(data.Sha1Caching, ""))
+	if !data.Sha1caching.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SHA1Caching`, tfutils.StringFromBool(data.Sha1caching, ""))
 	}
 	if !data.StaticDocumentCalls.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`StaticDocumentCalls`, tfutils.StringFromBool(data.StaticDocumentCalls, ""))
@@ -354,9 +354,9 @@ func (data *APIGateway) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.CacheSize = types.Int64Value(256)
 	}
 	if value := res.Get(pathRoot + `SHA1Caching`); value.Exists() {
-		data.Sha1Caching = tfutils.BoolFromString(value.String())
+		data.Sha1caching = tfutils.BoolFromString(value.String())
 	} else {
-		data.Sha1Caching = types.BoolNull()
+		data.Sha1caching = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `StaticDocumentCalls`); value.Exists() {
 		data.StaticDocumentCalls = tfutils.BoolFromString(value.String())
@@ -587,10 +587,10 @@ func (data *APIGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	} else if data.CacheSize.ValueInt64() != 256 {
 		data.CacheSize = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `SHA1Caching`); value.Exists() && !data.Sha1Caching.IsNull() {
-		data.Sha1Caching = tfutils.BoolFromString(value.String())
-	} else if !data.Sha1Caching.ValueBool() {
-		data.Sha1Caching = types.BoolNull()
+	if value := res.Get(pathRoot + `SHA1Caching`); value.Exists() && !data.Sha1caching.IsNull() {
+		data.Sha1caching = tfutils.BoolFromString(value.String())
+	} else if !data.Sha1caching.ValueBool() {
+		data.Sha1caching = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `StaticDocumentCalls`); value.Exists() && !data.StaticDocumentCalls.IsNull() {
 		data.StaticDocumentCalls = tfutils.BoolFromString(value.String())

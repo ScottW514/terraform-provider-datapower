@@ -88,7 +88,7 @@ func (d *JOSERecipientIdentifierDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Use the private key to verify the recipient.",
 							Computed:            true,
 						},
-						"ss_key": schema.StringAttribute{
+						"sskey": schema.StringAttribute{
 							MarkdownDescription: "Use the shared secret key to verify the recipient.",
 							Computed:            true,
 						},

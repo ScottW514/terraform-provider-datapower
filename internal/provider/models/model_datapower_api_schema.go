@@ -38,7 +38,7 @@ type APISchema struct {
 	AppDomain                  types.String                `tfsdk:"app_domain"`
 	UserSummary                types.String                `tfsdk:"user_summary"`
 	JsonSchema                 types.String                `tfsdk:"json_schema"`
-	GraphQlSchema              types.String                `tfsdk:"graph_ql_schema"`
+	GraphqlSchema              types.String                `tfsdk:"graphql_schema"`
 	XmlType                    types.String                `tfsdk:"xml_type"`
 	XmlValidationMode          types.String                `tfsdk:"xml_validation_mode"`
 	XmlSchemaUrl               types.String                `tfsdk:"xml_schema_url"`
@@ -55,7 +55,7 @@ var APISchemaObjectType = map[string]attr.Type{
 	"app_domain":                     types.StringType,
 	"user_summary":                   types.StringType,
 	"json_schema":                    types.StringType,
-	"graph_ql_schema":                types.StringType,
+	"graphql_schema":                 types.StringType,
 	"xml_type":                       types.StringType,
 	"xml_validation_mode":            types.StringType,
 	"xml_schema_url":                 types.StringType,
@@ -87,7 +87,7 @@ func (data APISchema) IsNull() bool {
 	if !data.JsonSchema.IsNull() {
 		return false
 	}
-	if !data.GraphQlSchema.IsNull() {
+	if !data.GraphqlSchema.IsNull() {
 		return false
 	}
 	if !data.XmlType.IsNull() {
@@ -132,8 +132,8 @@ func (data APISchema) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.JsonSchema.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`JSONSchema`, data.JsonSchema.ValueString())
 	}
-	if !data.GraphQlSchema.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GraphQLSchema`, data.GraphQlSchema.ValueString())
+	if !data.GraphqlSchema.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`GraphQLSchema`, data.GraphqlSchema.ValueString())
 	}
 	if !data.XmlType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`XMLType`, data.XmlType.ValueString())
@@ -182,9 +182,9 @@ func (data *APISchema) FromBody(ctx context.Context, pathRoot string, res gjson.
 		data.JsonSchema = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `GraphQLSchema`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.GraphQlSchema = tfutils.ParseStringFromGJSON(value)
+		data.GraphqlSchema = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.GraphQlSchema = types.StringNull()
+		data.GraphqlSchema = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XMLType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.XmlType = tfutils.ParseStringFromGJSON(value)
@@ -247,10 +247,10 @@ func (data *APISchema) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	} else {
 		data.JsonSchema = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `GraphQLSchema`); value.Exists() && !data.GraphQlSchema.IsNull() {
-		data.GraphQlSchema = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `GraphQLSchema`); value.Exists() && !data.GraphqlSchema.IsNull() {
+		data.GraphqlSchema = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.GraphQlSchema = types.StringNull()
+		data.GraphqlSchema = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XMLType`); value.Exists() && !data.XmlType.IsNull() {
 		data.XmlType = tfutils.ParseStringFromGJSON(value)

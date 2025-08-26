@@ -97,12 +97,12 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 				Default: stringdefault.StaticString("internal"),
 			},
-			"business_i_ds": schema.ListAttribute{
+			"business_ids": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier for the partners. When configuring a trading partner, its identifier (ID) must be unique within a specific B2B gateway. The identifiers are equivalent to one of the following values. <ul><li>In AS messages, a value for an <tt>AS*-From</tt> or <tt>AS*-To</tt> header, where * is 1, 2, or 3.</li><li>In ebMS messages, a value for an <tt>PartyID</tt> element, where the PartyID element can be under either From or To element.</li><li>In other messages, a value that is extracted from the body of the EDI message: <tt>SenderID</tt> or <tt>ReceiverID</tt> .</li></ul>", "business-id", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"business_i_ds_duns": schema.ListAttribute{
+			"business_id_duns": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the 9-digit DUNS (Data Universal Numbering System) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.", "business-id-duns", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -112,7 +112,7 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 					),
 				},
 			},
-			"business_i_ds_duns_plus4": schema.ListAttribute{
+			"business_id_duns4": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the 13-digit D-U-N-S (Data Universal Numbering System + 4) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.", "business-id-duns4", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -383,7 +383,7 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 				Default: stringdefault.StaticString("never"),
 			},
-			"mdnssl_client_config_type": schema.StringAttribute{
+			"mdn_ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("MDN TLS client type", "mdn-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
@@ -392,7 +392,7 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 				Default: stringdefault.StaticString("client"),
 			},
-			"mdnssl_client": schema.StringAttribute{
+			"mdn_ssl_client": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("MDN TLS client profile", "mdn-ssl-client", "ssl_client_profile").String,
 				Optional:            true,
 			},

@@ -106,12 +106,12 @@ resource "datapower_log_target" "test" {
   - CLI Alias: `maximum-connections`
   - Range: `1`-`100`
   - Default value: `1`
-- `nfs_file` (String) Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).
-  - CLI Alias: `nfs-file`
-  - Required When: `type`=`nfs`
-- `nfs_mount` (String) NFS static mount
+- `nf_sm_ount` (String) NFS static mount
   - CLI Alias: `nfs-static-mount`
   - Reference to: `datapower_nfs_static_mount:id`
+  - Required When: `type`=`nfs`
+- `nfs_file` (String) Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).
+  - CLI Alias: `nfs-file`
   - Required When: `type`=`nfs`
 - `priority` (String) Specify the priority to control the scheduling of logs. When system resources are in high demand, high priority operations are favored over lower priority operations.
   - CLI Alias: `priority`

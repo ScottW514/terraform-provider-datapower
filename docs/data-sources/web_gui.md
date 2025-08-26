@@ -35,7 +35,7 @@ data "datapower_web_gui" "test" {
 - `save_config_overwrites` (Boolean) Specify whether saving the configuration overwrites the startup configuration. <ul><li>When enable, saving the configuration overwrites the startup configuration with the running configuration.</li><li>When not enabled, a manual step is required that prevents overwriting the manually edited startup configuration.</li></ul>
 - `ssl_server` (String) Custom TLS server profile
 - `ssl_server_config_type` (String) Custom TLS server type
-- `sslsni_server` (String) Custom TLS SNI server profile
+- `ssl_sni_server` (String) Custom TLS SNI server profile
 - `user_agent` (String) Custom user agent
 - `user_summary` (String) Comments
 

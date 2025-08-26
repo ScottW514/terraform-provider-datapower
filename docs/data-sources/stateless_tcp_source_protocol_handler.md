@@ -46,7 +46,7 @@ Read-Only:
 - `persistent_connections` (Boolean) Enable or disable persistent connections where appropriate the front end.
 - `ssl_server` (String) The TLS server profile to secure connections between clients and the DataPower Gateway.
 - `ssl_server_config_type` (String) The TLS profile type to secure connections between clients and the DataPower Gateway.
-- `sslsni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
+- `ssl_sni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

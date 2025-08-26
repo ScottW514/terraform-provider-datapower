@@ -76,11 +76,11 @@ func (d *MCFXPathDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							MarkdownDescription: "The name of the application domain the object belongs to",
 							Computed:            true,
 						},
-						"x_path_expression": schema.StringAttribute{
+						"xpath_expression": schema.StringAttribute{
 							MarkdownDescription: "XPath Expression",
 							Computed:            true,
 						},
-						"x_path_value": schema.StringAttribute{
+						"xpath_value": schema.StringAttribute{
 							MarkdownDescription: "XPath Value",
 							Computed:            true,
 						},

@@ -642,8 +642,8 @@ var APISecurityOAuthTestConfig = ModelTestConfig{
 resource "datapower_api_security_oauth" "test" {
   id = "ResTestAPISecurityOAuth"
   app_domain = "acceptance_test"
-  o_auth_provider = "AccTest_OAuthProviderSettings"
-  o_auth_flow = "implicit"
+  oauth_provider = "AccTest_OAuthProviderSettings"
+  oauth_flow = "implicit"
 }`,
     Data: `
 data "datapower_api_security_oauth" "test" {
@@ -653,8 +653,8 @@ data "datapower_api_security_oauth" "test" {
 resource "datapower_api_security_oauth" "acc_test" {
   id = "AccTest_APISecurityOAuth"
   app_domain = datapower_domain.acc_test.app_domain
-  o_auth_provider = datapower_oauth_provider_settings.acc_test.id
-  o_auth_flow = "implicit"
+  oauth_provider = datapower_oauth_provider_settings.acc_test.id
+  oauth_flow = "implicit"
 }`,
     ModelOnly:    false,
 }
@@ -664,7 +664,7 @@ var APISecurityOAuthReqTestConfig = ModelTestConfig{
 resource "datapower_api_security_oauth_req" "test" {
   id = "ResTestAPISecurityOAuthReq"
   app_domain = "acceptance_test"
-  api_security_o_auth_def = "AccTest_APISecurityOAuth"
+  api_security_oauth_def = "AccTest_APISecurityOAuth"
 }`,
     Data: `
 data "datapower_api_security_oauth_req" "test" {
@@ -674,7 +674,7 @@ data "datapower_api_security_oauth_req" "test" {
 resource "datapower_api_security_oauth_req" "acc_test" {
   id = "AccTest_APISecurityOAuthReq"
   app_domain = datapower_domain.acc_test.app_domain
-  api_security_o_auth_def = datapower_api_security_oauth.acc_test.id
+  api_security_oauth_def = datapower_api_security_oauth.acc_test.id
 }`,
     ModelOnly:    false,
 }
@@ -1213,7 +1213,7 @@ var AssemblyActionOAuthTestConfig = ModelTestConfig{
 resource "datapower_assembly_action_oauth" "test" {
   id = "ResTestAssemblyActionOAuth"
   app_domain = "acceptance_test"
-  o_auth_provider_settings_reference = {"Default": "AccTest_OAuthProviderSettings"}
+  oauth_provider_settings_reference = {"Default": "AccTest_OAuthProviderSettings"}
 }`,
     Data: `
 data "datapower_assembly_action_oauth" "test" {
@@ -1223,7 +1223,7 @@ data "datapower_assembly_action_oauth" "test" {
 resource "datapower_assembly_action_oauth" "acc_test" {
   id = "AccTest_AssemblyActionOAuth"
   app_domain = datapower_domain.acc_test.app_domain
-  o_auth_provider_settings_reference = {"Default": datapower_oauth_provider_settings.acc_test.id}
+  oauth_provider_settings_reference = {"Default": datapower_oauth_provider_settings.acc_test.id}
 }`,
     ModelOnly:    false,
 }
@@ -1664,7 +1664,7 @@ var B2BProfileTestConfig = ModelTestConfig{
 resource "datapower_b2b_profile" "test" {
   id = "ResTestB2BProfile"
   app_domain = "acceptance_test"
-  business_i_ds = ["businessid"]
+  business_ids = ["businessid"]
   destinations = ` + DmB2BDestinationTestConfig.GetModelListConfig() + `
 }`,
     Data: `
@@ -1675,7 +1675,7 @@ data "datapower_b2b_profile" "test" {
 resource "datapower_b2b_profile" "acc_test" {
   id = "AccTest_B2BProfile"
   app_domain = datapower_domain.acc_test.app_domain
-  business_i_ds = ["businessid"]
+  business_ids = ["businessid"]
   destinations = ` + DmB2BDestinationTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
@@ -1706,8 +1706,8 @@ var B2BXPathRoutingPolicyTestConfig = ModelTestConfig{
 resource "datapower_b2b_xpath_routing_policy" "test" {
   id = "ResTestB2BXPathRoutingPolicy"
   app_domain = "acceptance_test"
-  sender_x_path = "senderpath"
-  receiver_x_path = "senderpath"
+  sender_xpath = "senderpath"
+  receiver_xpath = "senderpath"
 }`,
     Data: `
 data "datapower_b2b_xpath_routing_policy" "test" {
@@ -1717,8 +1717,8 @@ data "datapower_b2b_xpath_routing_policy" "test" {
 resource "datapower_b2b_xpath_routing_policy" "acc_test" {
   id = "AccTest_B2BXPathRoutingPolicy"
   app_domain = datapower_domain.acc_test.app_domain
-  sender_x_path = "senderpath"
-  receiver_x_path = "senderpath"
+  sender_xpath = "senderpath"
+  receiver_xpath = "senderpath"
 }`,
     ModelOnly:    false,
 }
@@ -1920,7 +1920,7 @@ resource "datapower_count_monitor" "test" {
   app_domain = "acceptance_test"
   measure = "requests"
   source = "all"
-  max_sources = 10000
+  max_source_s = 10000
   message_type = "AccTest_MessageType"
 }`,
     Data: `
@@ -1933,7 +1933,7 @@ resource "datapower_count_monitor" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   measure = "requests"
   source = "all"
-  max_sources = 10000
+  max_source_s = 10000
   message_type = datapower_message_type.acc_test.id
 }`,
     ModelOnly:    false,
@@ -3618,18 +3618,6 @@ var DmPubkeyAuthPolicyTestConfig = ModelTestConfig{
 }`,
     ModelOnly:    true,
 }
-var DmQMFileSystemUsageTestConfig = ModelTestConfig{
-    Name:         "DmQMFileSystemUsage",
-    Model: `{
-  warning_threshold = 75
-  critical_threshold = 90
-}`,
-    ModelTestBed: `{
-  warning_threshold = 75
-  critical_threshold = 90
-}`,
-    ModelOnly:    true,
-}
 var DmRBMSSHAuthenticateTypeTestConfig = ModelTestConfig{
     Name:         "DmRBMSSHAuthenticateType",
     Model: `{
@@ -3909,11 +3897,11 @@ var DmScheduledRuleTestConfig = ModelTestConfig{
 var DmSchemaExceptionRuleTestConfig = ModelTestConfig{
     Name:         "DmSchemaExceptionRule",
     Model: `{
-  x_path = "*"
+  xpath = "*"
   exception_type = "AllowEncrypted"
 }`,
     ModelTestBed: `{
-  x_path = "*"
+  xpath = "*"
   exception_type = "AllowEncrypted"
 }`,
     ModelOnly:    true,
@@ -4061,14 +4049,14 @@ var DmStylesheetParameterTestConfig = ModelTestConfig{
 var DmTAMAZReplicaTestConfig = ModelTestConfig{
     Name:         "DmTAMAZReplica",
     Model: `{
-  tamaz_replica = "replica"
-  tamaz_replica_port = 7136
-  tamaz_replica_weight = 10
+  tam_az_replica = "replica"
+  tam_az_replica_port = 7136
+  tam_az_replica_weight = 10
 }`,
     ModelTestBed: `{
-  tamaz_replica = "replica"
-  tamaz_replica_port = 7136
-  tamaz_replica_weight = 10
+  tam_az_replica = "replica"
+  tam_az_replica_port = 7136
+  tam_az_replica_weight = 10
 }`,
     ModelOnly:    true,
 }
@@ -4461,13 +4449,13 @@ var DmXMLMgmtModesTestConfig = ModelTestConfig{
 var DmXPathRoutingRuleTestConfig = ModelTestConfig{
     Name:         "DmXPathRoutingRule",
     Model: `{
-  x_path = "*"
+  xpath = "*"
   host = "localhost"
   port = 8888
   ssl = false
 }`,
     ModelTestBed: `{
-  x_path = "*"
+  xpath = "*"
   host = "localhost"
   port = 8888
   ssl = false
@@ -4481,7 +4469,7 @@ resource "datapower_document_crypto_map" "test" {
   id = "ResTestDocumentCryptoMap"
   app_domain = "acceptance_test"
   operation = "encrypt"
-  x_path = ["*",]
+  xpath = ["*",]
 }`,
     Data: `
 data "datapower_document_crypto_map" "test" {
@@ -4492,7 +4480,7 @@ resource "datapower_document_crypto_map" "acc_test" {
   id = "AccTest_DocumentCryptoMap"
   app_domain = datapower_domain.acc_test.app_domain
   operation = "encrypt"
-  x_path = ["*",]
+  xpath = ["*",]
 }`,
     ModelOnly:    false,
 }
@@ -4688,7 +4676,6 @@ var FileSystemUsageMonitorTestConfig = ModelTestConfig{
 resource "datapower_file_system_usage_monitor" "test" {
   polling_interval = 60
   all_system = true
-  all_queue_managers = true
 }`,
     Data: `
 data "datapower_file_system_usage_monitor" "test" {
@@ -5498,8 +5485,8 @@ var MCFXPathTestConfig = ModelTestConfig{
 resource "datapower_mcf_xpath" "test" {
   id = "ResTestMCFXPath"
   app_domain = "acceptance_test"
-  x_path_expression = "*"
-  x_path_value = "value"
+  xpath_expression = "*"
+  xpath_value = "value"
 }`,
     Data: `
 data "datapower_mcf_xpath" "test" {
@@ -5509,8 +5496,8 @@ data "datapower_mcf_xpath" "test" {
 resource "datapower_mcf_xpath" "acc_test" {
   id = "AccTest_MCFXPath"
   app_domain = datapower_domain.acc_test.app_domain
-  x_path_expression = "*"
-  x_path_value = "value"
+  xpath_expression = "*"
+  xpath_value = "value"
 }`,
     ModelOnly:    false,
 }
@@ -5875,7 +5862,7 @@ resource "datapower_oauth_provider_settings" "test" {
   id = "ResTestOAuthProviderSettings"
   app_domain = "acceptance_test"
   provider_type = "native"
-  apic_token_secret = "AccTest_CryptoSSKey"
+  api_c_token_secret = "AccTest_CryptoSSKey"
 }`,
     Data: `
 data "datapower_oauth_provider_settings" "test" {
@@ -5886,7 +5873,7 @@ resource "datapower_oauth_provider_settings" "acc_test" {
   id = "AccTest_OAuthProviderSettings"
   app_domain = datapower_domain.acc_test.app_domain
   provider_type = "native"
-  apic_token_secret = datapower_crypto_sskey.acc_test.id
+  api_c_token_secret = datapower_crypto_sskey.acc_test.id
 }`,
     ModelOnly:    false,
 }
@@ -5896,7 +5883,7 @@ var OAuthSupportedClientTestConfig = ModelTestConfig{
 resource "datapower_oauth_supported_client" "test" {
   id = "ResTestOAuthSupportedClient"
   app_domain = "acceptance_test"
-  o_auth_role = {"azsvr": true}
+  oauth_role = {"azsvr": true}
   az_grant = {"code": true}
   generate_client_secret = false
   client_secret_wo = "secret"
@@ -5913,7 +5900,7 @@ data "datapower_oauth_supported_client" "test" {
 resource "datapower_oauth_supported_client" "acc_test" {
   id = "AccTest_OAuthSupportedClient"
   app_domain = datapower_domain.acc_test.app_domain
-  o_auth_role = {"azsvr": true}
+  oauth_role = {"azsvr": true}
   az_grant = {"code": true}
   generate_client_secret = false
   client_secret_wo = "secret"
@@ -7512,7 +7499,7 @@ var WebServiceMonitorTestConfig = ModelTestConfig{
 resource "datapower_web_service_monitor" "test" {
   id = "ResTestWebServiceMonitor"
   app_domain = "acceptance_test"
-  wsdlurl = "wsdlurl"
+  wsdl_url = "wsdlurl"
   endpoint_url = "endpointurl"
   frontend_url = "frontendurl"
 }`,
@@ -7524,7 +7511,7 @@ data "datapower_web_service_monitor" "test" {
 resource "datapower_web_service_monitor" "acc_test" {
   id = "AccTest_WebServiceMonitor"
   app_domain = datapower_domain.acc_test.app_domain
-  wsdlurl = "wsdlurl"
+  wsdl_url = "wsdlurl"
   endpoint_url = "endpointurl"
   frontend_url = "frontendurl"
 }`,
@@ -7686,7 +7673,7 @@ var XPathRoutingMapTestConfig = ModelTestConfig{
 resource "datapower_xpath_routing_map" "test" {
   id = "ResTestXPathRoutingMap"
   app_domain = "acceptance_test"
-  x_path_routing_rules = ` + DmXPathRoutingRuleTestConfig.GetModelListConfig() + `
+  xpath_routing_rules = ` + DmXPathRoutingRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_xpath_routing_map" "test" {
@@ -7696,7 +7683,7 @@ data "datapower_xpath_routing_map" "test" {
 resource "datapower_xpath_routing_map" "acc_test" {
   id = "AccTest_XPathRoutingMap"
   app_domain = datapower_domain.acc_test.app_domain
-  x_path_routing_rules = ` + DmXPathRoutingRuleTestConfig.GetModelTestBedListConfig() + `
+  xpath_routing_rules = ` + DmXPathRoutingRuleTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }

@@ -50,12 +50,12 @@ resource "datapower_rbm_settings" "test" {
 - `au_custom_url` (String) Custom URL
   - CLI Alias: `au-custom-url`
   - Required When: `au_method`=`custom`
-- `au_force_dnldap_order` (Boolean) Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
+- `au_force_dn_ldap_order` (Boolean) Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   - CLI Alias: `au-force-dn-ldap-order`
   - Default value: `false`
 - `au_host` (String) Server host
   - CLI Alias: `au-server-host`
-  - Required When: (`au_method`=`ldap` AND `auldap_load_balance_group`=``)
+  - Required When: (`au_method`=`ldap` AND `au_ldap_load_balance_group`=``)
 - `au_info_url` (String) Specify the URL of the XML file for authentication. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file to map credentials.
   - CLI Alias: `au-info-url`
   - Required When: `au_method`=`xmlfile`
@@ -63,63 +63,63 @@ resource "datapower_rbm_settings" "test" {
   - CLI Alias: `au-kerberos-keytab`
   - Reference to: `datapower_crypto_kerberos_keytab:id`
   - Required When: `au_method`=`spnego`
+- `au_ldap_bind_dn` (String) LDAP bind DN
+  - CLI Alias: `au-ldap-bind-dn`
+- `au_ldap_bind_password_alias` (String) LDAP bind password alias
+  - CLI Alias: `au-ldap-bind-password-alias`
+  - Reference to: `datapower_password_alias:id`
+- `au_ldap_load_balance_group` (String) Specify the load balancer group of LDAP servers. This setting overrides the settings for the server host and port.
+  - CLI Alias: `loadbalancer-group`
+  - Reference to: `datapower_load_balancer_group:id`
+- `au_ldap_prefix` (String) Specify the string to add before the username to form the DN. If this value is <tt>CN=</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP suffix is <tt>O=example.com</tt> .
+  - CLI Alias: `ldap-prefix`
+  - Default value: `cn=`
+- `au_ldap_read_timeout` (Number) Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
+  - CLI Alias: `au-ldap-readtimeout`
+  - Range: `0`-`86400`
+  - Default value: `60`
+- `au_ldap_search_for_dn` (Boolean) Specify whether to retrieve the user DN with an LDAP search. <ul><li>When enabled, the login name presented by the user is used with the LDAP search parameters for an LDAP search to retrieve the user DN.</li><li>When disabled, the login name presented by the user is used with the LDAP prefix and suffix to construct the user DN.</li></ul>
+  - CLI Alias: `au-ldap-search`
+  - Default value: `false`
+- `au_ldap_search_parameters` (String) LDAP search parameters
+  - CLI Alias: `au-ldap-parameters`
+  - Reference to: `datapower_ldap_search_parameters:id`
+  - Required When: (`au_method`=`ldap` AND `au_ldap_search_for_dn`=`true`)
 - `au_method` (String) Authentication method
   - CLI Alias: `au-method`
   - Choices: `local`, `xmlfile`, `ldap`, `radius`, `spnego`, `zosnss`, `custom`, `client-ssl`, `oidc`
   - Default value: `local`
-- `au_port` (Number) Server port
-  - CLI Alias: `au-server-port`
-  - Required When: (`au_method`=`ldap` AND `auldap_load_balance_group`=``)
-- `auldap_bind_dn` (String) LDAP bind DN
-  - CLI Alias: `au-ldap-bind-dn`
-- `auldap_bind_password_alias` (String) LDAP bind password alias
-  - CLI Alias: `au-ldap-bind-password-alias`
-  - Reference to: `datapower_password_alias:id`
-- `auldap_load_balance_group` (String) Specify the load balancer group of LDAP servers. This setting overrides the settings for the server host and port.
-  - CLI Alias: `loadbalancer-group`
-  - Reference to: `datapower_load_balancer_group:id`
-- `auldap_prefix` (String) Specify the string to add before the username to form the DN. If this value is <tt>CN=</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP suffix is <tt>O=example.com</tt> .
-  - CLI Alias: `ldap-prefix`
-  - Default value: `cn=`
-- `auldap_read_timeout` (Number) Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
-  - CLI Alias: `au-ldap-readtimeout`
-  - Range: `0`-`86400`
-  - Default value: `60`
-- `auldap_search_for_dn` (Boolean) Specify whether to retrieve the user DN with an LDAP search. <ul><li>When enabled, the login name presented by the user is used with the LDAP search parameters for an LDAP search to retrieve the user DN.</li><li>When disabled, the login name presented by the user is used with the LDAP prefix and suffix to construct the user DN.</li></ul>
-  - CLI Alias: `au-ldap-search`
-  - Default value: `false`
-- `auldap_search_parameters` (String) LDAP search parameters
-  - CLI Alias: `au-ldap-parameters`
-  - Reference to: `datapower_ldap_search_parameters:id`
-  - Required When: (`au_method`=`ldap` AND `auldap_search_for_dn`=`true`)
-- `auoidc_client_id` (String) Client ID
+- `au_oidc_client_id` (String) Client ID
   - CLI Alias: `au-oidc-client-id`
-- `auoidc_client_secret` (String) Client secret
+- `au_oidc_client_secret` (String) Client secret
   - CLI Alias: `au-oidc-client-secret`
   - Reference to: `datapower_password_alias:id`
-- `auoidc_identity_service_url` (String) Identity service URL
+- `au_oidc_identity_service_url` (String) Identity service URL
   - CLI Alias: `au-oidc-identity-service-url`
-- `auoidc_identity_service_urlssl_client` (String) TLS client profile
+- `au_oidc_identity_service_url_ssl_client` (String) TLS client profile
   - CLI Alias: `au-oidc-identity-service-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
-- `auoidc_key_fetch_interval` (Number) Retrieval interval for public keys.
+- `au_oidc_key_fetch_interval` (Number) Retrieval interval for public keys.
   - CLI Alias: `au-oidc-key-fetch-interval`
   - Range: `1`-`86400`
   - Default value: `30`
-- `auoidc_scope` (String) Scope
+- `au_oidc_scope` (String) Scope
   - CLI Alias: `au-oidc-scope`
   - Default value: `openid`
-- `aussl_valcred` (String) Validation credentials
+- `au_port` (Number) Server port
+  - CLI Alias: `au-server-port`
+  - Required When: (`au_method`=`ldap` AND `au_ldap_load_balance_group`=``)
+- `au_ssl_valcred` (String) Validation credentials
   - CLI Alias: `au-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
   - Required When: `au_method`=`client-ssl`
-- `auzosnss_config` (String) z/OS NSS client
+- `au_zos_nss_config` (String) z/OS NSS client
   - CLI Alias: `zos-nss-au`
   - Reference to: `datapower_zos_nss_client:id`
   - Required When: `au_method`=`zosnss`
 - `ca_pub_key_file` (String) Specify the certificate authority (CA) public key file in the <tt>cert:</tt> directory for SSH authentication with SSH user certificates. This public key file contains the public key for one or more certificate authorities.
   - CLI Alias: `ssh-ca-pubkey-file`
-  - Required When: `sshau_method`=`certificate`
+  - Required When: `ssh_au_method`=`certificate`
 - `cli_timeout` (Number) Specify the time after which to invalidate idle CLI sessions. When invalidated, requires re-authentication. Enter a value in the range 0 - 65535. A value of 0 disables the timer. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 900.</li><li>When common criteria is not enabled, the default value is 0.</li></ul>
   - CLI Alias: `cli-timeout`
   - Range: `0`-`65535`
@@ -145,18 +145,18 @@ resource "datapower_rbm_settings" "test" {
   - CLI Alias: `fallback-user`
   - Reference to: `datapower_user:id`
   - Required When: (NOT`au_method`=`local` AND `fallback_login`=`restricted`)
-- `lda_psuffix` (String) Specify the string to add after the username to form the DN. If this value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .
+- `ldap_ssl_client_config_type` (String) TLS client type
+  - CLI Alias: `ssl-client-type`
+  - Choices: `client`
+  - Default value: `client`
+- `ldap_ssl_client_profile` (String) TLS client profile
+  - CLI Alias: `ssl-client`
+  - Reference to: `datapower_ssl_client_profile:id`
+- `ldap_suffix` (String) Specify the string to add after the username to form the DN. If this value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .
   - CLI Alias: `ldap-suffix`
 - `ldap_version` (String) LDAP version
   - CLI Alias: `ldap-version`
   - Choices: `v2`, `v3`
-- `ldapssl_client_config_type` (String) TLS client type
-  - CLI Alias: `ssl-client-type`
-  - Choices: `client`
-  - Default value: `client`
-- `ldapssl_client_profile` (String) TLS client profile
-  - CLI Alias: `ssl-client`
-  - Reference to: `datapower_ssl_client_profile:id`
 - `lockout_period` (Number) Specify the duration to lock out local user accounts after the maximum number of failed login attempts is exceeded. Instead of locking out accounts for a specific duration, the account can be locked out until re-enabled by a privileged user. Enter a value in the range 0 - 1000, where 0 locks out accounts until reset. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 0.</li><li>When common criteria is not enabled, the default value is 1.</li></ul><p><b>Note:</b> The duration applies to all local accounts, including the <tt>admin</tt> user account. The only difference is that the <tt>admin</tt> user account cannot be locked out until reset. When the duration is 0, the <tt>admin</tt> user account is locked out for 120 minutes or until re-enabled by a privileged user.</p>
   - CLI Alias: `lockout-duration`
   - Range: `0`-`1000`
@@ -173,48 +173,48 @@ resource "datapower_rbm_settings" "test" {
 - `mc_custom_url` (String) Custom URL
   - CLI Alias: `mc-custom-url`
   - Required When: `mc_method`=`custom`
-- `mc_force_dnldap_order` (Boolean) Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
+- `mc_force_dn_ldap_order` (Boolean) Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   - CLI Alias: `mc-force-dn-ldap-order`
   - Default value: `false`
 - `mc_host` (String) Server host
   - CLI Alias: `mc-server-host`
-  - Required When: (`mcldap_search_for_group`=`true` AND `mc_method`!=`custom`)
+  - Required When: (`mc_ldap_search_for_group`=`true` AND `mc_method`!=`custom`)
 - `mc_info_url` (String) Specify the URL of the XML file to map credentials. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file for authentication.
   - CLI Alias: `mc-info-url`
   - Required When: `mc_method`=`xmlfile`
+- `mc_ldap_bind_dn` (String) LDAP bind DN
+  - CLI Alias: `mc-ldap-bind-dn`
+- `mc_ldap_bind_password_alias` (String) LDAP bind password alias
+  - CLI Alias: `mc-ldap-bind-password-alias`
+  - Reference to: `datapower_password_alias:id`
+- `mc_ldap_load_balance_group` (String) Load balancer group
+  - CLI Alias: `mc-loadbalancer-group`
+  - Reference to: `datapower_load_balancer_group:id`
+- `mc_ldap_read_timeout` (Number) Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
+  - CLI Alias: `mc-ldap-readtimeout`
+  - Range: `0`-`86400`
+  - Default value: `60`
+- `mc_ldap_search_for_group` (Boolean) Specify whether to search LDAP to retrieve all user groups that match the query. <ul><li>When enabled, the authenticated DN of the user and the LDAP search parameters are used as part of the LDAP search to retrieve all user groups that match the query. When a user belongs to multiple groups, the resultant access policy for this user is additive not most restrictive.</li><li>When disabled, the authenticated identity of the user (DN or user group of local user) is used directly as the input credential.</li></ul>
+  - CLI Alias: `mc-ldap-search`
+  - Default value: `false`
+- `mc_ldap_search_parameters` (String) LDAP search parameters
+  - CLI Alias: `mc-ldap-parameters`
+  - Reference to: `datapower_ldap_search_parameters:id`
+  - Required When: (`mc_ldap_search_for_group`=`true` AND `mc_method`!=`custom`)
+- `mc_ldap_ssl_client_config_type` (String) TLS client type
+  - CLI Alias: `mc-ssl-client-type`
+  - Choices: `client`
+  - Default value: `client`
+- `mc_ldap_ssl_client_profile` (String) TLS client profile
+  - CLI Alias: `mc-ssl-client`
+  - Reference to: `datapower_ssl_client_profile:id`
 - `mc_method` (String) Credential-mapping method
   - CLI Alias: `mc-method`
   - Choices: `local`, `xmlfile`, `custom`
   - Default value: `local`
 - `mc_port` (Number) Server port
   - CLI Alias: `mc-server-port`
-  - Required When: (`mcldap_search_for_group`=`true` AND `mc_method`!=`custom`)
-- `mcldap_bind_dn` (String) LDAP bind DN
-  - CLI Alias: `mc-ldap-bind-dn`
-- `mcldap_bind_password_alias` (String) LDAP bind password alias
-  - CLI Alias: `mc-ldap-bind-password-alias`
-  - Reference to: `datapower_password_alias:id`
-- `mcldap_load_balance_group` (String) Load balancer group
-  - CLI Alias: `mc-loadbalancer-group`
-  - Reference to: `datapower_load_balancer_group:id`
-- `mcldap_read_timeout` (Number) Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
-  - CLI Alias: `mc-ldap-readtimeout`
-  - Range: `0`-`86400`
-  - Default value: `60`
-- `mcldap_search_for_group` (Boolean) Specify whether to search LDAP to retrieve all user groups that match the query. <ul><li>When enabled, the authenticated DN of the user and the LDAP search parameters are used as part of the LDAP search to retrieve all user groups that match the query. When a user belongs to multiple groups, the resultant access policy for this user is additive not most restrictive.</li><li>When disabled, the authenticated identity of the user (DN or user group of local user) is used directly as the input credential.</li></ul>
-  - CLI Alias: `mc-ldap-search`
-  - Default value: `false`
-- `mcldap_search_parameters` (String) LDAP search parameters
-  - CLI Alias: `mc-ldap-parameters`
-  - Reference to: `datapower_ldap_search_parameters:id`
-  - Required When: (`mcldap_search_for_group`=`true` AND `mc_method`!=`custom`)
-- `mcldapssl_client_config_type` (String) TLS client type
-  - CLI Alias: `mc-ssl-client-type`
-  - Choices: `client`
-  - Default value: `client`
-- `mcldapssl_client_profile` (String) TLS client profile
-  - CLI Alias: `mc-ssl-client`
-  - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: (`mc_ldap_search_for_group`=`true` AND `mc_method`!=`custom`)
 - `min_password_length` (Number) Specify the minimum length of a valid password. Enter a value in the range 1 - 128. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 14.</li><li>When common criteria is not enabled, the default value is 6.</li></ul>
   - CLI Alias: `pwd-minimum-length`
   - Range: `1`-`128`
@@ -242,8 +242,8 @@ resource "datapower_rbm_settings" "test" {
   - Default value: `false`
 - `revoked_keys` (List of String) Specify the OpenSSH public keys to revoke for SSH authentication. Each entry is the public key file in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory and must be in the OpenSSH public key format. These keys are signed by the CA user public key file.
   - CLI Alias: `ssh-revoked-keys`
-- `sshau_method` (Attributes) Specify the method to authenticate SSH users. <ul><li>When no method, the user is prompted for both username and password.</li><li>When password, the user is prompted for the password. For this method, the username must be part of the invocation. With the ssh command, the invocation is in the ssh username@host format.</li><li>When user certificate, the user is not prompted for input. The connection is successful when the invocation provides a signed SSH user certificate that is verified by the CA public key file in the <tt>cert:</tt> directory. With the ssh command, the invocation must include the -i file parameter.</li><li>When both certificate and password, processing attempts to first authenticate with the provided signed SSH user certificate. If unsuccessful, prompts for the password.</li><li>Supported RBM authentication methods with SSH authentication method are local and LDAP. <ul><li>Local authentication method extracts the certificate identity and attempts login with local User of that name.</li><li>LDAP authentication method constructs the DN through LDAP search or by applying the configured prefix and suffix. Since SSH authentication completes prior to the Authentication step no LDAP bind or authenticate will take place.</li></ul></li></ul>
-  - CLI Alias: `ssh-au-method` (see [below for nested schema](#nestedatt--sshau_method))
+- `ssh_au_method` (Attributes) Specify the method to authenticate SSH users. <ul><li>When no method, the user is prompted for both username and password.</li><li>When password, the user is prompted for the password. For this method, the username must be part of the invocation. With the ssh command, the invocation is in the ssh username@host format.</li><li>When user certificate, the user is not prompted for input. The connection is successful when the invocation provides a signed SSH user certificate that is verified by the CA public key file in the <tt>cert:</tt> directory. With the ssh command, the invocation must include the -i file parameter.</li><li>When both certificate and password, processing attempts to first authenticate with the provided signed SSH user certificate. If unsuccessful, prompts for the password.</li><li>Supported RBM authentication methods with SSH authentication method are local and LDAP. <ul><li>Local authentication method extracts the certificate identity and attempts login with local User of that name.</li><li>LDAP authentication method constructs the DN through LDAP search or by applying the configured prefix and suffix. Since SSH authentication completes prior to the Authentication step no LDAP bind or authenticate will take place.</li></ul></li></ul>
+  - CLI Alias: `ssh-au-method` (see [below for nested schema](#nestedatt--ssh_au_method))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
@@ -264,8 +264,8 @@ Optional:
 - `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
 
 
-<a id="nestedatt--sshau_method"></a>
-### Nested Schema for `sshau_method`
+<a id="nestedatt--ssh_au_method"></a>
+### Nested Schema for `ssh_au_method`
 
 Optional:
 

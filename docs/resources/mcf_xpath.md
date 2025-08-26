@@ -16,10 +16,10 @@ Filter based on specific data in the message. An XPath expression defines a data
 
 ```terraform
 resource "datapower_mcf_xpath" "test" {
-  id                = "ResTestMCFXPath"
-  app_domain        = "acceptance_test"
-  x_path_expression = "*"
-  x_path_value      = "value"
+  id               = "ResTestMCFXPath"
+  app_domain       = "acceptance_test"
+  xpath_expression = "*"
+  xpath_value      = "value"
 }
 ```
 
@@ -30,9 +30,9 @@ resource "datapower_mcf_xpath" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `x_path_expression` (String) XPath Expression
+- `xpath_expression` (String) XPath Expression
   - CLI Alias: `location`
-- `x_path_value` (String) XPath Value
+- `xpath_value` (String) XPath Value
   - CLI Alias: `value`
 
 ### Optional

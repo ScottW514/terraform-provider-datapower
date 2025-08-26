@@ -43,7 +43,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `key` (String) Private key.
 - `protected_header` (Attributes List) Add a protected header to the JWS Sign action. (see [below for nested schema](#nestedatt--result--protected_header))
-- `ss_key` (String) Shared secret key.
+- `sskey` (String) Shared secret key.
 - `unprotected_header` (Attributes List) Add an unprotected header to the JWS Sign action. (see [below for nested schema](#nestedatt--result--unprotected_header))
 - `user_summary` (String) A descriptive summary for the configuration.
 

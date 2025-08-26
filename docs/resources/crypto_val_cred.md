@@ -40,7 +40,7 @@ resource "datapower_crypto_val_cred" "test" {
 - `check_dates` (Boolean) Specify whether to check dates during certificate validation. This validation checks the current date and time against the <tt>notBefore</tt> and <tt>notAfter</tt> values in certificates and CRLs. When enabled, the date values are checked and expired certificates cause validation to fail. Otherwise, the date values are ignored and and do not cause validation to fail when a certificate is expired.
   - CLI Alias: `check-dates`
   - Default value: `true`
-- `crldp_handling` (String) Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.
+- `crl_dp_handling` (String) Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.
   - CLI Alias: `crldp`
   - Choices: `ignore`, `require`
   - Default value: `ignore`

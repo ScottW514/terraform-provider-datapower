@@ -39,7 +39,7 @@ data "datapower_error_report_settings" "test" {
 - `ftp_user_agent` (String) Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.
 - `internal_state` (Boolean) Specify whether to include the internal state of the appliance in the error report. The internal state can be useful in diagnosing the cause of the error.
 - `location_identifier` (String) Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.
-- `nfs_mount` (String) Specify the NFS mount point to which to upload the error report.
+- `nf_sm_ount` (String) Specify the NFS mount point to which to upload the error report.
 - `nfs_path` (String) This describes the NFS path location for the Error Report
 - `protocol` (String) Specify the protocol to use to upload the error report. Note that the selection you will see depends on your device features and licenses.
 - `raid_path` (String) Specify the directory on the RAID volume to which to upload the error report.

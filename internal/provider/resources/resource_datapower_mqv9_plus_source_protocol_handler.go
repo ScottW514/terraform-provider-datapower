@@ -189,7 +189,7 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				},
 				Default: stringdefault.StaticString("None"),
 			},
-			"content_type_x_path": schema.StringAttribute{
+			"content_type_xpath": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression to extract Content-Type from IBM MQ header", "content-type-xpath", "").AddRequiredWhen(models.MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

@@ -50,28 +50,28 @@ Read-Only:
 - `advanced_scope_custom_headers` (String) Specify the custom headers to send with the advanced scope validation request. Use a regular expression match to include headers from the initial request.
 - `advanced_scope_url` (String) Specify the URL to send scope information for validation. This external endpoint is where the specified scope is verified. You must define this property for advanced scope validation.
 - `advanced_scope_url_override` (Boolean) Use URL from API Security Definition
+- `api_c_access_token_ttl` (Number) Specify the time in seconds that an access token remains valid. The default value is 3600.
+- `api_c_auth_code_ttl` (Number) Specify the time in seconds that an authorization code remains valid. The default value is 300.
+- `api_c_authorize_endpoint` (String) Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .
+- `api_c_enable_introspection` (Boolean) Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.
+- `api_c_enable_oidc` (Boolean) Specify whether to enable OIDC to verify the identity of the user. When enabled, the client application verifies the identity of the user based on the requirement of an OIDC provider before requesting access to client resources. By default, OIDC token generation is enabled. OIDC is only available for implicit and AZ code grant types.
+- `api_c_enable_refresh_token` (Boolean) Specify whether to enable issuing refresh tokens. Refresh tokens are issued to the client. Refresh tokens are used to obtain a new access token when the current access token becomes invalid, expires, or are used to obtain additional access tokens with identical or narrower scope. By default, this setting is disabled.
+- `api_c_introspect_endpoint` (String) Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .
+- `api_c_maximum_consent_ttl` (Number) Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.
+- `api_c_oidc_hybrid_response_types` (Attributes) OIDC Hybrid Flow Response Types
+  - CLI Alias: `apic-oidc-hybrid-response-types` (see [below for nested schema](#nestedatt--result--api_c_oidc_hybrid_response_types))
+- `api_c_one_time_use_accesstoken` (Boolean) One-time use access token
+- `api_c_one_time_use_refreshtoken` (Boolean) Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>
+- `api_c_provider_base_path` (String) Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .
+- `api_c_refresh_token_limit` (Number) Specify the number of refresh tokens to allow to be generated. The default value is 10.
+- `api_c_refresh_token_ttl` (Number) Specify the time in seconds that a refresh token remains valid. The default value is 5400.
+- `api_c_require_pkce` (Boolean) Specify whether the application must enforce PKCE. For more information, see RFC 7636.
+- `api_c_support_pkce` (Boolean) Specify whether the application should enforce PKCE if provided by the client. For more information, see RFC 7636.
+- `api_c_support_pkce_plain` (Boolean) Specify whether to support the PKCE <tt>plain</tt> code challenge transform method. For more information, see RFC 7636.
+- `api_c_token_endpoint` (String) Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .
+- `api_c_token_secret` (String) Token secret
+- `api_c_token_type_to_generate` (String) Type of token to generate
 - `api_security_token_manager` (String) API security token manager
-- `apic_access_token_ttl` (Number) Specify the time in seconds that an access token remains valid. The default value is 3600.
-- `apic_auth_code_ttl` (Number) Specify the time in seconds that an authorization code remains valid. The default value is 300.
-- `apic_authorize_endpoint` (String) Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .
-- `apic_enable_introspection` (Boolean) Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.
-- `apic_enable_oidc` (Boolean) Specify whether to enable OIDC to verify the identity of the user. When enabled, the client application verifies the identity of the user based on the requirement of an OIDC provider before requesting access to client resources. By default, OIDC token generation is enabled. OIDC is only available for implicit and AZ code grant types.
-- `apic_enable_refresh_token` (Boolean) Specify whether to enable issuing refresh tokens. Refresh tokens are issued to the client. Refresh tokens are used to obtain a new access token when the current access token becomes invalid, expires, or are used to obtain additional access tokens with identical or narrower scope. By default, this setting is disabled.
-- `apic_introspect_endpoint` (String) Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .
-- `apic_maximum_consent_ttl` (Number) Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.
-- `apic_one_time_use_accesstoken` (Boolean) One-time use access token
-- `apic_one_time_use_refreshtoken` (Boolean) Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>
-- `apic_provider_base_path` (String) Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .
-- `apic_refresh_token_limit` (Number) Specify the number of refresh tokens to allow to be generated. The default value is 10.
-- `apic_refresh_token_ttl` (Number) Specify the time in seconds that a refresh token remains valid. The default value is 5400.
-- `apic_require_pkce` (Boolean) Specify whether the application must enforce PKCE. For more information, see RFC 7636.
-- `apic_support_pkce` (Boolean) Specify whether the application should enforce PKCE if provided by the client. For more information, see RFC 7636.
-- `apic_support_pkce_plain` (Boolean) Specify whether to support the PKCE <tt>plain</tt> code challenge transform method. For more information, see RFC 7636.
-- `apic_token_endpoint` (String) Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .
-- `apic_token_secret` (String) Token secret
-- `apic_token_type_to_generate` (String) Type of token to generate
-- `apicoidc_hybrid_response_types` (Attributes) OIDC Hybrid Flow Response Types
-  - CLI Alias: `apic-oidc-hybrid-response-types` (see [below for nested schema](#nestedatt--result--apicoidc_hybrid_response_types))
 - `app_domain` (String) The name of the application domain the object belongs to
 - `application_revocation_endpoint` (String) Application revocation endpoint
 - `default_scopes` (String) Specify the default scopes to apply when the request does not contain a scope. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The default scopes must be a subset of the allowed scopes in the API security OAuth requirement. Without defined scopes and the request does not contain a scope, an invalid scope error is returned.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
@@ -105,7 +105,7 @@ Read-Only:
 - `supported_grant_types` (Attributes) Specify the supported grant types. Each grant type defines a method to grant authorization to client applications.
   - CLI Alias: `supported-grant-types` (see [below for nested schema](#nestedatt--result--supported_grant_types))
 - `third_party_authorization_header_pass_thru` (Boolean) Specify whether to retain or remove the <tt>Authorization</tt> header for a bearer token. The default behavior is to remove this header.
-- `third_party_azurl` (String) Authorization endpoint
+- `third_party_az_url` (String) Authorization endpoint
 - `third_party_basic_auth_header_name` (String) Specify the header name to send the encoded or non-encoded authentication string. For example, <tt>x-introspect-basic-authorization-header</tt> .
 - `third_party_custom_header_name_format` (String) Specify the pattern of header name to send additional information. For example, <tt>x-introspect-*</tt> .
 - `third_party_introspect_basic_auth_password` (String) Basic authentication password
@@ -147,8 +147,8 @@ Read-Only:
   - Default value: `true`
 
 
-<a id="nestedatt--result--apicoidc_hybrid_response_types"></a>
-### Nested Schema for `result.apicoidc_hybrid_response_types`
+<a id="nestedatt--result--api_c_oidc_hybrid_response_types"></a>
+### Nested Schema for `result.api_c_oidc_hybrid_response_types`
 
 Read-Only:
 

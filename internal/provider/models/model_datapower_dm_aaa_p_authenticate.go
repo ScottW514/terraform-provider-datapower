@@ -46,59 +46,59 @@ type DmAAAPAuthenticate struct {
 	AuMapUrl                        types.String        `tfsdk:"au_map_url"`
 	AuHost                          types.String        `tfsdk:"au_host"`
 	AuPort                          types.Int64         `tfsdk:"au_port"`
-	AusslValcred                    types.String        `tfsdk:"aussl_valcred"`
+	AuSslValcred                    types.String        `tfsdk:"au_ssl_valcred"`
 	AuCacheAllow                    types.String        `tfsdk:"au_cache_allow"`
 	AuCacheTtl                      types.Int64         `tfsdk:"au_cache_ttl"`
 	AuKerberosPrincipal             types.String        `tfsdk:"au_kerberos_principal"`
 	AuKerberosPassword              types.String        `tfsdk:"au_kerberos_password"`
 	AuClearTrustServerUrl           types.String        `tfsdk:"au_clear_trust_server_url"`
 	AuClearTrustApplication         types.String        `tfsdk:"au_clear_trust_application"`
-	AusamlArtifactResponder         types.String        `tfsdk:"ausaml_artifact_responder"`
+	AuSamlArtifactResponder         types.String        `tfsdk:"au_saml_artifact_responder"`
 	AuKerberosVerifySignature       types.Bool          `tfsdk:"au_kerberos_verify_signature"`
 	AuNetegrityBaseUri              types.String        `tfsdk:"au_netegrity_base_uri"`
-	AusamlAuthQueryServer           types.String        `tfsdk:"ausaml_auth_query_server"`
-	AusamlVersion                   types.String        `tfsdk:"ausaml_version"`
-	AuldapPrefix                    types.String        `tfsdk:"auldap_prefix"`
-	AuldapSuffix                    types.String        `tfsdk:"auldap_suffix"`
-	AuldapLoadBalanceGroup          types.String        `tfsdk:"auldap_load_balance_group"`
+	AuSamlAuthQueryServer           types.String        `tfsdk:"au_saml_auth_query_server"`
+	AuSamlVersion                   types.String        `tfsdk:"au_saml_version"`
+	AuLdapPrefix                    types.String        `tfsdk:"au_ldap_prefix"`
+	AuLdapSuffix                    types.String        `tfsdk:"au_ldap_suffix"`
+	AuLdapLoadBalanceGroup          types.String        `tfsdk:"au_ldap_load_balance_group"`
 	AuKerberosKeytab                types.String        `tfsdk:"au_kerberos_keytab"`
-	AuwsTrustUrl                    types.String        `tfsdk:"auws_trust_url"`
-	Ausaml2Issuer                   types.String        `tfsdk:"ausaml2_issuer"`
+	AuWsTrustUrl                    types.String        `tfsdk:"au_ws_trust_url"`
+	AuSaml2Issuer                   types.String        `tfsdk:"au_saml2_issuer"`
 	AuSignerValcred                 types.String        `tfsdk:"au_signer_valcred"`
-	AuSignedXPath                   types.String        `tfsdk:"au_signed_x_path"`
-	AuldapBindDn                    types.String        `tfsdk:"auldap_bind_dn"`
-	AuldapSearchAttribute           types.String        `tfsdk:"auldap_search_attribute"`
-	AultpaTokenVersionsBitmap       *DmLTPATokenVersion `tfsdk:"aultpa_token_versions_bitmap"`
-	AultpaKeyFile                   types.String        `tfsdk:"aultpa_key_file"`
-	AultpaStashFile                 types.String        `tfsdk:"aultpa_stash_file"`
+	AuSignedXpath                   types.String        `tfsdk:"au_signed_xpath"`
+	AuLdapBindDn                    types.String        `tfsdk:"au_ldap_bind_dn"`
+	AuLdapSearchAttribute           types.String        `tfsdk:"au_ldap_search_attribute"`
+	AuLtpaTokenVersionsBitmap       *DmLTPATokenVersion `tfsdk:"au_ltpa_token_versions_bitmap"`
+	AuLtpaKeyFile                   types.String        `tfsdk:"au_ltpa_key_file"`
+	AuLtpaStashFile                 types.String        `tfsdk:"au_ltpa_stash_file"`
 	AuBinaryTokenX509Valcred        types.String        `tfsdk:"au_binary_token_x509_valcred"`
-	AutamServer                     types.String        `tfsdk:"autam_server"`
+	AuTamServer                     types.String        `tfsdk:"au_tam_server"`
 	AuAllowRemoteTokenReference     types.Bool          `tfsdk:"au_allow_remote_token_reference"`
 	AuRemoteTokenProcessService     types.String        `tfsdk:"au_remote_token_process_service"`
-	AuwsTrustVersion                types.String        `tfsdk:"auws_trust_version"`
-	AuldapSearchForDn               types.Bool          `tfsdk:"auldap_search_for_dn"`
-	AuldapSearchParameters          types.String        `tfsdk:"auldap_search_parameters"`
-	AuwsTrustRequireClientEntropy   types.Bool          `tfsdk:"auws_trust_require_client_entropy"`
-	AuwsTrustClientEntropySize      types.Int64         `tfsdk:"auws_trust_client_entropy_size"`
-	AuwsTrustRequireServerEntropy   types.Bool          `tfsdk:"auws_trust_require_server_entropy"`
-	AuwsTrustServerEntropySize      types.Int64         `tfsdk:"auws_trust_server_entropy_size"`
-	AuwsTrustRequireRstc            types.Bool          `tfsdk:"auws_trust_require_rstc"`
-	AuwsTrustRequireAppliesToHeader types.Bool          `tfsdk:"auws_trust_require_applies_to_header"`
-	AuwsTrustAppliesToHeader        types.String        `tfsdk:"auws_trust_applies_to_header"`
-	AuwsTrustEncryptionCertificate  types.String        `tfsdk:"auws_trust_encryption_certificate"`
-	AuzosnssConfig                  types.String        `tfsdk:"auzosnss_config"`
-	AuldapAttributes                types.String        `tfsdk:"auldap_attributes"`
+	AuWsTrustVersion                types.String        `tfsdk:"au_ws_trust_version"`
+	AuLdapSearchForDn               types.Bool          `tfsdk:"au_ldap_search_for_dn"`
+	AuLdapSearchParameters          types.String        `tfsdk:"au_ldap_search_parameters"`
+	AuWsTrustRequireClientEntropy   types.Bool          `tfsdk:"au_ws_trust_require_client_entropy"`
+	AuWsTrustClientEntropySize      types.Int64         `tfsdk:"au_ws_trust_client_entropy_size"`
+	AuWsTrustRequireServerEntropy   types.Bool          `tfsdk:"au_ws_trust_require_server_entropy"`
+	AuWsTrustServerEntropySize      types.Int64         `tfsdk:"au_ws_trust_server_entropy_size"`
+	AuWsTrustRequireRstc            types.Bool          `tfsdk:"au_ws_trust_require_rstc"`
+	AuWsTrustRequireAppliesToHeader types.Bool          `tfsdk:"au_ws_trust_require_applies_to_header"`
+	AuWsTrustAppliesToHeader        types.String        `tfsdk:"au_ws_trust_applies_to_header"`
+	AuWsTrustEncryptionCertificate  types.String        `tfsdk:"au_ws_trust_encryption_certificate"`
+	AuZosNssConfig                  types.String        `tfsdk:"au_zos_nss_config"`
+	AuLdapAttributes                types.String        `tfsdk:"au_ldap_attributes"`
 	AuSkewTime                      types.Int64         `tfsdk:"au_skew_time"`
-	AutampacReturn                  types.Bool          `tfsdk:"autampac_return"`
-	AuldapReadTimeout               types.Int64         `tfsdk:"auldap_read_timeout"`
-	AusslClientConfigType           types.String        `tfsdk:"aussl_client_config_type"`
-	AusslClientProfile              types.String        `tfsdk:"aussl_client_profile"`
-	AuldapBindPasswordAlias         types.String        `tfsdk:"auldap_bind_password_alias"`
-	AultpaKeyFilePasswordAlias      types.String        `tfsdk:"aultpa_key_file_password_alias"`
-	AusmRequestType                 types.String        `tfsdk:"ausm_request_type"`
-	AusmCookieFlow                  *DmSMFlow           `tfsdk:"ausm_cookie_flow"`
-	AusmHeaderFlow                  *DmSMFlow           `tfsdk:"ausm_header_flow"`
-	AusmCookieAttributes            types.String        `tfsdk:"ausm_cookie_attributes"`
+	AuTamPacReturn                  types.Bool          `tfsdk:"au_tam_pac_return"`
+	AuLdapReadTimeout               types.Int64         `tfsdk:"au_ldap_read_timeout"`
+	AuSslClientConfigType           types.String        `tfsdk:"au_ssl_client_config_type"`
+	AuSslClientProfile              types.String        `tfsdk:"au_ssl_client_profile"`
+	AuLdapBindPasswordAlias         types.String        `tfsdk:"au_ldap_bind_password_alias"`
+	AuLtpaKeyFilePasswordAlias      types.String        `tfsdk:"au_ltpa_key_file_password_alias"`
+	AuSmRequestType                 types.String        `tfsdk:"au_sm_request_type"`
+	AuSmCookieFlow                  *DmSMFlow           `tfsdk:"au_sm_cookie_flow"`
+	AuSmHeaderFlow                  *DmSMFlow           `tfsdk:"au_sm_header_flow"`
+	AuSmCookieAttributes            types.String        `tfsdk:"au_sm_cookie_attributes"`
 	AuCacheControl                  types.String        `tfsdk:"au_cache_control"`
 }
 
@@ -128,7 +128,7 @@ var DmAAAPAuthenticateAUHostCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "auldap_load_balance_group",
+			Attribute:   "au_ldap_load_balance_group",
 			AttrType:    "String",
 			AttrDefault: "",
 			Value:       []string{""},
@@ -147,7 +147,7 @@ var DmAAAPAuthenticateAUPortCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "auldap_load_balance_group",
+			Attribute:   "au_ldap_load_balance_group",
 			AttrType:    "String",
 			AttrDefault: "",
 			Value:       []string{""},
@@ -222,7 +222,7 @@ var DmAAAPAuthenticateAULDAPSearchParametersCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "auldap_search_for_dn",
+			Attribute:   "au_ldap_search_for_dn",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -255,7 +255,7 @@ var DmAAAPAuthenticateAULTPAKeyFilePasswordAliasCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "aultpa_token_versions_bitmap",
+			Attribute:   "au_ltpa_token_versions_bitmap",
 			AttrType:    "DmLTPATokenVersion",
 			AttrDefault: "LTPA2",
 			Value:       []string{"LTPA", "LTPA2"},
@@ -271,126 +271,126 @@ var DmAAAPAuthenticateAUSMRequestTypeCondVal = validators.Evaluation{
 }
 
 var DmAAAPAuthenticateObjectType = map[string]attr.Type{
-	"au_method":                            types.StringType,
-	"au_custom_url":                        types.StringType,
-	"au_map_url":                           types.StringType,
-	"au_host":                              types.StringType,
-	"au_port":                              types.Int64Type,
-	"aussl_valcred":                        types.StringType,
-	"au_cache_allow":                       types.StringType,
-	"au_cache_ttl":                         types.Int64Type,
-	"au_kerberos_principal":                types.StringType,
-	"au_kerberos_password":                 types.StringType,
-	"au_clear_trust_server_url":            types.StringType,
-	"au_clear_trust_application":           types.StringType,
-	"ausaml_artifact_responder":            types.StringType,
-	"au_kerberos_verify_signature":         types.BoolType,
-	"au_netegrity_base_uri":                types.StringType,
-	"ausaml_auth_query_server":             types.StringType,
-	"ausaml_version":                       types.StringType,
-	"auldap_prefix":                        types.StringType,
-	"auldap_suffix":                        types.StringType,
-	"auldap_load_balance_group":            types.StringType,
-	"au_kerberos_keytab":                   types.StringType,
-	"auws_trust_url":                       types.StringType,
-	"ausaml2_issuer":                       types.StringType,
-	"au_signer_valcred":                    types.StringType,
-	"au_signed_x_path":                     types.StringType,
-	"auldap_bind_dn":                       types.StringType,
-	"auldap_search_attribute":              types.StringType,
-	"aultpa_token_versions_bitmap":         types.ObjectType{AttrTypes: DmLTPATokenVersionObjectType},
-	"aultpa_key_file":                      types.StringType,
-	"aultpa_stash_file":                    types.StringType,
-	"au_binary_token_x509_valcred":         types.StringType,
-	"autam_server":                         types.StringType,
-	"au_allow_remote_token_reference":      types.BoolType,
-	"au_remote_token_process_service":      types.StringType,
-	"auws_trust_version":                   types.StringType,
-	"auldap_search_for_dn":                 types.BoolType,
-	"auldap_search_parameters":             types.StringType,
-	"auws_trust_require_client_entropy":    types.BoolType,
-	"auws_trust_client_entropy_size":       types.Int64Type,
-	"auws_trust_require_server_entropy":    types.BoolType,
-	"auws_trust_server_entropy_size":       types.Int64Type,
-	"auws_trust_require_rstc":              types.BoolType,
-	"auws_trust_require_applies_to_header": types.BoolType,
-	"auws_trust_applies_to_header":         types.StringType,
-	"auws_trust_encryption_certificate":    types.StringType,
-	"auzosnss_config":                      types.StringType,
-	"auldap_attributes":                    types.StringType,
-	"au_skew_time":                         types.Int64Type,
-	"autampac_return":                      types.BoolType,
-	"auldap_read_timeout":                  types.Int64Type,
-	"aussl_client_config_type":             types.StringType,
-	"aussl_client_profile":                 types.StringType,
-	"auldap_bind_password_alias":           types.StringType,
-	"aultpa_key_file_password_alias":       types.StringType,
-	"ausm_request_type":                    types.StringType,
-	"ausm_cookie_flow":                     types.ObjectType{AttrTypes: DmSMFlowObjectType},
-	"ausm_header_flow":                     types.ObjectType{AttrTypes: DmSMFlowObjectType},
-	"ausm_cookie_attributes":               types.StringType,
-	"au_cache_control":                     types.StringType,
+	"au_method":                             types.StringType,
+	"au_custom_url":                         types.StringType,
+	"au_map_url":                            types.StringType,
+	"au_host":                               types.StringType,
+	"au_port":                               types.Int64Type,
+	"au_ssl_valcred":                        types.StringType,
+	"au_cache_allow":                        types.StringType,
+	"au_cache_ttl":                          types.Int64Type,
+	"au_kerberos_principal":                 types.StringType,
+	"au_kerberos_password":                  types.StringType,
+	"au_clear_trust_server_url":             types.StringType,
+	"au_clear_trust_application":            types.StringType,
+	"au_saml_artifact_responder":            types.StringType,
+	"au_kerberos_verify_signature":          types.BoolType,
+	"au_netegrity_base_uri":                 types.StringType,
+	"au_saml_auth_query_server":             types.StringType,
+	"au_saml_version":                       types.StringType,
+	"au_ldap_prefix":                        types.StringType,
+	"au_ldap_suffix":                        types.StringType,
+	"au_ldap_load_balance_group":            types.StringType,
+	"au_kerberos_keytab":                    types.StringType,
+	"au_ws_trust_url":                       types.StringType,
+	"au_saml2_issuer":                       types.StringType,
+	"au_signer_valcred":                     types.StringType,
+	"au_signed_xpath":                       types.StringType,
+	"au_ldap_bind_dn":                       types.StringType,
+	"au_ldap_search_attribute":              types.StringType,
+	"au_ltpa_token_versions_bitmap":         types.ObjectType{AttrTypes: DmLTPATokenVersionObjectType},
+	"au_ltpa_key_file":                      types.StringType,
+	"au_ltpa_stash_file":                    types.StringType,
+	"au_binary_token_x509_valcred":          types.StringType,
+	"au_tam_server":                         types.StringType,
+	"au_allow_remote_token_reference":       types.BoolType,
+	"au_remote_token_process_service":       types.StringType,
+	"au_ws_trust_version":                   types.StringType,
+	"au_ldap_search_for_dn":                 types.BoolType,
+	"au_ldap_search_parameters":             types.StringType,
+	"au_ws_trust_require_client_entropy":    types.BoolType,
+	"au_ws_trust_client_entropy_size":       types.Int64Type,
+	"au_ws_trust_require_server_entropy":    types.BoolType,
+	"au_ws_trust_server_entropy_size":       types.Int64Type,
+	"au_ws_trust_require_rstc":              types.BoolType,
+	"au_ws_trust_require_applies_to_header": types.BoolType,
+	"au_ws_trust_applies_to_header":         types.StringType,
+	"au_ws_trust_encryption_certificate":    types.StringType,
+	"au_zos_nss_config":                     types.StringType,
+	"au_ldap_attributes":                    types.StringType,
+	"au_skew_time":                          types.Int64Type,
+	"au_tam_pac_return":                     types.BoolType,
+	"au_ldap_read_timeout":                  types.Int64Type,
+	"au_ssl_client_config_type":             types.StringType,
+	"au_ssl_client_profile":                 types.StringType,
+	"au_ldap_bind_password_alias":           types.StringType,
+	"au_ltpa_key_file_password_alias":       types.StringType,
+	"au_sm_request_type":                    types.StringType,
+	"au_sm_cookie_flow":                     types.ObjectType{AttrTypes: DmSMFlowObjectType},
+	"au_sm_header_flow":                     types.ObjectType{AttrTypes: DmSMFlowObjectType},
+	"au_sm_cookie_attributes":               types.StringType,
+	"au_cache_control":                      types.StringType,
 }
 var DmAAAPAuthenticateObjectDefault = map[string]attr.Value{
-	"au_method":                            types.StringValue("ldap"),
-	"au_custom_url":                        types.StringNull(),
-	"au_map_url":                           types.StringNull(),
-	"au_host":                              types.StringNull(),
-	"au_port":                              types.Int64Value(389),
-	"aussl_valcred":                        types.StringNull(),
-	"au_cache_allow":                       types.StringValue("absolute"),
-	"au_cache_ttl":                         types.Int64Value(3),
-	"au_kerberos_principal":                types.StringNull(),
-	"au_kerberos_password":                 types.StringNull(),
-	"au_clear_trust_server_url":            types.StringNull(),
-	"au_clear_trust_application":           types.StringNull(),
-	"ausaml_artifact_responder":            types.StringNull(),
-	"au_kerberos_verify_signature":         types.BoolValue(true),
-	"au_netegrity_base_uri":                types.StringNull(),
-	"ausaml_auth_query_server":             types.StringNull(),
-	"ausaml_version":                       types.StringValue("1.1"),
-	"auldap_prefix":                        types.StringValue("cn="),
-	"auldap_suffix":                        types.StringNull(),
-	"auldap_load_balance_group":            types.StringNull(),
-	"au_kerberos_keytab":                   types.StringNull(),
-	"auws_trust_url":                       types.StringNull(),
-	"ausaml2_issuer":                       types.StringNull(),
-	"au_signer_valcred":                    types.StringNull(),
-	"au_signed_x_path":                     types.StringNull(),
-	"auldap_bind_dn":                       types.StringNull(),
-	"auldap_search_attribute":              types.StringValue("userPassword"),
-	"aultpa_token_versions_bitmap":         types.ObjectValueMust(DmLTPATokenVersionObjectType, DmLTPATokenVersionObjectDefault),
-	"aultpa_key_file":                      types.StringNull(),
-	"aultpa_stash_file":                    types.StringNull(),
-	"au_binary_token_x509_valcred":         types.StringNull(),
-	"autam_server":                         types.StringNull(),
-	"au_allow_remote_token_reference":      types.BoolValue(false),
-	"au_remote_token_process_service":      types.StringNull(),
-	"auws_trust_version":                   types.StringValue("1.2"),
-	"auldap_search_for_dn":                 types.BoolValue(false),
-	"auldap_search_parameters":             types.StringNull(),
-	"auws_trust_require_client_entropy":    types.BoolValue(false),
-	"auws_trust_client_entropy_size":       types.Int64Value(32),
-	"auws_trust_require_server_entropy":    types.BoolValue(false),
-	"auws_trust_server_entropy_size":       types.Int64Value(32),
-	"auws_trust_require_rstc":              types.BoolValue(false),
-	"auws_trust_require_applies_to_header": types.BoolValue(false),
-	"auws_trust_applies_to_header":         types.StringNull(),
-	"auws_trust_encryption_certificate":    types.StringNull(),
-	"auzosnss_config":                      types.StringNull(),
-	"auldap_attributes":                    types.StringNull(),
-	"au_skew_time":                         types.Int64Value(0),
-	"autampac_return":                      types.BoolValue(false),
-	"auldap_read_timeout":                  types.Int64Value(60),
-	"aussl_client_config_type":             types.StringValue("client"),
-	"aussl_client_profile":                 types.StringNull(),
-	"auldap_bind_password_alias":           types.StringNull(),
-	"aultpa_key_file_password_alias":       types.StringNull(),
-	"ausm_request_type":                    types.StringValue("webagent"),
-	"ausm_cookie_flow":                     types.ObjectValueMust(DmSMFlowObjectType, DmSMFlowObjectDefault),
-	"ausm_header_flow":                     types.ObjectValueMust(DmSMFlowObjectType, DmSMFlowObjectDefault),
-	"ausm_cookie_attributes":               types.StringNull(),
-	"au_cache_control":                     types.StringValue("default"),
+	"au_method":                             types.StringValue("ldap"),
+	"au_custom_url":                         types.StringNull(),
+	"au_map_url":                            types.StringNull(),
+	"au_host":                               types.StringNull(),
+	"au_port":                               types.Int64Value(389),
+	"au_ssl_valcred":                        types.StringNull(),
+	"au_cache_allow":                        types.StringValue("absolute"),
+	"au_cache_ttl":                          types.Int64Value(3),
+	"au_kerberos_principal":                 types.StringNull(),
+	"au_kerberos_password":                  types.StringNull(),
+	"au_clear_trust_server_url":             types.StringNull(),
+	"au_clear_trust_application":            types.StringNull(),
+	"au_saml_artifact_responder":            types.StringNull(),
+	"au_kerberos_verify_signature":          types.BoolValue(true),
+	"au_netegrity_base_uri":                 types.StringNull(),
+	"au_saml_auth_query_server":             types.StringNull(),
+	"au_saml_version":                       types.StringValue("1.1"),
+	"au_ldap_prefix":                        types.StringValue("cn="),
+	"au_ldap_suffix":                        types.StringNull(),
+	"au_ldap_load_balance_group":            types.StringNull(),
+	"au_kerberos_keytab":                    types.StringNull(),
+	"au_ws_trust_url":                       types.StringNull(),
+	"au_saml2_issuer":                       types.StringNull(),
+	"au_signer_valcred":                     types.StringNull(),
+	"au_signed_xpath":                       types.StringNull(),
+	"au_ldap_bind_dn":                       types.StringNull(),
+	"au_ldap_search_attribute":              types.StringValue("userPassword"),
+	"au_ltpa_token_versions_bitmap":         types.ObjectValueMust(DmLTPATokenVersionObjectType, DmLTPATokenVersionObjectDefault),
+	"au_ltpa_key_file":                      types.StringNull(),
+	"au_ltpa_stash_file":                    types.StringNull(),
+	"au_binary_token_x509_valcred":          types.StringNull(),
+	"au_tam_server":                         types.StringNull(),
+	"au_allow_remote_token_reference":       types.BoolValue(false),
+	"au_remote_token_process_service":       types.StringNull(),
+	"au_ws_trust_version":                   types.StringValue("1.2"),
+	"au_ldap_search_for_dn":                 types.BoolValue(false),
+	"au_ldap_search_parameters":             types.StringNull(),
+	"au_ws_trust_require_client_entropy":    types.BoolValue(false),
+	"au_ws_trust_client_entropy_size":       types.Int64Value(32),
+	"au_ws_trust_require_server_entropy":    types.BoolValue(false),
+	"au_ws_trust_server_entropy_size":       types.Int64Value(32),
+	"au_ws_trust_require_rstc":              types.BoolValue(false),
+	"au_ws_trust_require_applies_to_header": types.BoolValue(false),
+	"au_ws_trust_applies_to_header":         types.StringNull(),
+	"au_ws_trust_encryption_certificate":    types.StringNull(),
+	"au_zos_nss_config":                     types.StringNull(),
+	"au_ldap_attributes":                    types.StringNull(),
+	"au_skew_time":                          types.Int64Value(0),
+	"au_tam_pac_return":                     types.BoolValue(false),
+	"au_ldap_read_timeout":                  types.Int64Value(60),
+	"au_ssl_client_config_type":             types.StringValue("client"),
+	"au_ssl_client_profile":                 types.StringNull(),
+	"au_ldap_bind_password_alias":           types.StringNull(),
+	"au_ltpa_key_file_password_alias":       types.StringNull(),
+	"au_sm_request_type":                    types.StringValue("webagent"),
+	"au_sm_cookie_flow":                     types.ObjectValueMust(DmSMFlowObjectType, DmSMFlowObjectDefault),
+	"au_sm_header_flow":                     types.ObjectValueMust(DmSMFlowObjectType, DmSMFlowObjectDefault),
+	"au_sm_cookie_attributes":               types.StringNull(),
+	"au_cache_control":                      types.StringValue("default"),
 }
 
 func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
@@ -417,7 +417,7 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify this listening port on the authentication server.", "remote-port", "").AddDefaultValue("389").String,
 				Computed:            true,
 			},
-			"aussl_valcred": DataSourceSchema.StringAttribute{
+			"au_ssl_valcred": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validation credentials that contain the certificate to validate the remote TLS peer.", "valcred", "crypto_val_cred").String,
 				Computed:            true,
 			},
@@ -445,7 +445,7 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
 				Computed:            true,
 			},
-			"ausaml_artifact_responder": DataSourceSchema.StringAttribute{
+			"au_saml_artifact_responder": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the SAML artifact responder.", "saml-artifact-responder", "").String,
 				Computed:            true,
 			},
@@ -457,23 +457,23 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base URI sent to CA Single Sign-On server. The base URI is combined with the host and port to form the URL for attempting CA Single Sign-On authentication. This base URI must equal the concatenation of the <tt>servlet-name</tt> and its <tt>url-pattern</tt> set in its <tt>web.xml</tt> configuration file. If the <tt>servlet-name</tt> is <tt>datapoweragent</tt> and the <tt>url-pattern</tt> is <tt>/</tt> , then the base URI must be <tt>datapoweragent/</tt> .", "netegrity-base-uri", "").String,
 				Computed:            true,
 			},
-			"ausaml_auth_query_server": DataSourceSchema.StringAttribute{
+			"au_saml_auth_query_server": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the SAML authentication query server and to post a SAML authentication query.", "saml-authen-query-url", "").String,
 				Computed:            true,
 			},
-			"ausaml_version": DataSourceSchema.StringAttribute{
+			"au_saml_version": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the version of SAML messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2.0", "1.1", "1.0").AddDefaultValue("1.1").String,
 				Computed:            true,
 			},
-			"auldap_prefix": DataSourceSchema.StringAttribute{
+			"au_ldap_prefix": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix to construct the LDAP lookup DN. The default value is <tt>cn=</tt> .", "ldap-prefix", "").AddDefaultValue("cn=").String,
 				Computed:            true,
 			},
-			"auldap_suffix": DataSourceSchema.StringAttribute{
+			"au_ldap_suffix": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the suffix used to construct the LDAP lookup DN.", "ldap-suffix", "").String,
 				Computed:            true,
 			},
-			"auldap_load_balance_group": DataSourceSchema.StringAttribute{
+			"au_ldap_load_balance_group": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the load balancer group that contains the LDAP servers.", "ldap-lbgroup", "load_balancer_group").String,
 				Computed:            true,
 			},
@@ -481,11 +481,11 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the keytab for the Kerberos server principal. This keytab is required to decrypt the client Kerberos ticket.", "kerberos-keytab", "crypto_kerberos_keytab").String,
 				Computed:            true,
 			},
-			"auws_trust_url": DataSourceSchema.StringAttribute{
+			"au_ws_trust_url": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the WS-Trust server.", "ws-trust-url", "").String,
 				Computed:            true,
 			},
-			"ausaml2_issuer": DataSourceSchema.StringAttribute{
+			"au_saml2_issuer": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
 				Computed:            true,
 			},
@@ -493,24 +493,24 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the validation credentials to verify the signature validity for the incoming message. When validation credentials are set, the signer certificate must be contained in the validation credentials or the signature is rejected as untrusted.", "valcred", "crypto_val_cred").String,
 				Computed:            true,
 			},
-			"au_signed_x_path": DataSourceSchema.StringAttribute{
+			"au_signed_xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression for the XML entity that is protected by signature. After the signature validity is verified, this property verifies if the specific XPath expression is part of the signed message.", "signed-xpath", "").String,
 				Computed:            true,
 			},
-			"auldap_bind_dn": DataSourceSchema.StringAttribute{
+			"au_ldap_bind_dn": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN to bind to the LDAP server for an LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.", "ldap-bind-dn", "").String,
 				Computed:            true,
 			},
-			"auldap_search_attribute": DataSourceSchema.StringAttribute{
+			"au_ldap_search_attribute": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute to use in the LDAP search. The default value is userPassword.", "ldap-search-attr", "").AddDefaultValue("userPassword").String,
 				Computed:            true,
 			},
-			"aultpa_token_versions_bitmap": GetDmLTPATokenVersionDataSourceSchema("Specify which versions of LTPA tokens are acceptable.", "lpta-version", ""),
-			"aultpa_key_file": DataSourceSchema.StringAttribute{
+			"au_ltpa_token_versions_bitmap": GetDmLTPATokenVersionDataSourceSchema("Specify which versions of LTPA tokens are acceptable.", "lpta-version", ""),
+			"au_ltpa_key_file": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the LTPA key file that contains the crypto material to create an LTPA token that can be consumed by WebSphere (both version 1 and version 2) or Domino.</p><ul><li>For WebSphere token creation, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino token creation, the key file contains only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").String,
 				Computed:            true,
 			},
-			"aultpa_stash_file": DataSourceSchema.StringAttribute{
+			"au_ltpa_stash_file": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify stash file file that contains the password for the LTPA key file.", "lpta-stash-file", "").String,
 				Computed:            true,
 			},
@@ -518,7 +518,7 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the validation credentials to validate the X.509 certificate in the BinarySecurityToken.", "x509-bin-token-valcred", "crypto_val_cred").String,
 				Computed:            true,
 			},
-			"autam_server": DataSourceSchema.StringAttribute{
+			"au_tam_server": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the Access Manager client.", "tam", "tam").String,
 				Computed:            true,
 			},
@@ -530,55 +530,55 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the URL for a service that can process the remote security token. This service accepts the WS-Security token as the request of the SOAP call and, if successful, provides the final security token as the response.</p><p>The remote WS-Security token can be signed, encrypted, or encoded DataPower services with different processing actions can process the remote token. Processing can be by decrypting parts of a remote SAML assertion, doing an XSLT transform, or with an AAA policy to assert the token.</p>", "remote-token-url", "").String,
 				Computed:            true,
 			},
-			"auws_trust_version": DataSourceSchema.StringAttribute{
+			"au_ws_trust_version": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the version of the WS-Trust and the WS-SecureConversation specifications to use when WS-Trust authentication sends a request to the remote STS. Usually these specifications are updated together. The default value is 1.2.", "ws-trust-version", "").AddStringEnum("1.3", "1.2", "1.1").AddDefaultValue("1.2").String,
 				Computed:            true,
 			},
-			"auldap_search_for_dn": DataSourceSchema.BoolAttribute{
+			"au_ldap_search_for_dn": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve the user DN with an LDAP search. By default, the login name that the user presents is used with the LDAP prefix and LDAP suffix to construct the user DN.", "ldap-search-for-dn", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"auldap_search_parameters": DataSourceSchema.StringAttribute{
+			"au_ldap_search_parameters": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an LDAP search parameters that retrieves the user DN.", "ldap-search-param", "ldap_search_parameters").String,
 				Computed:            true,
 			},
-			"auws_trust_require_client_entropy": DataSourceSchema.BoolAttribute{
+			"au_ws_trust_require_client_entropy": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to require client entropy in the WS-Trust request. When required, a WS-Trust entropy element is sent by the client as part of the security token request exchange. By default, entropy is not required.</p><ul><li>If a WS-Trust encryption certificate is used, the client entropy material is encrypted.</li><li>If a WS-Trust encryption certificate is not used, a WS-Trust <tt>BinarySecret</tt> element contains the entropy material. In this case, use a TLS profile to secure the exchange with the WS-Trust server.</li></ul>", "trust-require-client-entropy", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"auws_trust_client_entropy_size": DataSourceSchema.Int64Attribute{
+			"au_ws_trust_client_entropy_size": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the size in bytes of the WS-Trust client entropy material. The size refers to the length of the entropy before base 64-encoding. Enter a value in the range 8 - 128. The default value is 32.", "trust-client-entropy-size", "").AddIntegerRange(8, 128).AddDefaultValue("32").String,
 				Computed:            true,
 			},
-			"auws_trust_require_server_entropy": DataSourceSchema.BoolAttribute{
+			"au_ws_trust_require_server_entropy": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require server entropy in the WS-Trust response. When required, a WS-Trust <tt>entropy</tt> element must be returned to the client as part of the security token request exchange. By default, entropy is not required.", "trust-require-server-entropy", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"auws_trust_server_entropy_size": DataSourceSchema.Int64Attribute{
+			"au_ws_trust_server_entropy_size": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum size in bytes for the WS-Trust server entropy. The size refers to the length of the entropy before base 64-encoding. Enter any value in the range 8 - 128. The default value is 32.", "trust-server-entropy-size", "").AddIntegerRange(8, 128).AddDefaultValue("32").String,
 				Computed:            true,
 			},
-			"auws_trust_require_rstc": DataSourceSchema.BoolAttribute{
+			"au_ws_trust_require_rstc": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the message exchange with the client requires a WS-Trust <tt>RequestSecurityToken</tt> or WS-Trust <tt>RequestSecurityTokenCollection</tt> element to be sent by the client. By default, the element is not required.", "trust-require-rstc", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"auws_trust_require_applies_to_header": DataSourceSchema.BoolAttribute{
+			"au_ws_trust_require_applies_to_header": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require a WS-Addressing <tt>AppliesTo</tt> header in the message exchange. By default, the header is not required.", "trust-require-applies-to-header", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"auws_trust_applies_to_header": DataSourceSchema.StringAttribute{
+			"au_ws_trust_applies_to_header": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the WS-Addressing <tt>AppliesTo</tt> header. The <tt>header</tt> element is included in the WS-Trust request security token message sent to the WS-Trust server.", "trust-applies-to-header", "").String,
 				Computed:            true,
 			},
-			"auws_trust_encryption_certificate": DataSourceSchema.StringAttribute{
+			"au_ws_trust_encryption_certificate": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate to encrypt WS-Trust elements for recipient. If client entropy is configured, the certificate public key encrypts the material for the recipient. If client entropy is configured and this certificate is not specified, use a TLS profile to secure the message exchange.", "trust-encryption-certificate", "crypto_certificate").String,
 				Computed:            true,
 			},
-			"auzosnss_config": DataSourceSchema.StringAttribute{
+			"au_zos_nss_config": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the z/OS NSS client for SAF communication.", "zos-nss-au", "zos_nss_client").String,
 				Computed:            true,
 			},
-			"auldap_attributes": DataSourceSchema.StringAttribute{
+			"au_ldap_attributes": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of the extra user attributes to retrieve from the LDAP user store and kept in a <tt>var://context/ldap/auxiliary-attributes</tt> context variable for future use, such as AAA postprocessing. To define the list of LDAP attributes as the auxiliary information for AAA, use the comma (,) as the delimiter. For example, <tt>email, cn, userPassword</tt> .", "au-ldap-attributes", "").String,
 				Computed:            true,
 			},
@@ -586,37 +586,37 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. <p>When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>", "au-skew-time", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
-			"autampac_return": DataSourceSchema.BoolAttribute{
+			"au_tam_pac_return": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authentication for further use. You can use the PAC in the postprocessing phase. By default, The default the PAC token is not returned.", "tam-pac-return", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"auldap_read_timeout": DataSourceSchema.Int64Attribute{
+			"au_ldap_read_timeout": DataSourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for a response from the LDAP server before the LDAP connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out. <p>If you configure an LDAP connection pool and assign it to the XML manager, the service can use this LDAP connection pool. The LDAP read timer can work with the idle timer of the LDAP connection pool to remove idle connections from the LDAP connection pool.</p>", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
 				Computed:            true,
 			},
-			"aussl_client_config_type": DataSourceSchema.StringAttribute{
+			"au_ssl_client_config_type": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Computed:            true,
 			},
-			"aussl_client_profile": DataSourceSchema.StringAttribute{
+			"au_ssl_client_profile": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").String,
 				Computed:            true,
 			},
-			"auldap_bind_password_alias": DataSourceSchema.StringAttribute{
+			"au_ldap_bind_password_alias": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the alias for the password to bind to the LDAP server for the LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.", "ldap-bind-password-alias", "password_alias").String,
 				Computed:            true,
 			},
-			"aultpa_key_file_password_alias": DataSourceSchema.StringAttribute{
+			"au_ltpa_key_file_password_alias": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the password that decrypts the LTPA key file. This password decrypts certain entries in a WebSphere LTPA key file. This password is not applicable to Domino key files.", "ltpa-key-password-alias", "password_alias").String,
 				Computed:            true,
 			},
-			"ausm_request_type": DataSourceSchema.StringAttribute{
+			"au_sm_request_type": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of request to make. By default, the request is against the CA Single Sign-On web agent.", "sm-request-type", "").AddStringEnum("webagent", "webservice").AddDefaultValue("webagent").String,
 				Computed:            true,
 			},
-			"ausm_cookie_flow": GetDmSMFlowDataSourceSchema("Specify which flow to include the authentication session cookie.", "sm-cookie-flow", ""),
-			"ausm_header_flow": GetDmSMFlowDataSourceSchema("Identifies the flow to include the CA Single Sign-On headers that are generated during authentication. The CA Single Sign-On HTTP headers start with <tt>SM_</tt> .", "sm-header-flow", ""),
-			"ausm_cookie_attributes": DataSourceSchema.StringAttribute{
+			"au_sm_cookie_flow": GetDmSMFlowDataSourceSchema("Specify which flow to include the authentication session cookie.", "sm-cookie-flow", ""),
+			"au_sm_header_flow": GetDmSMFlowDataSourceSchema("Identifies the flow to include the CA Single Sign-On headers that are generated during authentication. The CA Single Sign-On HTTP headers start with <tt>SM_</tt> .", "sm-header-flow", ""),
+			"au_sm_cookie_attributes": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.", "cookie-attributes", "cookie_attribute_policy").String,
 				Computed:            true,
 			},
@@ -676,7 +676,7 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				},
 				Default: int64default.StaticInt64(389),
 			},
-			"aussl_valcred": ResourceSchema.StringAttribute{
+			"au_ssl_valcred": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validation credentials that contain the certificate to validate the remote TLS peer.", "valcred", "crypto_val_cred").String,
 				Optional:            true,
 			},
@@ -717,7 +717,7 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
 				Optional:            true,
 			},
-			"ausaml_artifact_responder": ResourceSchema.StringAttribute{
+			"au_saml_artifact_responder": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the SAML artifact responder.", "saml-artifact-responder", "").String,
 				Optional:            true,
 			},
@@ -731,11 +731,11 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base URI sent to CA Single Sign-On server. The base URI is combined with the host and port to form the URL for attempting CA Single Sign-On authentication. This base URI must equal the concatenation of the <tt>servlet-name</tt> and its <tt>url-pattern</tt> set in its <tt>web.xml</tt> configuration file. If the <tt>servlet-name</tt> is <tt>datapoweragent</tt> and the <tt>url-pattern</tt> is <tt>/</tt> , then the base URI must be <tt>datapoweragent/</tt> .", "netegrity-base-uri", "").String,
 				Optional:            true,
 			},
-			"ausaml_auth_query_server": ResourceSchema.StringAttribute{
+			"au_saml_auth_query_server": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the SAML authentication query server and to post a SAML authentication query.", "saml-authen-query-url", "").String,
 				Optional:            true,
 			},
-			"ausaml_version": ResourceSchema.StringAttribute{
+			"au_saml_version": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the version of SAML messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2.0", "1.1", "1.0").AddDefaultValue("1.1").String,
 				Computed:            true,
 				Optional:            true,
@@ -745,17 +745,17 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				},
 				Default: stringdefault.StaticString("1.1"),
 			},
-			"auldap_prefix": ResourceSchema.StringAttribute{
+			"au_ldap_prefix": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix to construct the LDAP lookup DN. The default value is <tt>cn=</tt> .", "ldap-prefix", "").AddDefaultValue("cn=").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             stringdefault.StaticString("cn="),
 			},
-			"auldap_suffix": ResourceSchema.StringAttribute{
+			"au_ldap_suffix": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the suffix used to construct the LDAP lookup DN.", "ldap-suffix", "").String,
 				Optional:            true,
 			},
-			"auldap_load_balance_group": ResourceSchema.StringAttribute{
+			"au_ldap_load_balance_group": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the load balancer group that contains the LDAP servers.", "ldap-lbgroup", "load_balancer_group").String,
 				Optional:            true,
 			},
@@ -766,14 +766,14 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 					validators.ConditionalRequiredString(DmAAAPAuthenticateAUKerberosKeytabCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"auws_trust_url": ResourceSchema.StringAttribute{
+			"au_ws_trust_url": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the WS-Trust server.", "ws-trust-url", "").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPAuthenticateAUWSTrustURLCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ausaml2_issuer": ResourceSchema.StringAttribute{
+			"au_saml2_issuer": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
 				Optional:            true,
 			},
@@ -781,29 +781,29 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the validation credentials to verify the signature validity for the incoming message. When validation credentials are set, the signer certificate must be contained in the validation credentials or the signature is rejected as untrusted.", "valcred", "crypto_val_cred").String,
 				Optional:            true,
 			},
-			"au_signed_x_path": ResourceSchema.StringAttribute{
+			"au_signed_xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression for the XML entity that is protected by signature. After the signature validity is verified, this property verifies if the specific XPath expression is part of the signed message.", "signed-xpath", "").String,
 				Optional:            true,
 			},
-			"auldap_bind_dn": ResourceSchema.StringAttribute{
+			"au_ldap_bind_dn": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN to bind to the LDAP server for an LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.", "ldap-bind-dn", "").String,
 				Optional:            true,
 			},
-			"auldap_search_attribute": ResourceSchema.StringAttribute{
+			"au_ldap_search_attribute": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute to use in the LDAP search. The default value is userPassword.", "ldap-search-attr", "").AddDefaultValue("userPassword").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             stringdefault.StaticString("userPassword"),
 			},
-			"aultpa_token_versions_bitmap": GetDmLTPATokenVersionResourceSchema("Specify which versions of LTPA tokens are acceptable.", "lpta-version", "", false),
-			"aultpa_key_file": ResourceSchema.StringAttribute{
+			"au_ltpa_token_versions_bitmap": GetDmLTPATokenVersionResourceSchema("Specify which versions of LTPA tokens are acceptable.", "lpta-version", "", false),
+			"au_ltpa_key_file": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the LTPA key file that contains the crypto material to create an LTPA token that can be consumed by WebSphere (both version 1 and version 2) or Domino.</p><ul><li>For WebSphere token creation, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino token creation, the key file contains only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPAuthenticateAULTPAKeyFileCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"aultpa_stash_file": ResourceSchema.StringAttribute{
+			"au_ltpa_stash_file": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify stash file file that contains the password for the LTPA key file.", "lpta-stash-file", "").String,
 				Optional:            true,
 			},
@@ -814,7 +814,7 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 					validators.ConditionalRequiredString(DmAAAPAuthenticateAUBinaryTokenX509ValcredCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"autam_server": ResourceSchema.StringAttribute{
+			"au_tam_server": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the Access Manager client.", "tam", "tam").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -831,7 +831,7 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the URL for a service that can process the remote security token. This service accepts the WS-Security token as the request of the SOAP call and, if successful, provides the final security token as the response.</p><p>The remote WS-Security token can be signed, encrypted, or encoded DataPower services with different processing actions can process the remote token. Processing can be by decrypting parts of a remote SAML assertion, doing an XSLT transform, or with an AAA policy to assert the token.</p>", "remote-token-url", "").String,
 				Optional:            true,
 			},
-			"auws_trust_version": ResourceSchema.StringAttribute{
+			"au_ws_trust_version": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the version of the WS-Trust and the WS-SecureConversation specifications to use when WS-Trust authentication sends a request to the remote STS. Usually these specifications are updated together. The default value is 1.2.", "ws-trust-version", "").AddStringEnum("1.3", "1.2", "1.1").AddDefaultValue("1.2").String,
 				Computed:            true,
 				Optional:            true,
@@ -840,26 +840,26 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				},
 				Default: stringdefault.StaticString("1.2"),
 			},
-			"auldap_search_for_dn": ResourceSchema.BoolAttribute{
+			"au_ldap_search_for_dn": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve the user DN with an LDAP search. By default, the login name that the user presents is used with the LDAP prefix and LDAP suffix to construct the user DN.", "ldap-search-for-dn", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"auldap_search_parameters": ResourceSchema.StringAttribute{
+			"au_ldap_search_parameters": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an LDAP search parameters that retrieves the user DN.", "ldap-search-param", "ldap_search_parameters").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPAuthenticateAULDAPSearchParametersCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"auws_trust_require_client_entropy": ResourceSchema.BoolAttribute{
+			"au_ws_trust_require_client_entropy": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to require client entropy in the WS-Trust request. When required, a WS-Trust entropy element is sent by the client as part of the security token request exchange. By default, entropy is not required.</p><ul><li>If a WS-Trust encryption certificate is used, the client entropy material is encrypted.</li><li>If a WS-Trust encryption certificate is not used, a WS-Trust <tt>BinarySecret</tt> element contains the entropy material. In this case, use a TLS profile to secure the exchange with the WS-Trust server.</li></ul>", "trust-require-client-entropy", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"auws_trust_client_entropy_size": ResourceSchema.Int64Attribute{
+			"au_ws_trust_client_entropy_size": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the size in bytes of the WS-Trust client entropy material. The size refers to the length of the entropy before base 64-encoding. Enter a value in the range 8 - 128. The default value is 32.", "trust-client-entropy-size", "").AddIntegerRange(8, 128).AddDefaultValue("32").String,
 				Computed:            true,
 				Optional:            true,
@@ -868,13 +868,13 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				},
 				Default: int64default.StaticInt64(32),
 			},
-			"auws_trust_require_server_entropy": ResourceSchema.BoolAttribute{
+			"au_ws_trust_require_server_entropy": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require server entropy in the WS-Trust response. When required, a WS-Trust <tt>entropy</tt> element must be returned to the client as part of the security token request exchange. By default, entropy is not required.", "trust-require-server-entropy", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"auws_trust_server_entropy_size": ResourceSchema.Int64Attribute{
+			"au_ws_trust_server_entropy_size": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum size in bytes for the WS-Trust server entropy. The size refers to the length of the entropy before base 64-encoding. Enter any value in the range 8 - 128. The default value is 32.", "trust-server-entropy-size", "").AddIntegerRange(8, 128).AddDefaultValue("32").String,
 				Computed:            true,
 				Optional:            true,
@@ -883,34 +883,34 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				},
 				Default: int64default.StaticInt64(32),
 			},
-			"auws_trust_require_rstc": ResourceSchema.BoolAttribute{
+			"au_ws_trust_require_rstc": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the message exchange with the client requires a WS-Trust <tt>RequestSecurityToken</tt> or WS-Trust <tt>RequestSecurityTokenCollection</tt> element to be sent by the client. By default, the element is not required.", "trust-require-rstc", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"auws_trust_require_applies_to_header": ResourceSchema.BoolAttribute{
+			"au_ws_trust_require_applies_to_header": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require a WS-Addressing <tt>AppliesTo</tt> header in the message exchange. By default, the header is not required.", "trust-require-applies-to-header", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"auws_trust_applies_to_header": ResourceSchema.StringAttribute{
+			"au_ws_trust_applies_to_header": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the WS-Addressing <tt>AppliesTo</tt> header. The <tt>header</tt> element is included in the WS-Trust request security token message sent to the WS-Trust server.", "trust-applies-to-header", "").String,
 				Optional:            true,
 			},
-			"auws_trust_encryption_certificate": ResourceSchema.StringAttribute{
+			"au_ws_trust_encryption_certificate": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate to encrypt WS-Trust elements for recipient. If client entropy is configured, the certificate public key encrypts the material for the recipient. If client entropy is configured and this certificate is not specified, use a TLS profile to secure the message exchange.", "trust-encryption-certificate", "crypto_certificate").String,
 				Optional:            true,
 			},
-			"auzosnss_config": ResourceSchema.StringAttribute{
+			"au_zos_nss_config": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the z/OS NSS client for SAF communication.", "zos-nss-au", "zos_nss_client").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPAuthenticateAUZOSNSSConfigCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"auldap_attributes": ResourceSchema.StringAttribute{
+			"au_ldap_attributes": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of the extra user attributes to retrieve from the LDAP user store and kept in a <tt>var://context/ldap/auxiliary-attributes</tt> context variable for future use, such as AAA postprocessing. To define the list of LDAP attributes as the auxiliary information for AAA, use the comma (,) as the delimiter. For example, <tt>email, cn, userPassword</tt> .", "au-ldap-attributes", "").String,
 				Optional:            true,
 			},
@@ -920,13 +920,13 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				Optional:            true,
 				Default:             int64default.StaticInt64(0),
 			},
-			"autampac_return": ResourceSchema.BoolAttribute{
+			"au_tam_pac_return": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authentication for further use. You can use the PAC in the postprocessing phase. By default, The default the PAC token is not returned.", "tam-pac-return", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"auldap_read_timeout": ResourceSchema.Int64Attribute{
+			"au_ldap_read_timeout": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for a response from the LDAP server before the LDAP connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out. <p>If you configure an LDAP connection pool and assign it to the XML manager, the service can use this LDAP connection pool. The LDAP read timer can work with the idle timer of the LDAP connection pool to remove idle connections from the LDAP connection pool.</p>", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
 				Computed:            true,
 				Optional:            true,
@@ -935,7 +935,7 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				},
 				Default: int64default.StaticInt64(60),
 			},
-			"aussl_client_config_type": ResourceSchema.StringAttribute{
+			"au_ssl_client_config_type": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Computed:            true,
 				Optional:            true,
@@ -944,22 +944,22 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				},
 				Default: stringdefault.StaticString("client"),
 			},
-			"aussl_client_profile": ResourceSchema.StringAttribute{
+			"au_ssl_client_profile": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").String,
 				Optional:            true,
 			},
-			"auldap_bind_password_alias": ResourceSchema.StringAttribute{
+			"au_ldap_bind_password_alias": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the alias for the password to bind to the LDAP server for the LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.", "ldap-bind-password-alias", "password_alias").String,
 				Optional:            true,
 			},
-			"aultpa_key_file_password_alias": ResourceSchema.StringAttribute{
+			"au_ltpa_key_file_password_alias": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the password that decrypts the LTPA key file. This password decrypts certain entries in a WebSphere LTPA key file. This password is not applicable to Domino key files.", "ltpa-key-password-alias", "password_alias").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmAAAPAuthenticateAULTPAKeyFilePasswordAliasCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ausm_request_type": ResourceSchema.StringAttribute{
+			"au_sm_request_type": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of request to make. By default, the request is against the CA Single Sign-On web agent.", "sm-request-type", "").AddStringEnum("webagent", "webservice").AddDefaultValue("webagent").String,
 				Computed:            true,
 				Optional:            true,
@@ -969,9 +969,9 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 				},
 				Default: stringdefault.StaticString("webagent"),
 			},
-			"ausm_cookie_flow": GetDmSMFlowResourceSchema("Specify which flow to include the authentication session cookie.", "sm-cookie-flow", "", false),
-			"ausm_header_flow": GetDmSMFlowResourceSchema("Identifies the flow to include the CA Single Sign-On headers that are generated during authentication. The CA Single Sign-On HTTP headers start with <tt>SM_</tt> .", "sm-header-flow", "", false),
-			"ausm_cookie_attributes": ResourceSchema.StringAttribute{
+			"au_sm_cookie_flow": GetDmSMFlowResourceSchema("Specify which flow to include the authentication session cookie.", "sm-cookie-flow", "", false),
+			"au_sm_header_flow": GetDmSMFlowResourceSchema("Identifies the flow to include the CA Single Sign-On headers that are generated during authentication. The CA Single Sign-On HTTP headers start with <tt>SM_</tt> .", "sm-header-flow", "", false),
+			"au_sm_cookie_attributes": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.", "cookie-attributes", "cookie_attribute_policy").String,
 				Optional:            true,
 			},
@@ -1012,7 +1012,7 @@ func (data DmAAAPAuthenticate) IsNull() bool {
 	if !data.AuPort.IsNull() {
 		return false
 	}
-	if !data.AusslValcred.IsNull() {
+	if !data.AuSslValcred.IsNull() {
 		return false
 	}
 	if !data.AuCacheAllow.IsNull() {
@@ -1033,7 +1033,7 @@ func (data DmAAAPAuthenticate) IsNull() bool {
 	if !data.AuClearTrustApplication.IsNull() {
 		return false
 	}
-	if !data.AusamlArtifactResponder.IsNull() {
+	if !data.AuSamlArtifactResponder.IsNull() {
 		return false
 	}
 	if !data.AuKerberosVerifySignature.IsNull() {
@@ -1042,57 +1042,57 @@ func (data DmAAAPAuthenticate) IsNull() bool {
 	if !data.AuNetegrityBaseUri.IsNull() {
 		return false
 	}
-	if !data.AusamlAuthQueryServer.IsNull() {
+	if !data.AuSamlAuthQueryServer.IsNull() {
 		return false
 	}
-	if !data.AusamlVersion.IsNull() {
+	if !data.AuSamlVersion.IsNull() {
 		return false
 	}
-	if !data.AuldapPrefix.IsNull() {
+	if !data.AuLdapPrefix.IsNull() {
 		return false
 	}
-	if !data.AuldapSuffix.IsNull() {
+	if !data.AuLdapSuffix.IsNull() {
 		return false
 	}
-	if !data.AuldapLoadBalanceGroup.IsNull() {
+	if !data.AuLdapLoadBalanceGroup.IsNull() {
 		return false
 	}
 	if !data.AuKerberosKeytab.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustUrl.IsNull() {
+	if !data.AuWsTrustUrl.IsNull() {
 		return false
 	}
-	if !data.Ausaml2Issuer.IsNull() {
+	if !data.AuSaml2Issuer.IsNull() {
 		return false
 	}
 	if !data.AuSignerValcred.IsNull() {
 		return false
 	}
-	if !data.AuSignedXPath.IsNull() {
+	if !data.AuSignedXpath.IsNull() {
 		return false
 	}
-	if !data.AuldapBindDn.IsNull() {
+	if !data.AuLdapBindDn.IsNull() {
 		return false
 	}
-	if !data.AuldapSearchAttribute.IsNull() {
+	if !data.AuLdapSearchAttribute.IsNull() {
 		return false
 	}
-	if data.AultpaTokenVersionsBitmap != nil {
-		if !data.AultpaTokenVersionsBitmap.IsNull() {
+	if data.AuLtpaTokenVersionsBitmap != nil {
+		if !data.AuLtpaTokenVersionsBitmap.IsNull() {
 			return false
 		}
 	}
-	if !data.AultpaKeyFile.IsNull() {
+	if !data.AuLtpaKeyFile.IsNull() {
 		return false
 	}
-	if !data.AultpaStashFile.IsNull() {
+	if !data.AuLtpaStashFile.IsNull() {
 		return false
 	}
 	if !data.AuBinaryTokenX509Valcred.IsNull() {
 		return false
 	}
-	if !data.AutamServer.IsNull() {
+	if !data.AuTamServer.IsNull() {
 		return false
 	}
 	if !data.AuAllowRemoteTokenReference.IsNull() {
@@ -1101,80 +1101,80 @@ func (data DmAAAPAuthenticate) IsNull() bool {
 	if !data.AuRemoteTokenProcessService.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustVersion.IsNull() {
+	if !data.AuWsTrustVersion.IsNull() {
 		return false
 	}
-	if !data.AuldapSearchForDn.IsNull() {
+	if !data.AuLdapSearchForDn.IsNull() {
 		return false
 	}
-	if !data.AuldapSearchParameters.IsNull() {
+	if !data.AuLdapSearchParameters.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustRequireClientEntropy.IsNull() {
+	if !data.AuWsTrustRequireClientEntropy.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustClientEntropySize.IsNull() {
+	if !data.AuWsTrustClientEntropySize.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustRequireServerEntropy.IsNull() {
+	if !data.AuWsTrustRequireServerEntropy.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustServerEntropySize.IsNull() {
+	if !data.AuWsTrustServerEntropySize.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustRequireRstc.IsNull() {
+	if !data.AuWsTrustRequireRstc.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustRequireAppliesToHeader.IsNull() {
+	if !data.AuWsTrustRequireAppliesToHeader.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustAppliesToHeader.IsNull() {
+	if !data.AuWsTrustAppliesToHeader.IsNull() {
 		return false
 	}
-	if !data.AuwsTrustEncryptionCertificate.IsNull() {
+	if !data.AuWsTrustEncryptionCertificate.IsNull() {
 		return false
 	}
-	if !data.AuzosnssConfig.IsNull() {
+	if !data.AuZosNssConfig.IsNull() {
 		return false
 	}
-	if !data.AuldapAttributes.IsNull() {
+	if !data.AuLdapAttributes.IsNull() {
 		return false
 	}
 	if !data.AuSkewTime.IsNull() {
 		return false
 	}
-	if !data.AutampacReturn.IsNull() {
+	if !data.AuTamPacReturn.IsNull() {
 		return false
 	}
-	if !data.AuldapReadTimeout.IsNull() {
+	if !data.AuLdapReadTimeout.IsNull() {
 		return false
 	}
-	if !data.AusslClientConfigType.IsNull() {
+	if !data.AuSslClientConfigType.IsNull() {
 		return false
 	}
-	if !data.AusslClientProfile.IsNull() {
+	if !data.AuSslClientProfile.IsNull() {
 		return false
 	}
-	if !data.AuldapBindPasswordAlias.IsNull() {
+	if !data.AuLdapBindPasswordAlias.IsNull() {
 		return false
 	}
-	if !data.AultpaKeyFilePasswordAlias.IsNull() {
+	if !data.AuLtpaKeyFilePasswordAlias.IsNull() {
 		return false
 	}
-	if !data.AusmRequestType.IsNull() {
+	if !data.AuSmRequestType.IsNull() {
 		return false
 	}
-	if data.AusmCookieFlow != nil {
-		if !data.AusmCookieFlow.IsNull() {
+	if data.AuSmCookieFlow != nil {
+		if !data.AuSmCookieFlow.IsNull() {
 			return false
 		}
 	}
-	if data.AusmHeaderFlow != nil {
-		if !data.AusmHeaderFlow.IsNull() {
+	if data.AuSmHeaderFlow != nil {
+		if !data.AuSmHeaderFlow.IsNull() {
 			return false
 		}
 	}
-	if !data.AusmCookieAttributes.IsNull() {
+	if !data.AuSmCookieAttributes.IsNull() {
 		return false
 	}
 	if !data.AuCacheControl.IsNull() {
@@ -1204,8 +1204,8 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.AuPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUPort`, data.AuPort.ValueInt64())
 	}
-	if !data.AusslValcred.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSSLValcred`, data.AusslValcred.ValueString())
+	if !data.AuSslValcred.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSSLValcred`, data.AuSslValcred.ValueString())
 	}
 	if !data.AuCacheAllow.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUCacheAllow`, data.AuCacheAllow.ValueString())
@@ -1225,8 +1225,8 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.AuClearTrustApplication.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUClearTrustApplication`, data.AuClearTrustApplication.ValueString())
 	}
-	if !data.AusamlArtifactResponder.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSAMLArtifactResponder`, data.AusamlArtifactResponder.ValueString())
+	if !data.AuSamlArtifactResponder.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSAMLArtifactResponder`, data.AuSamlArtifactResponder.ValueString())
 	}
 	if !data.AuKerberosVerifySignature.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUKerberosVerifySignature`, tfutils.StringFromBool(data.AuKerberosVerifySignature, ""))
@@ -1234,58 +1234,58 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.AuNetegrityBaseUri.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUNetegrityBaseURI`, data.AuNetegrityBaseUri.ValueString())
 	}
-	if !data.AusamlAuthQueryServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSAMLAuthQueryServer`, data.AusamlAuthQueryServer.ValueString())
+	if !data.AuSamlAuthQueryServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSAMLAuthQueryServer`, data.AuSamlAuthQueryServer.ValueString())
 	}
-	if !data.AusamlVersion.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSAMLVersion`, data.AusamlVersion.ValueString())
+	if !data.AuSamlVersion.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSAMLVersion`, data.AuSamlVersion.ValueString())
 	}
-	if !data.AuldapPrefix.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPPrefix`, data.AuldapPrefix.ValueString())
+	if !data.AuLdapPrefix.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPPrefix`, data.AuLdapPrefix.ValueString())
 	}
-	if !data.AuldapSuffix.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPSuffix`, data.AuldapSuffix.ValueString())
+	if !data.AuLdapSuffix.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPSuffix`, data.AuLdapSuffix.ValueString())
 	}
-	if !data.AuldapLoadBalanceGroup.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPLoadBalanceGroup`, data.AuldapLoadBalanceGroup.ValueString())
+	if !data.AuLdapLoadBalanceGroup.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPLoadBalanceGroup`, data.AuLdapLoadBalanceGroup.ValueString())
 	}
 	if !data.AuKerberosKeytab.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUKerberosKeytab`, data.AuKerberosKeytab.ValueString())
 	}
-	if !data.AuwsTrustUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustURL`, data.AuwsTrustUrl.ValueString())
+	if !data.AuWsTrustUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustURL`, data.AuWsTrustUrl.ValueString())
 	}
-	if !data.Ausaml2Issuer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSAML2Issuer`, data.Ausaml2Issuer.ValueString())
+	if !data.AuSaml2Issuer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSAML2Issuer`, data.AuSaml2Issuer.ValueString())
 	}
 	if !data.AuSignerValcred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUSignerValcred`, data.AuSignerValcred.ValueString())
 	}
-	if !data.AuSignedXPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSignedXPath`, data.AuSignedXPath.ValueString())
+	if !data.AuSignedXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSignedXPath`, data.AuSignedXpath.ValueString())
 	}
-	if !data.AuldapBindDn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPBindDN`, data.AuldapBindDn.ValueString())
+	if !data.AuLdapBindDn.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPBindDN`, data.AuLdapBindDn.ValueString())
 	}
-	if !data.AuldapSearchAttribute.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchAttribute`, data.AuldapSearchAttribute.ValueString())
+	if !data.AuLdapSearchAttribute.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchAttribute`, data.AuLdapSearchAttribute.ValueString())
 	}
-	if data.AultpaTokenVersionsBitmap != nil {
-		if !data.AultpaTokenVersionsBitmap.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`AULTPATokenVersionsBitmap`, data.AultpaTokenVersionsBitmap.ToBody(ctx, ""))
+	if data.AuLtpaTokenVersionsBitmap != nil {
+		if !data.AuLtpaTokenVersionsBitmap.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`AULTPATokenVersionsBitmap`, data.AuLtpaTokenVersionsBitmap.ToBody(ctx, ""))
 		}
 	}
-	if !data.AultpaKeyFile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULTPAKeyFile`, data.AultpaKeyFile.ValueString())
+	if !data.AuLtpaKeyFile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULTPAKeyFile`, data.AuLtpaKeyFile.ValueString())
 	}
-	if !data.AultpaStashFile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULTPAStashFile`, data.AultpaStashFile.ValueString())
+	if !data.AuLtpaStashFile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULTPAStashFile`, data.AuLtpaStashFile.ValueString())
 	}
 	if !data.AuBinaryTokenX509Valcred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUBinaryTokenX509Valcred`, data.AuBinaryTokenX509Valcred.ValueString())
 	}
-	if !data.AutamServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUTAMServer`, data.AutamServer.ValueString())
+	if !data.AuTamServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUTAMServer`, data.AuTamServer.ValueString())
 	}
 	if !data.AuAllowRemoteTokenReference.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUAllowRemoteTokenReference`, tfutils.StringFromBool(data.AuAllowRemoteTokenReference, ""))
@@ -1293,81 +1293,81 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.AuRemoteTokenProcessService.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AURemoteTokenProcessService`, data.AuRemoteTokenProcessService.ValueString())
 	}
-	if !data.AuwsTrustVersion.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustVersion`, data.AuwsTrustVersion.ValueString())
+	if !data.AuWsTrustVersion.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustVersion`, data.AuWsTrustVersion.ValueString())
 	}
-	if !data.AuldapSearchForDn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchForDN`, tfutils.StringFromBool(data.AuldapSearchForDn, ""))
+	if !data.AuLdapSearchForDn.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchForDN`, tfutils.StringFromBool(data.AuLdapSearchForDn, ""))
 	}
-	if !data.AuldapSearchParameters.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchParameters`, data.AuldapSearchParameters.ValueString())
+	if !data.AuLdapSearchParameters.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchParameters`, data.AuLdapSearchParameters.ValueString())
 	}
-	if !data.AuwsTrustRequireClientEntropy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireClientEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireClientEntropy, ""))
+	if !data.AuWsTrustRequireClientEntropy.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireClientEntropy`, tfutils.StringFromBool(data.AuWsTrustRequireClientEntropy, ""))
 	}
-	if !data.AuwsTrustClientEntropySize.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustClientEntropySize`, data.AuwsTrustClientEntropySize.ValueInt64())
+	if !data.AuWsTrustClientEntropySize.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustClientEntropySize`, data.AuWsTrustClientEntropySize.ValueInt64())
 	}
-	if !data.AuwsTrustRequireServerEntropy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireServerEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireServerEntropy, ""))
+	if !data.AuWsTrustRequireServerEntropy.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireServerEntropy`, tfutils.StringFromBool(data.AuWsTrustRequireServerEntropy, ""))
 	}
-	if !data.AuwsTrustServerEntropySize.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustServerEntropySize`, data.AuwsTrustServerEntropySize.ValueInt64())
+	if !data.AuWsTrustServerEntropySize.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustServerEntropySize`, data.AuWsTrustServerEntropySize.ValueInt64())
 	}
-	if !data.AuwsTrustRequireRstc.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireRSTC`, tfutils.StringFromBool(data.AuwsTrustRequireRstc, ""))
+	if !data.AuWsTrustRequireRstc.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireRSTC`, tfutils.StringFromBool(data.AuWsTrustRequireRstc, ""))
 	}
-	if !data.AuwsTrustRequireAppliesToHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireAppliesToHeader`, tfutils.StringFromBool(data.AuwsTrustRequireAppliesToHeader, ""))
+	if !data.AuWsTrustRequireAppliesToHeader.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireAppliesToHeader`, tfutils.StringFromBool(data.AuWsTrustRequireAppliesToHeader, ""))
 	}
-	if !data.AuwsTrustAppliesToHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustAppliesToHeader`, data.AuwsTrustAppliesToHeader.ValueString())
+	if !data.AuWsTrustAppliesToHeader.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustAppliesToHeader`, data.AuWsTrustAppliesToHeader.ValueString())
 	}
-	if !data.AuwsTrustEncryptionCertificate.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustEncryptionCertificate`, data.AuwsTrustEncryptionCertificate.ValueString())
+	if !data.AuWsTrustEncryptionCertificate.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustEncryptionCertificate`, data.AuWsTrustEncryptionCertificate.ValueString())
 	}
-	if !data.AuzosnssConfig.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUZOSNSSConfig`, data.AuzosnssConfig.ValueString())
+	if !data.AuZosNssConfig.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUZOSNSSConfig`, data.AuZosNssConfig.ValueString())
 	}
-	if !data.AuldapAttributes.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPAttributes`, data.AuldapAttributes.ValueString())
+	if !data.AuLdapAttributes.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPAttributes`, data.AuLdapAttributes.ValueString())
 	}
 	if !data.AuSkewTime.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUSkewTime`, data.AuSkewTime.ValueInt64())
 	}
-	if !data.AutampacReturn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUTAMPACReturn`, tfutils.StringFromBool(data.AutampacReturn, ""))
+	if !data.AuTamPacReturn.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUTAMPACReturn`, tfutils.StringFromBool(data.AuTamPacReturn, ""))
 	}
-	if !data.AuldapReadTimeout.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPReadTimeout`, data.AuldapReadTimeout.ValueInt64())
+	if !data.AuLdapReadTimeout.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPReadTimeout`, data.AuLdapReadTimeout.ValueInt64())
 	}
-	if !data.AusslClientConfigType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSSLClientConfigType`, data.AusslClientConfigType.ValueString())
+	if !data.AuSslClientConfigType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSSLClientConfigType`, data.AuSslClientConfigType.ValueString())
 	}
-	if !data.AusslClientProfile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSSLClientProfile`, data.AusslClientProfile.ValueString())
+	if !data.AuSslClientProfile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSSLClientProfile`, data.AuSslClientProfile.ValueString())
 	}
-	if !data.AuldapBindPasswordAlias.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPBindPasswordAlias`, data.AuldapBindPasswordAlias.ValueString())
+	if !data.AuLdapBindPasswordAlias.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULDAPBindPasswordAlias`, data.AuLdapBindPasswordAlias.ValueString())
 	}
-	if !data.AultpaKeyFilePasswordAlias.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULTPAKeyFilePasswordAlias`, data.AultpaKeyFilePasswordAlias.ValueString())
+	if !data.AuLtpaKeyFilePasswordAlias.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AULTPAKeyFilePasswordAlias`, data.AuLtpaKeyFilePasswordAlias.ValueString())
 	}
-	if !data.AusmRequestType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSMRequestType`, data.AusmRequestType.ValueString())
+	if !data.AuSmRequestType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSMRequestType`, data.AuSmRequestType.ValueString())
 	}
-	if data.AusmCookieFlow != nil {
-		if !data.AusmCookieFlow.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`AUSMCookieFlow`, data.AusmCookieFlow.ToBody(ctx, ""))
+	if data.AuSmCookieFlow != nil {
+		if !data.AuSmCookieFlow.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`AUSMCookieFlow`, data.AuSmCookieFlow.ToBody(ctx, ""))
 		}
 	}
-	if data.AusmHeaderFlow != nil {
-		if !data.AusmHeaderFlow.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`AUSMHeaderFlow`, data.AusmHeaderFlow.ToBody(ctx, ""))
+	if data.AuSmHeaderFlow != nil {
+		if !data.AuSmHeaderFlow.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`AUSMHeaderFlow`, data.AuSmHeaderFlow.ToBody(ctx, ""))
 		}
 	}
-	if !data.AusmCookieAttributes.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUSMCookieAttributes`, data.AusmCookieAttributes.ValueString())
+	if !data.AuSmCookieAttributes.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AUSMCookieAttributes`, data.AuSmCookieAttributes.ValueString())
 	}
 	if !data.AuCacheControl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUCacheControl`, data.AuCacheControl.ValueString())
@@ -1405,9 +1405,9 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuPort = types.Int64Value(389)
 	}
 	if value := res.Get(pathRoot + `AUSSLValcred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusslValcred = tfutils.ParseStringFromGJSON(value)
+		data.AuSslValcred = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusslValcred = types.StringNull()
+		data.AuSslValcred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUCacheAllow`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuCacheAllow = tfutils.ParseStringFromGJSON(value)
@@ -1440,9 +1440,9 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuClearTrustApplication = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSAMLArtifactResponder`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusamlArtifactResponder = tfutils.ParseStringFromGJSON(value)
+		data.AuSamlArtifactResponder = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusamlArtifactResponder = types.StringNull()
+		data.AuSamlArtifactResponder = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUKerberosVerifySignature`); value.Exists() {
 		data.AuKerberosVerifySignature = tfutils.BoolFromString(value.String())
@@ -1455,29 +1455,29 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuNetegrityBaseUri = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSAMLAuthQueryServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusamlAuthQueryServer = tfutils.ParseStringFromGJSON(value)
+		data.AuSamlAuthQueryServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusamlAuthQueryServer = types.StringNull()
+		data.AuSamlAuthQueryServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSAMLVersion`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusamlVersion = tfutils.ParseStringFromGJSON(value)
+		data.AuSamlVersion = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusamlVersion = types.StringValue("1.1")
+		data.AuSamlVersion = types.StringValue("1.1")
 	}
 	if value := res.Get(pathRoot + `AULDAPPrefix`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapPrefix = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapPrefix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapPrefix = types.StringValue("cn=")
+		data.AuLdapPrefix = types.StringValue("cn=")
 	}
 	if value := res.Get(pathRoot + `AULDAPSuffix`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapSuffix = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapSuffix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapSuffix = types.StringNull()
+		data.AuLdapSuffix = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPLoadBalanceGroup`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapLoadBalanceGroup = types.StringNull()
+		data.AuLdapLoadBalanceGroup = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUKerberosKeytab`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuKerberosKeytab = tfutils.ParseStringFromGJSON(value)
@@ -1485,14 +1485,14 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuKerberosKeytab = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUWSTrustURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuwsTrustUrl = tfutils.ParseStringFromGJSON(value)
+		data.AuWsTrustUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuwsTrustUrl = types.StringNull()
+		data.AuWsTrustUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSAML2Issuer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Ausaml2Issuer = tfutils.ParseStringFromGJSON(value)
+		data.AuSaml2Issuer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Ausaml2Issuer = types.StringNull()
+		data.AuSaml2Issuer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSignerValcred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuSignerValcred = tfutils.ParseStringFromGJSON(value)
@@ -1500,35 +1500,35 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuSignerValcred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSignedXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuSignedXPath = tfutils.ParseStringFromGJSON(value)
+		data.AuSignedXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuSignedXPath = types.StringNull()
+		data.AuSignedXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPBindDN`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapBindDn = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapBindDn = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapBindDn = types.StringNull()
+		data.AuLdapBindDn = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPSearchAttribute`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapSearchAttribute = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapSearchAttribute = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapSearchAttribute = types.StringValue("userPassword")
+		data.AuLdapSearchAttribute = types.StringValue("userPassword")
 	}
 	if value := res.Get(pathRoot + `AULTPATokenVersionsBitmap`); value.Exists() {
-		data.AultpaTokenVersionsBitmap = &DmLTPATokenVersion{}
-		data.AultpaTokenVersionsBitmap.FromBody(ctx, "", value)
+		data.AuLtpaTokenVersionsBitmap = &DmLTPATokenVersion{}
+		data.AuLtpaTokenVersionsBitmap.FromBody(ctx, "", value)
 	} else {
-		data.AultpaTokenVersionsBitmap = nil
+		data.AuLtpaTokenVersionsBitmap = nil
 	}
 	if value := res.Get(pathRoot + `AULTPAKeyFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AultpaKeyFile = tfutils.ParseStringFromGJSON(value)
+		data.AuLtpaKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AultpaKeyFile = types.StringNull()
+		data.AuLtpaKeyFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULTPAStashFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AultpaStashFile = tfutils.ParseStringFromGJSON(value)
+		data.AuLtpaStashFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AultpaStashFile = types.StringNull()
+		data.AuLtpaStashFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUBinaryTokenX509Valcred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuBinaryTokenX509Valcred = tfutils.ParseStringFromGJSON(value)
@@ -1536,9 +1536,9 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuBinaryTokenX509Valcred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUTAMServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AutamServer = tfutils.ParseStringFromGJSON(value)
+		data.AuTamServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AutamServer = types.StringNull()
+		data.AuTamServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUAllowRemoteTokenReference`); value.Exists() {
 		data.AuAllowRemoteTokenReference = tfutils.BoolFromString(value.String())
@@ -1551,69 +1551,69 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuRemoteTokenProcessService = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUWSTrustVersion`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuwsTrustVersion = tfutils.ParseStringFromGJSON(value)
+		data.AuWsTrustVersion = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuwsTrustVersion = types.StringValue("1.2")
+		data.AuWsTrustVersion = types.StringValue("1.2")
 	}
 	if value := res.Get(pathRoot + `AULDAPSearchForDN`); value.Exists() {
-		data.AuldapSearchForDn = tfutils.BoolFromString(value.String())
+		data.AuLdapSearchForDn = tfutils.BoolFromString(value.String())
 	} else {
-		data.AuldapSearchForDn = types.BoolNull()
+		data.AuLdapSearchForDn = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPSearchParameters`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapSearchParameters = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapSearchParameters = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapSearchParameters = types.StringNull()
+		data.AuLdapSearchParameters = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUWSTrustRequireClientEntropy`); value.Exists() {
-		data.AuwsTrustRequireClientEntropy = tfutils.BoolFromString(value.String())
+		data.AuWsTrustRequireClientEntropy = tfutils.BoolFromString(value.String())
 	} else {
-		data.AuwsTrustRequireClientEntropy = types.BoolNull()
+		data.AuWsTrustRequireClientEntropy = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AUWSTrustClientEntropySize`); value.Exists() {
-		data.AuwsTrustClientEntropySize = types.Int64Value(value.Int())
+		data.AuWsTrustClientEntropySize = types.Int64Value(value.Int())
 	} else {
-		data.AuwsTrustClientEntropySize = types.Int64Value(32)
+		data.AuWsTrustClientEntropySize = types.Int64Value(32)
 	}
 	if value := res.Get(pathRoot + `AUWSTrustRequireServerEntropy`); value.Exists() {
-		data.AuwsTrustRequireServerEntropy = tfutils.BoolFromString(value.String())
+		data.AuWsTrustRequireServerEntropy = tfutils.BoolFromString(value.String())
 	} else {
-		data.AuwsTrustRequireServerEntropy = types.BoolNull()
+		data.AuWsTrustRequireServerEntropy = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AUWSTrustServerEntropySize`); value.Exists() {
-		data.AuwsTrustServerEntropySize = types.Int64Value(value.Int())
+		data.AuWsTrustServerEntropySize = types.Int64Value(value.Int())
 	} else {
-		data.AuwsTrustServerEntropySize = types.Int64Value(32)
+		data.AuWsTrustServerEntropySize = types.Int64Value(32)
 	}
 	if value := res.Get(pathRoot + `AUWSTrustRequireRSTC`); value.Exists() {
-		data.AuwsTrustRequireRstc = tfutils.BoolFromString(value.String())
+		data.AuWsTrustRequireRstc = tfutils.BoolFromString(value.String())
 	} else {
-		data.AuwsTrustRequireRstc = types.BoolNull()
+		data.AuWsTrustRequireRstc = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AUWSTrustRequireAppliesToHeader`); value.Exists() {
-		data.AuwsTrustRequireAppliesToHeader = tfutils.BoolFromString(value.String())
+		data.AuWsTrustRequireAppliesToHeader = tfutils.BoolFromString(value.String())
 	} else {
-		data.AuwsTrustRequireAppliesToHeader = types.BoolNull()
+		data.AuWsTrustRequireAppliesToHeader = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AUWSTrustAppliesToHeader`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuwsTrustAppliesToHeader = tfutils.ParseStringFromGJSON(value)
+		data.AuWsTrustAppliesToHeader = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuwsTrustAppliesToHeader = types.StringNull()
+		data.AuWsTrustAppliesToHeader = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUWSTrustEncryptionCertificate`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuwsTrustEncryptionCertificate = tfutils.ParseStringFromGJSON(value)
+		data.AuWsTrustEncryptionCertificate = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuwsTrustEncryptionCertificate = types.StringNull()
+		data.AuWsTrustEncryptionCertificate = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUZOSNSSConfig`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuzosnssConfig = tfutils.ParseStringFromGJSON(value)
+		data.AuZosNssConfig = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuzosnssConfig = types.StringNull()
+		data.AuZosNssConfig = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPAttributes`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapAttributes = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapAttributes = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapAttributes = types.StringNull()
+		data.AuLdapAttributes = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSkewTime`); value.Exists() {
 		data.AuSkewTime = types.Int64Value(value.Int())
@@ -1621,56 +1621,56 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuSkewTime = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `AUTAMPACReturn`); value.Exists() {
-		data.AutampacReturn = tfutils.BoolFromString(value.String())
+		data.AuTamPacReturn = tfutils.BoolFromString(value.String())
 	} else {
-		data.AutampacReturn = types.BoolNull()
+		data.AuTamPacReturn = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPReadTimeout`); value.Exists() {
-		data.AuldapReadTimeout = types.Int64Value(value.Int())
+		data.AuLdapReadTimeout = types.Int64Value(value.Int())
 	} else {
-		data.AuldapReadTimeout = types.Int64Value(60)
+		data.AuLdapReadTimeout = types.Int64Value(60)
 	}
 	if value := res.Get(pathRoot + `AUSSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusslClientConfigType = tfutils.ParseStringFromGJSON(value)
+		data.AuSslClientConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusslClientConfigType = types.StringValue("client")
+		data.AuSslClientConfigType = types.StringValue("client")
 	}
 	if value := res.Get(pathRoot + `AUSSLClientProfile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusslClientProfile = tfutils.ParseStringFromGJSON(value)
+		data.AuSslClientProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusslClientProfile = types.StringNull()
+		data.AuSslClientProfile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULDAPBindPasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
+		data.AuLdapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapBindPasswordAlias = types.StringNull()
+		data.AuLdapBindPasswordAlias = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULTPAKeyFilePasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AultpaKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
+		data.AuLtpaKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AultpaKeyFilePasswordAlias = types.StringNull()
+		data.AuLtpaKeyFilePasswordAlias = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSMRequestType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusmRequestType = tfutils.ParseStringFromGJSON(value)
+		data.AuSmRequestType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusmRequestType = types.StringValue("webagent")
+		data.AuSmRequestType = types.StringValue("webagent")
 	}
 	if value := res.Get(pathRoot + `AUSMCookieFlow`); value.Exists() {
-		data.AusmCookieFlow = &DmSMFlow{}
-		data.AusmCookieFlow.FromBody(ctx, "", value)
+		data.AuSmCookieFlow = &DmSMFlow{}
+		data.AuSmCookieFlow.FromBody(ctx, "", value)
 	} else {
-		data.AusmCookieFlow = nil
+		data.AuSmCookieFlow = nil
 	}
 	if value := res.Get(pathRoot + `AUSMHeaderFlow`); value.Exists() {
-		data.AusmHeaderFlow = &DmSMFlow{}
-		data.AusmHeaderFlow.FromBody(ctx, "", value)
+		data.AuSmHeaderFlow = &DmSMFlow{}
+		data.AuSmHeaderFlow.FromBody(ctx, "", value)
 	} else {
-		data.AusmHeaderFlow = nil
+		data.AuSmHeaderFlow = nil
 	}
 	if value := res.Get(pathRoot + `AUSMCookieAttributes`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AusmCookieAttributes = tfutils.ParseStringFromGJSON(value)
+		data.AuSmCookieAttributes = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusmCookieAttributes = types.StringNull()
+		data.AuSmCookieAttributes = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUCacheControl`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuCacheControl = tfutils.ParseStringFromGJSON(value)
@@ -1708,10 +1708,10 @@ func (data *DmAAAPAuthenticate) UpdateFromBody(ctx context.Context, pathRoot str
 	} else if data.AuPort.ValueInt64() != 389 {
 		data.AuPort = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `AUSSLValcred`); value.Exists() && !data.AusslValcred.IsNull() {
-		data.AusslValcred = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSSLValcred`); value.Exists() && !data.AuSslValcred.IsNull() {
+		data.AuSslValcred = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusslValcred = types.StringNull()
+		data.AuSslValcred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUCacheAllow`); value.Exists() && !data.AuCacheAllow.IsNull() {
 		data.AuCacheAllow = tfutils.ParseStringFromGJSON(value)
@@ -1743,10 +1743,10 @@ func (data *DmAAAPAuthenticate) UpdateFromBody(ctx context.Context, pathRoot str
 	} else {
 		data.AuClearTrustApplication = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSAMLArtifactResponder`); value.Exists() && !data.AusamlArtifactResponder.IsNull() {
-		data.AusamlArtifactResponder = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSAMLArtifactResponder`); value.Exists() && !data.AuSamlArtifactResponder.IsNull() {
+		data.AuSamlArtifactResponder = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusamlArtifactResponder = types.StringNull()
+		data.AuSamlArtifactResponder = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUKerberosVerifySignature`); value.Exists() && !data.AuKerberosVerifySignature.IsNull() {
 		data.AuKerberosVerifySignature = tfutils.BoolFromString(value.String())
@@ -1758,90 +1758,90 @@ func (data *DmAAAPAuthenticate) UpdateFromBody(ctx context.Context, pathRoot str
 	} else {
 		data.AuNetegrityBaseUri = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSAMLAuthQueryServer`); value.Exists() && !data.AusamlAuthQueryServer.IsNull() {
-		data.AusamlAuthQueryServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSAMLAuthQueryServer`); value.Exists() && !data.AuSamlAuthQueryServer.IsNull() {
+		data.AuSamlAuthQueryServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusamlAuthQueryServer = types.StringNull()
+		data.AuSamlAuthQueryServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSAMLVersion`); value.Exists() && !data.AusamlVersion.IsNull() {
-		data.AusamlVersion = tfutils.ParseStringFromGJSON(value)
-	} else if data.AusamlVersion.ValueString() != "1.1" {
-		data.AusamlVersion = types.StringNull()
+	if value := res.Get(pathRoot + `AUSAMLVersion`); value.Exists() && !data.AuSamlVersion.IsNull() {
+		data.AuSamlVersion = tfutils.ParseStringFromGJSON(value)
+	} else if data.AuSamlVersion.ValueString() != "1.1" {
+		data.AuSamlVersion = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPPrefix`); value.Exists() && !data.AuldapPrefix.IsNull() {
-		data.AuldapPrefix = tfutils.ParseStringFromGJSON(value)
-	} else if data.AuldapPrefix.ValueString() != "cn=" {
-		data.AuldapPrefix = types.StringNull()
+	if value := res.Get(pathRoot + `AULDAPPrefix`); value.Exists() && !data.AuLdapPrefix.IsNull() {
+		data.AuLdapPrefix = tfutils.ParseStringFromGJSON(value)
+	} else if data.AuLdapPrefix.ValueString() != "cn=" {
+		data.AuLdapPrefix = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPSuffix`); value.Exists() && !data.AuldapSuffix.IsNull() {
-		data.AuldapSuffix = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPSuffix`); value.Exists() && !data.AuLdapSuffix.IsNull() {
+		data.AuLdapSuffix = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapSuffix = types.StringNull()
+		data.AuLdapSuffix = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPLoadBalanceGroup`); value.Exists() && !data.AuldapLoadBalanceGroup.IsNull() {
-		data.AuldapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPLoadBalanceGroup`); value.Exists() && !data.AuLdapLoadBalanceGroup.IsNull() {
+		data.AuLdapLoadBalanceGroup = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapLoadBalanceGroup = types.StringNull()
+		data.AuLdapLoadBalanceGroup = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUKerberosKeytab`); value.Exists() && !data.AuKerberosKeytab.IsNull() {
 		data.AuKerberosKeytab = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AuKerberosKeytab = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustURL`); value.Exists() && !data.AuwsTrustUrl.IsNull() {
-		data.AuwsTrustUrl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUWSTrustURL`); value.Exists() && !data.AuWsTrustUrl.IsNull() {
+		data.AuWsTrustUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuwsTrustUrl = types.StringNull()
+		data.AuWsTrustUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSAML2Issuer`); value.Exists() && !data.Ausaml2Issuer.IsNull() {
-		data.Ausaml2Issuer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSAML2Issuer`); value.Exists() && !data.AuSaml2Issuer.IsNull() {
+		data.AuSaml2Issuer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Ausaml2Issuer = types.StringNull()
+		data.AuSaml2Issuer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSignerValcred`); value.Exists() && !data.AuSignerValcred.IsNull() {
 		data.AuSignerValcred = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AuSignerValcred = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSignedXPath`); value.Exists() && !data.AuSignedXPath.IsNull() {
-		data.AuSignedXPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSignedXPath`); value.Exists() && !data.AuSignedXpath.IsNull() {
+		data.AuSignedXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuSignedXPath = types.StringNull()
+		data.AuSignedXpath = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPBindDN`); value.Exists() && !data.AuldapBindDn.IsNull() {
-		data.AuldapBindDn = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPBindDN`); value.Exists() && !data.AuLdapBindDn.IsNull() {
+		data.AuLdapBindDn = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapBindDn = types.StringNull()
+		data.AuLdapBindDn = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPSearchAttribute`); value.Exists() && !data.AuldapSearchAttribute.IsNull() {
-		data.AuldapSearchAttribute = tfutils.ParseStringFromGJSON(value)
-	} else if data.AuldapSearchAttribute.ValueString() != "userPassword" {
-		data.AuldapSearchAttribute = types.StringNull()
+	if value := res.Get(pathRoot + `AULDAPSearchAttribute`); value.Exists() && !data.AuLdapSearchAttribute.IsNull() {
+		data.AuLdapSearchAttribute = tfutils.ParseStringFromGJSON(value)
+	} else if data.AuLdapSearchAttribute.ValueString() != "userPassword" {
+		data.AuLdapSearchAttribute = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULTPATokenVersionsBitmap`); value.Exists() {
-		data.AultpaTokenVersionsBitmap.UpdateFromBody(ctx, "", value)
+		data.AuLtpaTokenVersionsBitmap.UpdateFromBody(ctx, "", value)
 	} else {
-		data.AultpaTokenVersionsBitmap = nil
+		data.AuLtpaTokenVersionsBitmap = nil
 	}
-	if value := res.Get(pathRoot + `AULTPAKeyFile`); value.Exists() && !data.AultpaKeyFile.IsNull() {
-		data.AultpaKeyFile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULTPAKeyFile`); value.Exists() && !data.AuLtpaKeyFile.IsNull() {
+		data.AuLtpaKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AultpaKeyFile = types.StringNull()
+		data.AuLtpaKeyFile = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULTPAStashFile`); value.Exists() && !data.AultpaStashFile.IsNull() {
-		data.AultpaStashFile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULTPAStashFile`); value.Exists() && !data.AuLtpaStashFile.IsNull() {
+		data.AuLtpaStashFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AultpaStashFile = types.StringNull()
+		data.AuLtpaStashFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUBinaryTokenX509Valcred`); value.Exists() && !data.AuBinaryTokenX509Valcred.IsNull() {
 		data.AuBinaryTokenX509Valcred = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AuBinaryTokenX509Valcred = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUTAMServer`); value.Exists() && !data.AutamServer.IsNull() {
-		data.AutamServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUTAMServer`); value.Exists() && !data.AuTamServer.IsNull() {
+		data.AuTamServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AutamServer = types.StringNull()
+		data.AuTamServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUAllowRemoteTokenReference`); value.Exists() && !data.AuAllowRemoteTokenReference.IsNull() {
 		data.AuAllowRemoteTokenReference = tfutils.BoolFromString(value.String())
@@ -1853,125 +1853,125 @@ func (data *DmAAAPAuthenticate) UpdateFromBody(ctx context.Context, pathRoot str
 	} else {
 		data.AuRemoteTokenProcessService = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustVersion`); value.Exists() && !data.AuwsTrustVersion.IsNull() {
-		data.AuwsTrustVersion = tfutils.ParseStringFromGJSON(value)
-	} else if data.AuwsTrustVersion.ValueString() != "1.2" {
-		data.AuwsTrustVersion = types.StringNull()
+	if value := res.Get(pathRoot + `AUWSTrustVersion`); value.Exists() && !data.AuWsTrustVersion.IsNull() {
+		data.AuWsTrustVersion = tfutils.ParseStringFromGJSON(value)
+	} else if data.AuWsTrustVersion.ValueString() != "1.2" {
+		data.AuWsTrustVersion = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPSearchForDN`); value.Exists() && !data.AuldapSearchForDn.IsNull() {
-		data.AuldapSearchForDn = tfutils.BoolFromString(value.String())
-	} else if data.AuldapSearchForDn.ValueBool() {
-		data.AuldapSearchForDn = types.BoolNull()
+	if value := res.Get(pathRoot + `AULDAPSearchForDN`); value.Exists() && !data.AuLdapSearchForDn.IsNull() {
+		data.AuLdapSearchForDn = tfutils.BoolFromString(value.String())
+	} else if data.AuLdapSearchForDn.ValueBool() {
+		data.AuLdapSearchForDn = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPSearchParameters`); value.Exists() && !data.AuldapSearchParameters.IsNull() {
-		data.AuldapSearchParameters = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPSearchParameters`); value.Exists() && !data.AuLdapSearchParameters.IsNull() {
+		data.AuLdapSearchParameters = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapSearchParameters = types.StringNull()
+		data.AuLdapSearchParameters = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustRequireClientEntropy`); value.Exists() && !data.AuwsTrustRequireClientEntropy.IsNull() {
-		data.AuwsTrustRequireClientEntropy = tfutils.BoolFromString(value.String())
-	} else if data.AuwsTrustRequireClientEntropy.ValueBool() {
-		data.AuwsTrustRequireClientEntropy = types.BoolNull()
+	if value := res.Get(pathRoot + `AUWSTrustRequireClientEntropy`); value.Exists() && !data.AuWsTrustRequireClientEntropy.IsNull() {
+		data.AuWsTrustRequireClientEntropy = tfutils.BoolFromString(value.String())
+	} else if data.AuWsTrustRequireClientEntropy.ValueBool() {
+		data.AuWsTrustRequireClientEntropy = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustClientEntropySize`); value.Exists() && !data.AuwsTrustClientEntropySize.IsNull() {
-		data.AuwsTrustClientEntropySize = types.Int64Value(value.Int())
-	} else if data.AuwsTrustClientEntropySize.ValueInt64() != 32 {
-		data.AuwsTrustClientEntropySize = types.Int64Null()
+	if value := res.Get(pathRoot + `AUWSTrustClientEntropySize`); value.Exists() && !data.AuWsTrustClientEntropySize.IsNull() {
+		data.AuWsTrustClientEntropySize = types.Int64Value(value.Int())
+	} else if data.AuWsTrustClientEntropySize.ValueInt64() != 32 {
+		data.AuWsTrustClientEntropySize = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustRequireServerEntropy`); value.Exists() && !data.AuwsTrustRequireServerEntropy.IsNull() {
-		data.AuwsTrustRequireServerEntropy = tfutils.BoolFromString(value.String())
-	} else if data.AuwsTrustRequireServerEntropy.ValueBool() {
-		data.AuwsTrustRequireServerEntropy = types.BoolNull()
+	if value := res.Get(pathRoot + `AUWSTrustRequireServerEntropy`); value.Exists() && !data.AuWsTrustRequireServerEntropy.IsNull() {
+		data.AuWsTrustRequireServerEntropy = tfutils.BoolFromString(value.String())
+	} else if data.AuWsTrustRequireServerEntropy.ValueBool() {
+		data.AuWsTrustRequireServerEntropy = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustServerEntropySize`); value.Exists() && !data.AuwsTrustServerEntropySize.IsNull() {
-		data.AuwsTrustServerEntropySize = types.Int64Value(value.Int())
-	} else if data.AuwsTrustServerEntropySize.ValueInt64() != 32 {
-		data.AuwsTrustServerEntropySize = types.Int64Null()
+	if value := res.Get(pathRoot + `AUWSTrustServerEntropySize`); value.Exists() && !data.AuWsTrustServerEntropySize.IsNull() {
+		data.AuWsTrustServerEntropySize = types.Int64Value(value.Int())
+	} else if data.AuWsTrustServerEntropySize.ValueInt64() != 32 {
+		data.AuWsTrustServerEntropySize = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustRequireRSTC`); value.Exists() && !data.AuwsTrustRequireRstc.IsNull() {
-		data.AuwsTrustRequireRstc = tfutils.BoolFromString(value.String())
-	} else if data.AuwsTrustRequireRstc.ValueBool() {
-		data.AuwsTrustRequireRstc = types.BoolNull()
+	if value := res.Get(pathRoot + `AUWSTrustRequireRSTC`); value.Exists() && !data.AuWsTrustRequireRstc.IsNull() {
+		data.AuWsTrustRequireRstc = tfutils.BoolFromString(value.String())
+	} else if data.AuWsTrustRequireRstc.ValueBool() {
+		data.AuWsTrustRequireRstc = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustRequireAppliesToHeader`); value.Exists() && !data.AuwsTrustRequireAppliesToHeader.IsNull() {
-		data.AuwsTrustRequireAppliesToHeader = tfutils.BoolFromString(value.String())
-	} else if data.AuwsTrustRequireAppliesToHeader.ValueBool() {
-		data.AuwsTrustRequireAppliesToHeader = types.BoolNull()
+	if value := res.Get(pathRoot + `AUWSTrustRequireAppliesToHeader`); value.Exists() && !data.AuWsTrustRequireAppliesToHeader.IsNull() {
+		data.AuWsTrustRequireAppliesToHeader = tfutils.BoolFromString(value.String())
+	} else if data.AuWsTrustRequireAppliesToHeader.ValueBool() {
+		data.AuWsTrustRequireAppliesToHeader = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustAppliesToHeader`); value.Exists() && !data.AuwsTrustAppliesToHeader.IsNull() {
-		data.AuwsTrustAppliesToHeader = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUWSTrustAppliesToHeader`); value.Exists() && !data.AuWsTrustAppliesToHeader.IsNull() {
+		data.AuWsTrustAppliesToHeader = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuwsTrustAppliesToHeader = types.StringNull()
+		data.AuWsTrustAppliesToHeader = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUWSTrustEncryptionCertificate`); value.Exists() && !data.AuwsTrustEncryptionCertificate.IsNull() {
-		data.AuwsTrustEncryptionCertificate = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUWSTrustEncryptionCertificate`); value.Exists() && !data.AuWsTrustEncryptionCertificate.IsNull() {
+		data.AuWsTrustEncryptionCertificate = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuwsTrustEncryptionCertificate = types.StringNull()
+		data.AuWsTrustEncryptionCertificate = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUZOSNSSConfig`); value.Exists() && !data.AuzosnssConfig.IsNull() {
-		data.AuzosnssConfig = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUZOSNSSConfig`); value.Exists() && !data.AuZosNssConfig.IsNull() {
+		data.AuZosNssConfig = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuzosnssConfig = types.StringNull()
+		data.AuZosNssConfig = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPAttributes`); value.Exists() && !data.AuldapAttributes.IsNull() {
-		data.AuldapAttributes = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPAttributes`); value.Exists() && !data.AuLdapAttributes.IsNull() {
+		data.AuLdapAttributes = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapAttributes = types.StringNull()
+		data.AuLdapAttributes = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSkewTime`); value.Exists() && !data.AuSkewTime.IsNull() {
 		data.AuSkewTime = types.Int64Value(value.Int())
 	} else if data.AuSkewTime.ValueInt64() != 0 {
 		data.AuSkewTime = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `AUTAMPACReturn`); value.Exists() && !data.AutampacReturn.IsNull() {
-		data.AutampacReturn = tfutils.BoolFromString(value.String())
-	} else if data.AutampacReturn.ValueBool() {
-		data.AutampacReturn = types.BoolNull()
+	if value := res.Get(pathRoot + `AUTAMPACReturn`); value.Exists() && !data.AuTamPacReturn.IsNull() {
+		data.AuTamPacReturn = tfutils.BoolFromString(value.String())
+	} else if data.AuTamPacReturn.ValueBool() {
+		data.AuTamPacReturn = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPReadTimeout`); value.Exists() && !data.AuldapReadTimeout.IsNull() {
-		data.AuldapReadTimeout = types.Int64Value(value.Int())
-	} else if data.AuldapReadTimeout.ValueInt64() != 60 {
-		data.AuldapReadTimeout = types.Int64Null()
+	if value := res.Get(pathRoot + `AULDAPReadTimeout`); value.Exists() && !data.AuLdapReadTimeout.IsNull() {
+		data.AuLdapReadTimeout = types.Int64Value(value.Int())
+	} else if data.AuLdapReadTimeout.ValueInt64() != 60 {
+		data.AuLdapReadTimeout = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `AUSSLClientConfigType`); value.Exists() && !data.AusslClientConfigType.IsNull() {
-		data.AusslClientConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.AusslClientConfigType.ValueString() != "client" {
-		data.AusslClientConfigType = types.StringNull()
+	if value := res.Get(pathRoot + `AUSSLClientConfigType`); value.Exists() && !data.AuSslClientConfigType.IsNull() {
+		data.AuSslClientConfigType = tfutils.ParseStringFromGJSON(value)
+	} else if data.AuSslClientConfigType.ValueString() != "client" {
+		data.AuSslClientConfigType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSSLClientProfile`); value.Exists() && !data.AusslClientProfile.IsNull() {
-		data.AusslClientProfile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSSLClientProfile`); value.Exists() && !data.AuSslClientProfile.IsNull() {
+		data.AuSslClientProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusslClientProfile = types.StringNull()
+		data.AuSslClientProfile = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPBindPasswordAlias`); value.Exists() && !data.AuldapBindPasswordAlias.IsNull() {
-		data.AuldapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULDAPBindPasswordAlias`); value.Exists() && !data.AuLdapBindPasswordAlias.IsNull() {
+		data.AuLdapBindPasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AuldapBindPasswordAlias = types.StringNull()
+		data.AuLdapBindPasswordAlias = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULTPAKeyFilePasswordAlias`); value.Exists() && !data.AultpaKeyFilePasswordAlias.IsNull() {
-		data.AultpaKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AULTPAKeyFilePasswordAlias`); value.Exists() && !data.AuLtpaKeyFilePasswordAlias.IsNull() {
+		data.AuLtpaKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AultpaKeyFilePasswordAlias = types.StringNull()
+		data.AuLtpaKeyFilePasswordAlias = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AUSMRequestType`); value.Exists() && !data.AusmRequestType.IsNull() {
-		data.AusmRequestType = tfutils.ParseStringFromGJSON(value)
-	} else if data.AusmRequestType.ValueString() != "webagent" {
-		data.AusmRequestType = types.StringNull()
+	if value := res.Get(pathRoot + `AUSMRequestType`); value.Exists() && !data.AuSmRequestType.IsNull() {
+		data.AuSmRequestType = tfutils.ParseStringFromGJSON(value)
+	} else if data.AuSmRequestType.ValueString() != "webagent" {
+		data.AuSmRequestType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUSMCookieFlow`); value.Exists() {
-		data.AusmCookieFlow.UpdateFromBody(ctx, "", value)
+		data.AuSmCookieFlow.UpdateFromBody(ctx, "", value)
 	} else {
-		data.AusmCookieFlow = nil
+		data.AuSmCookieFlow = nil
 	}
 	if value := res.Get(pathRoot + `AUSMHeaderFlow`); value.Exists() {
-		data.AusmHeaderFlow.UpdateFromBody(ctx, "", value)
+		data.AuSmHeaderFlow.UpdateFromBody(ctx, "", value)
 	} else {
-		data.AusmHeaderFlow = nil
+		data.AuSmHeaderFlow = nil
 	}
-	if value := res.Get(pathRoot + `AUSMCookieAttributes`); value.Exists() && !data.AusmCookieAttributes.IsNull() {
-		data.AusmCookieAttributes = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AUSMCookieAttributes`); value.Exists() && !data.AuSmCookieAttributes.IsNull() {
+		data.AuSmCookieAttributes = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AusmCookieAttributes = types.StringNull()
+		data.AuSmCookieAttributes = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUCacheControl`); value.Exists() && !data.AuCacheControl.IsNull() {
 		data.AuCacheControl = tfutils.ParseStringFromGJSON(value)

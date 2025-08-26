@@ -42,10 +42,10 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `o_auth_provider_settings_reference` (Attributes) Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.
-  - CLI Alias: `oauth-provider-settings-ref` (see [below for nested schema](#nestedatt--result--o_auth_provider_settings_reference))
-- `supported_o_auth_components` (Attributes) Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.
-  - CLI Alias: `supported-oauth-components` (see [below for nested schema](#nestedatt--result--supported_o_auth_components))
+- `oauth_provider_settings_reference` (Attributes) Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.
+  - CLI Alias: `oauth-provider-settings-ref` (see [below for nested schema](#nestedatt--result--oauth_provider_settings_reference))
+- `supported_oauth_components` (Attributes) Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.
+  - CLI Alias: `supported-oauth-components` (see [below for nested schema](#nestedatt--result--supported_oauth_components))
 - `title` (String) Title
 - `user_summary` (String) Comments
 
@@ -66,8 +66,8 @@ Optional:
 - `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
 
 
-<a id="nestedatt--result--o_auth_provider_settings_reference"></a>
-### Nested Schema for `result.o_auth_provider_settings_reference`
+<a id="nestedatt--result--oauth_provider_settings_reference"></a>
+### Nested Schema for `result.oauth_provider_settings_reference`
 
 Read-Only:
 
@@ -80,25 +80,25 @@ Read-Only:
   - CLI Alias: `url`
 
 
-<a id="nestedatt--result--supported_o_auth_components"></a>
-### Nested Schema for `result.supported_o_auth_components`
+<a id="nestedatt--result--supported_oauth_components"></a>
+### Nested Schema for `result.supported_oauth_components`
 
 Read-Only:
 
 - `none` (Boolean) - Default value: `false`
-- `o_auth_collect_metadata` (Boolean) Collect Metadata
+- `oauth_collect_metadata` (Boolean) Collect Metadata
   - Default value: `false`
-- `o_auth_generate_access_token` (Boolean) Generate access token
+- `oauth_generate_access_token` (Boolean) Generate access token
   - Default value: `false`
-- `o_auth_generate_az_code` (Boolean) Generate authorization code
+- `oauth_generate_az_code` (Boolean) Generate authorization code
   - Default value: `false`
-- `o_auth_introspect_token` (Boolean) Introspect token
+- `oauth_introspect_token` (Boolean) Introspect token
   - Default value: `false`
-- `o_auth_revoke_token` (Boolean) Revoke token
+- `oauth_revoke_token` (Boolean) Revoke token
   - Default value: `false`
-- `o_auth_validate_request` (Boolean) Validate request
+- `oauth_validate_request` (Boolean) Validate request
   - Default value: `false`
-- `o_auth_verify_az_code` (Boolean) Verify authorization code
+- `oauth_verify_az_code` (Boolean) Verify authorization code
   - Default value: `false`
-- `o_auth_verify_refresh_token` (Boolean) Verify refresh token
+- `oauth_verify_refresh_token` (Boolean) Verify refresh token
   - Default value: `false`

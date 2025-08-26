@@ -40,7 +40,7 @@ type CryptoValCred struct {
 	CertValidationMode types.String                `tfsdk:"cert_validation_mode"`
 	UseCrl             types.Bool                  `tfsdk:"use_crl"`
 	RequireCrl         types.Bool                  `tfsdk:"require_crl"`
-	CrldpHandling      types.String                `tfsdk:"crldp_handling"`
+	CrlDpHandling      types.String                `tfsdk:"crl_dp_handling"`
 	InitialPolicySet   types.List                  `tfsdk:"initial_policy_set"`
 	ExplicitPolicy     types.Bool                  `tfsdk:"explicit_policy"`
 	CheckDates         types.Bool                  `tfsdk:"check_dates"`
@@ -54,7 +54,7 @@ var CryptoValCredObjectType = map[string]attr.Type{
 	"cert_validation_mode": types.StringType,
 	"use_crl":              types.BoolType,
 	"require_crl":          types.BoolType,
-	"crldp_handling":       types.StringType,
+	"crl_dp_handling":      types.StringType,
 	"initial_policy_set":   types.ListType{ElemType: types.StringType},
 	"explicit_policy":      types.BoolType,
 	"check_dates":          types.BoolType,
@@ -87,7 +87,7 @@ func (data CryptoValCred) IsNull() bool {
 	if !data.RequireCrl.IsNull() {
 		return false
 	}
-	if !data.CrldpHandling.IsNull() {
+	if !data.CrlDpHandling.IsNull() {
 		return false
 	}
 	if !data.InitialPolicySet.IsNull() {
@@ -127,8 +127,8 @@ func (data CryptoValCred) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.RequireCrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RequireCRL`, tfutils.StringFromBool(data.RequireCrl, ""))
 	}
-	if !data.CrldpHandling.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CRLDPHandling`, data.CrldpHandling.ValueString())
+	if !data.CrlDpHandling.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`CRLDPHandling`, data.CrlDpHandling.ValueString())
 	}
 	if !data.InitialPolicySet.IsNull() {
 		var dataValues []string
@@ -176,9 +176,9 @@ func (data *CryptoValCred) FromBody(ctx context.Context, pathRoot string, res gj
 		data.RequireCrl = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `CRLDPHandling`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.CrldpHandling = tfutils.ParseStringFromGJSON(value)
+		data.CrlDpHandling = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.CrldpHandling = types.StringValue("ignore")
+		data.CrlDpHandling = types.StringValue("ignore")
 	}
 	if value := res.Get(pathRoot + `InitialPolicySet`); value.Exists() {
 		data.InitialPolicySet = tfutils.ParseStringListFromGJSON(value)
@@ -226,10 +226,10 @@ func (data *CryptoValCred) UpdateFromBody(ctx context.Context, pathRoot string, 
 	} else if data.RequireCrl.ValueBool() {
 		data.RequireCrl = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `CRLDPHandling`); value.Exists() && !data.CrldpHandling.IsNull() {
-		data.CrldpHandling = tfutils.ParseStringFromGJSON(value)
-	} else if data.CrldpHandling.ValueString() != "ignore" {
-		data.CrldpHandling = types.StringNull()
+	if value := res.Get(pathRoot + `CRLDPHandling`); value.Exists() && !data.CrlDpHandling.IsNull() {
+		data.CrlDpHandling = tfutils.ParseStringFromGJSON(value)
+	} else if data.CrlDpHandling.ValueString() != "ignore" {
+		data.CrlDpHandling = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `InitialPolicySet`); value.Exists() && !data.InitialPolicySet.IsNull() {
 		data.InitialPolicySet = tfutils.ParseStringListFromGJSON(value)

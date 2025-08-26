@@ -52,7 +52,7 @@ Read-Only:
 - `error_types` (Attributes) Error types
   - CLI Alias: `error-types` (see [below for nested schema](#nestedatt--result--error_types))
 - `follow_redirects` (Boolean) Specify whether to follow redirects. Some protocols generate redirects. When enabled, the action attempts to resolve redirects transparently.
-- `graph_ql_send_type` (String) Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.
+- `graphql_send_type` (String) Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.
 - `header_control_list` (String) Specify the control list that uses headers to accept or reject requests. By default, accepts all requests with headers.
 - `http2_required` (Boolean) Specify whether an HTTP/2 connection is required when connecting to the server. Only applicable when the HTTP version to the server is set to HTTP/2 and the connection uses TLS. The default value is off.
 - `http_version` (String) Specify the HTTP version for server-side connections. The default value is HTTP/1.1.

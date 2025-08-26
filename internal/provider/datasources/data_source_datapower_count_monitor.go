@@ -93,7 +93,7 @@ func (d *CountMonitorDataSource) Schema(ctx context.Context, req datasource.Sche
 							NestedObject:        models.GetDmCountMonitorFilterDataSourceSchema(),
 							Computed:            true,
 						},
-						"max_sources": schema.Int64Attribute{
+						"max_source_s": schema.Int64Attribute{
 							MarkdownDescription: "When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.",
 							Computed:            true,
 						},

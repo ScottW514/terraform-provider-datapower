@@ -50,10 +50,10 @@ type TAM struct {
 	ListenPort                  types.Int64                 `tfsdk:"listen_port"`
 	ReturningUserAttributes     types.Bool                  `tfsdk:"returning_user_attributes"`
 	LdapUseSsl                  types.Bool                  `tfsdk:"ldap_use_ssl"`
-	LdapsslPort                 types.Int64                 `tfsdk:"ldapssl_port"`
-	LdapsslKeyFile              types.String                `tfsdk:"ldapssl_key_file"`
-	LdapsslKeyFilePasswordAlias types.String                `tfsdk:"ldapssl_key_file_password_alias"`
-	LdapsslKeyFileLabel         types.String                `tfsdk:"ldapssl_key_file_label"`
+	LdapSslPort                 types.Int64                 `tfsdk:"ldap_ssl_port"`
+	LdapSslKeyFile              types.String                `tfsdk:"ldap_ssl_key_file"`
+	LdapSslKeyFilePasswordAlias types.String                `tfsdk:"ldap_ssl_key_file_password_alias"`
+	LdapSslKeyFileLabel         types.String                `tfsdk:"ldap_ssl_key_file_label"`
 	TamUseFips                  types.Bool                  `tfsdk:"tam_use_fips"`
 	TamChooseNist               types.String                `tfsdk:"tam_choose_nist"`
 	TamUseBasicUser             types.Bool                  `tfsdk:"tam_use_basic_user"`
@@ -62,8 +62,8 @@ type TAM struct {
 	UserSearchSuffixes          types.List                  `tfsdk:"user_search_suffixes"`
 	UserSuffixOptimiser         types.Bool                  `tfsdk:"user_suffix_optimiser"`
 	TamFedDirs                  types.List                  `tfsdk:"tam_fed_dirs"`
-	TamazReplicas               types.List                  `tfsdk:"tamaz_replicas"`
-	TamrasTrace                 *DmTAMRASTrace              `tfsdk:"tamras_trace"`
+	TamAzReplicas               types.List                  `tfsdk:"tam_az_replicas"`
+	TamRasTrace                 *DmTAMRASTrace              `tfsdk:"tam_ras_trace"`
 	AutoRetry                   types.Bool                  `tfsdk:"auto_retry"`
 	RetryInterval               types.Int64                 `tfsdk:"retry_interval"`
 	RetryAttempts               types.Int64                 `tfsdk:"retry_attempts"`
@@ -141,40 +141,40 @@ var TAMUserPrincipalAttributeCondVal = validators.Evaluation{
 }
 
 var TAMObjectType = map[string]attr.Type{
-	"id":                              types.StringType,
-	"app_domain":                      types.StringType,
-	"user_summary":                    types.StringType,
-	"ad_use_ad":                       types.BoolType,
-	"tam_version":                     types.StringType,
-	"configuration_file":              types.StringType,
-	"ad_configuration_file":           types.StringType,
-	"ssl_key_file":                    types.StringType,
-	"ssl_key_stash_file":              types.StringType,
-	"use_local_mode":                  types.BoolType,
-	"poll_interval":                   types.StringType,
-	"listen_mode":                     types.BoolType,
-	"listen_port":                     types.Int64Type,
-	"returning_user_attributes":       types.BoolType,
-	"ldap_use_ssl":                    types.BoolType,
-	"ldapssl_port":                    types.Int64Type,
-	"ldapssl_key_file":                types.StringType,
-	"ldapssl_key_file_password_alias": types.StringType,
-	"ldapssl_key_file_label":          types.StringType,
-	"tam_use_fips":                    types.BoolType,
-	"tam_choose_nist":                 types.StringType,
-	"tam_use_basic_user":              types.BoolType,
-	"user_principal_attribute":        types.StringType,
-	"user_no_duplicates":              types.BoolType,
-	"user_search_suffixes":            types.ListType{ElemType: types.StringType},
-	"user_suffix_optimiser":           types.BoolType,
-	"tam_fed_dirs":                    types.ListType{ElemType: types.ObjectType{AttrTypes: DmTAMFedDirObjectType}},
-	"tamaz_replicas":                  types.ListType{ElemType: types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType}},
-	"tamras_trace":                    types.ObjectType{AttrTypes: DmTAMRASTraceObjectType},
-	"auto_retry":                      types.BoolType,
-	"retry_interval":                  types.Int64Type,
-	"retry_attempts":                  types.Int64Type,
-	"long_retry_interval":             types.Int64Type,
-	"dependency_actions":              actions.ActionsListType,
+	"id":                               types.StringType,
+	"app_domain":                       types.StringType,
+	"user_summary":                     types.StringType,
+	"ad_use_ad":                        types.BoolType,
+	"tam_version":                      types.StringType,
+	"configuration_file":               types.StringType,
+	"ad_configuration_file":            types.StringType,
+	"ssl_key_file":                     types.StringType,
+	"ssl_key_stash_file":               types.StringType,
+	"use_local_mode":                   types.BoolType,
+	"poll_interval":                    types.StringType,
+	"listen_mode":                      types.BoolType,
+	"listen_port":                      types.Int64Type,
+	"returning_user_attributes":        types.BoolType,
+	"ldap_use_ssl":                     types.BoolType,
+	"ldap_ssl_port":                    types.Int64Type,
+	"ldap_ssl_key_file":                types.StringType,
+	"ldap_ssl_key_file_password_alias": types.StringType,
+	"ldap_ssl_key_file_label":          types.StringType,
+	"tam_use_fips":                     types.BoolType,
+	"tam_choose_nist":                  types.StringType,
+	"tam_use_basic_user":               types.BoolType,
+	"user_principal_attribute":         types.StringType,
+	"user_no_duplicates":               types.BoolType,
+	"user_search_suffixes":             types.ListType{ElemType: types.StringType},
+	"user_suffix_optimiser":            types.BoolType,
+	"tam_fed_dirs":                     types.ListType{ElemType: types.ObjectType{AttrTypes: DmTAMFedDirObjectType}},
+	"tam_az_replicas":                  types.ListType{ElemType: types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType}},
+	"tam_ras_trace":                    types.ObjectType{AttrTypes: DmTAMRASTraceObjectType},
+	"auto_retry":                       types.BoolType,
+	"retry_interval":                   types.Int64Type,
+	"retry_attempts":                   types.Int64Type,
+	"long_retry_interval":              types.Int64Type,
+	"dependency_actions":               actions.ActionsListType,
 }
 
 func (data TAM) GetPath() string {
@@ -230,16 +230,16 @@ func (data TAM) IsNull() bool {
 	if !data.LdapUseSsl.IsNull() {
 		return false
 	}
-	if !data.LdapsslPort.IsNull() {
+	if !data.LdapSslPort.IsNull() {
 		return false
 	}
-	if !data.LdapsslKeyFile.IsNull() {
+	if !data.LdapSslKeyFile.IsNull() {
 		return false
 	}
-	if !data.LdapsslKeyFilePasswordAlias.IsNull() {
+	if !data.LdapSslKeyFilePasswordAlias.IsNull() {
 		return false
 	}
-	if !data.LdapsslKeyFileLabel.IsNull() {
+	if !data.LdapSslKeyFileLabel.IsNull() {
 		return false
 	}
 	if !data.TamUseFips.IsNull() {
@@ -266,11 +266,11 @@ func (data TAM) IsNull() bool {
 	if !data.TamFedDirs.IsNull() {
 		return false
 	}
-	if !data.TamazReplicas.IsNull() {
+	if !data.TamAzReplicas.IsNull() {
 		return false
 	}
-	if data.TamrasTrace != nil {
-		if !data.TamrasTrace.IsNull() {
+	if data.TamRasTrace != nil {
+		if !data.TamRasTrace.IsNull() {
 			return false
 		}
 	}
@@ -337,17 +337,17 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.LdapUseSsl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPUseSSL`, tfutils.StringFromBool(data.LdapUseSsl, ""))
 	}
-	if !data.LdapsslPort.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPSSLPort`, data.LdapsslPort.ValueInt64())
+	if !data.LdapSslPort.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LDAPSSLPort`, data.LdapSslPort.ValueInt64())
 	}
-	if !data.LdapsslKeyFile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFile`, data.LdapsslKeyFile.ValueString())
+	if !data.LdapSslKeyFile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFile`, data.LdapSslKeyFile.ValueString())
 	}
-	if !data.LdapsslKeyFilePasswordAlias.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFilePasswordAlias`, data.LdapsslKeyFilePasswordAlias.ValueString())
+	if !data.LdapSslKeyFilePasswordAlias.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFilePasswordAlias`, data.LdapSslKeyFilePasswordAlias.ValueString())
 	}
-	if !data.LdapsslKeyFileLabel.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFileLabel`, data.LdapsslKeyFileLabel.ValueString())
+	if !data.LdapSslKeyFileLabel.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFileLabel`, data.LdapSslKeyFileLabel.ValueString())
 	}
 	if !data.TamUseFips.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TAMUseFIPS`, tfutils.StringFromBool(data.TamUseFips, ""))
@@ -381,16 +381,16 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 			body, _ = sjson.SetRaw(body, pathRoot+`TAMFedDirs`+".-1", val.ToBody(ctx, ""))
 		}
 	}
-	if !data.TamazReplicas.IsNull() {
+	if !data.TamAzReplicas.IsNull() {
 		var dataValues []DmTAMAZReplica
-		data.TamazReplicas.ElementsAs(ctx, &dataValues, false)
+		data.TamAzReplicas.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`TAMAZReplicas`+".-1", val.ToBody(ctx, ""))
 		}
 	}
-	if data.TamrasTrace != nil {
-		if !data.TamrasTrace.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`TAMRASTrace`, data.TamrasTrace.ToBody(ctx, ""))
+	if data.TamRasTrace != nil {
+		if !data.TamRasTrace.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`TAMRASTrace`, data.TamRasTrace.ToBody(ctx, ""))
 		}
 	}
 	if !data.AutoRetry.IsNull() {
@@ -483,24 +483,24 @@ func (data *TAM) FromBody(ctx context.Context, pathRoot string, res gjson.Result
 		data.LdapUseSsl = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `LDAPSSLPort`); value.Exists() {
-		data.LdapsslPort = types.Int64Value(value.Int())
+		data.LdapSslPort = types.Int64Value(value.Int())
 	} else {
-		data.LdapsslPort = types.Int64Value(636)
+		data.LdapSslPort = types.Int64Value(636)
 	}
 	if value := res.Get(pathRoot + `LDAPSSLKeyFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LdapsslKeyFile = tfutils.ParseStringFromGJSON(value)
+		data.LdapSslKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslKeyFile = types.StringNull()
+		data.LdapSslKeyFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LDAPSSLKeyFilePasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LdapsslKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
+		data.LdapSslKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslKeyFilePasswordAlias = types.StringNull()
+		data.LdapSslKeyFilePasswordAlias = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LDAPSSLKeyFileLabel`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LdapsslKeyFileLabel = tfutils.ParseStringFromGJSON(value)
+		data.LdapSslKeyFileLabel = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslKeyFileLabel = types.StringNull()
+		data.LdapSslKeyFileLabel = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `TAMUseFIPS`); value.Exists() {
 		data.TamUseFips = tfutils.BoolFromString(value.String())
@@ -568,18 +568,18 @@ func (data *TAM) FromBody(ctx context.Context, pathRoot string, res gjson.Result
 			}
 		}
 		if len(l) > 0 {
-			data.TamazReplicas, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType}, l)
+			data.TamAzReplicas, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType}, l)
 		} else {
-			data.TamazReplicas = types.ListNull(types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType})
+			data.TamAzReplicas = types.ListNull(types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType})
 		}
 	} else {
-		data.TamazReplicas = types.ListNull(types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType})
+		data.TamAzReplicas = types.ListNull(types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType})
 	}
 	if value := res.Get(pathRoot + `TAMRASTrace`); value.Exists() {
-		data.TamrasTrace = &DmTAMRASTrace{}
-		data.TamrasTrace.FromBody(ctx, "", value)
+		data.TamRasTrace = &DmTAMRASTrace{}
+		data.TamRasTrace.FromBody(ctx, "", value)
 	} else {
-		data.TamrasTrace = nil
+		data.TamRasTrace = nil
 	}
 	if value := res.Get(pathRoot + `AutoRetry`); value.Exists() {
 		data.AutoRetry = tfutils.BoolFromString(value.String())
@@ -677,25 +677,25 @@ func (data *TAM) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.
 	} else if data.LdapUseSsl.ValueBool() {
 		data.LdapUseSsl = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `LDAPSSLPort`); value.Exists() && !data.LdapsslPort.IsNull() {
-		data.LdapsslPort = types.Int64Value(value.Int())
-	} else if data.LdapsslPort.ValueInt64() != 636 {
-		data.LdapsslPort = types.Int64Null()
+	if value := res.Get(pathRoot + `LDAPSSLPort`); value.Exists() && !data.LdapSslPort.IsNull() {
+		data.LdapSslPort = types.Int64Value(value.Int())
+	} else if data.LdapSslPort.ValueInt64() != 636 {
+		data.LdapSslPort = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `LDAPSSLKeyFile`); value.Exists() && !data.LdapsslKeyFile.IsNull() {
-		data.LdapsslKeyFile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `LDAPSSLKeyFile`); value.Exists() && !data.LdapSslKeyFile.IsNull() {
+		data.LdapSslKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslKeyFile = types.StringNull()
+		data.LdapSslKeyFile = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `LDAPSSLKeyFilePasswordAlias`); value.Exists() && !data.LdapsslKeyFilePasswordAlias.IsNull() {
-		data.LdapsslKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `LDAPSSLKeyFilePasswordAlias`); value.Exists() && !data.LdapSslKeyFilePasswordAlias.IsNull() {
+		data.LdapSslKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslKeyFilePasswordAlias = types.StringNull()
+		data.LdapSslKeyFilePasswordAlias = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `LDAPSSLKeyFileLabel`); value.Exists() && !data.LdapsslKeyFileLabel.IsNull() {
-		data.LdapsslKeyFileLabel = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `LDAPSSLKeyFileLabel`); value.Exists() && !data.LdapSslKeyFileLabel.IsNull() {
+		data.LdapSslKeyFileLabel = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapsslKeyFileLabel = types.StringNull()
+		data.LdapSslKeyFileLabel = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `TAMUseFIPS`); value.Exists() && !data.TamUseFips.IsNull() {
 		data.TamUseFips = tfutils.BoolFromString(value.String())
@@ -749,7 +749,7 @@ func (data *TAM) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.
 	} else {
 		data.TamFedDirs = types.ListNull(types.ObjectType{AttrTypes: DmTAMFedDirObjectType})
 	}
-	if value := res.Get(pathRoot + `TAMAZReplicas`); value.Exists() && !data.TamazReplicas.IsNull() {
+	if value := res.Get(pathRoot + `TAMAZReplicas`); value.Exists() && !data.TamAzReplicas.IsNull() {
 		l := []DmTAMAZReplica{}
 		for _, v := range value.Array() {
 			item := DmTAMAZReplica{}
@@ -759,17 +759,17 @@ func (data *TAM) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.
 			}
 		}
 		if len(l) > 0 {
-			data.TamazReplicas, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType}, l)
+			data.TamAzReplicas, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType}, l)
 		} else {
-			data.TamazReplicas = types.ListNull(types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType})
+			data.TamAzReplicas = types.ListNull(types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType})
 		}
 	} else {
-		data.TamazReplicas = types.ListNull(types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType})
+		data.TamAzReplicas = types.ListNull(types.ObjectType{AttrTypes: DmTAMAZReplicaObjectType})
 	}
 	if value := res.Get(pathRoot + `TAMRASTrace`); value.Exists() {
-		data.TamrasTrace.UpdateFromBody(ctx, "", value)
+		data.TamRasTrace.UpdateFromBody(ctx, "", value)
 	} else {
-		data.TamrasTrace = nil
+		data.TamRasTrace = nil
 	}
 	if value := res.Get(pathRoot + `AutoRetry`); value.Exists() && !data.AutoRetry.IsNull() {
 		data.AutoRetry = tfutils.BoolFromString(value.String())

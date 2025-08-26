@@ -39,7 +39,7 @@ Optional:
 Read-Only:
 
 - `access_token_life_time` (Number) Sets the lifetime for the access token in seconds. Enter a value in the range 1 - 63244800. The default value is 3600.
-- `additional_o_auth_process_url` (String) <p>Specifies the location of the stylesheet or GatewayScript file to process after generating a code, after generating an access token, or after generating an access token but before sending it to the resource server. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>You can use custom additional OAuth processing in the following situations.</p><ul><li>An authorization form request allows custom processing to handle the consent form with the <tt>authorization_form</tt> operation. This operations allows custom handling of the consent form.</li><li>An authorization request after successfully generating a code for an authorization code grant with the <tt>authorization_request</tt> operation. Processing returns a node set. This information becomes part of the query string and is returned to the OAuth client during authorization code grant type.</li><li>An access request after successfully generating an access token with the <tt>access_request</tt> operation. Processing returns a node set. This information becomes part of the JSON object that contains the access token.</li><li>A resource request after successfully verifying an access token but before sending the request to the resource server with the <tt>resource_request</tt> operation.</li><li>A revoke request allows custom handling of a revocation request with the <tt>revoke_request</tt> operation. For example, this operation provides a way to persist the revocation information in a persistent store off the DataPower Gateway.</li><li>A check revocation request verifies whether an access request was revoked previously with the <tt>check_revocation_request</tt> operation. For example, this operation can be used to check against the persistent store off the DataPower Gateway to determine whether an access permission was revoked previously.</li><li>A pre-approval request allows the consent form to be by-passed in either an authorization code or implicit grant type with the <tt>preapproved_check</tt> operation. Depending on the result of this operation, the client's request is approved, denied, or the consent form to be presented.</li><li>A validation request allows custom handling of a validation request grant type with the <tt>validate_request</tt> operation. The response must be in a node set that can be converted into a JSON response, in responding to a validation request.</li><li>A miscinfo request allows the OAuth client to add miscellaneous information to the token with the <tt>miscinfo_request</tt> operation. The authorization server adds the response to the token and returns it to the OAuth client. The maximum number of characters in this information is 512.</li></ul>
+- `additional_oauth_process_url` (String) <p>Specifies the location of the stylesheet or GatewayScript file to process after generating a code, after generating an access token, or after generating an access token but before sending it to the resource server. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>You can use custom additional OAuth processing in the following situations.</p><ul><li>An authorization form request allows custom processing to handle the consent form with the <tt>authorization_form</tt> operation. This operations allows custom handling of the consent form.</li><li>An authorization request after successfully generating a code for an authorization code grant with the <tt>authorization_request</tt> operation. Processing returns a node set. This information becomes part of the query string and is returned to the OAuth client during authorization code grant type.</li><li>An access request after successfully generating an access token with the <tt>access_request</tt> operation. Processing returns a node set. This information becomes part of the JSON object that contains the access token.</li><li>A resource request after successfully verifying an access token but before sending the request to the resource server with the <tt>resource_request</tt> operation.</li><li>A revoke request allows custom handling of a revocation request with the <tt>revoke_request</tt> operation. For example, this operation provides a way to persist the revocation information in a persistent store off the DataPower Gateway.</li><li>A check revocation request verifies whether an access request was revoked previously with the <tt>check_revocation_request</tt> operation. For example, this operation can be used to check against the persistent store off the DataPower Gateway to determine whether an access permission was revoked previously.</li><li>A pre-approval request allows the consent form to be by-passed in either an authorization code or implicit grant type with the <tt>preapproved_check</tt> operation. Depending on the result of this operation, the client's request is approved, denied, or the consent form to be presented.</li><li>A validation request allows custom handling of a validation request grant type with the <tt>validate_request</tt> operation. The response must be in a node set that can be converted into a JSON response, in responding to a validation request.</li><li>A miscinfo request allows the OAuth client to add miscellaneous information to the token with the <tt>miscinfo_request</tt> operation. The authorization server adds the response to the token and returns it to the OAuth client. The maximum number of characters in this information is 512.</li></ul>
 - `app_domain` (String) The name of the application domain the object belongs to
 - `au_code_life_time` (Number) <p>Sets the lifetime for an authorization code in seconds. Enter a value in the range 1 - 600. The default value is 300.</p><p>An authorization code is the intermediary result of a successful authorization. The client uses authorization codes to obtain the access token. Instead of sending tokens to a client, clients receives authorization codes on their redirection URI. Each supported redirection URI for the client is defined with the <b>Redirect URI</b> property.</p>
 - `az_grant` (Attributes) Identifies the method to obtain the access token for authorization based on the grant type.
@@ -61,11 +61,11 @@ Read-Only:
 - `jwt_grant_validator` (String) <p>Specify the JWT validator configuration to verify a JWT for JWT authorization grant. The JWT validator configuration must meet the following requirements.</p><ul><li>Must treat the "sub" claim as the resource owner.</li><li>Must check the "iss" claim.</li><li>Must check the "aud" claim. The "aud" claim can be a client ID or the redirect URI.</li><li>Must be configured to verify a signed JWT.</li></ul>
 - `local_az_page_url` (String) <p>Specifies the location of the stylesheet or GatewayScript file that generates the authorization form for the resource owner and handles errors. The file must be in the local: or store: directory. You can use the <tt>OAuth-Generate-HTML.xsl</tt> stylesheet in the store: directory or copy this file to the local: directory and modify as needed.</p><p>The stylesheet or GatewayScript file must be on the DataPower Gateway in the local: or store: directory. The HTML authorization form remains operational for the duration defined with the <b>DataPower State Lifetime</b> property. If the user does not submit the request before the duration elapses, the authorization from the OAuth client is rejected.</p>
 - `max_consent_life_time` (Number) <p>Maximum lifetime that the permission is valid before the application must gather consent again. Enter a value in the range 0 - 2529792000. The default value is 0, which disables this feature.</p>
-- `o_auth_features` (Attributes) Specify which features to enable.
-  - CLI Alias: `oauth-features` (see [below for nested schema](#nestedatt--result--o_auth_features))
-- `o_auth_role` (Attributes) Identifies the role of the client when interacting with a request to access a protected resource.
-  - CLI Alias: `oauth-role` (see [below for nested schema](#nestedatt--result--o_auth_role))
-- `oidcid_token_generator` (String) <p>Specify the JWT generator configuration that generates an ID token. The JWT generator configuration must meet the following requirements.</p><ul><li>Must configure "Issuer" for the "iss" claim.</li><li>Must support "Issued at" for the "iat" claim.</li><li>Must support signing of the JWT.</li></ul><p>The following items are added to the JWT.</p><ul><li>Authenticated resource owner is added as the value of the "sub" claim.</li><li>Client ID is added as part of the "aud" claim.</li><li>"Validity period" is used to generate the value of the "exp" claim.</li><li>Requested "nonce" is used for the "nonce" claim.</li></ul>
+- `oauth_features` (Attributes) Specify which features to enable.
+  - CLI Alias: `oauth-features` (see [below for nested schema](#nestedatt--result--oauth_features))
+- `oauth_role` (Attributes) Identifies the role of the client when interacting with a request to access a protected resource.
+  - CLI Alias: `oauth-role` (see [below for nested schema](#nestedatt--result--oauth_role))
+- `oidc_id_token_generator` (String) <p>Specify the JWT generator configuration that generates an ID token. The JWT generator configuration must meet the following requirements.</p><ul><li>Must configure "Issuer" for the "iss" claim.</li><li>Must support "Issued at" for the "iat" claim.</li><li>Must support signing of the JWT.</li></ul><p>The following items are added to the JWT.</p><ul><li>Authenticated resource owner is added as the value of the "sub" claim.</li><li>Client ID is added as part of the "aud" claim.</li><li>"Validity period" is used to generate the value of the "exp" claim.</li><li>Requested "nonce" is used for the "nonce" claim.</li></ul>
 - `redirect_uri` (List of String) <p>Defines redirection URIs that the OAuth client supports to exchange tokens. Specify each redirection URI as a PCRE.</p><p>Redirection URIs help to detect malicious clients and prevent phishing attacks. The authorization endpoint must have the registered redirection URIs before the authorization endpoint can validate the authorization request from the client. For mobile applications, the redirection URI can be an application URL; for example, <tt>mobiletrafficapp://</tt> that is defined with the <tt>^mobiletrafficapp:\/\/?</tt> PCRE.</p>
 - `refresh_token_allowed` (Number) <p>Sets the maximum number of refresh tokens that can be generated for a specific permission set. A permission set is defined as a combination of the resource owner, application, and protected resources. For example, <tt>jack,mobileapp1,scope1</tt> and <tt>john,mobileapp1,scope1</tt> are different permission sets. When an application asks the resource owner for access to protected resources again, the application receives a new permission set with its own counter for refresh tokens.</p><p>Enter a value in the range 0 - 4096. The default value is 0. Remember that refresh tokens and access tokens are distributed in pairs.</p>
 - `refresh_token_life_time` (Number) Sets the lifetime for the refresh token in seconds. Enter a value in the range 2 - 252979200. The default value is 5400. The lifetime for a refresh token must be longer than that for the corresponding access token.
@@ -80,8 +80,8 @@ Read-Only:
 - `validation_features` (Attributes) Customize how to handle the validation grant type.
   - CLI Alias: `validation-features` (see [below for nested schema](#nestedatt--result--validation_features))
 - `validation_url` (String) Specifies the validation url.
-- `validation_urlssl_client` (String) Specifies the TLS Client Profile for the validation URL.
-- `validation_urlssl_client_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
+- `validation_url_ssl_client` (String) Specifies the TLS Client Profile for the validation URL.
+- `validation_url_ssl_client_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`
@@ -122,12 +122,12 @@ Read-Only:
 - `saml20bearer` (Boolean) - Default value: `false`
 
 
-<a id="nestedatt--result--o_auth_features"></a>
-### Nested Schema for `result.o_auth_features`
+<a id="nestedatt--result--oauth_features"></a>
+### Nested Schema for `result.oauth_features`
 
 Read-Only:
 
-- `multipleusesrefreshtoken` (Boolean) Allow reuse of refresh token
+- `multiple_uses_refresh_token` (Boolean) Allow reuse of refresh token
   - Default value: `false`
 - `onetimeuse` (Boolean) One-time use access token
   - Default value: `false`
@@ -137,8 +137,8 @@ Read-Only:
   - Default value: `false`
 
 
-<a id="nestedatt--result--o_auth_role"></a>
-### Nested Schema for `result.o_auth_role`
+<a id="nestedatt--result--oauth_role"></a>
+### Nested Schema for `result.oauth_role`
 
 Read-Only:
 
@@ -153,7 +153,7 @@ Read-Only:
 
 Read-Only:
 
-- `clientid` (Boolean) Client ID
+- `client_id` (Boolean) Client ID
   - Default value: `false`
 - `miscinfo` (Boolean) Customized Info
   - Default value: `false`

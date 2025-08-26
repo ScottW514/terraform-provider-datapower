@@ -207,7 +207,7 @@ func (d *StylePolicyActionDataSource) Schema(ctx context.Context, req datasource
 							MarkdownDescription: "Input conversion",
 							Computed:            true,
 						},
-						"x_path": schema.StringAttribute{
+						"xpath": schema.StringAttribute{
 							MarkdownDescription: "Specify the XPath expression to apply to the input context. Enter the XPath expression or a variable in the <tt>var://context/name</tt> format that expands to an XPath expression.",
 							Computed:            true,
 						},
@@ -334,7 +334,7 @@ func (d *StylePolicyActionDataSource) Schema(ctx context.Context, req datasource
 							MarkdownDescription: "Private Key",
 							Computed:            true,
 						},
-						"single_ss_key": schema.StringAttribute{
+						"single_sskey": schema.StringAttribute{
 							MarkdownDescription: "Shared Secret Key",
 							Computed:            true,
 						},

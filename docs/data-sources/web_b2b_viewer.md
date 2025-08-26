@@ -33,7 +33,7 @@ data "datapower_web_b2b_viewer" "test" {
 - `local_port` (Number) Specify the TCP port that the B2B viewer monitors. The default value is 9091.
 - `ssl_server` (String) Custom TLS server profile
 - `ssl_server_config_type` (String) Custom TLS server type
-- `sslsni_server` (String) Custom TLS SNI server profile
+- `ssl_sni_server` (String) Custom TLS SNI server profile
 - `user_agent` (String) Custom user agent
 - `user_summary` (String) Comments
 

@@ -123,7 +123,7 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
-			"max_cached_tickets": schema.Int64Attribute{
+			"max_cache_d_tickets": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.", "max-cached-tickets", "").AddIntegerRange(1, 65535).AddDefaultValue("32").String,
 				Optional:            true,
 				Computed:            true,
@@ -132,7 +132,7 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				},
 				Default: int64default.StaticInt64(32),
 			},
-			"min_cached_ticket_validity": schema.Int64Attribute{
+			"min_cache_d_ticket_validity": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.", "min-cached-ticket-validity", "").AddIntegerRange(1, 65535).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,

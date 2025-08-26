@@ -35,28 +35,28 @@ import (
 )
 
 type DmHTTPVersionMask struct {
-	Http10 types.Bool `tfsdk:"http_1_0"`
-	Http11 types.Bool `tfsdk:"http_1_1"`
+	Http1D0 types.Bool `tfsdk:"http_1d0"`
+	Http1D1 types.Bool `tfsdk:"http_1d1"`
 }
 
 var DmHTTPVersionMaskObjectType = map[string]attr.Type{
-	"http_1_0": types.BoolType,
-	"http_1_1": types.BoolType,
+	"http_1d0": types.BoolType,
+	"http_1d1": types.BoolType,
 }
 var DmHTTPVersionMaskObjectDefault = map[string]attr.Value{
-	"http_1_0": types.BoolValue(true),
-	"http_1_1": types.BoolValue(true),
+	"http_1d0": types.BoolValue(true),
+	"http_1d1": types.BoolValue(true),
 }
 
 func GetDmHTTPVersionMaskDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
 	var DmHTTPVersionMaskDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
-			"http_1_0": DataSourceSchema.BoolAttribute{
+			"http_1d0": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.0", "", "").AddDefaultValue("true").String,
 				Computed:            true,
 			},
-			"http_1_1": DataSourceSchema.BoolAttribute{
+			"http_1d1": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.1", "", "").AddDefaultValue("true").String,
 				Computed:            true,
 			},
@@ -73,13 +73,13 @@ func GetDmHTTPVersionMaskResourceSchema(description string, cliAlias string, ref
 				DmHTTPVersionMaskObjectDefault,
 			)),
 		Attributes: map[string]ResourceSchema.Attribute{
-			"http_1_0": ResourceSchema.BoolAttribute{
+			"http_1d0": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.0", "", "").AddDefaultValue("true").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
-			"http_1_1": ResourceSchema.BoolAttribute{
+			"http_1d1": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.1", "", "").AddDefaultValue("true").String,
 				Computed:            true,
 				Optional:            true,
@@ -98,10 +98,10 @@ func GetDmHTTPVersionMaskResourceSchema(description string, cliAlias string, ref
 }
 
 func (data DmHTTPVersionMask) IsNull() bool {
-	if !data.Http10.IsNull() {
+	if !data.Http1D0.IsNull() {
 		return false
 	}
-	if !data.Http11.IsNull() {
+	if !data.Http1D1.IsNull() {
 		return false
 	}
 	return true
@@ -113,11 +113,11 @@ func (data DmHTTPVersionMask) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	body := ""
 
-	if !data.Http10.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.0`, tfutils.StringFromBool(data.Http10, ""))
+	if !data.Http1D0.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.0`, tfutils.StringFromBool(data.Http1D0, ""))
 	}
-	if !data.Http11.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.1`, tfutils.StringFromBool(data.Http11, ""))
+	if !data.Http1D1.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.1`, tfutils.StringFromBool(data.Http1D1, ""))
 	}
 	return body
 }
@@ -127,14 +127,14 @@ func (data *DmHTTPVersionMask) FromBody(ctx context.Context, pathRoot string, re
 		pathRoot = pathRoot + "."
 	}
 	if value := res.Get(pathRoot + `HTTP-1\.0`); value.Exists() {
-		data.Http10 = tfutils.BoolFromString(value.String())
+		data.Http1D0 = tfutils.BoolFromString(value.String())
 	} else {
-		data.Http10 = types.BoolNull()
+		data.Http1D0 = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `HTTP-1\.1`); value.Exists() {
-		data.Http11 = tfutils.BoolFromString(value.String())
+		data.Http1D1 = tfutils.BoolFromString(value.String())
 	} else {
-		data.Http11 = types.BoolNull()
+		data.Http1D1 = types.BoolNull()
 	}
 }
 
@@ -142,14 +142,14 @@ func (data *DmHTTPVersionMask) UpdateFromBody(ctx context.Context, pathRoot stri
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
-	if value := res.Get(pathRoot + `HTTP-1\.0`); value.Exists() && !data.Http10.IsNull() {
-		data.Http10 = tfutils.BoolFromString(value.String())
-	} else if !data.Http10.ValueBool() {
-		data.Http10 = types.BoolNull()
+	if value := res.Get(pathRoot + `HTTP-1\.0`); value.Exists() && !data.Http1D0.IsNull() {
+		data.Http1D0 = tfutils.BoolFromString(value.String())
+	} else if !data.Http1D0.ValueBool() {
+		data.Http1D0 = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `HTTP-1\.1`); value.Exists() && !data.Http11.IsNull() {
-		data.Http11 = tfutils.BoolFromString(value.String())
-	} else if !data.Http11.ValueBool() {
-		data.Http11 = types.BoolNull()
+	if value := res.Get(pathRoot + `HTTP-1\.1`); value.Exists() && !data.Http1D1.IsNull() {
+		data.Http1D1 = tfutils.BoolFromString(value.String())
+	} else if !data.Http1D1.ValueBool() {
+		data.Http1D1 = types.BoolNull()
 	}
 }

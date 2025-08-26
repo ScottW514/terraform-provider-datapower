@@ -42,7 +42,7 @@ resource "datapower_jwe_recipient" "test" {
   - Reference to: `datapower_crypto_certificate:id`
   - Required When: `algorithm`=`RSA1_5`|`RSA-OAEP`|`RSA-OAEP-256`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `ss_key` (String) Shared secret key.
+- `sskey` (String) Shared secret key.
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: `algorithm`=`A128KW`|`A192KW`|`A256KW`|`dir`

@@ -55,8 +55,8 @@ type FTPServerSourceProtocolHandler struct {
 	PasvMinPort                 types.Int64                 `tfsdk:"pasv_min_port"`
 	PasvMaxPort                 types.Int64                 `tfsdk:"pasv_max_port"`
 	PasvIdleTimeOut             types.Int64                 `tfsdk:"pasv_idle_time_out"`
-	DisablePasvipCheck          types.Bool                  `tfsdk:"disable_pasvip_check"`
-	DisablePortipCheck          types.Bool                  `tfsdk:"disable_portip_check"`
+	DisablePasvIpCheck          types.Bool                  `tfsdk:"disable_pasv_ip_check"`
+	DisablePortIpCheck          types.Bool                  `tfsdk:"disable_port_ip_check"`
 	UseAlternatePasvAddr        types.Bool                  `tfsdk:"use_alternate_pasv_addr"`
 	AlternatePasvAddr           types.String                `tfsdk:"alternate_pasv_addr"`
 	AllowListCmd                types.Bool                  `tfsdk:"allow_list_cmd"`
@@ -71,11 +71,11 @@ type FTPServerSourceProtocolHandler struct {
 	ResponseType                types.String                `tfsdk:"response_type"`
 	ResponseStorage             types.String                `tfsdk:"response_storage"`
 	TemporaryStorageSize        types.Int64                 `tfsdk:"temporary_storage_size"`
-	ResponseNfsMount            types.String                `tfsdk:"response_nfs_mount"`
+	ResponseNfSmOunt            types.String                `tfsdk:"response_nf_sm_ount"`
 	ResponseSuffix              types.String                `tfsdk:"response_suffix"`
 	SslServerConfigType         types.String                `tfsdk:"ssl_server_config_type"`
 	SslServer                   types.String                `tfsdk:"ssl_server"`
-	SslsniServer                types.String                `tfsdk:"sslsni_server"`
+	SslSniServer                types.String                `tfsdk:"ssl_sni_server"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
@@ -153,8 +153,8 @@ var FTPServerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"pasv_min_port":                 types.Int64Type,
 	"pasv_max_port":                 types.Int64Type,
 	"pasv_idle_time_out":            types.Int64Type,
-	"disable_pasvip_check":          types.BoolType,
-	"disable_portip_check":          types.BoolType,
+	"disable_pasv_ip_check":         types.BoolType,
+	"disable_port_ip_check":         types.BoolType,
 	"use_alternate_pasv_addr":       types.BoolType,
 	"alternate_pasv_addr":           types.StringType,
 	"allow_list_cmd":                types.BoolType,
@@ -169,11 +169,11 @@ var FTPServerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"response_type":                 types.StringType,
 	"response_storage":              types.StringType,
 	"temporary_storage_size":        types.Int64Type,
-	"response_nfs_mount":            types.StringType,
+	"response_nf_sm_ount":           types.StringType,
 	"response_suffix":               types.StringType,
 	"ssl_server_config_type":        types.StringType,
 	"ssl_server":                    types.StringType,
-	"sslsni_server":                 types.StringType,
+	"ssl_sni_server":                types.StringType,
 	"dependency_actions":            actions.ActionsListType,
 }
 
@@ -245,10 +245,10 @@ func (data FTPServerSourceProtocolHandler) IsNull() bool {
 	if !data.PasvIdleTimeOut.IsNull() {
 		return false
 	}
-	if !data.DisablePasvipCheck.IsNull() {
+	if !data.DisablePasvIpCheck.IsNull() {
 		return false
 	}
-	if !data.DisablePortipCheck.IsNull() {
+	if !data.DisablePortIpCheck.IsNull() {
 		return false
 	}
 	if !data.UseAlternatePasvAddr.IsNull() {
@@ -293,7 +293,7 @@ func (data FTPServerSourceProtocolHandler) IsNull() bool {
 	if !data.TemporaryStorageSize.IsNull() {
 		return false
 	}
-	if !data.ResponseNfsMount.IsNull() {
+	if !data.ResponseNfSmOunt.IsNull() {
 		return false
 	}
 	if !data.ResponseSuffix.IsNull() {
@@ -305,7 +305,7 @@ func (data FTPServerSourceProtocolHandler) IsNull() bool {
 	if !data.SslServer.IsNull() {
 		return false
 	}
-	if !data.SslsniServer.IsNull() {
+	if !data.SslSniServer.IsNull() {
 		return false
 	}
 	return true
@@ -378,11 +378,11 @@ func (data FTPServerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 	if !data.PasvIdleTimeOut.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PasvIdleTimeOut`, data.PasvIdleTimeOut.ValueInt64())
 	}
-	if !data.DisablePasvipCheck.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DisablePASVIPCheck`, tfutils.StringFromBool(data.DisablePasvipCheck, ""))
+	if !data.DisablePasvIpCheck.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`DisablePASVIPCheck`, tfutils.StringFromBool(data.DisablePasvIpCheck, ""))
 	}
-	if !data.DisablePortipCheck.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DisablePORTIPCheck`, tfutils.StringFromBool(data.DisablePortipCheck, ""))
+	if !data.DisablePortIpCheck.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`DisablePORTIPCheck`, tfutils.StringFromBool(data.DisablePortIpCheck, ""))
 	}
 	if !data.UseAlternatePasvAddr.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UseAlternatePASVAddr`, tfutils.StringFromBool(data.UseAlternatePasvAddr, ""))
@@ -426,8 +426,8 @@ func (data FTPServerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 	if !data.TemporaryStorageSize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TemporaryStorageSize`, data.TemporaryStorageSize.ValueInt64())
 	}
-	if !data.ResponseNfsMount.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ResponseNFSMount`, data.ResponseNfsMount.ValueString())
+	if !data.ResponseNfSmOunt.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ResponseNFSMount`, data.ResponseNfSmOunt.ValueString())
 	}
 	if !data.ResponseSuffix.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ResponseSuffix`, data.ResponseSuffix.ValueString())
@@ -438,8 +438,8 @@ func (data FTPServerSourceProtocolHandler) ToBody(ctx context.Context, pathRoot 
 	if !data.SslServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServer`, data.SslServer.ValueString())
 	}
-	if !data.SslsniServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslsniServer.ValueString())
+	if !data.SslSniServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslSniServer.ValueString())
 	}
 	return body
 }
@@ -558,14 +558,14 @@ func (data *FTPServerSourceProtocolHandler) FromBody(ctx context.Context, pathRo
 		data.PasvIdleTimeOut = types.Int64Value(60)
 	}
 	if value := res.Get(pathRoot + `DisablePASVIPCheck`); value.Exists() {
-		data.DisablePasvipCheck = tfutils.BoolFromString(value.String())
+		data.DisablePasvIpCheck = tfutils.BoolFromString(value.String())
 	} else {
-		data.DisablePasvipCheck = types.BoolNull()
+		data.DisablePasvIpCheck = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `DisablePORTIPCheck`); value.Exists() {
-		data.DisablePortipCheck = tfutils.BoolFromString(value.String())
+		data.DisablePortIpCheck = tfutils.BoolFromString(value.String())
 	} else {
-		data.DisablePortipCheck = types.BoolNull()
+		data.DisablePortIpCheck = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `UseAlternatePASVAddr`); value.Exists() {
 		data.UseAlternatePasvAddr = tfutils.BoolFromString(value.String())
@@ -638,9 +638,9 @@ func (data *FTPServerSourceProtocolHandler) FromBody(ctx context.Context, pathRo
 		data.TemporaryStorageSize = types.Int64Value(32)
 	}
 	if value := res.Get(pathRoot + `ResponseNFSMount`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ResponseNfsMount = tfutils.ParseStringFromGJSON(value)
+		data.ResponseNfSmOunt = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ResponseNfsMount = types.StringNull()
+		data.ResponseNfSmOunt = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ResponseSuffix`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ResponseSuffix = tfutils.ParseStringFromGJSON(value)
@@ -658,9 +658,9 @@ func (data *FTPServerSourceProtocolHandler) FromBody(ctx context.Context, pathRo
 		data.SslServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 }
 
@@ -775,15 +775,15 @@ func (data *FTPServerSourceProtocolHandler) UpdateFromBody(ctx context.Context, 
 	} else if data.PasvIdleTimeOut.ValueInt64() != 60 {
 		data.PasvIdleTimeOut = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `DisablePASVIPCheck`); value.Exists() && !data.DisablePasvipCheck.IsNull() {
-		data.DisablePasvipCheck = tfutils.BoolFromString(value.String())
-	} else if data.DisablePasvipCheck.ValueBool() {
-		data.DisablePasvipCheck = types.BoolNull()
+	if value := res.Get(pathRoot + `DisablePASVIPCheck`); value.Exists() && !data.DisablePasvIpCheck.IsNull() {
+		data.DisablePasvIpCheck = tfutils.BoolFromString(value.String())
+	} else if data.DisablePasvIpCheck.ValueBool() {
+		data.DisablePasvIpCheck = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `DisablePORTIPCheck`); value.Exists() && !data.DisablePortipCheck.IsNull() {
-		data.DisablePortipCheck = tfutils.BoolFromString(value.String())
-	} else if data.DisablePortipCheck.ValueBool() {
-		data.DisablePortipCheck = types.BoolNull()
+	if value := res.Get(pathRoot + `DisablePORTIPCheck`); value.Exists() && !data.DisablePortIpCheck.IsNull() {
+		data.DisablePortIpCheck = tfutils.BoolFromString(value.String())
+	} else if data.DisablePortIpCheck.ValueBool() {
+		data.DisablePortIpCheck = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `UseAlternatePASVAddr`); value.Exists() && !data.UseAlternatePasvAddr.IsNull() {
 		data.UseAlternatePasvAddr = tfutils.BoolFromString(value.String())
@@ -855,10 +855,10 @@ func (data *FTPServerSourceProtocolHandler) UpdateFromBody(ctx context.Context, 
 	} else if data.TemporaryStorageSize.ValueInt64() != 32 {
 		data.TemporaryStorageSize = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `ResponseNFSMount`); value.Exists() && !data.ResponseNfsMount.IsNull() {
-		data.ResponseNfsMount = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `ResponseNFSMount`); value.Exists() && !data.ResponseNfSmOunt.IsNull() {
+		data.ResponseNfSmOunt = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ResponseNfsMount = types.StringNull()
+		data.ResponseNfSmOunt = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ResponseSuffix`); value.Exists() && !data.ResponseSuffix.IsNull() {
 		data.ResponseSuffix = tfutils.ParseStringFromGJSON(value)
@@ -875,9 +875,9 @@ func (data *FTPServerSourceProtocolHandler) UpdateFromBody(ctx context.Context, 
 	} else {
 		data.SslServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslsniServer.IsNull() {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslSniServer.IsNull() {
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 }

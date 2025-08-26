@@ -42,7 +42,7 @@ Read-Only:
 - `header_param` (Attributes List) The JOSE header parameters used to identify the recipient. (see [below for nested schema](#nestedatt--result--header_param))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `key` (String) Use the private key to verify the recipient.
-- `ss_key` (String) Use the shared secret key to verify the recipient.
+- `sskey` (String) Use the shared secret key to verify the recipient.
 - `type` (String) Key material type used to verify the recipient.
 - `user_summary` (String) Brief summary for user annotation.
 

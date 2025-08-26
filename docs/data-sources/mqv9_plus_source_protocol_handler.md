@@ -44,7 +44,7 @@ Read-Only:
 - `code_page` (Number) <p>Specify the coded character set identifier to which the remote IBM MQ queue manager converts output data. This property is meaningful only when the queue manager has the convert property set to on. The CCSI will be put in the CodeCharSetId field of MQMD.</p><p>The default CCSI is for ISO-8859-1 (latin-1).</p><p>For MQCCSI_EMBEDDED enter 4294967295; for MQCCSI_INHERIT enter 4294967294. For the other CCSIDs, refer to the IBM Code Pages.</p>
 - `concurrent_connections` (Number) Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.
 - `content_type_header` (String) Header to extract Content-Type
-- `content_type_x_path` (String) XPath expression to extract Content-Type from IBM MQ header
+- `content_type_xpath` (String) XPath expression to extract Content-Type from IBM MQ header
 - `exclude_headers` (Attributes) Specify the headers after MQMD to strip from the message. By default only the MQMD header is parsed.
   - CLI Alias: `exclude-headers` (see [below for nested schema](#nestedatt--result--exclude_headers))
 - `get_message_options` (Number) Specify the cumulative value of the MQGET options that are applicable to an IBM MQ message in decimal or hex format. The value is passed directly to the IBM MQ API. The default value is 1, which is the decimal value for the MQGMO_WAIT option.

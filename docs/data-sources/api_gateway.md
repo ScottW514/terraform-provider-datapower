@@ -59,7 +59,7 @@ Read-Only:
 - `open_telemetry_resource_attribute` (Attributes List) OpenTelemetry resource attributes (see [below for nested schema](#nestedatt--result--open_telemetry_resource_attribute))
 - `proxy_policies` (Attributes List) Specify the proxy policies to associate a set of URLs with a specific HTTP proxy. When multiple proxy policies are defined, URLs are evaluated against each policy in order. (see [below for nested schema](#nestedatt--result--proxy_policies))
 - `scheduled_rule` (Attributes List) Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager. (see [below for nested schema](#nestedatt--result--scheduled_rule))
-- `sha1_caching` (Boolean) Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
+- `sha1caching` (Boolean) Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
 - `share_rate_limit_count` (String) Share rate limit count
 - `static_document_calls` (Boolean) Specify how to manage static document calls. The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable this setting to allow all document calls to operate independently.
 - `url_refresh_policy` (String) Specify the stylesheet refresh policy. Stylesheets cached by this gateway are refreshed in accordance with policy rules.
@@ -202,7 +202,7 @@ Read-Only:
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`
   - Default value: `protocol`
-- `xc10_grid` (String) The eXtreme Scale grid configuration to use for caching documents.
+- `xc10grid` (String) The eXtreme Scale grid configuration to use for caching documents.
   - CLI Alias: `xc10-grid`
 
 

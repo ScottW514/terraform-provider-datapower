@@ -49,7 +49,7 @@ type APIDefinition struct {
 	Consume                          types.List                  `tfsdk:"consume"`
 	Produce                          types.List                  `tfsdk:"produce"`
 	SwaggerLocation                  types.String                `tfsdk:"swagger_location"`
-	GraphQlSchema                    types.String                `tfsdk:"graph_ql_schema"`
+	GraphqlSchema                    types.String                `tfsdk:"graphql_schema"`
 	WsdlAdvertisedSchemaLocation     types.String                `tfsdk:"wsdl_advertised_schema_location"`
 	WsdlValidationSchema             types.String                `tfsdk:"wsdl_validation_schema"`
 	SecurityRequirement              types.List                  `tfsdk:"security_requirement"`
@@ -68,11 +68,11 @@ type APIDefinition struct {
 	MessageBuffering                 types.Bool                  `tfsdk:"message_buffering"`
 	DeploymentState                  types.String                `tfsdk:"deployment_state"`
 	ShareRateLimitCount              types.String                `tfsdk:"share_rate_limit_count"`
-	ReturnV5Responses                types.Bool                  `tfsdk:"return_v5_responses"`
+	ReturnV5responses                types.Bool                  `tfsdk:"return_v5responses"`
 	CopyIdHeadersToMessage           types.Bool                  `tfsdk:"copy_id_headers_to_message"`
 	EnforceRequiredParams            types.Bool                  `tfsdk:"enforce_required_params"`
 	AllowChunkedUploads              types.Bool                  `tfsdk:"allow_chunked_uploads"`
-	SetV5RequestHeaders              types.Bool                  `tfsdk:"set_v5_request_headers"`
+	SetV5requestHeaders              types.Bool                  `tfsdk:"set_v5request_headers"`
 	GetRawBodyValue                  types.Bool                  `tfsdk:"get_raw_body_value"`
 	AllowedApiProtocols              *DmAPIProtocols             `tfsdk:"allowed_api_protocols"`
 	AllowTrailingSlash               types.Bool                  `tfsdk:"allow_trailing_slash"`
@@ -112,7 +112,7 @@ var APIDefinitionObjectType = map[string]attr.Type{
 	"consume":                              types.ListType{ElemType: types.StringType},
 	"produce":                              types.ListType{ElemType: types.StringType},
 	"swagger_location":                     types.StringType,
-	"graph_ql_schema":                      types.StringType,
+	"graphql_schema":                       types.StringType,
 	"wsdl_advertised_schema_location":      types.StringType,
 	"wsdl_validation_schema":               types.StringType,
 	"security_requirement":                 types.ListType{ElemType: types.StringType},
@@ -131,11 +131,11 @@ var APIDefinitionObjectType = map[string]attr.Type{
 	"message_buffering":                    types.BoolType,
 	"deployment_state":                     types.StringType,
 	"share_rate_limit_count":               types.StringType,
-	"return_v5_responses":                  types.BoolType,
+	"return_v5responses":                   types.BoolType,
 	"copy_id_headers_to_message":           types.BoolType,
 	"enforce_required_params":              types.BoolType,
 	"allow_chunked_uploads":                types.BoolType,
-	"set_v5_request_headers":               types.BoolType,
+	"set_v5request_headers":                types.BoolType,
 	"get_raw_body_value":                   types.BoolType,
 	"allowed_api_protocols":                types.ObjectType{AttrTypes: DmAPIProtocolsObjectType},
 	"allow_trailing_slash":                 types.BoolType,
@@ -195,7 +195,7 @@ func (data APIDefinition) IsNull() bool {
 	if !data.SwaggerLocation.IsNull() {
 		return false
 	}
-	if !data.GraphQlSchema.IsNull() {
+	if !data.GraphqlSchema.IsNull() {
 		return false
 	}
 	if !data.WsdlAdvertisedSchemaLocation.IsNull() {
@@ -252,7 +252,7 @@ func (data APIDefinition) IsNull() bool {
 	if !data.ShareRateLimitCount.IsNull() {
 		return false
 	}
-	if !data.ReturnV5Responses.IsNull() {
+	if !data.ReturnV5responses.IsNull() {
 		return false
 	}
 	if !data.CopyIdHeadersToMessage.IsNull() {
@@ -264,7 +264,7 @@ func (data APIDefinition) IsNull() bool {
 	if !data.AllowChunkedUploads.IsNull() {
 		return false
 	}
-	if !data.SetV5RequestHeaders.IsNull() {
+	if !data.SetV5requestHeaders.IsNull() {
 		return false
 	}
 	if !data.GetRawBodyValue.IsNull() {
@@ -347,8 +347,8 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.SwaggerLocation.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SwaggerLocation`, data.SwaggerLocation.ValueString())
 	}
-	if !data.GraphQlSchema.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GraphQLSchema`, data.GraphQlSchema.ValueString())
+	if !data.GraphqlSchema.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`GraphQLSchema`, data.GraphqlSchema.ValueString())
 	}
 	if !data.WsdlAdvertisedSchemaLocation.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WsdlAdvertisedSchemaLocation`, data.WsdlAdvertisedSchemaLocation.ValueString())
@@ -428,8 +428,8 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ShareRateLimitCount.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ShareRateLimitCount`, data.ShareRateLimitCount.ValueString())
 	}
-	if !data.ReturnV5Responses.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ReturnV5Responses`, tfutils.StringFromBool(data.ReturnV5Responses, ""))
+	if !data.ReturnV5responses.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ReturnV5Responses`, tfutils.StringFromBool(data.ReturnV5responses, ""))
 	}
 	if !data.CopyIdHeadersToMessage.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CopyIdHeadersToMessage`, tfutils.StringFromBool(data.CopyIdHeadersToMessage, ""))
@@ -440,8 +440,8 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AllowChunkedUploads.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AllowChunkedUploads`, tfutils.StringFromBool(data.AllowChunkedUploads, ""))
 	}
-	if !data.SetV5RequestHeaders.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SetV5RequestHeaders`, tfutils.StringFromBool(data.SetV5RequestHeaders, ""))
+	if !data.SetV5requestHeaders.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SetV5RequestHeaders`, tfutils.StringFromBool(data.SetV5requestHeaders, ""))
 	}
 	if !data.GetRawBodyValue.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`GetRawBodyValue`, tfutils.StringFromBool(data.GetRawBodyValue, ""))
@@ -536,9 +536,9 @@ func (data *APIDefinition) FromBody(ctx context.Context, pathRoot string, res gj
 		data.SwaggerLocation = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `GraphQLSchema`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.GraphQlSchema = tfutils.ParseStringFromGJSON(value)
+		data.GraphqlSchema = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.GraphQlSchema = types.StringNull()
+		data.GraphqlSchema = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WsdlAdvertisedSchemaLocation`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.WsdlAdvertisedSchemaLocation = tfutils.ParseStringFromGJSON(value)
@@ -659,9 +659,9 @@ func (data *APIDefinition) FromBody(ctx context.Context, pathRoot string, res gj
 		data.ShareRateLimitCount = types.StringValue("unset")
 	}
 	if value := res.Get(pathRoot + `ReturnV5Responses`); value.Exists() {
-		data.ReturnV5Responses = tfutils.BoolFromString(value.String())
+		data.ReturnV5responses = tfutils.BoolFromString(value.String())
 	} else {
-		data.ReturnV5Responses = types.BoolNull()
+		data.ReturnV5responses = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `CopyIdHeadersToMessage`); value.Exists() {
 		data.CopyIdHeadersToMessage = tfutils.BoolFromString(value.String())
@@ -679,9 +679,9 @@ func (data *APIDefinition) FromBody(ctx context.Context, pathRoot string, res gj
 		data.AllowChunkedUploads = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `SetV5RequestHeaders`); value.Exists() {
-		data.SetV5RequestHeaders = tfutils.BoolFromString(value.String())
+		data.SetV5requestHeaders = tfutils.BoolFromString(value.String())
 	} else {
-		data.SetV5RequestHeaders = types.BoolNull()
+		data.SetV5requestHeaders = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `GetRawBodyValue`); value.Exists() {
 		data.GetRawBodyValue = tfutils.BoolFromString(value.String())
@@ -785,10 +785,10 @@ func (data *APIDefinition) UpdateFromBody(ctx context.Context, pathRoot string, 
 	} else {
 		data.SwaggerLocation = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `GraphQLSchema`); value.Exists() && !data.GraphQlSchema.IsNull() {
-		data.GraphQlSchema = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `GraphQLSchema`); value.Exists() && !data.GraphqlSchema.IsNull() {
+		data.GraphqlSchema = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.GraphQlSchema = types.StringNull()
+		data.GraphqlSchema = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WsdlAdvertisedSchemaLocation`); value.Exists() && !data.WsdlAdvertisedSchemaLocation.IsNull() {
 		data.WsdlAdvertisedSchemaLocation = tfutils.ParseStringFromGJSON(value)
@@ -904,10 +904,10 @@ func (data *APIDefinition) UpdateFromBody(ctx context.Context, pathRoot string, 
 	} else if data.ShareRateLimitCount.ValueString() != "unset" {
 		data.ShareRateLimitCount = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `ReturnV5Responses`); value.Exists() && !data.ReturnV5Responses.IsNull() {
-		data.ReturnV5Responses = tfutils.BoolFromString(value.String())
-	} else if data.ReturnV5Responses.ValueBool() {
-		data.ReturnV5Responses = types.BoolNull()
+	if value := res.Get(pathRoot + `ReturnV5Responses`); value.Exists() && !data.ReturnV5responses.IsNull() {
+		data.ReturnV5responses = tfutils.BoolFromString(value.String())
+	} else if data.ReturnV5responses.ValueBool() {
+		data.ReturnV5responses = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `CopyIdHeadersToMessage`); value.Exists() && !data.CopyIdHeadersToMessage.IsNull() {
 		data.CopyIdHeadersToMessage = tfutils.BoolFromString(value.String())
@@ -924,10 +924,10 @@ func (data *APIDefinition) UpdateFromBody(ctx context.Context, pathRoot string, 
 	} else if !data.AllowChunkedUploads.ValueBool() {
 		data.AllowChunkedUploads = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `SetV5RequestHeaders`); value.Exists() && !data.SetV5RequestHeaders.IsNull() {
-		data.SetV5RequestHeaders = tfutils.BoolFromString(value.String())
-	} else if data.SetV5RequestHeaders.ValueBool() {
-		data.SetV5RequestHeaders = types.BoolNull()
+	if value := res.Get(pathRoot + `SetV5RequestHeaders`); value.Exists() && !data.SetV5requestHeaders.IsNull() {
+		data.SetV5requestHeaders = tfutils.BoolFromString(value.String())
+	} else if data.SetV5requestHeaders.ValueBool() {
+		data.SetV5requestHeaders = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `GetRawBodyValue`); value.Exists() && !data.GetRawBodyValue.IsNull() {
 		data.GetRawBodyValue = tfutils.BoolFromString(value.String())

@@ -81,23 +81,6 @@ func (d *FileSystemUsageMonitorDataSource) Schema(ctx context.Context, req datas
 				NestedObject:        models.GetDmFileSystemUsageDataSourceSchema(),
 				Computed:            true,
 			},
-			"all_queue_managers": schema.BoolAttribute{
-				MarkdownDescription: "Specify whether the utility checks all or only a subset of queue manager file systems.",
-				Computed:            true,
-			},
-			"all_qm_warning_threshold": schema.Int64Attribute{
-				MarkdownDescription: "Specify the usage threshold to generate a warning event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.",
-				Computed:            true,
-			},
-			"all_qm_critical_threshold": schema.Int64Attribute{
-				MarkdownDescription: "Specify the usage threshold to generate a critical event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.",
-				Computed:            true,
-			},
-			"queue_manager": schema.ListNestedAttribute{
-				MarkdownDescription: "Specify the queue manager file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all queue manager file systems.",
-				NestedObject:        models.GetDmQMFileSystemUsageDataSourceSchema(),
-				Computed:            true,
-			},
 			"dependency_actions": actions.ActionsSchema,
 		},
 	}

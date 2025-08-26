@@ -44,7 +44,7 @@ type DmDocCachePolicy struct {
 	Type                  types.String `tfsdk:"type"`
 	Ttl                   types.Int64  `tfsdk:"ttl"`
 	Priority              types.Int64  `tfsdk:"priority"`
-	Xc10Grid              types.String `tfsdk:"xc10_grid"`
+	Xc10grid              types.String `tfsdk:"xc10grid"`
 	CacheBackendResponses types.Bool   `tfsdk:"cache_backend_responses"`
 	HttpCacheValidation   types.Bool   `tfsdk:"http_cache_validation"`
 	ReturnExpired         types.Bool   `tfsdk:"return_expired"`
@@ -65,7 +65,7 @@ var DmDocCachePolicyObjectType = map[string]attr.Type{
 	"type":                    types.StringType,
 	"ttl":                     types.Int64Type,
 	"priority":                types.Int64Type,
-	"xc10_grid":               types.StringType,
+	"xc10grid":                types.StringType,
 	"cache_backend_responses": types.BoolType,
 	"http_cache_validation":   types.BoolType,
 	"return_expired":          types.BoolType,
@@ -77,7 +77,7 @@ var DmDocCachePolicyObjectDefault = map[string]attr.Value{
 	"type":                    types.StringValue("protocol"),
 	"ttl":                     types.Int64Value(900),
 	"priority":                types.Int64Value(128),
-	"xc10_grid":               types.StringNull(),
+	"xc10grid":                types.StringNull(),
 	"cache_backend_responses": types.BoolValue(false),
 	"http_cache_validation":   types.BoolValue(false),
 	"return_expired":          types.BoolValue(false),
@@ -104,7 +104,7 @@ func GetDmDocCachePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>", "priority", "").AddIntegerRange(1, 255).AddDefaultValue("128").String,
 				Computed:            true,
 			},
-			"xc10_grid": DataSourceSchema.StringAttribute{
+			"xc10grid": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").String,
 				Computed:            true,
 			},
@@ -167,7 +167,7 @@ func GetDmDocCachePolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 				},
 				Default: int64default.StaticInt64(128),
 			},
-			"xc10_grid": ResourceSchema.StringAttribute{
+			"xc10grid": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").String,
 				Optional:            true,
 			},
@@ -219,7 +219,7 @@ func (data DmDocCachePolicy) IsNull() bool {
 	if !data.Priority.IsNull() {
 		return false
 	}
-	if !data.Xc10Grid.IsNull() {
+	if !data.Xc10grid.IsNull() {
 		return false
 	}
 	if !data.CacheBackendResponses.IsNull() {
@@ -258,8 +258,8 @@ func (data DmDocCachePolicy) ToBody(ctx context.Context, pathRoot string) string
 	if !data.Priority.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Priority`, data.Priority.ValueInt64())
 	}
-	if !data.Xc10Grid.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XC10Grid`, data.Xc10Grid.ValueString())
+	if !data.Xc10grid.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XC10Grid`, data.Xc10grid.ValueString())
 	}
 	if !data.CacheBackendResponses.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CacheBackendResponses`, tfutils.StringFromBool(data.CacheBackendResponses, ""))
@@ -304,9 +304,9 @@ func (data *DmDocCachePolicy) FromBody(ctx context.Context, pathRoot string, res
 		data.Priority = types.Int64Value(128)
 	}
 	if value := res.Get(pathRoot + `XC10Grid`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Xc10Grid = tfutils.ParseStringFromGJSON(value)
+		data.Xc10grid = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Xc10Grid = types.StringNull()
+		data.Xc10grid = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `CacheBackendResponses`); value.Exists() {
 		data.CacheBackendResponses = tfutils.BoolFromString(value.String())
@@ -359,10 +359,10 @@ func (data *DmDocCachePolicy) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else if data.Priority.ValueInt64() != 128 {
 		data.Priority = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `XC10Grid`); value.Exists() && !data.Xc10Grid.IsNull() {
-		data.Xc10Grid = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XC10Grid`); value.Exists() && !data.Xc10grid.IsNull() {
+		data.Xc10grid = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Xc10Grid = types.StringNull()
+		data.Xc10grid = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `CacheBackendResponses`); value.Exists() && !data.CacheBackendResponses.IsNull() {
 		data.CacheBackendResponses = tfutils.BoolFromString(value.String())

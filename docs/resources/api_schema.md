@@ -33,7 +33,7 @@ resource "datapower_api_schema" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `graph_ql_schema` (String) Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
+- `graphql_schema` (String) Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `graphql-schema`
 - `json_schema` (String) Specify the schema URL for JSON message validation. For example, <tt>local:///petstore.json#/definitions/Pet</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `json-schema`

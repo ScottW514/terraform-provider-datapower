@@ -42,7 +42,7 @@ Read-Only:
 - `filter` (Attributes List) Click this tab to define a message-count monitor threshold and assign an action (Message Filter Action) that is taken when the threshold is reached. (see [below for nested schema](#nestedatt--result--filter))
 - `header` (String) The name of the HTTP header to read to determine the value of the source IP address.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_sources` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
+- `max_source_s` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
 - `measure` (String) Select the action that advances the counter. The default is Requests.
 - `message_type` (String) Select the message type monitored by this message-count monitor.
 - `source` (String) Select how monitoring is applied to IP addresses. This setting is meaningful only if an associated traffic definition contains and inclusive or exclusive IP address criterion. The default is All.

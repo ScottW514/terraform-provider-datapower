@@ -16,9 +16,9 @@ B2B partner profile
 
 ```terraform
 resource "datapower_b2b_profile" "test" {
-  id            = "ResTestB2BProfile"
-  app_domain    = "acceptance_test"
-  business_i_ds = ["businessid"]
+  id           = "ResTestB2BProfile"
+  app_domain   = "acceptance_test"
+  business_ids = ["businessid"]
   destinations = [{
     dest_name  = "b2bdestinationname"
     dest_url   = "https://localhost"
@@ -43,12 +43,12 @@ resource "datapower_b2b_profile" "test" {
   - CLI Alias: `as-allow-dup-msg`
   - Choices: `never`, `always`, `on-error`
   - Default value: `never`
-- `business_i_ds` (List of String) Specify the identifier for the partners. When configuring a trading partner, its identifier (ID) must be unique within a specific B2B gateway. The identifiers are equivalent to one of the following values. <ul><li>In AS messages, a value for an <tt>AS*-From</tt> or <tt>AS*-To</tt> header, where * is 1, 2, or 3.</li><li>In ebMS messages, a value for an <tt>PartyID</tt> element, where the PartyID element can be under either From or To element.</li><li>In other messages, a value that is extracted from the body of the EDI message: <tt>SenderID</tt> or <tt>ReceiverID</tt> .</li></ul>
-  - CLI Alias: `business-id`
-- `business_i_ds_duns` (List of String) Specify the 9-digit DUNS (Data Universal Numbering System) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.
+- `business_id_duns` (List of String) Specify the 9-digit DUNS (Data Universal Numbering System) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.
   - CLI Alias: `business-id-duns`
-- `business_i_ds_duns_plus4` (List of String) Specifies the 13-digit D-U-N-S (Data Universal Numbering System + 4) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.
+- `business_id_duns4` (List of String) Specifies the 13-digit D-U-N-S (Data Universal Numbering System + 4) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.
   - CLI Alias: `business-id-duns4`
+- `business_ids` (List of String) Specify the identifier for the partners. When configuring a trading partner, its identifier (ID) must be unique within a specific B2B gateway. The identifiers are equivalent to one of the following values. <ul><li>In AS messages, a value for an <tt>AS*-From</tt> or <tt>AS*-To</tt> header, where * is 1, 2, or 3.</li><li>In ebMS messages, a value for an <tt>PartyID</tt> element, where the PartyID element can be under either From or To element.</li><li>In other messages, a value that is extracted from the body of the EDI message: <tt>SenderID</tt> or <tt>ReceiverID</tt> .</li></ul>
+  - CLI Alias: `business-id`
 - `contacts` (Attributes List) Specify the contact information for partners. To define the contact information, you must provide information for at least one property.
   - CLI Alias: `contact` (see [below for nested schema](#nestedatt--contacts))
 - `custom_style_policy` (String) Processing policy
@@ -224,10 +224,10 @@ resource "datapower_b2b_profile" "test" {
 - `inbound_verify_val_cred` (String) Inbound signature validation credentials
   - CLI Alias: `verify-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
-- `mdnssl_client` (String) MDN TLS client profile
+- `mdn_ssl_client` (String) MDN TLS client profile
   - CLI Alias: `mdn-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
-- `mdnssl_client_config_type` (String) MDN TLS client type
+- `mdn_ssl_client_config_type` (String) MDN TLS client type
   - CLI Alias: `mdn-ssl-client-type`
   - Choices: `client`
   - Default value: `client`
@@ -277,11 +277,11 @@ Optional:
   - CLI Alias: `ack-time`
   - Range: `1`-`3600`
   - Default value: `1800`
-- `as1mdn_redirect_email` (String) Specify the redirection email address for the MDN to outbound AS1 messages. The partner that receives the outbound AS1 message sends the MDN to this email address. When blank, the redirection email in the <tt>From</tt> address of the outgoing message (the default email address of the sending internal partner).
+- `as1_mdn_redirect_email` (String) Specify the redirection email address for the MDN to outbound AS1 messages. The partner that receives the outbound AS1 message sends the MDN to this email address. When blank, the redirection email in the <tt>From</tt> address of the outgoing message (the default email address of the sending internal partner).
   - CLI Alias: `as1-mdn-email`
-- `as2mdn_redirect_url` (String) Specify the redirection URL for the MDN to outbound AS2 messages.
+- `as2_mdn_redirect_url` (String) Specify the redirection URL for the MDN to outbound AS2 messages.
   - CLI Alias: `as2-mdn-url`
-- `as3mdn_redirect_url` (String) Specify the redirection URL for the MDN to outbound AS3 messages.
+- `as3_mdn_redirect_url` (String) Specify the redirection URL for the MDN to outbound AS3 messages.
   - CLI Alias: `as3-mdn-url`
 - `as_compress` (Boolean) Specify whether to compress the body of outbound AS messages. The default behavior is disabled.
   - CLI Alias: `as-compress`
@@ -299,21 +299,21 @@ Optional:
 - `as_encrypt_cert` (String) Specify the certificate to encrypt outbound AS messages. Use the name of a certificate.
   - CLI Alias: `as-encrypt-cert`
   - Reference to: `datapower_crypto_certificate:id`
+- `as_mdn_request` (Boolean) Specify whether to request an MDN for outbound AS messages. The default behavior is disabled.
+  - CLI Alias: `as-mdn-request`
+  - Default value: `false`
+- `as_mdn_request_async` (Boolean) Specify whether the MDN request for outbound AS messages is asynchronous. The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If disabled, the MDN request is synchronous</li></ul>
+  - CLI Alias: `as-mdn-request-async`
+  - Default value: `false`
+- `as_mdn_request_signed` (Boolean) Specify whether to request a signed MDN instead of an unsigned one. The default behavior is an unsigned one.
+  - CLI Alias: `as-mdn-request-signed`
+  - Default value: `false`
+- `as_mdn_request_signed_algs` (String) Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .
+  - CLI Alias: `as-mdn-request-signed-algs`
+  - Default value: `sha1,md5`
 - `as_send_unsigned` (Boolean) Specify whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages when the sender has signing credentials.</li></ul>
   - CLI Alias: `as-send-unsigned`
   - Default value: `false`
-- `asmdn_request` (Boolean) Specify whether to request an MDN for outbound AS messages. The default behavior is disabled.
-  - CLI Alias: `as-mdn-request`
-  - Default value: `false`
-- `asmdn_request_async` (Boolean) Specify whether the MDN request for outbound AS messages is asynchronous. The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If disabled, the MDN request is synchronous</li></ul>
-  - CLI Alias: `as-mdn-request-async`
-  - Default value: `false`
-- `asmdn_request_signed` (Boolean) Specify whether to request a signed MDN instead of an unsigned one. The default behavior is an unsigned one.
-  - CLI Alias: `as-mdn-request-signed`
-  - Default value: `false`
-- `asmdn_request_signed_algs` (String) Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .
-  - CLI Alias: `as-mdn-request-signed-algs`
-  - Default value: `sha1,md5`
 - `auth_tls` (String) Specify the use of TLS to secure connections with the FTP <tt>AUTH TLS</tt> command.
   - CLI Alias: `ftp-auth-tls`
   - Choices: `auth-off`, `auth-tls-opt`, `auth-tls-req`, `auth-tls-imp`
@@ -371,6 +371,13 @@ Optional:
   - Default value: `one-way-push`
 - `ebms_message_partition_channel` (String) When the MEP is one-way pull, specify the message partition channel (MPC) to pull messages. In the one-way pull mode, a message remains in MPC storage until the B2B gateway receives an authenticated and authorized pull request.
   - CLI Alias: `ebms-mpc`
+- `ebms_mpc_auth_method` (String) Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.
+  - CLI Alias: `embs-mpc-auth-method`
+  - Choices: `username-token`, `cert`
+  - Default value: `username-token`
+- `ebms_mpc_verify_val_cred` (String) When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.
+  - CLI Alias: `ebms-mpc-verify-valcred`
+  - Reference to: `datapower_crypto_val_cred:id`
 - `ebms_outbound_receipt_reply_pattern` (String) Specifies the pattern to send the receipt signal. The default behavior is response.
   - CLI Alias: `ebms-outbound-receipt-reply-pattern`
   - Choices: `Response`, `Callback`
@@ -388,6 +395,8 @@ Optional:
 - `ebms_outbound_request_signed_receipt` (Boolean) Specify whether to request a signed receipt. The default behavior is off.
   - CLI Alias: `ebms-outbound-request-signed-receipt`
   - Default value: `false`
+- `ebms_p_mode` (String) Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.
+  - CLI Alias: `ebms-pmode`
 - `ebms_retry` (Boolean) Specify whether to retransmit unacknowledged outbound messages. The default behavior is off.
   - CLI Alias: `ebms-retry`
   - Default value: `false`
@@ -402,22 +411,13 @@ Optional:
   - CLI Alias: `ebms-service`
 - `ebms_service_type` (String) Specify the value of the type attribute in the ebMS SOAP message. When blank, ensure that the service value is a URI.
   - CLI Alias: `ebms-service-type`
+- `ebms_soap_body` (Boolean) When compression is not enabled, specify whether to send messages in the SOAP <tt>Body</tt> .
+  - CLI Alias: `ebms-soapbody`
+  - Default value: `false`
 - `ebms_sync_reply_mode` (String) Specify whether the response/acknowledgment is synchronous or asynchronous. The syncReplyMode parameter indicates to the receiving partner whether to return the business response or acknowledgment in the same connection. None means asynchronous.
   - CLI Alias: `ebms-syncreply-mode`
   - Choices: `mshSignalsOnly`, `none`
   - Default value: `none`
-- `ebmsmpc_auth_method` (String) Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.
-  - CLI Alias: `embs-mpc-auth-method`
-  - Choices: `username-token`, `cert`
-  - Default value: `username-token`
-- `ebmsmpc_verify_val_cred` (String) When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.
-  - CLI Alias: `ebms-mpc-verify-valcred`
-  - Reference to: `datapower_crypto_val_cred:id`
-- `ebmsp_mode` (String) Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.
-  - CLI Alias: `ebms-pmode`
-- `ebmssoap_body` (Boolean) When compression is not enabled, specify whether to send messages in the SOAP <tt>Body</tt> .
-  - CLI Alias: `ebms-soapbody`
-  - Default value: `false`
 - `email_address` (String) Specify the destination email address for messages sent to this partner.
   - CLI Alias: `email-address`
 - `enable_ftp_settings` (Boolean) Specify whether to override the FTP client policy. This policy is defined in user agent of the XML manager for the B2B gateway. <ul><li>When enabled, define the overrides with the advanced AS3 or FTP settings.</li><li>When disabled, uses the original FTP client policy.</li></ul>

@@ -43,24 +43,24 @@ type CryptoKerberosKDC struct {
 	ServerPort              types.Int64                 `tfsdk:"server_port"`
 	UdpTimeout              types.Int64                 `tfsdk:"udp_timeout"`
 	CacheTickets            types.Bool                  `tfsdk:"cache_tickets"`
-	MaxCachedTickets        types.Int64                 `tfsdk:"max_cached_tickets"`
-	MinCachedTicketValidity types.Int64                 `tfsdk:"min_cached_ticket_validity"`
+	MaxCacheDTickets        types.Int64                 `tfsdk:"max_cache_d_tickets"`
+	MinCacheDTicketValidity types.Int64                 `tfsdk:"min_cache_d_ticket_validity"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoKerberosKDCObjectType = map[string]attr.Type{
-	"id":                         types.StringType,
-	"app_domain":                 types.StringType,
-	"user_summary":               types.StringType,
-	"realm":                      types.StringType,
-	"server":                     types.StringType,
-	"use_tcp":                    types.BoolType,
-	"server_port":                types.Int64Type,
-	"udp_timeout":                types.Int64Type,
-	"cache_tickets":              types.BoolType,
-	"max_cached_tickets":         types.Int64Type,
-	"min_cached_ticket_validity": types.Int64Type,
-	"dependency_actions":         actions.ActionsListType,
+	"id":                          types.StringType,
+	"app_domain":                  types.StringType,
+	"user_summary":                types.StringType,
+	"realm":                       types.StringType,
+	"server":                      types.StringType,
+	"use_tcp":                     types.BoolType,
+	"server_port":                 types.Int64Type,
+	"udp_timeout":                 types.Int64Type,
+	"cache_tickets":               types.BoolType,
+	"max_cache_d_tickets":         types.Int64Type,
+	"min_cache_d_ticket_validity": types.Int64Type,
+	"dependency_actions":          actions.ActionsListType,
 }
 
 func (data CryptoKerberosKDC) GetPath() string {
@@ -98,10 +98,10 @@ func (data CryptoKerberosKDC) IsNull() bool {
 	if !data.CacheTickets.IsNull() {
 		return false
 	}
-	if !data.MaxCachedTickets.IsNull() {
+	if !data.MaxCacheDTickets.IsNull() {
 		return false
 	}
-	if !data.MinCachedTicketValidity.IsNull() {
+	if !data.MinCacheDTicketValidity.IsNull() {
 		return false
 	}
 	return true
@@ -137,11 +137,11 @@ func (data CryptoKerberosKDC) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.CacheTickets.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CacheTickets`, tfutils.StringFromBool(data.CacheTickets, ""))
 	}
-	if !data.MaxCachedTickets.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MaxCachedTickets`, data.MaxCachedTickets.ValueInt64())
+	if !data.MaxCacheDTickets.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MaxCachedTickets`, data.MaxCacheDTickets.ValueInt64())
 	}
-	if !data.MinCachedTicketValidity.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MinCachedTicketValidity`, data.MinCachedTicketValidity.ValueInt64())
+	if !data.MinCacheDTicketValidity.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MinCachedTicketValidity`, data.MinCacheDTicketValidity.ValueInt64())
 	}
 	return body
 }
@@ -191,14 +191,14 @@ func (data *CryptoKerberosKDC) FromBody(ctx context.Context, pathRoot string, re
 		data.CacheTickets = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `MaxCachedTickets`); value.Exists() {
-		data.MaxCachedTickets = types.Int64Value(value.Int())
+		data.MaxCacheDTickets = types.Int64Value(value.Int())
 	} else {
-		data.MaxCachedTickets = types.Int64Value(32)
+		data.MaxCacheDTickets = types.Int64Value(32)
 	}
 	if value := res.Get(pathRoot + `MinCachedTicketValidity`); value.Exists() {
-		data.MinCachedTicketValidity = types.Int64Value(value.Int())
+		data.MinCacheDTicketValidity = types.Int64Value(value.Int())
 	} else {
-		data.MinCachedTicketValidity = types.Int64Value(60)
+		data.MinCacheDTicketValidity = types.Int64Value(60)
 	}
 }
 
@@ -246,14 +246,14 @@ func (data *CryptoKerberosKDC) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else if !data.CacheTickets.ValueBool() {
 		data.CacheTickets = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `MaxCachedTickets`); value.Exists() && !data.MaxCachedTickets.IsNull() {
-		data.MaxCachedTickets = types.Int64Value(value.Int())
-	} else if data.MaxCachedTickets.ValueInt64() != 32 {
-		data.MaxCachedTickets = types.Int64Null()
+	if value := res.Get(pathRoot + `MaxCachedTickets`); value.Exists() && !data.MaxCacheDTickets.IsNull() {
+		data.MaxCacheDTickets = types.Int64Value(value.Int())
+	} else if data.MaxCacheDTickets.ValueInt64() != 32 {
+		data.MaxCacheDTickets = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `MinCachedTicketValidity`); value.Exists() && !data.MinCachedTicketValidity.IsNull() {
-		data.MinCachedTicketValidity = types.Int64Value(value.Int())
-	} else if data.MinCachedTicketValidity.ValueInt64() != 60 {
-		data.MinCachedTicketValidity = types.Int64Null()
+	if value := res.Get(pathRoot + `MinCachedTicketValidity`); value.Exists() && !data.MinCacheDTicketValidity.IsNull() {
+		data.MinCacheDTicketValidity = types.Int64Value(value.Int())
+	} else if data.MinCacheDTicketValidity.ValueInt64() != 60 {
+		data.MinCacheDTicketValidity = types.Int64Null()
 	}
 }

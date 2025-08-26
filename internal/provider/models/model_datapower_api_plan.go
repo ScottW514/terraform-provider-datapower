@@ -59,7 +59,7 @@ type APIPlan struct {
 	ExcludeOperation             types.List                  `tfsdk:"exclude_operation"`
 	Override                     types.List                  `tfsdk:"override"`
 	RateLimitScope               types.String                `tfsdk:"rate_limit_scope"`
-	GraphQlSchemaOptions         types.List                  `tfsdk:"graph_ql_schema_options"`
+	GraphqlSchemaOptions         types.List                  `tfsdk:"graphql_schema_options"`
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
@@ -89,7 +89,7 @@ var APIPlanObjectType = map[string]attr.Type{
 	"exclude_operation":               types.ListType{ElemType: types.StringType},
 	"override":                        types.ListType{ElemType: types.StringType},
 	"rate_limit_scope":                types.StringType,
-	"graph_ql_schema_options":         types.ListType{ElemType: types.StringType},
+	"graphql_schema_options":          types.ListType{ElemType: types.StringType},
 	"dependency_actions":              actions.ActionsListType,
 }
 
@@ -176,7 +176,7 @@ func (data APIPlan) IsNull() bool {
 	if !data.RateLimitScope.IsNull() {
 		return false
 	}
-	if !data.GraphQlSchemaOptions.IsNull() {
+	if !data.GraphqlSchemaOptions.IsNull() {
 		return false
 	}
 	return true
@@ -304,9 +304,9 @@ func (data APIPlan) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.RateLimitScope.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RateLimitScope`, data.RateLimitScope.ValueString())
 	}
-	if !data.GraphQlSchemaOptions.IsNull() {
+	if !data.GraphqlSchemaOptions.IsNull() {
 		var dataValues []string
-		data.GraphQlSchemaOptions.ElementsAs(ctx, &dataValues, false)
+		data.GraphqlSchemaOptions.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`GraphQLSchemaOptions`+".-1", map[string]string{"value": val})
 		}
@@ -551,9 +551,9 @@ func (data *APIPlan) FromBody(ctx context.Context, pathRoot string, res gjson.Re
 		data.RateLimitScope = types.StringValue("per-application")
 	}
 	if value := res.Get(pathRoot + `GraphQLSchemaOptions`); value.Exists() {
-		data.GraphQlSchemaOptions = tfutils.ParseStringListFromGJSON(value)
+		data.GraphqlSchemaOptions = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.GraphQlSchemaOptions = types.ListNull(types.StringType)
+		data.GraphqlSchemaOptions = types.ListNull(types.StringType)
 	}
 }
 
@@ -777,9 +777,9 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	} else if data.RateLimitScope.ValueString() != "per-application" {
 		data.RateLimitScope = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `GraphQLSchemaOptions`); value.Exists() && !data.GraphQlSchemaOptions.IsNull() {
-		data.GraphQlSchemaOptions = tfutils.ParseStringListFromGJSON(value)
+	if value := res.Get(pathRoot + `GraphQLSchemaOptions`); value.Exists() && !data.GraphqlSchemaOptions.IsNull() {
+		data.GraphqlSchemaOptions = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.GraphQlSchemaOptions = types.ListNull(types.StringType)
+		data.GraphqlSchemaOptions = types.ListNull(types.StringType)
 	}
 }

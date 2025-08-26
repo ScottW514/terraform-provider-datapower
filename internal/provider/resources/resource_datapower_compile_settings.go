@@ -140,7 +140,7 @@ func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.Schem
 				},
 				Default: int64default.StaticInt64(1048576),
 			},
-			"wsi_validation": schema.StringAttribute{
+			"ws_i_validation": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default setting is Warn.", "wsi-validate", "").AddStringEnum("ignore", "warn", "fail").AddDefaultValue("warn").String,
 				Optional:            true,
 				Computed:            true,

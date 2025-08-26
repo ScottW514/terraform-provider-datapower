@@ -16,9 +16,9 @@ An OAuth security requirement defines the allowed scopes for controlling access 
 
 ```terraform
 resource "datapower_api_security_oauth_req" "test" {
-  id                      = "ResTestAPISecurityOAuthReq"
-  app_domain              = "acceptance_test"
-  api_security_o_auth_def = "AccTest_APISecurityOAuth"
+  id                     = "ResTestAPISecurityOAuthReq"
+  app_domain             = "acceptance_test"
+  api_security_oauth_def = "AccTest_APISecurityOAuth"
 }
 ```
 
@@ -27,7 +27,7 @@ resource "datapower_api_security_oauth_req" "test" {
 
 ### Required
 
-- `api_security_o_auth_def` (String) OAuth security definition
+- `api_security_oauth_def` (String) OAuth security definition
   - CLI Alias: `oauth-definition`
   - Reference to: `datapower_api_security_oauth:id`
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -36,7 +36,7 @@ resource "datapower_api_security_oauth_req" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `o_auth_allowed_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
+- `oauth_allowed_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
   - CLI Alias: `allowed-scopes`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

@@ -37,24 +37,24 @@ type APISecurityOAuth struct {
 	Id                      types.String                `tfsdk:"id"`
 	AppDomain               types.String                `tfsdk:"app_domain"`
 	UserSummary             types.String                `tfsdk:"user_summary"`
-	OAuthProvider           types.String                `tfsdk:"o_auth_provider"`
-	OAuthFlow               types.String                `tfsdk:"o_auth_flow"`
-	OAuthScope              types.String                `tfsdk:"o_auth_scope"`
-	OAuthAdvScopeUrl        types.String                `tfsdk:"o_auth_adv_scope_url"`
-	OAuthAdvScopeTlsProfile types.String                `tfsdk:"o_auth_adv_scope_tls_profile"`
+	OauthProvider           types.String                `tfsdk:"oauth_provider"`
+	OauthFlow               types.String                `tfsdk:"oauth_flow"`
+	OauthScope              types.String                `tfsdk:"oauth_scope"`
+	OauthAdvScopeUrl        types.String                `tfsdk:"oauth_adv_scope_url"`
+	OauthAdvScopeTlsProfile types.String                `tfsdk:"oauth_adv_scope_tls_profile"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISecurityOAuthObjectType = map[string]attr.Type{
-	"id":                           types.StringType,
-	"app_domain":                   types.StringType,
-	"user_summary":                 types.StringType,
-	"o_auth_provider":              types.StringType,
-	"o_auth_flow":                  types.StringType,
-	"o_auth_scope":                 types.StringType,
-	"o_auth_adv_scope_url":         types.StringType,
-	"o_auth_adv_scope_tls_profile": types.StringType,
-	"dependency_actions":           actions.ActionsListType,
+	"id":                          types.StringType,
+	"app_domain":                  types.StringType,
+	"user_summary":                types.StringType,
+	"oauth_provider":              types.StringType,
+	"oauth_flow":                  types.StringType,
+	"oauth_scope":                 types.StringType,
+	"oauth_adv_scope_url":         types.StringType,
+	"oauth_adv_scope_tls_profile": types.StringType,
+	"dependency_actions":          actions.ActionsListType,
 }
 
 func (data APISecurityOAuth) GetPath() string {
@@ -74,19 +74,19 @@ func (data APISecurityOAuth) IsNull() bool {
 	if !data.UserSummary.IsNull() {
 		return false
 	}
-	if !data.OAuthProvider.IsNull() {
+	if !data.OauthProvider.IsNull() {
 		return false
 	}
-	if !data.OAuthFlow.IsNull() {
+	if !data.OauthFlow.IsNull() {
 		return false
 	}
-	if !data.OAuthScope.IsNull() {
+	if !data.OauthScope.IsNull() {
 		return false
 	}
-	if !data.OAuthAdvScopeUrl.IsNull() {
+	if !data.OauthAdvScopeUrl.IsNull() {
 		return false
 	}
-	if !data.OAuthAdvScopeTlsProfile.IsNull() {
+	if !data.OauthAdvScopeTlsProfile.IsNull() {
 		return false
 	}
 	return true
@@ -104,20 +104,20 @@ func (data APISecurityOAuth) ToBody(ctx context.Context, pathRoot string) string
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
-	if !data.OAuthProvider.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthProvider`, data.OAuthProvider.ValueString())
+	if !data.OauthProvider.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthProvider`, data.OauthProvider.ValueString())
 	}
-	if !data.OAuthFlow.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthFlow`, data.OAuthFlow.ValueString())
+	if !data.OauthFlow.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthFlow`, data.OauthFlow.ValueString())
 	}
-	if !data.OAuthScope.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthScope`, data.OAuthScope.ValueString())
+	if !data.OauthScope.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthScope`, data.OauthScope.ValueString())
 	}
-	if !data.OAuthAdvScopeUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthAdvScopeURL`, data.OAuthAdvScopeUrl.ValueString())
+	if !data.OauthAdvScopeUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthAdvScopeURL`, data.OauthAdvScopeUrl.ValueString())
 	}
-	if !data.OAuthAdvScopeTlsProfile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OAuthAdvScopeTLSProfile`, data.OAuthAdvScopeTlsProfile.ValueString())
+	if !data.OauthAdvScopeTlsProfile.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OAuthAdvScopeTLSProfile`, data.OauthAdvScopeTlsProfile.ValueString())
 	}
 	return body
 }
@@ -137,29 +137,29 @@ func (data *APISecurityOAuth) FromBody(ctx context.Context, pathRoot string, res
 		data.UserSummary = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthProvider`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.OAuthProvider = tfutils.ParseStringFromGJSON(value)
+		data.OauthProvider = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthProvider = types.StringNull()
+		data.OauthProvider = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthFlow`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.OAuthFlow = tfutils.ParseStringFromGJSON(value)
+		data.OauthFlow = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthFlow = types.StringValue("implicit")
+		data.OauthFlow = types.StringValue("implicit")
 	}
 	if value := res.Get(pathRoot + `OAuthScope`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.OAuthScope = tfutils.ParseStringFromGJSON(value)
+		data.OauthScope = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthScope = types.StringNull()
+		data.OauthScope = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthAdvScopeURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.OAuthAdvScopeUrl = tfutils.ParseStringFromGJSON(value)
+		data.OauthAdvScopeUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthAdvScopeUrl = types.StringNull()
+		data.OauthAdvScopeUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthAdvScopeTLSProfile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.OAuthAdvScopeTlsProfile = tfutils.ParseStringFromGJSON(value)
+		data.OauthAdvScopeTlsProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthAdvScopeTlsProfile = types.StringNull()
+		data.OauthAdvScopeTlsProfile = types.StringNull()
 	}
 }
 
@@ -177,29 +177,29 @@ func (data *APISecurityOAuth) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else {
 		data.UserSummary = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `OAuthProvider`); value.Exists() && !data.OAuthProvider.IsNull() {
-		data.OAuthProvider = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `OAuthProvider`); value.Exists() && !data.OauthProvider.IsNull() {
+		data.OauthProvider = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthProvider = types.StringNull()
+		data.OauthProvider = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `OAuthFlow`); value.Exists() && !data.OAuthFlow.IsNull() {
-		data.OAuthFlow = tfutils.ParseStringFromGJSON(value)
-	} else if data.OAuthFlow.ValueString() != "implicit" {
-		data.OAuthFlow = types.StringNull()
+	if value := res.Get(pathRoot + `OAuthFlow`); value.Exists() && !data.OauthFlow.IsNull() {
+		data.OauthFlow = tfutils.ParseStringFromGJSON(value)
+	} else if data.OauthFlow.ValueString() != "implicit" {
+		data.OauthFlow = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `OAuthScope`); value.Exists() && !data.OAuthScope.IsNull() {
-		data.OAuthScope = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `OAuthScope`); value.Exists() && !data.OauthScope.IsNull() {
+		data.OauthScope = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthScope = types.StringNull()
+		data.OauthScope = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `OAuthAdvScopeURL`); value.Exists() && !data.OAuthAdvScopeUrl.IsNull() {
-		data.OAuthAdvScopeUrl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `OAuthAdvScopeURL`); value.Exists() && !data.OauthAdvScopeUrl.IsNull() {
+		data.OauthAdvScopeUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthAdvScopeUrl = types.StringNull()
+		data.OauthAdvScopeUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `OAuthAdvScopeTLSProfile`); value.Exists() && !data.OAuthAdvScopeTlsProfile.IsNull() {
-		data.OAuthAdvScopeTlsProfile = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `OAuthAdvScopeTLSProfile`); value.Exists() && !data.OauthAdvScopeTlsProfile.IsNull() {
+		data.OauthAdvScopeTlsProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OAuthAdvScopeTlsProfile = types.StringNull()
+		data.OauthAdvScopeTlsProfile = types.StringNull()
 	}
 }

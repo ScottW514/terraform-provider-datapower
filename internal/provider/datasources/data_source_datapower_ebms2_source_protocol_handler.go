@@ -144,7 +144,7 @@ func (d *EBMS2SourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "TLS server profile",
 							Computed:            true,
 						},
-						"sslsni_server": schema.StringAttribute{
+						"ssl_sni_server": schema.StringAttribute{
 							MarkdownDescription: "TLS SNI server profile",
 							Computed:            true,
 						},

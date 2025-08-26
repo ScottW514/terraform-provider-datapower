@@ -38,8 +38,8 @@ data "datapower_api_connect_gateway_service" "test" {
 - `gateway_peering_manager` (String) Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.
 - `ip_multicast` (String) Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.
 - `ip_unicast` (String) Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.
+- `jwt_url` (String) JWT URL
 - `jwt_validation_mode` (String) Specify the JWT validation mode. This property does not control whether a token is validated. This property controls whether transactions fail when validation fails.
-- `jwturl` (String) JWT URL
 - `local_address` (String) Specify the IP address or interface through that API Connect uses to manage the gateway service. The default value is 0.0.0.0.
 - `local_port` (Number) Specify the listening port for the gateway service. The default value is 3000. <p><b>Note:</b> The gateway service uses four additional consecutive ports after the local port. Therefore, all five consecutive ports must be clear of conflicts.</p>
 - `proxy_policy` (Attributes) API Manager proxy
@@ -47,8 +47,8 @@ data "datapower_api_connect_gateway_service" "test" {
 - `ssl_server` (String) Specify the TLS server profile to secure connections between API Connect to the gateway service. The following restrictions apply. <ul><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li><li>The validation credentials must use PEM formatted material.</li></ul>
 - `user_defined_policies` (List of String) Specify user-defined policies to advertise to API Connect for use in the API Connect Assembly Editor. This property is meaningful when the gateway type is an API gateway. <p>For an assembly function that is a user-defined policy, configure the assembly function with a mechanism other than a watched file that is processed by a configuration sequence. Objects that are created through the processing of configuration sequences are not persisted to the startup configuration. The preferred method for user-defined policies is to define them explicitly so that they persist to the startup configuration.</p>
 - `user_summary` (String) Comments
-- `v5_compatibility_mode` (Boolean) Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>
 - `v5c_slm_mode` (String) Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.
+- `v5compatibility_mode` (Boolean) Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

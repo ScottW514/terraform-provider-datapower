@@ -100,7 +100,7 @@ func (r *JWSSignatureResource) Schema(ctx context.Context, req resource.SchemaRe
 					validators.ConditionalRequiredString(models.JWSSignatureKeyCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ss_key": schema.StringAttribute{
+			"sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").AddRequiredWhen(models.JWSSignatureSSKeyCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

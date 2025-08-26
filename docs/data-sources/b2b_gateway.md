@@ -48,10 +48,10 @@ Read-Only:
 - `archive_minimum_size` (Number) Specify the minimum remaining size in KB of document storage that triggers archival. The default value is 1024.
 - `archive_mode` (String) Purge mode
 - `archive_monitor` (Boolean) Specify whether to use a monitor during archival. The monitor limits the message injection rate to prevent problems in a critical situation like performance testing or on a heavily loaded system.
-- `as1mdn_email` (String) For AS1 asynchronous MDN scenarios, specify the default email address for the AS1 asynchronous MDN. When sending outbound AS1 email messages that request an MDN, this email address can be the default email address for the response MDN. An email address in the destination overrides this value.
-- `as1mdnsmtp_server_connection` (String) When an incoming AS1 message requests an MDN as an email request, specify the SMTP server connection for asynchronous MDN responses.
-- `as2mdnurl` (String) For AS2 asynchronous MDN scenarios, specify the default URL for the AS2 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
-- `as3mdnurl` (String) For AS3 asynchronous MDN scenarios, specify the default URL for the AS3 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
+- `as1_mdn_email` (String) For AS1 asynchronous MDN scenarios, specify the default email address for the AS1 asynchronous MDN. When sending outbound AS1 email messages that request an MDN, this email address can be the default email address for the response MDN. An email address in the destination overrides this value.
+- `as1_mdn_smtp_server_connection` (String) When an incoming AS1 message requests an MDN as an email request, specify the SMTP server connection for asynchronous MDN responses.
+- `as2_mdn_url` (String) For AS2 asynchronous MDN scenarios, specify the default URL for the AS2 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
+- `as3_mdn_url` (String) For AS3 asynchronous MDN scenarios, specify the default URL for the AS3 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
 - `as_front_protocol` (Attributes List) Protocol handlers (see [below for nested schema](#nestedatt--result--as_front_protocol))
 - `b2b_groups` (Attributes List) Active profile groups (see [below for nested schema](#nestedatt--result--b2b_groups))
 - `b2b_profiles` (Attributes List) Active partner profiles (see [below for nested schema](#nestedatt--result--b2b_profiles))
@@ -70,8 +70,8 @@ Read-Only:
 - `shaping_threshold` (Number) Specify the maximum TPS to allow during archival. When the threshold is reached, the service queues transactions. When the queue is full, the service rejects transactions and generates a log message. Enter a value in the range 10 - 10000. The default value is 200.
 - `sql_data_source` (String) SQL data source
 - `user_summary` (String) Comments
-- `x_path_routing_policies` (List of String) XPath routing policies
 - `xml_manager` (String) XML manager
+- `xpath_routing_policies` (List of String) XPath routing policies
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

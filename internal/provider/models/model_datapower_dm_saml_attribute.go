@@ -39,7 +39,7 @@ type DmSAMLAttribute struct {
 	SourceType   types.String `tfsdk:"source_type"`
 	Name         types.String `tfsdk:"name"`
 	Format       types.String `tfsdk:"format"`
-	XPath        types.String `tfsdk:"x_path"`
+	Xpath        types.String `tfsdk:"xpath"`
 	ValueData    types.String `tfsdk:"value_data"`
 	SubValueData types.String `tfsdk:"sub_value_data"`
 	FriendlyName types.String `tfsdk:"friendly_name"`
@@ -64,7 +64,7 @@ var DmSAMLAttributeObjectType = map[string]attr.Type{
 	"source_type":    types.StringType,
 	"name":           types.StringType,
 	"format":         types.StringType,
-	"x_path":         types.StringType,
+	"xpath":          types.StringType,
 	"value_data":     types.StringType,
 	"sub_value_data": types.StringType,
 	"friendly_name":  types.StringType,
@@ -73,7 +73,7 @@ var DmSAMLAttributeObjectDefault = map[string]attr.Value{
 	"source_type":    types.StringNull(),
 	"name":           types.StringNull(),
 	"format":         types.StringNull(),
-	"x_path":         types.StringNull(),
+	"xpath":          types.StringNull(),
 	"value_data":     types.StringNull(),
 	"sub_value_data": types.StringNull(),
 	"friendly_name":  types.StringNull(),
@@ -94,7 +94,7 @@ func GetDmSAMLAttributeDataSourceSchema() DataSourceSchema.NestedAttributeObject
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the optional Namespace URI for the SAML 1.x attribute,</p><p>Optional: Specify the NameFormat value for the SAML 2.0 attribute.</p>", "", "").String,
 				Computed:            true,
 			},
-			"x_path": DataSourceSchema.StringAttribute{
+			"xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPATH information to get the value for the SAML attribute when the attribute value is From Input Message, and specify the XPath expression to locate the value. <p>The XML nodes that the XPath expression points to is the value for the SAML attribute.</p>", "", "").String,
 				Computed:            true,
 			},
@@ -135,7 +135,7 @@ func GetDmSAMLAttributeResourceSchema() ResourceSchema.NestedAttributeObject {
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the optional Namespace URI for the SAML 1.x attribute,</p><p>Optional: Specify the NameFormat value for the SAML 2.0 attribute.</p>", "", "").String,
 				Optional:            true,
 			},
-			"x_path": ResourceSchema.StringAttribute{
+			"xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPATH information to get the value for the SAML attribute when the attribute value is From Input Message, and specify the XPath expression to locate the value. <p>The XML nodes that the XPath expression points to is the value for the SAML attribute.</p>", "", "").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -169,7 +169,7 @@ func (data DmSAMLAttribute) IsNull() bool {
 	if !data.Format.IsNull() {
 		return false
 	}
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	if !data.ValueData.IsNull() {
@@ -199,8 +199,8 @@ func (data DmSAMLAttribute) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.Format.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Format`, data.Format.ValueString())
 	}
-	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
+	if !data.Xpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPath`, data.Xpath.ValueString())
 	}
 	if !data.ValueData.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ValueData`, data.ValueData.ValueString())
@@ -234,9 +234,9 @@ func (data *DmSAMLAttribute) FromBody(ctx context.Context, pathRoot string, res 
 		data.Format = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ValueData`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ValueData = tfutils.ParseStringFromGJSON(value)
@@ -274,10 +274,10 @@ func (data *DmSAMLAttribute) UpdateFromBody(ctx context.Context, pathRoot string
 	} else {
 		data.Format = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ValueData`); value.Exists() && !data.ValueData.IsNull() {
 		data.ValueData = tfutils.ParseStringFromGJSON(value)

@@ -5,6 +5,7 @@
 - BREAKING CHANGE: `sensitive` and `write-only` properties in `DomainSettings:Passphrase`, `dmRadiusServer:Secret`, `dmSnmpCred:AuthSecret`, `dmSnmpCred:PrivSecret`, `LogTarget:RemotePassword` definitions
 - Bump github.com/hashicorp/terraform-plugin-testing from 1.13.2 to 1.13.3 in the terraform-plugin group (PR8)
 - Added `required_when` logic and attribute validators for conditionally requiring attributes
+- BREAKING CHANGE: Changed attribute names to aid in readability.
 
 ## v0.9.1
 

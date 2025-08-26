@@ -137,7 +137,7 @@ func (d *LogTargetDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "Specify the HTTP URL to send log entries. Entries are sent with the POST method and uses the default user agent.",
 							Computed:            true,
 						},
-						"nfs_mount": schema.StringAttribute{
+						"nf_sm_ount": schema.StringAttribute{
 							MarkdownDescription: "NFS static mount",
 							Computed:            true,
 						},

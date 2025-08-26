@@ -96,7 +96,7 @@ resource "datapower_xml_manager" "test" {
 - `search_results` (Boolean) Configures optimization of '//' in XPath expressions
   - CLI Alias: `search results`
   - Default value: `true`
-- `sha1_caching` (Boolean) Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
+- `sha1caching` (Boolean) Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
   - CLI Alias: `xsl checksummed cache`
   - Default value: `true`
 - `static_document_calls` (Boolean) The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable to allow all document calls to operate independently.
@@ -166,7 +166,7 @@ Optional:
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`
   - Default value: `protocol`
-- `xc10_grid` (String) The eXtreme Scale grid configuration to use for caching documents.
+- `xc10grid` (String) The eXtreme Scale grid configuration to use for caching documents.
   - CLI Alias: `xc10-grid`
 
 

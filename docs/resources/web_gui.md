@@ -60,7 +60,7 @@ resource "datapower_web_gui" "test" {
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
-- `sslsni_server` (String) Custom TLS SNI server profile
+- `ssl_sni_server` (String) Custom TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
   - Required When: `ssl_server_config_type`=`sni`

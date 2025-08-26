@@ -47,26 +47,26 @@ type ParseSettings struct {
 	UniqueNamespaces   types.Int64                 `tfsdk:"unique_namespaces"`
 	UniqueNames        types.Int64                 `tfsdk:"unique_names"`
 	NumberLength       types.Int64                 `tfsdk:"number_length"`
-	StrictUtf8Encoding types.Bool                  `tfsdk:"strict_utf8_encoding"`
+	StrictUtf8encoding types.Bool                  `tfsdk:"strict_utf8encoding"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ParseSettingsObjectType = map[string]attr.Type{
-	"id":                   types.StringType,
-	"app_domain":           types.StringType,
-	"user_summary":         types.StringType,
-	"document_type":        types.StringType,
-	"document_size":        types.Int64Type,
-	"nesting_depth":        types.Int64Type,
-	"width":                types.Int64Type,
-	"name_length":          types.Int64Type,
-	"value_length":         types.Int64Type,
-	"unique_prefixes":      types.Int64Type,
-	"unique_namespaces":    types.Int64Type,
-	"unique_names":         types.Int64Type,
-	"number_length":        types.Int64Type,
-	"strict_utf8_encoding": types.BoolType,
-	"dependency_actions":   actions.ActionsListType,
+	"id":                  types.StringType,
+	"app_domain":          types.StringType,
+	"user_summary":        types.StringType,
+	"document_type":       types.StringType,
+	"document_size":       types.Int64Type,
+	"nesting_depth":       types.Int64Type,
+	"width":               types.Int64Type,
+	"name_length":         types.Int64Type,
+	"value_length":        types.Int64Type,
+	"unique_prefixes":     types.Int64Type,
+	"unique_namespaces":   types.Int64Type,
+	"unique_names":        types.Int64Type,
+	"number_length":       types.Int64Type,
+	"strict_utf8encoding": types.BoolType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data ParseSettings) GetPath() string {
@@ -116,7 +116,7 @@ func (data ParseSettings) IsNull() bool {
 	if !data.NumberLength.IsNull() {
 		return false
 	}
-	if !data.StrictUtf8Encoding.IsNull() {
+	if !data.StrictUtf8encoding.IsNull() {
 		return false
 	}
 	return true
@@ -164,8 +164,8 @@ func (data ParseSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.NumberLength.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`NumberLength`, data.NumberLength.ValueInt64())
 	}
-	if !data.StrictUtf8Encoding.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`StrictUTF8Encoding`, tfutils.StringFromBool(data.StrictUtf8Encoding, ""))
+	if !data.StrictUtf8encoding.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`StrictUTF8Encoding`, tfutils.StringFromBool(data.StrictUtf8encoding, ""))
 	}
 	return body
 }
@@ -235,9 +235,9 @@ func (data *ParseSettings) FromBody(ctx context.Context, pathRoot string, res gj
 		data.NumberLength = types.Int64Value(128)
 	}
 	if value := res.Get(pathRoot + `StrictUTF8Encoding`); value.Exists() {
-		data.StrictUtf8Encoding = tfutils.BoolFromString(value.String())
+		data.StrictUtf8encoding = tfutils.BoolFromString(value.String())
 	} else {
-		data.StrictUtf8Encoding = types.BoolNull()
+		data.StrictUtf8encoding = types.BoolNull()
 	}
 }
 
@@ -305,9 +305,9 @@ func (data *ParseSettings) UpdateFromBody(ctx context.Context, pathRoot string, 
 	} else if data.NumberLength.ValueInt64() != 128 {
 		data.NumberLength = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `StrictUTF8Encoding`); value.Exists() && !data.StrictUtf8Encoding.IsNull() {
-		data.StrictUtf8Encoding = tfutils.BoolFromString(value.String())
-	} else if data.StrictUtf8Encoding.ValueBool() {
-		data.StrictUtf8Encoding = types.BoolNull()
+	if value := res.Get(pathRoot + `StrictUTF8Encoding`); value.Exists() && !data.StrictUtf8encoding.IsNull() {
+		data.StrictUtf8encoding = tfutils.BoolFromString(value.String())
+	} else if data.StrictUtf8encoding.ValueBool() {
+		data.StrictUtf8encoding = types.BoolNull()
 	}
 }

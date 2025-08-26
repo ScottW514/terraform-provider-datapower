@@ -16,10 +16,10 @@ B2B XPath routing policy
 
 ```terraform
 resource "datapower_b2b_xpath_routing_policy" "test" {
-  id              = "ResTestB2BXPathRoutingPolicy"
-  app_domain      = "acceptance_test"
-  sender_x_path   = "senderpath"
-  receiver_x_path = "senderpath"
+  id             = "ResTestB2BXPathRoutingPolicy"
+  app_domain     = "acceptance_test"
+  sender_xpath   = "senderpath"
+  receiver_xpath = "senderpath"
 }
 ```
 
@@ -30,17 +30,17 @@ resource "datapower_b2b_xpath_routing_policy" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `receiver_x_path` (String) Receiver XPath
+- `receiver_xpath` (String) Receiver XPath
   - CLI Alias: `receiver-xpath`
-- `sender_x_path` (String) Sender XPath
+- `sender_xpath` (String) Sender XPath
   - CLI Alias: `sender-xpath`
 
 ### Optional
 
-- `date_time_x_path` (String) Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.
+- `date_time_xpath` (String) Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.
   - CLI Alias: `transaction-time-xpath`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `document_idx_path` (String) Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.
+- `document_id_xpath` (String) Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.
   - CLI Alias: `document-id-xpath`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

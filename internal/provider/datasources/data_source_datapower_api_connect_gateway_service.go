@@ -93,7 +93,7 @@ func (d *APIConnectGatewayServiceDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: "Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.",
 				Computed:            true,
 			},
-			"v5_compatibility_mode": schema.BoolAttribute{
+			"v5compatibility_mode": schema.BoolAttribute{
 				MarkdownDescription: "Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>",
 				Computed:            true,
 			},
@@ -118,7 +118,7 @@ func (d *APIConnectGatewayServiceDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: "Specify the JWT validation mode. This property does not control whether a token is validated. This property controls whether transactions fail when validation fails.",
 				Computed:            true,
 			},
-			"jwturl": schema.StringAttribute{
+			"jwt_url": schema.StringAttribute{
 				MarkdownDescription: "JWT URL",
 				Computed:            true,
 			},

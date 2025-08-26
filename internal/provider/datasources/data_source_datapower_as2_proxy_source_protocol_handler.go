@@ -177,7 +177,7 @@ func (d *AS2ProxySourceProtocolHandlerDataSource) Schema(ctx context.Context, re
 							MarkdownDescription: "The TLS server profile to secure connections between clients and the DataPower Gateway.",
 							Computed:            true,
 						},
-						"sslsni_server": schema.StringAttribute{
+						"ssl_sni_server": schema.StringAttribute{
 							MarkdownDescription: "The TLS SNI server profile to secure connections between clients and the DataPower Gateway.",
 							Computed:            true,
 						},

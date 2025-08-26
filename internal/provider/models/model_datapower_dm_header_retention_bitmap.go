@@ -36,22 +36,22 @@ import (
 
 type DmHeaderRetentionBitmap struct {
 	Te             types.Bool `tfsdk:"te"`
-	AcceptEncoding types.Bool `tfsdk:"accept__encoding"`
+	AcceptEncoding types.Bool `tfsdk:"accept_encoding"`
 	Range          types.Bool `tfsdk:"range"`
 	Mqmd           types.Bool `tfsdk:"mqmd"`
 }
 
 var DmHeaderRetentionBitmapObjectType = map[string]attr.Type{
-	"te":               types.BoolType,
-	"accept__encoding": types.BoolType,
-	"range":            types.BoolType,
-	"mqmd":             types.BoolType,
+	"te":              types.BoolType,
+	"accept_encoding": types.BoolType,
+	"range":           types.BoolType,
+	"mqmd":            types.BoolType,
 }
 var DmHeaderRetentionBitmapObjectDefault = map[string]attr.Value{
-	"te":               types.BoolValue(false),
-	"accept__encoding": types.BoolValue(false),
-	"range":            types.BoolValue(false),
-	"mqmd":             types.BoolValue(false),
+	"te":              types.BoolValue(false),
+	"accept_encoding": types.BoolValue(false),
+	"range":           types.BoolValue(false),
+	"mqmd":            types.BoolValue(false),
 }
 
 func GetDmHeaderRetentionBitmapDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
@@ -62,7 +62,7 @@ func GetDmHeaderRetentionBitmapDataSourceSchema(description string, cliAlias str
 				MarkdownDescription: tfutils.NewAttributeDescription("TE", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"accept__encoding": DataSourceSchema.BoolAttribute{
+			"accept_encoding": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Accept-Encoding", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -93,7 +93,7 @@ func GetDmHeaderRetentionBitmapResourceSchema(description string, cliAlias strin
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"accept__encoding": ResourceSchema.BoolAttribute{
+			"accept_encoding": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Accept-Encoding", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,

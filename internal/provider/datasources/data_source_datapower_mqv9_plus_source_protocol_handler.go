@@ -141,7 +141,7 @@ func (d *MQv9PlusSourceProtocolHandlerDataSource) Schema(ctx context.Context, re
 							MarkdownDescription: "Header to extract Content-Type",
 							Computed:            true,
 						},
-						"content_type_x_path": schema.StringAttribute{
+						"content_type_xpath": schema.StringAttribute{
 							MarkdownDescription: "XPath expression to extract Content-Type from IBM MQ header",
 							Computed:            true,
 						},

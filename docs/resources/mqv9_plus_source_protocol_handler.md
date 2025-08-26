@@ -55,7 +55,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   - CLI Alias: `content-type-header`
   - Choices: `None`, `MQRFH`, `MQRFH2`
   - Default value: `None`
-- `content_type_x_path` (String) XPath expression to extract Content-Type from IBM MQ header
+- `content_type_xpath` (String) XPath expression to extract Content-Type from IBM MQ header
   - CLI Alias: `content-type-xpath`
   - Required When: `content_type_header`=`MQRFH`|`MQRFH2`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))

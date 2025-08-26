@@ -42,8 +42,8 @@ type DmWSDLUserPolicyToggles struct {
 	NoRequestValidation                  types.Bool `tfsdk:"no_request_validation"`
 	NoResponseValidation                 types.Bool `tfsdk:"no_response_validation"`
 	SuppressFaultsElementsForRpcWrappers types.Bool `tfsdk:"suppress_faults_elements_for_rpc_wrappers"`
-	NoWsa                                types.Bool `tfsdk:"no_wsa"`
-	NoWsrm                               types.Bool `tfsdk:"no_wsrm"`
+	NoWsA                                types.Bool `tfsdk:"no_ws_a"`
+	NoWsRm                               types.Bool `tfsdk:"no_ws_rm"`
 	AllowXopInclude                      types.Bool `tfsdk:"allow_xop_include"`
 }
 
@@ -55,8 +55,8 @@ var DmWSDLUserPolicyTogglesObjectType = map[string]attr.Type{
 	"no_request_validation":  types.BoolType,
 	"no_response_validation": types.BoolType,
 	"suppress_faults_elements_for_rpc_wrappers": types.BoolType,
-	"no_wsa":            types.BoolType,
-	"no_wsrm":           types.BoolType,
+	"no_ws_a":           types.BoolType,
+	"no_ws_rm":          types.BoolType,
 	"allow_xop_include": types.BoolType,
 }
 var DmWSDLUserPolicyTogglesObjectDefault = map[string]attr.Value{
@@ -67,8 +67,8 @@ var DmWSDLUserPolicyTogglesObjectDefault = map[string]attr.Value{
 	"no_request_validation":  types.BoolValue(false),
 	"no_response_validation": types.BoolValue(false),
 	"suppress_faults_elements_for_rpc_wrappers": types.BoolValue(false),
-	"no_wsa":            types.BoolValue(false),
-	"no_wsrm":           types.BoolValue(false),
+	"no_ws_a":           types.BoolValue(false),
+	"no_ws_rm":          types.BoolValue(false),
 	"allow_xop_include": types.BoolValue(true),
 }
 
@@ -104,11 +104,11 @@ func GetDmWSDLUserPolicyTogglesDataSourceSchema(description string, cliAlias str
 				MarkdownDescription: tfutils.NewAttributeDescription("Strict Fault Document Style", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"no_wsa": DataSourceSchema.BoolAttribute{
+			"no_ws_a": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-Addressing", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"no_wsrm": DataSourceSchema.BoolAttribute{
+			"no_ws_rm": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-ReliableMessaging", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -171,13 +171,13 @@ func GetDmWSDLUserPolicyTogglesResourceSchema(description string, cliAlias strin
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"no_wsa": ResourceSchema.BoolAttribute{
+			"no_ws_a": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-Addressing", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"no_wsrm": ResourceSchema.BoolAttribute{
+			"no_ws_rm": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-ReliableMessaging", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -223,10 +223,10 @@ func (data DmWSDLUserPolicyToggles) IsNull() bool {
 	if !data.SuppressFaultsElementsForRpcWrappers.IsNull() {
 		return false
 	}
-	if !data.NoWsa.IsNull() {
+	if !data.NoWsA.IsNull() {
 		return false
 	}
-	if !data.NoWsrm.IsNull() {
+	if !data.NoWsRm.IsNull() {
 		return false
 	}
 	if !data.AllowXopInclude.IsNull() {
@@ -262,11 +262,11 @@ func (data DmWSDLUserPolicyToggles) ToBody(ctx context.Context, pathRoot string)
 	if !data.SuppressFaultsElementsForRpcWrappers.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SuppressFaultsElementsForRPCWrappers`, tfutils.StringFromBool(data.SuppressFaultsElementsForRpcWrappers, ""))
 	}
-	if !data.NoWsa.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`NoWSA`, tfutils.StringFromBool(data.NoWsa, ""))
+	if !data.NoWsA.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`NoWSA`, tfutils.StringFromBool(data.NoWsA, ""))
 	}
-	if !data.NoWsrm.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`NoWSRM`, tfutils.StringFromBool(data.NoWsrm, ""))
+	if !data.NoWsRm.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`NoWSRM`, tfutils.StringFromBool(data.NoWsRm, ""))
 	}
 	if !data.AllowXopInclude.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AllowXOPInclude`, tfutils.StringFromBool(data.AllowXopInclude, ""))
@@ -314,14 +314,14 @@ func (data *DmWSDLUserPolicyToggles) FromBody(ctx context.Context, pathRoot stri
 		data.SuppressFaultsElementsForRpcWrappers = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `NoWSA`); value.Exists() {
-		data.NoWsa = tfutils.BoolFromString(value.String())
+		data.NoWsA = tfutils.BoolFromString(value.String())
 	} else {
-		data.NoWsa = types.BoolNull()
+		data.NoWsA = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `NoWSRM`); value.Exists() {
-		data.NoWsrm = tfutils.BoolFromString(value.String())
+		data.NoWsRm = tfutils.BoolFromString(value.String())
 	} else {
-		data.NoWsrm = types.BoolNull()
+		data.NoWsRm = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AllowXOPInclude`); value.Exists() {
 		data.AllowXopInclude = tfutils.BoolFromString(value.String())
@@ -369,15 +369,15 @@ func (data *DmWSDLUserPolicyToggles) UpdateFromBody(ctx context.Context, pathRoo
 	} else if data.SuppressFaultsElementsForRpcWrappers.ValueBool() {
 		data.SuppressFaultsElementsForRpcWrappers = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `NoWSA`); value.Exists() && !data.NoWsa.IsNull() {
-		data.NoWsa = tfutils.BoolFromString(value.String())
-	} else if data.NoWsa.ValueBool() {
-		data.NoWsa = types.BoolNull()
+	if value := res.Get(pathRoot + `NoWSA`); value.Exists() && !data.NoWsA.IsNull() {
+		data.NoWsA = tfutils.BoolFromString(value.String())
+	} else if data.NoWsA.ValueBool() {
+		data.NoWsA = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `NoWSRM`); value.Exists() && !data.NoWsrm.IsNull() {
-		data.NoWsrm = tfutils.BoolFromString(value.String())
-	} else if data.NoWsrm.ValueBool() {
-		data.NoWsrm = types.BoolNull()
+	if value := res.Get(pathRoot + `NoWSRM`); value.Exists() && !data.NoWsRm.IsNull() {
+		data.NoWsRm = tfutils.BoolFromString(value.String())
+	} else if data.NoWsRm.ValueBool() {
+		data.NoWsRm = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AllowXOPInclude`); value.Exists() && !data.AllowXopInclude.IsNull() {
 		data.AllowXopInclude = tfutils.BoolFromString(value.String())

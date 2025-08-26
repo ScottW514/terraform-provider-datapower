@@ -149,7 +149,7 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 					validators.ConditionalRequiredString(models.AAAJWTGeneratorSignKeyCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"sign_ss_key": schema.StringAttribute{
+			"sign_sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.", "sign-sskey", "crypto_sskey").AddRequiredWhen(models.AAAJWTGeneratorSignSSKeyCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -183,7 +183,7 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 					validators.ConditionalRequiredString(models.AAAJWTGeneratorEncryptCertificateCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"encrypt_ss_key": schema.StringAttribute{
+			"encrypt_sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.", "enc-sskey", "crypto_sskey").AddRequiredWhen(models.AAAJWTGeneratorEncryptSSKeyCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

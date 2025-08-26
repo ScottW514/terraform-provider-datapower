@@ -52,20 +52,20 @@ resource "datapower_tam" "test" {
   - CLI Alias: `auto-retry`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `ldap_ssl_key_file` (String) <p>Select the location of the key file that contains the certificates for TLS communication with the registry server.</p><ul><li>For server-only authentication, the key file must contain the signer certificate for the registry server.</li><li>For mutual authentication, the key file must also contain a personal certificate that the registry server can validate. If the personal certificate is not the default personal certificate in the key file, you must enter the label of the personal certificate.</li></ul><p>This file must be in the cert: or the sharedcert: directory.</p>
+  - CLI Alias: `ldap-ssl-key-file`
+  - Required When: `ldap_use_ssl`=`true`
+- `ldap_ssl_key_file_label` (String) <p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>
+  - CLI Alias: `ldap-ssl-key-file-dn`
+- `ldap_ssl_key_file_password_alias` (String) Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.
+  - CLI Alias: `ldap-ssl-key-file-password-alias`
+  - Reference to: `datapower_password_alias:id`
+- `ldap_ssl_port` (Number) Enter the listening port that the LDAP server uses for TLS communication. This property does not apply for TLS communication with an Active Directory server.
+  - CLI Alias: `ldap-ssl-port`
+  - Default value: `636`
 - `ldap_use_ssl` (Boolean) Select whether to use TLS communication between the Access Manager client and the LDAP or Active Directory server.
   - CLI Alias: `use-ldap-ssl`
   - Default value: `false`
-- `ldapssl_key_file` (String) <p>Select the location of the key file that contains the certificates for TLS communication with the registry server.</p><ul><li>For server-only authentication, the key file must contain the signer certificate for the registry server.</li><li>For mutual authentication, the key file must also contain a personal certificate that the registry server can validate. If the personal certificate is not the default personal certificate in the key file, you must enter the label of the personal certificate.</li></ul><p>This file must be in the cert: or the sharedcert: directory.</p>
-  - CLI Alias: `ldap-ssl-key-file`
-  - Required When: `ldap_use_ssl`=`true`
-- `ldapssl_key_file_label` (String) <p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>
-  - CLI Alias: `ldap-ssl-key-file-dn`
-- `ldapssl_key_file_password_alias` (String) Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.
-  - CLI Alias: `ldap-ssl-key-file-password-alias`
-  - Reference to: `datapower_password_alias:id`
-- `ldapssl_port` (Number) Enter the listening port that the LDAP server uses for TLS communication. This property does not apply for TLS communication with an Active Directory server.
-  - CLI Alias: `ldap-ssl-port`
-  - Default value: `636`
 - `listen_mode` (Boolean) Select whether to accept notifications to update the local policy database from the policy server. When you set this property, it overrides the behavior defined in configuration files for the Access Manager client.
   - CLI Alias: `listen-mode`
   - Default value: `false`
@@ -90,11 +90,15 @@ resource "datapower_tam" "test" {
 - `returning_user_attributes` (Boolean) Select whether the registry returns users attributes for successful authorization requests. When set, the registry returns user attributes.
   - CLI Alias: `return-attributes`
   - Default value: `false`
+- `tam_az_replicas` (Attributes List) <p>Replicas indicate the network location of remote authorization servers. You must configure at least one replica. You can configure additional replicas for failover purposes.</p><p><b>Note:</b> If you uploaded a file that was created previously, it must define at least one replica.</p>
+  - CLI Alias: `replica` (see [below for nested schema](#nestedatt--tam_az_replicas))
 - `tam_choose_nist` (String) In FIPS mode, there is a mandatory NIST compliance level to select. Select a level that is compatible with the corresponding Access Manager servers and registry servers. Note that the NIST and NSA options are available only in Access Manager versions 7.0 and later.
   - CLI Alias: `choose-nist`
   - Choices: `fips`, `sp800_131_transition`, `sp800_131_strict`, `suite_b_128`, `suite_b_192`
 - `tam_fed_dirs` (Attributes List) Specify a list of federated directories. Each entry describes a unique set of LDAP suffixes and LDAP server. Federated directories define all the suffixes that can be searched for user identities.
   - CLI Alias: `federated-directory` (see [below for nested schema](#nestedatt--tam_fed_dirs))
+- `tam_ras_trace` (Attributes) <p>Trace logging is a useful debugging tool. By default, trace logging is not enabled. Trace logging collects large amounts of data in a short amount of time and might result in a significant performance degradation. Enable trace logging only at the direction of IBM Support.</p><p>When enabled, the DataPower Gateway creates two trace files for each library. The DataPower Gateway writes the files cyclically. Double the size of the files to obtain the total allowable file size.</p>
+  - CLI Alias: `tam-ras-trace` (see [below for nested schema](#nestedatt--tam_ras_trace))
 - `tam_use_basic_user` (Boolean) Control whether to support basic users in the client. When enabled, you can use LDAP user entries for authentication or authorization without importing them into the ISAM domain.
   - CLI Alias: `use-basic-user`
   - Default value: `false`
@@ -104,10 +108,6 @@ resource "datapower_tam" "test" {
 - `tam_version` (String) <p>Select the Access Manager client version to use. The default value is Default.</p>
   - CLI Alias: `tam-version`
   - Choices: `default`, `v70`, `v801`, `v901`, `v903`, `v1005`
-- `tamaz_replicas` (Attributes List) <p>Replicas indicate the network location of remote authorization servers. You must configure at least one replica. You can configure additional replicas for failover purposes.</p><p><b>Note:</b> If you uploaded a file that was created previously, it must define at least one replica.</p>
-  - CLI Alias: `replica` (see [below for nested schema](#nestedatt--tamaz_replicas))
-- `tamras_trace` (Attributes) <p>Trace logging is a useful debugging tool. By default, trace logging is not enabled. Trace logging collects large amounts of data in a short amount of time and might result in a significant performance degradation. Enable trace logging only at the direction of IBM Support.</p><p>When enabled, the DataPower Gateway creates two trace files for each library. The DataPower Gateway writes the files cyclically. Double the size of the files to obtain the total allowable file size.</p>
-  - CLI Alias: `tam-ras-trace` (see [below for nested schema](#nestedatt--tamras_trace))
 - `use_local_mode` (Boolean) Select whether to create a local copy of the policy database. Set this property to cache the policy database locally instead of accessing the remote policy server. This property must match the behavior defined in the configuration files for the Access Manager client.
   - CLI Alias: `use-local-mode`
   - Default value: `false`
@@ -143,6 +143,25 @@ Optional:
 - `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
 
 
+<a id="nestedatt--tam_az_replicas"></a>
+### Nested Schema for `tam_az_replicas`
+
+Required:
+
+- `tam_az_replica` (String) Specify the TCP host name of the authorization server replica.
+  - CLI Alias: `host`
+
+Optional:
+
+- `tam_az_replica_port` (Number) Specify the listening port on the authorization server replica. The default value is 7136.
+  - CLI Alias: `port`
+  - Default value: `7136`
+- `tam_az_replica_weight` (Number) Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.
+  - CLI Alias: `weight`
+  - Range: `1`-`10`
+  - Default value: `10`
+
+
 <a id="nestedatt--tam_fed_dirs"></a>
 ### Nested Schema for `tam_fed_dirs`
 
@@ -175,27 +194,8 @@ Optional:
   - Default value: `false`
 
 
-<a id="nestedatt--tamaz_replicas"></a>
-### Nested Schema for `tamaz_replicas`
-
-Required:
-
-- `tamaz_replica` (String) Specify the TCP host name of the authorization server replica.
-  - CLI Alias: `host`
-
-Optional:
-
-- `tamaz_replica_port` (Number) Specify the listening port on the authorization server replica. The default value is 7136.
-  - CLI Alias: `port`
-  - Default value: `7136`
-- `tamaz_replica_weight` (Number) Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.
-  - CLI Alias: `weight`
-  - Range: `1`-`10`
-  - Default value: `10`
-
-
-<a id="nestedatt--tamras_trace"></a>
-### Nested Schema for `tamras_trace`
+<a id="nestedatt--tam_ras_trace"></a>
+### Nested Schema for `tam_ras_trace`
 
 Optional:
 

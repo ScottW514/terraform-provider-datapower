@@ -124,7 +124,7 @@ func (d *ErrorReportSettingsDataSource) Schema(ctx context.Context, req datasour
 				MarkdownDescription: "Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.",
 				Computed:            true,
 			},
-			"nfs_mount": schema.StringAttribute{
+			"nf_sm_ount": schema.StringAttribute{
 				MarkdownDescription: "Specify the NFS mount point to which to upload the error report.",
 				Computed:            true,
 			},

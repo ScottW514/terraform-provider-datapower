@@ -44,7 +44,7 @@ func TestAccResourceCompileSettings(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_compile_settings.test", "try_stream", "false"),
 			resource.TestCheckResourceAttr("datapower_compile_settings.test", "minimum_escaping", "false"),
 			resource.TestCheckResourceAttr("datapower_compile_settings.test", "stack_size", "1048576"),
-			resource.TestCheckResourceAttr("datapower_compile_settings.test", "wsi_validation", "warn"),
+			resource.TestCheckResourceAttr("datapower_compile_settings.test", "ws_i_validation", "warn"),
 			resource.TestCheckResourceAttr("datapower_compile_settings.test", "wsdl_validate_body", "strict"),
 			resource.TestCheckResourceAttr("datapower_compile_settings.test", "wsdl_validate_headers", "lax"),
 			resource.TestCheckResourceAttr("datapower_compile_settings.test", "wsdl_validate_faults", "strict"),

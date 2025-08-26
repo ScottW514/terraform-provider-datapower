@@ -36,23 +36,23 @@ import (
 )
 
 type DmSchemaExceptionRule struct {
-	XPath         types.String `tfsdk:"x_path"`
+	Xpath         types.String `tfsdk:"xpath"`
 	ExceptionType types.String `tfsdk:"exception_type"`
 }
 
 var DmSchemaExceptionRuleObjectType = map[string]attr.Type{
-	"x_path":         types.StringType,
+	"xpath":          types.StringType,
 	"exception_type": types.StringType,
 }
 var DmSchemaExceptionRuleObjectDefault = map[string]attr.Value{
-	"x_path":         types.StringNull(),
+	"xpath":          types.StringNull(),
 	"exception_type": types.StringValue("AllowEncrypted"),
 }
 
 func GetDmSchemaExceptionRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmSchemaExceptionRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
-			"x_path": DataSourceSchema.StringAttribute{
+			"xpath": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
 				Computed:            true,
 			},
@@ -67,7 +67,7 @@ func GetDmSchemaExceptionRuleDataSourceSchema() DataSourceSchema.NestedAttribute
 func GetDmSchemaExceptionRuleResourceSchema() ResourceSchema.NestedAttributeObject {
 	var DmSchemaExceptionRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 		Attributes: map[string]ResourceSchema.Attribute{
-			"x_path": ResourceSchema.StringAttribute{
+			"xpath": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
 				Required:            true,
 			},
@@ -86,7 +86,7 @@ func GetDmSchemaExceptionRuleResourceSchema() ResourceSchema.NestedAttributeObje
 }
 
 func (data DmSchemaExceptionRule) IsNull() bool {
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	if !data.ExceptionType.IsNull() {
@@ -101,8 +101,8 @@ func (data DmSchemaExceptionRule) ToBody(ctx context.Context, pathRoot string) s
 	}
 	body := ""
 
-	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, data.XPath.ValueString())
+	if !data.Xpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPath`, data.Xpath.ValueString())
 	}
 	if !data.ExceptionType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ExceptionType`, data.ExceptionType.ValueString())
@@ -115,9 +115,9 @@ func (data *DmSchemaExceptionRule) FromBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ExceptionType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ExceptionType = tfutils.ParseStringFromGJSON(value)
@@ -130,10 +130,10 @@ func (data *DmSchemaExceptionRule) UpdateFromBody(ctx context.Context, pathRoot 
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPath = types.StringNull()
+		data.Xpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ExceptionType`); value.Exists() && !data.ExceptionType.IsNull() {
 		data.ExceptionType = tfutils.ParseStringFromGJSON(value)

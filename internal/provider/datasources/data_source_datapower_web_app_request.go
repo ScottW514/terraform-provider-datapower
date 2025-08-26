@@ -92,7 +92,7 @@ func (d *WebAppRequestDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "If this property references a AAA policy, then that AAA policy will be run as a filter on this transaction and the success of that AAA run will be required to continue processing. Any input to this transaction as XML, application/www-url-encoded, or multipart/form-data MIME types will be automatically provided to the AAA processing policy.",
 							Computed:            true,
 						},
-						"ss_key": schema.StringAttribute{
+						"sskey": schema.StringAttribute{
 							MarkdownDescription: "Select the Shared Secret Key for both signing or encrypting.",
 							Computed:            true,
 						},

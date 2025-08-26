@@ -68,6 +68,10 @@ resource "datapower_compile_settings" "test" {
 - `wildcards_ignore_xsi_type` (Boolean) Specifies whether xs:any elements in the schema validate only child elements by name. The XML Schema specification requires that, if a wildcard matches an element but that element does not have an element declaration, the element is instead validated according to an xsi:type attribute on it. This option ignores those xsi:type attributes. It should be used for cases such as SOAP envelope validation where a further validation step will validate the contents matching the wildcard, possibly using the SOAP 1.1 encoding rules. By default, xsi:type attributes are not ignored.
   - CLI Alias: `wildcards-ignore-xsi-type`
   - Default value: `false`
+- `ws_i_validation` (String) Specifies the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default setting is Warn.
+  - CLI Alias: `wsi-validate`
+  - Choices: `ignore`, `warn`, `fail`
+  - Default value: `warn`
 - `wsdl_strict_soap_version` (Boolean) Specifies whether to strictly follow the SOAP binding in the WSDL. When enabled, only messages bound to SOAP 1.2 appear in SOAP 1.2 envelopes and only messages bound to SOAP 1.1 appear in SOAP 1.1 envelopes. By default, strict SOAP binding is disabled.
   - CLI Alias: `wsdl-strict-soap-version`
   - Default value: `false`
@@ -86,10 +90,6 @@ resource "datapower_compile_settings" "test" {
 - `wsdl_wrapped_faults` (Boolean) Specifies whether to require compatibility with RPC-style wrappers. By default, RPC-style wrappers are not required.
   - CLI Alias: `wsdl-wrapped-faults`
   - Default value: `false`
-- `wsi_validation` (String) Specifies the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default setting is Warn.
-  - CLI Alias: `wsi-validate`
-  - Choices: `ignore`, `warn`, `fail`
-  - Default value: `warn`
 - `xacml_debug` (Boolean) Specifies whether to compile XACML policies with debug information. Note that the XACML debugging messages are also controlled by the log event in the XACML category. Use the debug log level to view the full XACML debugging messages. By default, XACML policies are not compiled with debug information.
   - CLI Alias: `xacml-debug`
   - Default value: `false`

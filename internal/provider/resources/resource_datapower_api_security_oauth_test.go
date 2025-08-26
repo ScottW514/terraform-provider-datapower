@@ -36,7 +36,7 @@ func TestAccResourceAPISecurityOAuth(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testutils.APISecurityOAuthTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-			resource.TestCheckResourceAttr("datapower_api_security_oauth.test", "o_auth_flow", "implicit"),
+			resource.TestCheckResourceAttr("datapower_api_security_oauth.test", "oauth_flow", "implicit"),
 		}...),
 	})
 

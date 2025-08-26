@@ -88,7 +88,7 @@ func (d *WebGUIDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				MarkdownDescription: "Custom TLS server profile",
 				Computed:            true,
 			},
-			"sslsni_server": schema.StringAttribute{
+			"ssl_sni_server": schema.StringAttribute{
 				MarkdownDescription: "Custom TLS SNI server profile",
 				Computed:            true,
 			},

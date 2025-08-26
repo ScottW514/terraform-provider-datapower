@@ -36,18 +36,18 @@ import (
 
 type DmLTPATokenVersion struct {
 	Ltpa       types.Bool `tfsdk:"ltpa"`
-	Ltpa2      types.Bool `tfsdk:"ltpa2"`
+	Ltpa2      types.Bool `tfsdk:"ltpa_2"`
 	LtpaDomino types.Bool `tfsdk:"ltpa_domino"`
 }
 
 var DmLTPATokenVersionObjectType = map[string]attr.Type{
 	"ltpa":        types.BoolType,
-	"ltpa2":       types.BoolType,
+	"ltpa_2":      types.BoolType,
 	"ltpa_domino": types.BoolType,
 }
 var DmLTPATokenVersionObjectDefault = map[string]attr.Value{
 	"ltpa":        types.BoolValue(false),
-	"ltpa2":       types.BoolValue(true),
+	"ltpa_2":      types.BoolValue(true),
 	"ltpa_domino": types.BoolValue(false),
 }
 
@@ -59,7 +59,7 @@ func GetDmLTPATokenVersionDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 1", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ltpa2": DataSourceSchema.BoolAttribute{
+			"ltpa_2": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 2", "", "").AddDefaultValue("true").String,
 				Computed:            true,
 			},
@@ -86,7 +86,7 @@ func GetDmLTPATokenVersionResourceSchema(description string, cliAlias string, re
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ltpa2": ResourceSchema.BoolAttribute{
+			"ltpa_2": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 2", "", "").AddDefaultValue("true").String,
 				Computed:            true,
 				Optional:            true,

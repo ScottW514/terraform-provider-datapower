@@ -62,7 +62,7 @@ resource "datapower_error_report_settings" "test" {
 - `location_identifier` (String) Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.
   - CLI Alias: `location-id`
   - Required When: `use_smtp`=`true`
-- `nfs_mount` (String) Specify the NFS mount point to which to upload the error report.
+- `nf_sm_ount` (String) Specify the NFS mount point to which to upload the error report.
   - CLI Alias: `nfs-mount`
   - Reference to: `datapower_nfs_static_mount:id`
   - Required When: (`upload_report`=`true` AND `protocol`=`nfs`)

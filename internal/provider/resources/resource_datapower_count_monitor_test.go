@@ -39,7 +39,7 @@ func TestAccResourceCountMonitor(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_count_monitor.test", "measure", "requests"),
 			resource.TestCheckResourceAttr("datapower_count_monitor.test", "source", "all"),
 			resource.TestCheckResourceAttr("datapower_count_monitor.test", "header", "X-Client-IP"),
-			resource.TestCheckResourceAttr("datapower_count_monitor.test", "max_sources", "10000"),
+			resource.TestCheckResourceAttr("datapower_count_monitor.test", "max_source_s", "10000"),
 		}...),
 	})
 

@@ -55,7 +55,7 @@ resource "datapower_wxs_grid" "test" {
   - Choices: `tripledes-cbc`, `aes128-cbc`, `aes192-cbc`, `aes256-cbc`, `rc2-40-cbc`, `rc2-64-cbc`, `rc2-cbc`
   - Default value: `tripledes-cbc`
   - Required When: `encrypt`=`true`
-- `encrypt_ss_key` (String) Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.
+- `encrypt_sskey` (String) Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.
   - CLI Alias: `encrypt-sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: `encrypt`=`true`

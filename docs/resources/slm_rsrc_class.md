@@ -59,7 +59,7 @@ resource "datapower_slm_rsrc_class" "test" {
   - CLI Alias: `wsrr-subscription`
   - Reference to: `datapower_wsrr_subscription:id`
   - Required When: `rsrc_type`=`wsrr-subscription`
-- `x_path_filter` (String) XPath filter
+- `xpath_filter` (String) XPath filter
   - CLI Alias: `xpath-filter`
   - Required When: `rsrc_type`=`xpath-filter`
 

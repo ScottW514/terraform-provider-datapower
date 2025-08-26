@@ -152,7 +152,7 @@ func (d *MQManagerDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "Specify the maximum number of conversations to share a single TCP connection. Enter a value in the range 1 - 5000. The default value is 1.",
 							Computed:            true,
 						},
-						"ss_lkey": schema.StringAttribute{
+						"ssl_key": schema.StringAttribute{
 							MarkdownDescription: "<p>Specify the location of the key database file where keys and certificates are stored.</p><p>Use this setting with the TLS cipher setting to enable TLS communication when the TLS artifacts were created with IBM Global Security Kit (GSKit).</p><p><b>Note:</b> To integrate with IBM MQ for z/OS, do not use these properties. Use a TLS client profile.</p><p>Each key database file has an associated stash file. The stash file holds encrypted passwords that allow programmatic access to the key database. The stash file must reside in the same directory as the key database file, have the same file name as the key database file, and have the <tt>.sth</tt> file extension. For example, if the key database file is <tt>MQkeys.pem</tt> or <tt>MQkeys.kidb</tt> , the stash file must be <tt>MQkeys.sth</tt> .</p><p>If these file are not in the <tt>cert:</tt> directory, upload or fetch them.</p>",
 							Computed:            true,
 						},
@@ -160,7 +160,7 @@ func (d *MQManagerDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "When the configuration uses the TLS key repository, specify whether to permit connections to IBM MQ servers that do not support RFC 5746. Such servers are vulnerable to MITM attacks as documented in CVE-2009-3555. By default, insecure connections are rejected during the handshake.",
 							Computed:            true,
 						},
-						"ss_lcipher": schema.StringAttribute{
+						"ssl_cipher": schema.StringAttribute{
 							MarkdownDescription: "<p>When the configuration uses a TLS key repository, specify the TLS cipher suite. The cipher suite must match the ciphers that the remote queue manager uses.</p><p>Use this setting with the TLS key repository setting to enable TLS communication when the TLS artifacts were created with IBM Global Security Kit (GSKit).</p><p><b>Note:</b> To integrate with IBM MQ for z/OS, do not use these settings. Use a TLS client profile.</p>",
 							Computed:            true,
 						},

@@ -42,7 +42,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `certificate` (String) Certificate.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ss_key` (String) Shared secret key.
+- `sskey` (String) Shared secret key.
 - `unprotected_header` (Attributes List) Unprotected header for the JWE recipient. (see [below for nested schema](#nestedatt--result--unprotected_header))
 - `user_summary` (String) A descriptive summary for the configuration.
 

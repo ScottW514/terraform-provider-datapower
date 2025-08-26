@@ -54,12 +54,12 @@ Read-Only:
 - `user_summary` (String) Comments
 - `validate_soap_enc_array` (String) Designates a set of schemas that will do extra validation following the encoding rules in SOAP 1.1 Section 5. This validates members of SOAP arrays, allows attributes such as @id and @href even if not allowed by the schema, and checks that @href values have a corresponding @id element.
 - `wildcards_ignore_xsi_type` (String) Designates a set of schemas where wildcards (xs:any elements) only validate children by element name. The XML Schema specification requires that, if a wildcard matches an element but that element does not have an element declaration, the element is instead validated according to an xsi:type attribute on it. This option ignores those xsi:type attributes. It should be used for cases such as SOAP envelope validation where a further validation step will validate the contents matching the wildcard, possibly using the SOAP 1.1 encoding rules.
+- `ws_i_validation` (String) Select the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default is Ignore.
 - `wsdl_strict_soap_version` (Boolean) When on, follow the version of the SOAP Binding in the WSDL, allowing only messages bound to SOAP 1.2 to appear in SOAP 1.2 envelopes and messages bound to SOAP 1.1 to appear in SOAP 1.1 envelopes. The default is off.
 - `wsdl_validate_body` (String) Select the validation behavior for the soap:Body. The default is Strict.
 - `wsdl_validate_faults` (String) Select the validation behavior for the fault detail. The default is Strict.
 - `wsdl_validate_headers` (String) Select the validation behavior for the soap:Header. The default is Lax.
 - `wsdl_wrapped_faults` (Boolean) For compatibility, require a rpc-style wrapper around fault details that are specified by type.
-- `wsi_validation` (String) Select the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default is Ignore.
 - `xacml_debug` (Boolean) Setting to "on" to make the XACML compiler to put more debugging information when evaluate a policy. Note that the XACML debugging messages are also controlled by the log event in the 'XACML' category. Use the "debug" log level to view the full XACML debugging messages.
 - `xslt_version` (String) Select the XSLT processor version.
 

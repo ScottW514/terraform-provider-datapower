@@ -72,7 +72,7 @@ type XMLFirewallService struct {
 	CredentialCharset                      types.String                `tfsdk:"credential_charset"`
 	SslConfigType                          types.String                `tfsdk:"ssl_config_type"`
 	SslServer                              types.String                `tfsdk:"ssl_server"`
-	SslsniServer                           types.String                `tfsdk:"sslsni_server"`
+	SslSniServer                           types.String                `tfsdk:"ssl_sni_server"`
 	SslClient                              types.String                `tfsdk:"ssl_client"`
 	UserSummary                            types.String                `tfsdk:"user_summary"`
 	Priority                               types.String                `tfsdk:"priority"`
@@ -261,7 +261,7 @@ var XMLFirewallServiceObjectType = map[string]attr.Type{
 	"credential_charset":                          types.StringType,
 	"ssl_config_type":                             types.StringType,
 	"ssl_server":                                  types.StringType,
-	"sslsni_server":                               types.StringType,
+	"ssl_sni_server":                              types.StringType,
 	"ssl_client":                                  types.StringType,
 	"user_summary":                                types.StringType,
 	"priority":                                    types.StringType,
@@ -420,7 +420,7 @@ func (data XMLFirewallService) IsNull() bool {
 	if !data.SslServer.IsNull() {
 		return false
 	}
-	if !data.SslsniServer.IsNull() {
+	if !data.SslSniServer.IsNull() {
 		return false
 	}
 	if !data.SslClient.IsNull() {
@@ -654,8 +654,8 @@ func (data XMLFirewallService) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.SslServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServer`, data.SslServer.ValueString())
 	}
-	if !data.SslsniServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslsniServer.ValueString())
+	if !data.SslSniServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslSniServer.ValueString())
 	}
 	if !data.SslClient.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLClient`, data.SslClient.ValueString())
@@ -979,9 +979,9 @@ func (data *XMLFirewallService) FromBody(ctx context.Context, pathRoot string, r
 		data.SslServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLClient`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslClient = tfutils.ParseStringFromGJSON(value)
@@ -1406,10 +1406,10 @@ func (data *XMLFirewallService) UpdateFromBody(ctx context.Context, pathRoot str
 	} else {
 		data.SslServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslsniServer.IsNull() {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslSniServer.IsNull() {
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLClient`); value.Exists() && !data.SslClient.IsNull() {
 		data.SslClient = tfutils.ParseStringFromGJSON(value)

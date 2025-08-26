@@ -38,7 +38,7 @@ func TestAccResourceXMLManager(t *testing.T) {
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "cache_memory_size", "2147483647"),
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "cache_size", "256"),
-			resource.TestCheckResourceAttr("datapower_xml_manager.test", "sha1_caching", "true"),
+			resource.TestCheckResourceAttr("datapower_xml_manager.test", "sha1caching", "true"),
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "static_document_calls", "true"),
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "search_results", "true"),
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "parser_limits_bytes_scanned", "4194304"),

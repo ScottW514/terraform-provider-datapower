@@ -78,7 +78,7 @@ func (r *WebServiceMonitorResource) Schema(ctx context.Context, req resource.Sch
 					modifiers.ImmutableAfterSet(),
 				},
 			},
-			"wsdlurl": schema.StringAttribute{
+			"wsdl_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.", "wsdl", "").String,
 				Required:            true,
 			},

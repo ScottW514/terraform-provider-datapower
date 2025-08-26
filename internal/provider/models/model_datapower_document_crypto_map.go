@@ -37,7 +37,7 @@ type DocumentCryptoMap struct {
 	Id                types.String                `tfsdk:"id"`
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	Operation         types.String                `tfsdk:"operation"`
-	XPath             types.List                  `tfsdk:"x_path"`
+	Xpath             types.List                  `tfsdk:"xpath"`
 	NameSpaceMappings types.List                  `tfsdk:"name_space_mappings"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
@@ -47,7 +47,7 @@ var DocumentCryptoMapObjectType = map[string]attr.Type{
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"operation":           types.StringType,
-	"x_path":              types.ListType{ElemType: types.StringType},
+	"xpath":               types.ListType{ElemType: types.StringType},
 	"name_space_mappings": types.ListType{ElemType: types.ObjectType{AttrTypes: DmNamespaceMappingObjectType}},
 	"user_summary":        types.StringType,
 	"dependency_actions":  actions.ActionsListType,
@@ -70,7 +70,7 @@ func (data DocumentCryptoMap) IsNull() bool {
 	if !data.Operation.IsNull() {
 		return false
 	}
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	if !data.NameSpaceMappings.IsNull() {
@@ -94,9 +94,9 @@ func (data DocumentCryptoMap) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.Operation.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Operation`, data.Operation.ValueString())
 	}
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		var dataValues []string
-		data.XPath.ElementsAs(ctx, &dataValues, false)
+		data.Xpath.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`XPath`+".-1", map[string]string{"value": val})
 		}
@@ -129,9 +129,9 @@ func (data *DocumentCryptoMap) FromBody(ctx context.Context, pathRoot string, re
 		data.Operation = types.StringValue("encrypt")
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() {
-		data.XPath = tfutils.ParseStringListFromGJSON(value)
+		data.Xpath = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.XPath = types.ListNull(types.StringType)
+		data.Xpath = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `NameSpaceMappings`); value.Exists() {
 		l := []DmNamespaceMapping{}
@@ -173,10 +173,10 @@ func (data *DocumentCryptoMap) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else if data.Operation.ValueString() != "encrypt" {
 		data.Operation = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.ParseStringListFromGJSON(value)
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.XPath = types.ListNull(types.StringType)
+		data.Xpath = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `NameSpaceMappings`); value.Exists() && !data.NameSpaceMappings.IsNull() {
 		l := []DmNamespaceMapping{}

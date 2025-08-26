@@ -6,6 +6,7 @@ attributes:
   default: false
   description: Resource Owner
 - name: clientid
+  tf_name: client_id
   type: Bool
   default: false
   description: Client ID

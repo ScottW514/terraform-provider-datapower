@@ -38,20 +38,20 @@ type DmOAuthFeatures struct {
 	Verboseerror             types.Bool `tfsdk:"verboseerror"`
 	Onetimeuse               types.Bool `tfsdk:"onetimeuse"`
 	Pkce                     types.Bool `tfsdk:"pkce"`
-	Multipleusesrefreshtoken types.Bool `tfsdk:"multipleusesrefreshtoken"`
+	MultipleUsesRefreshToken types.Bool `tfsdk:"multiple_uses_refresh_token"`
 }
 
 var DmOAuthFeaturesObjectType = map[string]attr.Type{
-	"verboseerror":             types.BoolType,
-	"onetimeuse":               types.BoolType,
-	"pkce":                     types.BoolType,
-	"multipleusesrefreshtoken": types.BoolType,
+	"verboseerror":                types.BoolType,
+	"onetimeuse":                  types.BoolType,
+	"pkce":                        types.BoolType,
+	"multiple_uses_refresh_token": types.BoolType,
 }
 var DmOAuthFeaturesObjectDefault = map[string]attr.Value{
-	"verboseerror":             types.BoolValue(false),
-	"onetimeuse":               types.BoolValue(false),
-	"pkce":                     types.BoolValue(false),
-	"multipleusesrefreshtoken": types.BoolValue(false),
+	"verboseerror":                types.BoolValue(false),
+	"onetimeuse":                  types.BoolValue(false),
+	"pkce":                        types.BoolValue(false),
+	"multiple_uses_refresh_token": types.BoolValue(false),
 }
 
 func GetDmOAuthFeaturesDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
@@ -70,7 +70,7 @@ func GetDmOAuthFeaturesDataSourceSchema(description string, cliAlias string, ref
 				MarkdownDescription: tfutils.NewAttributeDescription("Require PKCE for Authorization Code", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"multipleusesrefreshtoken": DataSourceSchema.BoolAttribute{
+			"multiple_uses_refresh_token": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Allow reuse of refresh token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -105,7 +105,7 @@ func GetDmOAuthFeaturesResourceSchema(description string, cliAlias string, refer
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"multipleusesrefreshtoken": ResourceSchema.BoolAttribute{
+			"multiple_uses_refresh_token": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Allow reuse of refresh token", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -133,7 +133,7 @@ func (data DmOAuthFeatures) IsNull() bool {
 	if !data.Pkce.IsNull() {
 		return false
 	}
-	if !data.Multipleusesrefreshtoken.IsNull() {
+	if !data.MultipleUsesRefreshToken.IsNull() {
 		return false
 	}
 	return true
@@ -154,8 +154,8 @@ func (data DmOAuthFeatures) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.Pkce.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`pkce`, tfutils.StringFromBool(data.Pkce, ""))
 	}
-	if !data.Multipleusesrefreshtoken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`multipleusesrefreshtoken`, tfutils.StringFromBool(data.Multipleusesrefreshtoken, ""))
+	if !data.MultipleUsesRefreshToken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`multipleusesrefreshtoken`, tfutils.StringFromBool(data.MultipleUsesRefreshToken, ""))
 	}
 	return body
 }
@@ -180,9 +180,9 @@ func (data *DmOAuthFeatures) FromBody(ctx context.Context, pathRoot string, res 
 		data.Pkce = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `multipleusesrefreshtoken`); value.Exists() {
-		data.Multipleusesrefreshtoken = tfutils.BoolFromString(value.String())
+		data.MultipleUsesRefreshToken = tfutils.BoolFromString(value.String())
 	} else {
-		data.Multipleusesrefreshtoken = types.BoolNull()
+		data.MultipleUsesRefreshToken = types.BoolNull()
 	}
 }
 
@@ -205,9 +205,9 @@ func (data *DmOAuthFeatures) UpdateFromBody(ctx context.Context, pathRoot string
 	} else if data.Pkce.ValueBool() {
 		data.Pkce = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `multipleusesrefreshtoken`); value.Exists() && !data.Multipleusesrefreshtoken.IsNull() {
-		data.Multipleusesrefreshtoken = tfutils.BoolFromString(value.String())
-	} else if data.Multipleusesrefreshtoken.ValueBool() {
-		data.Multipleusesrefreshtoken = types.BoolNull()
+	if value := res.Get(pathRoot + `multipleusesrefreshtoken`); value.Exists() && !data.MultipleUsesRefreshToken.IsNull() {
+		data.MultipleUsesRefreshToken = tfutils.BoolFromString(value.String())
+	} else if data.MultipleUsesRefreshToken.ValueBool() {
+		data.MultipleUsesRefreshToken = types.BoolNull()
 	}
 }

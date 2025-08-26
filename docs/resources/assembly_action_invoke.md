@@ -73,7 +73,7 @@ resource "datapower_assembly_action_invoke" "test" {
 - `follow_redirects` (Boolean) Specify whether to follow redirects. Some protocols generate redirects. When enabled, the action attempts to resolve redirects transparently.
   - CLI Alias: `follow-redirects`
   - Default value: `false`
-- `graph_ql_send_type` (String) Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.
+- `graphql_send_type` (String) Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.
   - CLI Alias: `graphql-send-type`
   - Choices: `detect`, `graphql`, `json`
   - Default value: `detect`

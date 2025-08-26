@@ -39,9 +39,9 @@ type B2BProfile struct {
 	AppDomain                           types.String                `tfsdk:"app_domain"`
 	UserSummary                         types.String                `tfsdk:"user_summary"`
 	ProfileType                         types.String                `tfsdk:"profile_type"`
-	BusinessIDs                         types.List                  `tfsdk:"business_i_ds"`
-	BusinessIDsDuns                     types.List                  `tfsdk:"business_i_ds_duns"`
-	BusinessIDsDunsPlus4                types.List                  `tfsdk:"business_i_ds_duns_plus4"`
+	BusinessIds                         types.List                  `tfsdk:"business_ids"`
+	BusinessIdDuns                      types.List                  `tfsdk:"business_id_duns"`
+	BusinessIdDuns4                     types.List                  `tfsdk:"business_id_duns4"`
 	CustomStylePolicy                   types.String                `tfsdk:"custom_style_policy"`
 	ResponseType                        types.String                `tfsdk:"response_type"`
 	EmailAddresses                      types.List                  `tfsdk:"email_addresses"`
@@ -84,8 +84,8 @@ type B2BProfile struct {
 	EbmsAction                          types.String                `tfsdk:"ebms_action"`
 	EbmsStartParameter                  types.Bool                  `tfsdk:"ebms_start_parameter"`
 	EbmsAllowDuplicateMessage           types.String                `tfsdk:"ebms_allow_duplicate_message"`
-	MdnsslClientConfigType              types.String                `tfsdk:"mdnssl_client_config_type"`
-	MdnsslClient                        types.String                `tfsdk:"mdnssl_client"`
+	MdnSslClientConfigType              types.String                `tfsdk:"mdn_ssl_client_config_type"`
+	MdnSslClient                        types.String                `tfsdk:"mdn_ssl_client"`
 	EbmsAckSslClientConfigType          types.String                `tfsdk:"ebms_ack_ssl_client_config_type"`
 	EbmsAckSslClient                    types.String                `tfsdk:"ebms_ack_ssl_client"`
 	Ebms3OutboundSign                   types.Bool                  `tfsdk:"ebms3_outbound_sign"`
@@ -382,9 +382,9 @@ var B2BProfileObjectType = map[string]attr.Type{
 	"app_domain":                               types.StringType,
 	"user_summary":                             types.StringType,
 	"profile_type":                             types.StringType,
-	"business_i_ds":                            types.ListType{ElemType: types.StringType},
-	"business_i_ds_duns":                       types.ListType{ElemType: types.StringType},
-	"business_i_ds_duns_plus4":                 types.ListType{ElemType: types.StringType},
+	"business_ids":                             types.ListType{ElemType: types.StringType},
+	"business_id_duns":                         types.ListType{ElemType: types.StringType},
+	"business_id_duns4":                        types.ListType{ElemType: types.StringType},
 	"custom_style_policy":                      types.StringType,
 	"response_type":                            types.StringType,
 	"email_addresses":                          types.ListType{ElemType: types.StringType},
@@ -427,8 +427,8 @@ var B2BProfileObjectType = map[string]attr.Type{
 	"ebms_action":                              types.StringType,
 	"ebms_start_parameter":                     types.BoolType,
 	"ebms_allow_duplicate_message":             types.StringType,
-	"mdnssl_client_config_type":                types.StringType,
-	"mdnssl_client":                            types.StringType,
+	"mdn_ssl_client_config_type":               types.StringType,
+	"mdn_ssl_client":                           types.StringType,
 	"ebms_ack_ssl_client_config_type":          types.StringType,
 	"ebms_ack_ssl_client":                      types.StringType,
 	"ebms3_outbound_sign":                      types.BoolType,
@@ -474,13 +474,13 @@ func (data B2BProfile) IsNull() bool {
 	if !data.ProfileType.IsNull() {
 		return false
 	}
-	if !data.BusinessIDs.IsNull() {
+	if !data.BusinessIds.IsNull() {
 		return false
 	}
-	if !data.BusinessIDsDuns.IsNull() {
+	if !data.BusinessIdDuns.IsNull() {
 		return false
 	}
-	if !data.BusinessIDsDunsPlus4.IsNull() {
+	if !data.BusinessIdDuns4.IsNull() {
 		return false
 	}
 	if !data.CustomStylePolicy.IsNull() {
@@ -609,10 +609,10 @@ func (data B2BProfile) IsNull() bool {
 	if !data.EbmsAllowDuplicateMessage.IsNull() {
 		return false
 	}
-	if !data.MdnsslClientConfigType.IsNull() {
+	if !data.MdnSslClientConfigType.IsNull() {
 		return false
 	}
-	if !data.MdnsslClient.IsNull() {
+	if !data.MdnSslClient.IsNull() {
 		return false
 	}
 	if !data.EbmsAckSslClientConfigType.IsNull() {
@@ -699,23 +699,23 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ProfileType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ProfileType`, data.ProfileType.ValueString())
 	}
-	if !data.BusinessIDs.IsNull() {
+	if !data.BusinessIds.IsNull() {
 		var dataValues []string
-		data.BusinessIDs.ElementsAs(ctx, &dataValues, false)
+		data.BusinessIds.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`BusinessIDs`+".-1", map[string]string{"value": val})
 		}
 	}
-	if !data.BusinessIDsDuns.IsNull() {
+	if !data.BusinessIdDuns.IsNull() {
 		var dataValues []string
-		data.BusinessIDsDuns.ElementsAs(ctx, &dataValues, false)
+		data.BusinessIdDuns.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`BusinessIDsDUNS`+".-1", map[string]string{"value": val})
 		}
 	}
-	if !data.BusinessIDsDunsPlus4.IsNull() {
+	if !data.BusinessIdDuns4.IsNull() {
 		var dataValues []string
-		data.BusinessIDsDunsPlus4.ElementsAs(ctx, &dataValues, false)
+		data.BusinessIdDuns4.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.Set(body, pathRoot+`BusinessIDsDUNSPlus4`+".-1", map[string]string{"value": val})
 		}
@@ -862,11 +862,11 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.EbmsAllowDuplicateMessage.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EBMSAllowDuplicateMessage`, data.EbmsAllowDuplicateMessage.ValueString())
 	}
-	if !data.MdnsslClientConfigType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MDNSSLClientConfigType`, data.MdnsslClientConfigType.ValueString())
+	if !data.MdnSslClientConfigType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MDNSSLClientConfigType`, data.MdnSslClientConfigType.ValueString())
 	}
-	if !data.MdnsslClient.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MDNSSLClient`, data.MdnsslClient.ValueString())
+	if !data.MdnSslClient.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`MDNSSLClient`, data.MdnSslClient.ValueString())
 	}
 	if !data.EbmsAckSslClientConfigType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EBMSAckSSLClientConfigType`, data.EbmsAckSslClientConfigType.ValueString())
@@ -961,19 +961,19 @@ func (data *B2BProfile) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.ProfileType = types.StringValue("internal")
 	}
 	if value := res.Get(pathRoot + `BusinessIDs`); value.Exists() {
-		data.BusinessIDs = tfutils.ParseStringListFromGJSON(value)
+		data.BusinessIds = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.BusinessIDs = types.ListNull(types.StringType)
+		data.BusinessIds = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `BusinessIDsDUNS`); value.Exists() {
-		data.BusinessIDsDuns = tfutils.ParseStringListFromGJSON(value)
+		data.BusinessIdDuns = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.BusinessIDsDuns = types.ListNull(types.StringType)
+		data.BusinessIdDuns = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `BusinessIDsDUNSPlus4`); value.Exists() {
-		data.BusinessIDsDunsPlus4 = tfutils.ParseStringListFromGJSON(value)
+		data.BusinessIdDuns4 = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.BusinessIDsDunsPlus4 = types.ListNull(types.StringType)
+		data.BusinessIdDuns4 = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `CustomStylePolicy`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.CustomStylePolicy = tfutils.ParseStringFromGJSON(value)
@@ -1228,14 +1228,14 @@ func (data *B2BProfile) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.EbmsAllowDuplicateMessage = types.StringValue("never")
 	}
 	if value := res.Get(pathRoot + `MDNSSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.MdnsslClientConfigType = tfutils.ParseStringFromGJSON(value)
+		data.MdnSslClientConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MdnsslClientConfigType = types.StringValue("client")
+		data.MdnSslClientConfigType = types.StringValue("client")
 	}
 	if value := res.Get(pathRoot + `MDNSSLClient`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.MdnsslClient = tfutils.ParseStringFromGJSON(value)
+		data.MdnSslClient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MdnsslClient = types.StringNull()
+		data.MdnSslClient = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EBMSAckSSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.EbmsAckSslClientConfigType = tfutils.ParseStringFromGJSON(value)
@@ -1382,20 +1382,20 @@ func (data *B2BProfile) UpdateFromBody(ctx context.Context, pathRoot string, res
 	} else if data.ProfileType.ValueString() != "internal" {
 		data.ProfileType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `BusinessIDs`); value.Exists() && !data.BusinessIDs.IsNull() {
-		data.BusinessIDs = tfutils.ParseStringListFromGJSON(value)
+	if value := res.Get(pathRoot + `BusinessIDs`); value.Exists() && !data.BusinessIds.IsNull() {
+		data.BusinessIds = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.BusinessIDs = types.ListNull(types.StringType)
+		data.BusinessIds = types.ListNull(types.StringType)
 	}
-	if value := res.Get(pathRoot + `BusinessIDsDUNS`); value.Exists() && !data.BusinessIDsDuns.IsNull() {
-		data.BusinessIDsDuns = tfutils.ParseStringListFromGJSON(value)
+	if value := res.Get(pathRoot + `BusinessIDsDUNS`); value.Exists() && !data.BusinessIdDuns.IsNull() {
+		data.BusinessIdDuns = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.BusinessIDsDuns = types.ListNull(types.StringType)
+		data.BusinessIdDuns = types.ListNull(types.StringType)
 	}
-	if value := res.Get(pathRoot + `BusinessIDsDUNSPlus4`); value.Exists() && !data.BusinessIDsDunsPlus4.IsNull() {
-		data.BusinessIDsDunsPlus4 = tfutils.ParseStringListFromGJSON(value)
+	if value := res.Get(pathRoot + `BusinessIDsDUNSPlus4`); value.Exists() && !data.BusinessIdDuns4.IsNull() {
+		data.BusinessIdDuns4 = tfutils.ParseStringListFromGJSON(value)
 	} else {
-		data.BusinessIDsDunsPlus4 = types.ListNull(types.StringType)
+		data.BusinessIdDuns4 = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `CustomStylePolicy`); value.Exists() && !data.CustomStylePolicy.IsNull() {
 		data.CustomStylePolicy = tfutils.ParseStringFromGJSON(value)
@@ -1643,15 +1643,15 @@ func (data *B2BProfile) UpdateFromBody(ctx context.Context, pathRoot string, res
 	} else if data.EbmsAllowDuplicateMessage.ValueString() != "never" {
 		data.EbmsAllowDuplicateMessage = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MDNSSLClientConfigType`); value.Exists() && !data.MdnsslClientConfigType.IsNull() {
-		data.MdnsslClientConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.MdnsslClientConfigType.ValueString() != "client" {
-		data.MdnsslClientConfigType = types.StringNull()
+	if value := res.Get(pathRoot + `MDNSSLClientConfigType`); value.Exists() && !data.MdnSslClientConfigType.IsNull() {
+		data.MdnSslClientConfigType = tfutils.ParseStringFromGJSON(value)
+	} else if data.MdnSslClientConfigType.ValueString() != "client" {
+		data.MdnSslClientConfigType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MDNSSLClient`); value.Exists() && !data.MdnsslClient.IsNull() {
-		data.MdnsslClient = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `MDNSSLClient`); value.Exists() && !data.MdnSslClient.IsNull() {
+		data.MdnSslClient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.MdnsslClient = types.StringNull()
+		data.MdnSslClient = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EBMSAckSSLClientConfigType`); value.Exists() && !data.EbmsAckSslClientConfigType.IsNull() {
 		data.EbmsAckSslClientConfigType = tfutils.ParseStringFromGJSON(value)

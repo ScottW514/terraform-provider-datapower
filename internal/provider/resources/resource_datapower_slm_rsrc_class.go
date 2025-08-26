@@ -116,7 +116,7 @@ func (r *SLMRsrcClassResource) Schema(ctx context.Context, req resource.SchemaRe
 					validators.ConditionalRequiredString(models.SLMRsrcClassStylesheetCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"x_path_filter": schema.StringAttribute{
+			"xpath_filter": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XPath filter", "xpath-filter", "").AddRequiredWhen(models.SLMRsrcClassXPathFilterCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

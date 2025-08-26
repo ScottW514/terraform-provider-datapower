@@ -36,8 +36,8 @@ import (
 type MCFXPath struct {
 	Id                types.String                `tfsdk:"id"`
 	AppDomain         types.String                `tfsdk:"app_domain"`
-	XPathExpression   types.String                `tfsdk:"x_path_expression"`
-	XPathValue        types.String                `tfsdk:"x_path_value"`
+	XpathExpression   types.String                `tfsdk:"xpath_expression"`
+	XpathValue        types.String                `tfsdk:"xpath_value"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
@@ -45,8 +45,8 @@ type MCFXPath struct {
 var MCFXPathObjectType = map[string]attr.Type{
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
-	"x_path_expression":  types.StringType,
-	"x_path_value":       types.StringType,
+	"xpath_expression":   types.StringType,
+	"xpath_value":        types.StringType,
 	"user_summary":       types.StringType,
 	"dependency_actions": actions.ActionsListType,
 }
@@ -65,10 +65,10 @@ func (data MCFXPath) IsNull() bool {
 	if !data.AppDomain.IsNull() {
 		return false
 	}
-	if !data.XPathExpression.IsNull() {
+	if !data.XpathExpression.IsNull() {
 		return false
 	}
-	if !data.XPathValue.IsNull() {
+	if !data.XpathValue.IsNull() {
 		return false
 	}
 	if !data.UserSummary.IsNull() {
@@ -86,11 +86,11 @@ func (data MCFXPath) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
-	if !data.XPathExpression.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPathExpression`, data.XPathExpression.ValueString())
+	if !data.XpathExpression.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPathExpression`, data.XpathExpression.ValueString())
 	}
-	if !data.XPathValue.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPathValue`, data.XPathValue.ValueString())
+	if !data.XpathValue.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPathValue`, data.XpathValue.ValueString())
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
@@ -108,14 +108,14 @@ func (data *MCFXPath) FromBody(ctx context.Context, pathRoot string, res gjson.R
 		data.Id = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XPathExpression`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPathExpression = tfutils.ParseStringFromGJSON(value)
+		data.XpathExpression = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathExpression = types.StringNull()
+		data.XpathExpression = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XPathValue`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPathValue = tfutils.ParseStringFromGJSON(value)
+		data.XpathValue = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathValue = types.StringNull()
+		data.XpathValue = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.UserSummary = tfutils.ParseStringFromGJSON(value)
@@ -133,15 +133,15 @@ func (data *MCFXPath) UpdateFromBody(ctx context.Context, pathRoot string, res g
 	} else {
 		data.Id = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPathExpression`); value.Exists() && !data.XPathExpression.IsNull() {
-		data.XPathExpression = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPathExpression`); value.Exists() && !data.XpathExpression.IsNull() {
+		data.XpathExpression = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathExpression = types.StringNull()
+		data.XpathExpression = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPathValue`); value.Exists() && !data.XPathValue.IsNull() {
-		data.XPathValue = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPathValue`); value.Exists() && !data.XpathValue.IsNull() {
+		data.XpathValue = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathValue = types.StringNull()
+		data.XpathValue = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && !data.UserSummary.IsNull() {
 		data.UserSummary = tfutils.ParseStringFromGJSON(value)

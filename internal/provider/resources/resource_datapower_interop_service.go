@@ -150,7 +150,7 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 					validators.ConditionalRequiredString(models.InteropServiceSSLServerCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"sslsni_server": schema.StringAttribute{
+			"ssl_sni_server": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.InteropServiceSSLSNIServerCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

@@ -42,7 +42,7 @@ Read-Only:
 - `certificate` (String) Use the certificate to verify the signature.
 - `header_param` (Attributes List) The JOSE header parameters used to identify the signature. (see [below for nested schema](#nestedatt--result--header_param))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ss_key` (String) Use the shared secret key to verify the signature.
+- `sskey` (String) Use the shared secret key to verify the signature.
 - `type` (String) Key material type used to verify the signature.
 - `user_summary` (String) A descriptive summary for the configuration.
 - `valid_algorithms` (List of String) Specifies an array of algorithm values that are valid for signature verification. When specified, the JWS <tt>alg</tt> header parameter value must match a value in this set. By default, all allowed JWS <tt>alg</tt> header parameters values are valid.

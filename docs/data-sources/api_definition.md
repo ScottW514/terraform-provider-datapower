@@ -61,7 +61,7 @@ Read-Only:
 - `error_content` (String) Specify the content to log on error. When set to payload data, you must enable message buffering to capture all request and response data.
 - `force_http500_for_soap11` (Boolean) Force HTTP 500 for SOAP 1.1
 - `get_raw_body_value` (Boolean) Specify whether the GatewayScript <tt>apim.getvariable()</tt> APIreturns the raw body instead of parsing. This setting applies only when the context is other than <tt>message</tt> .
-- `graph_ql_schema` (String) GraphQL schema location
+- `graphql_schema` (String) GraphQL schema location
 - `html_page` (String) Specify the name and location of a static HTML page that the API can return. Import the file to the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> DataPower directory.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `message_buffering` (Boolean) Specify whether to buffer requests and responses before processing. <ul><li>When enabled, requests and responses are buffered before processing. The message payload and the output of the invoke assembly action are read as a binary large object (BLOB).</li><li>When disabled, requests and responses are streamed. Only an asynchronous API call can read the streamed data. If the message processing requires data to be parsed at the payload level, buffering is used to capture the data.</li></ul><p>If you enable activity logging to capture payload data, you must enable message buffering to capture all request and response data.</p>
@@ -72,10 +72,10 @@ Read-Only:
 - `produce` (List of String) Specify the MIME types that the API can produce. These MIME types apply to all API operations. You can override the setting for specific operations in the API operation.
 - `properties` (Attributes List) Specify custom entries for API properties. An API property is a type of context variable whose value is dependent on the collection that the API is provisioned in. Collection-specific API properties allow you to use the same API definition in different collections when a property in a collection requires a unique or different value. A custom property entry defines a property and its value for one collection. For each custom property or property that needs a different value for another collection, add another entry. (see [below for nested schema](#nestedatt--result--properties))
 - `require_api_mutual_tls` (Boolean) API protection
-- `return_v5_responses` (Boolean) Specify whether to return v5-compatible responses, such as OAuth and client security error responses.
+- `return_v5responses` (Boolean) Specify whether to return v5-compatible responses, such as OAuth and client security error responses.
 - `schemas` (Attributes List) Specify the API schemas that define data types for request or message validation. An API data type consists of a name and its API schema. (see [below for nested schema](#nestedatt--result--schemas))
 - `security_requirement` (List of String) Specify the alternative security requirements to enforce for the API as a whole. In other words, processing applies a logical <tt>OR</tt> between the security requirements. By default, the security requirement is applied to all operations in the API. However, for each API operation, you can override the API-level security by separately specifying security schemes to enforce at the operation level.
-- `set_v5_request_headers` (Boolean) Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.
+- `set_v5request_headers` (Boolean) Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.
 - `share_rate_limit_count` (String) Share rate limit count
 - `swagger_location` (String) Specify the name and location of the OpenAPI document when you create the API definition from an OpenAPI document. Prepare the document as follows before you specify the location. <ol><li>When the OpenAPI document is a YAML file, convert it to JSON.</li><li>Import the JSON file to the <tt>local:</tt> or <tt>temporary:</tt> DataPower directory.</li></ol><p>When you create the API definition with API properties, this property is not applicable.</p>
 - `type` (String) Type

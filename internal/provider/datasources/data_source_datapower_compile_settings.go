@@ -112,7 +112,7 @@ func (d *CompileSettingsDataSource) Schema(ctx context.Context, req datasource.S
 							MarkdownDescription: "Indicates the maximum number of bytes that the stack is allowed to use while executing a stylesheet or other compiled content. This setting is used to block infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The maximum value is 100 megabytes, or 104,857,600 bytes. The default value is 1 megabyte, or 1,048,576 bytes.",
 							Computed:            true,
 						},
-						"wsi_validation": schema.StringAttribute{
+						"ws_i_validation": schema.StringAttribute{
 							MarkdownDescription: "Specifies the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default setting is Warn.",
 							Computed:            true,
 						},

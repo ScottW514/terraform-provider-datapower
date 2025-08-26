@@ -39,7 +39,7 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `graph_ql_schema` (String) Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
+- `graphql_schema` (String) Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `json_schema` (String) Specify the schema URL for JSON message validation. For example, <tt>local:///petstore.json#/definitions/Pet</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
 - `user_summary` (String) Comments

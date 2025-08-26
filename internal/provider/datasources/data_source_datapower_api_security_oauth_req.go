@@ -80,11 +80,11 @@ func (d *APISecurityOAuthReqDataSource) Schema(ctx context.Context, req datasour
 							MarkdownDescription: "Comments",
 							Computed:            true,
 						},
-						"api_security_o_auth_def": schema.StringAttribute{
+						"api_security_oauth_def": schema.StringAttribute{
 							MarkdownDescription: "OAuth security definition",
 							Computed:            true,
 						},
-						"o_auth_allowed_scope": schema.StringAttribute{
+						"oauth_allowed_scope": schema.StringAttribute{
 							MarkdownDescription: "Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>",
 							Computed:            true,
 						},

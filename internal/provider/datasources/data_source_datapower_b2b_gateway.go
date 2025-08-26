@@ -93,19 +93,19 @@ func (d *B2BGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 							NestedObject:        models.GetDmASFrontProtocolDataSourceSchema(),
 							Computed:            true,
 						},
-						"as1mdn_email": schema.StringAttribute{
+						"as1_mdn_email": schema.StringAttribute{
 							MarkdownDescription: "For AS1 asynchronous MDN scenarios, specify the default email address for the AS1 asynchronous MDN. When sending outbound AS1 email messages that request an MDN, this email address can be the default email address for the response MDN. An email address in the destination overrides this value.",
 							Computed:            true,
 						},
-						"as1mdnsmtp_server_connection": schema.StringAttribute{
+						"as1_mdn_smtp_server_connection": schema.StringAttribute{
 							MarkdownDescription: "When an incoming AS1 message requests an MDN as an email request, specify the SMTP server connection for asynchronous MDN responses.",
 							Computed:            true,
 						},
-						"as2mdnurl": schema.StringAttribute{
+						"as2_mdn_url": schema.StringAttribute{
 							MarkdownDescription: "For AS2 asynchronous MDN scenarios, specify the default URL for the AS2 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.",
 							Computed:            true,
 						},
-						"as3mdnurl": schema.StringAttribute{
+						"as3_mdn_url": schema.StringAttribute{
 							MarkdownDescription: "For AS3 asynchronous MDN scenarios, specify the default URL for the AS3 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.",
 							Computed:            true,
 						},
@@ -172,7 +172,7 @@ func (d *B2BGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"archive_backup_documents": models.GetDmB2BBackupMsgTypeDataSourceSchema("Specify the types of documents to archive. This property does not indicate the inbound or outbound transaction to archive.", "arch-backup-documents", ""),
-						"x_path_routing_policies": schema.ListAttribute{
+						"xpath_routing_policies": schema.ListAttribute{
 							MarkdownDescription: "XPath routing policies",
 							ElementType:         types.StringType,
 							Computed:            true,

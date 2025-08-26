@@ -195,7 +195,7 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 				Default: stringdefault.StaticString("per-application"),
 			},
-			"graph_ql_schema_options": schema.ListAttribute{
+			"graphql_schema_options": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema options", "graphql-schema-options", "graphql_schema_options").String,
 				ElementType:         types.StringType,
 				Optional:            true,

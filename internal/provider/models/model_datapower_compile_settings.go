@@ -45,7 +45,7 @@ type CompileSettings struct {
 	TryStream              types.Bool                  `tfsdk:"try_stream"`
 	MinimumEscaping        types.Bool                  `tfsdk:"minimum_escaping"`
 	StackSize              types.Int64                 `tfsdk:"stack_size"`
-	WsiValidation          types.String                `tfsdk:"wsi_validation"`
+	WsIValidation          types.String                `tfsdk:"ws_i_validation"`
 	WsdlValidateBody       types.String                `tfsdk:"wsdl_validate_body"`
 	WsdlValidateHeaders    types.String                `tfsdk:"wsdl_validate_headers"`
 	WsdlValidateFaults     types.String                `tfsdk:"wsdl_validate_faults"`
@@ -71,7 +71,7 @@ var CompileSettingsObjectType = map[string]attr.Type{
 	"try_stream":                types.BoolType,
 	"minimum_escaping":          types.BoolType,
 	"stack_size":                types.Int64Type,
-	"wsi_validation":            types.StringType,
+	"ws_i_validation":           types.StringType,
 	"wsdl_validate_body":        types.StringType,
 	"wsdl_validate_headers":     types.StringType,
 	"wsdl_validate_faults":      types.StringType,
@@ -126,7 +126,7 @@ func (data CompileSettings) IsNull() bool {
 	if !data.StackSize.IsNull() {
 		return false
 	}
-	if !data.WsiValidation.IsNull() {
+	if !data.WsIValidation.IsNull() {
 		return false
 	}
 	if !data.WsdlValidateBody.IsNull() {
@@ -198,8 +198,8 @@ func (data CompileSettings) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.StackSize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`StackSize`, data.StackSize.ValueInt64())
 	}
-	if !data.WsiValidation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSIValidation`, data.WsiValidation.ValueString())
+	if !data.WsIValidation.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSIValidation`, data.WsIValidation.ValueString())
 	}
 	if !data.WsdlValidateBody.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSDLValidateBody`, data.WsdlValidateBody.ValueString())
@@ -289,9 +289,9 @@ func (data *CompileSettings) FromBody(ctx context.Context, pathRoot string, res 
 		data.StackSize = types.Int64Value(1048576)
 	}
 	if value := res.Get(pathRoot + `WSIValidation`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsiValidation = tfutils.ParseStringFromGJSON(value)
+		data.WsIValidation = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsiValidation = types.StringValue("warn")
+		data.WsIValidation = types.StringValue("warn")
 	}
 	if value := res.Get(pathRoot + `WSDLValidateBody`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.WsdlValidateBody = tfutils.ParseStringFromGJSON(value)
@@ -399,10 +399,10 @@ func (data *CompileSettings) UpdateFromBody(ctx context.Context, pathRoot string
 	} else if data.StackSize.ValueInt64() != 1048576 {
 		data.StackSize = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `WSIValidation`); value.Exists() && !data.WsiValidation.IsNull() {
-		data.WsiValidation = tfutils.ParseStringFromGJSON(value)
-	} else if data.WsiValidation.ValueString() != "warn" {
-		data.WsiValidation = types.StringNull()
+	if value := res.Get(pathRoot + `WSIValidation`); value.Exists() && !data.WsIValidation.IsNull() {
+		data.WsIValidation = tfutils.ParseStringFromGJSON(value)
+	} else if data.WsIValidation.ValueString() != "warn" {
+		data.WsIValidation = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSDLValidateBody`); value.Exists() && !data.WsdlValidateBody.IsNull() {
 		data.WsdlValidateBody = tfutils.ParseStringFromGJSON(value)

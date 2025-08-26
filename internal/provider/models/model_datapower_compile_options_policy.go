@@ -47,7 +47,7 @@ type CompileOptionsPolicy struct {
 	StackSize              types.Int64                 `tfsdk:"stack_size"`
 	PreferXg4              types.String                `tfsdk:"prefer_xg4"`
 	DisallowXg4            types.String                `tfsdk:"disallow_xg4"`
-	WsiValidation          types.String                `tfsdk:"wsi_validation"`
+	WsIValidation          types.String                `tfsdk:"ws_i_validation"`
 	WsdlValidateBody       types.String                `tfsdk:"wsdl_validate_body"`
 	WsdlValidateHeaders    types.String                `tfsdk:"wsdl_validate_headers"`
 	WsdlValidateFaults     types.String                `tfsdk:"wsdl_validate_faults"`
@@ -75,7 +75,7 @@ var CompileOptionsPolicyObjectType = map[string]attr.Type{
 	"stack_size":                types.Int64Type,
 	"prefer_xg4":                types.StringType,
 	"disallow_xg4":              types.StringType,
-	"wsi_validation":            types.StringType,
+	"ws_i_validation":           types.StringType,
 	"wsdl_validate_body":        types.StringType,
 	"wsdl_validate_headers":     types.StringType,
 	"wsdl_validate_faults":      types.StringType,
@@ -136,7 +136,7 @@ func (data CompileOptionsPolicy) IsNull() bool {
 	if !data.DisallowXg4.IsNull() {
 		return false
 	}
-	if !data.WsiValidation.IsNull() {
+	if !data.WsIValidation.IsNull() {
 		return false
 	}
 	if !data.WsdlValidateBody.IsNull() {
@@ -214,8 +214,8 @@ func (data CompileOptionsPolicy) ToBody(ctx context.Context, pathRoot string) st
 	if !data.DisallowXg4.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DisallowXG4`, data.DisallowXg4.ValueString())
 	}
-	if !data.WsiValidation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSIValidation`, data.WsiValidation.ValueString())
+	if !data.WsIValidation.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`WSIValidation`, data.WsIValidation.ValueString())
 	}
 	if !data.WsdlValidateBody.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSDLValidateBody`, data.WsdlValidateBody.ValueString())
@@ -315,9 +315,9 @@ func (data *CompileOptionsPolicy) FromBody(ctx context.Context, pathRoot string,
 		data.DisallowXg4 = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSIValidation`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.WsiValidation = tfutils.ParseStringFromGJSON(value)
+		data.WsIValidation = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.WsiValidation = types.StringValue("ignore")
+		data.WsIValidation = types.StringValue("ignore")
 	}
 	if value := res.Get(pathRoot + `WSDLValidateBody`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.WsdlValidateBody = tfutils.ParseStringFromGJSON(value)
@@ -435,10 +435,10 @@ func (data *CompileOptionsPolicy) UpdateFromBody(ctx context.Context, pathRoot s
 	} else {
 		data.DisallowXg4 = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `WSIValidation`); value.Exists() && !data.WsiValidation.IsNull() {
-		data.WsiValidation = tfutils.ParseStringFromGJSON(value)
-	} else if data.WsiValidation.ValueString() != "ignore" {
-		data.WsiValidation = types.StringNull()
+	if value := res.Get(pathRoot + `WSIValidation`); value.Exists() && !data.WsIValidation.IsNull() {
+		data.WsIValidation = tfutils.ParseStringFromGJSON(value)
+	} else if data.WsIValidation.ValueString() != "ignore" {
+		data.WsIValidation = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `WSDLValidateBody`); value.Exists() && !data.WsdlValidateBody.IsNull() {
 		data.WsdlValidateBody = tfutils.ParseStringFromGJSON(value)

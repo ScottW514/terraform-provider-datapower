@@ -84,7 +84,7 @@ func (d *JWERecipientDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "JWE key management algorithm for the JWE recipient.",
 							Computed:            true,
 						},
-						"ss_key": schema.StringAttribute{
+						"sskey": schema.StringAttribute{
 							MarkdownDescription: "Shared secret key.",
 							Computed:            true,
 						},

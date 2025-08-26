@@ -37,7 +37,7 @@ type AssemblyActionJWTGenerate struct {
 	Id                  types.String                `tfsdk:"id"`
 	AppDomain           types.String                `tfsdk:"app_domain"`
 	Jwt                 types.String                `tfsdk:"jwt"`
-	JwtidClaims         types.Bool                  `tfsdk:"jwtid_claims"`
+	JwtIdClaims         types.Bool                  `tfsdk:"jwt_id_claims"`
 	IssuerClaim         types.String                `tfsdk:"issuer_claim"`
 	SubjectClaim        types.String                `tfsdk:"subject_claim"`
 	AudienceClaim       types.String                `tfsdk:"audience_claim"`
@@ -63,7 +63,7 @@ var AssemblyActionJWTGenerateObjectType = map[string]attr.Type{
 	"id":                    types.StringType,
 	"app_domain":            types.StringType,
 	"jwt":                   types.StringType,
-	"jwtid_claims":          types.BoolType,
+	"jwt_id_claims":         types.BoolType,
 	"issuer_claim":          types.StringType,
 	"subject_claim":         types.StringType,
 	"audience_claim":        types.StringType,
@@ -102,7 +102,7 @@ func (data AssemblyActionJWTGenerate) IsNull() bool {
 	if !data.Jwt.IsNull() {
 		return false
 	}
-	if !data.JwtidClaims.IsNull() {
+	if !data.JwtIdClaims.IsNull() {
 		return false
 	}
 	if !data.IssuerClaim.IsNull() {
@@ -174,8 +174,8 @@ func (data AssemblyActionJWTGenerate) ToBody(ctx context.Context, pathRoot strin
 	if !data.Jwt.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`JWT`, data.Jwt.ValueString())
 	}
-	if !data.JwtidClaims.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`JWTIDClaims`, tfutils.StringFromBool(data.JwtidClaims, ""))
+	if !data.JwtIdClaims.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`JWTIDClaims`, tfutils.StringFromBool(data.JwtIdClaims, ""))
 	}
 	if !data.IssuerClaim.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`IssuerClaim`, data.IssuerClaim.ValueString())
@@ -249,9 +249,9 @@ func (data *AssemblyActionJWTGenerate) FromBody(ctx context.Context, pathRoot st
 		data.Jwt = types.StringValue("generated.jwt")
 	}
 	if value := res.Get(pathRoot + `JWTIDClaims`); value.Exists() {
-		data.JwtidClaims = tfutils.BoolFromString(value.String())
+		data.JwtIdClaims = tfutils.BoolFromString(value.String())
 	} else {
-		data.JwtidClaims = types.BoolNull()
+		data.JwtIdClaims = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `IssuerClaim`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.IssuerClaim = tfutils.ParseStringFromGJSON(value)
@@ -359,10 +359,10 @@ func (data *AssemblyActionJWTGenerate) UpdateFromBody(ctx context.Context, pathR
 	} else if data.Jwt.ValueString() != "generated.jwt" {
 		data.Jwt = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `JWTIDClaims`); value.Exists() && !data.JwtidClaims.IsNull() {
-		data.JwtidClaims = tfutils.BoolFromString(value.String())
-	} else if data.JwtidClaims.ValueBool() {
-		data.JwtidClaims = types.BoolNull()
+	if value := res.Get(pathRoot + `JWTIDClaims`); value.Exists() && !data.JwtIdClaims.IsNull() {
+		data.JwtIdClaims = tfutils.BoolFromString(value.String())
+	} else if data.JwtIdClaims.ValueBool() {
+		data.JwtIdClaims = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `IssuerClaim`); value.Exists() && !data.IssuerClaim.IsNull() {
 		data.IssuerClaim = tfutils.ParseStringFromGJSON(value)

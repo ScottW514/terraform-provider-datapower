@@ -69,5 +69,5 @@ Optional:
 
 - `http_name` (String) Enter the name of the HTTP header field. Available for HTTP header-based filters.
 - `http_value` (String) Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.
-- `x_path_expression` (String) Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.
-- `x_path_value` (String) Enter the contents of the element for the XPath expression. Available for XPath-based filters.
+- `xpath_expression` (String) Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.
+- `xpath_value` (String) Enter the contents of the element for the XPath expression. Available for XPath-based filters.

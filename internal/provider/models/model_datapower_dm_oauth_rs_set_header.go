@@ -36,22 +36,22 @@ import (
 
 type DmOAuthRSSetHeader struct {
 	Owner    types.Bool `tfsdk:"owner"`
-	Clientid types.Bool `tfsdk:"clientid"`
+	ClientId types.Bool `tfsdk:"client_id"`
 	Scope    types.Bool `tfsdk:"scope"`
 	Miscinfo types.Bool `tfsdk:"miscinfo"`
 }
 
 var DmOAuthRSSetHeaderObjectType = map[string]attr.Type{
-	"owner":    types.BoolType,
-	"clientid": types.BoolType,
-	"scope":    types.BoolType,
-	"miscinfo": types.BoolType,
+	"owner":     types.BoolType,
+	"client_id": types.BoolType,
+	"scope":     types.BoolType,
+	"miscinfo":  types.BoolType,
 }
 var DmOAuthRSSetHeaderObjectDefault = map[string]attr.Value{
-	"owner":    types.BoolValue(false),
-	"clientid": types.BoolValue(false),
-	"scope":    types.BoolValue(false),
-	"miscinfo": types.BoolValue(false),
+	"owner":     types.BoolValue(false),
+	"client_id": types.BoolValue(false),
+	"scope":     types.BoolValue(false),
+	"miscinfo":  types.BoolValue(false),
 }
 
 func GetDmOAuthRSSetHeaderDataSourceSchema(description string, cliAlias string, referenceTo string) DataSourceSchema.SingleNestedAttribute {
@@ -62,7 +62,7 @@ func GetDmOAuthRSSetHeaderDataSourceSchema(description string, cliAlias string, 
 				MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"clientid": DataSourceSchema.BoolAttribute{
+			"client_id": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -93,7 +93,7 @@ func GetDmOAuthRSSetHeaderResourceSchema(description string, cliAlias string, re
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"clientid": ResourceSchema.BoolAttribute{
+			"client_id": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -127,7 +127,7 @@ func (data DmOAuthRSSetHeader) IsNull() bool {
 	if !data.Owner.IsNull() {
 		return false
 	}
-	if !data.Clientid.IsNull() {
+	if !data.ClientId.IsNull() {
 		return false
 	}
 	if !data.Scope.IsNull() {
@@ -148,8 +148,8 @@ func (data DmOAuthRSSetHeader) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.Owner.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`owner`, tfutils.StringFromBool(data.Owner, ""))
 	}
-	if !data.Clientid.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`clientid`, tfutils.StringFromBool(data.Clientid, ""))
+	if !data.ClientId.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`clientid`, tfutils.StringFromBool(data.ClientId, ""))
 	}
 	if !data.Scope.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`scope`, tfutils.StringFromBool(data.Scope, ""))
@@ -170,9 +170,9 @@ func (data *DmOAuthRSSetHeader) FromBody(ctx context.Context, pathRoot string, r
 		data.Owner = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `clientid`); value.Exists() {
-		data.Clientid = tfutils.BoolFromString(value.String())
+		data.ClientId = tfutils.BoolFromString(value.String())
 	} else {
-		data.Clientid = types.BoolNull()
+		data.ClientId = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `scope`); value.Exists() {
 		data.Scope = tfutils.BoolFromString(value.String())
@@ -195,10 +195,10 @@ func (data *DmOAuthRSSetHeader) UpdateFromBody(ctx context.Context, pathRoot str
 	} else if data.Owner.ValueBool() {
 		data.Owner = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `clientid`); value.Exists() && !data.Clientid.IsNull() {
-		data.Clientid = tfutils.BoolFromString(value.String())
-	} else if data.Clientid.ValueBool() {
-		data.Clientid = types.BoolNull()
+	if value := res.Get(pathRoot + `clientid`); value.Exists() && !data.ClientId.IsNull() {
+		data.ClientId = tfutils.BoolFromString(value.String())
+	} else if data.ClientId.ValueBool() {
+		data.ClientId = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `scope`); value.Exists() && !data.Scope.IsNull() {
 		data.Scope = tfutils.BoolFromString(value.String())

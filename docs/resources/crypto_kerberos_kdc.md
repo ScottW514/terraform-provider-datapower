@@ -41,11 +41,11 @@ resource "datapower_crypto_kerberos_kdc" "test" {
   - CLI Alias: `cache-tickets`
   - Default value: `true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `max_cached_tickets` (Number) Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.
+- `max_cache_d_tickets` (Number) Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.
   - CLI Alias: `max-cached-tickets`
   - Range: `1`-`65535`
   - Default value: `32`
-- `min_cached_ticket_validity` (Number) Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.
+- `min_cache_d_ticket_validity` (Number) Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.
   - CLI Alias: `min-cached-ticket-validity`
   - Range: `1`-`65535`
   - Default value: `60`

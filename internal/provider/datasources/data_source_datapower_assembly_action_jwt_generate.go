@@ -80,7 +80,7 @@ func (d *AssemblyActionJWTGenerateDataSource) Schema(ctx context.Context, req da
 							MarkdownDescription: "Specify the variable to store the generated JWT. The default value is <tt>generated.jwt</tt> . When the variable is not set, the generated JWT is written to the Authorization Header as a Bearer token.",
 							Computed:            true,
 						},
-						"jwtid_claims": schema.BoolAttribute{
+						"jwt_id_claims": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to add a JWT ID (jti) claim to the JWT. When enabled, a UUID is generated and set as the value of the JWT ID claim.",
 							Computed:            true,
 						},

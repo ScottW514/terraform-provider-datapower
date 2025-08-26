@@ -54,7 +54,7 @@ type XSLCoprocService struct {
 	DebugTrigger              types.List                  `tfsdk:"debug_trigger"`
 	SslServerConfigType       types.String                `tfsdk:"ssl_server_config_type"`
 	SslServer                 types.String                `tfsdk:"ssl_server"`
-	SslsniServer              types.String                `tfsdk:"sslsni_server"`
+	SslSniServer              types.String                `tfsdk:"ssl_sni_server"`
 	LocalAddress              types.String                `tfsdk:"local_address"`
 	DependencyActions         []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
@@ -87,7 +87,7 @@ var XSLCoprocServiceObjectType = map[string]attr.Type{
 	"debug_trigger":               types.ListType{ElemType: types.ObjectType{AttrTypes: DmMSDebugTriggerTypeObjectType}},
 	"ssl_server_config_type":      types.StringType,
 	"ssl_server":                  types.StringType,
-	"sslsni_server":               types.StringType,
+	"ssl_sni_server":              types.StringType,
 	"local_address":               types.StringType,
 	"dependency_actions":          actions.ActionsListType,
 }
@@ -157,7 +157,7 @@ func (data XSLCoprocService) IsNull() bool {
 	if !data.SslServer.IsNull() {
 		return false
 	}
-	if !data.SslsniServer.IsNull() {
+	if !data.SslSniServer.IsNull() {
 		return false
 	}
 	if !data.LocalAddress.IsNull() {
@@ -230,8 +230,8 @@ func (data XSLCoprocService) ToBody(ctx context.Context, pathRoot string) string
 	if !data.SslServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServer`, data.SslServer.ValueString())
 	}
-	if !data.SslsniServer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslsniServer.ValueString())
+	if !data.SslSniServer.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSLSNIServer`, data.SslSniServer.ValueString())
 	}
 	if !data.LocalAddress.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LocalAddress`, data.LocalAddress.ValueString())
@@ -348,9 +348,9 @@ func (data *XSLCoprocService) FromBody(ctx context.Context, pathRoot string, res
 		data.SslServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LocalAddress`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LocalAddress = tfutils.ParseStringFromGJSON(value)
@@ -465,10 +465,10 @@ func (data *XSLCoprocService) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else {
 		data.SslServer = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslsniServer.IsNull() {
-		data.SslsniServer = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSLSNIServer`); value.Exists() && !data.SslSniServer.IsNull() {
+		data.SslSniServer = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslsniServer = types.StringNull()
+		data.SslSniServer = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LocalAddress`); value.Exists() && !data.LocalAddress.IsNull() {
 		data.LocalAddress = tfutils.ParseStringFromGJSON(value)

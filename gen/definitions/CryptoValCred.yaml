@@ -73,6 +73,7 @@ attributes:
     value:
     - false
 - name: CRLDPHandling
+  tf_name: crl_dp_handling
   type: String
   enum:
   - ignore

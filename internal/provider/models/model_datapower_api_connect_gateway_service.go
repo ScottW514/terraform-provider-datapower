@@ -46,34 +46,34 @@ type APIConnectGatewayService struct {
 	ApiGatewayPort        types.Int64                 `tfsdk:"api_gateway_port"`
 	GatewayPeering        types.String                `tfsdk:"gateway_peering"`
 	GatewayPeeringManager types.String                `tfsdk:"gateway_peering_manager"`
-	V5CompatibilityMode   types.Bool                  `tfsdk:"v5_compatibility_mode"`
+	V5compatibilityMode   types.Bool                  `tfsdk:"v5compatibility_mode"`
 	UserDefinedPolicies   types.List                  `tfsdk:"user_defined_policies"`
 	V5cSlmMode            types.String                `tfsdk:"v5c_slm_mode"`
 	IpMulticast           types.String                `tfsdk:"ip_multicast"`
 	IpUnicast             types.String                `tfsdk:"ip_unicast"`
 	JwtValidationMode     types.String                `tfsdk:"jwt_validation_mode"`
-	Jwturl                types.String                `tfsdk:"jwturl"`
+	JwtUrl                types.String                `tfsdk:"jwt_url"`
 	ProxyPolicy           *DmAPICGSProxyPolicy        `tfsdk:"proxy_policy"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIConnectGatewayServiceGatewayPeeringCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "v5_compatibility_mode",
+	Attribute:   "v5compatibility_mode",
 	AttrType:    "Bool",
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
 var APIConnectGatewayServiceGatewayPeeringManagerCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "v5_compatibility_mode",
+	Attribute:   "v5compatibility_mode",
 	AttrType:    "Bool",
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
 var APIConnectGatewayServiceV5CSlmModeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
-	Attribute:   "v5_compatibility_mode",
+	Attribute:   "v5compatibility_mode",
 	AttrType:    "Bool",
 	AttrDefault: "true",
 	Value:       []string{"true"},
@@ -90,7 +90,7 @@ var APIConnectGatewayServiceIPMulticastCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "v5_compatibility_mode",
+			Attribute:   "v5compatibility_mode",
 			AttrType:    "Bool",
 			AttrDefault: "true",
 			Value:       []string{"true"},
@@ -109,7 +109,7 @@ var APIConnectGatewayServiceIPUnicastCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "v5_compatibility_mode",
+			Attribute:   "v5compatibility_mode",
 			AttrType:    "Bool",
 			AttrDefault: "true",
 			Value:       []string{"true"},
@@ -128,13 +128,13 @@ var APIConnectGatewayServiceObjectType = map[string]attr.Type{
 	"api_gateway_port":        types.Int64Type,
 	"gateway_peering":         types.StringType,
 	"gateway_peering_manager": types.StringType,
-	"v5_compatibility_mode":   types.BoolType,
+	"v5compatibility_mode":    types.BoolType,
 	"user_defined_policies":   types.ListType{ElemType: types.StringType},
 	"v5c_slm_mode":            types.StringType,
 	"ip_multicast":            types.StringType,
 	"ip_unicast":              types.StringType,
 	"jwt_validation_mode":     types.StringType,
-	"jwturl":                  types.StringType,
+	"jwt_url":                 types.StringType,
 	"proxy_policy":            types.ObjectType{AttrTypes: DmAPICGSProxyPolicyObjectType},
 	"dependency_actions":      actions.ActionsListType,
 }
@@ -176,7 +176,7 @@ func (data APIConnectGatewayService) IsNull() bool {
 	if !data.GatewayPeeringManager.IsNull() {
 		return false
 	}
-	if !data.V5CompatibilityMode.IsNull() {
+	if !data.V5compatibilityMode.IsNull() {
 		return false
 	}
 	if !data.UserDefinedPolicies.IsNull() {
@@ -194,7 +194,7 @@ func (data APIConnectGatewayService) IsNull() bool {
 	if !data.JwtValidationMode.IsNull() {
 		return false
 	}
-	if !data.Jwturl.IsNull() {
+	if !data.JwtUrl.IsNull() {
 		return false
 	}
 	if data.ProxyPolicy != nil {
@@ -239,8 +239,8 @@ func (data APIConnectGatewayService) ToBody(ctx context.Context, pathRoot string
 	if !data.GatewayPeeringManager.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`GatewayPeeringManager`, data.GatewayPeeringManager.ValueString())
 	}
-	if !data.V5CompatibilityMode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`V5CompatibilityMode`, tfutils.StringFromBool(data.V5CompatibilityMode, ""))
+	if !data.V5compatibilityMode.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`V5CompatibilityMode`, tfutils.StringFromBool(data.V5compatibilityMode, ""))
 	}
 	if !data.UserDefinedPolicies.IsNull() {
 		var dataValues []string
@@ -261,8 +261,8 @@ func (data APIConnectGatewayService) ToBody(ctx context.Context, pathRoot string
 	if !data.JwtValidationMode.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`JWTValidationMode`, data.JwtValidationMode.ValueString())
 	}
-	if !data.Jwturl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`JWTURL`, data.Jwturl.ValueString())
+	if !data.JwtUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`JWTURL`, data.JwtUrl.ValueString())
 	}
 	if data.ProxyPolicy != nil {
 		if !data.ProxyPolicy.IsNull() {
@@ -322,9 +322,9 @@ func (data *APIConnectGatewayService) FromBody(ctx context.Context, pathRoot str
 		data.GatewayPeeringManager = types.StringValue("default")
 	}
 	if value := res.Get(pathRoot + `V5CompatibilityMode`); value.Exists() {
-		data.V5CompatibilityMode = tfutils.BoolFromString(value.String())
+		data.V5compatibilityMode = tfutils.BoolFromString(value.String())
 	} else {
-		data.V5CompatibilityMode = types.BoolNull()
+		data.V5compatibilityMode = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `UserDefinedPolicies`); value.Exists() {
 		data.UserDefinedPolicies = tfutils.ParseStringListFromGJSON(value)
@@ -352,9 +352,9 @@ func (data *APIConnectGatewayService) FromBody(ctx context.Context, pathRoot str
 		data.JwtValidationMode = types.StringValue("request")
 	}
 	if value := res.Get(pathRoot + `JWTURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Jwturl = tfutils.ParseStringFromGJSON(value)
+		data.JwtUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Jwturl = types.StringNull()
+		data.JwtUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ProxyPolicy`); value.Exists() {
 		data.ProxyPolicy = &DmAPICGSProxyPolicy{}
@@ -413,10 +413,10 @@ func (data *APIConnectGatewayService) UpdateFromBody(ctx context.Context, pathRo
 	} else if data.GatewayPeeringManager.ValueString() != "default" {
 		data.GatewayPeeringManager = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `V5CompatibilityMode`); value.Exists() && !data.V5CompatibilityMode.IsNull() {
-		data.V5CompatibilityMode = tfutils.BoolFromString(value.String())
-	} else if !data.V5CompatibilityMode.ValueBool() {
-		data.V5CompatibilityMode = types.BoolNull()
+	if value := res.Get(pathRoot + `V5CompatibilityMode`); value.Exists() && !data.V5compatibilityMode.IsNull() {
+		data.V5compatibilityMode = tfutils.BoolFromString(value.String())
+	} else if !data.V5compatibilityMode.ValueBool() {
+		data.V5compatibilityMode = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `UserDefinedPolicies`); value.Exists() && !data.UserDefinedPolicies.IsNull() {
 		data.UserDefinedPolicies = tfutils.ParseStringListFromGJSON(value)
@@ -443,10 +443,10 @@ func (data *APIConnectGatewayService) UpdateFromBody(ctx context.Context, pathRo
 	} else if data.JwtValidationMode.ValueString() != "request" {
 		data.JwtValidationMode = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `JWTURL`); value.Exists() && !data.Jwturl.IsNull() {
-		data.Jwturl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `JWTURL`); value.Exists() && !data.JwtUrl.IsNull() {
+		data.JwtUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Jwturl = types.StringNull()
+		data.JwtUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ProxyPolicy`); value.Exists() {
 		data.ProxyPolicy.UpdateFromBody(ctx, "", value)

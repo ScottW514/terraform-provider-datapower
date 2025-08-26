@@ -231,7 +231,7 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 				Default: int64default.StaticInt64(1),
 			},
-			"ss_lkey": schema.StringAttribute{
+			"ssl_key": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the key database file where keys and certificates are stored.</p><p>Use this setting with the TLS cipher setting to enable TLS communication when the TLS artifacts were created with IBM Global Security Kit (GSKit).</p><p><b>Note:</b> To integrate with IBM MQ for z/OS, do not use these properties. Use a TLS client profile.</p><p>Each key database file has an associated stash file. The stash file holds encrypted passwords that allow programmatic access to the key database. The stash file must reside in the same directory as the key database file, have the same file name as the key database file, and have the <tt>.sth</tt> file extension. For example, if the key database file is <tt>MQkeys.pem</tt> or <tt>MQkeys.kidb</tt> , the stash file must be <tt>MQkeys.sth</tt> .</p><p>If these file are not in the <tt>cert:</tt> directory, upload or fetch them.</p>", "ssl-key", "").String,
 				Optional:            true,
 			},
@@ -241,7 +241,7 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ss_lcipher": schema.StringAttribute{
+			"ssl_cipher": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>When the configuration uses a TLS key repository, specify the TLS cipher suite. The cipher suite must match the ciphers that the remote queue manager uses.</p><p>Use this setting with the TLS key repository setting to enable TLS communication when the TLS artifacts were created with IBM Global Security Kit (GSKit).</p><p><b>Note:</b> To integrate with IBM MQ for z/OS, do not use these settings. Use a TLS client profile.</p>", "ssl-cipher", "").AddStringEnum("none", "NULL_MD5", "NULL_SHA", "RC4_MD5_EXPORT", "RC4_MD5_US", "RC4_SHA_US", "RC2_MD5_EXPORT", "DES_SHA_EXPORT", "RC4_56_SHA_EXPORT1024", "DES_SHA_EXPORT1024", "TRIPLE_DES_SHA_US", "TLS_RSA_WITH_AES_128_CBC_SHA", "TLS_RSA_WITH_AES_256_CBC_SHA", "AES_SHA_US", "TLS_RSA_WITH_NULL_SHA256", "TLS_RSA_WITH_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_256_CBC_SHA256", "ECDHE_ECDSA_AES_128_CBC_SHA256", "ECDHE_RSA_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_128_GCM_SHA256", "TLS_RSA_WITH_AES_256_GCM_SHA384", "ECDHE_ECDSA_AES_256_CBC_SHA384", "ECDHE_ECDSA_AES_128_GCM_SHA256", "ECDHE_ECDSA_AES_256_GCM_SHA384", "ECDHE_RSA_AES_256_CBC_SHA384", "ECDHE_RSA_AES_128_GCM_SHA256", "ECDHE_RSA_AES_256_GCM_SHA384", "TLS_AES_128_GCM_SHA256", "TLS_AES_256_GCM_SHA384", "TLS_CHACHA20_POLY1305_SHA256", "TLS_AES_128_CCM_SHA256", "TLS_AES_128_CCM_8_SHA256").AddDefaultValue("none").String,
 				Optional:            true,
 				Computed:            true,

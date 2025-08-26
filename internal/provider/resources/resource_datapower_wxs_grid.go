@@ -128,7 +128,7 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"encrypt_ss_key": schema.StringAttribute{
+			"encrypt_sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-sskey", "crypto_sskey").AddRequiredWhen(models.WXSGridEncryptSSKeyCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

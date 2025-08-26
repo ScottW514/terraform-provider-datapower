@@ -79,8 +79,8 @@ func (r *AssemblyActionOAuthResource) Schema(ctx context.Context, req resource.S
 					modifiers.ImmutableAfterSet(),
 				},
 			},
-			"o_auth_provider_settings_reference": models.GetDmDynamicOAuthProviderSettingsReferenceResourceSchema("Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.", "oauth-provider-settings-ref", "", false),
-			"supported_o_auth_components":        models.GetDmOAuthComponentsResourceSchema("Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.", "supported-oauth-components", "", false),
+			"oauth_provider_settings_reference": models.GetDmDynamicOAuthProviderSettingsReferenceResourceSchema("Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.", "oauth-provider-settings-ref", "", false),
+			"supported_oauth_components":        models.GetDmOAuthComponentsResourceSchema("Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.", "supported-oauth-components", "", false),
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
 				Optional:            true,

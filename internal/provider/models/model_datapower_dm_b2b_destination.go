@@ -52,10 +52,10 @@ type DmB2BDestination struct {
 	EnableFtpSettings                          types.Bool           `tfsdk:"enable_ftp_settings"`
 	UserName                                   types.String         `tfsdk:"user_name"`
 	PasswordAlias                              types.String         `tfsdk:"password_alias"`
-	EbmsmpcAuthMethod                          types.String         `tfsdk:"ebmsmpc_auth_method"`
+	EbmsMpcAuthMethod                          types.String         `tfsdk:"ebms_mpc_auth_method"`
 	UserNameToken                              types.String         `tfsdk:"user_name_token"`
 	UserNameTokenPasswordAlias                 types.String         `tfsdk:"user_name_token_password_alias"`
-	EbmsmpcVerifyValCred                       types.String         `tfsdk:"ebmsmpc_verify_val_cred"`
+	EbmsMpcVerifyValCred                       types.String         `tfsdk:"ebms_mpc_verify_val_cred"`
 	Passive                                    types.String         `tfsdk:"passive"`
 	AuthTls                                    types.String         `tfsdk:"auth_tls"`
 	UseCcc                                     types.String         `tfsdk:"use_ccc"`
@@ -70,17 +70,17 @@ type DmB2BDestination struct {
 	AsSendUnsigned                             types.Bool           `tfsdk:"as_send_unsigned"`
 	AsEncrypt                                  types.Bool           `tfsdk:"as_encrypt"`
 	AsEncryptCert                              types.String         `tfsdk:"as_encrypt_cert"`
-	AsmdnRequest                               types.Bool           `tfsdk:"asmdn_request"`
-	AsmdnRequestAsync                          types.Bool           `tfsdk:"asmdn_request_async"`
-	As1mdnRedirectEmail                        types.String         `tfsdk:"as1mdn_redirect_email"`
-	As2mdnRedirectUrl                          types.String         `tfsdk:"as2mdn_redirect_url"`
-	As3mdnRedirectUrl                          types.String         `tfsdk:"as3mdn_redirect_url"`
-	AsmdnRequestSigned                         types.Bool           `tfsdk:"asmdn_request_signed"`
+	AsMdnRequest                               types.Bool           `tfsdk:"as_mdn_request"`
+	AsMdnRequestAsync                          types.Bool           `tfsdk:"as_mdn_request_async"`
+	As1MdnRedirectEmail                        types.String         `tfsdk:"as1_mdn_redirect_email"`
+	As2MdnRedirectUrl                          types.String         `tfsdk:"as2_mdn_redirect_url"`
+	As3MdnRedirectUrl                          types.String         `tfsdk:"as3_mdn_redirect_url"`
+	AsMdnRequestSigned                         types.Bool           `tfsdk:"as_mdn_request_signed"`
 	Retransmit                                 types.Bool           `tfsdk:"retransmit"`
 	AckTime                                    types.Int64          `tfsdk:"ack_time"`
 	MaxResends                                 types.Int64          `tfsdk:"max_resends"`
 	AsEncryptAlg                               types.String         `tfsdk:"as_encrypt_alg"`
-	AsmdnRequestSignedAlgs                     types.String         `tfsdk:"asmdn_request_signed_algs"`
+	AsMdnRequestSignedAlgs                     types.String         `tfsdk:"as_mdn_request_signed_algs"`
 	EbmsCpaId                                  types.String         `tfsdk:"ebms_cpa_id"`
 	EbmsService                                types.String         `tfsdk:"ebms_service"`
 	EbmsServiceType                            types.String         `tfsdk:"ebms_service_type"`
@@ -103,14 +103,14 @@ type DmB2BDestination struct {
 	EbmsMessageExchangePattern                 types.String         `tfsdk:"ebms_message_exchange_pattern"`
 	EbmsMessagePartitionChannel                types.String         `tfsdk:"ebms_message_partition_channel"`
 	EbmsAgreementRef                           types.String         `tfsdk:"ebms_agreement_ref"`
-	EbmspMode                                  types.String         `tfsdk:"ebmsp_mode"`
+	EbmsPMode                                  types.String         `tfsdk:"ebms_p_mode"`
 	EbmsOutboundRequestReceipt                 types.Bool           `tfsdk:"ebms_outbound_request_receipt"`
 	EbmsOutboundRequestSignedReceipt           types.Bool           `tfsdk:"ebms_outbound_request_signed_receipt"`
 	EbmsOutboundReceiptReplyPattern            types.String         `tfsdk:"ebms_outbound_receipt_reply_pattern"`
 	EbmsOutboundReceptionAwarenessNotification types.Bool           `tfsdk:"ebms_outbound_reception_awareness_notification"`
 	EbmsOutboundReceptionAwarenessTimeout      types.Int64          `tfsdk:"ebms_outbound_reception_awareness_timeout"`
 	EbmsCompress                               types.Bool           `tfsdk:"ebms_compress"`
-	EbmssoapBody                               types.Bool           `tfsdk:"ebmssoap_body"`
+	EbmsSoapBody                               types.Bool           `tfsdk:"ebms_soap_body"`
 }
 
 var DmB2BDestinationSMTPServerConnectionCondVal = validators.Evaluation{
@@ -211,10 +211,10 @@ var DmB2BDestinationObjectType = map[string]attr.Type{
 	"enable_ftp_settings":                  types.BoolType,
 	"user_name":                            types.StringType,
 	"password_alias":                       types.StringType,
-	"ebmsmpc_auth_method":                  types.StringType,
+	"ebms_mpc_auth_method":                 types.StringType,
 	"user_name_token":                      types.StringType,
 	"user_name_token_password_alias":       types.StringType,
-	"ebmsmpc_verify_val_cred":              types.StringType,
+	"ebms_mpc_verify_val_cred":             types.StringType,
 	"passive":                              types.StringType,
 	"auth_tls":                             types.StringType,
 	"use_ccc":                              types.StringType,
@@ -229,17 +229,17 @@ var DmB2BDestinationObjectType = map[string]attr.Type{
 	"as_send_unsigned":                     types.BoolType,
 	"as_encrypt":                           types.BoolType,
 	"as_encrypt_cert":                      types.StringType,
-	"asmdn_request":                        types.BoolType,
-	"asmdn_request_async":                  types.BoolType,
-	"as1mdn_redirect_email":                types.StringType,
-	"as2mdn_redirect_url":                  types.StringType,
-	"as3mdn_redirect_url":                  types.StringType,
-	"asmdn_request_signed":                 types.BoolType,
+	"as_mdn_request":                       types.BoolType,
+	"as_mdn_request_async":                 types.BoolType,
+	"as1_mdn_redirect_email":               types.StringType,
+	"as2_mdn_redirect_url":                 types.StringType,
+	"as3_mdn_redirect_url":                 types.StringType,
+	"as_mdn_request_signed":                types.BoolType,
 	"retransmit":                           types.BoolType,
 	"ack_time":                             types.Int64Type,
 	"max_resends":                          types.Int64Type,
 	"as_encrypt_alg":                       types.StringType,
-	"asmdn_request_signed_algs":            types.StringType,
+	"as_mdn_request_signed_algs":           types.StringType,
 	"ebms_cpa_id":                          types.StringType,
 	"ebms_service":                         types.StringType,
 	"ebms_service_type":                    types.StringType,
@@ -262,14 +262,14 @@ var DmB2BDestinationObjectType = map[string]attr.Type{
 	"ebms_message_exchange_pattern":        types.StringType,
 	"ebms_message_partition_channel":       types.StringType,
 	"ebms_agreement_ref":                   types.StringType,
-	"ebmsp_mode":                           types.StringType,
+	"ebms_p_mode":                          types.StringType,
 	"ebms_outbound_request_receipt":        types.BoolType,
 	"ebms_outbound_request_signed_receipt": types.BoolType,
 	"ebms_outbound_receipt_reply_pattern":  types.StringType,
 	"ebms_outbound_reception_awareness_notification": types.BoolType,
 	"ebms_outbound_reception_awareness_timeout":      types.Int64Type,
-	"ebms_compress": types.BoolType,
-	"ebmssoap_body": types.BoolType,
+	"ebms_compress":  types.BoolType,
+	"ebms_soap_body": types.BoolType,
 }
 var DmB2BDestinationObjectDefault = map[string]attr.Value{
 	"dest_name":                            types.StringNull(),
@@ -283,10 +283,10 @@ var DmB2BDestinationObjectDefault = map[string]attr.Value{
 	"enable_ftp_settings":                  types.BoolValue(false),
 	"user_name":                            types.StringNull(),
 	"password_alias":                       types.StringNull(),
-	"ebmsmpc_auth_method":                  types.StringValue("username-token"),
+	"ebms_mpc_auth_method":                 types.StringValue("username-token"),
 	"user_name_token":                      types.StringNull(),
 	"user_name_token_password_alias":       types.StringNull(),
-	"ebmsmpc_verify_val_cred":              types.StringNull(),
+	"ebms_mpc_verify_val_cred":             types.StringNull(),
 	"passive":                              types.StringValue("pasv-req"),
 	"auth_tls":                             types.StringValue("auth-off"),
 	"use_ccc":                              types.StringValue("ccc-off"),
@@ -301,17 +301,17 @@ var DmB2BDestinationObjectDefault = map[string]attr.Value{
 	"as_send_unsigned":                     types.BoolValue(false),
 	"as_encrypt":                           types.BoolValue(false),
 	"as_encrypt_cert":                      types.StringNull(),
-	"asmdn_request":                        types.BoolValue(false),
-	"asmdn_request_async":                  types.BoolValue(false),
-	"as1mdn_redirect_email":                types.StringNull(),
-	"as2mdn_redirect_url":                  types.StringNull(),
-	"as3mdn_redirect_url":                  types.StringNull(),
-	"asmdn_request_signed":                 types.BoolValue(false),
+	"as_mdn_request":                       types.BoolValue(false),
+	"as_mdn_request_async":                 types.BoolValue(false),
+	"as1_mdn_redirect_email":               types.StringNull(),
+	"as2_mdn_redirect_url":                 types.StringNull(),
+	"as3_mdn_redirect_url":                 types.StringNull(),
+	"as_mdn_request_signed":                types.BoolValue(false),
 	"retransmit":                           types.BoolValue(false),
 	"ack_time":                             types.Int64Value(1800),
 	"max_resends":                          types.Int64Value(3),
 	"as_encrypt_alg":                       types.StringValue("3des"),
-	"asmdn_request_signed_algs":            types.StringValue("sha1,md5"),
+	"as_mdn_request_signed_algs":           types.StringValue("sha1,md5"),
 	"ebms_cpa_id":                          types.StringNull(),
 	"ebms_service":                         types.StringNull(),
 	"ebms_service_type":                    types.StringNull(),
@@ -334,14 +334,14 @@ var DmB2BDestinationObjectDefault = map[string]attr.Value{
 	"ebms_message_exchange_pattern":        types.StringValue("one-way-push"),
 	"ebms_message_partition_channel":       types.StringNull(),
 	"ebms_agreement_ref":                   types.StringNull(),
-	"ebmsp_mode":                           types.StringNull(),
+	"ebms_p_mode":                          types.StringNull(),
 	"ebms_outbound_request_receipt":        types.BoolValue(false),
 	"ebms_outbound_request_signed_receipt": types.BoolValue(false),
 	"ebms_outbound_receipt_reply_pattern":  types.StringValue("Response"),
 	"ebms_outbound_reception_awareness_notification": types.BoolValue(false),
 	"ebms_outbound_reception_awareness_timeout":      types.Int64Value(300),
-	"ebms_compress": types.BoolValue(false),
-	"ebmssoap_body": types.BoolValue(false),
+	"ebms_compress":  types.BoolValue(false),
+	"ebms_soap_body": types.BoolValue(false),
 }
 
 func GetDmB2BDestinationDataSourceSchema() DataSourceSchema.NestedAttributeObject {
@@ -388,7 +388,7 @@ func GetDmB2BDestinationDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to override in the basic authentication policy of the user agent.", "password-alias", "password_alias").String,
 				Computed:            true,
 			},
-			"ebmsmpc_auth_method": DataSourceSchema.StringAttribute{
+			"ebms_mpc_auth_method": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.", "embs-mpc-auth-method", "").AddStringEnum("username-token", "cert").AddDefaultValue("username-token").String,
 				Computed:            true,
 			},
@@ -400,7 +400,7 @@ func GetDmB2BDestinationDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the username for the wsse:UsernameToken element.", "username-token-password-alias", "password_alias").String,
 				Computed:            true,
 			},
-			"ebmsmpc_verify_val_cred": DataSourceSchema.StringAttribute{
+			"ebms_mpc_verify_val_cred": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.", "ebms-mpc-verify-valcred", "crypto_val_cred").String,
 				Computed:            true,
 			},
@@ -460,27 +460,27 @@ func GetDmB2BDestinationDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate to encrypt outbound AS messages. Use the name of a certificate.", "as-encrypt-cert", "crypto_certificate").String,
 				Computed:            true,
 			},
-			"asmdn_request": DataSourceSchema.BoolAttribute{
+			"as_mdn_request": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request an MDN for outbound AS messages. The default behavior is disabled.", "as-mdn-request", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"asmdn_request_async": DataSourceSchema.BoolAttribute{
+			"as_mdn_request_async": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the MDN request for outbound AS messages is asynchronous. The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If disabled, the MDN request is synchronous</li></ul>", "as-mdn-request-async", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"as1mdn_redirect_email": DataSourceSchema.StringAttribute{
+			"as1_mdn_redirect_email": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection email address for the MDN to outbound AS1 messages. The partner that receives the outbound AS1 message sends the MDN to this email address. When blank, the redirection email in the <tt>From</tt> address of the outgoing message (the default email address of the sending internal partner).", "as1-mdn-email", "").String,
 				Computed:            true,
 			},
-			"as2mdn_redirect_url": DataSourceSchema.StringAttribute{
+			"as2_mdn_redirect_url": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection URL for the MDN to outbound AS2 messages.", "as2-mdn-url", "").String,
 				Computed:            true,
 			},
-			"as3mdn_redirect_url": DataSourceSchema.StringAttribute{
+			"as3_mdn_redirect_url": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection URL for the MDN to outbound AS3 messages.", "as3-mdn-url", "").String,
 				Computed:            true,
 			},
-			"asmdn_request_signed": DataSourceSchema.BoolAttribute{
+			"as_mdn_request_signed": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request a signed MDN instead of an unsigned one. The default behavior is an unsigned one.", "as-mdn-request-signed", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -500,7 +500,7 @@ func GetDmB2BDestinationDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symmetric encryption algorithm to encrypt outbound AS messages.", "as-encrypt-alg", "").AddStringEnum("3des", "des", "rc2-128", "rc2-64", "rc2-40", "aes-128", "aes-192", "aes-256").AddDefaultValue("3des").String,
 				Computed:            true,
 			},
-			"asmdn_request_signed_algs": DataSourceSchema.StringAttribute{
+			"as_mdn_request_signed_algs": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .", "as-mdn-request-signed-algs", "").AddDefaultValue("sha1,md5").String,
 				Computed:            true,
 			},
@@ -592,7 +592,7 @@ func GetDmB2BDestinationDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the reference to the agreement that governs this message exchange. This value maps to <tt>eb:AgreementRef</tt> in the message header.", "ebms-agreementref", "").String,
 				Computed:            true,
 			},
-			"ebmsp_mode": DataSourceSchema.StringAttribute{
+			"ebms_p_mode": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.", "ebms-pmode", "").String,
 				Computed:            true,
 			},
@@ -620,7 +620,7 @@ func GetDmB2BDestinationDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to compress the body of outbound ebMS messages. The default behavior is off.", "ebms-compress", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"ebmssoap_body": DataSourceSchema.BoolAttribute{
+			"ebms_soap_body": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When compression is not enabled, specify whether to send messages in the SOAP <tt>Body</tt> .", "ebms-soapbody", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -703,7 +703,7 @@ func GetDmB2BDestinationResourceSchema() ResourceSchema.NestedAttributeObject {
 					stringvalidator.LengthBetween(0, 128),
 				},
 			},
-			"ebmsmpc_auth_method": ResourceSchema.StringAttribute{
+			"ebms_mpc_auth_method": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.", "embs-mpc-auth-method", "").AddStringEnum("username-token", "cert").AddDefaultValue("username-token").String,
 				Computed:            true,
 				Optional:            true,
@@ -727,7 +727,7 @@ func GetDmB2BDestinationResourceSchema() ResourceSchema.NestedAttributeObject {
 					stringvalidator.LengthBetween(0, 128),
 				},
 			},
-			"ebmsmpc_verify_val_cred": ResourceSchema.StringAttribute{
+			"ebms_mpc_verify_val_cred": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.", "ebms-mpc-verify-valcred", "crypto_val_cred").String,
 				Optional:            true,
 			},
@@ -838,31 +838,31 @@ func GetDmB2BDestinationResourceSchema() ResourceSchema.NestedAttributeObject {
 					validators.ConditionalRequiredString(DmB2BDestinationASEncryptCertCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"asmdn_request": ResourceSchema.BoolAttribute{
+			"as_mdn_request": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request an MDN for outbound AS messages. The default behavior is disabled.", "as-mdn-request", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"asmdn_request_async": ResourceSchema.BoolAttribute{
+			"as_mdn_request_async": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the MDN request for outbound AS messages is asynchronous. The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If disabled, the MDN request is synchronous</li></ul>", "as-mdn-request-async", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"as1mdn_redirect_email": ResourceSchema.StringAttribute{
+			"as1_mdn_redirect_email": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection email address for the MDN to outbound AS1 messages. The partner that receives the outbound AS1 message sends the MDN to this email address. When blank, the redirection email in the <tt>From</tt> address of the outgoing message (the default email address of the sending internal partner).", "as1-mdn-email", "").String,
 				Optional:            true,
 			},
-			"as2mdn_redirect_url": ResourceSchema.StringAttribute{
+			"as2_mdn_redirect_url": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection URL for the MDN to outbound AS2 messages.", "as2-mdn-url", "").String,
 				Optional:            true,
 			},
-			"as3mdn_redirect_url": ResourceSchema.StringAttribute{
+			"as3_mdn_redirect_url": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection URL for the MDN to outbound AS3 messages.", "as3-mdn-url", "").String,
 				Optional:            true,
 			},
-			"asmdn_request_signed": ResourceSchema.BoolAttribute{
+			"as_mdn_request_signed": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request a signed MDN instead of an unsigned one. The default behavior is an unsigned one.", "as-mdn-request-signed", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -901,7 +901,7 @@ func GetDmB2BDestinationResourceSchema() ResourceSchema.NestedAttributeObject {
 				},
 				Default: stringdefault.StaticString("3des"),
 			},
-			"asmdn_request_signed_algs": ResourceSchema.StringAttribute{
+			"as_mdn_request_signed_algs": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .", "as-mdn-request-signed-algs", "").AddDefaultValue("sha1,md5").String,
 				Computed:            true,
 				Optional:            true,
@@ -1060,7 +1060,7 @@ func GetDmB2BDestinationResourceSchema() ResourceSchema.NestedAttributeObject {
 					stringvalidator.LengthBetween(0, 128),
 				},
 			},
-			"ebmsp_mode": ResourceSchema.StringAttribute{
+			"ebms_p_mode": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.", "ebms-pmode", "").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -1109,7 +1109,7 @@ func GetDmB2BDestinationResourceSchema() ResourceSchema.NestedAttributeObject {
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"ebmssoap_body": ResourceSchema.BoolAttribute{
+			"ebms_soap_body": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When compression is not enabled, specify whether to send messages in the SOAP <tt>Body</tt> .", "ebms-soapbody", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -1156,7 +1156,7 @@ func (data DmB2BDestination) IsNull() bool {
 	if !data.PasswordAlias.IsNull() {
 		return false
 	}
-	if !data.EbmsmpcAuthMethod.IsNull() {
+	if !data.EbmsMpcAuthMethod.IsNull() {
 		return false
 	}
 	if !data.UserNameToken.IsNull() {
@@ -1165,7 +1165,7 @@ func (data DmB2BDestination) IsNull() bool {
 	if !data.UserNameTokenPasswordAlias.IsNull() {
 		return false
 	}
-	if !data.EbmsmpcVerifyValCred.IsNull() {
+	if !data.EbmsMpcVerifyValCred.IsNull() {
 		return false
 	}
 	if !data.Passive.IsNull() {
@@ -1210,22 +1210,22 @@ func (data DmB2BDestination) IsNull() bool {
 	if !data.AsEncryptCert.IsNull() {
 		return false
 	}
-	if !data.AsmdnRequest.IsNull() {
+	if !data.AsMdnRequest.IsNull() {
 		return false
 	}
-	if !data.AsmdnRequestAsync.IsNull() {
+	if !data.AsMdnRequestAsync.IsNull() {
 		return false
 	}
-	if !data.As1mdnRedirectEmail.IsNull() {
+	if !data.As1MdnRedirectEmail.IsNull() {
 		return false
 	}
-	if !data.As2mdnRedirectUrl.IsNull() {
+	if !data.As2MdnRedirectUrl.IsNull() {
 		return false
 	}
-	if !data.As3mdnRedirectUrl.IsNull() {
+	if !data.As3MdnRedirectUrl.IsNull() {
 		return false
 	}
-	if !data.AsmdnRequestSigned.IsNull() {
+	if !data.AsMdnRequestSigned.IsNull() {
 		return false
 	}
 	if !data.Retransmit.IsNull() {
@@ -1240,7 +1240,7 @@ func (data DmB2BDestination) IsNull() bool {
 	if !data.AsEncryptAlg.IsNull() {
 		return false
 	}
-	if !data.AsmdnRequestSignedAlgs.IsNull() {
+	if !data.AsMdnRequestSignedAlgs.IsNull() {
 		return false
 	}
 	if !data.EbmsCpaId.IsNull() {
@@ -1309,7 +1309,7 @@ func (data DmB2BDestination) IsNull() bool {
 	if !data.EbmsAgreementRef.IsNull() {
 		return false
 	}
-	if !data.EbmspMode.IsNull() {
+	if !data.EbmsPMode.IsNull() {
 		return false
 	}
 	if !data.EbmsOutboundRequestReceipt.IsNull() {
@@ -1330,7 +1330,7 @@ func (data DmB2BDestination) IsNull() bool {
 	if !data.EbmsCompress.IsNull() {
 		return false
 	}
-	if !data.EbmssoapBody.IsNull() {
+	if !data.EbmsSoapBody.IsNull() {
 		return false
 	}
 	return true
@@ -1377,8 +1377,8 @@ func (data DmB2BDestination) ToBody(ctx context.Context, pathRoot string) string
 	if !data.PasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PasswordAlias`, data.PasswordAlias.ValueString())
 	}
-	if !data.EbmsmpcAuthMethod.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EBMSMPCAuthMethod`, data.EbmsmpcAuthMethod.ValueString())
+	if !data.EbmsMpcAuthMethod.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`EBMSMPCAuthMethod`, data.EbmsMpcAuthMethod.ValueString())
 	}
 	if !data.UserNameToken.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserNameToken`, data.UserNameToken.ValueString())
@@ -1386,8 +1386,8 @@ func (data DmB2BDestination) ToBody(ctx context.Context, pathRoot string) string
 	if !data.UserNameTokenPasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserNameTokenPasswordAlias`, data.UserNameTokenPasswordAlias.ValueString())
 	}
-	if !data.EbmsmpcVerifyValCred.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EBMSMPCVerifyValCred`, data.EbmsmpcVerifyValCred.ValueString())
+	if !data.EbmsMpcVerifyValCred.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`EBMSMPCVerifyValCred`, data.EbmsMpcVerifyValCred.ValueString())
 	}
 	if !data.Passive.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Passive`, data.Passive.ValueString())
@@ -1431,23 +1431,23 @@ func (data DmB2BDestination) ToBody(ctx context.Context, pathRoot string) string
 	if !data.AsEncryptCert.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ASEncryptCert`, data.AsEncryptCert.ValueString())
 	}
-	if !data.AsmdnRequest.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ASMDNRequest`, tfutils.StringFromBool(data.AsmdnRequest, ""))
+	if !data.AsMdnRequest.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ASMDNRequest`, tfutils.StringFromBool(data.AsMdnRequest, ""))
 	}
-	if !data.AsmdnRequestAsync.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ASMDNRequestAsync`, tfutils.StringFromBool(data.AsmdnRequestAsync, ""))
+	if !data.AsMdnRequestAsync.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ASMDNRequestAsync`, tfutils.StringFromBool(data.AsMdnRequestAsync, ""))
 	}
-	if !data.As1mdnRedirectEmail.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AS1MDNRedirectEmail`, data.As1mdnRedirectEmail.ValueString())
+	if !data.As1MdnRedirectEmail.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AS1MDNRedirectEmail`, data.As1MdnRedirectEmail.ValueString())
 	}
-	if !data.As2mdnRedirectUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AS2MDNRedirectURL`, data.As2mdnRedirectUrl.ValueString())
+	if !data.As2MdnRedirectUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AS2MDNRedirectURL`, data.As2MdnRedirectUrl.ValueString())
 	}
-	if !data.As3mdnRedirectUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AS3MDNRedirectURL`, data.As3mdnRedirectUrl.ValueString())
+	if !data.As3MdnRedirectUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AS3MDNRedirectURL`, data.As3MdnRedirectUrl.ValueString())
 	}
-	if !data.AsmdnRequestSigned.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ASMDNRequestSigned`, tfutils.StringFromBool(data.AsmdnRequestSigned, ""))
+	if !data.AsMdnRequestSigned.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ASMDNRequestSigned`, tfutils.StringFromBool(data.AsMdnRequestSigned, ""))
 	}
 	if !data.Retransmit.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Retransmit`, tfutils.StringFromBool(data.Retransmit, ""))
@@ -1461,8 +1461,8 @@ func (data DmB2BDestination) ToBody(ctx context.Context, pathRoot string) string
 	if !data.AsEncryptAlg.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ASEncryptAlg`, data.AsEncryptAlg.ValueString())
 	}
-	if !data.AsmdnRequestSignedAlgs.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ASMDNRequestSignedAlgs`, data.AsmdnRequestSignedAlgs.ValueString())
+	if !data.AsMdnRequestSignedAlgs.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ASMDNRequestSignedAlgs`, data.AsMdnRequestSignedAlgs.ValueString())
 	}
 	if !data.EbmsCpaId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EBMSCpaId`, data.EbmsCpaId.ValueString())
@@ -1530,8 +1530,8 @@ func (data DmB2BDestination) ToBody(ctx context.Context, pathRoot string) string
 	if !data.EbmsAgreementRef.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EBMSAgreementRef`, data.EbmsAgreementRef.ValueString())
 	}
-	if !data.EbmspMode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EBMSPMode`, data.EbmspMode.ValueString())
+	if !data.EbmsPMode.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`EBMSPMode`, data.EbmsPMode.ValueString())
 	}
 	if !data.EbmsOutboundRequestReceipt.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EBMSOutboundRequestReceipt`, tfutils.StringFromBool(data.EbmsOutboundRequestReceipt, ""))
@@ -1551,8 +1551,8 @@ func (data DmB2BDestination) ToBody(ctx context.Context, pathRoot string) string
 	if !data.EbmsCompress.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EBMSCompress`, tfutils.StringFromBool(data.EbmsCompress, ""))
 	}
-	if !data.EbmssoapBody.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EBMSSOAPBody`, tfutils.StringFromBool(data.EbmssoapBody, ""))
+	if !data.EbmsSoapBody.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`EBMSSOAPBody`, tfutils.StringFromBool(data.EbmsSoapBody, ""))
 	}
 	return body
 }
@@ -1618,9 +1618,9 @@ func (data *DmB2BDestination) FromBody(ctx context.Context, pathRoot string, res
 		data.PasswordAlias = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EBMSMPCAuthMethod`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.EbmsmpcAuthMethod = tfutils.ParseStringFromGJSON(value)
+		data.EbmsMpcAuthMethod = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EbmsmpcAuthMethod = types.StringValue("username-token")
+		data.EbmsMpcAuthMethod = types.StringValue("username-token")
 	}
 	if value := res.Get(pathRoot + `UserNameToken`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.UserNameToken = tfutils.ParseStringFromGJSON(value)
@@ -1633,9 +1633,9 @@ func (data *DmB2BDestination) FromBody(ctx context.Context, pathRoot string, res
 		data.UserNameTokenPasswordAlias = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EBMSMPCVerifyValCred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.EbmsmpcVerifyValCred = tfutils.ParseStringFromGJSON(value)
+		data.EbmsMpcVerifyValCred = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EbmsmpcVerifyValCred = types.StringNull()
+		data.EbmsMpcVerifyValCred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Passive`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Passive = tfutils.ParseStringFromGJSON(value)
@@ -1708,34 +1708,34 @@ func (data *DmB2BDestination) FromBody(ctx context.Context, pathRoot string, res
 		data.AsEncryptCert = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ASMDNRequest`); value.Exists() {
-		data.AsmdnRequest = tfutils.BoolFromString(value.String())
+		data.AsMdnRequest = tfutils.BoolFromString(value.String())
 	} else {
-		data.AsmdnRequest = types.BoolNull()
+		data.AsMdnRequest = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `ASMDNRequestAsync`); value.Exists() {
-		data.AsmdnRequestAsync = tfutils.BoolFromString(value.String())
+		data.AsMdnRequestAsync = tfutils.BoolFromString(value.String())
 	} else {
-		data.AsmdnRequestAsync = types.BoolNull()
+		data.AsMdnRequestAsync = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AS1MDNRedirectEmail`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.As1mdnRedirectEmail = tfutils.ParseStringFromGJSON(value)
+		data.As1MdnRedirectEmail = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As1mdnRedirectEmail = types.StringNull()
+		data.As1MdnRedirectEmail = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AS2MDNRedirectURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.As2mdnRedirectUrl = tfutils.ParseStringFromGJSON(value)
+		data.As2MdnRedirectUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As2mdnRedirectUrl = types.StringNull()
+		data.As2MdnRedirectUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AS3MDNRedirectURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.As3mdnRedirectUrl = tfutils.ParseStringFromGJSON(value)
+		data.As3MdnRedirectUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As3mdnRedirectUrl = types.StringNull()
+		data.As3MdnRedirectUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ASMDNRequestSigned`); value.Exists() {
-		data.AsmdnRequestSigned = tfutils.BoolFromString(value.String())
+		data.AsMdnRequestSigned = tfutils.BoolFromString(value.String())
 	} else {
-		data.AsmdnRequestSigned = types.BoolNull()
+		data.AsMdnRequestSigned = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `Retransmit`); value.Exists() {
 		data.Retransmit = tfutils.BoolFromString(value.String())
@@ -1758,9 +1758,9 @@ func (data *DmB2BDestination) FromBody(ctx context.Context, pathRoot string, res
 		data.AsEncryptAlg = types.StringValue("3des")
 	}
 	if value := res.Get(pathRoot + `ASMDNRequestSignedAlgs`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AsmdnRequestSignedAlgs = tfutils.ParseStringFromGJSON(value)
+		data.AsMdnRequestSignedAlgs = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AsmdnRequestSignedAlgs = types.StringValue("sha1,md5")
+		data.AsMdnRequestSignedAlgs = types.StringValue("sha1,md5")
 	}
 	if value := res.Get(pathRoot + `EBMSCpaId`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.EbmsCpaId = tfutils.ParseStringFromGJSON(value)
@@ -1873,9 +1873,9 @@ func (data *DmB2BDestination) FromBody(ctx context.Context, pathRoot string, res
 		data.EbmsAgreementRef = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EBMSPMode`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.EbmspMode = tfutils.ParseStringFromGJSON(value)
+		data.EbmsPMode = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EbmspMode = types.StringNull()
+		data.EbmsPMode = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EBMSOutboundRequestReceipt`); value.Exists() {
 		data.EbmsOutboundRequestReceipt = tfutils.BoolFromString(value.String())
@@ -1908,9 +1908,9 @@ func (data *DmB2BDestination) FromBody(ctx context.Context, pathRoot string, res
 		data.EbmsCompress = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `EBMSSOAPBody`); value.Exists() {
-		data.EbmssoapBody = tfutils.BoolFromString(value.String())
+		data.EbmsSoapBody = tfutils.BoolFromString(value.String())
 	} else {
-		data.EbmssoapBody = types.BoolNull()
+		data.EbmsSoapBody = types.BoolNull()
 	}
 }
 
@@ -1973,10 +1973,10 @@ func (data *DmB2BDestination) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else {
 		data.PasswordAlias = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `EBMSMPCAuthMethod`); value.Exists() && !data.EbmsmpcAuthMethod.IsNull() {
-		data.EbmsmpcAuthMethod = tfutils.ParseStringFromGJSON(value)
-	} else if data.EbmsmpcAuthMethod.ValueString() != "username-token" {
-		data.EbmsmpcAuthMethod = types.StringNull()
+	if value := res.Get(pathRoot + `EBMSMPCAuthMethod`); value.Exists() && !data.EbmsMpcAuthMethod.IsNull() {
+		data.EbmsMpcAuthMethod = tfutils.ParseStringFromGJSON(value)
+	} else if data.EbmsMpcAuthMethod.ValueString() != "username-token" {
+		data.EbmsMpcAuthMethod = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `UserNameToken`); value.Exists() && !data.UserNameToken.IsNull() {
 		data.UserNameToken = tfutils.ParseStringFromGJSON(value)
@@ -1988,10 +1988,10 @@ func (data *DmB2BDestination) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else {
 		data.UserNameTokenPasswordAlias = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `EBMSMPCVerifyValCred`); value.Exists() && !data.EbmsmpcVerifyValCred.IsNull() {
-		data.EbmsmpcVerifyValCred = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `EBMSMPCVerifyValCred`); value.Exists() && !data.EbmsMpcVerifyValCred.IsNull() {
+		data.EbmsMpcVerifyValCred = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EbmsmpcVerifyValCred = types.StringNull()
+		data.EbmsMpcVerifyValCred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Passive`); value.Exists() && !data.Passive.IsNull() {
 		data.Passive = tfutils.ParseStringFromGJSON(value)
@@ -2063,35 +2063,35 @@ func (data *DmB2BDestination) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else {
 		data.AsEncryptCert = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `ASMDNRequest`); value.Exists() && !data.AsmdnRequest.IsNull() {
-		data.AsmdnRequest = tfutils.BoolFromString(value.String())
-	} else if data.AsmdnRequest.ValueBool() {
-		data.AsmdnRequest = types.BoolNull()
+	if value := res.Get(pathRoot + `ASMDNRequest`); value.Exists() && !data.AsMdnRequest.IsNull() {
+		data.AsMdnRequest = tfutils.BoolFromString(value.String())
+	} else if data.AsMdnRequest.ValueBool() {
+		data.AsMdnRequest = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `ASMDNRequestAsync`); value.Exists() && !data.AsmdnRequestAsync.IsNull() {
-		data.AsmdnRequestAsync = tfutils.BoolFromString(value.String())
-	} else if data.AsmdnRequestAsync.ValueBool() {
-		data.AsmdnRequestAsync = types.BoolNull()
+	if value := res.Get(pathRoot + `ASMDNRequestAsync`); value.Exists() && !data.AsMdnRequestAsync.IsNull() {
+		data.AsMdnRequestAsync = tfutils.BoolFromString(value.String())
+	} else if data.AsMdnRequestAsync.ValueBool() {
+		data.AsMdnRequestAsync = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `AS1MDNRedirectEmail`); value.Exists() && !data.As1mdnRedirectEmail.IsNull() {
-		data.As1mdnRedirectEmail = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AS1MDNRedirectEmail`); value.Exists() && !data.As1MdnRedirectEmail.IsNull() {
+		data.As1MdnRedirectEmail = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As1mdnRedirectEmail = types.StringNull()
+		data.As1MdnRedirectEmail = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AS2MDNRedirectURL`); value.Exists() && !data.As2mdnRedirectUrl.IsNull() {
-		data.As2mdnRedirectUrl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AS2MDNRedirectURL`); value.Exists() && !data.As2MdnRedirectUrl.IsNull() {
+		data.As2MdnRedirectUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As2mdnRedirectUrl = types.StringNull()
+		data.As2MdnRedirectUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AS3MDNRedirectURL`); value.Exists() && !data.As3mdnRedirectUrl.IsNull() {
-		data.As3mdnRedirectUrl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AS3MDNRedirectURL`); value.Exists() && !data.As3MdnRedirectUrl.IsNull() {
+		data.As3MdnRedirectUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.As3mdnRedirectUrl = types.StringNull()
+		data.As3MdnRedirectUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `ASMDNRequestSigned`); value.Exists() && !data.AsmdnRequestSigned.IsNull() {
-		data.AsmdnRequestSigned = tfutils.BoolFromString(value.String())
-	} else if data.AsmdnRequestSigned.ValueBool() {
-		data.AsmdnRequestSigned = types.BoolNull()
+	if value := res.Get(pathRoot + `ASMDNRequestSigned`); value.Exists() && !data.AsMdnRequestSigned.IsNull() {
+		data.AsMdnRequestSigned = tfutils.BoolFromString(value.String())
+	} else if data.AsMdnRequestSigned.ValueBool() {
+		data.AsMdnRequestSigned = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `Retransmit`); value.Exists() && !data.Retransmit.IsNull() {
 		data.Retransmit = tfutils.BoolFromString(value.String())
@@ -2113,10 +2113,10 @@ func (data *DmB2BDestination) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else if data.AsEncryptAlg.ValueString() != "3des" {
 		data.AsEncryptAlg = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `ASMDNRequestSignedAlgs`); value.Exists() && !data.AsmdnRequestSignedAlgs.IsNull() {
-		data.AsmdnRequestSignedAlgs = tfutils.ParseStringFromGJSON(value)
-	} else if data.AsmdnRequestSignedAlgs.ValueString() != "sha1,md5" {
-		data.AsmdnRequestSignedAlgs = types.StringNull()
+	if value := res.Get(pathRoot + `ASMDNRequestSignedAlgs`); value.Exists() && !data.AsMdnRequestSignedAlgs.IsNull() {
+		data.AsMdnRequestSignedAlgs = tfutils.ParseStringFromGJSON(value)
+	} else if data.AsMdnRequestSignedAlgs.ValueString() != "sha1,md5" {
+		data.AsMdnRequestSignedAlgs = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EBMSCpaId`); value.Exists() && !data.EbmsCpaId.IsNull() {
 		data.EbmsCpaId = tfutils.ParseStringFromGJSON(value)
@@ -2228,10 +2228,10 @@ func (data *DmB2BDestination) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else {
 		data.EbmsAgreementRef = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `EBMSPMode`); value.Exists() && !data.EbmspMode.IsNull() {
-		data.EbmspMode = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `EBMSPMode`); value.Exists() && !data.EbmsPMode.IsNull() {
+		data.EbmsPMode = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EbmspMode = types.StringNull()
+		data.EbmsPMode = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EBMSOutboundRequestReceipt`); value.Exists() && !data.EbmsOutboundRequestReceipt.IsNull() {
 		data.EbmsOutboundRequestReceipt = tfutils.BoolFromString(value.String())
@@ -2263,9 +2263,9 @@ func (data *DmB2BDestination) UpdateFromBody(ctx context.Context, pathRoot strin
 	} else if data.EbmsCompress.ValueBool() {
 		data.EbmsCompress = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `EBMSSOAPBody`); value.Exists() && !data.EbmssoapBody.IsNull() {
-		data.EbmssoapBody = tfutils.BoolFromString(value.String())
-	} else if data.EbmssoapBody.ValueBool() {
-		data.EbmssoapBody = types.BoolNull()
+	if value := res.Get(pathRoot + `EBMSSOAPBody`); value.Exists() && !data.EbmsSoapBody.IsNull() {
+		data.EbmsSoapBody = tfutils.BoolFromString(value.String())
+	} else if data.EbmsSoapBody.ValueBool() {
+		data.EbmsSoapBody = types.BoolNull()
 	}
 }

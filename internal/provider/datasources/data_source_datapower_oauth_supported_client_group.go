@@ -88,7 +88,7 @@ func (d *OAuthSupportedClientGroupDataSource) Schema(ctx context.Context, req da
 							MarkdownDescription: "Sets the method to customize an OAuth client.",
 							Computed:            true,
 						},
-						"o_auth_role": models.GetDmOAuthRoleDataSourceSchema("Identifies the roles of clients in the group. This property is mutually exclusive to the <b>Customized OAuth</b> property.", "oauth-role", ""),
+						"oauth_role": models.GetDmOAuthRoleDataSourceSchema("Identifies the roles of clients in the group. This property is mutually exclusive to the <b>Customized OAuth</b> property.", "oauth-role", ""),
 						"client": schema.ListAttribute{
 							MarkdownDescription: "Manages the group of OAuth clients. Use the controls to add or remove clients from the group.",
 							ElementType:         types.StringType,

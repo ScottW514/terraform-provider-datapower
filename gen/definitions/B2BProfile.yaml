@@ -42,6 +42,7 @@ attributes:
     The default value is internal.
   cli_alias: profile-type
 - name: BusinessIDs
+  tf_name: business_ids
   type: List
   element_type: String
   test_value: '["businessid"]'
@@ -55,6 +56,7 @@ attributes:
     or <tt>ReceiverID</tt> .</li></ul>'
   cli_alias: business-id
 - name: BusinessIDsDUNS
+  tf_name: business_id_duns
   type: List
   element_type: String
   description: Specify the 9-digit DUNS (Data Universal Numbering System) identification
@@ -65,6 +67,7 @@ attributes:
   string_patterns:
   - ^[0-9]{9}$
 - name: BusinessIDsDUNSPlus4
+  tf_name: business_id_duns4
   type: List
   element_type: String
   description: Specifies the 13-digit D-U-N-S (Data Universal Numbering System + 4)

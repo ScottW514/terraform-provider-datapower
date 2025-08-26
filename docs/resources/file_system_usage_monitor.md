@@ -16,9 +16,8 @@ The file system usage monitor is a utility that checks file systems to determine
 
 ```terraform
 resource "datapower_file_system_usage_monitor" "test" {
-  polling_interval   = 60
-  all_system         = true
-  all_queue_managers = true
+  polling_interval = 60
+  all_system       = true
 }
 ```
 
@@ -27,18 +26,6 @@ resource "datapower_file_system_usage_monitor" "test" {
 
 ### Optional
 
-- `all_qm_critical_threshold` (Number) Specify the usage threshold to generate a critical event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.
-  - CLI Alias: `all-qm-critical`
-  - Range: `0`-`100`
-  - Default value: `90`
-  - Required When: `all_queue_managers`=`true`
-- `all_qm_warning_threshold` (Number) Specify the usage threshold to generate a warning event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
-  - CLI Alias: `all-qm-warning`
-  - Range: `0`-`100`
-  - Default value: `75`
-  - Required When: `all_queue_managers`=`true`
-- `all_queue_managers` (Boolean) Specify whether the utility checks all or only a subset of queue manager file systems.
-  - Default value: `true`
 - `all_system` (Boolean) Specify whether the utility checks all or only a subset of system file systems. By default, all file systems are scanned. <ul><li>When enabled, you can define specific file systems that override their default thresholds.</li><li>When not enabled, define the file systems to check with their thresholds.</li></ul>
   - CLI Alias: `all-system`
   - Default value: `true`
@@ -60,8 +47,6 @@ resource "datapower_file_system_usage_monitor" "test" {
   - CLI Alias: `poll`
   - Range: `15`-`65535`
   - Default value: `60`
-- `queue_manager` (Attributes List) Specify the queue manager file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all queue manager file systems.
-  - CLI Alias: `qm` (see [below for nested schema](#nestedatt--queue_manager))
 - `system` (Attributes List) Specify the system file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all system file systems.
   - CLI Alias: `system` (see [below for nested schema](#nestedatt--system))
 - `user_summary` (String) Comments
@@ -82,26 +67,6 @@ Optional:
 - `on_delete` (Boolean) Execute this action on the target when deleting this resource.
 - `on_update` (Boolean) Execute this action on the target when updating this resource.
 - `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
-
-<a id="nestedatt--queue_manager"></a>
-### Nested Schema for `queue_manager`
-
-Required:
-
-- `name` (String) Specify the name of a queue manager to check.
-  - CLI Alias: `name`
-
-Optional:
-
-- `critical_threshold` (Number) Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.
-  - CLI Alias: `critical`
-  - Range: `0`-`100`
-  - Default value: `90`
-- `warning_threshold` (Number) Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
-  - CLI Alias: `warning`
-  - Range: `0`-`100`
-  - Default value: `75`
 
 
 <a id="nestedatt--system"></a>

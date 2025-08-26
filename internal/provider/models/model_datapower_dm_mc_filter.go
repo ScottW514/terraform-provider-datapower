@@ -40,8 +40,8 @@ type DmMCFilter struct {
 	Type            types.String `tfsdk:"type"`
 	HttpName        types.String `tfsdk:"http_name"`
 	HttpValue       types.String `tfsdk:"http_value"`
-	XPathExpression types.String `tfsdk:"x_path_expression"`
-	XPathValue      types.String `tfsdk:"x_path_value"`
+	XpathExpression types.String `tfsdk:"xpath_expression"`
+	XpathValue      types.String `tfsdk:"xpath_value"`
 }
 
 var DmMCFilterHttpNameCondVal = validators.Evaluation{
@@ -74,20 +74,20 @@ var DmMCFilterXPathValueCondVal = validators.Evaluation{
 }
 
 var DmMCFilterObjectType = map[string]attr.Type{
-	"filter_name":       types.StringType,
-	"type":              types.StringType,
-	"http_name":         types.StringType,
-	"http_value":        types.StringType,
-	"x_path_expression": types.StringType,
-	"x_path_value":      types.StringType,
+	"filter_name":      types.StringType,
+	"type":             types.StringType,
+	"http_name":        types.StringType,
+	"http_value":       types.StringType,
+	"xpath_expression": types.StringType,
+	"xpath_value":      types.StringType,
 }
 var DmMCFilterObjectDefault = map[string]attr.Value{
-	"filter_name":       types.StringNull(),
-	"type":              types.StringNull(),
-	"http_name":         types.StringNull(),
-	"http_value":        types.StringNull(),
-	"x_path_expression": types.StringNull(),
-	"x_path_value":      types.StringNull(),
+	"filter_name":      types.StringNull(),
+	"type":             types.StringNull(),
+	"http_name":        types.StringNull(),
+	"http_value":       types.StringNull(),
+	"xpath_expression": types.StringNull(),
+	"xpath_value":      types.StringNull(),
 }
 
 func GetDmMCFilterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
@@ -109,11 +109,11 @@ func GetDmMCFilterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").String,
 				Computed:            true,
 			},
-			"x_path_expression": DataSourceSchema.StringAttribute{
+			"xpath_expression": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").String,
 				Computed:            true,
 			},
-			"x_path_value": DataSourceSchema.StringAttribute{
+			"xpath_value": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").String,
 				Computed:            true,
 			},
@@ -149,14 +149,14 @@ func GetDmMCFilterResourceSchema() ResourceSchema.NestedAttributeObject {
 					validators.ConditionalRequiredString(DmMCFilterHttpValueCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"x_path_expression": ResourceSchema.StringAttribute{
+			"xpath_expression": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmMCFilterXPathExpressionCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"x_path_value": ResourceSchema.StringAttribute{
+			"xpath_value": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -181,10 +181,10 @@ func (data DmMCFilter) IsNull() bool {
 	if !data.HttpValue.IsNull() {
 		return false
 	}
-	if !data.XPathExpression.IsNull() {
+	if !data.XpathExpression.IsNull() {
 		return false
 	}
-	if !data.XPathValue.IsNull() {
+	if !data.XpathValue.IsNull() {
 		return false
 	}
 	return true
@@ -208,11 +208,11 @@ func (data DmMCFilter) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.HttpValue.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HttpValue`, data.HttpValue.ValueString())
 	}
-	if !data.XPathExpression.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPathExpression`, data.XPathExpression.ValueString())
+	if !data.XpathExpression.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPathExpression`, data.XpathExpression.ValueString())
 	}
-	if !data.XPathValue.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPathValue`, data.XPathValue.ValueString())
+	if !data.XpathValue.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPathValue`, data.XpathValue.ValueString())
 	}
 	return body
 }
@@ -242,14 +242,14 @@ func (data *DmMCFilter) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.HttpValue = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XPathExpression`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPathExpression = tfutils.ParseStringFromGJSON(value)
+		data.XpathExpression = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathExpression = types.StringNull()
+		data.XpathExpression = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `XPathValue`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.XPathValue = tfutils.ParseStringFromGJSON(value)
+		data.XpathValue = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathValue = types.StringNull()
+		data.XpathValue = types.StringNull()
 	}
 }
 
@@ -277,14 +277,14 @@ func (data *DmMCFilter) UpdateFromBody(ctx context.Context, pathRoot string, res
 	} else {
 		data.HttpValue = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPathExpression`); value.Exists() && !data.XPathExpression.IsNull() {
-		data.XPathExpression = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPathExpression`); value.Exists() && !data.XpathExpression.IsNull() {
+		data.XpathExpression = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathExpression = types.StringNull()
+		data.XpathExpression = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPathValue`); value.Exists() && !data.XPathValue.IsNull() {
-		data.XPathValue = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `XPathValue`); value.Exists() && !data.XpathValue.IsNull() {
+		data.XpathValue = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.XPathValue = types.StringNull()
+		data.XpathValue = types.StringNull()
 	}
 }

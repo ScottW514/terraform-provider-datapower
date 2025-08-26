@@ -41,7 +41,7 @@ type WebAppRequest struct {
 	PolicyType               types.String                `tfsdk:"policy_type"`
 	SslPolicy                types.String                `tfsdk:"ssl_policy"`
 	Aaa                      types.String                `tfsdk:"aaa"`
-	SsKey                    types.String                `tfsdk:"ss_key"`
+	Sskey                    types.String                `tfsdk:"sskey"`
 	RateLimiter              types.String                `tfsdk:"rate_limiter"`
 	Acl                      types.String                `tfsdk:"acl"`
 	OkMethods                *DmHTTPRequestMethods       `tfsdk:"ok_methods"`
@@ -116,7 +116,7 @@ var WebAppRequestObjectType = map[string]attr.Type{
 	"policy_type":                 types.StringType,
 	"ssl_policy":                  types.StringType,
 	"aaa":                         types.StringType,
-	"ss_key":                      types.StringType,
+	"sskey":                       types.StringType,
 	"rate_limiter":                types.StringType,
 	"acl":                         types.StringType,
 	"ok_methods":                  types.ObjectType{AttrTypes: DmHTTPRequestMethodsObjectType},
@@ -174,7 +174,7 @@ func (data WebAppRequest) IsNull() bool {
 	if !data.Aaa.IsNull() {
 		return false
 	}
-	if !data.SsKey.IsNull() {
+	if !data.Sskey.IsNull() {
 		return false
 	}
 	if !data.RateLimiter.IsNull() {
@@ -293,8 +293,8 @@ func (data WebAppRequest) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Aaa.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AAA`, data.Aaa.ValueString())
 	}
-	if !data.SsKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.SsKey.ValueString())
+	if !data.Sskey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.Sskey.ValueString())
 	}
 	if !data.RateLimiter.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RateLimiter`, data.RateLimiter.ValueString())
@@ -429,9 +429,9 @@ func (data *WebAppRequest) FromBody(ctx context.Context, pathRoot string, res gj
 		data.Aaa = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SsKey = tfutils.ParseStringFromGJSON(value)
+		data.Sskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsKey = types.StringNull()
+		data.Sskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `RateLimiter`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.RateLimiter = tfutils.ParseStringFromGJSON(value)
@@ -608,10 +608,10 @@ func (data *WebAppRequest) UpdateFromBody(ctx context.Context, pathRoot string, 
 	} else {
 		data.Aaa = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSKey`); value.Exists() && !data.SsKey.IsNull() {
-		data.SsKey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSKey`); value.Exists() && !data.Sskey.IsNull() {
+		data.Sskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsKey = types.StringNull()
+		data.Sskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `RateLimiter`); value.Exists() && !data.RateLimiter.IsNull() {
 		data.RateLimiter = tfutils.ParseStringFromGJSON(value)

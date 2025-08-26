@@ -54,7 +54,7 @@ resource "datapower_api_plan" "test" {
 - `exclude_operation` (List of String) Exclude operation
   - CLI Alias: `exclude`
   - Reference to: `datapower_api_operation:id`
-- `graph_ql_schema_options` (List of String) GraphQL schema options
+- `graphql_schema_options` (List of String) GraphQL schema options
   - CLI Alias: `graphql-schema-options`
   - Reference to: `datapower_graphql_schema_options:id`
 - `name` (String) Plan name

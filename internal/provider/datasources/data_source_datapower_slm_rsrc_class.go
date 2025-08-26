@@ -97,7 +97,7 @@ func (d *SLMRsrcClassDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "Custom stylesheet",
 							Computed:            true,
 						},
-						"x_path_filter": schema.StringAttribute{
+						"xpath_filter": schema.StringAttribute{
 							MarkdownDescription: "XPath filter",
 							Computed:            true,
 						},

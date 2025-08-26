@@ -46,7 +46,7 @@ func TestAccResourceParseSettings(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_parse_settings.test", "unique_namespaces", "1024"),
 			resource.TestCheckResourceAttr("datapower_parse_settings.test", "unique_names", "1024"),
 			resource.TestCheckResourceAttr("datapower_parse_settings.test", "number_length", "128"),
-			resource.TestCheckResourceAttr("datapower_parse_settings.test", "strict_utf8_encoding", "false"),
+			resource.TestCheckResourceAttr("datapower_parse_settings.test", "strict_utf8encoding", "false"),
 		}...),
 	})
 

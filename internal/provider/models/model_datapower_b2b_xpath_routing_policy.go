@@ -37,10 +37,10 @@ type B2BXPathRoutingPolicy struct {
 	Id                types.String                `tfsdk:"id"`
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
-	SenderXPath       types.String                `tfsdk:"sender_x_path"`
-	ReceiverXPath     types.String                `tfsdk:"receiver_x_path"`
-	DocumentIdxPath   types.String                `tfsdk:"document_idx_path"`
-	DateTimeXPath     types.String                `tfsdk:"date_time_x_path"`
+	SenderXpath       types.String                `tfsdk:"sender_xpath"`
+	ReceiverXpath     types.String                `tfsdk:"receiver_xpath"`
+	DocumentIdXpath   types.String                `tfsdk:"document_id_xpath"`
+	DateTimeXpath     types.String                `tfsdk:"date_time_xpath"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
@@ -48,10 +48,10 @@ var B2BXPathRoutingPolicyObjectType = map[string]attr.Type{
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,
-	"sender_x_path":      types.StringType,
-	"receiver_x_path":    types.StringType,
-	"document_idx_path":  types.StringType,
-	"date_time_x_path":   types.StringType,
+	"sender_xpath":       types.StringType,
+	"receiver_xpath":     types.StringType,
+	"document_id_xpath":  types.StringType,
+	"date_time_xpath":    types.StringType,
 	"dependency_actions": actions.ActionsListType,
 }
 
@@ -72,16 +72,16 @@ func (data B2BXPathRoutingPolicy) IsNull() bool {
 	if !data.UserSummary.IsNull() {
 		return false
 	}
-	if !data.SenderXPath.IsNull() {
+	if !data.SenderXpath.IsNull() {
 		return false
 	}
-	if !data.ReceiverXPath.IsNull() {
+	if !data.ReceiverXpath.IsNull() {
 		return false
 	}
-	if !data.DocumentIdxPath.IsNull() {
+	if !data.DocumentIdXpath.IsNull() {
 		return false
 	}
-	if !data.DateTimeXPath.IsNull() {
+	if !data.DateTimeXpath.IsNull() {
 		return false
 	}
 	return true
@@ -99,17 +99,17 @@ func (data B2BXPathRoutingPolicy) ToBody(ctx context.Context, pathRoot string) s
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
-	if !data.SenderXPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SenderXPath`, data.SenderXPath.ValueString())
+	if !data.SenderXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SenderXPath`, data.SenderXpath.ValueString())
 	}
-	if !data.ReceiverXPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ReceiverXPath`, data.ReceiverXPath.ValueString())
+	if !data.ReceiverXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ReceiverXPath`, data.ReceiverXpath.ValueString())
 	}
-	if !data.DocumentIdxPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DocumentIDXPath`, data.DocumentIdxPath.ValueString())
+	if !data.DocumentIdXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`DocumentIDXPath`, data.DocumentIdXpath.ValueString())
 	}
-	if !data.DateTimeXPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DateTimeXPath`, data.DateTimeXPath.ValueString())
+	if !data.DateTimeXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`DateTimeXPath`, data.DateTimeXpath.ValueString())
 	}
 	return body
 }
@@ -129,24 +129,24 @@ func (data *B2BXPathRoutingPolicy) FromBody(ctx context.Context, pathRoot string
 		data.UserSummary = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SenderXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SenderXPath = tfutils.ParseStringFromGJSON(value)
+		data.SenderXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SenderXPath = types.StringNull()
+		data.SenderXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ReceiverXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ReceiverXPath = tfutils.ParseStringFromGJSON(value)
+		data.ReceiverXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ReceiverXPath = types.StringNull()
+		data.ReceiverXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `DocumentIDXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.DocumentIdxPath = tfutils.ParseStringFromGJSON(value)
+		data.DocumentIdXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.DocumentIdxPath = types.StringNull()
+		data.DocumentIdXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `DateTimeXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.DateTimeXPath = tfutils.ParseStringFromGJSON(value)
+		data.DateTimeXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.DateTimeXPath = types.StringNull()
+		data.DateTimeXpath = types.StringNull()
 	}
 }
 
@@ -164,24 +164,24 @@ func (data *B2BXPathRoutingPolicy) UpdateFromBody(ctx context.Context, pathRoot 
 	} else {
 		data.UserSummary = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SenderXPath`); value.Exists() && !data.SenderXPath.IsNull() {
-		data.SenderXPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SenderXPath`); value.Exists() && !data.SenderXpath.IsNull() {
+		data.SenderXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SenderXPath = types.StringNull()
+		data.SenderXpath = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `ReceiverXPath`); value.Exists() && !data.ReceiverXPath.IsNull() {
-		data.ReceiverXPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `ReceiverXPath`); value.Exists() && !data.ReceiverXpath.IsNull() {
+		data.ReceiverXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ReceiverXPath = types.StringNull()
+		data.ReceiverXpath = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `DocumentIDXPath`); value.Exists() && !data.DocumentIdxPath.IsNull() {
-		data.DocumentIdxPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `DocumentIDXPath`); value.Exists() && !data.DocumentIdXpath.IsNull() {
+		data.DocumentIdXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.DocumentIdxPath = types.StringNull()
+		data.DocumentIdXpath = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `DateTimeXPath`); value.Exists() && !data.DateTimeXPath.IsNull() {
-		data.DateTimeXPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `DateTimeXPath`); value.Exists() && !data.DateTimeXpath.IsNull() {
+		data.DateTimeXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.DateTimeXPath = types.StringNull()
+		data.DateTimeXpath = types.StringNull()
 	}
 }

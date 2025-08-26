@@ -44,7 +44,7 @@ type AssemblyActionInvoke struct {
 	Password              types.String                `tfsdk:"password"`
 	Method                types.String                `tfsdk:"method"`
 	BackendType           types.String                `tfsdk:"backend_type"`
-	GraphQlSendType       types.String                `tfsdk:"graph_ql_send_type"`
+	GraphqlSendType       types.String                `tfsdk:"graphql_send_type"`
 	Compression           types.Bool                  `tfsdk:"compression"`
 	CacheType             types.String                `tfsdk:"cache_type"`
 	TimeToLive            types.Int64                 `tfsdk:"time_to_live"`
@@ -116,7 +116,7 @@ var AssemblyActionInvokeObjectType = map[string]attr.Type{
 	"password":                 types.StringType,
 	"method":                   types.StringType,
 	"backend_type":             types.StringType,
-	"graph_ql_send_type":       types.StringType,
+	"graphql_send_type":        types.StringType,
 	"compression":              types.BoolType,
 	"cache_type":               types.StringType,
 	"time_to_live":             types.Int64Type,
@@ -179,7 +179,7 @@ func (data AssemblyActionInvoke) IsNull() bool {
 	if !data.BackendType.IsNull() {
 		return false
 	}
-	if !data.GraphQlSendType.IsNull() {
+	if !data.GraphqlSendType.IsNull() {
 		return false
 	}
 	if !data.Compression.IsNull() {
@@ -289,8 +289,8 @@ func (data AssemblyActionInvoke) ToBody(ctx context.Context, pathRoot string) st
 	if !data.BackendType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`BackendType`, data.BackendType.ValueString())
 	}
-	if !data.GraphQlSendType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GraphQLSendType`, data.GraphQlSendType.ValueString())
+	if !data.GraphqlSendType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`GraphQLSendType`, data.GraphqlSendType.ValueString())
 	}
 	if !data.Compression.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Compression`, tfutils.StringFromBool(data.Compression, ""))
@@ -414,9 +414,9 @@ func (data *AssemblyActionInvoke) FromBody(ctx context.Context, pathRoot string,
 		data.BackendType = types.StringValue("detect")
 	}
 	if value := res.Get(pathRoot + `GraphQLSendType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.GraphQlSendType = tfutils.ParseStringFromGJSON(value)
+		data.GraphqlSendType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.GraphQlSendType = types.StringValue("detect")
+		data.GraphqlSendType = types.StringValue("detect")
 	}
 	if value := res.Get(pathRoot + `Compression`); value.Exists() {
 		data.Compression = tfutils.BoolFromString(value.String())
@@ -585,10 +585,10 @@ func (data *AssemblyActionInvoke) UpdateFromBody(ctx context.Context, pathRoot s
 	} else if data.BackendType.ValueString() != "detect" {
 		data.BackendType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `GraphQLSendType`); value.Exists() && !data.GraphQlSendType.IsNull() {
-		data.GraphQlSendType = tfutils.ParseStringFromGJSON(value)
-	} else if data.GraphQlSendType.ValueString() != "detect" {
-		data.GraphQlSendType = types.StringNull()
+	if value := res.Get(pathRoot + `GraphQLSendType`); value.Exists() && !data.GraphqlSendType.IsNull() {
+		data.GraphqlSendType = tfutils.ParseStringFromGJSON(value)
+	} else if data.GraphqlSendType.ValueString() != "detect" {
+		data.GraphqlSendType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Compression`); value.Exists() && !data.Compression.IsNull() {
 		data.Compression = tfutils.BoolFromString(value.String())

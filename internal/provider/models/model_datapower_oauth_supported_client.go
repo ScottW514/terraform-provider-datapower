@@ -40,7 +40,7 @@ type OAuthSupportedClient struct {
 	UserSummary                types.String                `tfsdk:"user_summary"`
 	Customized                 types.Bool                  `tfsdk:"customized"`
 	CustomizedProcessUrl       types.String                `tfsdk:"customized_process_url"`
-	OAuthRole                  *DmOAuthRole                `tfsdk:"o_auth_role"`
+	OauthRole                  *DmOAuthRole                `tfsdk:"oauth_role"`
 	AzGrant                    *DmOAuthAZGrantType         `tfsdk:"az_grant"`
 	ClientType                 types.String                `tfsdk:"client_type"`
 	CheckClientCredential      types.Bool                  `tfsdk:"check_client_credential"`
@@ -68,14 +68,14 @@ type OAuthSupportedClient struct {
 	MaxConsentLifeTime         types.Int64                 `tfsdk:"max_consent_life_time"`
 	CustomResourceOwner        types.Bool                  `tfsdk:"custom_resource_owner"`
 	ResourceOwnerUrl           types.String                `tfsdk:"resource_owner_url"`
-	AdditionalOAuthProcessUrl  types.String                `tfsdk:"additional_o_auth_process_url"`
+	AdditionalOauthProcessUrl  types.String                `tfsdk:"additional_oauth_process_url"`
 	RsSetHeader                *DmOAuthRSSetHeader         `tfsdk:"rs_set_header"`
-	ValidationUrlsslClientType types.String                `tfsdk:"validation_urlssl_client_type"`
-	ValidationUrlsslClient     types.String                `tfsdk:"validation_urlssl_client"`
+	ValidationUrlSslClientType types.String                `tfsdk:"validation_url_ssl_client_type"`
+	ValidationUrlSslClient     types.String                `tfsdk:"validation_url_ssl_client"`
 	JwtGrantValidator          types.String                `tfsdk:"jwt_grant_validator"`
 	ClientJwtValidator         types.String                `tfsdk:"client_jwt_validator"`
-	OidcidTokenGenerator       types.String                `tfsdk:"oidcid_token_generator"`
-	OAuthFeatures              *DmOAuthFeatures            `tfsdk:"o_auth_features"`
+	OidcIdTokenGenerator       types.String                `tfsdk:"oidc_id_token_generator"`
+	OauthFeatures              *DmOAuthFeatures            `tfsdk:"oauth_features"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 type OAuthSupportedClientWO struct {
@@ -84,7 +84,7 @@ type OAuthSupportedClientWO struct {
 	UserSummary                types.String                `tfsdk:"user_summary"`
 	Customized                 types.Bool                  `tfsdk:"customized"`
 	CustomizedProcessUrl       types.String                `tfsdk:"customized_process_url"`
-	OAuthRole                  *DmOAuthRole                `tfsdk:"o_auth_role"`
+	OauthRole                  *DmOAuthRole                `tfsdk:"oauth_role"`
 	AzGrant                    *DmOAuthAZGrantType         `tfsdk:"az_grant"`
 	ClientType                 types.String                `tfsdk:"client_type"`
 	CheckClientCredential      types.Bool                  `tfsdk:"check_client_credential"`
@@ -110,14 +110,14 @@ type OAuthSupportedClientWO struct {
 	MaxConsentLifeTime         types.Int64                 `tfsdk:"max_consent_life_time"`
 	CustomResourceOwner        types.Bool                  `tfsdk:"custom_resource_owner"`
 	ResourceOwnerUrl           types.String                `tfsdk:"resource_owner_url"`
-	AdditionalOAuthProcessUrl  types.String                `tfsdk:"additional_o_auth_process_url"`
+	AdditionalOauthProcessUrl  types.String                `tfsdk:"additional_oauth_process_url"`
 	RsSetHeader                *DmOAuthRSSetHeader         `tfsdk:"rs_set_header"`
-	ValidationUrlsslClientType types.String                `tfsdk:"validation_urlssl_client_type"`
-	ValidationUrlsslClient     types.String                `tfsdk:"validation_urlssl_client"`
+	ValidationUrlSslClientType types.String                `tfsdk:"validation_url_ssl_client_type"`
+	ValidationUrlSslClient     types.String                `tfsdk:"validation_url_ssl_client"`
 	JwtGrantValidator          types.String                `tfsdk:"jwt_grant_validator"`
 	ClientJwtValidator         types.String                `tfsdk:"client_jwt_validator"`
-	OidcidTokenGenerator       types.String                `tfsdk:"oidcid_token_generator"`
-	OAuthFeatures              *DmOAuthFeatures            `tfsdk:"o_auth_features"`
+	OidcIdTokenGenerator       types.String                `tfsdk:"oidc_id_token_generator"`
+	OauthFeatures              *DmOAuthFeatures            `tfsdk:"oauth_features"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
@@ -147,7 +147,7 @@ var OAuthSupportedClientAZGrantCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -176,7 +176,7 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 				},
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "o_auth_role",
+					Attribute:   "oauth_role",
 					AttrType:    "DmOAuthRole",
 					AttrDefault: "",
 					Value:       []string{"azsvr"},
@@ -202,7 +202,7 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 				},
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "o_auth_role",
+					Attribute:   "oauth_role",
 					AttrType:    "DmOAuthRole",
 					AttrDefault: "",
 					Value:       []string{"rssvr"},
@@ -255,7 +255,7 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -279,7 +279,7 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -298,7 +298,7 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"rssvr"},
@@ -353,7 +353,7 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -384,7 +384,7 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -403,14 +403,14 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"rssvr"},
 						},
 						{
 							Evaluation:  "property-value-not-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -440,7 +440,7 @@ var OAuthSupportedClientGenerateClientSecretCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -460,7 +460,7 @@ var OAuthSupportedClientGenerateClientSecretCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -524,7 +524,7 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -555,7 +555,7 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -581,14 +581,14 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"rssvr"},
 						},
 						{
 							Evaluation:  "property-value-not-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -630,7 +630,7 @@ var OAuthSupportedClientValidationURLCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"rssvr"},
@@ -656,7 +656,7 @@ var OAuthSupportedClientRedirectURICondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -692,7 +692,7 @@ var OAuthSupportedClientScopeCondVal = validators.Evaluation{
 			Conditions: []validators.Evaluation{
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "o_auth_role",
+					Attribute:   "oauth_role",
 					AttrType:    "DmOAuthRole",
 					AttrDefault: "",
 					Value:       []string{"azsvr"},
@@ -730,7 +730,7 @@ var OAuthSupportedClientScopeUrlCondVal = validators.Evaluation{
 			Conditions: []validators.Evaluation{
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "o_auth_role",
+					Attribute:   "oauth_role",
 					AttrType:    "DmOAuthRole",
 					AttrDefault: "",
 					Value:       []string{"azsvr"},
@@ -764,7 +764,7 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -774,7 +774,7 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 							Conditions: []validators.Evaluation{
 								{
 									Evaluation:  "property-value-not-in-list",
-									Attribute:   "o_auth_role",
+									Attribute:   "oauth_role",
 									AttrType:    "DmOAuthRole",
 									AttrDefault: "",
 									Value:       []string{"azsrv"},
@@ -814,7 +814,7 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -824,7 +824,7 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 							Conditions: []validators.Evaluation{
 								{
 									Evaluation:  "property-value-not-in-list",
-									Attribute:   "o_auth_role",
+									Attribute:   "oauth_role",
 									AttrType:    "DmOAuthRole",
 									AttrDefault: "",
 									Value:       []string{"azsvr"},
@@ -859,7 +859,7 @@ var OAuthSupportedClientLocalAZPageUrlCondVal = validators.Evaluation{
 				},
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "o_auth_role",
+					Attribute:   "oauth_role",
 					AttrType:    "DmOAuthRole",
 					AttrDefault: "",
 					Value:       []string{"azsvr"},
@@ -890,7 +890,7 @@ var OAuthSupportedClientDPStateLifeTimeCondVal = validators.Evaluation{
 				},
 				{
 					Evaluation:  "property-value-in-list",
-					Attribute:   "o_auth_role",
+					Attribute:   "oauth_role",
 					AttrType:    "DmOAuthRole",
 					AttrDefault: "",
 					Value:       []string{"azsvr"},
@@ -918,7 +918,7 @@ var OAuthSupportedClientAUCodeLifeTimeCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -944,7 +944,7 @@ var OAuthSupportedClientAccessTokenLifeTimeCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -963,7 +963,7 @@ var OAuthSupportedClientRefreshTokenAllowedCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -989,7 +989,7 @@ var OAuthSupportedClientRefreshTokenLifeTimeCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -1022,7 +1022,7 @@ var OAuthSupportedClientMaxConsentLifeTimeCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -1055,7 +1055,7 @@ var OAuthSupportedClientResourceOwnerUrlCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -1100,7 +1100,7 @@ var OAuthSupportedClientValidationURLSSLClientTypeCondVal = validators.Evaluatio
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"rssvr"},
@@ -1126,7 +1126,7 @@ var OAuthSupportedClientValidationURLSSLClientCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"rssvr"},
@@ -1140,7 +1140,7 @@ var OAuthSupportedClientValidationURLSSLClientCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "validation_urlssl_client_type",
+			Attribute:   "validation_url_ssl_client_type",
 			AttrType:    "String",
 			AttrDefault: "client",
 			Value:       []string{"client"},
@@ -1159,7 +1159,7 @@ var OAuthSupportedClientJWTGrantValidatorCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -1198,7 +1198,7 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -1229,7 +1229,7 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -1248,14 +1248,14 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 					Conditions: []validators.Evaluation{
 						{
 							Evaluation:  "property-value-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"rssvr"},
 						},
 						{
 							Evaluation:  "property-value-not-in-list",
-							Attribute:   "o_auth_role",
+							Attribute:   "oauth_role",
 							AttrType:    "DmOAuthRole",
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
@@ -1285,7 +1285,7 @@ var OAuthSupportedClientOIDCIDTokenGeneratorCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "o_auth_role",
+			Attribute:   "oauth_role",
 			AttrType:    "DmOAuthRole",
 			AttrDefault: "",
 			Value:       []string{"azsvr"},
@@ -1308,90 +1308,90 @@ var OAuthSupportedClientOIDCIDTokenGeneratorCondVal = validators.Evaluation{
 }
 
 var OAuthSupportedClientObjectType = map[string]attr.Type{
-	"id":                            types.StringType,
-	"app_domain":                    types.StringType,
-	"user_summary":                  types.StringType,
-	"customized":                    types.BoolType,
-	"customized_process_url":        types.StringType,
-	"o_auth_role":                   types.ObjectType{AttrTypes: DmOAuthRoleObjectType},
-	"az_grant":                      types.ObjectType{AttrTypes: DmOAuthAZGrantTypeObjectType},
-	"client_type":                   types.StringType,
-	"check_client_credential":       types.BoolType,
-	"use_validation_url":            types.BoolType,
-	"client_authen_method":          types.StringType,
-	"client_val_cred":               types.StringType,
-	"generate_client_secret":        types.BoolType,
-	"client_secret_wo":              types.StringType,
-	"client_secret_wo_version":      types.Int64Type,
-	"caching":                       types.StringType,
-	"validation_url":                types.StringType,
-	"validation_features":           types.ObjectType{AttrTypes: DmValidationFeaturesObjectType},
-	"redirect_uri":                  types.ListType{ElemType: types.StringType},
-	"custom_scope_check":            types.BoolType,
-	"scope":                         types.StringType,
-	"scope_url":                     types.StringType,
-	"default_scope":                 types.StringType,
-	"token_secret":                  types.StringType,
-	"local_az_page_url":             types.StringType,
-	"dp_state_life_time":            types.Int64Type,
-	"au_code_life_time":             types.Int64Type,
-	"access_token_life_time":        types.Int64Type,
-	"refresh_token_allowed":         types.Int64Type,
-	"refresh_token_life_time":       types.Int64Type,
-	"max_consent_life_time":         types.Int64Type,
-	"custom_resource_owner":         types.BoolType,
-	"resource_owner_url":            types.StringType,
-	"additional_o_auth_process_url": types.StringType,
-	"rs_set_header":                 types.ObjectType{AttrTypes: DmOAuthRSSetHeaderObjectType},
-	"validation_urlssl_client_type": types.StringType,
-	"validation_urlssl_client":      types.StringType,
-	"jwt_grant_validator":           types.StringType,
-	"client_jwt_validator":          types.StringType,
-	"oidcid_token_generator":        types.StringType,
-	"o_auth_features":               types.ObjectType{AttrTypes: DmOAuthFeaturesObjectType},
-	"dependency_actions":            actions.ActionsListType,
+	"id":                             types.StringType,
+	"app_domain":                     types.StringType,
+	"user_summary":                   types.StringType,
+	"customized":                     types.BoolType,
+	"customized_process_url":         types.StringType,
+	"oauth_role":                     types.ObjectType{AttrTypes: DmOAuthRoleObjectType},
+	"az_grant":                       types.ObjectType{AttrTypes: DmOAuthAZGrantTypeObjectType},
+	"client_type":                    types.StringType,
+	"check_client_credential":        types.BoolType,
+	"use_validation_url":             types.BoolType,
+	"client_authen_method":           types.StringType,
+	"client_val_cred":                types.StringType,
+	"generate_client_secret":         types.BoolType,
+	"client_secret_wo":               types.StringType,
+	"client_secret_wo_version":       types.Int64Type,
+	"caching":                        types.StringType,
+	"validation_url":                 types.StringType,
+	"validation_features":            types.ObjectType{AttrTypes: DmValidationFeaturesObjectType},
+	"redirect_uri":                   types.ListType{ElemType: types.StringType},
+	"custom_scope_check":             types.BoolType,
+	"scope":                          types.StringType,
+	"scope_url":                      types.StringType,
+	"default_scope":                  types.StringType,
+	"token_secret":                   types.StringType,
+	"local_az_page_url":              types.StringType,
+	"dp_state_life_time":             types.Int64Type,
+	"au_code_life_time":              types.Int64Type,
+	"access_token_life_time":         types.Int64Type,
+	"refresh_token_allowed":          types.Int64Type,
+	"refresh_token_life_time":        types.Int64Type,
+	"max_consent_life_time":          types.Int64Type,
+	"custom_resource_owner":          types.BoolType,
+	"resource_owner_url":             types.StringType,
+	"additional_oauth_process_url":   types.StringType,
+	"rs_set_header":                  types.ObjectType{AttrTypes: DmOAuthRSSetHeaderObjectType},
+	"validation_url_ssl_client_type": types.StringType,
+	"validation_url_ssl_client":      types.StringType,
+	"jwt_grant_validator":            types.StringType,
+	"client_jwt_validator":           types.StringType,
+	"oidc_id_token_generator":        types.StringType,
+	"oauth_features":                 types.ObjectType{AttrTypes: DmOAuthFeaturesObjectType},
+	"dependency_actions":             actions.ActionsListType,
 }
 var OAuthSupportedClientObjectTypeWO = map[string]attr.Type{
-	"id":                            types.StringType,
-	"app_domain":                    types.StringType,
-	"user_summary":                  types.StringType,
-	"customized":                    types.BoolType,
-	"customized_process_url":        types.StringType,
-	"o_auth_role":                   types.ObjectType{AttrTypes: DmOAuthRoleObjectType},
-	"az_grant":                      types.ObjectType{AttrTypes: DmOAuthAZGrantTypeObjectType},
-	"client_type":                   types.StringType,
-	"check_client_credential":       types.BoolType,
-	"use_validation_url":            types.BoolType,
-	"client_authen_method":          types.StringType,
-	"client_val_cred":               types.StringType,
-	"generate_client_secret":        types.BoolType,
-	"caching":                       types.StringType,
-	"validation_url":                types.StringType,
-	"validation_features":           types.ObjectType{AttrTypes: DmValidationFeaturesObjectType},
-	"redirect_uri":                  types.ListType{ElemType: types.StringType},
-	"custom_scope_check":            types.BoolType,
-	"scope":                         types.StringType,
-	"scope_url":                     types.StringType,
-	"default_scope":                 types.StringType,
-	"token_secret":                  types.StringType,
-	"local_az_page_url":             types.StringType,
-	"dp_state_life_time":            types.Int64Type,
-	"au_code_life_time":             types.Int64Type,
-	"access_token_life_time":        types.Int64Type,
-	"refresh_token_allowed":         types.Int64Type,
-	"refresh_token_life_time":       types.Int64Type,
-	"max_consent_life_time":         types.Int64Type,
-	"custom_resource_owner":         types.BoolType,
-	"resource_owner_url":            types.StringType,
-	"additional_o_auth_process_url": types.StringType,
-	"rs_set_header":                 types.ObjectType{AttrTypes: DmOAuthRSSetHeaderObjectType},
-	"validation_urlssl_client_type": types.StringType,
-	"validation_urlssl_client":      types.StringType,
-	"jwt_grant_validator":           types.StringType,
-	"client_jwt_validator":          types.StringType,
-	"oidcid_token_generator":        types.StringType,
-	"o_auth_features":               types.ObjectType{AttrTypes: DmOAuthFeaturesObjectType},
-	"dependency_actions":            actions.ActionsListType,
+	"id":                             types.StringType,
+	"app_domain":                     types.StringType,
+	"user_summary":                   types.StringType,
+	"customized":                     types.BoolType,
+	"customized_process_url":         types.StringType,
+	"oauth_role":                     types.ObjectType{AttrTypes: DmOAuthRoleObjectType},
+	"az_grant":                       types.ObjectType{AttrTypes: DmOAuthAZGrantTypeObjectType},
+	"client_type":                    types.StringType,
+	"check_client_credential":        types.BoolType,
+	"use_validation_url":             types.BoolType,
+	"client_authen_method":           types.StringType,
+	"client_val_cred":                types.StringType,
+	"generate_client_secret":         types.BoolType,
+	"caching":                        types.StringType,
+	"validation_url":                 types.StringType,
+	"validation_features":            types.ObjectType{AttrTypes: DmValidationFeaturesObjectType},
+	"redirect_uri":                   types.ListType{ElemType: types.StringType},
+	"custom_scope_check":             types.BoolType,
+	"scope":                          types.StringType,
+	"scope_url":                      types.StringType,
+	"default_scope":                  types.StringType,
+	"token_secret":                   types.StringType,
+	"local_az_page_url":              types.StringType,
+	"dp_state_life_time":             types.Int64Type,
+	"au_code_life_time":              types.Int64Type,
+	"access_token_life_time":         types.Int64Type,
+	"refresh_token_allowed":          types.Int64Type,
+	"refresh_token_life_time":        types.Int64Type,
+	"max_consent_life_time":          types.Int64Type,
+	"custom_resource_owner":          types.BoolType,
+	"resource_owner_url":             types.StringType,
+	"additional_oauth_process_url":   types.StringType,
+	"rs_set_header":                  types.ObjectType{AttrTypes: DmOAuthRSSetHeaderObjectType},
+	"validation_url_ssl_client_type": types.StringType,
+	"validation_url_ssl_client":      types.StringType,
+	"jwt_grant_validator":            types.StringType,
+	"client_jwt_validator":           types.StringType,
+	"oidc_id_token_generator":        types.StringType,
+	"oauth_features":                 types.ObjectType{AttrTypes: DmOAuthFeaturesObjectType},
+	"dependency_actions":             actions.ActionsListType,
 }
 
 func (data OAuthSupportedClient) GetPath() string {
@@ -1424,8 +1424,8 @@ func (data OAuthSupportedClient) IsNull() bool {
 	if !data.CustomizedProcessUrl.IsNull() {
 		return false
 	}
-	if data.OAuthRole != nil {
-		if !data.OAuthRole.IsNull() {
+	if data.OauthRole != nil {
+		if !data.OauthRole.IsNull() {
 			return false
 		}
 	}
@@ -1511,7 +1511,7 @@ func (data OAuthSupportedClient) IsNull() bool {
 	if !data.ResourceOwnerUrl.IsNull() {
 		return false
 	}
-	if !data.AdditionalOAuthProcessUrl.IsNull() {
+	if !data.AdditionalOauthProcessUrl.IsNull() {
 		return false
 	}
 	if data.RsSetHeader != nil {
@@ -1519,10 +1519,10 @@ func (data OAuthSupportedClient) IsNull() bool {
 			return false
 		}
 	}
-	if !data.ValidationUrlsslClientType.IsNull() {
+	if !data.ValidationUrlSslClientType.IsNull() {
 		return false
 	}
-	if !data.ValidationUrlsslClient.IsNull() {
+	if !data.ValidationUrlSslClient.IsNull() {
 		return false
 	}
 	if !data.JwtGrantValidator.IsNull() {
@@ -1531,11 +1531,11 @@ func (data OAuthSupportedClient) IsNull() bool {
 	if !data.ClientJwtValidator.IsNull() {
 		return false
 	}
-	if !data.OidcidTokenGenerator.IsNull() {
+	if !data.OidcIdTokenGenerator.IsNull() {
 		return false
 	}
-	if data.OAuthFeatures != nil {
-		if !data.OAuthFeatures.IsNull() {
+	if data.OauthFeatures != nil {
+		if !data.OauthFeatures.IsNull() {
 			return false
 		}
 	}
@@ -1557,8 +1557,8 @@ func (data OAuthSupportedClientWO) IsNull() bool {
 	if !data.CustomizedProcessUrl.IsNull() {
 		return false
 	}
-	if data.OAuthRole != nil {
-		if !data.OAuthRole.IsNull() {
+	if data.OauthRole != nil {
+		if !data.OauthRole.IsNull() {
 			return false
 		}
 	}
@@ -1641,7 +1641,7 @@ func (data OAuthSupportedClientWO) IsNull() bool {
 	if !data.ResourceOwnerUrl.IsNull() {
 		return false
 	}
-	if !data.AdditionalOAuthProcessUrl.IsNull() {
+	if !data.AdditionalOauthProcessUrl.IsNull() {
 		return false
 	}
 	if data.RsSetHeader != nil {
@@ -1649,10 +1649,10 @@ func (data OAuthSupportedClientWO) IsNull() bool {
 			return false
 		}
 	}
-	if !data.ValidationUrlsslClientType.IsNull() {
+	if !data.ValidationUrlSslClientType.IsNull() {
 		return false
 	}
-	if !data.ValidationUrlsslClient.IsNull() {
+	if !data.ValidationUrlSslClient.IsNull() {
 		return false
 	}
 	if !data.JwtGrantValidator.IsNull() {
@@ -1661,11 +1661,11 @@ func (data OAuthSupportedClientWO) IsNull() bool {
 	if !data.ClientJwtValidator.IsNull() {
 		return false
 	}
-	if !data.OidcidTokenGenerator.IsNull() {
+	if !data.OidcIdTokenGenerator.IsNull() {
 		return false
 	}
-	if data.OAuthFeatures != nil {
-		if !data.OAuthFeatures.IsNull() {
+	if data.OauthFeatures != nil {
+		if !data.OauthFeatures.IsNull() {
 			return false
 		}
 	}
@@ -1690,9 +1690,9 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string, co
 	if !data.CustomizedProcessUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CustomizedProcessUrl`, data.CustomizedProcessUrl.ValueString())
 	}
-	if data.OAuthRole != nil {
-		if !data.OAuthRole.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`OAuthRole`, data.OAuthRole.ToBody(ctx, ""))
+	if data.OauthRole != nil {
+		if !data.OauthRole.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`OAuthRole`, data.OauthRole.ToBody(ctx, ""))
 		}
 	}
 	if data.AzGrant != nil {
@@ -1784,19 +1784,19 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string, co
 	if !data.ResourceOwnerUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ResourceOwnerUrl`, data.ResourceOwnerUrl.ValueString())
 	}
-	if !data.AdditionalOAuthProcessUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AdditionalOAuthProcessUrl`, data.AdditionalOAuthProcessUrl.ValueString())
+	if !data.AdditionalOauthProcessUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`AdditionalOAuthProcessUrl`, data.AdditionalOauthProcessUrl.ValueString())
 	}
 	if data.RsSetHeader != nil {
 		if !data.RsSetHeader.IsNull() {
 			body, _ = sjson.SetRaw(body, pathRoot+`RSSetHeader`, data.RsSetHeader.ToBody(ctx, ""))
 		}
 	}
-	if !data.ValidationUrlsslClientType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidationURLSSLClientType`, data.ValidationUrlsslClientType.ValueString())
+	if !data.ValidationUrlSslClientType.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ValidationURLSSLClientType`, data.ValidationUrlSslClientType.ValueString())
 	}
-	if !data.ValidationUrlsslClient.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidationURLSSLClient`, data.ValidationUrlsslClient.ValueString())
+	if !data.ValidationUrlSslClient.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ValidationURLSSLClient`, data.ValidationUrlSslClient.ValueString())
 	}
 	if !data.JwtGrantValidator.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`JWTGrantValidator`, data.JwtGrantValidator.ValueString())
@@ -1804,12 +1804,12 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string, co
 	if !data.ClientJwtValidator.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ClientJWTValidator`, data.ClientJwtValidator.ValueString())
 	}
-	if !data.OidcidTokenGenerator.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OIDCIDTokenGenerator`, data.OidcidTokenGenerator.ValueString())
+	if !data.OidcIdTokenGenerator.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`OIDCIDTokenGenerator`, data.OidcIdTokenGenerator.ValueString())
 	}
-	if data.OAuthFeatures != nil {
-		if !data.OAuthFeatures.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`OAuthFeatures`, data.OAuthFeatures.ToBody(ctx, ""))
+	if data.OauthFeatures != nil {
+		if !data.OauthFeatures.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`OAuthFeatures`, data.OauthFeatures.ToBody(ctx, ""))
 		}
 	}
 	return body
@@ -1840,10 +1840,10 @@ func (data *OAuthSupportedClient) FromBody(ctx context.Context, pathRoot string,
 		data.CustomizedProcessUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthRole`); value.Exists() {
-		data.OAuthRole = &DmOAuthRole{}
-		data.OAuthRole.FromBody(ctx, "", value)
+		data.OauthRole = &DmOAuthRole{}
+		data.OauthRole.FromBody(ctx, "", value)
 	} else {
-		data.OAuthRole = nil
+		data.OauthRole = nil
 	}
 	if value := res.Get(pathRoot + `AZGrant`); value.Exists() {
 		data.AzGrant = &DmOAuthAZGrantType{}
@@ -1978,9 +1978,9 @@ func (data *OAuthSupportedClient) FromBody(ctx context.Context, pathRoot string,
 		data.ResourceOwnerUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AdditionalOAuthProcessUrl`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AdditionalOAuthProcessUrl = tfutils.ParseStringFromGJSON(value)
+		data.AdditionalOauthProcessUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AdditionalOAuthProcessUrl = types.StringNull()
+		data.AdditionalOauthProcessUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `RSSetHeader`); value.Exists() {
 		data.RsSetHeader = &DmOAuthRSSetHeader{}
@@ -1989,14 +1989,14 @@ func (data *OAuthSupportedClient) FromBody(ctx context.Context, pathRoot string,
 		data.RsSetHeader = nil
 	}
 	if value := res.Get(pathRoot + `ValidationURLSSLClientType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ValidationUrlsslClientType = tfutils.ParseStringFromGJSON(value)
+		data.ValidationUrlSslClientType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ValidationUrlsslClientType = types.StringValue("client")
+		data.ValidationUrlSslClientType = types.StringValue("client")
 	}
 	if value := res.Get(pathRoot + `ValidationURLSSLClient`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ValidationUrlsslClient = tfutils.ParseStringFromGJSON(value)
+		data.ValidationUrlSslClient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ValidationUrlsslClient = types.StringNull()
+		data.ValidationUrlSslClient = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `JWTGrantValidator`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.JwtGrantValidator = tfutils.ParseStringFromGJSON(value)
@@ -2009,15 +2009,15 @@ func (data *OAuthSupportedClient) FromBody(ctx context.Context, pathRoot string,
 		data.ClientJwtValidator = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OIDCIDTokenGenerator`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.OidcidTokenGenerator = tfutils.ParseStringFromGJSON(value)
+		data.OidcIdTokenGenerator = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OidcidTokenGenerator = types.StringNull()
+		data.OidcIdTokenGenerator = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthFeatures`); value.Exists() {
-		data.OAuthFeatures = &DmOAuthFeatures{}
-		data.OAuthFeatures.FromBody(ctx, "", value)
+		data.OauthFeatures = &DmOAuthFeatures{}
+		data.OauthFeatures.FromBody(ctx, "", value)
 	} else {
-		data.OAuthFeatures = nil
+		data.OauthFeatures = nil
 	}
 }
 func (data *OAuthSupportedClientWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -2045,10 +2045,10 @@ func (data *OAuthSupportedClientWO) FromBody(ctx context.Context, pathRoot strin
 		data.CustomizedProcessUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthRole`); value.Exists() {
-		data.OAuthRole = &DmOAuthRole{}
-		data.OAuthRole.FromBody(ctx, "", value)
+		data.OauthRole = &DmOAuthRole{}
+		data.OauthRole.FromBody(ctx, "", value)
 	} else {
-		data.OAuthRole = nil
+		data.OauthRole = nil
 	}
 	if value := res.Get(pathRoot + `AZGrant`); value.Exists() {
 		data.AzGrant = &DmOAuthAZGrantType{}
@@ -2178,9 +2178,9 @@ func (data *OAuthSupportedClientWO) FromBody(ctx context.Context, pathRoot strin
 		data.ResourceOwnerUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AdditionalOAuthProcessUrl`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AdditionalOAuthProcessUrl = tfutils.ParseStringFromGJSON(value)
+		data.AdditionalOauthProcessUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AdditionalOAuthProcessUrl = types.StringNull()
+		data.AdditionalOauthProcessUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `RSSetHeader`); value.Exists() {
 		data.RsSetHeader = &DmOAuthRSSetHeader{}
@@ -2189,14 +2189,14 @@ func (data *OAuthSupportedClientWO) FromBody(ctx context.Context, pathRoot strin
 		data.RsSetHeader = nil
 	}
 	if value := res.Get(pathRoot + `ValidationURLSSLClientType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ValidationUrlsslClientType = tfutils.ParseStringFromGJSON(value)
+		data.ValidationUrlSslClientType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ValidationUrlsslClientType = types.StringValue("client")
+		data.ValidationUrlSslClientType = types.StringValue("client")
 	}
 	if value := res.Get(pathRoot + `ValidationURLSSLClient`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ValidationUrlsslClient = tfutils.ParseStringFromGJSON(value)
+		data.ValidationUrlSslClient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ValidationUrlsslClient = types.StringNull()
+		data.ValidationUrlSslClient = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `JWTGrantValidator`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.JwtGrantValidator = tfutils.ParseStringFromGJSON(value)
@@ -2209,15 +2209,15 @@ func (data *OAuthSupportedClientWO) FromBody(ctx context.Context, pathRoot strin
 		data.ClientJwtValidator = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OIDCIDTokenGenerator`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.OidcidTokenGenerator = tfutils.ParseStringFromGJSON(value)
+		data.OidcIdTokenGenerator = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OidcidTokenGenerator = types.StringNull()
+		data.OidcIdTokenGenerator = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthFeatures`); value.Exists() {
-		data.OAuthFeatures = &DmOAuthFeatures{}
-		data.OAuthFeatures.FromBody(ctx, "", value)
+		data.OauthFeatures = &DmOAuthFeatures{}
+		data.OauthFeatures.FromBody(ctx, "", value)
 	} else {
-		data.OAuthFeatures = nil
+		data.OauthFeatures = nil
 	}
 }
 
@@ -2246,9 +2246,9 @@ func (data *OAuthSupportedClient) UpdateFromBody(ctx context.Context, pathRoot s
 		data.CustomizedProcessUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthRole`); value.Exists() {
-		data.OAuthRole.UpdateFromBody(ctx, "", value)
+		data.OauthRole.UpdateFromBody(ctx, "", value)
 	} else {
-		data.OAuthRole = nil
+		data.OauthRole = nil
 	}
 	if value := res.Get(pathRoot + `AZGrant`); value.Exists() {
 		data.AzGrant.UpdateFromBody(ctx, "", value)
@@ -2380,25 +2380,25 @@ func (data *OAuthSupportedClient) UpdateFromBody(ctx context.Context, pathRoot s
 	} else {
 		data.ResourceOwnerUrl = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AdditionalOAuthProcessUrl`); value.Exists() && !data.AdditionalOAuthProcessUrl.IsNull() {
-		data.AdditionalOAuthProcessUrl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `AdditionalOAuthProcessUrl`); value.Exists() && !data.AdditionalOauthProcessUrl.IsNull() {
+		data.AdditionalOauthProcessUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AdditionalOAuthProcessUrl = types.StringNull()
+		data.AdditionalOauthProcessUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `RSSetHeader`); value.Exists() {
 		data.RsSetHeader.UpdateFromBody(ctx, "", value)
 	} else {
 		data.RsSetHeader = nil
 	}
-	if value := res.Get(pathRoot + `ValidationURLSSLClientType`); value.Exists() && !data.ValidationUrlsslClientType.IsNull() {
-		data.ValidationUrlsslClientType = tfutils.ParseStringFromGJSON(value)
-	} else if data.ValidationUrlsslClientType.ValueString() != "client" {
-		data.ValidationUrlsslClientType = types.StringNull()
+	if value := res.Get(pathRoot + `ValidationURLSSLClientType`); value.Exists() && !data.ValidationUrlSslClientType.IsNull() {
+		data.ValidationUrlSslClientType = tfutils.ParseStringFromGJSON(value)
+	} else if data.ValidationUrlSslClientType.ValueString() != "client" {
+		data.ValidationUrlSslClientType = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `ValidationURLSSLClient`); value.Exists() && !data.ValidationUrlsslClient.IsNull() {
-		data.ValidationUrlsslClient = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `ValidationURLSSLClient`); value.Exists() && !data.ValidationUrlSslClient.IsNull() {
+		data.ValidationUrlSslClient = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ValidationUrlsslClient = types.StringNull()
+		data.ValidationUrlSslClient = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `JWTGrantValidator`); value.Exists() && !data.JwtGrantValidator.IsNull() {
 		data.JwtGrantValidator = tfutils.ParseStringFromGJSON(value)
@@ -2410,15 +2410,15 @@ func (data *OAuthSupportedClient) UpdateFromBody(ctx context.Context, pathRoot s
 	} else {
 		data.ClientJwtValidator = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `OIDCIDTokenGenerator`); value.Exists() && !data.OidcidTokenGenerator.IsNull() {
-		data.OidcidTokenGenerator = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `OIDCIDTokenGenerator`); value.Exists() && !data.OidcIdTokenGenerator.IsNull() {
+		data.OidcIdTokenGenerator = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.OidcidTokenGenerator = types.StringNull()
+		data.OidcIdTokenGenerator = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `OAuthFeatures`); value.Exists() {
-		data.OAuthFeatures.UpdateFromBody(ctx, "", value)
+		data.OauthFeatures.UpdateFromBody(ctx, "", value)
 	} else {
-		data.OAuthFeatures = nil
+		data.OauthFeatures = nil
 	}
 }
 func (data *OAuthSupportedClient) UpdateUnknownFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -2453,12 +2453,12 @@ func (data *OAuthSupportedClient) UpdateUnknownFromBody(ctx context.Context, pat
 			data.CustomizedProcessUrl = types.StringNull()
 		}
 	}
-	if data.OAuthRole == nil {
+	if data.OauthRole == nil {
 		if value := res.Get(pathRoot + `OAuthRole`); value.Exists() {
 			d := DmOAuthRole{}
 			d.UpdateFromBody(ctx, "", value)
 			if !d.IsNull() {
-				data.OAuthRole = &d
+				data.OauthRole = &d
 			}
 		}
 	}
@@ -2648,11 +2648,11 @@ func (data *OAuthSupportedClient) UpdateUnknownFromBody(ctx context.Context, pat
 			data.ResourceOwnerUrl = types.StringNull()
 		}
 	}
-	if data.AdditionalOAuthProcessUrl.IsUnknown() {
-		if value := res.Get(pathRoot + `AdditionalOAuthProcessUrl`); value.Exists() && !data.AdditionalOAuthProcessUrl.IsNull() {
-			data.AdditionalOAuthProcessUrl = tfutils.ParseStringFromGJSON(value)
+	if data.AdditionalOauthProcessUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `AdditionalOAuthProcessUrl`); value.Exists() && !data.AdditionalOauthProcessUrl.IsNull() {
+			data.AdditionalOauthProcessUrl = tfutils.ParseStringFromGJSON(value)
 		} else {
-			data.AdditionalOAuthProcessUrl = types.StringNull()
+			data.AdditionalOauthProcessUrl = types.StringNull()
 		}
 	}
 	if data.RsSetHeader == nil {
@@ -2664,18 +2664,18 @@ func (data *OAuthSupportedClient) UpdateUnknownFromBody(ctx context.Context, pat
 			}
 		}
 	}
-	if data.ValidationUrlsslClientType.IsUnknown() {
-		if value := res.Get(pathRoot + `ValidationURLSSLClientType`); value.Exists() && !data.ValidationUrlsslClientType.IsNull() {
-			data.ValidationUrlsslClientType = tfutils.ParseStringFromGJSON(value)
-		} else if data.ValidationUrlsslClientType.ValueString() != "client" {
-			data.ValidationUrlsslClientType = types.StringNull()
+	if data.ValidationUrlSslClientType.IsUnknown() {
+		if value := res.Get(pathRoot + `ValidationURLSSLClientType`); value.Exists() && !data.ValidationUrlSslClientType.IsNull() {
+			data.ValidationUrlSslClientType = tfutils.ParseStringFromGJSON(value)
+		} else if data.ValidationUrlSslClientType.ValueString() != "client" {
+			data.ValidationUrlSslClientType = types.StringNull()
 		}
 	}
-	if data.ValidationUrlsslClient.IsUnknown() {
-		if value := res.Get(pathRoot + `ValidationURLSSLClient`); value.Exists() && !data.ValidationUrlsslClient.IsNull() {
-			data.ValidationUrlsslClient = tfutils.ParseStringFromGJSON(value)
+	if data.ValidationUrlSslClient.IsUnknown() {
+		if value := res.Get(pathRoot + `ValidationURLSSLClient`); value.Exists() && !data.ValidationUrlSslClient.IsNull() {
+			data.ValidationUrlSslClient = tfutils.ParseStringFromGJSON(value)
 		} else {
-			data.ValidationUrlsslClient = types.StringNull()
+			data.ValidationUrlSslClient = types.StringNull()
 		}
 	}
 	if data.JwtGrantValidator.IsUnknown() {
@@ -2692,19 +2692,19 @@ func (data *OAuthSupportedClient) UpdateUnknownFromBody(ctx context.Context, pat
 			data.ClientJwtValidator = types.StringNull()
 		}
 	}
-	if data.OidcidTokenGenerator.IsUnknown() {
-		if value := res.Get(pathRoot + `OIDCIDTokenGenerator`); value.Exists() && !data.OidcidTokenGenerator.IsNull() {
-			data.OidcidTokenGenerator = tfutils.ParseStringFromGJSON(value)
+	if data.OidcIdTokenGenerator.IsUnknown() {
+		if value := res.Get(pathRoot + `OIDCIDTokenGenerator`); value.Exists() && !data.OidcIdTokenGenerator.IsNull() {
+			data.OidcIdTokenGenerator = tfutils.ParseStringFromGJSON(value)
 		} else {
-			data.OidcidTokenGenerator = types.StringNull()
+			data.OidcIdTokenGenerator = types.StringNull()
 		}
 	}
-	if data.OAuthFeatures == nil {
+	if data.OauthFeatures == nil {
 		if value := res.Get(pathRoot + `OAuthFeatures`); value.Exists() {
 			d := DmOAuthFeatures{}
 			d.UpdateFromBody(ctx, "", value)
 			if !d.IsNull() {
-				data.OAuthFeatures = &d
+				data.OauthFeatures = &d
 			}
 		}
 	}

@@ -66,7 +66,7 @@ Read-Only:
 - `ssl_client_config_type` (String) <p>The TLS profile type to secure connections between the DataPower Gateway and the remote Multi-Enterprise Integration Gateway server. This communication must be TLS protected. You can define the TLS proxy profile for this communication in one of the following places:</p><ul><li>Define the TLS profile in the user agent that is assigned to the XML manager for the DataPower service service.</li><li>Define the TLS profile here.</li></ul><p>Ensure that the TLS profile is defined in one of these places. Without the remote TLS profile, processing is stopped and an error is logged.</p>
 - `ssl_server` (String) The TLS server profile to secure connections between clients and the DataPower Gateway.
 - `ssl_server_config_type` (String) The TLS profile type to secure connections between clients and the DataPower Gateway.
-- `sslsni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
+- `ssl_sni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
 - `user_summary` (String) Comments
 - `visibility_event_endpoint` (String) Specifies the URL of the MEIG visibility event endpoint. Enter the URL in the format of static IBM MQ URL that provides the information about the IBM MQ server name, queue manager name, and name of the channel configured in the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT
 - `xml_manager` (String) Specifies an existing XML manager. An XML manager obtains and manages XML documents, stylesheets, and other document resources on behalf of one or more services.
@@ -99,9 +99,9 @@ Read-Only:
   - Default value: `false`
 - `fragment_identifiers` (Boolean) UAllows requests when the URL contains a # (fragment identifier)
   - Default value: `true`
-- `http_1_0` (Boolean) Supports HTTP 1.0 requests
+- `http_1d0` (Boolean) Supports HTTP 1.0 requests
   - Default value: `true`
-- `http_1_1` (Boolean) Supports HTTP 1.1 requests
+- `http_1d1` (Boolean) Supports HTTP 1.1 requests
   - Default value: `true`
 - `query_string` (Boolean) Allows requests when the URL contains a ? (query string)
   - Default value: `true`

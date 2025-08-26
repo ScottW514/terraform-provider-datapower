@@ -17,11 +17,11 @@ description: |-
 resource "datapower_xpath_routing_map" "test" {
   id         = "ResTestXPathRoutingMap"
   app_domain = "acceptance_test"
-  x_path_routing_rules = [{
-    x_path = "*"
-    host   = "localhost"
-    port   = 8888
-    ssl    = false
+  xpath_routing_rules = [{
+    xpath = "*"
+    host  = "localhost"
+    port  = 8888
+    ssl   = false
   }]
 }
 ```
@@ -33,8 +33,8 @@ resource "datapower_xpath_routing_map" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `x_path_routing_rules` (Attributes List) Rules
-  - CLI Alias: `rule` (see [below for nested schema](#nestedatt--x_path_routing_rules))
+- `xpath_routing_rules` (Attributes List) Rules
+  - CLI Alias: `rule` (see [below for nested schema](#nestedatt--xpath_routing_rules))
 
 ### Optional
 
@@ -44,14 +44,14 @@ resource "datapower_xpath_routing_map" "test" {
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
-<a id="nestedatt--x_path_routing_rules"></a>
-### Nested Schema for `x_path_routing_rules`
+<a id="nestedatt--xpath_routing_rules"></a>
+### Nested Schema for `xpath_routing_rules`
 
 Required:
 
 - `host` (String) Specify the host name or IP address to which matching documents should be routed.
 - `port` (Number) Specify the port to which matching documents should be routed.
-- `x_path` (String) <p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>
+- `xpath` (String) <p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>
 
 Optional:
 

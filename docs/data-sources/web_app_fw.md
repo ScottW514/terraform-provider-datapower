@@ -68,7 +68,7 @@ Read-Only:
 - `ssl_client` (String) TLS client profile
 - `ssl_config_type` (String) TLS type
 - `ssl_server` (String) TLS server profile
-- `sslsni_server` (String) TLS SNI server profile
+- `ssl_sni_server` (String) TLS SNI server profile
 - `stream_output_to_back` (String) Select the desired streaming behavior.
 - `stream_output_to_front` (String) Select the desired streaming behavior.
 - `style_policy` (String) Select a security policy from the list of available policies. Click + to create a new Policy. This policy controls which profiles are enforced.
@@ -105,7 +105,7 @@ Read-Only:
 - `rule_match` (String) Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.
 - `rule_type` (String) Select the rule direction or type that will trigger the probe.
   - Choices: `all`, `response`, `request`, `call`, `error`, `scheduled`, `lbhealth`
-- `x_path` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.
+- `xpath` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.
 
 
 <a id="nestedatt--result--front_side"></a>

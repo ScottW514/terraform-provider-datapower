@@ -214,7 +214,7 @@ func (d *WebAppFWDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							MarkdownDescription: "TLS server profile",
 							Computed:            true,
 						},
-						"sslsni_server": schema.StringAttribute{
+						"ssl_sni_server": schema.StringAttribute{
 							MarkdownDescription: "TLS SNI server profile",
 							Computed:            true,
 						},

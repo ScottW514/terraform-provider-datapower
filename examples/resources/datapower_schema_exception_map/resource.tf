@@ -4,7 +4,7 @@ resource "datapower_schema_exception_map" "test" {
   app_domain          = "acceptance_test"
   original_schema_url = "http://localhost"
   schema_exception_rules = [{
-    x_path         = "*"
+    xpath          = "*"
     exception_type = "AllowEncrypted"
   }]
 }

@@ -361,7 +361,7 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").String,
 				Optional:            true,
 			},
-			"sslsni_server": schema.StringAttribute{
+			"ssl_sni_server": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").String,
 				Optional:            true,
 			},

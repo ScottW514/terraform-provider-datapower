@@ -20,7 +20,7 @@ resource "datapower_schema_exception_map" "test" {
   app_domain          = "acceptance_test"
   original_schema_url = "http://localhost"
   schema_exception_rules = [{
-    x_path         = "*"
+    xpath          = "*"
     exception_type = "AllowEncrypted"
   }]
 }
@@ -49,7 +49,7 @@ resource "datapower_schema_exception_map" "test" {
 
 Required:
 
-- `x_path` (String) This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.
+- `xpath` (String) This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.
 
 Optional:
 

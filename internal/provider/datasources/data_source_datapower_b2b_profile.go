@@ -84,17 +84,17 @@ func (d *B2BProfileDataSource) Schema(ctx context.Context, req datasource.Schema
 							MarkdownDescription: "Specify whether the profile is for an internal or external partner. The default value is internal.",
 							Computed:            true,
 						},
-						"business_i_ds": schema.ListAttribute{
+						"business_ids": schema.ListAttribute{
 							MarkdownDescription: "Specify the identifier for the partners. When configuring a trading partner, its identifier (ID) must be unique within a specific B2B gateway. The identifiers are equivalent to one of the following values. <ul><li>In AS messages, a value for an <tt>AS*-From</tt> or <tt>AS*-To</tt> header, where * is 1, 2, or 3.</li><li>In ebMS messages, a value for an <tt>PartyID</tt> element, where the PartyID element can be under either From or To element.</li><li>In other messages, a value that is extracted from the body of the EDI message: <tt>SenderID</tt> or <tt>ReceiverID</tt> .</li></ul>",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"business_i_ds_duns": schema.ListAttribute{
+						"business_id_duns": schema.ListAttribute{
 							MarkdownDescription: "Specify the 9-digit DUNS (Data Universal Numbering System) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"business_i_ds_duns_plus4": schema.ListAttribute{
+						"business_id_duns4": schema.ListAttribute{
 							MarkdownDescription: "Specifies the 13-digit D-U-N-S (Data Universal Numbering System + 4) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -271,11 +271,11 @@ func (d *B2BProfileDataSource) Schema(ctx context.Context, req datasource.Schema
 							MarkdownDescription: "Specify when to allow and reprocess duplicate ebMS2 inbound messages. The default behavior is never. This option does not apply to acknowledgments.",
 							Computed:            true,
 						},
-						"mdnssl_client_config_type": schema.StringAttribute{
+						"mdn_ssl_client_config_type": schema.StringAttribute{
 							MarkdownDescription: "MDN TLS client type",
 							Computed:            true,
 						},
-						"mdnssl_client": schema.StringAttribute{
+						"mdn_ssl_client": schema.StringAttribute{
 							MarkdownDescription: "MDN TLS client profile",
 							Computed:            true,
 						},

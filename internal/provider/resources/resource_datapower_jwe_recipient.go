@@ -93,7 +93,7 @@ func (r *JWERecipientResource) Schema(ctx context.Context, req resource.SchemaRe
 				},
 				Default: stringdefault.StaticString("RSA1_5"),
 			},
-			"ss_key": schema.StringAttribute{
+			"sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").AddRequiredWhen(models.JWERecipientSSKeyCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

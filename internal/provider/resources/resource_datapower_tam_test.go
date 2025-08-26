@@ -43,7 +43,7 @@ func TestAccResourceTAM(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_tam.test", "listen_mode", "false"),
 			resource.TestCheckResourceAttr("datapower_tam.test", "returning_user_attributes", "false"),
 			resource.TestCheckResourceAttr("datapower_tam.test", "ldap_use_ssl", "false"),
-			resource.TestCheckResourceAttr("datapower_tam.test", "ldapssl_port", "636"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "ldap_ssl_port", "636"),
 			resource.TestCheckResourceAttr("datapower_tam.test", "tam_use_fips", "false"),
 			resource.TestCheckResourceAttr("datapower_tam.test", "tam_use_basic_user", "false"),
 			resource.TestCheckResourceAttr("datapower_tam.test", "user_principal_attribute", "uid"),

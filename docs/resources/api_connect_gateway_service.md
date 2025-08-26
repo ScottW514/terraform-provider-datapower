@@ -46,25 +46,25 @@ resource "datapower_api_connect_gateway_service" "test" {
 - `gateway_peering` (String) Specify the gateway-peering instance that manages data across the gateway peers. The following restrictions apply. <ul><li>When TLS and peer group mode are enabled, all peers must use the same crypto material.</li><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li></ul>
   - CLI Alias: `gateway-peering`
   - Reference to: `datapower_gateway_peering:id`
-  - Required When: `v5_compatibility_mode`=`true`
+  - Required When: `v5compatibility_mode`=`true`
 - `gateway_peering_manager` (String) Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.
   - CLI Alias: `gateway-peering-manager`
   - Reference to: `datapower_gateway_peering_manager:id`
   - Default value: `default`
-  - Required When: `v5_compatibility_mode`=`false`
+  - Required When: `v5compatibility_mode`=`false`
 - `ip_multicast` (String) Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.
   - CLI Alias: `ip-multicast`
   - Reference to: `datapower_ip_multicast:id`
-  - Required When: (`v5c_slm_mode`=`multicast` AND `v5_compatibility_mode`=`true`)
+  - Required When: (`v5c_slm_mode`=`multicast` AND `v5compatibility_mode`=`true`)
 - `ip_unicast` (String) Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.
   - CLI Alias: `ip-unicast`
-  - Required When: (`v5c_slm_mode`=`unicast` AND `v5_compatibility_mode`=`true`)
+  - Required When: (`v5c_slm_mode`=`unicast` AND `v5compatibility_mode`=`true`)
+- `jwt_url` (String) JWT URL
+  - CLI Alias: `jwt-url`
 - `jwt_validation_mode` (String) Specify the JWT validation mode. This property does not control whether a token is validated. This property controls whether transactions fail when validation fails.
   - CLI Alias: `jwt-validate-mode`
   - Choices: `request`, `require`
   - Default value: `request`
-- `jwturl` (String) JWT URL
-  - CLI Alias: `jwt-url`
 - `local_address` (String) Specify the IP address or interface through that API Connect uses to manage the gateway service. The default value is 0.0.0.0.
   - CLI Alias: `local-address`
   - Default value: `0.0.0.0`
@@ -81,14 +81,14 @@ resource "datapower_api_connect_gateway_service" "test" {
   - Reference to: `datapower_assembly_function:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `v5_compatibility_mode` (Boolean) Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>
-  - CLI Alias: `v5-compatibility-mode`
-  - Default value: `true`
 - `v5c_slm_mode` (String) Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.
   - CLI Alias: `slm-mode`
   - Choices: `autounicast`, `unicast`, `multicast`
   - Default value: `autounicast`
-  - Required When: `v5_compatibility_mode`=`true`
+  - Required When: `v5compatibility_mode`=`true`
+- `v5compatibility_mode` (Boolean) Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>
+  - CLI Alias: `v5-compatibility-mode`
+  - Default value: `true`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

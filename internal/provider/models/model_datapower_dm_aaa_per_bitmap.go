@@ -40,7 +40,7 @@ type DmAAAPERBitmap struct {
 	RequestUri    types.Bool `tfsdk:"request_uri"`
 	RequestOpname types.Bool `tfsdk:"request_opname"`
 	HttpMethod    types.Bool `tfsdk:"http_method"`
-	XPath         types.Bool `tfsdk:"x_path"`
+	Xpath         types.Bool `tfsdk:"xpath"`
 	Metadata      types.Bool `tfsdk:"metadata"`
 }
 
@@ -50,7 +50,7 @@ var DmAAAPERBitmapObjectType = map[string]attr.Type{
 	"request_uri":    types.BoolType,
 	"request_opname": types.BoolType,
 	"http_method":    types.BoolType,
-	"x_path":         types.BoolType,
+	"xpath":          types.BoolType,
 	"metadata":       types.BoolType,
 }
 var DmAAAPERBitmapObjectDefault = map[string]attr.Value{
@@ -59,7 +59,7 @@ var DmAAAPERBitmapObjectDefault = map[string]attr.Value{
 	"request_uri":    types.BoolValue(false),
 	"request_opname": types.BoolValue(false),
 	"http_method":    types.BoolValue(false),
-	"x_path":         types.BoolValue(false),
+	"xpath":          types.BoolValue(false),
 	"metadata":       types.BoolValue(false),
 }
 
@@ -87,7 +87,7 @@ func GetDmAAAPERBitmapDataSourceSchema(description string, cliAlias string, refe
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP operation (GET or POST)", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
-			"x_path": DataSourceSchema.BoolAttribute{
+			"xpath": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 			},
@@ -138,7 +138,7 @@ func GetDmAAAPERBitmapResourceSchema(description string, cliAlias string, refere
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"x_path": ResourceSchema.BoolAttribute{
+			"xpath": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").AddDefaultValue("false").String,
 				Computed:            true,
 				Optional:            true,
@@ -178,7 +178,7 @@ func (data DmAAAPERBitmap) IsNull() bool {
 	if !data.HttpMethod.IsNull() {
 		return false
 	}
-	if !data.XPath.IsNull() {
+	if !data.Xpath.IsNull() {
 		return false
 	}
 	if !data.Metadata.IsNull() {
@@ -208,8 +208,8 @@ func (data DmAAAPERBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.HttpMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`http-method`, tfutils.StringFromBool(data.HttpMethod, ""))
 	}
-	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, tfutils.StringFromBool(data.XPath, ""))
+	if !data.Xpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`XPath`, tfutils.StringFromBool(data.Xpath, ""))
 	}
 	if !data.Metadata.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`metadata`, tfutils.StringFromBool(data.Metadata, ""))
@@ -247,9 +247,9 @@ func (data *DmAAAPERBitmap) FromBody(ctx context.Context, pathRoot string, res g
 		data.HttpMethod = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `XPath`); value.Exists() {
-		data.XPath = tfutils.BoolFromString(value.String())
+		data.Xpath = tfutils.BoolFromString(value.String())
 	} else {
-		data.XPath = types.BoolNull()
+		data.Xpath = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `metadata`); value.Exists() {
 		data.Metadata = tfutils.BoolFromString(value.String())
@@ -287,10 +287,10 @@ func (data *DmAAAPERBitmap) UpdateFromBody(ctx context.Context, pathRoot string,
 	} else if data.HttpMethod.ValueBool() {
 		data.HttpMethod = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.XPath.IsNull() {
-		data.XPath = tfutils.BoolFromString(value.String())
-	} else if data.XPath.ValueBool() {
-		data.XPath = types.BoolNull()
+	if value := res.Get(pathRoot + `XPath`); value.Exists() && !data.Xpath.IsNull() {
+		data.Xpath = tfutils.BoolFromString(value.String())
+	} else if data.Xpath.ValueBool() {
+		data.Xpath = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `metadata`); value.Exists() && !data.Metadata.IsNull() {
 		data.Metadata = tfutils.BoolFromString(value.String())

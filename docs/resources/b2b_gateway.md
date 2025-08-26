@@ -62,14 +62,14 @@ resource "datapower_b2b_gateway" "test" {
 - `archive_monitor` (Boolean) Specify whether to use a monitor during archival. The monitor limits the message injection rate to prevent problems in a critical situation like performance testing or on a heavily loaded system.
   - CLI Alias: `arch-monitor`
   - Default value: `true`
-- `as1mdn_email` (String) For AS1 asynchronous MDN scenarios, specify the default email address for the AS1 asynchronous MDN. When sending outbound AS1 email messages that request an MDN, this email address can be the default email address for the response MDN. An email address in the destination overrides this value.
+- `as1_mdn_email` (String) For AS1 asynchronous MDN scenarios, specify the default email address for the AS1 asynchronous MDN. When sending outbound AS1 email messages that request an MDN, this email address can be the default email address for the response MDN. An email address in the destination overrides this value.
   - CLI Alias: `as1-mdn-email`
-- `as1mdnsmtp_server_connection` (String) When an incoming AS1 message requests an MDN as an email request, specify the SMTP server connection for asynchronous MDN responses.
+- `as1_mdn_smtp_server_connection` (String) When an incoming AS1 message requests an MDN as an email request, specify the SMTP server connection for asynchronous MDN responses.
   - CLI Alias: `as1-mdn-smtp-server-connection`
   - Reference to: `datapower_smtp_server_connection:id`
-- `as2mdnurl` (String) For AS2 asynchronous MDN scenarios, specify the default URL for the AS2 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
+- `as2_mdn_url` (String) For AS2 asynchronous MDN scenarios, specify the default URL for the AS2 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
   - CLI Alias: `as2-mdn-url`
-- `as3mdnurl` (String) For AS3 asynchronous MDN scenarios, specify the default URL for the AS3 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
+- `as3_mdn_url` (String) For AS3 asynchronous MDN scenarios, specify the default URL for the AS3 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
   - CLI Alias: `as3-mdn-url`
 - `as_front_protocol` (Attributes List) Protocol handlers
   - CLI Alias: `as-fsph` (see [below for nested schema](#nestedatt--as_front_protocol))
@@ -128,13 +128,13 @@ resource "datapower_b2b_gateway" "test" {
   - Reference to: `datapower_sql_data_source:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `x_path_routing_policies` (List of String) XPath routing policies
-  - CLI Alias: `xpath-routing`
-  - Reference to: `datapower_b2b_xpath_routing_policy:id`
 - `xml_manager` (String) XML manager
   - CLI Alias: `xml-manager`
   - Reference to: `datapower_xml_manager:id`
   - Default value: `default`
+- `xpath_routing_policies` (List of String) XPath routing policies
+  - CLI Alias: `xpath-routing`
+  - Reference to: `datapower_b2b_xpath_routing_policy:id`
 
 <a id="nestedatt--archive_backup_documents"></a>
 ### Nested Schema for `archive_backup_documents`

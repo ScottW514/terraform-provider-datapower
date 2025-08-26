@@ -41,10 +41,6 @@ type FileSystemUsageMonitor struct {
 	AllSystemWarningThreshold  types.Int64                 `tfsdk:"all_system_warning_threshold"`
 	AllSystemCriticalThreshold types.Int64                 `tfsdk:"all_system_critical_threshold"`
 	System                     types.List                  `tfsdk:"system"`
-	AllQueueManagers           types.Bool                  `tfsdk:"all_queue_managers"`
-	AllQmWarningThreshold      types.Int64                 `tfsdk:"all_qm_warning_threshold"`
-	AllQmCriticalThreshold     types.Int64                 `tfsdk:"all_qm_critical_threshold"`
-	QueueManager               types.List                  `tfsdk:"queue_manager"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
@@ -62,20 +58,6 @@ var FileSystemUsageMonitorAllSystemCriticalThresholdCondVal = validators.Evaluat
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
-var FileSystemUsageMonitorAllQMWarningThresholdCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "all_queue_managers",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
-var FileSystemUsageMonitorAllQMCriticalThresholdCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "all_queue_managers",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
 
 var FileSystemUsageMonitorObjectType = map[string]attr.Type{
 	"enabled":                       types.BoolType,
@@ -85,10 +67,6 @@ var FileSystemUsageMonitorObjectType = map[string]attr.Type{
 	"all_system_warning_threshold":  types.Int64Type,
 	"all_system_critical_threshold": types.Int64Type,
 	"system":                        types.ListType{ElemType: types.ObjectType{AttrTypes: DmFileSystemUsageObjectType}},
-	"all_queue_managers":            types.BoolType,
-	"all_qm_warning_threshold":      types.Int64Type,
-	"all_qm_critical_threshold":     types.Int64Type,
-	"queue_manager":                 types.ListType{ElemType: types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType}},
 	"dependency_actions":            actions.ActionsListType,
 }
 
@@ -117,18 +95,6 @@ func (data FileSystemUsageMonitor) IsNull() bool {
 		return false
 	}
 	if !data.System.IsNull() {
-		return false
-	}
-	if !data.AllQueueManagers.IsNull() {
-		return false
-	}
-	if !data.AllQmWarningThreshold.IsNull() {
-		return false
-	}
-	if !data.AllQmCriticalThreshold.IsNull() {
-		return false
-	}
-	if !data.QueueManager.IsNull() {
 		return false
 	}
 	return true
@@ -164,22 +130,6 @@ func (data FileSystemUsageMonitor) ToBody(ctx context.Context, pathRoot string) 
 		data.System.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`System`+".-1", val.ToBody(ctx, ""))
-		}
-	}
-	if !data.AllQueueManagers.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllQueueManagers`, tfutils.StringFromBool(data.AllQueueManagers, ""))
-	}
-	if !data.AllQmWarningThreshold.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllQMWarningThreshold`, data.AllQmWarningThreshold.ValueInt64())
-	}
-	if !data.AllQmCriticalThreshold.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllQMCriticalThreshold`, data.AllQmCriticalThreshold.ValueInt64())
-	}
-	if !data.QueueManager.IsNull() {
-		var dataValues []DmQMFileSystemUsage
-		data.QueueManager.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`QueueManager`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	return body
@@ -238,40 +188,6 @@ func (data *FileSystemUsageMonitor) FromBody(ctx context.Context, pathRoot strin
 	} else {
 		data.System = types.ListNull(types.ObjectType{AttrTypes: DmFileSystemUsageObjectType})
 	}
-	if value := res.Get(pathRoot + `AllQueueManagers`); value.Exists() {
-		data.AllQueueManagers = tfutils.BoolFromString(value.String())
-	} else {
-		data.AllQueueManagers = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `AllQMWarningThreshold`); value.Exists() {
-		data.AllQmWarningThreshold = types.Int64Value(value.Int())
-	} else {
-		data.AllQmWarningThreshold = types.Int64Value(75)
-	}
-	if value := res.Get(pathRoot + `AllQMCriticalThreshold`); value.Exists() {
-		data.AllQmCriticalThreshold = types.Int64Value(value.Int())
-	} else {
-		data.AllQmCriticalThreshold = types.Int64Value(90)
-	}
-	if value := res.Get(pathRoot + `QueueManager`); value.Exists() {
-		l := []DmQMFileSystemUsage{}
-		if value := res.Get(`QueueManager`); value.Exists() {
-			for _, v := range value.Array() {
-				item := DmQMFileSystemUsage{}
-				item.FromBody(ctx, "", v)
-				if !item.IsNull() {
-					l = append(l, item)
-				}
-			}
-		}
-		if len(l) > 0 {
-			data.QueueManager, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType}, l)
-		} else {
-			data.QueueManager = types.ListNull(types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType})
-		}
-	} else {
-		data.QueueManager = types.ListNull(types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType})
-	}
 }
 
 func (data *FileSystemUsageMonitor) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -324,37 +240,5 @@ func (data *FileSystemUsageMonitor) UpdateFromBody(ctx context.Context, pathRoot
 		}
 	} else {
 		data.System = types.ListNull(types.ObjectType{AttrTypes: DmFileSystemUsageObjectType})
-	}
-	if value := res.Get(pathRoot + `AllQueueManagers`); value.Exists() && !data.AllQueueManagers.IsNull() {
-		data.AllQueueManagers = tfutils.BoolFromString(value.String())
-	} else if !data.AllQueueManagers.ValueBool() {
-		data.AllQueueManagers = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `AllQMWarningThreshold`); value.Exists() && !data.AllQmWarningThreshold.IsNull() {
-		data.AllQmWarningThreshold = types.Int64Value(value.Int())
-	} else if data.AllQmWarningThreshold.ValueInt64() != 75 {
-		data.AllQmWarningThreshold = types.Int64Null()
-	}
-	if value := res.Get(pathRoot + `AllQMCriticalThreshold`); value.Exists() && !data.AllQmCriticalThreshold.IsNull() {
-		data.AllQmCriticalThreshold = types.Int64Value(value.Int())
-	} else if data.AllQmCriticalThreshold.ValueInt64() != 90 {
-		data.AllQmCriticalThreshold = types.Int64Null()
-	}
-	if value := res.Get(pathRoot + `QueueManager`); value.Exists() && !data.QueueManager.IsNull() {
-		l := []DmQMFileSystemUsage{}
-		for _, v := range value.Array() {
-			item := DmQMFileSystemUsage{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
-			}
-		}
-		if len(l) > 0 {
-			data.QueueManager, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType}, l)
-		} else {
-			data.QueueManager = types.ListNull(types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType})
-		}
-	} else {
-		data.QueueManager = types.ListNull(types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType})
 	}
 }

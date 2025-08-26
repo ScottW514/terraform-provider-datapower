@@ -66,7 +66,7 @@ resource "datapower_xtc_protocol_handler" "test" {
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
-- `sslsni_server` (String) TLS SNI server profile
+- `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
 - `user_summary` (String) Comments

@@ -67,7 +67,7 @@ Read-Only:
 - `session_management_profile` (String) The session management policy enforces the start pages acceptable for requests that match this security profile. If no policy is referenced, any page is an acceptable start page.
 - `sql_injection` (Boolean) Data parameters from the query string, application/www-urlencoded requests, and multipart/form-data requests will be passed through the standard SQL Injection filter if this property is enabled.
 - `sql_injection_patterns_file` (String) The patterns file that the SQL injection filter uses.
-- `ss_key` (String) Select the Shared Secret Key for both signing or encrypting.
+- `sskey` (String) Select the Shared Secret Key for both signing or encrypting.
 - `ssl_policy` (String) Select how the client side of the inspected transaction handles SSL. The default value is Allow.
 - `uri_filter_dot_dot` (Boolean) Filter Requests with .. in the URI after URI normalization
 - `uri_filter_exe` (Boolean) Filter Requests with .exe in the URI after URI normalization
@@ -162,7 +162,7 @@ Read-Only:
 
 Read-Only:
 
-- `http_1_0` (Boolean) HTTP 1.0
+- `http_1d0` (Boolean) HTTP 1.0
   - Default value: `true`
-- `http_1_1` (Boolean) HTTP 1.1
+- `http_1d1` (Boolean) HTTP 1.1
   - Default value: `true`

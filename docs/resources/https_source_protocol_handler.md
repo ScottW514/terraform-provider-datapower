@@ -111,7 +111,7 @@ resource "datapower_https_source_protocol_handler" "test" {
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
-- `sslsni_server` (String) Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
+- `ssl_sni_server` (String) Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
   - Required When: `ssl_server_config_type`=`sni`

@@ -255,7 +255,7 @@ resource "datapower_xml_firewall_service" "test" {
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
-- `sslsni_server` (String) TLS SNI server profile
+- `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
 - `style_policy` (String) Assign the processing policy to the service. The processing policy defines the actions to take against messages that flow through the service.
@@ -298,7 +298,7 @@ Optional:
 - `rule_match` (String) Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.
 - `rule_type` (String) Select the rule direction or type that will trigger the probe.
   - Choices: `all`, `response`, `request`, `call`, `error`, `scheduled`, `lbhealth`
-- `x_path` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.
+- `xpath` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.
 
 
 <a id="nestedatt--dependency_actions"></a>

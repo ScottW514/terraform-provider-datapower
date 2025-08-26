@@ -57,7 +57,7 @@ resource "datapower_aaa_jwt_generator" "test" {
   - CLI Alias: `enc-cert`
   - Reference to: `datapower_crypto_certificate:id`
   - Required When: (`gen_method`=`encrypt` AND `encrypt_algorithm`=`RSA1_5`|`RSA-OAEP`|`RSA-OAEP-256`)
-- `encrypt_ss_key` (String) The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
+- `encrypt_sskey` (String) The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
   - CLI Alias: `enc-sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: (`gen_method`=`encrypt` AND `encrypt_algorithm`=`A128KW`|`A192KW`|`A256KW`|`dir`)
@@ -79,7 +79,7 @@ resource "datapower_aaa_jwt_generator" "test" {
   - CLI Alias: `sign-key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: (`gen_method`=`sign` AND `sign_algorithm`=`RS256`|`RS384`|`RS512`|`PS256`|`PS384`|`PS512`|`ES256`|`ES384`|`ES512`)
-- `sign_ss_key` (String) The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
+- `sign_sskey` (String) The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
   - CLI Alias: `sign-sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: (`gen_method`=`sign` AND `sign_algorithm`=`HS256`|`HS384`|`HS512`)

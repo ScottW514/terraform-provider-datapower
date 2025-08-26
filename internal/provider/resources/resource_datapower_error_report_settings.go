@@ -171,7 +171,7 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 					validators.ConditionalRequiredString(models.ErrorReportSettingsFTPUserAgentCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"nfs_mount": schema.StringAttribute{
+			"nf_sm_ount": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the NFS mount point to which to upload the error report.", "nfs-mount", "nfs_static_mount").AddRequiredWhen(models.ErrorReportSettingsNFSMountCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

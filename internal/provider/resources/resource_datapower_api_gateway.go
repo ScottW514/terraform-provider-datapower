@@ -116,7 +116,7 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 				Default: int64default.StaticInt64(256),
 			},
-			"sha1_caching": schema.BoolAttribute{
+			"sha1caching": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.", "xsl-checksummed-cache", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,

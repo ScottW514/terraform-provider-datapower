@@ -156,7 +156,7 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name and location of the OpenAPI document when you create the API definition from an OpenAPI document. Prepare the document as follows before you specify the location. <ol><li>When the OpenAPI document is a YAML file, convert it to JSON.</li><li>Import the JSON file to the <tt>local:</tt> or <tt>temporary:</tt> DataPower directory.</li></ol><p>When you create the API definition with API properties, this property is not applicable.</p>", "swagger-location", "").String,
 				Optional:            true,
 			},
-			"graph_ql_schema": schema.StringAttribute{
+			"graphql_schema": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema location", "graphql-schema", "api_schema").AddRequiredWhen(models.APIDefinitionGraphQLSchemaCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -277,7 +277,7 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				},
 				Default: stringdefault.StaticString("unset"),
 			},
-			"return_v5_responses": schema.BoolAttribute{
+			"return_v5responses": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return v5-compatible responses, such as OAuth and client security error responses.", "return-v5-responses", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
@@ -301,7 +301,7 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
-			"set_v5_request_headers": schema.BoolAttribute{
+			"set_v5request_headers": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.", "set-v5-request-headers", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,

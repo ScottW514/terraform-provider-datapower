@@ -38,17 +38,17 @@ type APIApplicationType struct {
 	AppDomain           types.String                `tfsdk:"app_domain"`
 	UserSummary         types.String                `tfsdk:"user_summary"`
 	Title               types.String                `tfsdk:"title"`
-	SupportedOAuthTypes types.List                  `tfsdk:"supported_o_auth_types"`
+	SupportedOauthTypes types.List                  `tfsdk:"supported_oauth_types"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIApplicationTypeObjectType = map[string]attr.Type{
-	"id":                     types.StringType,
-	"app_domain":             types.StringType,
-	"user_summary":           types.StringType,
-	"title":                  types.StringType,
-	"supported_o_auth_types": types.ListType{ElemType: types.ObjectType{AttrTypes: DmOAuthTypeObjectType}},
-	"dependency_actions":     actions.ActionsListType,
+	"id":                    types.StringType,
+	"app_domain":            types.StringType,
+	"user_summary":          types.StringType,
+	"title":                 types.StringType,
+	"supported_oauth_types": types.ListType{ElemType: types.ObjectType{AttrTypes: DmOAuthTypeObjectType}},
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data APIApplicationType) GetPath() string {
@@ -71,7 +71,7 @@ func (data APIApplicationType) IsNull() bool {
 	if !data.Title.IsNull() {
 		return false
 	}
-	if !data.SupportedOAuthTypes.IsNull() {
+	if !data.SupportedOauthTypes.IsNull() {
 		return false
 	}
 	return true
@@ -92,9 +92,9 @@ func (data APIApplicationType) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.Title.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Title`, data.Title.ValueString())
 	}
-	if !data.SupportedOAuthTypes.IsNull() {
+	if !data.SupportedOauthTypes.IsNull() {
 		var dataValues []DmOAuthType
-		data.SupportedOAuthTypes.ElementsAs(ctx, &dataValues, false)
+		data.SupportedOauthTypes.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`SupportedOAuthTypes`+".-1", val.ToBody(ctx, ""))
 		}
@@ -133,12 +133,12 @@ func (data *APIApplicationType) FromBody(ctx context.Context, pathRoot string, r
 			}
 		}
 		if len(l) > 0 {
-			data.SupportedOAuthTypes, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmOAuthTypeObjectType}, l)
+			data.SupportedOauthTypes, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmOAuthTypeObjectType}, l)
 		} else {
-			data.SupportedOAuthTypes = types.ListNull(types.ObjectType{AttrTypes: DmOAuthTypeObjectType})
+			data.SupportedOauthTypes = types.ListNull(types.ObjectType{AttrTypes: DmOAuthTypeObjectType})
 		}
 	} else {
-		data.SupportedOAuthTypes = types.ListNull(types.ObjectType{AttrTypes: DmOAuthTypeObjectType})
+		data.SupportedOauthTypes = types.ListNull(types.ObjectType{AttrTypes: DmOAuthTypeObjectType})
 	}
 }
 
@@ -161,7 +161,7 @@ func (data *APIApplicationType) UpdateFromBody(ctx context.Context, pathRoot str
 	} else {
 		data.Title = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SupportedOAuthTypes`); value.Exists() && !data.SupportedOAuthTypes.IsNull() {
+	if value := res.Get(pathRoot + `SupportedOAuthTypes`); value.Exists() && !data.SupportedOauthTypes.IsNull() {
 		l := []DmOAuthType{}
 		for _, v := range value.Array() {
 			item := DmOAuthType{}
@@ -171,11 +171,11 @@ func (data *APIApplicationType) UpdateFromBody(ctx context.Context, pathRoot str
 			}
 		}
 		if len(l) > 0 {
-			data.SupportedOAuthTypes, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmOAuthTypeObjectType}, l)
+			data.SupportedOauthTypes, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmOAuthTypeObjectType}, l)
 		} else {
-			data.SupportedOAuthTypes = types.ListNull(types.ObjectType{AttrTypes: DmOAuthTypeObjectType})
+			data.SupportedOauthTypes = types.ListNull(types.ObjectType{AttrTypes: DmOAuthTypeObjectType})
 		}
 	} else {
-		data.SupportedOAuthTypes = types.ListNull(types.ObjectType{AttrTypes: DmOAuthTypeObjectType})
+		data.SupportedOauthTypes = types.ListNull(types.ObjectType{AttrTypes: DmOAuthTypeObjectType})
 	}
 }

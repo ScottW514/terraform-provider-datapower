@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `supported_o_auth_types` (Attributes List) Supported OAuth types (see [below for nested schema](#nestedatt--result--supported_o_auth_types))
+- `supported_oauth_types` (Attributes List) Supported OAuth types (see [below for nested schema](#nestedatt--result--supported_oauth_types))
 - `title` (String) Title
 - `user_summary` (String) Comments
 
@@ -61,8 +61,8 @@ Optional:
 - `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
 
 
-<a id="nestedatt--result--supported_o_auth_types"></a>
-### Nested Schema for `result.supported_o_auth_types`
+<a id="nestedatt--result--supported_oauth_types"></a>
+### Nested Schema for `result.supported_oauth_types`
 
 Read-Only:
 

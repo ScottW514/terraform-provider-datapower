@@ -86,7 +86,7 @@ func (r *APISchemaResource) Schema(ctx context.Context, req resource.SchemaReque
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the schema URL for JSON message validation. For example, <tt>local:///petstore.json#/definitions/Pet</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.", "json-schema", "").String,
 				Optional:            true,
 			},
-			"graph_ql_schema": schema.StringAttribute{
+			"graphql_schema": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.", "graphql-schema", "").String,
 				Optional:            true,
 			},

@@ -93,7 +93,7 @@ func (d *CryptoValCredDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.",
 							Computed:            true,
 						},
-						"crldp_handling": schema.StringAttribute{
+						"crl_dp_handling": schema.StringAttribute{
 							MarkdownDescription: "Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.",
 							Computed:            true,
 						},

@@ -176,7 +176,7 @@ func (r *ParseSettingsResource) Schema(ctx context.Context, req resource.SchemaR
 				},
 				Default: int64default.StaticInt64(128),
 			},
-			"strict_utf8_encoding": schema.BoolAttribute{
+			"strict_utf8encoding": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enforce strict UTF-8 encoding throughout the entire JSON document. When enabled, the entire document is checked for valid UTF-8 encoding. When disabled, only the first few bytes are checked for proper encoding and the rest of the document is assumed to be in the same encoding.", "strict-utf8-encoding", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,

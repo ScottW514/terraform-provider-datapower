@@ -120,7 +120,7 @@ func (d *ParseSettingsDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify the maximum number length in bytes for the value portion of a label-value pair when the value is a number. The number must be a contiguous string of bytes that contain no white space. The number can include a minus sign and a positive or negative exponent. A document is rejected when the number length in the document exceeds the maximum length. Enter a value in the range 0 - 256. The default value is 128. A value of 0 indicates unlimited. When 0, the action does not return the number length.",
 							Computed:            true,
 						},
-						"strict_utf8_encoding": schema.BoolAttribute{
+						"strict_utf8encoding": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to enforce strict UTF-8 encoding throughout the entire JSON document. When enabled, the entire document is checked for valid UTF-8 encoding. When disabled, only the first few bytes are checked for proper encoding and the rest of the document is assumed to be in the same encoding.",
 							Computed:            true,
 						},

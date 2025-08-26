@@ -97,7 +97,7 @@ func (r *JOSERecipientIdentifierResource) Schema(ctx context.Context, req resour
 					validators.ConditionalRequiredString(models.JOSERecipientIdentifierKeyCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"ss_key": schema.StringAttribute{
+			"sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the recipient.", "sskey", "crypto_sskey").AddRequiredWhen(models.JOSERecipientIdentifierSSKeyCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

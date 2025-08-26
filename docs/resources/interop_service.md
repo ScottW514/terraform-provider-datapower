@@ -70,7 +70,7 @@ resource "datapower_interop_service" "test" {
   - Choices: `server`, `sni`
   - Default value: `server`
   - Required When: `https_service`=`true`
-- `sslsni_server` (String) TLS SNI server profile
+- `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
   - Required When: (`https_service`=`true` AND `ssl_server_config_type`=`sni`)

@@ -78,11 +78,11 @@ func (r *MCFXPathResource) Schema(ctx context.Context, req resource.SchemaReques
 					modifiers.ImmutableAfterSet(),
 				},
 			},
-			"x_path_expression": schema.StringAttribute{
+			"xpath_expression": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XPath Expression", "location", "").String,
 				Required:            true,
 			},
-			"x_path_value": schema.StringAttribute{
+			"xpath_value": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XPath Value", "value", "").String,
 				Required:            true,
 			},

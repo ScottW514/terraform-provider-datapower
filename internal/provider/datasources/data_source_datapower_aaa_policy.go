@@ -135,7 +135,7 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "Specify the algorithm to sign SAML messages. The default value is rsa.",
 							Computed:            true,
 						},
-						"lda_psuffix": schema.StringAttribute{
+						"ldap_suffix": schema.StringAttribute{
 							MarkdownDescription: "Specify the LDAP suffix to add to the username to form the base distinguished name (DN) for authentication. The suffix and the username are separated with a comma. If the suffix is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the DN is <tt>CN=Bob,O=example.com</tt> .",
 							Computed:            true,
 						},
@@ -187,12 +187,12 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "Set the assumed <tt>S11:actor</tt> or <tt>S12:role</tt> identifier. The AAA policy acts as the assumed actor or role when it consumes <tt>Security</tt> headers. This setting takes effect only when the AAA policy attempts to process the incoming message before it makes an authorization decision. Postprocessing does not use this setting. Postprocessing uses its own setting in generating the message for the next SOAP node. The default value is an empty string. <table border=\"1\"><tr><td valign=\"left\"><tt>http://schemas.xmlsoap.org/soap/actor/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/none</tt></td><td>No one can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</tt></td><td>The ultimate receiver can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\">No value, which is an empty string</td><td>The empty string (without quotation marks) indicates that no \"actor/role\" identifier is configured. With a configured actor/role, the ultimate receiver is assumed for the message. No actor/role attribute is added during the generation of the <tt>Security</tt> header. More than one <tt>Security</tt> header cannot omit the actor/role identifier.</td></tr><tr><td valign=\"left\"><tt>USE_MESSAGE_BASE_URI</tt></td><td>The identifier is the base URL of the message. When the SOAP message is transported, the base URI is the request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">A string value</td><td>Any string to identify the actor or role of the <tt>Security</tt> header.</td></tr></table>",
 							Computed:            true,
 						},
-						"ausmhttp_header": schema.ListAttribute{
+						"au_sm_http_header": schema.ListAttribute{
 							MarkdownDescription: "Specify HTTP headers from CA Single Sign-On authentication responses. These headers are included as request or response headers based on the CA Single Sign-on header flow.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"azsmhttp_header": schema.ListAttribute{
+						"az_sm_http_header": schema.ListAttribute{
 							MarkdownDescription: "Specify HTTP headers from CA Single Sign-On authorization responses. These headers are included as request or response headers based on the CA Single Sign-On header flow.",
 							ElementType:         types.StringType,
 							Computed:            true,

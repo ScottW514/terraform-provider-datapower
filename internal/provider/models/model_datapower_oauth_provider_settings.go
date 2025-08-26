@@ -44,20 +44,20 @@ type OAuthProviderSettings struct {
 	DefaultScopes                         types.String                `tfsdk:"default_scopes"`
 	SupportedGrantTypes                   *DmOAuthProviderGrantType   `tfsdk:"supported_grant_types"`
 	SupportedClientTypes                  *DmAllowedClientType        `tfsdk:"supported_client_types"`
-	ApicProviderBasePath                  types.String                `tfsdk:"apic_provider_base_path"`
-	ApicAuthorizeEndpoint                 types.String                `tfsdk:"apic_authorize_endpoint"`
-	ApicTokenEndpoint                     types.String                `tfsdk:"apic_token_endpoint"`
-	ApicEnableIntrospection               types.Bool                  `tfsdk:"apic_enable_introspection"`
-	ApicIntrospectEndpoint                types.String                `tfsdk:"apic_introspect_endpoint"`
-	ApicTokenSecret                       types.String                `tfsdk:"apic_token_secret"`
-	ApicOneTimeUseAccesstoken             types.Bool                  `tfsdk:"apic_one_time_use_accesstoken"`
-	ApicAccessTokenTtl                    types.Int64                 `tfsdk:"apic_access_token_ttl"`
-	ApicAuthCodeTtl                       types.Int64                 `tfsdk:"apic_auth_code_ttl"`
-	ApicEnableRefreshToken                types.Bool                  `tfsdk:"apic_enable_refresh_token"`
-	ApicOneTimeUseRefreshtoken            types.Bool                  `tfsdk:"apic_one_time_use_refreshtoken"`
-	ApicRefreshTokenLimit                 types.Int64                 `tfsdk:"apic_refresh_token_limit"`
-	ApicRefreshTokenTtl                   types.Int64                 `tfsdk:"apic_refresh_token_ttl"`
-	ApicMaximumConsentTtl                 types.Int64                 `tfsdk:"apic_maximum_consent_ttl"`
+	ApiCProviderBasePath                  types.String                `tfsdk:"api_c_provider_base_path"`
+	ApiCAuthorizeEndpoint                 types.String                `tfsdk:"api_c_authorize_endpoint"`
+	ApiCTokenEndpoint                     types.String                `tfsdk:"api_c_token_endpoint"`
+	ApiCEnableIntrospection               types.Bool                  `tfsdk:"api_c_enable_introspection"`
+	ApiCIntrospectEndpoint                types.String                `tfsdk:"api_c_introspect_endpoint"`
+	ApiCTokenSecret                       types.String                `tfsdk:"api_c_token_secret"`
+	ApiCOneTimeUseAccesstoken             types.Bool                  `tfsdk:"api_c_one_time_use_accesstoken"`
+	ApiCAccessTokenTtl                    types.Int64                 `tfsdk:"api_c_access_token_ttl"`
+	ApiCAuthCodeTtl                       types.Int64                 `tfsdk:"api_c_auth_code_ttl"`
+	ApiCEnableRefreshToken                types.Bool                  `tfsdk:"api_c_enable_refresh_token"`
+	ApiCOneTimeUseRefreshtoken            types.Bool                  `tfsdk:"api_c_one_time_use_refreshtoken"`
+	ApiCRefreshTokenLimit                 types.Int64                 `tfsdk:"api_c_refresh_token_limit"`
+	ApiCRefreshTokenTtl                   types.Int64                 `tfsdk:"api_c_refresh_token_ttl"`
+	ApiCMaximumConsentTtl                 types.Int64                 `tfsdk:"api_c_maximum_consent_ttl"`
 	AdvScopeValidationEnabled             types.Bool                  `tfsdk:"adv_scope_validation_enabled"`
 	AdvancedScopeUrlOverride              types.Bool                  `tfsdk:"advanced_scope_url_override"`
 	AdvancedScopeUrl                      types.String                `tfsdk:"advanced_scope_url"`
@@ -69,12 +69,12 @@ type OAuthProviderSettings struct {
 	AdvScopeBasicAuthHeaderName           types.String                `tfsdk:"adv_scope_basic_auth_header_name"`
 	AdvancedScopeCustomHeaders            types.String                `tfsdk:"advanced_scope_custom_headers"`
 	AdvancedScopeCustomContexts           types.String                `tfsdk:"advanced_scope_custom_contexts"`
-	ApicEnableOidc                        types.Bool                  `tfsdk:"apic_enable_oidc"`
-	ApicoidcHybridResponseTypes           *DmOIDCHybridResponseType   `tfsdk:"apicoidc_hybrid_response_types"`
-	ApicSupportPkce                       types.Bool                  `tfsdk:"apic_support_pkce"`
-	ApicRequirePkce                       types.Bool                  `tfsdk:"apic_require_pkce"`
-	ApicSupportPkcePlain                  types.Bool                  `tfsdk:"apic_support_pkce_plain"`
-	ApicTokenTypeToGenerate               types.String                `tfsdk:"apic_token_type_to_generate"`
+	ApiCEnableOidc                        types.Bool                  `tfsdk:"api_c_enable_oidc"`
+	ApiCOidcHybridResponseTypes           *DmOIDCHybridResponseType   `tfsdk:"api_c_oidc_hybrid_response_types"`
+	ApiCSupportPkce                       types.Bool                  `tfsdk:"api_c_support_pkce"`
+	ApiCRequirePkce                       types.Bool                  `tfsdk:"api_c_require_pkce"`
+	ApiCSupportPkcePlain                  types.Bool                  `tfsdk:"api_c_support_pkce_plain"`
+	ApiCTokenTypeToGenerate               types.String                `tfsdk:"api_c_token_type_to_generate"`
 	MetadataFrom                          *DmMetadataFromType         `tfsdk:"metadata_from"`
 	MetadataUrl                           types.String                `tfsdk:"metadata_url"`
 	MetadataSslProfile                    types.String                `tfsdk:"metadata_ssl_profile"`
@@ -98,7 +98,7 @@ type OAuthProviderSettings struct {
 	EnableOwnerRevocation                 types.Bool                  `tfsdk:"enable_owner_revocation"`
 	OwnerRevocationEndpoint               types.String                `tfsdk:"owner_revocation_endpoint"`
 	TokenValidationReq                    types.String                `tfsdk:"token_validation_req"`
-	ThirdPartyAzurl                       types.String                `tfsdk:"third_party_azurl"`
+	ThirdPartyAzUrl                       types.String                `tfsdk:"third_party_az_url"`
 	ThirdPartyTokenUrl                    types.String                `tfsdk:"third_party_token_url"`
 	ThirdPartyIntrospectUrl               types.String                `tfsdk:"third_party_introspect_url"`
 	ThirdPartyIntrospectCacheType         types.String                `tfsdk:"third_party_introspect_cache_type"`
@@ -153,7 +153,7 @@ var OAuthProviderSettingsAPICIntrospectEndpointCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "apic_enable_introspection",
+			Attribute:   "api_c_enable_introspection",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -212,14 +212,14 @@ var OAuthProviderSettingsAPICRefreshTokenLimitCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "apic_enable_refresh_token",
+			Attribute:   "api_c_enable_refresh_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "apic_one_time_use_refreshtoken",
+			Attribute:   "api_c_one_time_use_refreshtoken",
 			AttrType:    "Bool",
 			AttrDefault: "true",
 			Value:       []string{"true"},
@@ -238,7 +238,7 @@ var OAuthProviderSettingsAPICRefreshTokenTTLCondVal = validators.Evaluation{
 		},
 		{
 			Evaluation:  "property-value-in-list",
-			Attribute:   "apic_enable_refresh_token",
+			Attribute:   "api_c_enable_refresh_token",
 			AttrType:    "Bool",
 			AttrDefault: "false",
 			Value:       []string{"true"},
@@ -504,20 +504,20 @@ var OAuthProviderSettingsObjectType = map[string]attr.Type{
 	"default_scopes":                              types.StringType,
 	"supported_grant_types":                       types.ObjectType{AttrTypes: DmOAuthProviderGrantTypeObjectType},
 	"supported_client_types":                      types.ObjectType{AttrTypes: DmAllowedClientTypeObjectType},
-	"apic_provider_base_path":                     types.StringType,
-	"apic_authorize_endpoint":                     types.StringType,
-	"apic_token_endpoint":                         types.StringType,
-	"apic_enable_introspection":                   types.BoolType,
-	"apic_introspect_endpoint":                    types.StringType,
-	"apic_token_secret":                           types.StringType,
-	"apic_one_time_use_accesstoken":               types.BoolType,
-	"apic_access_token_ttl":                       types.Int64Type,
-	"apic_auth_code_ttl":                          types.Int64Type,
-	"apic_enable_refresh_token":                   types.BoolType,
-	"apic_one_time_use_refreshtoken":              types.BoolType,
-	"apic_refresh_token_limit":                    types.Int64Type,
-	"apic_refresh_token_ttl":                      types.Int64Type,
-	"apic_maximum_consent_ttl":                    types.Int64Type,
+	"api_c_provider_base_path":                    types.StringType,
+	"api_c_authorize_endpoint":                    types.StringType,
+	"api_c_token_endpoint":                        types.StringType,
+	"api_c_enable_introspection":                  types.BoolType,
+	"api_c_introspect_endpoint":                   types.StringType,
+	"api_c_token_secret":                          types.StringType,
+	"api_c_one_time_use_accesstoken":              types.BoolType,
+	"api_c_access_token_ttl":                      types.Int64Type,
+	"api_c_auth_code_ttl":                         types.Int64Type,
+	"api_c_enable_refresh_token":                  types.BoolType,
+	"api_c_one_time_use_refreshtoken":             types.BoolType,
+	"api_c_refresh_token_limit":                   types.Int64Type,
+	"api_c_refresh_token_ttl":                     types.Int64Type,
+	"api_c_maximum_consent_ttl":                   types.Int64Type,
 	"adv_scope_validation_enabled":                types.BoolType,
 	"advanced_scope_url_override":                 types.BoolType,
 	"advanced_scope_url":                          types.StringType,
@@ -529,12 +529,12 @@ var OAuthProviderSettingsObjectType = map[string]attr.Type{
 	"adv_scope_basic_auth_header_name":            types.StringType,
 	"advanced_scope_custom_headers":               types.StringType,
 	"advanced_scope_custom_contexts":              types.StringType,
-	"apic_enable_oidc":                            types.BoolType,
-	"apicoidc_hybrid_response_types":              types.ObjectType{AttrTypes: DmOIDCHybridResponseTypeObjectType},
-	"apic_support_pkce":                           types.BoolType,
-	"apic_require_pkce":                           types.BoolType,
-	"apic_support_pkce_plain":                     types.BoolType,
-	"apic_token_type_to_generate":                 types.StringType,
+	"api_c_enable_oidc":                           types.BoolType,
+	"api_c_oidc_hybrid_response_types":            types.ObjectType{AttrTypes: DmOIDCHybridResponseTypeObjectType},
+	"api_c_support_pkce":                          types.BoolType,
+	"api_c_require_pkce":                          types.BoolType,
+	"api_c_support_pkce_plain":                    types.BoolType,
+	"api_c_token_type_to_generate":                types.StringType,
 	"metadata_from":                               types.ObjectType{AttrTypes: DmMetadataFromTypeObjectType},
 	"metadata_url":                                types.StringType,
 	"metadata_ssl_profile":                        types.StringType,
@@ -558,7 +558,7 @@ var OAuthProviderSettingsObjectType = map[string]attr.Type{
 	"enable_owner_revocation":                     types.BoolType,
 	"owner_revocation_endpoint":                   types.StringType,
 	"token_validation_req":                        types.StringType,
-	"third_party_azurl":                           types.StringType,
+	"third_party_az_url":                          types.StringType,
 	"third_party_token_url":                       types.StringType,
 	"third_party_introspect_url":                  types.StringType,
 	"third_party_introspect_cache_type":           types.StringType,
@@ -612,46 +612,46 @@ func (data OAuthProviderSettings) IsNull() bool {
 			return false
 		}
 	}
-	if !data.ApicProviderBasePath.IsNull() {
+	if !data.ApiCProviderBasePath.IsNull() {
 		return false
 	}
-	if !data.ApicAuthorizeEndpoint.IsNull() {
+	if !data.ApiCAuthorizeEndpoint.IsNull() {
 		return false
 	}
-	if !data.ApicTokenEndpoint.IsNull() {
+	if !data.ApiCTokenEndpoint.IsNull() {
 		return false
 	}
-	if !data.ApicEnableIntrospection.IsNull() {
+	if !data.ApiCEnableIntrospection.IsNull() {
 		return false
 	}
-	if !data.ApicIntrospectEndpoint.IsNull() {
+	if !data.ApiCIntrospectEndpoint.IsNull() {
 		return false
 	}
-	if !data.ApicTokenSecret.IsNull() {
+	if !data.ApiCTokenSecret.IsNull() {
 		return false
 	}
-	if !data.ApicOneTimeUseAccesstoken.IsNull() {
+	if !data.ApiCOneTimeUseAccesstoken.IsNull() {
 		return false
 	}
-	if !data.ApicAccessTokenTtl.IsNull() {
+	if !data.ApiCAccessTokenTtl.IsNull() {
 		return false
 	}
-	if !data.ApicAuthCodeTtl.IsNull() {
+	if !data.ApiCAuthCodeTtl.IsNull() {
 		return false
 	}
-	if !data.ApicEnableRefreshToken.IsNull() {
+	if !data.ApiCEnableRefreshToken.IsNull() {
 		return false
 	}
-	if !data.ApicOneTimeUseRefreshtoken.IsNull() {
+	if !data.ApiCOneTimeUseRefreshtoken.IsNull() {
 		return false
 	}
-	if !data.ApicRefreshTokenLimit.IsNull() {
+	if !data.ApiCRefreshTokenLimit.IsNull() {
 		return false
 	}
-	if !data.ApicRefreshTokenTtl.IsNull() {
+	if !data.ApiCRefreshTokenTtl.IsNull() {
 		return false
 	}
-	if !data.ApicMaximumConsentTtl.IsNull() {
+	if !data.ApiCMaximumConsentTtl.IsNull() {
 		return false
 	}
 	if !data.AdvScopeValidationEnabled.IsNull() {
@@ -689,24 +689,24 @@ func (data OAuthProviderSettings) IsNull() bool {
 	if !data.AdvancedScopeCustomContexts.IsNull() {
 		return false
 	}
-	if !data.ApicEnableOidc.IsNull() {
+	if !data.ApiCEnableOidc.IsNull() {
 		return false
 	}
-	if data.ApicoidcHybridResponseTypes != nil {
-		if !data.ApicoidcHybridResponseTypes.IsNull() {
+	if data.ApiCOidcHybridResponseTypes != nil {
+		if !data.ApiCOidcHybridResponseTypes.IsNull() {
 			return false
 		}
 	}
-	if !data.ApicSupportPkce.IsNull() {
+	if !data.ApiCSupportPkce.IsNull() {
 		return false
 	}
-	if !data.ApicRequirePkce.IsNull() {
+	if !data.ApiCRequirePkce.IsNull() {
 		return false
 	}
-	if !data.ApicSupportPkcePlain.IsNull() {
+	if !data.ApiCSupportPkcePlain.IsNull() {
 		return false
 	}
-	if !data.ApicTokenTypeToGenerate.IsNull() {
+	if !data.ApiCTokenTypeToGenerate.IsNull() {
 		return false
 	}
 	if data.MetadataFrom != nil {
@@ -782,7 +782,7 @@ func (data OAuthProviderSettings) IsNull() bool {
 	if !data.TokenValidationReq.IsNull() {
 		return false
 	}
-	if !data.ThirdPartyAzurl.IsNull() {
+	if !data.ThirdPartyAzUrl.IsNull() {
 		return false
 	}
 	if !data.ThirdPartyTokenUrl.IsNull() {
@@ -857,47 +857,47 @@ func (data OAuthProviderSettings) ToBody(ctx context.Context, pathRoot string) s
 			body, _ = sjson.SetRaw(body, pathRoot+`SupportedClientTypes`, data.SupportedClientTypes.ToBody(ctx, ""))
 		}
 	}
-	if !data.ApicProviderBasePath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICProviderBasePath`, data.ApicProviderBasePath.ValueString())
+	if !data.ApiCProviderBasePath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICProviderBasePath`, data.ApiCProviderBasePath.ValueString())
 	}
-	if !data.ApicAuthorizeEndpoint.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICAuthorizeEndpoint`, data.ApicAuthorizeEndpoint.ValueString())
+	if !data.ApiCAuthorizeEndpoint.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICAuthorizeEndpoint`, data.ApiCAuthorizeEndpoint.ValueString())
 	}
-	if !data.ApicTokenEndpoint.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICTokenEndpoint`, data.ApicTokenEndpoint.ValueString())
+	if !data.ApiCTokenEndpoint.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICTokenEndpoint`, data.ApiCTokenEndpoint.ValueString())
 	}
-	if !data.ApicEnableIntrospection.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICEnableIntrospection`, tfutils.StringFromBool(data.ApicEnableIntrospection, ""))
+	if !data.ApiCEnableIntrospection.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICEnableIntrospection`, tfutils.StringFromBool(data.ApiCEnableIntrospection, ""))
 	}
-	if !data.ApicIntrospectEndpoint.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICIntrospectEndpoint`, data.ApicIntrospectEndpoint.ValueString())
+	if !data.ApiCIntrospectEndpoint.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICIntrospectEndpoint`, data.ApiCIntrospectEndpoint.ValueString())
 	}
-	if !data.ApicTokenSecret.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICTokenSecret`, data.ApicTokenSecret.ValueString())
+	if !data.ApiCTokenSecret.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICTokenSecret`, data.ApiCTokenSecret.ValueString())
 	}
-	if !data.ApicOneTimeUseAccesstoken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICOneTimeUseAccesstoken`, tfutils.StringFromBool(data.ApicOneTimeUseAccesstoken, ""))
+	if !data.ApiCOneTimeUseAccesstoken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICOneTimeUseAccesstoken`, tfutils.StringFromBool(data.ApiCOneTimeUseAccesstoken, ""))
 	}
-	if !data.ApicAccessTokenTtl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICAccessTokenTTL`, data.ApicAccessTokenTtl.ValueInt64())
+	if !data.ApiCAccessTokenTtl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICAccessTokenTTL`, data.ApiCAccessTokenTtl.ValueInt64())
 	}
-	if !data.ApicAuthCodeTtl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICAuthCodeTTL`, data.ApicAuthCodeTtl.ValueInt64())
+	if !data.ApiCAuthCodeTtl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICAuthCodeTTL`, data.ApiCAuthCodeTtl.ValueInt64())
 	}
-	if !data.ApicEnableRefreshToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICEnableRefreshToken`, tfutils.StringFromBool(data.ApicEnableRefreshToken, ""))
+	if !data.ApiCEnableRefreshToken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICEnableRefreshToken`, tfutils.StringFromBool(data.ApiCEnableRefreshToken, ""))
 	}
-	if !data.ApicOneTimeUseRefreshtoken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICOneTimeUseRefreshtoken`, tfutils.StringFromBool(data.ApicOneTimeUseRefreshtoken, ""))
+	if !data.ApiCOneTimeUseRefreshtoken.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICOneTimeUseRefreshtoken`, tfutils.StringFromBool(data.ApiCOneTimeUseRefreshtoken, ""))
 	}
-	if !data.ApicRefreshTokenLimit.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICRefreshTokenLimit`, data.ApicRefreshTokenLimit.ValueInt64())
+	if !data.ApiCRefreshTokenLimit.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICRefreshTokenLimit`, data.ApiCRefreshTokenLimit.ValueInt64())
 	}
-	if !data.ApicRefreshTokenTtl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICRefreshTokenTTL`, data.ApicRefreshTokenTtl.ValueInt64())
+	if !data.ApiCRefreshTokenTtl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICRefreshTokenTTL`, data.ApiCRefreshTokenTtl.ValueInt64())
 	}
-	if !data.ApicMaximumConsentTtl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICMaximumConsentTTL`, data.ApicMaximumConsentTtl.ValueInt64())
+	if !data.ApiCMaximumConsentTtl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICMaximumConsentTTL`, data.ApiCMaximumConsentTtl.ValueInt64())
 	}
 	if !data.AdvScopeValidationEnabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AdvScopeValidationEnabled`, tfutils.StringFromBool(data.AdvScopeValidationEnabled, ""))
@@ -934,25 +934,25 @@ func (data OAuthProviderSettings) ToBody(ctx context.Context, pathRoot string) s
 	if !data.AdvancedScopeCustomContexts.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AdvancedScopeCustomContexts`, data.AdvancedScopeCustomContexts.ValueString())
 	}
-	if !data.ApicEnableOidc.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICEnableOIDC`, tfutils.StringFromBool(data.ApicEnableOidc, ""))
+	if !data.ApiCEnableOidc.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICEnableOIDC`, tfutils.StringFromBool(data.ApiCEnableOidc, ""))
 	}
-	if data.ApicoidcHybridResponseTypes != nil {
-		if !data.ApicoidcHybridResponseTypes.IsNull() {
-			body, _ = sjson.SetRaw(body, pathRoot+`APICOIDCHybridResponseTypes`, data.ApicoidcHybridResponseTypes.ToBody(ctx, ""))
+	if data.ApiCOidcHybridResponseTypes != nil {
+		if !data.ApiCOidcHybridResponseTypes.IsNull() {
+			body, _ = sjson.SetRaw(body, pathRoot+`APICOIDCHybridResponseTypes`, data.ApiCOidcHybridResponseTypes.ToBody(ctx, ""))
 		}
 	}
-	if !data.ApicSupportPkce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICSupportPKCE`, tfutils.StringFromBool(data.ApicSupportPkce, ""))
+	if !data.ApiCSupportPkce.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICSupportPKCE`, tfutils.StringFromBool(data.ApiCSupportPkce, ""))
 	}
-	if !data.ApicRequirePkce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICRequirePKCE`, tfutils.StringFromBool(data.ApicRequirePkce, ""))
+	if !data.ApiCRequirePkce.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICRequirePKCE`, tfutils.StringFromBool(data.ApiCRequirePkce, ""))
 	}
-	if !data.ApicSupportPkcePlain.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICSupportPKCEPlain`, tfutils.StringFromBool(data.ApicSupportPkcePlain, ""))
+	if !data.ApiCSupportPkcePlain.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICSupportPKCEPlain`, tfutils.StringFromBool(data.ApiCSupportPkcePlain, ""))
 	}
-	if !data.ApicTokenTypeToGenerate.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`APICTokenTypeToGenerate`, data.ApicTokenTypeToGenerate.ValueString())
+	if !data.ApiCTokenTypeToGenerate.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`APICTokenTypeToGenerate`, data.ApiCTokenTypeToGenerate.ValueString())
 	}
 	if data.MetadataFrom != nil {
 		if !data.MetadataFrom.IsNull() {
@@ -1027,8 +1027,8 @@ func (data OAuthProviderSettings) ToBody(ctx context.Context, pathRoot string) s
 	if !data.TokenValidationReq.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TokenValidationReq`, data.TokenValidationReq.ValueString())
 	}
-	if !data.ThirdPartyAzurl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ThirdPartyAZURL`, data.ThirdPartyAzurl.ValueString())
+	if !data.ThirdPartyAzUrl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ThirdPartyAZURL`, data.ThirdPartyAzUrl.ValueString())
 	}
 	if !data.ThirdPartyTokenUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ThirdPartyTokenURL`, data.ThirdPartyTokenUrl.ValueString())
@@ -1115,74 +1115,74 @@ func (data *OAuthProviderSettings) FromBody(ctx context.Context, pathRoot string
 		data.SupportedClientTypes = nil
 	}
 	if value := res.Get(pathRoot + `APICProviderBasePath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ApicProviderBasePath = tfutils.ParseStringFromGJSON(value)
+		data.ApiCProviderBasePath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApicProviderBasePath = types.StringValue("/")
+		data.ApiCProviderBasePath = types.StringValue("/")
 	}
 	if value := res.Get(pathRoot + `APICAuthorizeEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ApicAuthorizeEndpoint = tfutils.ParseStringFromGJSON(value)
+		data.ApiCAuthorizeEndpoint = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApicAuthorizeEndpoint = types.StringValue("/oauth2/authorize")
+		data.ApiCAuthorizeEndpoint = types.StringValue("/oauth2/authorize")
 	}
 	if value := res.Get(pathRoot + `APICTokenEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ApicTokenEndpoint = tfutils.ParseStringFromGJSON(value)
+		data.ApiCTokenEndpoint = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApicTokenEndpoint = types.StringValue("/oauth2/token")
+		data.ApiCTokenEndpoint = types.StringValue("/oauth2/token")
 	}
 	if value := res.Get(pathRoot + `APICEnableIntrospection`); value.Exists() {
-		data.ApicEnableIntrospection = tfutils.BoolFromString(value.String())
+		data.ApiCEnableIntrospection = tfutils.BoolFromString(value.String())
 	} else {
-		data.ApicEnableIntrospection = types.BoolNull()
+		data.ApiCEnableIntrospection = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICIntrospectEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ApicIntrospectEndpoint = tfutils.ParseStringFromGJSON(value)
+		data.ApiCIntrospectEndpoint = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApicIntrospectEndpoint = types.StringValue("/oauth2/introspect")
+		data.ApiCIntrospectEndpoint = types.StringValue("/oauth2/introspect")
 	}
 	if value := res.Get(pathRoot + `APICTokenSecret`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ApicTokenSecret = tfutils.ParseStringFromGJSON(value)
+		data.ApiCTokenSecret = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApicTokenSecret = types.StringNull()
+		data.ApiCTokenSecret = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `APICOneTimeUseAccesstoken`); value.Exists() {
-		data.ApicOneTimeUseAccesstoken = tfutils.BoolFromString(value.String())
+		data.ApiCOneTimeUseAccesstoken = tfutils.BoolFromString(value.String())
 	} else {
-		data.ApicOneTimeUseAccesstoken = types.BoolNull()
+		data.ApiCOneTimeUseAccesstoken = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICAccessTokenTTL`); value.Exists() {
-		data.ApicAccessTokenTtl = types.Int64Value(value.Int())
+		data.ApiCAccessTokenTtl = types.Int64Value(value.Int())
 	} else {
-		data.ApicAccessTokenTtl = types.Int64Value(3600)
+		data.ApiCAccessTokenTtl = types.Int64Value(3600)
 	}
 	if value := res.Get(pathRoot + `APICAuthCodeTTL`); value.Exists() {
-		data.ApicAuthCodeTtl = types.Int64Value(value.Int())
+		data.ApiCAuthCodeTtl = types.Int64Value(value.Int())
 	} else {
-		data.ApicAuthCodeTtl = types.Int64Value(300)
+		data.ApiCAuthCodeTtl = types.Int64Value(300)
 	}
 	if value := res.Get(pathRoot + `APICEnableRefreshToken`); value.Exists() {
-		data.ApicEnableRefreshToken = tfutils.BoolFromString(value.String())
+		data.ApiCEnableRefreshToken = tfutils.BoolFromString(value.String())
 	} else {
-		data.ApicEnableRefreshToken = types.BoolNull()
+		data.ApiCEnableRefreshToken = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICOneTimeUseRefreshtoken`); value.Exists() {
-		data.ApicOneTimeUseRefreshtoken = tfutils.BoolFromString(value.String())
+		data.ApiCOneTimeUseRefreshtoken = tfutils.BoolFromString(value.String())
 	} else {
-		data.ApicOneTimeUseRefreshtoken = types.BoolNull()
+		data.ApiCOneTimeUseRefreshtoken = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICRefreshTokenLimit`); value.Exists() {
-		data.ApicRefreshTokenLimit = types.Int64Value(value.Int())
+		data.ApiCRefreshTokenLimit = types.Int64Value(value.Int())
 	} else {
-		data.ApicRefreshTokenLimit = types.Int64Value(10)
+		data.ApiCRefreshTokenLimit = types.Int64Value(10)
 	}
 	if value := res.Get(pathRoot + `APICRefreshTokenTTL`); value.Exists() {
-		data.ApicRefreshTokenTtl = types.Int64Value(value.Int())
+		data.ApiCRefreshTokenTtl = types.Int64Value(value.Int())
 	} else {
-		data.ApicRefreshTokenTtl = types.Int64Value(5400)
+		data.ApiCRefreshTokenTtl = types.Int64Value(5400)
 	}
 	if value := res.Get(pathRoot + `APICMaximumConsentTTL`); value.Exists() {
-		data.ApicMaximumConsentTtl = types.Int64Value(value.Int())
+		data.ApiCMaximumConsentTtl = types.Int64Value(value.Int())
 	} else {
-		data.ApicMaximumConsentTtl = types.Int64Value(0)
+		data.ApiCMaximumConsentTtl = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `AdvScopeValidationEnabled`); value.Exists() {
 		data.AdvScopeValidationEnabled = tfutils.BoolFromString(value.String())
@@ -1241,35 +1241,35 @@ func (data *OAuthProviderSettings) FromBody(ctx context.Context, pathRoot string
 		data.AdvancedScopeCustomContexts = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `APICEnableOIDC`); value.Exists() {
-		data.ApicEnableOidc = tfutils.BoolFromString(value.String())
+		data.ApiCEnableOidc = tfutils.BoolFromString(value.String())
 	} else {
-		data.ApicEnableOidc = types.BoolNull()
+		data.ApiCEnableOidc = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICOIDCHybridResponseTypes`); value.Exists() {
-		data.ApicoidcHybridResponseTypes = &DmOIDCHybridResponseType{}
-		data.ApicoidcHybridResponseTypes.FromBody(ctx, "", value)
+		data.ApiCOidcHybridResponseTypes = &DmOIDCHybridResponseType{}
+		data.ApiCOidcHybridResponseTypes.FromBody(ctx, "", value)
 	} else {
-		data.ApicoidcHybridResponseTypes = nil
+		data.ApiCOidcHybridResponseTypes = nil
 	}
 	if value := res.Get(pathRoot + `APICSupportPKCE`); value.Exists() {
-		data.ApicSupportPkce = tfutils.BoolFromString(value.String())
+		data.ApiCSupportPkce = tfutils.BoolFromString(value.String())
 	} else {
-		data.ApicSupportPkce = types.BoolNull()
+		data.ApiCSupportPkce = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICRequirePKCE`); value.Exists() {
-		data.ApicRequirePkce = tfutils.BoolFromString(value.String())
+		data.ApiCRequirePkce = tfutils.BoolFromString(value.String())
 	} else {
-		data.ApicRequirePkce = types.BoolNull()
+		data.ApiCRequirePkce = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICSupportPKCEPlain`); value.Exists() {
-		data.ApicSupportPkcePlain = tfutils.BoolFromString(value.String())
+		data.ApiCSupportPkcePlain = tfutils.BoolFromString(value.String())
 	} else {
-		data.ApicSupportPkcePlain = types.BoolNull()
+		data.ApiCSupportPkcePlain = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICTokenTypeToGenerate`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ApicTokenTypeToGenerate = tfutils.ParseStringFromGJSON(value)
+		data.ApiCTokenTypeToGenerate = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApicTokenTypeToGenerate = types.StringValue("Bearer")
+		data.ApiCTokenTypeToGenerate = types.StringValue("Bearer")
 	}
 	if value := res.Get(pathRoot + `MetadataFrom`); value.Exists() {
 		data.MetadataFrom = &DmMetadataFromType{}
@@ -1389,9 +1389,9 @@ func (data *OAuthProviderSettings) FromBody(ctx context.Context, pathRoot string
 		data.TokenValidationReq = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ThirdPartyAZURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ThirdPartyAzurl = tfutils.ParseStringFromGJSON(value)
+		data.ThirdPartyAzUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ThirdPartyAzurl = types.StringNull()
+		data.ThirdPartyAzUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ThirdPartyTokenURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ThirdPartyTokenUrl = tfutils.ParseStringFromGJSON(value)
@@ -1495,75 +1495,75 @@ func (data *OAuthProviderSettings) UpdateFromBody(ctx context.Context, pathRoot 
 	} else {
 		data.SupportedClientTypes = nil
 	}
-	if value := res.Get(pathRoot + `APICProviderBasePath`); value.Exists() && !data.ApicProviderBasePath.IsNull() {
-		data.ApicProviderBasePath = tfutils.ParseStringFromGJSON(value)
-	} else if data.ApicProviderBasePath.ValueString() != "/" {
-		data.ApicProviderBasePath = types.StringNull()
+	if value := res.Get(pathRoot + `APICProviderBasePath`); value.Exists() && !data.ApiCProviderBasePath.IsNull() {
+		data.ApiCProviderBasePath = tfutils.ParseStringFromGJSON(value)
+	} else if data.ApiCProviderBasePath.ValueString() != "/" {
+		data.ApiCProviderBasePath = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `APICAuthorizeEndpoint`); value.Exists() && !data.ApicAuthorizeEndpoint.IsNull() {
-		data.ApicAuthorizeEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else if data.ApicAuthorizeEndpoint.ValueString() != "/oauth2/authorize" {
-		data.ApicAuthorizeEndpoint = types.StringNull()
+	if value := res.Get(pathRoot + `APICAuthorizeEndpoint`); value.Exists() && !data.ApiCAuthorizeEndpoint.IsNull() {
+		data.ApiCAuthorizeEndpoint = tfutils.ParseStringFromGJSON(value)
+	} else if data.ApiCAuthorizeEndpoint.ValueString() != "/oauth2/authorize" {
+		data.ApiCAuthorizeEndpoint = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `APICTokenEndpoint`); value.Exists() && !data.ApicTokenEndpoint.IsNull() {
-		data.ApicTokenEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else if data.ApicTokenEndpoint.ValueString() != "/oauth2/token" {
-		data.ApicTokenEndpoint = types.StringNull()
+	if value := res.Get(pathRoot + `APICTokenEndpoint`); value.Exists() && !data.ApiCTokenEndpoint.IsNull() {
+		data.ApiCTokenEndpoint = tfutils.ParseStringFromGJSON(value)
+	} else if data.ApiCTokenEndpoint.ValueString() != "/oauth2/token" {
+		data.ApiCTokenEndpoint = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `APICEnableIntrospection`); value.Exists() && !data.ApicEnableIntrospection.IsNull() {
-		data.ApicEnableIntrospection = tfutils.BoolFromString(value.String())
-	} else if data.ApicEnableIntrospection.ValueBool() {
-		data.ApicEnableIntrospection = types.BoolNull()
+	if value := res.Get(pathRoot + `APICEnableIntrospection`); value.Exists() && !data.ApiCEnableIntrospection.IsNull() {
+		data.ApiCEnableIntrospection = tfutils.BoolFromString(value.String())
+	} else if data.ApiCEnableIntrospection.ValueBool() {
+		data.ApiCEnableIntrospection = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `APICIntrospectEndpoint`); value.Exists() && !data.ApicIntrospectEndpoint.IsNull() {
-		data.ApicIntrospectEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else if data.ApicIntrospectEndpoint.ValueString() != "/oauth2/introspect" {
-		data.ApicIntrospectEndpoint = types.StringNull()
+	if value := res.Get(pathRoot + `APICIntrospectEndpoint`); value.Exists() && !data.ApiCIntrospectEndpoint.IsNull() {
+		data.ApiCIntrospectEndpoint = tfutils.ParseStringFromGJSON(value)
+	} else if data.ApiCIntrospectEndpoint.ValueString() != "/oauth2/introspect" {
+		data.ApiCIntrospectEndpoint = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `APICTokenSecret`); value.Exists() && !data.ApicTokenSecret.IsNull() {
-		data.ApicTokenSecret = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `APICTokenSecret`); value.Exists() && !data.ApiCTokenSecret.IsNull() {
+		data.ApiCTokenSecret = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ApicTokenSecret = types.StringNull()
+		data.ApiCTokenSecret = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `APICOneTimeUseAccesstoken`); value.Exists() && !data.ApicOneTimeUseAccesstoken.IsNull() {
-		data.ApicOneTimeUseAccesstoken = tfutils.BoolFromString(value.String())
-	} else if data.ApicOneTimeUseAccesstoken.ValueBool() {
-		data.ApicOneTimeUseAccesstoken = types.BoolNull()
+	if value := res.Get(pathRoot + `APICOneTimeUseAccesstoken`); value.Exists() && !data.ApiCOneTimeUseAccesstoken.IsNull() {
+		data.ApiCOneTimeUseAccesstoken = tfutils.BoolFromString(value.String())
+	} else if data.ApiCOneTimeUseAccesstoken.ValueBool() {
+		data.ApiCOneTimeUseAccesstoken = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `APICAccessTokenTTL`); value.Exists() && !data.ApicAccessTokenTtl.IsNull() {
-		data.ApicAccessTokenTtl = types.Int64Value(value.Int())
-	} else if data.ApicAccessTokenTtl.ValueInt64() != 3600 {
-		data.ApicAccessTokenTtl = types.Int64Null()
+	if value := res.Get(pathRoot + `APICAccessTokenTTL`); value.Exists() && !data.ApiCAccessTokenTtl.IsNull() {
+		data.ApiCAccessTokenTtl = types.Int64Value(value.Int())
+	} else if data.ApiCAccessTokenTtl.ValueInt64() != 3600 {
+		data.ApiCAccessTokenTtl = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `APICAuthCodeTTL`); value.Exists() && !data.ApicAuthCodeTtl.IsNull() {
-		data.ApicAuthCodeTtl = types.Int64Value(value.Int())
-	} else if data.ApicAuthCodeTtl.ValueInt64() != 300 {
-		data.ApicAuthCodeTtl = types.Int64Null()
+	if value := res.Get(pathRoot + `APICAuthCodeTTL`); value.Exists() && !data.ApiCAuthCodeTtl.IsNull() {
+		data.ApiCAuthCodeTtl = types.Int64Value(value.Int())
+	} else if data.ApiCAuthCodeTtl.ValueInt64() != 300 {
+		data.ApiCAuthCodeTtl = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `APICEnableRefreshToken`); value.Exists() && !data.ApicEnableRefreshToken.IsNull() {
-		data.ApicEnableRefreshToken = tfutils.BoolFromString(value.String())
-	} else if data.ApicEnableRefreshToken.ValueBool() {
-		data.ApicEnableRefreshToken = types.BoolNull()
+	if value := res.Get(pathRoot + `APICEnableRefreshToken`); value.Exists() && !data.ApiCEnableRefreshToken.IsNull() {
+		data.ApiCEnableRefreshToken = tfutils.BoolFromString(value.String())
+	} else if data.ApiCEnableRefreshToken.ValueBool() {
+		data.ApiCEnableRefreshToken = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `APICOneTimeUseRefreshtoken`); value.Exists() && !data.ApicOneTimeUseRefreshtoken.IsNull() {
-		data.ApicOneTimeUseRefreshtoken = tfutils.BoolFromString(value.String())
-	} else if !data.ApicOneTimeUseRefreshtoken.ValueBool() {
-		data.ApicOneTimeUseRefreshtoken = types.BoolNull()
+	if value := res.Get(pathRoot + `APICOneTimeUseRefreshtoken`); value.Exists() && !data.ApiCOneTimeUseRefreshtoken.IsNull() {
+		data.ApiCOneTimeUseRefreshtoken = tfutils.BoolFromString(value.String())
+	} else if !data.ApiCOneTimeUseRefreshtoken.ValueBool() {
+		data.ApiCOneTimeUseRefreshtoken = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `APICRefreshTokenLimit`); value.Exists() && !data.ApicRefreshTokenLimit.IsNull() {
-		data.ApicRefreshTokenLimit = types.Int64Value(value.Int())
-	} else if data.ApicRefreshTokenLimit.ValueInt64() != 10 {
-		data.ApicRefreshTokenLimit = types.Int64Null()
+	if value := res.Get(pathRoot + `APICRefreshTokenLimit`); value.Exists() && !data.ApiCRefreshTokenLimit.IsNull() {
+		data.ApiCRefreshTokenLimit = types.Int64Value(value.Int())
+	} else if data.ApiCRefreshTokenLimit.ValueInt64() != 10 {
+		data.ApiCRefreshTokenLimit = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `APICRefreshTokenTTL`); value.Exists() && !data.ApicRefreshTokenTtl.IsNull() {
-		data.ApicRefreshTokenTtl = types.Int64Value(value.Int())
-	} else if data.ApicRefreshTokenTtl.ValueInt64() != 5400 {
-		data.ApicRefreshTokenTtl = types.Int64Null()
+	if value := res.Get(pathRoot + `APICRefreshTokenTTL`); value.Exists() && !data.ApiCRefreshTokenTtl.IsNull() {
+		data.ApiCRefreshTokenTtl = types.Int64Value(value.Int())
+	} else if data.ApiCRefreshTokenTtl.ValueInt64() != 5400 {
+		data.ApiCRefreshTokenTtl = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `APICMaximumConsentTTL`); value.Exists() && !data.ApicMaximumConsentTtl.IsNull() {
-		data.ApicMaximumConsentTtl = types.Int64Value(value.Int())
-	} else if data.ApicMaximumConsentTtl.ValueInt64() != 0 {
-		data.ApicMaximumConsentTtl = types.Int64Null()
+	if value := res.Get(pathRoot + `APICMaximumConsentTTL`); value.Exists() && !data.ApiCMaximumConsentTtl.IsNull() {
+		data.ApiCMaximumConsentTtl = types.Int64Value(value.Int())
+	} else if data.ApiCMaximumConsentTtl.ValueInt64() != 0 {
+		data.ApiCMaximumConsentTtl = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `AdvScopeValidationEnabled`); value.Exists() && !data.AdvScopeValidationEnabled.IsNull() {
 		data.AdvScopeValidationEnabled = tfutils.BoolFromString(value.String())
@@ -1620,35 +1620,35 @@ func (data *OAuthProviderSettings) UpdateFromBody(ctx context.Context, pathRoot 
 	} else {
 		data.AdvancedScopeCustomContexts = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `APICEnableOIDC`); value.Exists() && !data.ApicEnableOidc.IsNull() {
-		data.ApicEnableOidc = tfutils.BoolFromString(value.String())
-	} else if !data.ApicEnableOidc.ValueBool() {
-		data.ApicEnableOidc = types.BoolNull()
+	if value := res.Get(pathRoot + `APICEnableOIDC`); value.Exists() && !data.ApiCEnableOidc.IsNull() {
+		data.ApiCEnableOidc = tfutils.BoolFromString(value.String())
+	} else if !data.ApiCEnableOidc.ValueBool() {
+		data.ApiCEnableOidc = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `APICOIDCHybridResponseTypes`); value.Exists() {
-		data.ApicoidcHybridResponseTypes.UpdateFromBody(ctx, "", value)
+		data.ApiCOidcHybridResponseTypes.UpdateFromBody(ctx, "", value)
 	} else {
-		data.ApicoidcHybridResponseTypes = nil
+		data.ApiCOidcHybridResponseTypes = nil
 	}
-	if value := res.Get(pathRoot + `APICSupportPKCE`); value.Exists() && !data.ApicSupportPkce.IsNull() {
-		data.ApicSupportPkce = tfutils.BoolFromString(value.String())
-	} else if !data.ApicSupportPkce.ValueBool() {
-		data.ApicSupportPkce = types.BoolNull()
+	if value := res.Get(pathRoot + `APICSupportPKCE`); value.Exists() && !data.ApiCSupportPkce.IsNull() {
+		data.ApiCSupportPkce = tfutils.BoolFromString(value.String())
+	} else if !data.ApiCSupportPkce.ValueBool() {
+		data.ApiCSupportPkce = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `APICRequirePKCE`); value.Exists() && !data.ApicRequirePkce.IsNull() {
-		data.ApicRequirePkce = tfutils.BoolFromString(value.String())
-	} else if data.ApicRequirePkce.ValueBool() {
-		data.ApicRequirePkce = types.BoolNull()
+	if value := res.Get(pathRoot + `APICRequirePKCE`); value.Exists() && !data.ApiCRequirePkce.IsNull() {
+		data.ApiCRequirePkce = tfutils.BoolFromString(value.String())
+	} else if data.ApiCRequirePkce.ValueBool() {
+		data.ApiCRequirePkce = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `APICSupportPKCEPlain`); value.Exists() && !data.ApicSupportPkcePlain.IsNull() {
-		data.ApicSupportPkcePlain = tfutils.BoolFromString(value.String())
-	} else if data.ApicSupportPkcePlain.ValueBool() {
-		data.ApicSupportPkcePlain = types.BoolNull()
+	if value := res.Get(pathRoot + `APICSupportPKCEPlain`); value.Exists() && !data.ApiCSupportPkcePlain.IsNull() {
+		data.ApiCSupportPkcePlain = tfutils.BoolFromString(value.String())
+	} else if data.ApiCSupportPkcePlain.ValueBool() {
+		data.ApiCSupportPkcePlain = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `APICTokenTypeToGenerate`); value.Exists() && !data.ApicTokenTypeToGenerate.IsNull() {
-		data.ApicTokenTypeToGenerate = tfutils.ParseStringFromGJSON(value)
-	} else if data.ApicTokenTypeToGenerate.ValueString() != "Bearer" {
-		data.ApicTokenTypeToGenerate = types.StringNull()
+	if value := res.Get(pathRoot + `APICTokenTypeToGenerate`); value.Exists() && !data.ApiCTokenTypeToGenerate.IsNull() {
+		data.ApiCTokenTypeToGenerate = tfutils.ParseStringFromGJSON(value)
+	} else if data.ApiCTokenTypeToGenerate.ValueString() != "Bearer" {
+		data.ApiCTokenTypeToGenerate = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MetadataFrom`); value.Exists() {
 		data.MetadataFrom.UpdateFromBody(ctx, "", value)
@@ -1765,10 +1765,10 @@ func (data *OAuthProviderSettings) UpdateFromBody(ctx context.Context, pathRoot 
 	} else {
 		data.TokenValidationReq = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `ThirdPartyAZURL`); value.Exists() && !data.ThirdPartyAzurl.IsNull() {
-		data.ThirdPartyAzurl = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `ThirdPartyAZURL`); value.Exists() && !data.ThirdPartyAzUrl.IsNull() {
+		data.ThirdPartyAzUrl = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ThirdPartyAzurl = types.StringNull()
+		data.ThirdPartyAzUrl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ThirdPartyTokenURL`); value.Exists() && !data.ThirdPartyTokenUrl.IsNull() {
 		data.ThirdPartyTokenUrl = tfutils.ParseStringFromGJSON(value)

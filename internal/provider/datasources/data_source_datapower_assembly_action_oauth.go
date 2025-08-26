@@ -76,8 +76,8 @@ func (d *AssemblyActionOAuthDataSource) Schema(ctx context.Context, req datasour
 							MarkdownDescription: "The name of the application domain the object belongs to",
 							Computed:            true,
 						},
-						"o_auth_provider_settings_reference": models.GetDmDynamicOAuthProviderSettingsReferenceDataSourceSchema("Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.", "oauth-provider-settings-ref", ""),
-						"supported_o_auth_components":        models.GetDmOAuthComponentsDataSourceSchema("Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.", "supported-oauth-components", ""),
+						"oauth_provider_settings_reference": models.GetDmDynamicOAuthProviderSettingsReferenceDataSourceSchema("Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.", "oauth-provider-settings-ref", ""),
+						"supported_oauth_components":        models.GetDmOAuthComponentsDataSourceSchema("Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.", "supported-oauth-components", ""),
 						"user_summary": schema.StringAttribute{
 							MarkdownDescription: "Comments",
 							Computed:            true,

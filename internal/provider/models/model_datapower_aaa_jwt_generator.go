@@ -47,11 +47,11 @@ type AAAJWTGenerator struct {
 	GenMethod          *DmJWTGenMethod             `tfsdk:"gen_method"`
 	SignAlgorithm      types.String                `tfsdk:"sign_algorithm"`
 	SignKey            types.String                `tfsdk:"sign_key"`
-	SignSsKey          types.String                `tfsdk:"sign_ss_key"`
+	SignSskey          types.String                `tfsdk:"sign_sskey"`
 	EncAlgorithm       types.String                `tfsdk:"enc_algorithm"`
 	EncryptAlgorithm   types.String                `tfsdk:"encrypt_algorithm"`
 	EncryptCertificate types.String                `tfsdk:"encrypt_certificate"`
-	EncryptSsKey       types.String                `tfsdk:"encrypt_ss_key"`
+	EncryptSskey       types.String                `tfsdk:"encrypt_sskey"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
@@ -187,11 +187,11 @@ var AAAJWTGeneratorObjectType = map[string]attr.Type{
 	"gen_method":          types.ObjectType{AttrTypes: DmJWTGenMethodObjectType},
 	"sign_algorithm":      types.StringType,
 	"sign_key":            types.StringType,
-	"sign_ss_key":         types.StringType,
+	"sign_sskey":          types.StringType,
 	"enc_algorithm":       types.StringType,
 	"encrypt_algorithm":   types.StringType,
 	"encrypt_certificate": types.StringType,
-	"encrypt_ss_key":      types.StringType,
+	"encrypt_sskey":       types.StringType,
 	"dependency_actions":  actions.ActionsListType,
 }
 
@@ -243,7 +243,7 @@ func (data AAAJWTGenerator) IsNull() bool {
 	if !data.SignKey.IsNull() {
 		return false
 	}
-	if !data.SignSsKey.IsNull() {
+	if !data.SignSskey.IsNull() {
 		return false
 	}
 	if !data.EncAlgorithm.IsNull() {
@@ -255,7 +255,7 @@ func (data AAAJWTGenerator) IsNull() bool {
 	if !data.EncryptCertificate.IsNull() {
 		return false
 	}
-	if !data.EncryptSsKey.IsNull() {
+	if !data.EncryptSskey.IsNull() {
 		return false
 	}
 	return true
@@ -308,8 +308,8 @@ func (data AAAJWTGenerator) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.SignKey.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SignKey`, data.SignKey.ValueString())
 	}
-	if !data.SignSsKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SignSSKey`, data.SignSsKey.ValueString())
+	if !data.SignSskey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SignSSKey`, data.SignSskey.ValueString())
 	}
 	if !data.EncAlgorithm.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EncAlgorithm`, data.EncAlgorithm.ValueString())
@@ -320,8 +320,8 @@ func (data AAAJWTGenerator) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.EncryptCertificate.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EncryptCertificate`, data.EncryptCertificate.ValueString())
 	}
-	if !data.EncryptSsKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EncryptSSKey`, data.EncryptSsKey.ValueString())
+	if !data.EncryptSskey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`EncryptSSKey`, data.EncryptSskey.ValueString())
 	}
 	return body
 }
@@ -388,9 +388,9 @@ func (data *AAAJWTGenerator) FromBody(ctx context.Context, pathRoot string, res 
 		data.SignKey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SignSSKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SignSsKey = tfutils.ParseStringFromGJSON(value)
+		data.SignSskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SignSsKey = types.StringNull()
+		data.SignSskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EncAlgorithm`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.EncAlgorithm = tfutils.ParseStringFromGJSON(value)
@@ -408,9 +408,9 @@ func (data *AAAJWTGenerator) FromBody(ctx context.Context, pathRoot string, res 
 		data.EncryptCertificate = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EncryptSSKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.EncryptSsKey = tfutils.ParseStringFromGJSON(value)
+		data.EncryptSskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EncryptSsKey = types.StringNull()
+		data.EncryptSskey = types.StringNull()
 	}
 }
 
@@ -473,10 +473,10 @@ func (data *AAAJWTGenerator) UpdateFromBody(ctx context.Context, pathRoot string
 	} else {
 		data.SignKey = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SignSSKey`); value.Exists() && !data.SignSsKey.IsNull() {
-		data.SignSsKey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SignSSKey`); value.Exists() && !data.SignSskey.IsNull() {
+		data.SignSskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SignSsKey = types.StringNull()
+		data.SignSskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `EncAlgorithm`); value.Exists() && !data.EncAlgorithm.IsNull() {
 		data.EncAlgorithm = tfutils.ParseStringFromGJSON(value)
@@ -493,9 +493,9 @@ func (data *AAAJWTGenerator) UpdateFromBody(ctx context.Context, pathRoot string
 	} else {
 		data.EncryptCertificate = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `EncryptSSKey`); value.Exists() && !data.EncryptSsKey.IsNull() {
-		data.EncryptSsKey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `EncryptSSKey`); value.Exists() && !data.EncryptSskey.IsNull() {
+		data.EncryptSskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.EncryptSsKey = types.StringNull()
+		data.EncryptSskey = types.StringNull()
 	}
 }

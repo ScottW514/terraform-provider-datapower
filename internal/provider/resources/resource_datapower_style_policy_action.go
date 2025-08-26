@@ -283,7 +283,7 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 				MarkdownDescription: tfutils.NewAttributeDescription("Input conversion", "input-conversion", "http_input_conversion_map").String,
 				Optional:            true,
 			},
-			"x_path": schema.StringAttribute{
+			"xpath": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the input context. Enter the XPath expression or a variable in the <tt>var://context/name</tt> format that expands to an XPath expression.", "xpath", "").String,
 				Optional:            true,
 			},
@@ -495,7 +495,7 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 					validators.ConditionalRequiredString(models.StylePolicyActionSingleKeyCondVal, validators.Evaluation{}, false),
 				},
 			},
-			"single_ss_key": schema.StringAttribute{
+			"single_sskey": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Shared Secret Key", "single-sskey", "crypto_sskey").AddRequiredWhen(models.StylePolicyActionSingleSSKeyCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{

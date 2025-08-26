@@ -31,7 +31,6 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
-	"unicode"
 
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
@@ -267,22 +266,13 @@ var functions = template.FuncMap{
 
 // buildAttribute derives TfName from Name if not set, handling camel to snake conversion
 func buildAttribute(attr *YamlConfigAttribute) {
-	var b strings.Builder
-	for i, r := range attr.Name {
-		if i > 0 && unicode.IsUpper(r) &&
-			(unicode.IsLower(rune(attr.Name[i-1])) || (i < len(attr.Name)-1 && unicode.IsLower(rune(attr.Name[i+1])))) {
-			b.WriteRune('_')
-		}
-		b.WriteRune(unicode.ToLower(r))
-	}
 	if attr.Path == "" {
 		attr.Path = fmt.Sprintf("`%s`", strings.ReplaceAll(strings.ReplaceAll(attr.Name, ":", `\:`), ".", `\.`))
 	} else {
 		attr.Path = fmt.Sprintf("`%s`", attr.Path)
 	}
 	if attr.TfName == "" {
-		attr.TfName = strings.ReplaceAll(b.String(), "-", "_")
-		attr.TfName = strings.ReplaceAll(attr.TfName, ".", "_")
+		attr.TfName = tfutils.ToTfName(attr.Name)
 	}
 	if attr.WriteOnly {
 		attr.TfName = attr.TfName + "_wo"

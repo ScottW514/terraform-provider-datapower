@@ -43,7 +43,7 @@ Read-Only:
 - `name_space_mappings` (Attributes List) The prefix and URI for namespaces that might be encountered in requests. (see [below for nested schema](#nestedatt--result--name_space_mappings))
 - `operation` (String) Select the operation to perform on the selected document nodes.
 - `user_summary` (String) Comments
-- `x_path` (List of String) <p>Enter the XPath expression identifying the elements on which to operate in the blank field in front of the Add button. Click Add to add the expression to those included in the map.</p><p>Click the XPath Tool button to use the graphically oriented XPath Tool to construct the message. You will need to upload an example document to use this tool. Note that this example should be the encrypted document when the operation is decrypt.</p>
+- `xpath` (List of String) <p>Enter the XPath expression identifying the elements on which to operate in the blank field in front of the Add button. Click Add to add the expression to those included in the map.</p><p>Click the XPath Tool button to use the graphically oriented XPath Tool to construct the message. You will need to upload an example document to use this tool. Note that this example should be the encrypted document when the operation is decrypt.</p>
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

@@ -150,7 +150,7 @@ Read-Only:
 
 Read-Only:
 
-- `accept__encoding` (Boolean) Accept-Encoding
+- `accept_encoding` (Boolean) Accept-Encoding
   - Default value: `false`
 - `mqmd` (Boolean) MQMD
   - Default value: `false`

@@ -36,19 +36,19 @@ import (
 type XPathRoutingMap struct {
 	Id                types.String                `tfsdk:"id"`
 	AppDomain         types.String                `tfsdk:"app_domain"`
-	XPathRoutingRules types.List                  `tfsdk:"x_path_routing_rules"`
+	XpathRoutingRules types.List                  `tfsdk:"xpath_routing_rules"`
 	NameSpaceMappings types.List                  `tfsdk:"name_space_mappings"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var XPathRoutingMapObjectType = map[string]attr.Type{
-	"id":                   types.StringType,
-	"app_domain":           types.StringType,
-	"x_path_routing_rules": types.ListType{ElemType: types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}},
-	"name_space_mappings":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmNamespaceMappingObjectType}},
-	"user_summary":         types.StringType,
-	"dependency_actions":   actions.ActionsListType,
+	"id":                  types.StringType,
+	"app_domain":          types.StringType,
+	"xpath_routing_rules": types.ListType{ElemType: types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}},
+	"name_space_mappings": types.ListType{ElemType: types.ObjectType{AttrTypes: DmNamespaceMappingObjectType}},
+	"user_summary":        types.StringType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data XPathRoutingMap) GetPath() string {
@@ -65,7 +65,7 @@ func (data XPathRoutingMap) IsNull() bool {
 	if !data.AppDomain.IsNull() {
 		return false
 	}
-	if !data.XPathRoutingRules.IsNull() {
+	if !data.XpathRoutingRules.IsNull() {
 		return false
 	}
 	if !data.NameSpaceMappings.IsNull() {
@@ -86,9 +86,9 @@ func (data XPathRoutingMap) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.Id.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`name`, data.Id.ValueString())
 	}
-	if !data.XPathRoutingRules.IsNull() {
+	if !data.XpathRoutingRules.IsNull() {
 		var dataValues []DmXPathRoutingRule
-		data.XPathRoutingRules.ElementsAs(ctx, &dataValues, false)
+		data.XpathRoutingRules.ElementsAs(ctx, &dataValues, false)
 		for _, val := range dataValues {
 			body, _ = sjson.SetRaw(body, pathRoot+`XPathRoutingRules`+".-1", val.ToBody(ctx, ""))
 		}
@@ -127,12 +127,12 @@ func (data *XPathRoutingMap) FromBody(ctx context.Context, pathRoot string, res 
 			}
 		}
 		if len(l) > 0 {
-			data.XPathRoutingRules, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}, l)
+			data.XpathRoutingRules, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}, l)
 		} else {
-			data.XPathRoutingRules = types.ListNull(types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType})
+			data.XpathRoutingRules = types.ListNull(types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType})
 		}
 	} else {
-		data.XPathRoutingRules = types.ListNull(types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType})
+		data.XpathRoutingRules = types.ListNull(types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType})
 	}
 	if value := res.Get(pathRoot + `NameSpaceMappings`); value.Exists() {
 		l := []DmNamespaceMapping{}
@@ -169,7 +169,7 @@ func (data *XPathRoutingMap) UpdateFromBody(ctx context.Context, pathRoot string
 	} else {
 		data.Id = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `XPathRoutingRules`); value.Exists() && !data.XPathRoutingRules.IsNull() {
+	if value := res.Get(pathRoot + `XPathRoutingRules`); value.Exists() && !data.XpathRoutingRules.IsNull() {
 		l := []DmXPathRoutingRule{}
 		for _, v := range value.Array() {
 			item := DmXPathRoutingRule{}
@@ -179,12 +179,12 @@ func (data *XPathRoutingMap) UpdateFromBody(ctx context.Context, pathRoot string
 			}
 		}
 		if len(l) > 0 {
-			data.XPathRoutingRules, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}, l)
+			data.XpathRoutingRules, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}, l)
 		} else {
-			data.XPathRoutingRules = types.ListNull(types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType})
+			data.XpathRoutingRules = types.ListNull(types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType})
 		}
 	} else {
-		data.XPathRoutingRules = types.ListNull(types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType})
+		data.XpathRoutingRules = types.ListNull(types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType})
 	}
 	if value := res.Get(pathRoot + `NameSpaceMappings`); value.Exists() && !data.NameSpaceMappings.IsNull() {
 		l := []DmNamespaceMapping{}

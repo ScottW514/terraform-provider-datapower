@@ -103,7 +103,7 @@ resource "datapower_api_definition" "test" {
 - `get_raw_body_value` (Boolean) Specify whether the GatewayScript <tt>apim.getvariable()</tt> APIreturns the raw body instead of parsing. This setting applies only when the context is other than <tt>message</tt> .
   - CLI Alias: `get-raw-body-value`
   - Default value: `false`
-- `graph_ql_schema` (String) GraphQL schema location
+- `graphql_schema` (String) GraphQL schema location
   - CLI Alias: `graphql-schema`
   - Reference to: `datapower_api_schema:id`
   - Required When: `type`=`graphql`
@@ -125,7 +125,7 @@ resource "datapower_api_definition" "test" {
 - `require_api_mutual_tls` (Boolean) API protection
   - CLI Alias: `require-api-mutual-tls`
   - Default value: `false`
-- `return_v5_responses` (Boolean) Specify whether to return v5-compatible responses, such as OAuth and client security error responses.
+- `return_v5responses` (Boolean) Specify whether to return v5-compatible responses, such as OAuth and client security error responses.
   - CLI Alias: `return-v5-responses`
   - Default value: `false`
 - `schemas` (Attributes List) Specify the API schemas that define data types for request or message validation. An API data type consists of a name and its API schema.
@@ -133,7 +133,7 @@ resource "datapower_api_definition" "test" {
 - `security_requirement` (List of String) Specify the alternative security requirements to enforce for the API as a whole. In other words, processing applies a logical <tt>OR</tt> between the security requirements. By default, the security requirement is applied to all operations in the API. However, for each API operation, you can override the API-level security by separately specifying security schemes to enforce at the operation level.
   - CLI Alias: `security-req`
   - Reference to: `datapower_api_security_requirement:id`
-- `set_v5_request_headers` (Boolean) Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.
+- `set_v5request_headers` (Boolean) Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.
   - CLI Alias: `set-v5-request-headers`
   - Default value: `false`
 - `share_rate_limit_count` (String) Share rate limit count

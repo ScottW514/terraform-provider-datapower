@@ -35,7 +35,7 @@ data "datapower_mgmt_interface" "test" {
 - `slm_peering` (Number) SLM update interval
 - `ssl_config_type` (String) Custom TLS server type
 - `ssl_server` (String) Custom TLS server profile
-- `sslsni_server` (String) Custom TLS SNI server profile
+- `ssl_sni_server` (String) Custom TLS SNI server profile
 - `user_agent` (String) Custom user agent
 - `user_summary` (String) Comments
 

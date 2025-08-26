@@ -127,7 +127,7 @@ func (d *APIDefinitionDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify the name and location of the OpenAPI document when you create the API definition from an OpenAPI document. Prepare the document as follows before you specify the location. <ol><li>When the OpenAPI document is a YAML file, convert it to JSON.</li><li>Import the JSON file to the <tt>local:</tt> or <tt>temporary:</tt> DataPower directory.</li></ol><p>When you create the API definition with API properties, this property is not applicable.</p>",
 							Computed:            true,
 						},
-						"graph_ql_schema": schema.StringAttribute{
+						"graphql_schema": schema.StringAttribute{
 							MarkdownDescription: "GraphQL schema location",
 							Computed:            true,
 						},
@@ -209,7 +209,7 @@ func (d *APIDefinitionDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Share rate limit count",
 							Computed:            true,
 						},
-						"return_v5_responses": schema.BoolAttribute{
+						"return_v5responses": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to return v5-compatible responses, such as OAuth and client security error responses.",
 							Computed:            true,
 						},
@@ -225,7 +225,7 @@ func (d *APIDefinitionDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify whether to transfer documents to the server in chunks, which is based on the <tt>Transfer-Encoding: chunked</tt> header. This setting applies only to the <tt>invoke</tt> 1.5.0 policy that is deployed from API Connect from using the migration utility.",
 							Computed:            true,
 						},
-						"set_v5_request_headers": schema.BoolAttribute{
+						"set_v5request_headers": schema.BoolAttribute{
 							MarkdownDescription: "Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.",
 							Computed:            true,
 						},

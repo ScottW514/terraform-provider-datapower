@@ -54,7 +54,7 @@ type MQv9PlusSourceProtocolHandler struct {
 	PollingInterval         types.Int64                 `tfsdk:"polling_interval"`
 	BatchSize               types.Int64                 `tfsdk:"batch_size"`
 	ContentTypeHeader       types.String                `tfsdk:"content_type_header"`
-	ContentTypeXPath        types.String                `tfsdk:"content_type_x_path"`
+	ContentTypeXpath        types.String                `tfsdk:"content_type_xpath"`
 	RetrieveBackoutSettings types.Bool                  `tfsdk:"retrieve_backout_settings"`
 	UseQmNameInUrl          types.Bool                  `tfsdk:"use_qm_name_in_url"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
@@ -102,7 +102,7 @@ var MQv9PlusSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"polling_interval":          types.Int64Type,
 	"batch_size":                types.Int64Type,
 	"content_type_header":       types.StringType,
-	"content_type_x_path":       types.StringType,
+	"content_type_xpath":        types.StringType,
 	"retrieve_backout_settings": types.BoolType,
 	"use_qm_name_in_url":        types.BoolType,
 	"dependency_actions":        actions.ActionsListType,
@@ -175,7 +175,7 @@ func (data MQv9PlusSourceProtocolHandler) IsNull() bool {
 	if !data.ContentTypeHeader.IsNull() {
 		return false
 	}
-	if !data.ContentTypeXPath.IsNull() {
+	if !data.ContentTypeXpath.IsNull() {
 		return false
 	}
 	if !data.RetrieveBackoutSettings.IsNull() {
@@ -249,8 +249,8 @@ func (data MQv9PlusSourceProtocolHandler) ToBody(ctx context.Context, pathRoot s
 	if !data.ContentTypeHeader.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ContentTypeHeader`, data.ContentTypeHeader.ValueString())
 	}
-	if !data.ContentTypeXPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ContentTypeXPath`, data.ContentTypeXPath.ValueString())
+	if !data.ContentTypeXpath.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`ContentTypeXPath`, data.ContentTypeXpath.ValueString())
 	}
 	if !data.RetrieveBackoutSettings.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RetrieveBackoutSettings`, tfutils.StringFromBool(data.RetrieveBackoutSettings, ""))
@@ -357,9 +357,9 @@ func (data *MQv9PlusSourceProtocolHandler) FromBody(ctx context.Context, pathRoo
 		data.ContentTypeHeader = types.StringValue("None")
 	}
 	if value := res.Get(pathRoot + `ContentTypeXPath`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.ContentTypeXPath = tfutils.ParseStringFromGJSON(value)
+		data.ContentTypeXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ContentTypeXPath = types.StringNull()
+		data.ContentTypeXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `RetrieveBackoutSettings`); value.Exists() {
 		data.RetrieveBackoutSettings = tfutils.BoolFromString(value.String())
@@ -467,10 +467,10 @@ func (data *MQv9PlusSourceProtocolHandler) UpdateFromBody(ctx context.Context, p
 	} else if data.ContentTypeHeader.ValueString() != "None" {
 		data.ContentTypeHeader = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `ContentTypeXPath`); value.Exists() && !data.ContentTypeXPath.IsNull() {
-		data.ContentTypeXPath = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `ContentTypeXPath`); value.Exists() && !data.ContentTypeXpath.IsNull() {
+		data.ContentTypeXpath = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ContentTypeXPath = types.StringNull()
+		data.ContentTypeXpath = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `RetrieveBackoutSettings`); value.Exists() && !data.RetrieveBackoutSettings.IsNull() {
 		data.RetrieveBackoutSettings = tfutils.BoolFromString(value.String())

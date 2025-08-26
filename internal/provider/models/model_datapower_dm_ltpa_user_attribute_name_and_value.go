@@ -38,20 +38,20 @@ type DmLTPAUserAttributeNameAndValue struct {
 	LtpaUserAttributeName        types.String `tfsdk:"ltpa_user_attribute_name"`
 	LtpaUserAttributeType        types.String `tfsdk:"ltpa_user_attribute_type"`
 	LtpaUserAttributeStaticValue types.String `tfsdk:"ltpa_user_attribute_static_value"`
-	LtpaUserAttributeXPathValue  types.String `tfsdk:"ltpa_user_attribute_x_path_value"`
+	LtpaUserAttributeXpathValue  types.String `tfsdk:"ltpa_user_attribute_xpath_value"`
 }
 
 var DmLTPAUserAttributeNameAndValueObjectType = map[string]attr.Type{
 	"ltpa_user_attribute_name":         types.StringType,
 	"ltpa_user_attribute_type":         types.StringType,
 	"ltpa_user_attribute_static_value": types.StringType,
-	"ltpa_user_attribute_x_path_value": types.StringType,
+	"ltpa_user_attribute_xpath_value":  types.StringType,
 }
 var DmLTPAUserAttributeNameAndValueObjectDefault = map[string]attr.Value{
 	"ltpa_user_attribute_name":         types.StringNull(),
 	"ltpa_user_attribute_type":         types.StringNull(),
 	"ltpa_user_attribute_static_value": types.StringNull(),
-	"ltpa_user_attribute_x_path_value": types.StringNull(),
+	"ltpa_user_attribute_xpath_value":  types.StringNull(),
 }
 
 func GetDmLTPAUserAttributeNameAndValueDataSourceSchema() DataSourceSchema.NestedAttributeObject {
@@ -69,7 +69,7 @@ func GetDmLTPAUserAttributeNameAndValueDataSourceSchema() DataSourceSchema.Neste
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").String,
 				Computed:            true,
 			},
-			"ltpa_user_attribute_x_path_value": DataSourceSchema.StringAttribute{
+			"ltpa_user_attribute_xpath_value": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").String,
 				Computed:            true,
 			},
@@ -95,7 +95,7 @@ func GetDmLTPAUserAttributeNameAndValueResourceSchema() ResourceSchema.NestedAtt
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").String,
 				Optional:            true,
 			},
-			"ltpa_user_attribute_x_path_value": ResourceSchema.StringAttribute{
+			"ltpa_user_attribute_xpath_value": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").String,
 				Optional:            true,
 			},
@@ -114,7 +114,7 @@ func (data DmLTPAUserAttributeNameAndValue) IsNull() bool {
 	if !data.LtpaUserAttributeStaticValue.IsNull() {
 		return false
 	}
-	if !data.LtpaUserAttributeXPathValue.IsNull() {
+	if !data.LtpaUserAttributeXpathValue.IsNull() {
 		return false
 	}
 	return true
@@ -135,8 +135,8 @@ func (data DmLTPAUserAttributeNameAndValue) ToBody(ctx context.Context, pathRoot
 	if !data.LtpaUserAttributeStaticValue.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LTPAUserAttributeStaticValue`, data.LtpaUserAttributeStaticValue.ValueString())
 	}
-	if !data.LtpaUserAttributeXPathValue.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LTPAUserAttributeXPathValue`, data.LtpaUserAttributeXPathValue.ValueString())
+	if !data.LtpaUserAttributeXpathValue.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`LTPAUserAttributeXPathValue`, data.LtpaUserAttributeXpathValue.ValueString())
 	}
 	return body
 }
@@ -161,9 +161,9 @@ func (data *DmLTPAUserAttributeNameAndValue) FromBody(ctx context.Context, pathR
 		data.LtpaUserAttributeStaticValue = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LTPAUserAttributeXPathValue`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LtpaUserAttributeXPathValue = tfutils.ParseStringFromGJSON(value)
+		data.LtpaUserAttributeXpathValue = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LtpaUserAttributeXPathValue = types.StringNull()
+		data.LtpaUserAttributeXpathValue = types.StringNull()
 	}
 }
 
@@ -186,9 +186,9 @@ func (data *DmLTPAUserAttributeNameAndValue) UpdateFromBody(ctx context.Context,
 	} else {
 		data.LtpaUserAttributeStaticValue = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `LTPAUserAttributeXPathValue`); value.Exists() && !data.LtpaUserAttributeXPathValue.IsNull() {
-		data.LtpaUserAttributeXPathValue = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `LTPAUserAttributeXPathValue`); value.Exists() && !data.LtpaUserAttributeXpathValue.IsNull() {
+		data.LtpaUserAttributeXpathValue = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LtpaUserAttributeXPathValue = types.StringNull()
+		data.LtpaUserAttributeXpathValue = types.StringNull()
 	}
 }

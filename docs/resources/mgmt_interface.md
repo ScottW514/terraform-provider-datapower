@@ -54,7 +54,7 @@ resource "datapower_mgmt_interface" "test" {
 - `ssl_server` (String) Custom TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
-- `sslsni_server` (String) Custom TLS SNI server profile
+- `ssl_sni_server` (String) Custom TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
   - Required When: `ssl_config_type`=`sni`

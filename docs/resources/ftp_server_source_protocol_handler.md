@@ -68,10 +68,10 @@ resource "datapower_ftp_server_source_protocol_handler" "test" {
   - CLI Alias: `default-directory`
   - Default value: `/`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `disable_pasvip_check` (Boolean) Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
+- `disable_pasv_ip_check` (Boolean) Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `passive-promiscuous`
   - Default value: `false`
-- `disable_portip_check` (Boolean) Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
+- `disable_port_ip_check` (Boolean) Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `port-promiscuous`
   - Default value: `false`
 - `filesystem_type` (String) Specify the type of file system that the FTP server shows. <ul><li>When virtual ephemeral or virtual persistent, the client can write files to all directories. These files are shown in directory listings but cannot be retrieved. For file system responses, the responses are shown and can be retrieved, renamed, and deleted by the client.</li><li>When transparent, the file system shows the contents of the equivalent path of the remote server.</li></ul><p>This setting is supported by only the FTP server handler and a multiprotocol gateway or web service proxy.</p>
@@ -120,7 +120,7 @@ resource "datapower_ftp_server_source_protocol_handler" "test" {
   - CLI Alias: `require-tls`
   - Choices: `off`, `explicit`, `implicit`
   - Default value: `off`
-- `response_nfs_mount` (String) When the response type is virtual file system and response storage is NFS, specify the NFS static mount to store response files. Each response file has a unique file name in the NFS directory. The name of the response file is not related to the file name that the virtual file system presents to the FTP client. Generally, this NFS directory is not made available through the FTP server. Do not use this directory for any other purpose.
+- `response_nf_sm_ount` (String) When the response type is virtual file system and response storage is NFS, specify the NFS static mount to store response files. Each response file has a unique file name in the NFS directory. The name of the response file is not related to the file name that the virtual file system presents to the FTP client. Generally, this NFS directory is not made available through the FTP server. Do not use this directory for any other purpose.
   - CLI Alias: `response-nfs-mount`
   - Reference to: `datapower_nfs_static_mount:id`
 - `response_storage` (String) Response storage
@@ -146,7 +146,7 @@ resource "datapower_ftp_server_source_protocol_handler" "test" {
   - Choices: `server`, `sni`
   - Default value: `server`
   - Required When: `require_tls`=`explicit`|`implicit`
-- `sslsni_server` (String) TLS SNI server profile
+- `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
   - Required When: (`require_tls`=`explicit`|`implicit` AND `ssl_server_config_type`=`sni`)

@@ -78,7 +78,7 @@ func (r *XPathRoutingMapResource) Schema(ctx context.Context, req resource.Schem
 					modifiers.ImmutableAfterSet(),
 				},
 			},
-			"x_path_routing_rules": schema.ListNestedAttribute{
+			"xpath_routing_rules": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Rules", "rule", "").String,
 				NestedObject:        models.GetDmXPathRoutingRuleResourceSchema(),
 				Required:            true,

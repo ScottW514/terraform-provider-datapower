@@ -40,8 +40,8 @@ func TestAccResourceCryptoKerberosKDC(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_crypto_kerberos_kdc.test", "server_port", "88"),
 			resource.TestCheckResourceAttr("datapower_crypto_kerberos_kdc.test", "udp_timeout", "5"),
 			resource.TestCheckResourceAttr("datapower_crypto_kerberos_kdc.test", "cache_tickets", "true"),
-			resource.TestCheckResourceAttr("datapower_crypto_kerberos_kdc.test", "max_cached_tickets", "32"),
-			resource.TestCheckResourceAttr("datapower_crypto_kerberos_kdc.test", "min_cached_ticket_validity", "60"),
+			resource.TestCheckResourceAttr("datapower_crypto_kerberos_kdc.test", "max_cache_d_tickets", "32"),
+			resource.TestCheckResourceAttr("datapower_crypto_kerberos_kdc.test", "min_cache_d_ticket_validity", "60"),
 		}...),
 	})
 

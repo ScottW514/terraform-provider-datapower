@@ -39,7 +39,7 @@ type JOSESignatureIdentifier struct {
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	Type              types.String                `tfsdk:"type"`
-	SsKey             types.String                `tfsdk:"ss_key"`
+	Sskey             types.String                `tfsdk:"sskey"`
 	Certificate       types.String                `tfsdk:"certificate"`
 	ValidAlgorithms   types.List                  `tfsdk:"valid_algorithms"`
 	HeaderParam       types.List                  `tfsdk:"header_param"`
@@ -66,7 +66,7 @@ var JOSESignatureIdentifierObjectType = map[string]attr.Type{
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,
 	"type":               types.StringType,
-	"ss_key":             types.StringType,
+	"sskey":              types.StringType,
 	"certificate":        types.StringType,
 	"valid_algorithms":   types.ListType{ElemType: types.StringType},
 	"header_param":       types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
@@ -93,7 +93,7 @@ func (data JOSESignatureIdentifier) IsNull() bool {
 	if !data.Type.IsNull() {
 		return false
 	}
-	if !data.SsKey.IsNull() {
+	if !data.Sskey.IsNull() {
 		return false
 	}
 	if !data.Certificate.IsNull() {
@@ -123,8 +123,8 @@ func (data JOSESignatureIdentifier) ToBody(ctx context.Context, pathRoot string)
 	if !data.Type.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Type`, data.Type.ValueString())
 	}
-	if !data.SsKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.SsKey.ValueString())
+	if !data.Sskey.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`SSKey`, data.Sskey.ValueString())
 	}
 	if !data.Certificate.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Certificate`, data.Certificate.ValueString())
@@ -166,9 +166,9 @@ func (data *JOSESignatureIdentifier) FromBody(ctx context.Context, pathRoot stri
 		data.Type = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SsKey = tfutils.ParseStringFromGJSON(value)
+		data.Sskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsKey = types.StringNull()
+		data.Sskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Certificate`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Certificate = tfutils.ParseStringFromGJSON(value)
@@ -220,10 +220,10 @@ func (data *JOSESignatureIdentifier) UpdateFromBody(ctx context.Context, pathRoo
 	} else {
 		data.Type = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSKey`); value.Exists() && !data.SsKey.IsNull() {
-		data.SsKey = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `SSKey`); value.Exists() && !data.Sskey.IsNull() {
+		data.Sskey = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SsKey = types.StringNull()
+		data.Sskey = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Certificate`); value.Exists() && !data.Certificate.IsNull() {
 		data.Certificate = tfutils.ParseStringFromGJSON(value)
