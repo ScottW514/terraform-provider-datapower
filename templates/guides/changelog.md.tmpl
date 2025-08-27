@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## UNRELEASED
+## v0.10.0
 
 - Added validation criteria to definitions
 - BREAKING CHANGE: Refactored `write-only` handling to align with common provider practice
@@ -15,6 +15,8 @@ description: |-
 - Bump github.com/hashicorp/terraform-plugin-testing from 1.13.2 to 1.13.3 in the terraform-plugin group (PR8)
 - Added `required_when` logic and attribute validators for conditionally requiring attributes
 - BREAKING CHANGE: Changed attribute names to aid in readability.
+- Bump goreleaser/goreleaser-action from 6.3.0 to 6.4.0 in the github-actions group (PR9)
+- Bump github.com/stretchr/testify from 1.10.0 to 1.11.0 (PR10)
 
 ## v0.9.1
 
