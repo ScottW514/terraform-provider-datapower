@@ -63,7 +63,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: Profiles
     value:
-    - BP10
+    - bp10
 - name: ReportLevel
   type: String
   enum:
