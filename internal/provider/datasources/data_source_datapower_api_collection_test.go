@@ -43,7 +43,6 @@ func TestAccDataSourceAPICollection(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_api_collection.test", "result.0.sandbox", "false"),
 					resource.TestCheckResourceAttr("data.datapower_api_collection.test", "result.0.catalog_id", "default-catalog-id"),
 					resource.TestCheckResourceAttr("data.datapower_api_collection.test", "result.0.catalog_name", "default"),
-					resource.TestCheckResourceAttr("data.datapower_api_collection.test", "result.0.enable_cache", "true"),
 					resource.TestCheckResourceAttr("data.datapower_api_collection.test", "result.0.cache_capacity", "128"),
 					resource.TestCheckResourceAttr("data.datapower_api_collection.test", "result.0.use_rate_limit_group", "false"),
 					resource.TestCheckResourceAttr("data.datapower_api_collection.test", "result.0.enforce_pre_assembly_rate_limits", "true"),

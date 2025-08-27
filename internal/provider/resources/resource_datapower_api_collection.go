@@ -41,7 +41,6 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &APICollectionResource{}
@@ -115,23 +114,16 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 				Computed:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
-			"enable_cache": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable subscriber caching", "", "").AddDefaultValue("true").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
-			},
 			"dev_portal_endpoint": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.", "dev-portal-endpoint", "").String,
 				Optional:            true,
 			},
 			"cache_capacity": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of subscriber entries to cache. Enter a value in the range 8 - 51200. The default value is 128. When the limit is exceeded, the least recently used (LRU) entry is removed.", "cache-capacity", "").AddIntegerRange(8, 51200).AddDefaultValue("128").AddRequiredWhen(models.APICollectionCacheCapacityCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of subscriber entries to cache. Enter a value in the range 8 - 51200. The default value is 128. When the limit is exceeded, the least recently used (LRU) entry is removed.", "cache-capacity", "").AddIntegerRange(8, 51200).AddDefaultValue("128").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 51200),
-					validators.ConditionalRequiredInt64(models.APICollectionCacheCapacityCondVal, validators.Evaluation{}, true),
 				},
 				Default: int64default.StaticInt64(128),
 			},

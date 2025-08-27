@@ -100,10 +100,6 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Catalog name",
 							Computed:            true,
 						},
-						"enable_cache": schema.BoolAttribute{
-							MarkdownDescription: "Enable subscriber caching",
-							Computed:            true,
-						},
 						"dev_portal_endpoint": schema.StringAttribute{
 							MarkdownDescription: "Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.",
 							Computed:            true,

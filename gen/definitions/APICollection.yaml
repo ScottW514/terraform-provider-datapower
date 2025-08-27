@@ -65,11 +65,6 @@ attributes:
   default: default
   description: Catalog name
   cli_alias: catalog-name
-- name: EnableCache
-  type: Bool
-  default: true
-  description: Enable subscriber caching
-  cli_alias": enable-cache
 - name: DevPortalEndpoint
   type: String
   description: Specify the URL of the Developer Portal endpoint. This endpoint can
@@ -84,16 +79,6 @@ attributes:
     value in the range 8 - 51200. The default value is 128. When the limit is exceeded,
     the least recently used (LRU) entry is removed.
   cli_alias: cache-capacity
-  required_when:
-  - evaluation: property-value-in-list
-    attribute: EnableCache
-    value:
-    - true
-  ignored_when:
-  - evaluation: property-value-in-list
-    attribute: EnableCache
-    value:
-    - false
 - name: RoutingPrefix
   type: List
   element_type: DmRoutingPrefix

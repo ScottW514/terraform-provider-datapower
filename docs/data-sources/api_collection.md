@@ -53,7 +53,6 @@ Read-Only:
 - `catalog_name` (String) Catalog name
 - `default_rate_limit` (Attributes List) Specify the default rate limit scheme for API requests without API keys for client identification. When not defined, requests without API keys are rejected. (see [below for nested schema](#nestedatt--result--default_rate_limit))
 - `dev_portal_endpoint` (String) Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.
-- `enable_cache` (Boolean) Enable subscriber caching
 - `enforce_pre_assembly_rate_limits` (Boolean) Specify whether to enforce the API rate and burst limits from the plan. When disabled, only the limits specified in a rate limit assembly action are applied to this API.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `org_id` (String) Organization ID
