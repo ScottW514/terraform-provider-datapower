@@ -123,6 +123,25 @@ var OAuthSupportedClientGroupClientTemplateCondVal = validators.Evaluation{
 		},
 	},
 }
+var OAuthSupportedClientGroupCustomizedTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "customized",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var OAuthSupportedClientGroupOAuthRoleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var OAuthSupportedClientGroupClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var OAuthSupportedClientGroupTemplateProcessUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var OAuthSupportedClientGroupClientTemplateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var OAuthSupportedClientGroupObjectType = map[string]attr.Type{
 	"id":                   types.StringType,

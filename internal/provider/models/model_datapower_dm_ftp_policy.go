@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,21 @@ type DmFTPPolicy struct {
 	SlashStou      types.String `tfsdk:"slash_stou"`
 	QuotedCommands types.String `tfsdk:"quoted_commands"`
 	SizeCheck      types.String `tfsdk:"size_check"`
+}
+
+var DmFTPPolicyUseCCCIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "auth_tls",
+	AttrType:    "String",
+	AttrDefault: "auth-off",
+	Value:       []string{"auth-off"},
+}
+var DmFTPPolicyEncryptDataIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "auth_tls",
+	AttrType:    "String",
+	AttrDefault: "auth-off",
+	Value:       []string{"auth-off"},
 }
 
 var DmFTPPolicyObjectType = map[string]attr.Type{

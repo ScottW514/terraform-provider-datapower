@@ -108,6 +108,33 @@ var WebAppRequestSQLInjectionPatternsFileCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var WebAppRequestXMLRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WebAppRequestNonXMLRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WebAppRequestQueryStringGNVCIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "query_string_policy",
+	AttrType:    "String",
+	AttrDefault: "allow",
+	Value:       []string{"allow"},
+}
+var WebAppRequestCookieNameVectorIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "process_all_cookie",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var WebAppRequestSQLInjectionPatternsFileIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "sql_injection",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
 
 var WebAppRequestObjectType = map[string]attr.Type{
 	"id":                          types.StringType,

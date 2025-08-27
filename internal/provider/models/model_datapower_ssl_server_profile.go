@@ -83,6 +83,115 @@ var SSLServerProfileValcredCondVal = validators.Evaluation{
 		},
 	},
 }
+var SSLServerProfileRequireClientAuthIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "request_client_auth",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var SSLServerProfileValidateClientCertIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "request_client_auth",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var SSLServerProfileSendClientAuthCAListIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "request_client_auth",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "validate_client_cert",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var SSLServerProfileValcredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SSLServerProfileCacheTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "caching",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var SSLServerProfileCacheSizeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "caching",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var SSLServerProfileMaxSSLDurationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_options",
+	AttrType:    "DmSSLOptions",
+	AttrDefault: "",
+	Value:       []string{"max-duration"},
+}
+var SSLServerProfileNumberOfRenegotiationAllowedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_options",
+	AttrType:    "DmSSLOptions",
+	AttrDefault: "",
+	Value:       []string{"max-renegotiation"},
+}
+var SSLServerProfileProhibitResumeOnRenegIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_options",
+			AttrType:    "DmSSLOptions",
+			AttrDefault: "",
+			Value:       []string{"max-renegotiation"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "number_of_renegotiation_allowed",
+			AttrType:    "Int64",
+			AttrDefault: "0",
+			Value:       []string{"0"},
+		},
+	},
+}
+var SSLServerProfileAllowLegacyRenegotiationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_options",
+			AttrType:    "DmSSLOptions",
+			AttrDefault: "",
+			Value:       []string{"max-renegotiation"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "number_of_renegotiation_allowed",
+			AttrType:    "Int64",
+			AttrDefault: "0",
+			Value:       []string{"0"},
+		},
+	},
+}
+var SSLServerProfilePrioritizeChaChaIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "prefer_server_ciphers",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
 
 var SSLServerProfileObjectType = map[string]attr.Type{
 	"id":                              types.StringType,

@@ -58,6 +58,20 @@ var FileSystemUsageMonitorAllSystemCriticalThresholdCondVal = validators.Evaluat
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+var FileSystemUsageMonitorAllSystemWarningThresholdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "all_system",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var FileSystemUsageMonitorAllSystemCriticalThresholdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "all_system",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
 
 var FileSystemUsageMonitorObjectType = map[string]attr.Type{
 	"enabled":                       types.BoolType,

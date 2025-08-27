@@ -93,6 +93,15 @@ var DmSSLFrontSideSSLSNIServerCondVal = validators.Evaluation{
 		},
 	},
 }
+var DmSSLFrontSideSSLServerConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmSSLFrontSideSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmSSLFrontSideSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmSSLFrontSideObjectType = map[string]attr.Type{
 	"local_address":          types.StringType,

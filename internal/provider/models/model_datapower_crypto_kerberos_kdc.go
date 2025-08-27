@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -46,6 +47,28 @@ type CryptoKerberosKDC struct {
 	MaxCacheDTickets        types.Int64                 `tfsdk:"max_cache_d_tickets"`
 	MinCacheDTicketValidity types.Int64                 `tfsdk:"min_cache_d_ticket_validity"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var CryptoKerberosKDCUDPTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_tcp",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var CryptoKerberosKDCMaxCachedTicketsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cache_tickets",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var CryptoKerberosKDCMinCachedTicketValidityIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cache_tickets",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
 }
 
 var CryptoKerberosKDCObjectType = map[string]attr.Type{

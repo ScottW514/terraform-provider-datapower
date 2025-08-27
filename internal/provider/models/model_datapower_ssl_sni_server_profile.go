@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,21 @@ type SSLSNIServerProfile struct {
 	MaxSslDuration               types.Int64                 `tfsdk:"max_ssl_duration"`
 	NumberOfRenegotiationAllowed types.Int64                 `tfsdk:"number_of_renegotiation_allowed"`
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SSLSNIServerProfileMaxSSLDurationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_options",
+	AttrType:    "DmSSLOptions",
+	AttrDefault: "",
+	Value:       []string{"max-duration"},
+}
+var SSLSNIServerProfileNumberOfRenegotiationAllowedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_options",
+	AttrType:    "DmSSLOptions",
+	AttrDefault: "",
+	Value:       []string{"max-renegotiation"},
 }
 
 var SSLSNIServerProfileObjectType = map[string]attr.Type{

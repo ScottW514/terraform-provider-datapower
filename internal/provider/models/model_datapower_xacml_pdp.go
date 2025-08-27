@@ -61,6 +61,12 @@ var XACMLPDPCombiningAlgCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var XACMLPDPGeneralPolicyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XACMLPDPCombiningAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var XACMLPDPObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

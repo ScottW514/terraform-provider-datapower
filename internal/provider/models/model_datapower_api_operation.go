@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -50,6 +51,21 @@ type APIOperation struct {
 	SoapAction        types.String                `tfsdk:"soap_action"`
 	SoapElementName   types.String                `tfsdk:"soap_element_name"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var APIOperationConsumeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remove_consume",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var APIOperationSecurityIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remove_security",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var APIOperationObjectType = map[string]attr.Type{

@@ -81,6 +81,32 @@ var MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal = validators.Evaluation
 	AttrDefault: "None",
 	Value:       []string{"MQRFH", "MQRFH2"},
 }
+var MQv9PlusSourceProtocolHandlerConcurrentConnectionsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "get_queue",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "subscribe_topic_string",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var MQv9PlusSourceProtocolHandlerContentTypeXPathIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "content_type_header",
+	AttrType:    "String",
+	AttrDefault: "None",
+	Value:       []string{"None"},
+}
 
 var MQv9PlusSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"id":                        types.StringType,

@@ -54,6 +54,13 @@ var CountMonitorHeaderCondVal = validators.Evaluation{
 	AttrDefault: "all",
 	Value:       []string{"ip-from-header"},
 }
+var CountMonitorMaxSourcesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "source",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"each-ip", "ip-from-header"},
+}
 
 var CountMonitorObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

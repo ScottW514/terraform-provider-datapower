@@ -30,6 +30,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,14 @@ type SSHServerProfile struct {
 	PreAuthMsg        types.String                `tfsdk:"pre_auth_msg"`
 	HostKeyAlg        *DmHostKeyAlgorithms        `tfsdk:"host_key_alg"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SSHServerProfilePreAuthMsgIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "send_pre_auth_msg",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
 }
 
 var SSHServerProfileObjectType = map[string]attr.Type{

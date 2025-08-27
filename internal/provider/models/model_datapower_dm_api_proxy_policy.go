@@ -61,6 +61,26 @@ var DmAPIProxyPolicyRemotePortCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+var DmAPIProxyPolicyRemoteAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAPIProxyPolicyRemotePortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAPIProxyPolicyUserNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "skip",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAPIProxyPolicyPasswordIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "skip",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
 
 var DmAPIProxyPolicyObjectType = map[string]attr.Type{
 	"reg_exp":        types.StringType,

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,6 +43,14 @@ type CryptoKerberosKeytab struct {
 	GenerateGssChecksum types.Bool                  `tfsdk:"generate_gss_checksum"`
 	GssChecksumFlags    *DmGssChecksumFlags         `tfsdk:"gss_checksum_flags"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var CryptoKerberosKeytabGssChecksumFlagsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "generate_gss_checksum",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
 }
 
 var CryptoKerberosKeytabObjectType = map[string]attr.Type{

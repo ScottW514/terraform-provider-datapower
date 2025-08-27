@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,14 @@ type DmLBGroupAffinity struct {
 	AffinityWlmOverride types.Bool             `tfsdk:"affinity_wlm_override"`
 	AffinityMode        types.String           `tfsdk:"affinity_mode"`
 	InsertionAttributes *DmInsertionAttributes `tfsdk:"insertion_attributes"`
+}
+
+var DmLBGroupAffinityAffinityModeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "affinity_wlm_override",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
 }
 
 var DmLBGroupAffinityObjectType = map[string]attr.Type{
@@ -62,7 +71,7 @@ var DmLBGroupAffinityObjectDefault = map[string]attr.Value{
 	"insertion_path":        types.StringValue("/"),
 	"insertion_domain":      types.StringValue("datapower.com"),
 	"affinity_wlm_override": types.BoolValue(false),
-	"affinity_mode":         types.StringNull(),
+	"affinity_mode":         types.StringValue("activeConditional"),
 	"insertion_attributes":  types.ObjectValueMust(DmInsertionAttributesObjectType, DmInsertionAttributesObjectDefault),
 }
 
@@ -91,7 +100,7 @@ func GetDmLBGroupAffinityDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"affinity_mode": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").AddDefaultValue("activeConditional").String,
 				Computed:            true,
 			},
 			"insertion_attributes": GetDmInsertionAttributesDataSourceSchema("Specifies the attributes to insert in the cookie in the response when active or active-conditional session affinity is required.", "i-cookie-attributes", ""),
@@ -139,11 +148,13 @@ func GetDmLBGroupAffinityResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"affinity_mode": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").AddDefaultValue("activeConditional").String,
+				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("active", "activeConditional"),
 				},
+				Default: stringdefault.StaticString("activeConditional"),
 			},
 			"insertion_attributes": GetDmInsertionAttributesResourceSchema("Specifies the attributes to insert in the cookie in the response when active or active-conditional session affinity is required.", "i-cookie-attributes", "", false),
 		},
@@ -249,7 +260,7 @@ func (data *DmLBGroupAffinity) FromBody(ctx context.Context, pathRoot string, re
 	if value := res.Get(pathRoot + `AffinityMode`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AffinityMode = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.AffinityMode = types.StringNull()
+		data.AffinityMode = types.StringValue("activeConditional")
 	}
 	if value := res.Get(pathRoot + `InsertionAttributes`); value.Exists() {
 		data.InsertionAttributes = &DmInsertionAttributes{}
@@ -290,7 +301,7 @@ func (data *DmLBGroupAffinity) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `AffinityMode`); value.Exists() && !data.AffinityMode.IsNull() {
 		data.AffinityMode = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.AffinityMode.ValueString() != "activeConditional" {
 		data.AffinityMode = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `InsertionAttributes`); value.Exists() {

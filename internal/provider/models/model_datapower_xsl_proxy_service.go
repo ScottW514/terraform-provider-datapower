@@ -105,6 +105,43 @@ var XSLProxyServiceDebugHistoryCondVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
+var XSLProxyServiceSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var XSLProxyServiceSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
+}
+var XSLProxyServiceSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"proxy"},
+}
+var XSLProxyServiceRemoteAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XSLProxyServiceRemotePortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XSLProxyServiceDebugHistoryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XSLProxyServiceDebugTriggerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
 
 var XSLProxyServiceObjectType = map[string]attr.Type{
 	"id":                                  types.StringType,

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,14 @@ type WSRRServer struct {
 	SslClientConfigType types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient           types.String                `tfsdk:"ssl_client"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WSRRServerSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_client_config_type",
+	AttrType:    "String",
+	AttrDefault: "client",
+	Value:       []string{"client"},
 }
 
 var WSRRServerObjectType = map[string]attr.Type{

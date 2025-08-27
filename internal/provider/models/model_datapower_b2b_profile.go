@@ -376,6 +376,618 @@ var B2BProfileEBMSNotificationSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
+var B2BProfileInboundVerifyValCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileInboundRequireSignedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileInboundRequireEncryptedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileInboundDecryptIdCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileOutboundSignIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileOutboundSignIdCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileOutboundSignDigestAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileOutboundSignMICAlgVersionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileASAllowDuplicateMessageIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfilePreserveFilenameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMSPersistDurationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSAckURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSErrorURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSInboundSendReceiptIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSInboundSendSignedReceiptIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_send_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMSInboundReceiptReplyPatternIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_send_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMSReceiptURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_receipt_reply_pattern",
+			AttrType:    "String",
+			AttrDefault: "Response",
+			Value:       []string{"Response"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_inbound_send_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMSInboundErrorURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSInboundVerifyValCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSDefaultSignerCertIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSInboundRequireSignedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMSInboundRequireEncryptedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMSInboundDecryptIdCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMSOutboundSignIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMSOutboundSignIdCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMSOutboundSignatureAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMSOutboundSignatureC14NAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMSOutboundSignDigestAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMSEnableCPABindingIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSProfileCPABindingsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_enable_cpa_binding",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMSCpaIdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSServiceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSActionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSAllowDuplicateMessageIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileMDNSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileMDNSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mdn_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+	},
+}
+var B2BProfileEBMSAckSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSAckSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ebms_ack_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+	},
+}
+var B2BProfileEBMS3OutboundSignIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMS3OutboundSignIdCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMS3OutboundSignDigestAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms3_outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMS3OutboundSignatureAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms3_outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMS3OutboundSignatureC14NAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms3_outbound_sign",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var B2BProfileEBMS3InboundVerifyValCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMS3DefaultSignerCertIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMS3InboundRequireSignedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMS3InboundRequireEncryptedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMS3InboundDecryptIdCredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMS3InboundRequireCompressedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMS3ReceiptSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMS3ReceiptSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ebms3_receipt_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"internal"},
+		},
+	},
+}
+var B2BProfileEBMSNotificationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMSNotificationURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"external"},
+}
+var B2BProfileEBMSNotificationSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "ebms_notification_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"https"},
+		},
+	},
+}
+var B2BProfileEBMSNotificationSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ebms_notification_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "profile_type",
+			AttrType:    "String",
+			AttrDefault: "internal",
+			Value:       []string{"external"},
+		},
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "ebms_notification_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"https"},
+		},
+	},
+}
+var B2BProfileEBMS3AllowDuplicateMessageIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMS3DuplicateDetectionNotificationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
+var B2BProfileEBMSMessagePropertiesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_type",
+	AttrType:    "String",
+	AttrDefault: "internal",
+	Value:       []string{"internal"},
+}
 
 var B2BProfileObjectType = map[string]attr.Type{
 	"id":                                       types.StringType,

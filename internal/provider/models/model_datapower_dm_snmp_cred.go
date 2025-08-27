@@ -84,6 +84,26 @@ var DmSnmpCredPrivSecretCondVal = validators.Evaluation{
 	AttrDefault: "des",
 	Value:       []string{"none"},
 }
+var DmSnmpCredAuthSecretTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmSnmpCredAuthSecretIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "auth_protocol",
+	AttrType:    "String",
+	AttrDefault: "sha",
+	Value:       []string{"none"},
+}
+var DmSnmpCredPrivSecretTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmSnmpCredPrivSecretIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "priv_protocol",
+	AttrType:    "String",
+	AttrDefault: "des",
+	Value:       []string{"none"},
+}
 
 var DmSnmpCredObjectType = map[string]attr.Type{
 	"engine_id":              types.StringType,

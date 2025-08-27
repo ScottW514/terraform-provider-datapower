@@ -140,6 +140,37 @@ var B2BCPASenderSettingSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
+var B2BCPASenderSettingMaxRetriesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var B2BCPASenderSettingRetryIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var B2BCPASenderSettingIncludeTimeToLiveIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var B2BCPASenderSettingSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_endpoint_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2s"},
+}
+var B2BCPASenderSettingSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var B2BCPASenderSettingObjectType = map[string]attr.Type{
 	"id":                       types.StringType,

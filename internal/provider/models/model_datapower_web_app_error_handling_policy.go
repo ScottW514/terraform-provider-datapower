@@ -59,6 +59,12 @@ var WebAppErrorHandlingPolicyErrorStylePolicyRuleCondVal = validators.Evaluation
 	AttrDefault: "standard",
 	Value:       []string{"error-rule"},
 }
+var WebAppErrorHandlingPolicyURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WebAppErrorHandlingPolicyErrorStylePolicyRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var WebAppErrorHandlingPolicyObjectType = map[string]attr.Type{
 	"id":                      types.StringType,

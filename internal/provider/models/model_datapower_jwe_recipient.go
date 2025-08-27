@@ -59,6 +59,20 @@ var JWERecipientCertificateCondVal = validators.Evaluation{
 	AttrDefault: "RSA1_5",
 	Value:       []string{"RSA1_5", "RSA-OAEP", "RSA-OAEP-256"},
 }
+var JWERecipientSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "algorithm",
+	AttrType:    "String",
+	AttrDefault: "RSA1_5",
+	Value:       []string{"A128KW", "A192KW", "A256KW", "dir"},
+}
+var JWERecipientCertificateIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "algorithm",
+	AttrType:    "String",
+	AttrDefault: "RSA1_5",
+	Value:       []string{"RSA1_5", "RSA-OAEP", "RSA-OAEP-256"},
+}
 
 var JWERecipientObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

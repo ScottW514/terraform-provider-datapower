@@ -67,6 +67,12 @@ var WebAppResponseNonXMLRuleCondVal = validators.Evaluation{
 	AttrDefault: "nothing",
 	Value:       []string{"side", "binary"},
 }
+var WebAppResponseXMLRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WebAppResponseNonXMLRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var WebAppResponseObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

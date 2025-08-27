@@ -89,6 +89,30 @@ var GatewayPeeringLocalDirectoryCondVal = validators.Evaluation{
 	AttrDefault: "memory",
 	Value:       []string{"local"},
 }
+var GatewayPeeringPeerGroupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "enable_peer_group",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var GatewayPeeringEnableSSLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "peer_group",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{""},
+}
+var GatewayPeeringLocalDirectoryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var GatewayPeeringMaxMemoryIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "persistence_location",
+	AttrType:    "String",
+	AttrDefault: "memory",
+	Value:       []string{"memory"},
+}
 
 var GatewayPeeringObjectType = map[string]attr.Type{
 	"id":                   types.StringType,

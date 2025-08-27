@@ -102,6 +102,47 @@ var WebAppFWDebugHistoryCondVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
+var WebAppFWDelayErrorsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "rewrite_errors",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var WebAppFWDelayErrorsDurationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WebAppFWDebugHistoryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WebAppFWDebugTriggerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
+var WebAppFWSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var WebAppFWSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
+}
+var WebAppFWSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"proxy"},
+}
 
 var WebAppFWObjectType = map[string]attr.Type{
 	"id":                         types.StringType,

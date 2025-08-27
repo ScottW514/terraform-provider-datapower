@@ -32,6 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,28 @@ type DmSnmpTarget struct {
 	TrapVersion   types.String `tfsdk:"trap_version"`
 	SecurityName  types.String `tfsdk:"security_name"`
 	SecurityLevel types.String `tfsdk:"security_level"`
+}
+
+var DmSnmpTargetCommunityIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "trap_version",
+	AttrType:    "String",
+	AttrDefault: "1",
+	Value:       []string{"1", "2c"},
+}
+var DmSnmpTargetSecurityNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "trap_version",
+	AttrType:    "String",
+	AttrDefault: "1",
+	Value:       []string{"3"},
+}
+var DmSnmpTargetSecurityLevelIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "trap_version",
+	AttrType:    "String",
+	AttrDefault: "1",
+	Value:       []string{"3"},
 }
 
 var DmSnmpTargetObjectType = map[string]attr.Type{

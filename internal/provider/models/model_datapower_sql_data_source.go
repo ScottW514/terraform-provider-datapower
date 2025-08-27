@@ -185,6 +185,322 @@ var SQLDataSourceTruststoreRefCondVal = validators.Evaluation{
 		},
 	},
 }
+var SQLDataSourcePasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "database",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"DB2"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "encryption_method_db2",
+			AttrType:    "String",
+			AttrDefault: "NoEncryption",
+			Value:       []string{"NoEncryption"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "keystore_ref",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var SQLDataSourceLimitReturnedDataSizeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "limit_returned_data",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var SQLDataSourceOracleDataSourceTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"Oracle"},
+}
+var SQLDataSourceLoadBalancingIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"DB2"},
+}
+var SQLDataSourceEncryptionMethodMSSQLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"MSSQLServer"},
+}
+var SQLDataSourceEncryptionMethodOracleIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"Oracle"},
+}
+var SQLDataSourceEncryptionMethodDB2IgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "database",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"DB2"},
+}
+var SQLDataSourceTruststoreRefIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"Oracle"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_oracle",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"MSSQLServer"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_mssql",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"DB2"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_db2",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+	},
+}
+var SQLDataSourceValidateServerCertificateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"Oracle"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_oracle",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"MSSQLServer"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_mssql",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"DB2"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_db2",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+	},
+}
+var SQLDataSourceHostNameInCertificateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"Oracle"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_oracle",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"MSSQLServer"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_mssql",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+	},
+}
+var SQLDataSourceValidateHostNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "database",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"DB2"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "encryption_method_db2",
+			AttrType:    "String",
+			AttrDefault: "NoEncryption",
+			Value:       []string{"NoEncryption"},
+		},
+	},
+}
+var SQLDataSourceKeystoreRefIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"Oracle"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_oracle",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"MSSQLServer"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_mssql",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "database",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"DB2"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "encryption_method_db2",
+					AttrType:    "String",
+					AttrDefault: "NoEncryption",
+					Value:       []string{"NoEncryption"},
+				},
+			},
+		},
+	},
+}
 
 var SQLDataSourceObjectType = map[string]attr.Type{
 	"id":                              types.StringType,

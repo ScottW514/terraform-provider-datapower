@@ -99,6 +99,51 @@ var B2BGatewayDebugHistoryCondVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
+var B2BGatewayArchiveLocationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "archive_mode",
+	AttrType:    "String",
+	AttrDefault: "archpurge",
+	Value:       []string{"archpurge"},
+}
+var B2BGatewayArchiveFileNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "archive_mode",
+	AttrType:    "String",
+	AttrDefault: "archpurge",
+	Value:       []string{"archpurge"},
+}
+var B2BGatewayArchiveMinimumSizeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "archive_mode",
+	AttrType:    "String",
+	AttrDefault: "archpurge",
+	Value:       []string{"archpurge"},
+}
+var B2BGatewayArchiveMinimumDocumentsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "archive_mode",
+	AttrType:    "String",
+	AttrDefault: "archpurge",
+	Value:       []string{"archpurge"},
+}
+var B2BGatewayShapingThresholdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "archive_monitor",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var B2BGatewayArchiveBackupDocumentsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "archive_mode",
+	AttrType:    "String",
+	AttrDefault: "archpurge",
+	Value:       []string{"archpurge"},
+}
+var B2BGatewayDebugHistoryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var B2BGatewayObjectType = map[string]attr.Type{
 	"id":                                  types.StringType,

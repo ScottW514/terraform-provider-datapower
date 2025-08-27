@@ -92,6 +92,27 @@ var AssemblyActionClientSecurityUserRegistryCondVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"third-party"},
 }
+var AssemblyActionClientSecurityIdNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionClientSecuritySecretNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "extract_credential_method",
+			AttrType:    "String",
+			AttrDefault: "header",
+			Value:       []string{"http"},
+		},
+	},
+}
+var AssemblyActionClientSecurityHTTPTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionClientSecurityUserRegistryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var AssemblyActionClientSecurityObjectType = map[string]attr.Type{
 	"id":                         types.StringType,

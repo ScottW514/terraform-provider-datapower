@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,40 @@ type DmCookieProfile struct {
 	IPinWatermark         types.Bool   `tfsdk:"i_pin_watermark"`
 	CookieGnvc            types.String `tfsdk:"cookie_gnvc"`
 	UseSharedSecretObject types.Bool   `tfsdk:"use_shared_secret_object"`
+}
+
+var DmCookieProfileKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_shared_secret_object",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "none",
+			Value:       []string{"sign", "encrypt"},
+		},
+	},
+}
+var DmCookieProfileIPinWatermarkIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"sign", "encrypt"},
+}
+var DmCookieProfileUseSharedSecretObjectIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"sign", "encrypt"},
 }
 
 var DmCookieProfileObjectType = map[string]attr.Type{

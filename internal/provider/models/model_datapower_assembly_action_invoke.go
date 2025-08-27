@@ -105,6 +105,53 @@ var AssemblyActionInvokeErrorTypesCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var AssemblyActionInvokeGraphQLSendTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "method",
+			AttrType:    "String",
+			AttrDefault: "Keep",
+			Value:       []string{"Keep", "POST"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "backend_type",
+			AttrType:    "String",
+			AttrDefault: "detect",
+			Value:       []string{"detect", "graphql"},
+		},
+	},
+}
+var AssemblyActionInvokeTimeToLiveIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "cache_type",
+	AttrType:    "String",
+	AttrDefault: "Protocol",
+	Value:       []string{"TimeToLive"},
+}
+var AssemblyActionInvokeCacheUnsafeResponseIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "cache_type",
+	AttrType:    "String",
+	AttrDefault: "Protocol",
+	Value:       []string{"TimeToLive"},
+}
+var AssemblyActionInvokeHTTP2RequiredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "http_version",
+	AttrType:    "String",
+	AttrDefault: "HTTP/1.1",
+	Value:       []string{"HTTP/2"},
+}
+var AssemblyActionInvokeErrorTypesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "stop_on_error",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
 
 var AssemblyActionInvokeObjectType = map[string]attr.Type{
 	"id":                       types.StringType,

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -61,6 +62,21 @@ type APICollection struct {
 	ApplicationType              types.List                       `tfsdk:"application_type"`
 	ParseSettingsReference       *DmDynamicParseSettingsReference `tfsdk:"parse_settings_reference"`
 	DependencyActions            []*actions.DependencyAction      `tfsdk:"dependency_actions"`
+}
+
+var APICollectionDefaultRateLimitIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_rate_limit_group",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var APICollectionRateLimitGroupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_rate_limit_group",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
 }
 
 var APICollectionObjectType = map[string]attr.Type{

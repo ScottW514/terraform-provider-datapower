@@ -57,6 +57,20 @@ var NameValueProfileNoMatchXSSPatternsFileCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var NameValueProfileDefaultMapValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "default_fixup",
+	AttrType:    "String",
+	AttrDefault: "strip",
+	Value:       []string{"set"},
+}
+var NameValueProfileNoMatchXSSPatternsFileIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "default_xss",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
 
 var NameValueProfileObjectType = map[string]attr.Type{
 	"id":                         types.StringType,

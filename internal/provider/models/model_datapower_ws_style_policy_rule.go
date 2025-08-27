@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,21 @@ type WSStylePolicyRule struct {
 	Unprocessed       types.Bool                  `tfsdk:"unprocessed"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WSStylePolicyRuleNonXMLProcessingIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "unprocessed",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var WSStylePolicyRuleUnprocessedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "non_xml_processing",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var WSStylePolicyRuleObjectType = map[string]attr.Type{

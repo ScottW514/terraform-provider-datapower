@@ -59,6 +59,12 @@ var PeerGroupUpdateIntervalCondVal = validators.Evaluation{
 	AttrDefault: "slm",
 	Value:       []string{"slm-multicast"},
 }
+var PeerGroupIPMulticastIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var PeerGroupUpdateIntervalIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var PeerGroupObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

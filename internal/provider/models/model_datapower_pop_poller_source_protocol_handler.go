@@ -77,6 +77,16 @@ var POPPollerSourceProtocolHandlerSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
+var POPPollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "conn_security",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"none"},
+}
+var POPPollerSourceProtocolHandlerSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var POPPollerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"id":                     types.StringType,

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -48,6 +49,56 @@ type APISchema struct {
 	WsdlMessageDirectionOrName types.String                `tfsdk:"wsdl_message_direction_or_name"`
 	WsdlAttachmentPart         types.String                `tfsdk:"wsdl_attachment_part"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var APISchemaXMLValidationModeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "xml_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"xml"},
+}
+var APISchemaXMLSchemaURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "xml_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"xml"},
+}
+var APISchemaWSDLSchemaURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "xml_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"wsdl"},
+}
+var APISchemaWSDLPortQNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "xml_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"wsdl"},
+}
+var APISchemaWSDLOperationNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "xml_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"wsdl"},
+}
+var APISchemaWSDLMessageDirectionOrNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "xml_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"wsdl"},
+}
+var APISchemaWSDLAttachmentPartIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "xml_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"wsdl"},
 }
 
 var APISchemaObjectType = map[string]attr.Type{

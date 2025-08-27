@@ -82,6 +82,46 @@ var DomainConfigPermissionsProfileCondVal = validators.Evaluation{
 	AttrDefault: "scope-domain",
 	Value:       []string{"global-profile"},
 }
+var DomainConfigDirIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"local"},
+}
+var DomainDomainUserIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DomainImportURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DomainImportFormatIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DomainDeploymentPolicyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"import"},
+}
+var DomainDeploymentPolicyParametersIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"import"},
+}
+var DomainLocalIPRewriteIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DomainConfigPermissionsProfileIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "config_permissions_mode",
+	AttrType:    "String",
+	AttrDefault: "scope-domain",
+	Value:       []string{"global-profile"},
+}
 
 var DomainObjectType = map[string]attr.Type{
 	"app_domain":                   types.StringType,

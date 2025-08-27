@@ -52,6 +52,16 @@ var DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal = validat
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+var DmWSOperationReliableMessagingReliableMessagingWSDLComponentValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "reliable_messaging_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+var DmWSOperationReliableMessagingReliableMessagingSubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmWSOperationReliableMessagingObjectType = map[string]attr.Type{
 	"options":                                 types.ObjectType{AttrTypes: DmWSRMPolicyBitmapObjectType},

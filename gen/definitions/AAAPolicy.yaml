@@ -346,10 +346,12 @@ attributes:
   ignored_when:
   - evaluation: property-value-not-in-list
     attribute: AUSMHeaderFlow
+    attr_type: DmSMFlow
+    attr_path: '../authenticate'
+    attr_default: false
     value:
     - frontend
     - backend
-    - frontend+backend
 - name: AZSMHTTPHeader
   type: List
   element_type: String
@@ -360,10 +362,12 @@ attributes:
   ignored_when:
   - evaluation: property-value-not-in-list
     attribute: AZSMHeaderFlow
+    attr_type: DmSMFlow
+    attr_path: '../authenticate'
+    attr_default: false
     value:
     - frontend
     - backend
-    - frontend+backend
 - name: DynConfig
   type: String
   enum:

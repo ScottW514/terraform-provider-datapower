@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -43,6 +44,14 @@ type PolicyAttachments struct {
 	ExternalPolicy                types.List                  `tfsdk:"external_policy"`
 	SlaEnforcementMode            types.String                `tfsdk:"sla_enforcement_mode"`
 	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var PolicyAttachmentsIgnoredPolicyAttachmentPointsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "policy_references",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
 }
 
 var PolicyAttachmentsObjectType = map[string]attr.Type{

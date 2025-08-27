@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -47,6 +48,10 @@ type ImportPackage struct {
 	LocalIpRewrite             types.Bool                  `tfsdk:"local_ip_rewrite"`
 	OnStartup                  types.Bool                  `tfsdk:"on_startup"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var ImportPackageDestinationDomainIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
 }
 
 var ImportPackageObjectType = map[string]attr.Type{

@@ -113,6 +113,69 @@ var GitOpsGitEmailCondVal = validators.Evaluation{
 	AttrDefault: "read-write",
 	Value:       []string{"read-write"},
 }
+var GitOpsCommitIdentifierTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-write"},
+}
+var GitOpsIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-write"},
+}
+var GitOpsSSHClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"https"},
+}
+var GitOpsUsernameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"ssh"},
+}
+var GitOpsPasswordIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"ssh"},
+}
+var GitOpsSSHAuthorizedKeysFileIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"https"},
+}
+var GitOpsTLSValcredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"ssh"},
+}
+var GitOpsGitUserIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-only"},
+}
+var GitOpsGitEmailIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-only"},
+}
 
 var GitOpsObjectType = map[string]attr.Type{
 	"app_domain":               types.StringType,

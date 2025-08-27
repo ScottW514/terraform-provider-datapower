@@ -51,6 +51,20 @@ var APIRuleDynamicActionsCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var APIRuleActionsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "dynamic_actions_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var APIRuleDynamicActionsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "dynamic_actions_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
 
 var APIRuleObjectType = map[string]attr.Type{
 	"id":                   types.StringType,

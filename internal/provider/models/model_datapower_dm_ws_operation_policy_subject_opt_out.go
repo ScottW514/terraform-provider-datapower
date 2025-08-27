@@ -51,6 +51,16 @@ var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal = val
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutWSDLComponentValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "policy_subject_opt_out_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmWSOperationPolicySubjectOptOutObjectType = map[string]attr.Type{
 	"ignored_subjects":                            types.ObjectType{AttrTypes: DmPolicySubjectBitmapObjectType},

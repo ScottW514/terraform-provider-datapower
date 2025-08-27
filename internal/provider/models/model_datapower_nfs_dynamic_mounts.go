@@ -30,6 +30,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -49,6 +50,14 @@ type NFSDynamicMounts struct {
 	IdleUnmountSeconds  types.Int64                 `tfsdk:"idle_unmount_seconds"`
 	MountTimeoutSeconds types.Int64                 `tfsdk:"mount_timeout_seconds"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var NFSDynamicMountsTransportIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "version",
+	AttrType:    "Int64",
+	AttrDefault: "3",
+	Value:       []string{"4"},
 }
 
 var NFSDynamicMountsObjectType = map[string]attr.Type{

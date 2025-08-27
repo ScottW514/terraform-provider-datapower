@@ -74,6 +74,18 @@ var CookieAttributePolicyCustomAttributeCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"custom"},
 }
+var CookieAttributePolicyDomainIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var CookieAttributePolicyPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var CookieAttributePolicyIntervalIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var CookieAttributePolicyCustomAttributeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var CookieAttributePolicyObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

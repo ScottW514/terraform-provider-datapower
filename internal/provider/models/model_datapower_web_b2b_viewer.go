@@ -54,6 +54,16 @@ var WebB2BViewerSSLSNIServerCondVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"sni"},
 }
+var WebB2BViewerSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var WebB2BViewerSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var WebB2BViewerObjectType = map[string]attr.Type{
 	"enabled":                types.BoolType,

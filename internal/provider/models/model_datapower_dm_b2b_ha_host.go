@@ -58,6 +58,12 @@ var DmB2BHAHostPortCondVal = validators.Evaluation{
 	AttrPath:    "../",
 	Value:       []string{"true"},
 }
+var DmB2BHAHostHostnameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmB2BHAHostPortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmB2BHAHostObjectType = map[string]attr.Type{
 	"hostname": types.StringType,

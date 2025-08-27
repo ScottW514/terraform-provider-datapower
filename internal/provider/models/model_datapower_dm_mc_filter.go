@@ -72,6 +72,18 @@ var DmMCFilterXPathValueCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xpath"},
 }
+var DmMCFilterHttpNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMCFilterHttpValueIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMCFilterXPathExpressionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMCFilterXPathValueIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmMCFilterObjectType = map[string]attr.Type{
 	"filter_name":      types.StringType,

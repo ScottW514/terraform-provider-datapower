@@ -116,6 +116,65 @@ var APIConnectGatewayServiceIPUnicastCondVal = validators.Evaluation{
 		},
 	},
 }
+var APIConnectGatewayServiceGatewayPeeringManagerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "v5compatibility_mode",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var APIConnectGatewayServiceUserDefinedPoliciesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "v5compatibility_mode",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var APIConnectGatewayServiceV5CSlmModeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "v5compatibility_mode",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var APIConnectGatewayServiceIPMulticastIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "v5c_slm_mode",
+			AttrType:    "String",
+			AttrDefault: "autounicast",
+			Value:       []string{"multicast"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "v5compatibility_mode",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var APIConnectGatewayServiceIPUnicastIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "v5c_slm_mode",
+			AttrType:    "String",
+			AttrDefault: "autounicast",
+			Value:       []string{"unicast"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "v5compatibility_mode",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
 
 var APIConnectGatewayServiceObjectType = map[string]attr.Type{
 	"app_domain":              types.StringType,

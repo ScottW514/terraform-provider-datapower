@@ -56,6 +56,34 @@ var SMTPServerConnectionAccountNameCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"auth"},
 }
+var SMTPServerConnectionAuthIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "options",
+	AttrType:    "DmSMTPOptions",
+	AttrDefault: "",
+	Value:       []string{"auth"},
+}
+var SMTPServerConnectionAccountNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "options",
+	AttrType:    "DmSMTPOptions",
+	AttrDefault: "",
+	Value:       []string{"auth"},
+}
+var SMTPServerConnectionAccountPasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "options",
+	AttrType:    "DmSMTPOptions",
+	AttrDefault: "",
+	Value:       []string{"auth"},
+}
+var SMTPServerConnectionSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_client_config_type",
+	AttrType:    "String",
+	AttrDefault: "client",
+	Value:       []string{"client"},
+}
 
 var SMTPServerConnectionObjectType = map[string]attr.Type{
 	"id":                     types.StringType,

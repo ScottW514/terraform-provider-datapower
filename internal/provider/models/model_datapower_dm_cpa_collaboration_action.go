@@ -58,6 +58,20 @@ var DmCPACollaborationActionReceiverSettingCondVal = validators.Evaluation{
 	AttrDefault: "cansend",
 	Value:       []string{"canreceive"},
 }
+var DmCPACollaborationActionSenderSettingIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "capability",
+	AttrType:    "String",
+	AttrDefault: "cansend",
+	Value:       []string{"cansend"},
+}
+var DmCPACollaborationActionReceiverSettingIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "capability",
+	AttrType:    "String",
+	AttrDefault: "cansend",
+	Value:       []string{"canreceive"},
+}
 
 var DmCPACollaborationActionObjectType = map[string]attr.Type{
 	"name":             types.StringType,

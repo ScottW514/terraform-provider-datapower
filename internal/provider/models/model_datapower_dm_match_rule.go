@@ -97,6 +97,27 @@ var DmMatchRuleCustomMethodCondVal = validators.Evaluation{
 	AttrDefault: "default",
 	Value:       []string{"custom"},
 }
+var DmMatchRuleHttpTagIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMatchRuleHttpValueIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMatchRuleUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMatchRuleErrorCodeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMatchRuleXPATHExpressionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMatchRuleMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmMatchRuleCustomMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmMatchRuleObjectType = map[string]attr.Type{
 	"type":             types.StringType,

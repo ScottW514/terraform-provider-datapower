@@ -59,6 +59,12 @@ var JOSERecipientIdentifierSSKeyCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"sskey"},
 }
+var JOSERecipientIdentifierKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var JOSERecipientIdentifierSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var JOSERecipientIdentifierObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -57,6 +58,127 @@ type RateLimitDefinition struct {
 	UseCache            types.Bool                  `tfsdk:"use_cache"`
 	Parameters          types.List                  `tfsdk:"parameters"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var RateLimitDefinitionIntervalIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rate",
+			AttrType:    "Int64",
+			AttrDefault: "",
+			Value:       []string{"0"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "rate",
+			Value:       []string{"count"},
+		},
+	},
+}
+var RateLimitDefinitionUnitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rate",
+			AttrType:    "Int64",
+			AttrDefault: "",
+			Value:       []string{"0"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "rate",
+			Value:       []string{"count"},
+		},
+	},
+}
+var RateLimitDefinitionHardLimitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rate",
+			AttrType:    "Int64",
+			AttrDefault: "",
+			Value:       []string{"0"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "rate",
+			Value:       []string{"burst"},
+		},
+	},
+}
+var RateLimitDefinitionIsClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var RateLimitDefinitionUseApiNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var RateLimitDefinitionUseAppIdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var RateLimitDefinitionUseClientIdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var RateLimitDefinitionAutoReplenishIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "rate",
+	Value:       []string{"count"},
+}
+var RateLimitDefinitionDynamicValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var RateLimitDefinitionWeightIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var RateLimitDefinitionEmulateBurstHeadersIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "rate",
+	Value:       []string{"rate"},
+}
+var RateLimitDefinitionUseIntervalOffsetIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "rate",
+	Value:       []string{"count"},
 }
 
 var RateLimitDefinitionObjectType = map[string]attr.Type{

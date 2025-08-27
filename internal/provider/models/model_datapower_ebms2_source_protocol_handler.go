@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -55,6 +56,21 @@ type EBMS2SourceProtocolHandler struct {
 	SslServer             types.String                `tfsdk:"ssl_server"`
 	SslSniServer          types.String                `tfsdk:"ssl_sni_server"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var EBMS2SourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var EBMS2SourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
 }
 
 var EBMS2SourceProtocolHandlerObjectType = map[string]attr.Type{

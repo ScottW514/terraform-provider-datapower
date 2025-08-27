@@ -105,6 +105,41 @@ var AAAPolicyDynConfigCustomURLCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"current-aaa", "external-aaa"},
 }
+var AAAPolicyLogAllowedLevelIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAPolicyLogRejectedLevelIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAPolicyWSSecActorRoleIDIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enforce_soap_actor",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var AAAPolicyAUSMHTTPHeaderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_sm_header_flow",
+	AttrType:    "DmSMFlow",
+	AttrDefault: "false",
+	AttrPath:    "../authenticate",
+	Value:       []string{"frontend", "backend"},
+}
+var AAAPolicyAZSMHTTPHeaderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_sm_header_flow",
+	AttrType:    "DmSMFlow",
+	AttrDefault: "false",
+	AttrPath:    "../authenticate",
+	Value:       []string{"frontend", "backend"},
+}
+var AAAPolicyExternalAAATemplateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAPolicyDynConfigCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var AAAPolicyObjectType = map[string]attr.Type{
 	"id":                                types.StringType,

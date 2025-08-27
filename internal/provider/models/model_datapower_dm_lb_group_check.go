@@ -143,6 +143,285 @@ var DmLBGroupCheckTCPConnectionTypeCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"TCPConnection"},
 }
+var DmLBGroupCheckURIIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+}
+var DmLBGroupCheckPostIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmLBGroupCheckInputIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "post",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+	},
+}
+var DmLBGroupCheckXPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmLBGroupCheckFilterIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmLBGroupCheckEnforceTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+}
+var DmLBGroupCheckIndependentChecksIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+}
+var DmLBGroupCheckGatewayScriptChecksIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+}
+var DmLBGroupCheckGatewayScriptReqMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmLBGroupCheckGatewayScriptCustomReqMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_req_method",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"GET", "POST", "PUT", "HEAD"},
+		},
+	},
+}
+var DmLBGroupCheckGatewayScriptReqDocIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_req_method",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"GET", "HEAD"},
+		},
+	},
+}
+var DmLBGroupCheckGatewayScriptReqContentTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_req_method",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"GET", "HEAD"},
+		},
+	},
+}
+var DmLBGroupCheckGatewayScriptRspHandlerMetadataIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmLBGroupCheckGatewayScriptRspHandlerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmLBGroupCheckTCPConnectionTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"LDAP", "IMSConnect", "Standard"},
+}
+var DmLBGroupCheckSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"Standard"},
+}
+var DmLBGroupCheckSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"Standard"},
+		},
+	},
+}
 
 var DmLBGroupCheckObjectType = map[string]attr.Type{
 	"active":                              types.BoolType,

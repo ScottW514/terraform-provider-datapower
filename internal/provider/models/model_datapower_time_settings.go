@@ -81,6 +81,246 @@ var TimeSettingsTZNameDSTCondVal = validators.Evaluation{
 		},
 	},
 }
+var TimeSettingsCustomTZNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var TimeSettingsUTCDirectionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+var TimeSettingsOffsetHoursIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+var TimeSettingsOffsetMinutesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+var TimeSettingsDaylightOffsetHoursIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+var TimeSettingsTZNameDSTIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStartMonthIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStartWeekIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStartDayIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStartTimeHoursIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStartTimeMinutesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStopMonthIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStopWeekIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStopDayIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStopTimeHoursIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
+var TimeSettingsDaylightStopTimeMinutesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "local_time_zone",
+			AttrType:    "String",
+			AttrDefault: "EST5EDT",
+			Value:       []string{"Custom"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "daylight_offset_hours",
+			AttrType:    "Int64",
+			AttrDefault: "1",
+			Value:       []string{"0"},
+		},
+	},
+}
 
 var TimeSettingsObjectType = map[string]attr.Type{
 	"enabled":                     types.BoolType,

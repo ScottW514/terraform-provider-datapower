@@ -69,6 +69,36 @@ var MPGWErrorActionErrorRuleCondVal = validators.Evaluation{
 	AttrDefault: "static",
 	Value:       []string{"error-rule"},
 }
+var MPGWErrorActionRemoteURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MPGWErrorActionLocalURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MPGWErrorActionErrorRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MPGWErrorActionStatusCodeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"proxy", "static"},
+}
+var MPGWErrorActionReasonPhraseIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"proxy", "static"},
+}
+var MPGWErrorActionHeaderInjectionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"proxy", "static"},
+}
 
 var MPGWErrorActionObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

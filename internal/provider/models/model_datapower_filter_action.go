@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,6 +42,14 @@ type FilterAction struct {
 	LogLevel          types.String                `tfsdk:"log_level"`
 	BlockInterval     types.Int64                 `tfsdk:"block_interval"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var FilterActionBlockIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "notify",
+	Value:       []string{"notify"},
 }
 
 var FilterActionObjectType = map[string]attr.Type{

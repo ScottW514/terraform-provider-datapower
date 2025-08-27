@@ -65,6 +65,12 @@ var AssemblyActionValidateDefinitionCondVal = validators.Evaluation{
 	AttrDefault: "url",
 	Value:       []string{"definition"},
 }
+var AssemblyActionValidateSchemaIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionValidateDefinitionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var AssemblyActionValidateObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

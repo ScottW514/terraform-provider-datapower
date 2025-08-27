@@ -173,6 +173,36 @@ var AAAJWTGeneratorEncryptSSKeyCondVal = validators.Evaluation{
 		},
 	},
 }
+var AAAJWTGeneratorAudienceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorNotBeforeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorCustomClaimsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorSignAlgorithmIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorSignKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorSignSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorEncAlgorithmIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorEncryptAlgorithmIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorEncryptCertificateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AAAJWTGeneratorEncryptSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var AAAJWTGeneratorObjectType = map[string]attr.Type{
 	"id":                  types.StringType,

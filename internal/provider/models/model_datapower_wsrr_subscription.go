@@ -57,6 +57,20 @@ var WSRRSubscriptionNamespaceCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"service-version"},
 }
+var WSRRSubscriptionRefreshIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "method",
+	AttrType:    "String",
+	AttrDefault: "poll",
+	Value:       []string{"poll"},
+}
+var WSRRSubscriptionObjectVersionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_version",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
 
 var WSRRSubscriptionObjectType = map[string]attr.Type{
 	"id":                       types.StringType,

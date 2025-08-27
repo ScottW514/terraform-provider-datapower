@@ -51,6 +51,16 @@ var DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal = validat
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+var DmWSOperationSchedulerPrioritySchedulerPriorityWSDLComponentValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "scheduler_priority_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+var DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmWSOperationSchedulerPriorityObjectType = map[string]attr.Type{
 	"scheduler_priority":                      types.StringType,

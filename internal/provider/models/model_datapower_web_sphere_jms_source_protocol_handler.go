@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -46,6 +47,14 @@ type WebSphereJMSSourceProtocolHandler struct {
 	Selector               types.String                `tfsdk:"selector"`
 	AsyncMessageProcessing types.Bool                  `tfsdk:"async_message_processing"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WebSphereJMSSourceProtocolHandlerStrictMessageOrderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "async_message_processing",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
 }
 
 var WebSphereJMSSourceProtocolHandlerObjectType = map[string]attr.Type{

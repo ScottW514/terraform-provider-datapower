@@ -269,6 +269,522 @@ var DmAAAPAuthenticateAUSMRequestTypeCondVal = validators.Evaluation{
 	AttrDefault: "ldap",
 	Value:       []string{"netegrity"},
 }
+var DmAAAPAuthenticateAUCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUMapURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUHostIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ldap", "netegrity", "oblix"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_ldap_load_balance_group",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var DmAAAPAuthenticateAUPortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ldap", "netegrity", "oblix"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_ldap_load_balance_group",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var DmAAAPAuthenticateAUSSLValcredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"client-ssl"},
+}
+var DmAAAPAuthenticateAUCacheTTLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_cache_allow",
+	AttrType:    "String",
+	AttrDefault: "absolute",
+	Value:       []string{"disabled"},
+}
+var DmAAAPAuthenticateAUKerberosPrincipalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"kerberos"},
+}
+var DmAAAPAuthenticateAUKerberosPasswordIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUClearTrustServerURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUClearTrustApplicationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUSAMLArtifactResponderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"saml-artifact"},
+}
+var DmAAAPAuthenticateAUKerberosVerifySignatureIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUNetegrityBaseURIIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"netegrity"},
+}
+var DmAAAPAuthenticateAUSAMLAuthQueryServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"saml-authen-query"},
+}
+var DmAAAPAuthenticateAUSAMLVersionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAULDAPPrefixIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmAAAPAuthenticateAULDAPSuffixIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmAAAPAuthenticateAULDAPLoadBalanceGroupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthenticateAUKerberosKeytabIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUWSTrustURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUSAML2IssuerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUSignerValcredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"validate-signer"},
+}
+var DmAAAPAuthenticateAUSignedXPathIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"validate-signer"},
+}
+var DmAAAPAuthenticateAULDAPBindDNIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthenticateAULDAPSearchAttributeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthenticateAULTPATokenVersionsBitmapIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAULTPAKeyFileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAULTPAStashFileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUBinaryTokenX509ValcredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUTAMServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAUAllowRemoteTokenReferenceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"saml-signature", "validate-signer"},
+}
+var DmAAAPAuthenticateAURemoteTokenProcessServiceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"saml-signature", "validate-signer"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_allow_remote_token_reference",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPAuthenticateAUWSTrustVersionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ws-trust"},
+}
+var DmAAAPAuthenticateAULDAPSearchForDNIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthenticateAULDAPSearchParametersIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPAuthenticateAUWSTrustRequireClientEntropyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ws-trust"},
+}
+var DmAAAPAuthenticateAUWSTrustClientEntropySizeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ws-trust"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ws_trust_require_client_entropy",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPAuthenticateAUWSTrustRequireServerEntropyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ws-trust"},
+}
+var DmAAAPAuthenticateAUWSTrustServerEntropySizeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ws-trust"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ws_trust_require_server_entropy",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPAuthenticateAUWSTrustRequireRSTCIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ws-trust"},
+}
+var DmAAAPAuthenticateAUWSTrustRequireAppliesToHeaderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ws-trust"},
+}
+var DmAAAPAuthenticateAUWSTrustAppliesToHeaderIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ws-trust"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ws_trust_require_applies_to_header",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPAuthenticateAUWSTrustEncryptionCertificateIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ws-trust"},
+}
+var DmAAAPAuthenticateAUZOSNSSConfigIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAULDAPAttributesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthenticateAUSkewTimeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"saml-artifact", "saml-authen-query", "saml-signature"},
+}
+var DmAAAPAuthenticateAUTAMPACReturnIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthenticateAULDAPReadTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthenticateAUSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"cleartrust", "ldap", "netegrity", "saml-artifact", "saml-authen-query", "ws-trust"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "au_method",
+					AttrType:    "String",
+					AttrDefault: "ldap",
+					Value:       []string{"saml-signature", "validate-signer"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "au_allow_remote_token_reference",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var DmAAAPAuthenticateAUSSLClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "au_method",
+					AttrType:    "String",
+					AttrDefault: "ldap",
+					Value:       []string{"cleartrust", "ldap", "netegrity", "saml-artifact", "saml-authen-query", "ws-trust"},
+				},
+				{
+					Evaluation: "logical-or",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "au_method",
+							AttrType:    "String",
+							AttrDefault: "ldap",
+							Value:       []string{"saml-signature", "validate-signer"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "au_allow_remote_token_reference",
+							AttrType:    "Bool",
+							AttrDefault: "false",
+							Value:       []string{"false"},
+						},
+					},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+	},
+}
+var DmAAAPAuthenticateAULDAPBindPasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthenticateAULTPAKeyFilePasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			Value:       []string{"ltpa"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "au_ltpa_token_versions_bitmap",
+					AttrType:    "DmLTPATokenVersion",
+					AttrDefault: "LTPA2",
+					Value:       []string{"LTPA", "LTPA2"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "au_ltpa_token_versions_bitmap",
+					AttrType:    "DmLTPATokenVersion",
+					AttrDefault: "LTPA2",
+					Value:       []string{"LTPADomino"},
+				},
+			},
+		},
+	},
+}
+var DmAAAPAuthenticateAUSMRequestTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"netegrity"},
+}
+var DmAAAPAuthenticateAUSMCookieFlowIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"netegrity"},
+}
+var DmAAAPAuthenticateAUSMHeaderFlowIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "ldap",
+	Value:       []string{"netegrity"},
+}
+var DmAAAPAuthenticateAUSMCookieAttributesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_sm_cookie_flow",
+	AttrType:    "DmSMFlow",
+	AttrDefault: "",
+	Value:       []string{"frontend", "frontend+backend", "backend+frontend"},
+}
 
 var DmAAAPAuthenticateObjectType = map[string]attr.Type{
 	"au_method":                             types.StringType,

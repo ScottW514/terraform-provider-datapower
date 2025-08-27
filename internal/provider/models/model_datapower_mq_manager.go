@@ -92,6 +92,86 @@ var MQManagerCSPPasswordAliasCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{""},
 }
+var MQManagerAutomaticBackoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "units_of_work",
+	AttrType:    "Int64",
+	AttrDefault: "0",
+	Value:       []string{"1"},
+}
+var MQManagerBackoutThresholdIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-less-than",
+			Attribute:   "units_of_work",
+			AttrType:    "Int64",
+			AttrDefault: "0",
+			Value:       []string{"1"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "automatic_backout",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var MQManagerBackoutQueueNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-less-than",
+			Attribute:   "units_of_work",
+			AttrType:    "Int64",
+			AttrDefault: "0",
+			Value:       []string{"1"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "automatic_backout",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var MQManagerPermitInsecureServersIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_key",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{""},
+}
+var MQManagerRetryIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "auto_retry",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var MQManagerRetryAttemptsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "auto_retry",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var MQManagerLongRetryIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "auto_retry",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var MQManagerReportingIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "auto_retry",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
 
 var MQManagerObjectType = map[string]attr.Type{
 	"id":                       types.StringType,

@@ -31,6 +31,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,6 +43,14 @@ type DmSMTPPolicy struct {
 	Subject   types.String   `tfsdk:"subject"`
 	Options   *DmSMTPOptions `tfsdk:"options"`
 	Auth      types.String   `tfsdk:"auth"`
+}
+
+var DmSMTPPolicyAuthIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "options",
+	AttrType:    "DmSMTPOptions",
+	AttrDefault: "",
+	Value:       []string{"auth"},
 }
 
 var DmSMTPPolicyObjectType = map[string]attr.Type{

@@ -309,6 +309,420 @@ var RBMSettingsNumOldPasswordsCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var RBMSettingsCAPubKeyFileIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssh_au_method",
+	AttrType:    "DmRBMSSHAuthenticateType",
+	AttrDefault: "",
+	Value:       []string{"certificate"},
+}
+var RBMSettingsRevokedKeysIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssh_au_method",
+	AttrType:    "DmRBMSSHAuthenticateType",
+	AttrDefault: "",
+	Value:       []string{"certificate"},
+}
+var RBMSettingsAUZOSNSSConfigIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsAUKerberosKeytabIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsAUCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsAUInfoURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsAUSSLValcredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsAUHostIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsAUPortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsAULDAPSearchForDNIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"ldap"},
+}
+var RBMSettingsAULDAPBindDNIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var RBMSettingsAULDAPBindPasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var RBMSettingsAULDAPSearchParametersIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var RBMSettingsAULDAPPrefixIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var RBMSettingsAUForceDNLDAPOrderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"client-ssl"},
+}
+var RBMSettingsLDAPsuffixIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_ldap_search_for_dn",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var RBMSettingsAULDAPLoadBalanceGroupIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsAUCacheTTLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_cache_allow",
+	AttrType:    "String",
+	AttrDefault: "absolute",
+	Value:       []string{"disabled"},
+}
+var RBMSettingsAULDAPReadTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"ldap"},
+}
+var RBMSettingsMCCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsMCLDAPSearchForGroupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mc_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"custom"},
+}
+var RBMSettingsMCHostIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsMCPortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsMCLDAPLoadBalanceGroupIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_ldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsMCLDAPBindDNIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_ldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsMCLDAPBindPasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_ldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsMCLDAPSearchParametersIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsMCInfoURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsMCLDAPReadTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_ldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsLDAPVersionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"ldap"},
+}
+var RBMSettingsFallbackLoginIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"local"},
+}
+var RBMSettingsFallbackUserIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsApplyToCLIIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"client-ssl"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "fallback_login",
+			AttrType:    "String",
+			AttrDefault: "disabled",
+			Value:       []string{"disabled"},
+		},
+	},
+}
+var RBMSettingsMaxPasswordAgeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsNumOldPasswordsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var RBMSettingsMCForceDNLDAPOrderIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"client-ssl"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_ldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsLDAPSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"ldap"},
+}
+var RBMSettingsLDAPSSLClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"ldap"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ldap_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+	},
+}
+var RBMSettingsMCLDAPSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_ldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+	},
+}
+var RBMSettingsMCLDAPSSLClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_ldap_search_for_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "mc_method",
+			AttrType:    "String",
+			AttrDefault: "local",
+			Value:       []string{"custom"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "mc_ldap_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+	},
+}
 
 var RBMSettingsObjectType = map[string]attr.Type{
 	"enabled":                                 types.BoolType,

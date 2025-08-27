@@ -189,6 +189,98 @@ var FormsLoginPolicyFormSupportScriptCondVal = validators.Evaluation{
 	AttrDefault: "static",
 	Value:       []string{"custom"},
 }
+var FormsLoginPolicyCookieAttributesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var FormsLoginPolicyUseSSLForLoginIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var FormsLoginPolicySSLPortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var FormsLoginPolicySharedSecretIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_migration",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var FormsLoginPolicyFormsLocationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var FormsLoginPolicyLocalLoginFormIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "form_support_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"static"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "forms_location",
+			AttrType:    "String",
+			AttrDefault: "backend",
+			Value:       []string{"backend"},
+		},
+	},
+}
+var FormsLoginPolicyLocalErrorPageIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "form_support_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"static"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "forms_location",
+			AttrType:    "String",
+			AttrDefault: "backend",
+			Value:       []string{"backend"},
+		},
+	},
+}
+var FormsLoginPolicyLocalLogoutPageIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "form_support_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"static"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "forms_location",
+			AttrType:    "String",
+			AttrDefault: "backend",
+			Value:       []string{"backend"},
+		},
+	},
+}
+var FormsLoginPolicyInactivityTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var FormsLoginPolicySessionLifetimeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var FormsLoginPolicyRedirectURLTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var FormsLoginPolicyFormSupportScriptIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "form_support_type",
+	AttrType:    "String",
+	AttrDefault: "static",
+	Value:       []string{"custom"},
+}
 
 var FormsLoginPolicyObjectType = map[string]attr.Type{
 	"id":                    types.StringType,

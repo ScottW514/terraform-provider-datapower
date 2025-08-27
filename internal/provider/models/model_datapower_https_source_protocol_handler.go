@@ -100,6 +100,29 @@ var HTTPSSourceProtocolHandlerSSLSNIServerCondVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"sni"},
 }
+var HTTPSSourceProtocolHandlerMaxPersistentConnectionsReuseIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "persistent_connections",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var HTTPSSourceProtocolHandlerAllowWebSocketUpgradeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "http_version",
+	AttrType:    "String",
+	AttrDefault: "HTTP/1.1",
+	Value:       []string{"HTTP/1.0"},
+}
+var HTTPSSourceProtocolHandlerWebSocketIdleTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var HTTPSSourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var HTTPSSourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var HTTPSSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"id":                               types.StringType,

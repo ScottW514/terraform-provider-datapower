@@ -51,6 +51,9 @@ var IncludeConfigInterfaceDetectionCondVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+var IncludeConfigInterfaceDetectionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var IncludeConfigObjectType = map[string]attr.Type{
 	"id":                  types.StringType,

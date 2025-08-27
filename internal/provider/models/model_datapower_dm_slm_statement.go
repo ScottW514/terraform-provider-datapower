@@ -66,6 +66,23 @@ var DmSLMStatementBurstLimitCondVal = validators.Evaluation{
 	AttrDefault: "greater-than",
 	Value:       []string{"token-bucket"},
 }
+var DmSLMStatementThreshIntervalLengthIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "thresh_interval_type",
+	AttrType:    "String",
+	AttrDefault: "fixed",
+	Value:       []string{"concurrent"},
+}
+var DmSLMStatementReleaseThresholdLevelIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "thresh_algorithm",
+	AttrType:    "String",
+	AttrDefault: "greater-than",
+	Value:       []string{"high-low-thresholds"},
+}
+var DmSLMStatementBurstLimitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmSLMStatementObjectType = map[string]attr.Type{
 	"slm_id":                          types.Int64Type,

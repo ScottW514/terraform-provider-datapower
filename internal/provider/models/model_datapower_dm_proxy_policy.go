@@ -56,6 +56,12 @@ var DmProxyPolicyRemotePortCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+var DmProxyPolicyRemoteAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmProxyPolicyRemotePortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmProxyPolicyObjectType = map[string]attr.Type{
 	"reg_exp":        types.StringType,

@@ -59,6 +59,23 @@ var DmSAMLAttributeXPathCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xpath"},
 }
+var DmSAMLAttributeXPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmSAMLAttributeValueDataIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "source_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"xpath"},
+}
+var DmSAMLAttributeSubValueDataIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "source_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"var"},
+}
 
 var DmSAMLAttributeObjectType = map[string]attr.Type{
 	"source_type":    types.StringType,

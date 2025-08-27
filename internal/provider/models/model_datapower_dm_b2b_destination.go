@@ -198,6 +198,1022 @@ var DmB2BDestinationEBMSMessageExchangePatternCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"ebms3", "ebms3s"},
 }
+var DmB2BDestinationSMTPServerConnectionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as1", "dpsmtp"},
+}
+var DmB2BDestinationEmailAddressIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as1", "dpsmtp"},
+}
+var DmB2BDestinationSSHClientConnectionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"sftp"},
+}
+var DmB2BDestinationUseUniqueFilenamesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as3", "ftp", "sftp", "dpnfs", "mqfte", "dpmqfte", "idgmqmft"},
+}
+var DmB2BDestinationOverrideTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ebms_message_exchange_pattern",
+	AttrType:    "String",
+	AttrDefault: "one-way-push",
+	Value:       []string{"one-way-pull"},
+}
+var DmB2BDestinationEnableFTPSettingsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ftp", "as3"},
+}
+var DmB2BDestinationUserNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as2", "as2s", "as3", "ebms2", "ebms2s", "ebms3", "ebms3s", "http", "https", "ftp"},
+}
+var DmB2BDestinationPasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as2", "as2s", "as3", "ebms2", "ebms2s", "ebms3", "ebms3s", "http", "https", "ftp"},
+}
+var DmB2BDestinationEBMSMPCAuthMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_message_exchange_pattern",
+			AttrType:    "String",
+			AttrDefault: "one-way-push",
+			Value:       []string{"one-way-push"},
+		},
+	},
+}
+var DmB2BDestinationUserNameTokenIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ebms_mpc_auth_method",
+					AttrType:    "String",
+					AttrDefault: "username-token",
+					Value:       []string{"cert"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ebms_message_exchange_pattern",
+					AttrType:    "String",
+					AttrDefault: "one-way-push",
+					Value:       []string{"one-way-pull"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+	},
+}
+var DmB2BDestinationUserNameTokenPasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ebms_mpc_auth_method",
+					AttrType:    "String",
+					AttrDefault: "username-token",
+					Value:       []string{"cert"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ebms_message_exchange_pattern",
+					AttrType:    "String",
+					AttrDefault: "one-way-push",
+					Value:       []string{"one-way-pull"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+	},
+}
+var DmB2BDestinationEBMSMPCVerifyValCredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_mpc_auth_method",
+			AttrType:    "String",
+			AttrDefault: "username-token",
+			Value:       []string{"username-token"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_message_exchange_pattern",
+			AttrType:    "String",
+			AttrDefault: "one-way-push",
+			Value:       []string{"one-way-push"},
+		},
+	},
+}
+var DmB2BDestinationPassiveIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_ftp_settings",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationAuthTLSIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_ftp_settings",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationUseCCCIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_ftp_settings",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "auth_tls",
+			AttrType:    "String",
+			AttrDefault: "auth-off",
+			Value:       []string{"auth-off"},
+		},
+	},
+}
+var DmB2BDestinationEncryptDataIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_ftp_settings",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "auth_tls",
+			AttrType:    "String",
+			AttrDefault: "auth-off",
+			Value:       []string{"auth-off"},
+		},
+	},
+}
+var DmB2BDestinationDataTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_ftp_settings",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationSlashSTOUIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_ftp_settings",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationQuotedCommandsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_ftp_settings",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationSizeCheckIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_ftp_settings",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationBinaryTransferModeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as1", "as2", "as2s", "as3"},
+}
+var DmB2BDestinationASCompressIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as1", "as2", "as2s", "as3"},
+}
+var DmB2BDestinationASCompressBeforeSignIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as1", "as2", "as2s", "as3"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "as_compress",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationASSendUnsignedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as1", "as2", "as2s", "as3"},
+}
+var DmB2BDestinationASEncryptIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as1", "as2", "as2s", "as3"},
+}
+var DmB2BDestinationASEncryptCertIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmB2BDestinationASMDNRequestIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as1", "as2", "as2s", "as3"},
+}
+var DmB2BDestinationASMDNRequestAsyncIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as2", "as2s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationAS1MDNRedirectEmailIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as1"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationAS2MDNRedirectURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as2", "as2s"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "as_mdn_request_async",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationAS3MDNRedirectURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationASMDNRequestSignedIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as1", "as2", "as2s", "as3"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationRetransmitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as1", "as2", "as2s", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationACKTimeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as1", "as2", "as2s", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationMaxResendsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as1", "as2", "as2s", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "retransmit",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationASEncryptAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as1", "as2", "as2s", "as3"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "as_encrypt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationASMDNRequestSignedAlgsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as1", "as2", "as2s", "as3"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "as_mdn_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "as_mdn_request_signed",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationEBMSCpaIdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2", "ebms2s"},
+}
+var DmB2BDestinationEBMSServiceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2", "ebms2s"},
+}
+var DmB2BDestinationEBMSServiceTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2", "ebms2s"},
+}
+var DmB2BDestinationEBMSActionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2", "ebms2s"},
+}
+var DmB2BDestinationEBMSSendUnsignedIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2", "ebms2s", "ebms3", "ebms3s"},
+}
+var DmB2BDestinationEBMSEncryptIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2", "ebms2s", "ebms3", "ebms3s"},
+}
+var DmB2BDestinationEBMSEncryptCertIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmB2BDestinationEBMSEncryptAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms2", "ebms2s", "ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ebms_encrypt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationEBMSKeyEncryptAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ebms_encrypt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationEBMSDuplicateEliminationRequestIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2", "ebms2s"},
+}
+var DmB2BDestinationEBMSAckRequestIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2", "ebms2s"},
+}
+var DmB2BDestinationEBMSAckRequestSignedIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms2", "ebms2s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_ack_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationEBMSSyncReplyModeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms2", "ebms2s"},
+		},
+	},
+}
+var DmB2BDestinationEBMSRetryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms2", "ebms2s"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ebms_ack_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationEBMSMaxRetriesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms2", "ebms2s"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ebms_ack_request",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_retry",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationEBMSRetryIntervalIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms2", "ebms2s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_retry",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationEBMSIncludeTimeToLiveIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms2", "ebms2s"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ebms_retry",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmB2BDestinationSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"as2s", "as3", "https", "ftp", "mq", "mqfte", "dpimsssl", "ebms2s", "ebms3s"},
+}
+var DmB2BDestinationSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"as2s", "as3", "https", "ftp", "mq", "mqfte", "dpimsssl", "ebms2s"},
+		},
+	},
+}
+var DmB2BDestinationEBMSMessageExchangePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms3", "ebms3s"},
+}
+var DmB2BDestinationEBMSMessagePartitionChannelIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_message_exchange_pattern",
+			AttrType:    "String",
+			AttrDefault: "one-way-push",
+			Value:       []string{"one-way-push"},
+		},
+	},
+}
+var DmB2BDestinationEBMSAgreementRefIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms3", "ebms3s"},
+}
+var DmB2BDestinationEBMSPModeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms3", "ebms3s"},
+}
+var DmB2BDestinationEBMSOutboundRequestReceiptIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms3", "ebms3s"},
+}
+var DmB2BDestinationEBMSOutboundRequestSignedReceiptIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_request_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationEBMSOutboundReceiptReplyPatternIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_request_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_message_exchange_pattern",
+			AttrType:    "String",
+			AttrDefault: "one-way-push",
+			Value:       []string{"one-way-pull"},
+		},
+	},
+}
+var DmB2BDestinationEBMSOutboundReceptionAwarenessNotificationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_request_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmB2BDestinationEBMSOutboundReceptionAwarenessTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_request_receipt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_outbound_reception_awareness_notification",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ebms_outbound_receipt_reply_pattern",
+					AttrType:    "String",
+					AttrDefault: "Response",
+					Value:       []string{"Response"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ebms_message_exchange_pattern",
+					AttrType:    "String",
+					AttrDefault: "one-way-push",
+					Value:       []string{"one-way-push"},
+				},
+			},
+		},
+	},
+}
+var DmB2BDestinationEBMSCompressIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms3", "ebms3s"},
+}
+var DmB2BDestinationEBMSSOAPBodyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "dest_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ebms3", "ebms3s"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ebms_compress",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
 
 var DmB2BDestinationObjectType = map[string]attr.Type{
 	"dest_name":                            types.StringType,

@@ -121,28 +121,16 @@ attributes:
     .
   cli_alias: ssl-cipher
   ignored_when:
-  - evaluation: logical-or
+  - evaluation: logical-and
     conditions:
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-value-in-list
-        attribute: SSLClientConfigType
-        value:
-        - proxy
-      - evaluation: property-value-in-list
-        attribute: SSLProfile
-        value:
-        - ''
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-value-in-list
-        attribute: SSLClientConfigType
-        value:
-        - client
-      - evaluation: property-value-in-list
-        attribute: SSLClient
-        value:
-        - ''
+    - evaluation: property-value-in-list
+      attribute: SSLClientConfigType
+      value:
+      - client
+    - evaluation: property-value-in-list
+      attribute: SSLClient
+      value:
+      - ''
 - name: FIPS
   type: Bool
   default: false
@@ -152,28 +140,16 @@ attributes:
     requires the use of one of the following ciphers. <ul><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA256</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA256</tt></li></ul>
   cli_alias: ssl-fips
   ignored_when:
-  - evaluation: logical-or
+  - evaluation: logical-and
     conditions:
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-value-in-list
-        attribute: SSLClientConfigType
-        value:
-        - proxy
-      - evaluation: property-value-in-list
-        attribute: SSLProfile
-        value:
-        - ''
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-value-in-list
-        attribute: SSLClientConfigType
-        value:
-        - client
-      - evaluation: property-value-in-list
-        attribute: SSLClient
-        value:
-        - ''
+    - evaluation: property-value-in-list
+      attribute: SSLClientConfigType
+      value:
+      - client
+    - evaluation: property-value-in-list
+      attribute: SSLClient
+      value:
+      - ''
 - name: UserSummary
   type: String
   description: Comments

@@ -64,6 +64,27 @@ var DmSchemaValidationDynamicSchemaCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"dynamic-schema"},
 }
+var DmSchemaValidationSchemaURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validation_mode",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"attribute-rewrite", "dynamic-schema", "default"},
+}
+var DmSchemaValidationURLRewritePolicyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validation_mode",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"schema", "dynamic-schema", "default"},
+}
+var DmSchemaValidationDynamicSchemaIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validation_mode",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"schema-rewrite", "schema", "attribute-rewrite", "default"},
+}
 
 var DmSchemaValidationObjectType = map[string]attr.Type{
 	"matching":           types.StringType,

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -48,6 +49,49 @@ type AssemblyActionRateLimit struct {
 	CorrelationPath     types.String                `tfsdk:"correlation_path"`
 	ActionDebug         types.Bool                  `tfsdk:"action_debug"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var AssemblyActionRateLimitBurstLimitIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "source",
+	AttrType:    "String",
+	AttrDefault: "plan-default",
+	Value:       []string{"plan-default", "domain-named", "group"},
+}
+var AssemblyActionRateLimitRateLimitIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "source",
+	AttrType:    "String",
+	AttrDefault: "plan-default",
+	Value:       []string{"plan-default", "domain-named", "group"},
+}
+var AssemblyActionRateLimitCountLimitIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "source",
+	AttrType:    "String",
+	AttrDefault: "plan-default",
+	Value:       []string{"plan-default", "domain-named", "group"},
+}
+var AssemblyActionRateLimitRateLimitDefinitionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "source",
+	AttrType:    "String",
+	AttrDefault: "plan-default",
+	Value:       []string{"domain-named"},
+}
+var AssemblyActionRateLimitRateLimitGroupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "source",
+	AttrType:    "String",
+	AttrDefault: "plan-default",
+	Value:       []string{"group"},
+}
+var AssemblyActionRateLimitGroupActionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "source",
+	AttrType:    "String",
+	AttrDefault: "plan-default",
+	Value:       []string{"group"},
 }
 
 var AssemblyActionRateLimitObjectType = map[string]attr.Type{

@@ -1,3 +1,10 @@
+## UNRELEASED
+
+- Fixed case for `required_when` `values` in `ConformancePolicy`, `dmAAAPExtractIdentity`, `dmAAAPExtractResource` and `dmSMTPPolicy` definitions.
+- Corrected `do_s_valve` attribute to `dos_valve` in `AAAPolicy`
+- Added default `document_cache_size` in `XMLManager`
+- Added `ignored_when` var definitions to models
+
 ## v0.10.0
 
 - Added validation criteria to definitions

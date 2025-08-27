@@ -139,6 +139,308 @@ var TAMUserPrincipalAttributeCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var TAMADUseADIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v801"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v901"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v903"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v1005"},
+		},
+	},
+}
+var TAMADConfigurationFileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v801"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v901"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v903"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v1005"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ad_use_ad",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var TAMPollIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_local_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var TAMListenModeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_local_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var TAMListenPortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "listen_mode",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "use_local_mode",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var TAMLDAPSSLPortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_use_ssl",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ad_use_ad",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var TAMLDAPSSLKeyFileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var TAMLDAPSSLKeyFilePasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_use_ssl",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var TAMLDAPSSLKeyFileLabelIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_use_ssl",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "tam_use_fips",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "tam_version",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"default"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "tam_version",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"v70"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "tam_version",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"v801"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "tam_version",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"v901"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "tam_version",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"v903"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "tam_version",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"v1005"},
+				},
+			},
+		},
+	},
+}
+var TAMUserPrincipalAttributeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_use_basic_user",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var TAMUserNoDuplicatesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_use_basic_user",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var TAMUserSearchSuffixesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_use_basic_user",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var TAMUserSuffixOptimiserIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "tam_use_basic_user",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "user_no_duplicates",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var TAMTAMFedDirsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"default"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v801"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v901"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v903"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tam_version",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"v1005"},
+		},
+	},
+}
+var TAMRetryIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "auto_retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var TAMRetryAttemptsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "auto_retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var TAMLongRetryIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "auto_retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
 
 var TAMObjectType = map[string]attr.Type{
 	"id":                               types.StringType,

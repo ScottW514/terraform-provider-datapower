@@ -69,6 +69,30 @@ var FTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators
 	AttrDefault: "0",
 	Value:       []string{"0"},
 }
+var FTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "delete_on_success",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var FTPFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "delete_on_error",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var FTPFilePollerSourceProtocolHandlerResultNamePatternIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var FTPFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "processing_seize_timeout",
+	AttrType:    "Int64",
+	AttrDefault: "0",
+	Value:       []string{"0"},
+}
 
 var FTPFilePollerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"id":                        types.StringType,

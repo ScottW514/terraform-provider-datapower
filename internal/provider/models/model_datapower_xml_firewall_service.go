@@ -222,6 +222,142 @@ var XMLFirewallServiceDebugHistoryCondVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
+var XMLFirewallServiceRequestAttachmentsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "request_type",
+	AttrType:    "String",
+	AttrDefault: "soap",
+	Value:       []string{"unprocessed"},
+}
+var XMLFirewallServiceResponseAttachmentsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "response_type",
+	AttrType:    "String",
+	AttrDefault: "soap",
+	Value:       []string{"unprocessed"},
+}
+var XMLFirewallServiceRootPartNotFirstActionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "request_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"streaming"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "response_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"streaming"},
+		},
+	},
+}
+var XMLFirewallServiceDelayErrorsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "rewrite_errors",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var XMLFirewallServiceDelayErrorsDurationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceSOAPSchemaURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "request_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"soap"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "response_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"soap"},
+		},
+	},
+}
+var XMLFirewallServiceWSDLFileLocationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "wsdl_response_policy",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"serve"},
+}
+var XMLFirewallServiceParserLimitsBytesScannedIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsElementDepthIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsAttributeCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsMaxNodeSizeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsMaxPrefixesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsMaxNamespacesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsMaxLocalNamesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsAttachmentByteCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsAttachmentPackageByteCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceParserLimitsExternalReferencesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var XMLFirewallServiceSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
+}
+var XMLFirewallServiceSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"proxy"},
+}
+var XMLFirewallServiceRemoteAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceRemotePortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceDebugHistoryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XMLFirewallServiceDebugTriggerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
 
 var XMLFirewallServiceObjectType = map[string]attr.Type{
 	"id":                                          types.StringType,

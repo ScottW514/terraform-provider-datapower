@@ -70,6 +70,30 @@ var SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validator
 	AttrDefault: "0",
 	Value:       []string{"0"},
 }
+var SFTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "delete_on_success",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var SFTPFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "delete_on_error",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var SFTPFilePollerSourceProtocolHandlerResultNamePatternIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "processing_seize_timeout",
+	AttrType:    "Int64",
+	AttrDefault: "0",
+	Value:       []string{"0"},
+}
 
 var SFTPFilePollerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"id":                        types.StringType,

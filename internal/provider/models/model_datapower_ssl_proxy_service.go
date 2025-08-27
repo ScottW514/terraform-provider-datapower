@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -51,6 +52,28 @@ type SSLProxyService struct {
 	SslClient         types.String                `tfsdk:"ssl_client"`
 	LocalAddress      types.String                `tfsdk:"local_address"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SSLProxyServiceSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var SSLProxyServiceSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
+}
+var SSLProxyServiceSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"proxy"},
 }
 
 var SSLProxyServiceObjectType = map[string]attr.Type{

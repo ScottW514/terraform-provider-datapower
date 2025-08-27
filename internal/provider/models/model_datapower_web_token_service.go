@@ -82,6 +82,19 @@ var WebTokenServiceDebugHistoryCondVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
+var WebTokenServiceDelayErrorsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "rewrite_errors",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var WebTokenServiceDelayErrorsDurationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WebTokenServiceDebugHistoryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var WebTokenServiceObjectType = map[string]attr.Type{
 	"id":                       types.StringType,

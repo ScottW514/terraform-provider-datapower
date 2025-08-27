@@ -93,6 +93,43 @@ var SSLClientProfileCustomSNIHostnameCondVal = validators.Evaluation{
 		},
 	},
 }
+var SSLClientProfileValcredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SSLClientProfileCacheTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "caching",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var SSLClientProfileCacheSizeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "caching",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var SSLClientProfileUseCustomSNIHostnameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SSLClientProfileCustomSNIHostnameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SSLClientProfileHostnameValidationFlagsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validate_hostname",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var SSLClientProfileHostnameValidationFailOnErrorIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validate_hostname",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
 
 var SSLClientProfileObjectType = map[string]attr.Type{
 	"id":                                types.StringType,

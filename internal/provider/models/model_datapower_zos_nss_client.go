@@ -56,6 +56,9 @@ var ZosNSSClientSSLClientCondVal = validators.Evaluation{
 	AttrDefault: "client",
 	Value:       []string{"client"},
 }
+var ZosNSSClientSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var ZosNSSClientObjectType = map[string]attr.Type{
 	"id":                     types.StringType,

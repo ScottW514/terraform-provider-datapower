@@ -827,6 +827,923 @@ var DmAAAPPostProcessPPJWTGeneratorCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var DmAAAPPostProcessPPCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPSAMLServerNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_auth_assertion",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_send_slo",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLNameQualifierIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_auth_assertion",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_saml_identity_provider",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_saml_name_id",
+					AttrType:    "Bool",
+					AttrDefault: "true",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var DmAAAPPostProcessPPKerberosClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosClientPasswordIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPTimestampIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ws_trust",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPTimestampExpiryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust_never_expire",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmAAAPPostProcessPPAllowRenewalIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust_never_expire",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLVersionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_auth_assertion",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLSLOEndpointIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_send_slo",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPWSUsernameTokenPasswordTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_username_token",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_username_token_include_pwd",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLValidityIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_auth_assertion",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLSkewIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_auth_assertion",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPWSUsernameTokenIncludePwdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ws_username_token",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPLTPAVersionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ltpa",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPLTPAExpiryIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ltpa",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPLTPAKeyFileIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ltpa",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPLTPAKeyFilePasswordIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_ltpa",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "pp_ltpa_version",
+							AttrType:    "String",
+							AttrDefault: "LTPA2",
+							Value:       []string{"LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "pp_ltpa_version",
+							AttrType:    "String",
+							AttrDefault: "LTPA2",
+							Value:       []string{"LTPADomino"},
+						},
+					},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ltpa_key_file_password",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var DmAAAPPostProcessPPLTPAStashFileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosBstValueTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPSAMLUseWSSecIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_auth_assertion",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPKerberosClientKeytabIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPUseWSSecIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_ltpa",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_ltpa_version",
+					AttrType:    "String",
+					AttrDefault: "LTPA2",
+					Value:       []string{"LTPADomino"},
+				},
+			},
+		},
+	},
+}
+var DmAAAPPostProcessPPActorRoleIDIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-not",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-or",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_ws_username_token",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ppicrx_token",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_saml_identity_provider",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation: "logical-and",
+					Conditions: []validators.Evaluation{
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "pp_ltpa",
+							AttrType:    "Bool",
+							AttrDefault: "false",
+							Value:       []string{"true"},
+						},
+						{
+							Evaluation:  "property-value-not-in-list",
+							Attribute:   "pp_ltpa_version",
+							AttrType:    "String",
+							AttrDefault: "LTPA2",
+							Value:       []string{"LTPADomino"},
+						},
+						{
+							Evaluation:  "property-value-in-list",
+							Attribute:   "pp_use_ws_sec",
+							AttrType:    "Bool",
+							AttrDefault: "false",
+							Value:       []string{"true"},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+var DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPWSUsernameTokenAllowReplacementIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ws_username_token",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPHMACSigningAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPSigningHashAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPWSTrustHeaderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ws_trust",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPWSSCKeySourceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ws_trust",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSharedSecretKeyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "pp_ws_sc_key_source",
+	AttrType:    "String",
+	AttrDefault: "random",
+	Value:       []string{"static"},
+}
+var DmAAAPPostProcessPPWSTrustRenewalWaitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust_never_expire",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_allow_renewal",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPWSTrustNewInstanceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust_never_expire",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_allow_renewal",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPWSTrustNewKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust_never_expire",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_allow_renewal",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ws_trust_new_instance",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPWSTrustNeverExpireIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_ws_trust",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPICRXUserRealmIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ppicrx_token",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var DmAAAPPostProcessPPSAMLProtocolIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_identity_provider",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSAMLResponseDestinationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "pp_saml_version",
+			AttrType:    "String",
+			AttrDefault: "2",
+			Value:       []string{"2.0"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_protocol",
+			AttrType:    "String",
+			AttrDefault: "assertion",
+			Value:       []string{"assertion"},
+		},
+	},
+}
+var DmAAAPPostProcessPPResultWrapupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_identity_provider",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSAMLAssertionTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_identity_provider",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSAMLSubjectConfirmIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_identity_provider",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSAMLNameIDIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_identity_provider",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSAMLNameIDFormatIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_name_id",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLRecipientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_identity_provider",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSAMLAudienceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_identity_provider",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSAMLOmitNotBeforeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_identity_provider",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPOneTimeUseIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_version",
+			AttrType:    "String",
+			AttrDefault: "2",
+			Value:       []string{"1.0"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLProxyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "pp_saml_version",
+			AttrType:    "String",
+			AttrDefault: "2",
+			Value:       []string{"2.0"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLProxyAudienceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_proxy",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "pp_saml_version",
+			AttrType:    "String",
+			AttrDefault: "2",
+			Value:       []string{"2.0"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLProxyCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_proxy",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "pp_saml_version",
+			AttrType:    "String",
+			AttrDefault: "2",
+			Value:       []string{"2.0"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLAuthzActionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_identity_provider",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "pp_saml_assertion_type",
+			AttrType:    "DmSAMLStatementType",
+			AttrDefault: "authentication+attribute",
+			Value:       []string{"authorization"},
+		},
+	},
+}
+var DmAAAPPostProcessPPSAMLAttributesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPLTPAInsertCookieIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ltpa",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_use_ws_sec",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmAAAPPostProcessPPTAMHeaderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_tam_pac_propagate",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPTAMHeaderSizeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_tam_pac_propagate",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPKerberosUseS4U2ProxyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			AttrPath:    "../authenticate",
+			Value:       []string{"kerberos"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_kerberos_ticket",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_kerberos_spnego_token",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var DmAAAPPostProcessPPCookieAttributesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "pp_ltpa",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "pp_ltpa_insert_cookie",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmAAAPPostProcessPPKerberosUseS4U2SelfAndS4U2ProxyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "au_method",
+			AttrType:    "String",
+			AttrDefault: "ldap",
+			AttrPath:    "../authenticate",
+			Value:       []string{"kerberos"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_kerberos_ticket",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_kerberos_spnego_token",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var DmAAAPPostProcessPPKerberosClientSourceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosSelfIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosSelfKeytabIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosClientCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosClientCtxVarIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosServerSourceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosServerCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPKerberosServerCtxVarIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPPostProcessPPSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "pp_saml_send_slo",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAAAPPostProcessPPSSLClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_saml_send_slo",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "pp_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "proxy",
+			Value:       []string{"client"},
+		},
+	},
+}
+var DmAAAPPostProcessPPLTPAKeyFilePasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "pp_ltpa",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "pp_ltpa_version",
+					AttrType:    "String",
+					AttrDefault: "LTPA2",
+					Value:       []string{"LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "pp_ltpa_version",
+					AttrType:    "String",
+					AttrDefault: "LTPA2",
+					Value:       []string{"LTPADomino"},
+				},
+			},
+		},
+	},
+}
+var DmAAAPPostProcessPPJWTGeneratorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmAAAPPostProcessObjectType = map[string]attr.Type{
 	"pp_enabled":                                  types.BoolType,

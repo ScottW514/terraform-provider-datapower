@@ -34,6 +34,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -51,6 +52,77 @@ type DmAPIRateLimit struct {
 	UseClientId  types.Bool   `tfsdk:"use_client_id"`
 	DynamicValue types.String `tfsdk:"dynamic_value"`
 	Weight       types.String `tfsdk:"weight"`
+}
+
+var DmAPIRateLimitIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitUnitIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitHardLimitIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitCacheOnlyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitIsClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitUseApiNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitUseAppIdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitUseClientIdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitDynamicValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIRateLimitWeightIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rate",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
 }
 
 var DmAPIRateLimitObjectType = map[string]attr.Type{

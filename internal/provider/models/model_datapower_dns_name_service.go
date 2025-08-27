@@ -61,6 +61,20 @@ var DNSNameServiceTimeoutCondVal = validators.Evaluation{
 	AttrDefault: "first-alive",
 	Value:       []string{"first-alive"},
 }
+var DNSNameServiceMaxRetriesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "load_balance_algorithm",
+	AttrType:    "String",
+	AttrDefault: "first-alive",
+	Value:       []string{"first-alive"},
+}
+var DNSNameServiceTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "load_balance_algorithm",
+	AttrType:    "String",
+	AttrDefault: "first-alive",
+	Value:       []string{"first-alive"},
+}
 
 var DNSNameServiceObjectType = map[string]attr.Type{
 	"enabled":                types.BoolType,

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,14 @@ type WSRRSavedSearchSubscription struct {
 	FetchPolicyAttachments types.Bool                  `tfsdk:"fetch_policy_attachments"`
 	UserSummary            types.String                `tfsdk:"user_summary"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var WSRRSavedSearchSubscriptionRefreshIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "method",
+	AttrType:    "String",
+	AttrDefault: "poll",
+	Value:       []string{"poll"},
 }
 
 var WSRRSavedSearchSubscriptionObjectType = map[string]attr.Type{

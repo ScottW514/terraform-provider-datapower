@@ -42,16 +42,10 @@ attributes:
     balancer group as the remote host.
   cli_alias: backup
   ignored_when:
-  - evaluation: logical-or
-    conditions:
-    - evaluation: property-value-in-list
-      attribute: dmObjectName
-      value:
-      - default-log
-    - evaluation: property-value-not-in-list
-      attribute: Type
-      value:
-      - file
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - file
 - name: LogEvents
   type: List
   element_type: DmLogEvent
@@ -165,16 +159,10 @@ attributes:
     fixed at version 6.0.1. New fields added to log formats are ignored.
   cli_alias: fixed-format
   ignored_when:
-  - evaluation: logical-or
-    conditions:
-    - evaluation: property-value-in-list
-      attribute: dmObjectName
-      value:
-      - default-log
-    - evaluation: property-value-in-list
-      attribute: Format
-      value:
-      - json-icp
+  - evaluation: property-value-in-list
+    attribute: Format
+    value:
+    - json-icp
 - name: LocalIdentifier
   type: String
   description: Specify a descriptive string that identifies the log target to remote
@@ -466,29 +454,23 @@ attributes:
     of the remote port of the TLS proxy service.
   cli_alias: remote-port
   ignored_when:
-  - evaluation: logical-or
+  - evaluation: logical-and
     conditions:
-    - evaluation: logical-and
-      conditions:
-      - evaluation: property-value-in-list
-        attribute: Type
-        value:
-        - file
-      - evaluation: property-value-not-in-list
-        attribute: ArchiveMode
-        value:
-        - upload
-    - evaluation: property-value-not-in-list
+    - evaluation: property-value-in-list
       attribute: Type
       value:
-      - syslog
-      - syslog-tcp
-      - smtp
       - file
-    - evaluation: property-value-in-list
-      attribute: dmObjectName
+    - evaluation: property-value-not-in-list
+      attribute: ArchiveMode
       value:
-      - default-log
+      - upload
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog
+    - syslog-tcp
+    - smtp
+    - file
 - name: RemoteLogin
   type: String
   description: Remote login

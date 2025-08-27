@@ -69,6 +69,30 @@ var NFSFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators
 	AttrDefault: "0",
 	Value:       []string{"0"},
 }
+var NFSFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "delete_on_success",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var NFSFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "delete_on_error",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var NFSFilePollerSourceProtocolHandlerResultNamePatternIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var NFSFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "processing_seize_timeout",
+	AttrType:    "Int64",
+	AttrDefault: "0",
+	Value:       []string{"0"},
+}
 
 var NFSFilePollerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"id":                        types.StringType,

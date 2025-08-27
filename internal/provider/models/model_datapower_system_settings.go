@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -55,6 +56,10 @@ type SystemSettings struct {
 	SystemLogFixedFormat    types.Bool                  `tfsdk:"system_log_fixed_format"`
 	Uuid                    types.String                `tfsdk:"uuid"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SystemSettingsHardwareXMLAccelerationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
 }
 
 var SystemSettingsObjectType = map[string]attr.Type{

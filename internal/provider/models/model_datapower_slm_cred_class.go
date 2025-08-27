@@ -67,6 +67,34 @@ var SLMCredClassHeaderCondVal = validators.Evaluation{
 	AttrDefault: "aaa-mapped-credential",
 	Value:       []string{"ip-from-header", "request-header"},
 }
+var SLMCredClassCredMatchTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SLMCredClassCredValueIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "cred_match_type",
+			AttrType:    "String",
+			AttrDefault: "per-extracted-value",
+			Value:       []string{"exact-match", "regexp-match"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "cred_type",
+			AttrType:    "String",
+			AttrDefault: "aaa-mapped-credential",
+			Value:       []string{"custom-stylesheet"},
+		},
+	},
+}
+var SLMCredClassStylesheetIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SLMCredClassHeaderIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var SLMCredClassObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

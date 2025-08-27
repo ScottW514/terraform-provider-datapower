@@ -77,6 +77,16 @@ var AS1PollerSourceProtocolHandlerSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
+var AS1PollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "conn_security",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"none"},
+}
+var AS1PollerSourceProtocolHandlerSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var AS1PollerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"id":                     types.StringType,

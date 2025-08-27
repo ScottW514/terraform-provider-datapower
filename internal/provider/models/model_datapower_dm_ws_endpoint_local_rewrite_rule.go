@@ -56,6 +56,30 @@ var DmWSEndpointLocalRewriteRuleFrontProtocolCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var DmWSEndpointLocalRewriteRuleLocalEndpointProtocolIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmWSEndpointLocalRewriteRuleLocalEndpointHostnameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmWSEndpointLocalRewriteRuleLocalEndpointPortIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmWSEndpointLocalRewriteRuleFrontProtocolIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmWSEndpointLocalRewriteRuleObjectType = map[string]attr.Type{
 	"service_port_match_regexp": types.StringType,

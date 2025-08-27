@@ -73,6 +73,15 @@ var WXSGridKeyObfuscationAlgCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var WXSGridEncryptSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WXSGridEncryptAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var WXSGridKeyObfuscationAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var WXSGridObjectType = map[string]attr.Type{
 	"id":                  types.StringType,

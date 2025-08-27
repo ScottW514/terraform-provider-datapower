@@ -50,6 +50,20 @@ var DmAssemblyActionSetVarValueCondVal = validators.Evaluation{
 	AttrDefault: "set",
 	Value:       []string{"clear"},
 }
+var DmAssemblyActionSetVarTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "action",
+	AttrType:    "String",
+	AttrDefault: "set",
+	Value:       []string{"clear"},
+}
+var DmAssemblyActionSetVarValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "action",
+	AttrType:    "String",
+	AttrDefault: "set",
+	Value:       []string{"clear"},
+}
 
 var DmAssemblyActionSetVarObjectType = map[string]attr.Type{
 	"action": types.StringType,

@@ -140,6 +140,144 @@ var APILDAPRegistryLDAPGroupDynamicFilterCondVal = validators.Evaluation{
 		},
 	},
 }
+var APILDAPRegistryLDAPGroupAuthTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ldap_group_auth_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var APILDAPRegistryLDAPGroupScopeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_group_auth_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var APILDAPRegistryLDAPGroupBaseDNIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ldap_group_auth_enabled",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ldap_group_auth_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"dynamic"},
+				},
+			},
+		},
+	},
+}
+var APILDAPRegistryLDAPGroupFilterPrefixIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ldap_group_auth_enabled",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ldap_group_auth_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"dynamic"},
+				},
+			},
+		},
+	},
+}
+var APILDAPRegistryLDAPGroupFilterSuffixIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ldap_group_auth_enabled",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ldap_group_auth_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"dynamic"},
+				},
+			},
+		},
+	},
+}
+var APILDAPRegistryLDAPGroupDynamicFilterIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ldap_group_auth_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ldap_group_auth_enabled",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ldap_group_auth_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"static"},
+				},
+			},
+		},
+	},
+}
 
 var APILDAPRegistryObjectType = map[string]attr.Type{
 	"id":                        types.StringType,

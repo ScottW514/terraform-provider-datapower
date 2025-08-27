@@ -379,6 +379,328 @@ var DmAAAPAuthorizeAZSMRequestTypeCondVal = validators.Evaluation{
 	AttrDefault: "anyauthenticated",
 	Value:       []string{"netegrity"},
 }
+var DmAAAPAuthorizeAZCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZMapURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZHostIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"ldap", "netegrity", "oblix"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_ldap_load_balance_group",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var DmAAAPAuthorizeAZPortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"ldap", "netegrity", "oblix"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_ldap_load_balance_group",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var DmAAAPAuthorizeAZLDAPGroupIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZValcredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZSAMLURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZSAMLTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZSAMLXPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_saml_type",
+			AttrType:    "String",
+			AttrDefault: "any",
+			Value:       []string{"xpath"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"saml-attr", "saml-authz", "use-authen-attr"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZSAMLNameQualifierIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"saml-attr", "saml-authz"},
+}
+var DmAAAPAuthorizeAZCacheTTLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "az_cache_allow",
+	AttrType:    "String",
+	AttrDefault: "absolute",
+	Value:       []string{"disabled"},
+}
+var DmAAAPAuthorizeAZNetegrityBaseURIIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"netegrity"},
+}
+var DmAAAPAuthorizeAZNetegrityOpNameExtensionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"netegrity"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_sm_request_type",
+			AttrType:    "String",
+			AttrDefault: "webagent",
+			Value:       []string{"webservice"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZClearTrustServerURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZSAMLVersionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"saml-attr", "saml-authz"},
+}
+var DmAAAPAuthorizeAZLDAPLoadBalanceGroupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZLDAPBindDNIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZLDAPGroupAttributeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZLDAPSearchScopeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZLDAPSearchFilterIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZXACMLVersionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZXACMLPEPTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZXACMLUseOnBoxPDPIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZXACMLPDPIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZXACMLExternalPDPUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZXACMLBindingMethodIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"xacml"},
+}
+var DmAAAPAuthorizeAZXACMLBindingObjectIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZXACMLBindingXSLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZXACMLCustomObligationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"xacml"},
+}
+var DmAAAPAuthorizeAZXACMLUseSAML2IgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZTAMServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZTAMDefaultActionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"tivoli"},
+}
+var DmAAAPAuthorizeAZTAMActionResourceMapIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"tivoli"},
+}
+var DmAAAPAuthorizeAZXACMLUseSOAPIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZZOSNSSConfigIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZSAFDefaultActionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"zosnss"},
+}
+var DmAAAPAuthorizeAZLDAPAttributesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZSkewTimeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"saml-authz", "saml-attr"},
+}
+var DmAAAPAuthorizeAZOAuthEnforceScopeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZOAuthExportHeadersIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZTAMPACReturnIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZTAMPACUseIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPAuthorizeAZLDAPReadTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"cleartrust", "ldap", "netegrity", "saml-attr", "saml-authz"},
+}
+var DmAAAPAuthorizeAZSSLClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_method",
+			AttrType:    "String",
+			AttrDefault: "anyauthenticated",
+			Value:       []string{"cleartrust", "ldap", "netegrity", "saml-attr", "saml-authz"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "az_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+	},
+}
+var DmAAAPAuthorizeAZLDAPBindPasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"ldap"},
+}
+var DmAAAPAuthorizeAZSMRequestTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"netegrity"},
+}
+var DmAAAPAuthorizeAZSMCookieFlowIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"netegrity"},
+}
+var DmAAAPAuthorizeAZSMHeaderFlowIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_method",
+	AttrType:    "String",
+	AttrDefault: "anyauthenticated",
+	Value:       []string{"netegrity"},
+}
+var DmAAAPAuthorizeAZSMCookieAttributesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "az_sm_cookie_flow",
+	AttrType:    "DmSMFlow",
+	AttrDefault: "",
+	Value:       []string{"frontend", "frontend+backend", "backend+frontend"},
+}
 
 var DmAAAPAuthorizeObjectType = map[string]attr.Type{
 	"az_method":                      types.StringType,

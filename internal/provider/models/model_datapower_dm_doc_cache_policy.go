@@ -59,6 +59,79 @@ var DmDocCachePolicyTTLCondVal = validators.Evaluation{
 	AttrDefault: "protocol",
 	Value:       []string{"fixed"},
 }
+var DmDocCachePolicyTTLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "protocol",
+	Value:       []string{"protocol", "no-cache"},
+}
+var DmDocCachePolicyXC10GridIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "protocol",
+	Value:       []string{"no-cache"},
+}
+var DmDocCachePolicyCacheBackendResponsesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "protocol",
+	Value:       []string{"no-cache"},
+}
+var DmDocCachePolicyHTTPCacheValidationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "protocol",
+	Value:       []string{"no-cache"},
+}
+var DmDocCachePolicyReturnExpiredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "protocol",
+	Value:       []string{"no-cache"},
+}
+var DmDocCachePolicyRESTInvalidationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "protocol",
+			Value:       []string{"no-cache"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "cache_unsafe_response",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var DmDocCachePolicyCacheUnsafeResponseIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "protocol",
+			Value:       []string{"fixed"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rest_invalidation",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
 
 var DmDocCachePolicyObjectType = map[string]attr.Type{
 	"match":                   types.StringType,
@@ -75,7 +148,7 @@ var DmDocCachePolicyObjectType = map[string]attr.Type{
 var DmDocCachePolicyObjectDefault = map[string]attr.Value{
 	"match":                   types.StringNull(),
 	"type":                    types.StringValue("protocol"),
-	"ttl":                     types.Int64Value(0),
+	"ttl":                     types.Int64Value(900),
 	"priority":                types.Int64Value(128),
 	"xc10grid":                types.StringNull(),
 	"cache_backend_responses": types.BoolValue(false),
@@ -97,7 +170,7 @@ func GetDmDocCachePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				Computed:            true,
 			},
 			"ttl": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("900").String,
 				Computed:            true,
 			},
 			"priority": DataSourceSchema.Int64Attribute{
@@ -149,14 +222,14 @@ func GetDmDocCachePolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("protocol"),
 			},
 			"ttl": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("900").String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 31708800),
 					validators.ConditionalRequiredInt64(DmDocCachePolicyTTLCondVal, validators.Evaluation{}, true),
 				},
-				Default: int64default.StaticInt64(0),
+				Default: int64default.StaticInt64(900),
 			},
 			"priority": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>", "priority", "").AddIntegerRange(1, 255).AddDefaultValue("128").String,
@@ -296,7 +369,7 @@ func (data *DmDocCachePolicy) FromBody(ctx context.Context, pathRoot string, res
 	if value := res.Get(pathRoot + `TTL`); value.Exists() {
 		data.Ttl = types.Int64Value(value.Int())
 	} else {
-		data.Ttl = types.Int64Value(0)
+		data.Ttl = types.Int64Value(900)
 	}
 	if value := res.Get(pathRoot + `Priority`); value.Exists() {
 		data.Priority = types.Int64Value(value.Int())
@@ -351,7 +424,7 @@ func (data *DmDocCachePolicy) UpdateFromBody(ctx context.Context, pathRoot strin
 	}
 	if value := res.Get(pathRoot + `TTL`); value.Exists() && !data.Ttl.IsNull() {
 		data.Ttl = types.Int64Value(value.Int())
-	} else if data.Ttl.ValueInt64() != 0 {
+	} else if data.Ttl.ValueInt64() != 900 {
 		data.Ttl = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `Priority`); value.Exists() && !data.Priority.IsNull() {

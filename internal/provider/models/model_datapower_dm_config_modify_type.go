@@ -57,6 +57,12 @@ var DmConfigModifyTypeValueCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"add", "change"},
 }
+var DmConfigModifyTypePropertyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmConfigModifyTypeValueIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmConfigModifyTypeObjectType = map[string]attr.Type{
 	"match":    types.StringType,

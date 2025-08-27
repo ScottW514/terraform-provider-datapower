@@ -194,6 +194,181 @@ var AnalyticsEndpointScopeCondVal = validators.Evaluation{
 		},
 	},
 }
+var AnalyticsEndpointSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "analytics_server_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"https"},
+}
+var AnalyticsEndpointRequestTopicIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "analytics_server_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"dpkafka"},
+}
+var AnalyticsEndpointDeliveryConnectionsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "analytics_server_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"dpkafka"},
+}
+var AnalyticsEndpointEnableJWTIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "analytics_server_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"http", "https"},
+}
+var AnalyticsEndpointManagementURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+	},
+}
+var AnalyticsEndpointManagementURL_SSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "management_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http"},
+		},
+		{
+			Evaluation:  "property-url-protocol-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"dpkafka"},
+		},
+	},
+}
+var AnalyticsEndpointClientIDIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AnalyticsEndpointClientSecretAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AnalyticsEndpointGrantTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AnalyticsEndpointScopeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "enable_jwt",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AnalyticsEndpointPersistentConnectionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "analytics_server_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"http", "https"},
+}
+var AnalyticsEndpointPersistentTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "persistent_connection",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-url-protocol-not-in-list",
+			Attribute:   "analytics_server_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"http", "https"},
+		},
+	},
+}
 
 var AnalyticsEndpointObjectType = map[string]attr.Type{
 	"id":                        types.StringType,

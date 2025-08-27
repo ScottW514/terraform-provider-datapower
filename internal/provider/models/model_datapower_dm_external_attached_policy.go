@@ -51,6 +51,20 @@ var DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal = validators
 	AttrDefault: "",
 	Value:       []string{"rest"},
 }
+var DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "external_attach_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"rest"},
+}
+var DmExternalAttachedPolicyExternalAttachPolicyFragmentIDIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "external_attach_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"rest"},
+}
 
 var DmExternalAttachedPolicyObjectType = map[string]attr.Type{
 	"external_attach_wsdl_component_type":                     types.StringType,

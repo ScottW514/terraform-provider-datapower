@@ -34,6 +34,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -50,6 +51,70 @@ type DmAPIBurstLimit struct {
 	UseClientId  types.Bool   `tfsdk:"use_client_id"`
 	DynamicValue types.String `tfsdk:"dynamic_value"`
 	Weight       types.String `tfsdk:"weight"`
+}
+
+var DmAPIBurstLimitIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIBurstLimitUnitIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIBurstLimitCacheOnlyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIBurstLimitIsClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIBurstLimitUseApiNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIBurstLimitUseAppIdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIBurstLimitUseClientIdIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIBurstLimitDynamicValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
+}
+var DmAPIBurstLimitWeightIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "burst",
+	AttrType:    "Int64",
+	AttrDefault: "",
+	Value:       []string{"0"},
 }
 
 var DmAPIBurstLimitObjectType = map[string]attr.Type{

@@ -30,6 +30,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -39,6 +40,21 @@ type DmLTPAUserAttributeNameAndValue struct {
 	LtpaUserAttributeType        types.String `tfsdk:"ltpa_user_attribute_type"`
 	LtpaUserAttributeStaticValue types.String `tfsdk:"ltpa_user_attribute_static_value"`
 	LtpaUserAttributeXpathValue  types.String `tfsdk:"ltpa_user_attribute_xpath_value"`
+}
+
+var DmLTPAUserAttributeNameAndValueLTPAUserAttributeStaticValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ltpa_user_attribute_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"static"},
+}
+var DmLTPAUserAttributeNameAndValueLTPAUserAttributeXPathValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ltpa_user_attribute_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"xpath"},
 }
 
 var DmLTPAUserAttributeNameAndValueObjectType = map[string]attr.Type{

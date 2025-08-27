@@ -66,6 +66,30 @@ var XSLCoprocServiceDebugHistoryCondVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
+var XSLCoprocServiceDebugHistoryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var XSLCoprocServiceDebugTriggerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
+var XSLCoprocServiceSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var XSLCoprocServiceSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
+}
 
 var XSLCoprocServiceObjectType = map[string]attr.Type{
 	"id":                          types.StringType,

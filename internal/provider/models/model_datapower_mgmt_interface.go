@@ -62,6 +62,19 @@ var MgmtInterfaceSSLSNIServerCondVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"sni"},
 }
+var MgmtInterfaceSLMPeeringIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MgmtInterfaceSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var MgmtInterfaceSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var MgmtInterfaceObjectType = map[string]attr.Type{
 	"enabled":            types.BoolType,

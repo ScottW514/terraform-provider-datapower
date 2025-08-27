@@ -571,6 +571,754 @@ var StylePolicyActionMethodType2CondVal = validators.Evaluation{
 	AttrDefault: "xform",
 	Value:       []string{"log"},
 }
+var StylePolicyActionInputIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionTransformIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "xform",
+					Value:       []string{"xformng"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "transform_language",
+					AttrType:    "String",
+					AttrDefault: "none",
+					Value:       []string{"none"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"route-action", "xformpi", "xformbin", "xformng", "xform", "sql"},
+		},
+	},
+}
+var StylePolicyActionParseSettingsReferenceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"parse"},
+}
+var StylePolicyActionParseMetricsResultTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"parse"},
+}
+var StylePolicyActionParseMetricsResultLocationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"parse"},
+}
+var StylePolicyActionInputLanguageIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformng"},
+}
+var StylePolicyActionDFDLInputRootNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"xformng"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "input_language",
+			AttrType:    "String",
+			AttrDefault: "xml",
+			Value:       []string{"dfdl"},
+		},
+	},
+}
+var StylePolicyActionInputDescriptorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"xformng"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "input_language",
+			AttrType:    "String",
+			AttrDefault: "xml",
+			Value:       []string{"xsd", "dfdl"},
+		},
+	},
+}
+var StylePolicyActionOutputDescriptorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"xformng"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "output_language",
+			AttrType:    "String",
+			AttrDefault: "default",
+			Value:       []string{"dfdl"},
+		},
+	},
+}
+var StylePolicyActionTransformLanguageIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformng"},
+}
+var StylePolicyActionOutputLanguageIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformng"},
+}
+var StylePolicyActionTxMapIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformbin"},
+}
+var StylePolicyActionGatewayScriptLocationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionActionDebugIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"gatewayscript"},
+}
+var StylePolicyActionTxTopLevelMapIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"xformbin"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "tx_mode",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"dpa"},
+		},
+	},
+}
+var StylePolicyActionTxModeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformbin"},
+}
+var StylePolicyActionTxAuditLogIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"xformbin"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "tx_mode",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"dpa"},
+		},
+	},
+}
+var StylePolicyActionOutputIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"results-async", "setvar", "rewrite", "route-set", "strip-attachments", "on-error", "checkpoint", "conditional", "event-sink", "method-rewrite"},
+}
+var StylePolicyActionNoTranscodeUtf8IgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"convert-http"},
+}
+var StylePolicyActionNamedInOutLocationTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformbin"},
+}
+var StylePolicyActionNamedInputsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "named_in_out_location_type",
+			AttrType:    "String",
+			AttrDefault: "default",
+			Value:       []string{"explicit"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"xformbin"},
+		},
+	},
+}
+var StylePolicyActionNamedOutputsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "named_in_out_location_type",
+			AttrType:    "String",
+			AttrDefault: "default",
+			Value:       []string{"explicit"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"xformbin"},
+		},
+	},
+}
+var StylePolicyActionDestinationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"results", "log"},
+}
+var StylePolicyActionSchemaURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate"},
+}
+var StylePolicyActionJSONSchemaURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate"},
+}
+var StylePolicyActionWsdlURLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate"},
+}
+var StylePolicyActionPolicyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate", "xformpi", "xformbin", "xformng", "xform"},
+}
+var StylePolicyActionAAAIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionDynamicSchemaIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate"},
+}
+var StylePolicyActionDynamicStylesheetIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"filter", "route-action", "xformpi", "xformbin", "xformng", "xform"},
+}
+var StylePolicyActionInputConversionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"convert-http"},
+}
+var StylePolicyActionXPathIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"extract"},
+}
+var StylePolicyActionVariableIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"extract", "setvar", "sql"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "xform",
+					Value:       []string{"sql"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "sql_source_type",
+					AttrType:    "String",
+					AttrDefault: "static",
+					Value:       []string{"variable"},
+				},
+			},
+		},
+	},
+}
+var StylePolicyActionValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"setvar"},
+}
+var StylePolicyActionSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"route-set"},
+}
+var StylePolicyActionSSLClientCredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"route-set"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "client",
+			Value:       []string{"client"},
+		},
+	},
+}
+var StylePolicyActionAttachmentURIIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"strip-attachments"},
+}
+var StylePolicyActionStylesheetParametersIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"filter", "route-action", "xformpi", "xformbin", "xformng", "cryptobin", "xform", "gatewayscript"},
+}
+var StylePolicyActionErrorModeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionErrorInputIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"on-error"},
+}
+var StylePolicyActionErrorOutputIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"on-error"},
+}
+var StylePolicyActionRuleIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"on-error"},
+}
+var StylePolicyActionOutputTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"xformpi", "xformbin", "xformng", "xform", "results", "log", "fetch"},
+}
+var StylePolicyActionLogLevelIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionLogTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionTransactionalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"results", "results-async"},
+}
+var StylePolicyActionCheckpointEventIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionSLMPolicyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionSQLDataSourceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionSQLTextIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"sql"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "sql_source_type",
+			AttrType:    "String",
+			AttrDefault: "static",
+			Value:       []string{"stylesheet", "variable"},
+		},
+	},
+}
+var StylePolicyActionSOAPValidationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"validate"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "wsdl_url",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{""},
+		},
+	},
+}
+var StylePolicyActionSQLSourceTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"sql"},
+}
+var StylePolicyActionJOSESerializationTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionJWEEncAlgorithmIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionJWSSignatureObjectIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionJWEHeaderObjectIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionJOSEVerifyTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"jose-verify"},
+}
+var StylePolicyActionJOSEDecryptTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"jose-decrypt"},
+}
+var StylePolicyActionSignatureIdentifierIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionRecipientIdentifierIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionSingleCertificateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionSingleKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionSingleSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionJWEDirectKeyObjectIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionJWSVerifyStripSignatureIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"jose-verify"},
+}
+var StylePolicyActionAsynchronousIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"results-async", "event-sink", "method-rewrite", "gatewayscript", "jose-sign", "jose-verify", "jose-encrypt", "jose-decrypt"},
+}
+var StylePolicyActionConditionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"conditional"},
+}
+var StylePolicyActionResultsModeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"results", "results-async"},
+}
+var StylePolicyActionRetryCountIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"results", "results-async"},
+}
+var StylePolicyActionRetryIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"results", "results-async"},
+}
+var StylePolicyActionMultipleOutputsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"results", "for-each"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "xform",
+					Value:       []string{"results"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "destination",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{""},
+				},
+			},
+		},
+	},
+}
+var StylePolicyActionIteratorTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"for-each"},
+}
+var StylePolicyActionIteratorExpressionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"for-each"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "iterator_type",
+			AttrType:    "String",
+			AttrDefault: "XPATH",
+			Value:       []string{"XPATH"},
+		},
+	},
+}
+var StylePolicyActionIteratorCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"for-each"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "iterator_type",
+			AttrType:    "String",
+			AttrDefault: "XPATH",
+			Value:       []string{"COUNT"},
+		},
+	},
+}
+var StylePolicyActionLoopActionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var StylePolicyActionAsyncActionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"event-sink"},
+}
+var StylePolicyActionTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"event-sink"},
+}
+var StylePolicyActionWSDLPortQNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate"},
+}
+var StylePolicyActionWSDLOperationNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate"},
+}
+var StylePolicyActionWSDLMessageDirectionOrNameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate"},
+}
+var StylePolicyActionWSDLAttachmentPartIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"validate"},
+}
+var StylePolicyActionMethodRewriteTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"method-rewrite", "fetch"},
+}
+var StylePolicyActionMethodTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "xform",
+			Value:       []string{"results", "results-async"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "xform",
+					Value:       []string{"results"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "destination",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{""},
+				},
+			},
+		},
+	},
+}
+var StylePolicyActionMethodType2IgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "xform",
+	Value:       []string{"log"},
+}
 
 var StylePolicyActionObjectType = map[string]attr.Type{
 	"id":                             types.StringType,

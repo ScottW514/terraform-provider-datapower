@@ -129,6 +129,82 @@ var KafkaClusterSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
+var KafkaClusterSASLMechanismIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"ssl"},
+		},
+	},
+}
+var KafkaClusterUserNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"ssl"},
+		},
+	},
+}
+var KafkaClusterPasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"ssl"},
+		},
+	},
+}
+var KafkaClusterSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_plaintext"},
+		},
+	},
+}
 
 var KafkaClusterObjectType = map[string]attr.Type{
 	"id":                   types.StringType,

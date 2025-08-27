@@ -32,6 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,14 @@ type DmAssemblyFunctionParameter struct {
 	Value       types.String `tfsdk:"value"`
 	ValueType   types.String `tfsdk:"value_type"`
 	Required    types.Bool   `tfsdk:"required"`
+}
+
+var DmAssemblyFunctionParameterRequiredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "value",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{""},
 }
 
 var DmAssemblyFunctionParameterObjectType = map[string]attr.Type{

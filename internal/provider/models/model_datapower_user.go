@@ -62,6 +62,12 @@ var UserGroupNameCondVal = validators.Evaluation{
 	AttrDefault: "group-defined",
 	Value:       []string{"group-defined"},
 }
+var UserGroupNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var UserHashedSnmpCredsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var UserObjectType = map[string]attr.Type{
 	"id":                  types.StringType,

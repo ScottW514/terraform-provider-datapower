@@ -56,6 +56,20 @@ var DmAPICGSProxyPolicyRemotePortCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var DmAPICGSProxyPolicyRemoteAddressIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "proxy_policy_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmAPICGSProxyPolicyRemotePortIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "proxy_policy_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
 
 var DmAPICGSProxyPolicyObjectType = map[string]attr.Type{
 	"proxy_policy_enable": types.BoolType,

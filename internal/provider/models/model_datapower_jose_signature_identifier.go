@@ -60,6 +60,12 @@ var JOSESignatureIdentifierCertificateCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"certificate"},
 }
+var JOSESignatureIdentifierSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var JOSESignatureIdentifierCertificateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var JOSESignatureIdentifierObjectType = map[string]attr.Type{
 	"id":                 types.StringType,

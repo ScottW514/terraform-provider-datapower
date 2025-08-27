@@ -313,6 +313,855 @@ var MultiProtocolGatewayDelayErrorsDurationCondVal = validators.Evaluation{
 		},
 	},
 }
+var MultiProtocolGatewayHTTP2RequiredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "back_http_version",
+	AttrType:    "String",
+	AttrDefault: "HTTP/1.1",
+	Value:       []string{"HTTP/2"},
+}
+var MultiProtocolGatewayRewriteLocationHeaderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "follow_redirects",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayWSMAgentMonitorPCMIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "w_sm_agent_monitor",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var MultiProtocolGatewaySSLClientIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_client_config_type",
+	AttrType:    "String",
+	AttrDefault: "client",
+	Value:       []string{"proxy"},
+}
+var MultiProtocolGatewayBackendUrlIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static-backend",
+	Value:       []string{"static-backend"},
+}
+var MultiProtocolGatewayRequestAttachmentsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "request_type",
+	AttrType:    "String",
+	AttrDefault: "soap",
+	Value:       []string{"unprocessed"},
+}
+var MultiProtocolGatewayResponseAttachmentsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "response_type",
+	AttrType:    "String",
+	AttrDefault: "soap",
+	Value:       []string{"unprocessed"},
+}
+var MultiProtocolGatewayRequestAttachmentsFlowControlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayResponseAttachmentsFlowControlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayRootPartNotFirstActionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "request_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"streaming"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "response_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"streaming"},
+		},
+	},
+}
+var MultiProtocolGatewayParserLimitsElementDepthIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayParserLimitsAttributeCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayParserLimitsMaxNodeSizeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayParserLimitsExternalReferencesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayParserLimitsMaxPrefixesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayParserLimitsMaxNamespacesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayParserLimitsMaxLocalNamesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayParserLimitsAttachmentByteCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayParserLimitsAttachmentPackageByteCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayDebugHistoryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var MultiProtocolGatewayDebugTriggerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayFlowControlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "request_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"soap", "xml"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "response_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"soap", "xml"},
+		},
+	},
+}
+var MultiProtocolGatewaySOAPSchemaURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "request_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"soap"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "response_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"soap"},
+		},
+	},
+}
+var MultiProtocolGatewayWSARequireAAAIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_a_mode",
+			AttrType:    "String",
+			AttrDefault: "sync2sync",
+			Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "static-backend",
+			Value:       []string{"dynamic-backend"},
+		},
+	},
+}
+var MultiProtocolGatewayWSARewriteReplyToIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa"},
+}
+var MultiProtocolGatewayWSARewriteFaultToIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa"},
+}
+var MultiProtocolGatewayWSARewriteToIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa"},
+}
+var MultiProtocolGatewayWSAStripIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "sync2wsa"},
+}
+var MultiProtocolGatewayWSADefaultReplyToIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_a_mode",
+			AttrType:    "String",
+			AttrDefault: "sync2sync",
+			Value:       []string{"wsa2sync", "wsa2wsa"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_a_force",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var MultiProtocolGatewayWSADefaultFaultToIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa"},
+}
+var MultiProtocolGatewayWSAForceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa"},
+}
+var MultiProtocolGatewayWSAGenStyleIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"sync2wsa", "wsa2wsa"},
+}
+var MultiProtocolGatewayWSAHTTPAsyncResponseCodeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+}
+var MultiProtocolGatewayWSABackProtocolIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+}
+var MultiProtocolGatewayWSATimeoutIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_a_mode",
+			AttrType:    "String",
+			AttrDefault: "sync2sync",
+			Value:       []string{"wsa2wsa", "sync2wsa"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_a_gen_style",
+			AttrType:    "String",
+			AttrDefault: "sync",
+			Value:       []string{"async"},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSequenceExpirationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_rm_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayWSRMAAAPolicyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_rm_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayWSRMDestinationAcceptCreateSequenceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_rm_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayWSRMDestinationMaximumSequencesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_destination_accept_create_sequence",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMDestinationInOrderIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_destination_accept_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "true",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_source_make_offer",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMDestinationMaximumInOrderQueueLengthIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ws_rm_destination_in_order",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMDestinationAcceptOffersIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_destination_accept_create_sequence",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMFrontForceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_destination_accept_create_sequence",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMBackForceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_destination_accept_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "true",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_source_make_offer",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMBackCreateSequenceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ws_rm_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayWSRMFrontCreateSequenceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_a_mode",
+			AttrType:    "String",
+			AttrDefault: "sync2sync",
+			Value:       []string{"wsa2sync", "wsa2wsa"},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSourceMakeOfferIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_back_create_sequence",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMUsesSequenceSSLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMFrontAcksToIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMBackAcksToIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSourceMaximumSequencesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSourceRetransmissionIntervalIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSourceExponentialBackoffIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSourceMaximumRetransmissionsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSourceMaximumQueueLengthIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSourceRequestAckCountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayWSRMSourceInactivityCloseIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ws_rm_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_destination_accept_offers",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_front_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "ws_rm_back_create_sequence",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+	},
+}
+var MultiProtocolGatewayDelayErrorsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "rewrite_errors",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var MultiProtocolGatewayDelayErrorsDurationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var MultiProtocolGatewayObjectType = map[string]attr.Type{
 	"id":                                              types.StringType,

@@ -51,6 +51,16 @@ var DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal = validat
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+var DmWSOperationConformancePolicyConformancePolicyWSDLComponentValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "conformance_policy_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+var DmWSOperationConformancePolicyConformancePolicySubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmWSOperationConformancePolicyObjectType = map[string]attr.Type{
 	"conformance_policy":                      types.StringType,

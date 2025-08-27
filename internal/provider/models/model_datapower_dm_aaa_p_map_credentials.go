@@ -65,6 +65,15 @@ var DmAAAPMapCredentialsMCMapXPathCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"xpath"},
 }
+var DmAAAPMapCredentialsMCCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPMapCredentialsMCMapURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPMapCredentialsMCMapXPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmAAAPMapCredentialsObjectType = map[string]attr.Type{
 	"mc_method":     types.StringType,

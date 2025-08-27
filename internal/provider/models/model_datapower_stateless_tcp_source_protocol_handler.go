@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,21 @@ type StatelessTCPSourceProtocolHandler struct {
 	SslServer             types.String                `tfsdk:"ssl_server"`
 	SslSniServer          types.String                `tfsdk:"ssl_sni_server"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var StatelessTCPSourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var StatelessTCPSourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
 }
 
 var StatelessTCPSourceProtocolHandlerObjectType = map[string]attr.Type{

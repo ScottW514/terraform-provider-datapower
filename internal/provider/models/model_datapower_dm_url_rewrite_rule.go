@@ -62,6 +62,34 @@ var DmURLRewriteRuleHeaderCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"header-rewrite"},
 }
+var DmURLRewriteRuleStyleReplaceRegexpIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"header-rewrite", "content-type"},
+}
+var DmURLRewriteRuleInputUnescapeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"header-rewrite", "content-type"},
+}
+var DmURLRewriteRuleStylesheetUnescapeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"header-rewrite", "content-type"},
+}
+var DmURLRewriteRuleHeaderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"post-body", "rewrite", "absolute-rewrite", "content-type"},
+}
 
 var DmURLRewriteRuleObjectType = map[string]attr.Type{
 	"type":                 types.StringType,

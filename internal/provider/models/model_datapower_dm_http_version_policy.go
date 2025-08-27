@@ -32,6 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -40,6 +41,14 @@ type DmHTTPVersionPolicy struct {
 	RegExp        types.String `tfsdk:"reg_exp"`
 	Version       types.String `tfsdk:"version"`
 	Http2Required types.Bool   `tfsdk:"http2_required"`
+}
+
+var DmHTTPVersionPolicyHTTP2RequiredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "version",
+	AttrType:    "String",
+	AttrDefault: "HTTP/1.1",
+	Value:       []string{"HTTP/2"},
 }
 
 var DmHTTPVersionPolicyObjectType = map[string]attr.Type{

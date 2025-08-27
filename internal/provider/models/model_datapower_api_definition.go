@@ -96,6 +96,74 @@ var APIDefinitionAPIMutualTLSSourceCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var APIDefinitionGraphQLSchemaIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "standard",
+	Value:       []string{"graphql"},
+}
+var APIDefinitionWsdlAdvertisedSchemaLocationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "standard",
+	Value:       []string{"wsdl"},
+}
+var APIDefinitionWsdlValidationSchemaIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "standard",
+	Value:       []string{"wsdl"},
+}
+var APIDefinitionAPIMutualTLSSourceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "require_api_mutual_tls",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var APIDefinitionAPIMutualTLSHeaderNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "require_api_mutual_tls",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "api_mutual_tls_source",
+			AttrType:    "List",
+			AttrDefault: "",
+			Value:       []string{"header"},
+		},
+	},
+}
+var APIDefinitionContentIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "activity_log_toggle",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var APIDefinitionErrorContentIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "activity_log_toggle",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+var APIDefinitionForceHttp500ForSoap11IgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "standard",
+	Value:       []string{"wsdl"},
+}
 
 var APIDefinitionObjectType = map[string]attr.Type{
 	"id":                                   types.StringType,

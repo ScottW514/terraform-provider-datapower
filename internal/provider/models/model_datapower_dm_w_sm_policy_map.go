@@ -52,6 +52,16 @@ var DmWSMPolicyMapSubscriptionCondVal = validators.Evaluation{
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+var DmWSMPolicyMapWSDLComponentValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+var DmWSMPolicyMapSubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmWSMPolicyMapObjectType = map[string]attr.Type{
 	"wsdl_component_type":  types.StringType,

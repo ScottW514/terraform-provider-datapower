@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -44,6 +45,10 @@ type DmLBGroupMember struct {
 	Activity      types.String `tfsdk:"activity"`
 	HealthPort    types.Int64  `tfsdk:"health_port"`
 	LbMemberState types.String `tfsdk:"lb_member_state"`
+}
+
+var DmLBGroupMemberActivityIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
 }
 
 var DmLBGroupMemberObjectType = map[string]attr.Type{

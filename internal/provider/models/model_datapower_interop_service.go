@@ -125,6 +125,57 @@ var InteropServiceSSLSNIServerCondVal = validators.Evaluation{
 		},
 	},
 }
+var InteropServiceLocalAddressIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "http_service",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var InteropServiceLocalPortIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "http_service",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var InteropServiceACLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "http_service",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var InteropServiceHttpsLocalAddressIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "https_service",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var InteropServiceHttpsLocalPortIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "https_service",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var InteropServiceHttpsACLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "https_service",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var InteropServiceSSLServerConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var InteropServiceSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var InteropServiceSSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var InteropServiceObjectType = map[string]attr.Type{
 	"enabled":                types.BoolType,

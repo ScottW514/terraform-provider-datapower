@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -55,6 +56,63 @@ type SSHServerSourceProtocolHandler struct {
 	PersistentFilesystemTimeout types.Int64                     `tfsdk:"persistent_filesystem_timeout"`
 	VirtualDirectories          types.List                      `tfsdk:"virtual_directories"`
 	DependencyActions           []*actions.DependencyAction     `tfsdk:"dependency_actions"`
+}
+
+var SSHServerSourceProtocolHandlerAllowBackendListingsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "filesystem_type",
+	AttrType:    "String",
+	AttrDefault: "transparent",
+	Value:       []string{"transparent"},
+}
+var SSHServerSourceProtocolHandlerAllowBackendDeleteIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "filesystem_type",
+	AttrType:    "String",
+	AttrDefault: "transparent",
+	Value:       []string{"transparent"},
+}
+var SSHServerSourceProtocolHandlerAllowBackendStatIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "filesystem_type",
+	AttrType:    "String",
+	AttrDefault: "transparent",
+	Value:       []string{"transparent"},
+}
+var SSHServerSourceProtocolHandlerAllowBackendMkdirIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "filesystem_type",
+	AttrType:    "String",
+	AttrDefault: "transparent",
+	Value:       []string{"transparent"},
+}
+var SSHServerSourceProtocolHandlerAllowBackendRmdirIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "filesystem_type",
+	AttrType:    "String",
+	AttrDefault: "transparent",
+	Value:       []string{"transparent"},
+}
+var SSHServerSourceProtocolHandlerAllowBackendRenameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "filesystem_type",
+	AttrType:    "String",
+	AttrDefault: "transparent",
+	Value:       []string{"transparent"},
+}
+var SSHServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "filesystem_type",
+	AttrType:    "String",
+	AttrDefault: "transparent",
+	Value:       []string{"virtual-persistent"},
+}
+var SSHServerSourceProtocolHandlerVirtualDirectoriesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "filesystem_type",
+	AttrType:    "String",
+	AttrDefault: "transparent",
+	Value:       []string{"virtual-ephemeral", "virtual-persistent"},
 }
 
 var SSHServerSourceProtocolHandlerObjectType = map[string]attr.Type{

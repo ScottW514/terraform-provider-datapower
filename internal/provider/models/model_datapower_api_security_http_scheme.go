@@ -72,6 +72,38 @@ var APISecurityHTTPSchemeBearerValidationEndpointCondVal = validators.Evaluation
 		},
 	},
 }
+var APISecurityHTTPSchemeBearerFormatIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "scheme",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"bearer"},
+}
+var APISecurityHTTPSchemeBearerValidationMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var APISecurityHTTPSchemeBearerValidationEndpointIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var APISecurityHTTPSchemeBearerValidationTLSProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "scheme",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"bearer"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "bearer_validation_method",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"external-url"},
+		},
+	},
+}
 
 var APISecurityHTTPSchemeObjectType = map[string]attr.Type{
 	"id":                            types.StringType,

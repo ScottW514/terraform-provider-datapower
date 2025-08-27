@@ -205,9 +205,15 @@ attributes:
     conditions:
     - evaluation: property-value-in-list
       attribute: AffinityWLMOverride
+      attr_type: Bool
+      attr_path: LBGroupAffinityConf
+      attr_default: false
       value:
       - false
     - evaluation: property-value-not-in-list
       attribute: AffinityMode
+      attr_type: String
+      attr_path: LBGroupAffinityConf
+      attr_default: activeConditional
       value:
       - activeConditional

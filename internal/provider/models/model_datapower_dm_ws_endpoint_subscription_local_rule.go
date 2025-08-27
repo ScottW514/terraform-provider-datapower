@@ -56,6 +56,30 @@ var DmWSEndpointSubscriptionLocalRuleFrontProtocolCondVal = validators.Evaluatio
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var DmWSEndpointSubscriptionLocalRuleLocalEndpointProtocolIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmWSEndpointSubscriptionLocalRuleLocalEndpointHostnameIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmWSEndpointSubscriptionLocalRuleLocalEndpointPortIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var DmWSEndpointSubscriptionLocalRuleFrontProtocolIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmWSEndpointSubscriptionLocalRuleObjectType = map[string]attr.Type{
 	"subscription":            types.StringType,

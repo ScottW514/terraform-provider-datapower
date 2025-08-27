@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -53,6 +54,99 @@ type LoadBalancerGroup struct {
 	LbGroupAffinityConf         *DmLBGroupAffinity          `tfsdk:"lb_group_affinity_conf"`
 	MonitoredCookies            types.List                  `tfsdk:"monitored_cookies"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var LoadBalancerGroupWLMRetrievalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "retrieve_info",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var LoadBalancerGroupWebSphereCellConfigIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "retrieve_info",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "wlm_retrieval",
+			AttrType:    "String",
+			AttrDefault: "use-websphere",
+			Value:       []string{"use-websphere"},
+		},
+	},
+}
+var LoadBalancerGroupWLMGroupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "retrieve_info",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+var LoadBalancerGroupWLMTransportIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "retrieve_info",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "wlm_retrieval",
+			AttrType:    "String",
+			AttrDefault: "use-websphere",
+			Value:       []string{"use-websphere"},
+		},
+	},
+}
+var LoadBalancerGroupApplicationRoutingIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "retrieve_info",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "wlm_retrieval",
+			AttrType:    "String",
+			AttrDefault: "use-websphere",
+			Value:       []string{"use-websphere"},
+		},
+	},
+}
+var LoadBalancerGroupMonitoredCookiesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "affinity_wlm_override",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			AttrPath:    "LBGroupAffinityConf",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "affinity_mode",
+			AttrType:    "String",
+			AttrDefault: "activeConditional",
+			AttrPath:    "LBGroupAffinityConf",
+			Value:       []string{"activeConditional"},
+		},
+	},
 }
 
 var LoadBalancerGroupObjectType = map[string]attr.Type{

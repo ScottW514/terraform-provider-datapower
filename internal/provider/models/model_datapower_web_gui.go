@@ -56,6 +56,16 @@ var WebGUISSLSNIServerCondVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"sni"},
 }
+var WebGUISSLServerIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"server"},
+}
+var WebGUISSLSNIServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var WebGUIObjectType = map[string]attr.Type{
 	"enabled":                types.BoolType,

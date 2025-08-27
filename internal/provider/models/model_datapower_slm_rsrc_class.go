@@ -91,6 +91,55 @@ var SLMRsrcClassWSRRSavedSearchSubscriptionCondVal = validators.Evaluation{
 	AttrDefault: "aaa-mapped-resource",
 	Value:       []string{"wsrr-saved-search-subscription"},
 }
+var SLMRsrcClassRsrcMatchTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SLMRsrcClassRsrcValueIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "rsrc_match_type",
+					AttrType:    "String",
+					AttrDefault: "per-extracted-value",
+					Value:       []string{"exact-match"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "rsrc_match_type",
+					AttrType:    "String",
+					AttrDefault: "per-extracted-value",
+					Value:       []string{"regexp-match"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rsrc_type",
+			AttrType:    "String",
+			AttrDefault: "aaa-mapped-resource",
+			Value:       []string{"uddi-subscription", "wsrr-subscription", "wsrr-saved-search-subscription", "request-message", "response-message", "soap-fault", "xpath-filter", "custom-stylesheet", "concurrent-connections", "concurrent-transactions"},
+		},
+	},
+}
+var SLMRsrcClassStylesheetIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SLMRsrcClassXPathFilterIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SLMRsrcClassSubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SLMRsrcClassWSRRSubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var SLMRsrcClassWSRRSavedSearchSubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var SLMRsrcClassObjectType = map[string]attr.Type{
 	"id":                             types.StringType,

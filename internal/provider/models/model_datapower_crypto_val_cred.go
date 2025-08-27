@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -45,6 +46,35 @@ type CryptoValCred struct {
 	ExplicitPolicy     types.Bool                  `tfsdk:"explicit_policy"`
 	CheckDates         types.Bool                  `tfsdk:"check_dates"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var CryptoValCredRequireCRLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_crl",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var CryptoValCredCRLDPHandlingIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_crl",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var CryptoValCredInitialPolicySetIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "cert_validation_mode",
+	AttrType:    "String",
+	AttrDefault: "legacy",
+	Value:       []string{"pkix"},
+}
+var CryptoValCredExplicitPolicyIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "cert_validation_mode",
+	AttrType:    "String",
+	AttrDefault: "legacy",
+	Value:       []string{"pkix"},
 }
 
 var CryptoValCredObjectType = map[string]attr.Type{

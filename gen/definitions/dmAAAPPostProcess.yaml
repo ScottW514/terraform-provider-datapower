@@ -602,10 +602,6 @@ attributes:
         value:
         - true
       - evaluation: property-value-in-list
-        attribute: PPTFIMTokenMapping
-        value:
-        - true
-      - evaluation: property-value-in-list
         attribute: PPICRXToken
         value:
         - true
@@ -951,7 +947,7 @@ attributes:
       value:
       - '2.0'
     - evaluation: property-value-in-list
-      attribute: saml-protocol
+      attribute: PPSAMLProtocol
       value:
       - assertion
 - name: PPResultWrapup

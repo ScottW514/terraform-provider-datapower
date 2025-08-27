@@ -53,6 +53,20 @@ var DmValidationTypeXSSPatternsFileCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var DmValidationTypeMapValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "fixup",
+	AttrType:    "String",
+	AttrDefault: "error",
+	Value:       []string{"set"},
+}
+var DmValidationTypeXSSPatternsFileIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "xss",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
 
 var DmValidationTypeObjectType = map[string]attr.Type{
 	"name":              types.StringType,

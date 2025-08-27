@@ -195,6 +195,192 @@ var AssemblyActionUserSecurityAZFormTimeLimitCondVal = validators.Evaluation{
 	AttrDefault: "authenticated",
 	Value:       []string{"html-form"},
 }
+var AssemblyActionUserSecurityEIStopOnErrorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityUserContextVariableIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityPassContextVariableIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityRedirectURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityRedirectTimeLimitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityQueryParametersIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "extract_identity_method",
+	AttrType:    "String",
+	AttrDefault: "basic",
+	Value:       []string{"redirect"},
+}
+var AssemblyActionUserSecurityEIDefaultFormIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityEICustomFormIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityEICustomFormClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "extract_identity_method",
+			AttrType:    "String",
+			AttrDefault: "basic",
+			Value:       []string{"html-form"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ei_default_form",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AssemblyActionUserSecurityEICustomFormContentSecurityPolicyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "extract_identity_method",
+			AttrType:    "String",
+			AttrDefault: "basic",
+			Value:       []string{"html-form"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ei_default_form",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AssemblyActionUserSecurityEIFormTimeLimitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityAUStopOnErrorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityUserRegistryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityAuthResponseHeadersPatternIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "user_auth_method",
+	AttrType:    "String",
+	AttrDefault: "user-registry",
+	Value:       []string{"user-registry"},
+}
+var AssemblyActionUserSecurityAuthResponseCredentialHeaderIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "user_auth_method",
+	AttrType:    "String",
+	AttrDefault: "user-registry",
+	Value:       []string{"user-registry"},
+}
+var AssemblyActionUserSecurityAZStopOnErrorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityAZDefaultFormIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityAZCustomFormIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityAZCustomFormClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "user_az_method",
+			AttrType:    "String",
+			AttrDefault: "authenticated",
+			Value:       []string{"html-form"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_default_form",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AssemblyActionUserSecurityAZCustomFormContentSecurityPolicyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "user_az_method",
+			AttrType:    "String",
+			AttrDefault: "authenticated",
+			Value:       []string{"html-form"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_default_form",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+var AssemblyActionUserSecurityAZFormTimeLimitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var AssemblyActionUserSecurityAZTableDisplayCheckboxesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "user_az_method",
+	AttrType:    "String",
+	AttrDefault: "authenticated",
+	Value:       []string{"html-form"},
+}
+var AssemblyActionUserSecurityAZTableDynamicEntriesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "user_az_method",
+	AttrType:    "String",
+	AttrDefault: "authenticated",
+	Value:       []string{"html-form"},
+}
+var AssemblyActionUserSecurityAZTableDefaultEntryIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "user_az_method",
+	AttrType:    "String",
+	AttrDefault: "authenticated",
+	Value:       []string{"html-form"},
+}
+var AssemblyActionUserSecurityHostnameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "extract_identity_method",
+			AttrType:    "String",
+			AttrDefault: "basic",
+			Value:       []string{"redirect"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "extract_identity_method",
+			AttrType:    "String",
+			AttrDefault: "basic",
+			Value:       []string{"html-form"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "user_az_method",
+			AttrType:    "String",
+			AttrDefault: "authenticated",
+			Value:       []string{"html-form"},
+		},
+	},
+}
 
 var AssemblyActionUserSecurityObjectType = map[string]attr.Type{
 	"id":                                     types.StringType,

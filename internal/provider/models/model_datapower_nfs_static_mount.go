@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -48,6 +49,14 @@ type NFSStaticMount struct {
 	Timeout               types.Int64                 `tfsdk:"timeout"`
 	Retransmissions       types.Int64                 `tfsdk:"retransmissions"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var NFSStaticMountTransportIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "version",
+	AttrType:    "Int64",
+	AttrDefault: "3",
+	Value:       []string{"4"},
 }
 
 var NFSStaticMountObjectType = map[string]attr.Type{

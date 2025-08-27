@@ -83,6 +83,23 @@ var HTTPSourceProtocolHandlerWebSocketIdleTimeoutCondVal = validators.Evaluation
 		},
 	},
 }
+var HTTPSourceProtocolHandlerMaxPersistentConnectionsReuseIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "persistent_connections",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+var HTTPSourceProtocolHandlerAllowWebSocketUpgradeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "http_version",
+	AttrType:    "String",
+	AttrDefault: "HTTP/1.1",
+	Value:       []string{"HTTP/1.0"},
+}
+var HTTPSourceProtocolHandlerWebSocketIdleTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var HTTPSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"id":                               types.StringType,

@@ -82,6 +82,45 @@ var DmAAAPMapResourceMRTAMInstancePrefixCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"tivoli"},
 }
+var DmAAAPMapResourceMRCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPMapResourceMRMapURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPMapResourceMRMapXPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPMapResourceMRTAMMapIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPMapResourceMRTAMInstancePrefixIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPMapResourceMRTAMWebSEALDynURLFileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-not",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "mr_method",
+					AttrType:    "String",
+					AttrDefault: "none",
+					Value:       []string{"tivoli"},
+				},
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "mr_tam_map",
+					AttrType:    "String",
+					AttrDefault: "WebSEAL",
+					Value:       []string{"WebSEAL"},
+				},
+			},
+		},
+	},
+}
 
 var DmAAAPMapResourceObjectType = map[string]attr.Type{
 	"mr_method":                    types.StringType,

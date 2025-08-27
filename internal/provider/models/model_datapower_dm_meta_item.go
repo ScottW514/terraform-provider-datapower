@@ -48,6 +48,9 @@ var DmMetaItemDataSourceCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"header", "variable"},
 }
+var DmMetaItemDataSourceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmMetaItemObjectType = map[string]attr.Type{
 	"meta_category": types.StringType,

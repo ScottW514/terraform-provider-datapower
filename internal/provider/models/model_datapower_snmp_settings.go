@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -54,6 +55,21 @@ type SNMPSettings struct {
 	NotifMib                       types.String                `tfsdk:"notif_mib"`
 	NotifMibMq                     types.String                `tfsdk:"notif_mib_mq"`
 	DependencyActions              []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+
+var SNMPSettingsTrapPriorityIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "enable_default_trap_subscriptions",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+var SNMPSettingsTrapEventCodeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "enable_default_trap_subscriptions",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
 }
 
 var SNMPSettingsObjectType = map[string]attr.Type{

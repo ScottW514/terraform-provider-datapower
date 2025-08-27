@@ -51,6 +51,16 @@ var DmWSPolicyParametersPolicyParamSubscriptionCondVal = validators.Evaluation{
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+var DmWSPolicyParametersPolicyParamWSDLComponentValueIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "policy_param_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+var DmWSPolicyParametersPolicyParamSubscriptionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
 
 var DmWSPolicyParametersObjectType = map[string]attr.Type{
 	"policy_param_parameters":           types.StringType,

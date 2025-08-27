@@ -162,6 +162,150 @@ var DmAAAPExtractIdentityEISocialLoginPolicyCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"social_login"},
 }
+var DmAAAPExtractIdentityEICustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEIXPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEISignerDNValcredIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ei_bitmap",
+	AttrType:    "DmAAAPEIBitmap",
+	AttrDefault: "",
+	Value:       []string{"signer_dn"},
+}
+var DmAAAPExtractIdentityEICookieNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEIBasicAuthRealmIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ei_bitmap",
+	AttrType:    "DmAAAPEIBitmap",
+	AttrDefault: "",
+	Value:       []string{"http_basic_auth"},
+}
+var DmAAAPExtractIdentityEIUseWSSecIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEIMetadataIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ei_bitmap",
+	AttrType:    "DmAAAPEIBitmap",
+	AttrDefault: "",
+	Value:       []string{"metadata"},
+}
+var DmAAAPExtractIdentityEIAllowRemoteTokenReferenceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "ei_bitmap",
+	AttrType:    "DmAAAPEIBitmap",
+	AttrDefault: "",
+	Value:       []string{"signer_dn"},
+}
+var DmAAAPExtractIdentityEIRemoteTokenProcessServiceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ei_bitmap",
+			AttrType:    "DmAAAPEIBitmap",
+			AttrDefault: "",
+			Value:       []string{"signer_dn"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ei_allow_remote_token_reference",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPExtractIdentityEIPasswordRetrievalMechanismIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEIPasswordRetrievalCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEIPasswordRetrievalAAAInfoURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEIFormsLoginPolicyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEIOAuthClientGroupIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEISSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ei_bitmap",
+			AttrType:    "DmAAAPEIBitmap",
+			AttrDefault: "",
+			Value:       []string{"signer_dn"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ei_allow_remote_token_reference",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+	},
+}
+var DmAAAPExtractIdentityEISSLClientProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ei_bitmap",
+			AttrType:    "DmAAAPEIBitmap",
+			AttrDefault: "",
+			Value:       []string{"signer_dn"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ei_allow_remote_token_reference",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ei_ssl_client_config_type",
+			AttrType:    "String",
+			AttrDefault: "proxy",
+			Value:       []string{"client"},
+		},
+	},
+}
+var DmAAAPExtractIdentityEIJWTValidatorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEISocialLoginPolicyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+var DmAAAPExtractIdentityEISAMLResponseValCredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ei_bitmap",
+			AttrType:    "DmAAAPEIBitmap",
+			AttrDefault: "",
+			Value:       []string{"saml_attr_name"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "ei_bitmap",
+			AttrType:    "DmAAAPEIBitmap",
+			AttrDefault: "",
+			Value:       []string{"saml_authen_name"},
+		},
+	},
+}
 
 var DmAAAPExtractIdentityObjectType = map[string]attr.Type{
 	"ei_bitmap":                          types.ObjectType{AttrTypes: DmAAAPEIBitmapObjectType},
