@@ -50,6 +50,7 @@ func TestAccResourceXMLManager(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "parser_limits_max_namespaces", "1024"),
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "parser_limits_max_local_names", "60000"),
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "doc_cache_max_docs", "5000"),
+			resource.TestCheckResourceAttr("datapower_xml_manager.test", "doc_cache_size", "0"),
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "doc_max_writes", "32768"),
 			resource.TestCheckResourceAttr("datapower_xml_manager.test", "user_agent", "default"),
 		}...),

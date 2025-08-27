@@ -51,6 +51,8 @@ resource "datapower_xml_manager" "test" {
   - CLI Alias: `policy` (see [below for nested schema](#nestedatt--doc_cache_policy))
 - `doc_cache_size` (Number) Enter the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.
   - CLI Alias: `size`
+  - Range: `1`-`4294967295`
+  - Default value: `0`
 - `doc_max_writes` (Number) Enter the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.
   - CLI Alias: `max-writes`
   - Range: `1`-`32768`
@@ -160,8 +162,8 @@ Optional:
   - Default value: `false`
 - `ttl` (Number) Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.
   - CLI Alias: `ttl`
-  - Range: `5`-`31708800`
-  - Default value: `900`
+  - Range: `0`-`31708800`
+  - Default value: `0`
 - `type` (String) Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`

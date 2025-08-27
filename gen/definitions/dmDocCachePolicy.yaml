@@ -26,7 +26,7 @@ attributes:
   cli_alias: type
 - name: TTL
   type: Int64
-  minimum: 5
+  minimum: 0
   maximum: 31708800
   default: 900
   description: Sets the validity period in seconds for documents in the cache. TTL

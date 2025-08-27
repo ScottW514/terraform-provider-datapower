@@ -180,6 +180,9 @@ attributes:
   cli_alias: maxdocs
 - name: DocCacheSize
   type: Int64
+  minimum: 1
+  maximum: 4294967295
+  default: 0
   description: Enter the maximum size of the document cache. Regardless of the specified
     size, no document that is greater than 1073741824 bytes is cached. This restriction
     applies even if the cache has available space.

@@ -400,7 +400,7 @@ func (data *XMLManager) FromBody(ctx context.Context, pathRoot string, res gjson
 	if value := res.Get(pathRoot + `DocCacheSize`); value.Exists() {
 		data.DocCacheSize = types.Int64Value(value.Int())
 	} else {
-		data.DocCacheSize = types.Int64Null()
+		data.DocCacheSize = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `DocMaxWrites`); value.Exists() {
 		data.DocMaxWrites = types.Int64Value(value.Int())
@@ -582,7 +582,7 @@ func (data *XMLManager) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `DocCacheSize`); value.Exists() && !data.DocCacheSize.IsNull() {
 		data.DocCacheSize = types.Int64Value(value.Int())
-	} else {
+	} else if data.DocCacheSize.ValueInt64() != 0 {
 		data.DocCacheSize = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `DocMaxWrites`); value.Exists() && !data.DocMaxWrites.IsNull() {

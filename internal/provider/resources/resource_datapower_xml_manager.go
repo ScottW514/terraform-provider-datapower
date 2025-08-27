@@ -207,8 +207,13 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(5000),
 			},
 			"doc_cache_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.", "size", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.", "size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("0").String,
 				Optional:            true,
+				Computed:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 4294967295),
+				},
+				Default: int64default.StaticInt64(0),
 			},
 			"doc_max_writes": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.", "max-writes", "").AddIntegerRange(1, 32768).AddDefaultValue("32768").String,

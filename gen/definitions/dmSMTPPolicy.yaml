@@ -30,4 +30,4 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: Options
     value:
-    - Auth
+    - auth
