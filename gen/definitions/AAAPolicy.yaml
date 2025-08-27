@@ -147,6 +147,7 @@ attributes:
   - sha224
   - sha384
   - md5
+  default: sha1
   description: Specify the algorithm to calculate the message digest for signing.
     The default value is sha1.
   cli_alias: saml-sign-hash
@@ -169,6 +170,7 @@ attributes:
   - ecdsa-sha256
   - ecdsa-sha384
   - ecdsa-sha512
+  default: rsa
   description: Specify the algorithm to sign SAML messages. The default value is rsa.
   cli_alias: saml-sign-alg
 - name: LDAPsuffix
@@ -269,6 +271,7 @@ attributes:
   - local
   - store
 - name: DoSValve
+  tf_name: dos_valve
   type: Int64
   minimum: 1
   maximum: 1000

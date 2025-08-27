@@ -36,12 +36,14 @@ func TestAccResourceAAAPolicy(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testutils.AAAPolicyTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "saml_signing_hash_alg", "sha1"),
+			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "saml_signing_alg", "rsa"),
 			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "log_allowed", "false"),
 			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "log_allowed_level", "info"),
 			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "log_rejected", "true"),
 			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "log_rejected_level", "warn"),
 			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "ping_identity_compatibility", "false"),
-			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "do_s_valve", "3"),
+			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "dos_valve", "3"),
 			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "ldap_version", "v2"),
 			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "enforce_soap_actor", "true"),
 			resource.TestCheckResourceAttr("datapower_aaa_policy.test", "dyn_config", "none"),

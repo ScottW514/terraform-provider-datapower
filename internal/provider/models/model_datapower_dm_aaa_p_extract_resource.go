@@ -46,7 +46,7 @@ var DmAAAPExtractResourceERXPathCondVal = validators.Evaluation{
 	Attribute:   "er_bitmap",
 	AttrType:    "DmAAAPERBitmap",
 	AttrDefault: "",
-	Value:       []string{"XPath"},
+	Value:       []string{"xpath"},
 }
 
 var DmAAAPExtractResourceObjectType = map[string]attr.Type{

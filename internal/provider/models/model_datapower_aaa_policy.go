@@ -65,7 +65,7 @@ type AAAPolicy struct {
 	SamlSourceIdMappingFile       types.String                `tfsdk:"saml_source_id_mapping_file"`
 	PingIdentityCompatibility     types.Bool                  `tfsdk:"ping_identity_compatibility"`
 	Saml2MetadataFile             types.String                `tfsdk:"saml2_metadata_file"`
-	DoSValve                      types.Int64                 `tfsdk:"do_s_valve"`
+	DosValve                      types.Int64                 `tfsdk:"dos_valve"`
 	LdapVersion                   types.String                `tfsdk:"ldap_version"`
 	EnforceSoapActor              types.Bool                  `tfsdk:"enforce_soap_actor"`
 	WsSecActorRoleId              types.String                `tfsdk:"ws_sec_actor_role_id"`
@@ -137,7 +137,7 @@ var AAAPolicyObjectType = map[string]attr.Type{
 	"saml_source_id_mapping_file":       types.StringType,
 	"ping_identity_compatibility":       types.BoolType,
 	"saml2_metadata_file":               types.StringType,
-	"do_s_valve":                        types.Int64Type,
+	"dos_valve":                         types.Int64Type,
 	"ldap_version":                      types.StringType,
 	"enforce_soap_actor":                types.BoolType,
 	"ws_sec_actor_role_id":              types.StringType,
@@ -261,7 +261,7 @@ func (data AAAPolicy) IsNull() bool {
 	if !data.Saml2MetadataFile.IsNull() {
 		return false
 	}
-	if !data.DoSValve.IsNull() {
+	if !data.DosValve.IsNull() {
 		return false
 	}
 	if !data.LdapVersion.IsNull() {
@@ -414,8 +414,8 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Saml2MetadataFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SAML2MetadataFile`, data.Saml2MetadataFile.ValueString())
 	}
-	if !data.DoSValve.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DoSValve`, data.DoSValve.ValueInt64())
+	if !data.DosValve.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`DoSValve`, data.DosValve.ValueInt64())
 	}
 	if !data.LdapVersion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPVersion`, data.LdapVersion.ValueString())
@@ -612,12 +612,12 @@ func (data *AAAPolicy) FromBody(ctx context.Context, pathRoot string, res gjson.
 	if value := res.Get(pathRoot + `SAMLSigningHashAlg`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SamlSigningHashAlg = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SamlSigningHashAlg = types.StringNull()
+		data.SamlSigningHashAlg = types.StringValue("sha1")
 	}
 	if value := res.Get(pathRoot + `SAMLSigningAlg`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SamlSigningAlg = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SamlSigningAlg = types.StringNull()
+		data.SamlSigningAlg = types.StringValue("rsa")
 	}
 	if value := res.Get(pathRoot + `LDAPsuffix`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LdapSuffix = tfutils.ParseStringFromGJSON(value)
@@ -665,9 +665,9 @@ func (data *AAAPolicy) FromBody(ctx context.Context, pathRoot string, res gjson.
 		data.Saml2MetadataFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `DoSValve`); value.Exists() {
-		data.DoSValve = types.Int64Value(value.Int())
+		data.DosValve = types.Int64Value(value.Int())
 	} else {
-		data.DoSValve = types.Int64Value(3)
+		data.DosValve = types.Int64Value(3)
 	}
 	if value := res.Get(pathRoot + `LDAPVersion`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LdapVersion = tfutils.ParseStringFromGJSON(value)
@@ -855,12 +855,12 @@ func (data *AAAPolicy) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `SAMLSigningHashAlg`); value.Exists() && !data.SamlSigningHashAlg.IsNull() {
 		data.SamlSigningHashAlg = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.SamlSigningHashAlg.ValueString() != "sha1" {
 		data.SamlSigningHashAlg = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SAMLSigningAlg`); value.Exists() && !data.SamlSigningAlg.IsNull() {
 		data.SamlSigningAlg = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.SamlSigningAlg.ValueString() != "rsa" {
 		data.SamlSigningAlg = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LDAPsuffix`); value.Exists() && !data.LdapSuffix.IsNull() {
@@ -908,10 +908,10 @@ func (data *AAAPolicy) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	} else {
 		data.Saml2MetadataFile = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `DoSValve`); value.Exists() && !data.DoSValve.IsNull() {
-		data.DoSValve = types.Int64Value(value.Int())
-	} else if data.DoSValve.ValueInt64() != 3 {
-		data.DoSValve = types.Int64Null()
+	if value := res.Get(pathRoot + `DoSValve`); value.Exists() && !data.DosValve.IsNull() {
+		data.DosValve = types.Int64Value(value.Int())
+	} else if data.DosValve.ValueInt64() != 3 {
+		data.DosValve = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `LDAPVersion`); value.Exists() && !data.LdapVersion.IsNull() {
 		data.LdapVersion = tfutils.ParseStringFromGJSON(value)

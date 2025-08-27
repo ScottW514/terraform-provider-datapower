@@ -80,7 +80,7 @@ var DmAAAPExtractIdentityEICookieNameCondVal = validators.Evaluation{
 	Attribute:   "ei_bitmap",
 	AttrType:    "DmAAAPEIBitmap",
 	AttrDefault: "",
-	Value:       []string{"cookie-token"},
+	Value:       []string{"cookie_token"},
 }
 var DmAAAPExtractIdentityEIUseWSSecCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
@@ -94,7 +94,7 @@ var DmAAAPExtractIdentityEIPasswordRetrievalMechanismCondVal = validators.Evalua
 	Attribute:   "ei_bitmap",
 	AttrType:    "DmAAAPEIBitmap",
 	AttrDefault: "",
-	Value:       []string{"wssec-derived-key"},
+	Value:       []string{"wssec_derived_key"},
 }
 var DmAAAPExtractIdentityEIPasswordRetrievalCustomURLCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
@@ -104,7 +104,7 @@ var DmAAAPExtractIdentityEIPasswordRetrievalCustomURLCondVal = validators.Evalua
 			Attribute:   "ei_bitmap",
 			AttrType:    "DmAAAPEIBitmap",
 			AttrDefault: "",
-			Value:       []string{"wssec-derived-key"},
+			Value:       []string{"wssec_derived_key"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
@@ -123,7 +123,7 @@ var DmAAAPExtractIdentityEIPasswordRetrievalAAAInfoURLCondVal = validators.Evalu
 			Attribute:   "ei_bitmap",
 			AttrType:    "DmAAAPEIBitmap",
 			AttrDefault: "",
-			Value:       []string{"wssec-derived-key"},
+			Value:       []string{"wssec_derived_key"},
 		},
 		{
 			Evaluation:  "property-value-in-list",
@@ -139,7 +139,7 @@ var DmAAAPExtractIdentityEIFormsLoginPolicyCondVal = validators.Evaluation{
 	Attribute:   "ei_bitmap",
 	AttrType:    "DmAAAPEIBitmap",
 	AttrDefault: "",
-	Value:       []string{"html-forms-auth"},
+	Value:       []string{"html_forms_auth"},
 }
 var DmAAAPExtractIdentityEIOAuthClientGroupCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
@@ -160,7 +160,7 @@ var DmAAAPExtractIdentityEISocialLoginPolicyCondVal = validators.Evaluation{
 	Attribute:   "ei_bitmap",
 	AttrType:    "DmAAAPEIBitmap",
 	AttrDefault: "",
-	Value:       []string{"social-login"},
+	Value:       []string{"social_login"},
 }
 
 var DmAAAPExtractIdentityObjectType = map[string]attr.Type{

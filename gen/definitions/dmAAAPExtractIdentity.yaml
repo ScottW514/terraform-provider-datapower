@@ -38,7 +38,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: EIBitmap
     value:
-    - signer-dn
+    - signer_dn
 - name: EICookieName
   type: String
   description: Specify the cookie in the <tt>Cookie</tt> header to extract and use
@@ -48,7 +48,7 @@ attributes:
   - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
-    - cookie-token
+    - cookie_token
   ignored_when:
   - evaluation: logical-true
 - name: EIBasicAuthRealm
@@ -62,7 +62,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: EIBitmap
     value:
-    - http-basic-auth
+    - http_basic_auth
 - name: EIUseWSSec
   type: Bool
   default: false
@@ -105,7 +105,7 @@ attributes:
   - evaluation: property-value-not-in-list
     attribute: EIBitmap
     value:
-    - signer-dn
+    - signer_dn
 - name: EIRemoteTokenProcessService
   type: String
   description: <p>Specify the URL of the service that can process the remote security
@@ -121,7 +121,7 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: EIBitmap
       value:
-      - signer-dn
+      - signer_dn
     - evaluation: property-value-in-list
       attribute: EIAllowRemoteTokenReference
       value:
@@ -139,7 +139,7 @@ attributes:
   - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
-    - wssec-derived-key
+    - wssec_derived_key
   ignored_when:
   - evaluation: logical-true
 - name: EIPasswordRetrievalCustomURL
@@ -152,7 +152,7 @@ attributes:
     - evaluation: property-value-in-list
       attribute: EIBitmap
       value:
-      - wssec-derived-key
+      - wssec_derived_key
     - evaluation: property-value-in-list
       attribute: EIPasswordRetrievalMechanism
       value:
@@ -169,7 +169,7 @@ attributes:
     - evaluation: property-value-in-list
       attribute: EIBitmap
       value:
-      - wssec-derived-key
+      - wssec_derived_key
     - evaluation: property-value-in-list
       attribute: EIPasswordRetrievalMechanism
       value:
@@ -186,7 +186,7 @@ attributes:
   - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
-    - html-forms-auth
+    - html_forms_auth
   ignored_when:
   - evaluation: logical-true
 - name: EIOAuthClientGroup
@@ -215,7 +215,7 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: EIBitmap
       value:
-      - signer-dn
+      - signer_dn
     - evaluation: property-value-in-list
       attribute: EIAllowRemoteTokenReference
       value:
@@ -231,7 +231,7 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: EIBitmap
       value:
-      - signer-dn
+      - signer_dn
     - evaluation: property-value-in-list
       attribute: EIAllowRemoteTokenReference
       value:
@@ -264,7 +264,7 @@ attributes:
   - evaluation: property-value-in-list
     attribute: EIBitmap
     value:
-    - social-login
+    - social_login
   ignored_when:
   - evaluation: logical-true
 - name: EISAMLResponseValCred
@@ -279,8 +279,8 @@ attributes:
     - evaluation: property-value-not-in-list
       attribute: EIBitmap
       value:
-      - saml-attr-name
+      - saml_attr_name
     - evaluation: property-value-not-in-list
       attribute: EIBitmap
       value:
-      - saml-authen-name
+      - saml_authen_name

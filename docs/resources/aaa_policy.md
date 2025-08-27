@@ -43,7 +43,7 @@ resource "datapower_aaa_policy" "test" {
 - `az_sm_http_header` (List of String) Specify HTTP headers from CA Single Sign-On authorization responses. These headers are included as request or response headers based on the CA Single Sign-On header flow.
   - CLI Alias: `az-sm-http-header`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `do_s_valve` (Number) <p>Specify the number of times to process the same request to protect against a denial of service (DoS) attack. Enter a value in the range 1 - 1000. The default value is 3.</p><p>With the default value, AAA processes only the first 3 signature and each signature can contain up to 3 reference URIs. Additional signatures or reference URIs are ignored.</p><p>XML processing includes encryption, decryption, message signing, and signature validation. The AAA policy supports only identity extraction with subject DN from certificate in message signature and authorization with signer certificate for digitally signed messages.</p>
+- `dos_valve` (Number) <p>Specify the number of times to process the same request to protect against a denial of service (DoS) attack. Enter a value in the range 1 - 1000. The default value is 3.</p><p>With the default value, AAA processes only the first 3 signature and each signature can contain up to 3 reference URIs. Additional signatures or reference URIs are ignored.</p><p>XML processing includes encryption, decryption, message signing, and signature validation. The AAA policy supports only identity extraction with subject DN from certificate in message signature and authorization with signer certificate for digitally signed messages.</p>
   - CLI Alias: `dos-valve`
   - Range: `1`-`1000`
   - Default value: `3`
@@ -110,12 +110,14 @@ resource "datapower_aaa_policy" "test" {
 - `saml_signing_alg` (String) Specify the algorithm to sign SAML messages. The default value is rsa.
   - CLI Alias: `saml-sign-alg`
   - Choices: `rsa-sha1`, `dsa-sha1`, `rsa-sha256`, `rsa-sha384`, `rsa-sha512`, `rsa-ripemd160`, `rsa-ripemd160-2010`, `sha256-rsa-MGF1`, `rsa-md5`, `rsa`, `dsa`, `ecdsa-sha1`, `ecdsa-sha224`, `ecdsa-sha256`, `ecdsa-sha384`, `ecdsa-sha512`
+  - Default value: `rsa`
 - `saml_signing_cert` (String) Specify the certificate to sign SAML messages. To sign messages, you must specify a key and a certificate.
   - CLI Alias: `saml-sign-cert`
   - Reference to: `datapower_crypto_certificate:id`
 - `saml_signing_hash_alg` (String) Specify the algorithm to calculate the message digest for signing. The default value is sha1.
   - CLI Alias: `saml-sign-hash`
   - Choices: `sha1`, `sha256`, `sha512`, `ripemd160`, `sha224`, `sha384`, `md5`
+  - Default value: `sha1`
 - `saml_signing_key` (String) Specify the key to sign SAML messages. To sign messages, you must specify a key and a certificate.
   - CLI Alias: `saml-sign-key`
   - Reference to: `datapower_crypto_key:id`

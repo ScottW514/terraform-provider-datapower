@@ -171,7 +171,7 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "Specify the location of the SAML 2.0 metadata file for SAML 2.0 protocol message exchanges. The metadata in this file identifies identity provider endpoints and certificates to secure message exchanges. The file must have a root-level &lt;md:EntitiesDescriptor> element with an &lt;EntityDescriptor> child element for each identity provider.",
 							Computed:            true,
 						},
-						"do_s_valve": schema.Int64Attribute{
+						"dos_valve": schema.Int64Attribute{
 							MarkdownDescription: "<p>Specify the number of times to process the same request to protect against a denial of service (DoS) attack. Enter a value in the range 1 - 1000. The default value is 3.</p><p>With the default value, AAA processes only the first 3 signature and each signature can contain up to 3 reference URIs. Additional signatures or reference URIs are ignored.</p><p>XML processing includes encryption, decryption, message signing, and signature validation. The AAA policy supports only identity extraction with subject DN from certificate in message signature and authorization with signer certificate for digitally signed messages.</p>",
 							Computed:            true,
 						},
