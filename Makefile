@@ -1,4 +1,4 @@
-all: generate tfdocs build
+all: generate tfdocs build buildwin
 clean:
 	bash ./scripts/clean_files.sh ./internal/provider ./gen/generator.ignore
 generate: clean execute_templates adjust_imports tidy
