@@ -89,11 +89,11 @@ func GetDmWSOperationSchedulerPriorityDataSourceSchema() DataSourceSchema.Nested
 				Computed:            true,
 			},
 			"scheduler_priority_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationSchedulerPrioritySchedulerPriorityWSDLComponentValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"scheduler_priority_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"scheduler_priority_fragment_id": DataSourceSchema.StringAttribute{
@@ -126,14 +126,14 @@ func GetDmWSOperationSchedulerPriorityResourceSchema() ResourceSchema.NestedAttr
 				Default: stringdefault.StaticString("all"),
 			},
 			"scheduler_priority_wsdl_component_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationSchedulerPrioritySchedulerPriorityWSDLComponentValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"scheduler_priority_subscription": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal, DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionIgnoreVal, false),
 				},
 			},
 			"scheduler_priority_fragment_id": ResourceSchema.StringAttribute{

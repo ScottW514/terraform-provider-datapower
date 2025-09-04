@@ -122,11 +122,11 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, 
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS server profile to secure connections between clients and the DataPower Gateway.", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS server profile to secure connections between clients and the DataPower Gateway.", "ssl-server", "ssl_server_profile").AddNotValidWhen(models.StatelessTCPSourceProtocolHandlerSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS SNI server profile to secure connections between clients and the DataPower Gateway.", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS SNI server profile to secure connections between clients and the DataPower Gateway.", "ssl-sni-server", "ssl_sni_server_profile").AddNotValidWhen(models.StatelessTCPSourceProtocolHandlerSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

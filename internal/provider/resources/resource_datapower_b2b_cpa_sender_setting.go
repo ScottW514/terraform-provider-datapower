@@ -159,22 +159,22 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_retries": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.", "max-retries", "").AddIntegerRange(1, 30).AddDefaultValue("3").AddRequiredWhen(models.B2BCPASenderSettingMaxRetriesCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.", "max-retries", "").AddIntegerRange(1, 30).AddDefaultValue("3").AddRequiredWhen(models.B2BCPASenderSettingMaxRetriesCondVal.String()).AddNotValidWhen(models.B2BCPASenderSettingMaxRetriesIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 30),
-					validators.ConditionalRequiredInt64(models.B2BCPASenderSettingMaxRetriesCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.B2BCPASenderSettingMaxRetriesCondVal, models.B2BCPASenderSettingMaxRetriesIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(3),
 			},
 			"retry_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between retransmit attempts. Enter a value in the range 1 - 86400. The default value in 1800.", "retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("1800").AddRequiredWhen(models.B2BCPASenderSettingRetryIntervalCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between retransmit attempts. Enter a value in the range 1 - 86400. The default value in 1800.", "retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("1800").AddRequiredWhen(models.B2BCPASenderSettingRetryIntervalCondVal.String()).AddNotValidWhen(models.B2BCPASenderSettingRetryIntervalIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
-					validators.ConditionalRequiredInt64(models.B2BCPASenderSettingRetryIntervalCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.B2BCPASenderSettingRetryIntervalCondVal, models.B2BCPASenderSettingRetryIntervalIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1800),
 			},
@@ -186,7 +186,7 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				},
 			},
 			"include_time_to_live": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the <tt>TimeToLive</tt> element in the outbound messages. This element indicates when the message expires. The receiving partner can accept the message only when it has not expired.", "include-time-to-live", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the <tt>TimeToLive</tt> element in the outbound messages. This element indicates when the message expires. The receiving partner can accept the message only when it has not expired.", "include-time-to-live", "").AddDefaultValue("true").AddNotValidWhen(models.B2BCPASenderSettingIncludeTimeToLiveIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -258,19 +258,20 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				Default: stringdefault.StaticString("exc-c14n"),
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.B2BCPASenderSettingSSLClientConfigTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BCPASenderSettingSSLClientConfigTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.B2BCPASenderSettingSSLClientCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.B2BCPASenderSettingSSLClientCondVal.String()).AddNotValidWhen(models.B2BCPASenderSettingSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.B2BCPASenderSettingSSLClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BCPASenderSettingSSLClientCondVal, models.B2BCPASenderSettingSSLClientIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

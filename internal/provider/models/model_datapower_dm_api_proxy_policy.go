@@ -111,19 +111,19 @@ func GetDmAPIProxyPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				Computed:            true,
 			},
 			"remote_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").AddRequiredWhen(DmAPIProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmAPIProxyPolicyRemoteAddressIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"remote_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).AddRequiredWhen(DmAPIProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmAPIProxyPolicyRemotePortIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"user_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").AddNotValidWhen(DmAPIProxyPolicyUserNameIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"password": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").AddNotValidWhen(DmAPIProxyPolicyPasswordIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -144,29 +144,30 @@ func GetDmAPIProxyPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default:             booldefault.StaticBool(false),
 			},
 			"remote_address": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").AddRequiredWhen(DmAPIProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmAPIProxyPolicyRemoteAddressIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAPIProxyPolicyRemoteAddressCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAPIProxyPolicyRemoteAddressCondVal, DmAPIProxyPolicyRemoteAddressIgnoreVal, false),
 				},
 			},
 			"remote_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).AddRequiredWhen(DmAPIProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmAPIProxyPolicyRemotePortIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
-					validators.ConditionalRequiredInt64(DmAPIProxyPolicyRemotePortCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(DmAPIProxyPolicyRemotePortCondVal, DmAPIProxyPolicyRemotePortIgnoreVal, false),
 				},
 			},
 			"user_name": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").AddNotValidWhen(DmAPIProxyPolicyUserNameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAPIProxyPolicyUserNameIgnoreVal, false),
 				},
 			},
 			"password": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").AddNotValidWhen(DmAPIProxyPolicyPasswordIgnoreVal.String()).String,
 				Optional:            true,
 			},
 		},

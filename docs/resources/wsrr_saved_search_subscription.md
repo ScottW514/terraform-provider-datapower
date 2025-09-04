@@ -50,6 +50,7 @@ resource "datapower_wsrr_saved_search_subscription" "test" {
   - CLI Alias: `refresh-interval`
   - Range: `60`-`4294967`
   - Default value: `86400`
+  - Not Valid When: `method`!=`poll`
 - `saved_search_parameters` (List of String) Specify the parameters to include in the query. The query to the registry uses these parameters. A parameter can be up to 255 characters in length. You can define a maximum of 9 parameters. <p>If you define parameters and they are not require parameters, an error is logged.</p><p><b>Note:</b> In WSRR, a named query and a saved search can have the same name. WSRR matches named queries before saved searches. Therefore, WSRR never finds a saved search with the same name as a named query.</p>
   - CLI Alias: `params`
 - `user_summary` (String) Comments

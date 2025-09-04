@@ -37,13 +37,16 @@ resource "datapower_smtp_server_connection" "test" {
 - `account_name` (String) The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.
   - CLI Alias: `username`
   - Required When: `options`=`auth`
+  - Not Valid When: `options`!=`auth`
 - `account_password_alias` (String) The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
+  - Not Valid When: `options`!=`auth`
 - `auth` (String) With the client authentication option, the method to authenticate the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.
   - CLI Alias: `auth`
   - Choices: `plain`, `login`
   - Default value: `plain`
+  - Not Valid When: `options`!=`auth`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `mail_server_port` (Number) The listening port on the SMTP server to send outgoing e-mail messages.
   - CLI Alias: `server-port`
@@ -53,6 +56,7 @@ resource "datapower_smtp_server_connection" "test" {
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: `ssl_client_config_type`!=`client`
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`

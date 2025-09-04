@@ -61,23 +61,27 @@ resource "datapower_xml_firewall_service" "test" {
   - Range: `10`-`250`
   - Default value: `25`
   - Required When: `debug_mode`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
 - `debug_trigger` (Attributes List) The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.
-  - CLI Alias: `debug-trigger` (see [below for nested schema](#nestedatt--debug_trigger))
+  - CLI Alias: `debug-trigger`
+  - Not Valid When: `debug_mode`!=`true` (see [below for nested schema](#nestedatt--debug_trigger))
 - `default_param_namespace` (String) If a stylesheet parameter is defined without a namespace (or without explicitly specifying the null namespace), then this is the namespace into which the parameter will be assigned.
   - CLI Alias: `default-param-namespace`
   - Default value: `http://www.datapower.com/param/config`
 - `delay_errors` (Boolean) The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the DataPower Gateway delays error messages for the defined duration. When disabled, the DataPower Gateway does not delay error messages.
   - CLI Alias: `delay-errors`
   - Default value: `true`
+  - Not Valid When: `rewrite_errors`!=`true`
 - `delay_errors_duration` (Number) When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
   - Required When: (`delay_errors`=`true` AND `rewrite_errors`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `disallow_empty_response` (Boolean) If set, only responses with message bodies are allowed (that is, not 304 and so forth).
   - CLI Alias: `disallow-empty-reply`
@@ -161,47 +165,57 @@ resource "datapower_xml_firewall_service" "test" {
   - Range: `0`-`4294967295`
   - Default value: `2000000000`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_attachment_package_byte_count` (Number) Defines the maximum number of bytes allowed for all parts of an attachment package, including the root part. Attachment packages that exceed this size will result in a failure of the transaction. If this value is 0, no limit is enforced.
   - CLI Alias: `attachment-package-byte-count`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_attribute_count` (Number) Defines the maximum number of attributes of a given element. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager.
   - CLI Alias: `attribute-count`
   - Range: `0`-`65535`
   - Default value: `128`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_bytes_scanned` (Number) Defines the maximum number of bytes scanned by the XML parser. This applies to any XML document that is parsed. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. If this value is 0, no limit is enforced.
   - CLI Alias: `bytes-scanned`
   - Default value: `4194304`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_element_depth` (Number) Defines the maximum depth of element nesting in XML parser. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager.
   - CLI Alias: `element-depth`
   - Range: `0`-`65535`
   - Default value: `512`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_external_references` (String) Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.
   - CLI Alias: `external-references`
   - Choices: `forbid`, `ignore`, `allow`
   - Default value: `forbid`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_max_local_names` (Number) Enter an integer that defines the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.
   - CLI Alias: `max-local-names`
   - Range: `0`-`4294967295`
   - Default value: `60000`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_max_namespaces` (Number) Enter an integer that defines the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.
   - CLI Alias: `max-namespaces`
   - Default value: `1024`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_max_node_size` (Number) Defines the maximum size any one node may consume. The default is 32 MB. Sizes which are powers of two result in the best performance. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. Although you set an explicit value, the DataPower Gateway uses a value that is the rounded-down, largest power of two that is smaller than the defined value.
   - CLI Alias: `max-node-size`
   - Range: `1024`-`4294967295`
   - Default value: `33554432`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `parser_limits_max_prefixes` (Number) Enter an integer that defines the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the rage 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.
   - CLI Alias: `max-prefixes`
   - Range: `0`-`4294967295`
   - Default value: `1024`
   - Required When: `firewall_parser_limits`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
@@ -212,14 +226,17 @@ resource "datapower_xml_firewall_service" "test" {
 - `remote_address` (String) Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.
   - CLI Alias: `remote-ip-address`
   - Required When: `type`=`static-backend`
+  - Not Valid When: attribute is not conditionally required
 - `remote_port` (Number) Specify the port number to monitor. Used only when Type is static-backend.
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
   - Required When: `type`=`static-backend`
+  - Not Valid When: attribute is not conditionally required
 - `request_attachments` (String) Select how to treat client requests with attachments. The default is Strip.
   - CLI Alias: `request-attachments`
   - Choices: `strip`, `reject`, `allow`, `streaming`, `unprocessed`
   - Default value: `strip`
+  - Not Valid When: `request_type`=`unprocessed`
 - `request_type` (String) Characterizes the type of traffic that originates from the client. The default is SOAP.
   - CLI Alias: `request-type`
   - Choices: `soap`, `xml`, `unprocessed`, `preprocessed`, `json`
@@ -228,6 +245,7 @@ resource "datapower_xml_firewall_service" "test" {
   - CLI Alias: `response-attachments`
   - Choices: `strip`, `reject`, `allow`, `streaming`, `unprocessed`
   - Default value: `strip`
+  - Not Valid When: `response_type`=`unprocessed`
 - `response_type` (String) Characterizes the type of traffic that originates from the server. The default is SOAP.
   - CLI Alias: `response-type`
   - Choices: `soap`, `xml`, `unprocessed`, `preprocessed`, `json`
@@ -239,15 +257,18 @@ resource "datapower_xml_firewall_service" "test" {
   - CLI Alias: `root-part-not-first-action`
   - Choices: `process-in-order`, `buffer`, `abort`
   - Default value: `process-in-order`
+  - Not Valid When: (`request_attachments`!=`streaming` AND `response_attachments`!=`streaming`)
 - `service_monitors` (List of String) Specifies a list of Web Service Monitors. Web Service Monitors target Web Service endpoints. Use the Web Services wizard on the Control Panel to supply a WSDL and configure a Monitor for an endpoint. The Monitor collects statistics, establishes count and duration monitors and can take action when thresholds are met or exceeded. A Monitor must be selected here to be activated. Click + to create a new Web Services Monitor. Note that this Monitor is not the Service Level Monitor (SLM) used by a Multi-Protocol Gateway or Web Service Proxy.
   - CLI Alias: `monitor-service`
   - Reference to: `datapower_web_service_monitor:id`
 - `soap_schema_url` (String) When a firewall is in SOAP mode, either on the request or response side, it will validate the incoming messages against a W3C Schema that defines what a SOAP message is supposed to look like. It is possible to customize which schema is used on a per-firewall basis by changing this property; this can be used to accommodate non-standard configurations or other special cases.
   - CLI Alias: `soap-schema-url`
   - Default value: `store:///schemas/soap-envelope.xsd`
+  - Not Valid When: (`request_type`!=`soap` AND `response_type`!=`soap`)
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: `ssl_config_type`=`proxy`
 - `ssl_config_type` (String) TLS type
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
@@ -255,9 +276,11 @@ resource "datapower_xml_firewall_service" "test" {
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Not Valid When: `ssl_config_type`!=`server`
 - `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Not Valid When: `ssl_config_type`!=`sni`
 - `style_policy` (String) Assign the processing policy to the service. The processing policy defines the actions to take against messages that flow through the service.
   - CLI Alias: `stylesheet-policy`
   - Reference to: `datapower_style_policy:id`
@@ -278,6 +301,7 @@ resource "datapower_xml_firewall_service" "test" {
   - CLI Alias: `summary`
 - `wsdl_file_location` (String) URL of the file to return when WSDL response policy is set to serve local.
   - CLI Alias: `wsdl-file-location`
+  - Not Valid When: `wsdl_response_policy`!=`serve`
 - `wsdl_response_policy` (String) Select how the firewall handles requests for .NET WSDL requests via the http://domain.com/service?wsdl convention. The default is Off.
   - CLI Alias: `wsdl-response-policy`
   - Choices: `off`, `intercept`, `serve`

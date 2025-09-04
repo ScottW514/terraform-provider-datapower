@@ -76,11 +76,11 @@ func GetDmAAAPExtractResourceDataSourceSchema(description string, cliAlias strin
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"er_bitmap": GetDmAAAPERBitmapDataSourceSchema("Specify the methods to extract resource.", "method", ""),
 			"er_xpath": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").AddRequiredWhen(DmAAAPExtractResourceERXPathCondVal.String()).AddNotValidWhen(DmAAAPExtractResourceERXPathIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"er_metadata": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processing_metadata").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processing_metadata").AddNotValidWhen(DmAAAPExtractResourceERMetadataIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -98,14 +98,14 @@ func GetDmAAAPExtractResourceResourceSchema(description string, cliAlias string,
 		Attributes: map[string]ResourceSchema.Attribute{
 			"er_bitmap": GetDmAAAPERBitmapResourceSchema("Specify the methods to extract resource.", "method", "", false),
 			"er_xpath": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").AddRequiredWhen(DmAAAPExtractResourceERXPathCondVal.String()).AddNotValidWhen(DmAAAPExtractResourceERXPathIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPExtractResourceERXPathCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPExtractResourceERXPathCondVal, DmAAAPExtractResourceERXPathIgnoreVal, false),
 				},
 			},
 			"er_metadata": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processing_metadata").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processing_metadata").AddNotValidWhen(DmAAAPExtractResourceERMetadataIgnoreVal.String()).String,
 				Optional:            true,
 			},
 		},

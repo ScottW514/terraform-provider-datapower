@@ -86,11 +86,11 @@ func GetDmWSOperationPolicySubjectOptOutDataSourceSchema() DataSourceSchema.Nest
 				Computed:            true,
 			},
 			"policy_subject_opt_out_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutWSDLComponentValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"policy_subject_opt_out_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"policy_subject_opt_out_fragment_id": DataSourceSchema.StringAttribute{
@@ -115,14 +115,14 @@ func GetDmWSOperationPolicySubjectOptOutResourceSchema() ResourceSchema.NestedAt
 				Default: stringdefault.StaticString("all"),
 			},
 			"policy_subject_opt_out_wsdl_component_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutWSDLComponentValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"policy_subject_opt_out_subscription": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal, DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionIgnoreVal, false),
 				},
 			},
 			"policy_subject_opt_out_fragment_id": ResourceSchema.StringAttribute{

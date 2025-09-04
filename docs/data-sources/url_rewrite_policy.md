@@ -67,11 +67,15 @@ Read-Only:
 
 - `header` (String) Name HTTP Header to Rewrite
   - Default value: `none`
+  - Required When: `type`=`header-rewrite`
+  - Not Valid When: `type`=`post-body`|`rewrite`|`absolute-rewrite`|`content-type`
 - `input_replace_regexp` (String) <p>Specify a Perl-style replacement that defines the rewritten URL, header field, or HTTP POST body.</p><ul><li>For <b>absolute-rewrite</b> , defines the rewritten URL. If the match pattern is *, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To replace the second text subpattern only, specify $1xsl=ident.xsl$3. <p>If a rewritten URL begins with a host name or port that is different from the configured remote address, the host name or port portion of the rewritten URL is ignored.</p></li><li>For <b>content-type</b> , define the replace value for the Content-Type header.</li><li>For <b>header-rewrite</b> , define the replacement value for the specified header.</li><li>For <b>post-body</b> , define the rewritten body of the HTTP POST. If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To omit the second text subpattern only, specify $1$3.</li></ul>
   - CLI Alias: `input-expression`
+  - Required When: `type`=`header-rewrite`
 - `input_unescape` (Boolean) Replace URL-encoded characters (for example, "%2F") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.
   - CLI Alias: `input-unescape`
   - Default value: `false`
+  - Not Valid When: `type`=`header-rewrite`|`content-type`
 - `match_regexp` (String) <p>Specify a PCRE that defines the match condition that triggers the rewrite rule. Depending on the rule type, a candidate URL or header field is matched against the expression.</p><ul><li>For <b>absolute-rewrite</b> , <b>content-type</b> , and <b>post-body</b> , defines the expression to be matched against the URL. For example, .* or * matches any string, while (.*)xsl=(.*)\?(.*) matches a text subpattern followed by xsl= followed by a text subpattern followed by a ? followed by a text subpattern.</li><li>For <b>header-rewrite</b> , defines the expression to be matched against the contents of a specific header field. For example, *.* matches any value.</li></ul><p>PCRE documentation is available at http://www.pcre.org</p>
   - CLI Alias: `match`
 - `normalize_url` (Boolean) Normalize URL by converting '\' to '/' and compressing '.' and '..'
@@ -79,9 +83,11 @@ Read-Only:
   - Default value: `false`
 - `style_replace_regexp` (String) <p>Specify a Perl-style replacement that identifies the replacement stylesheet. This option is available for <b>absolute-rewrite</b> and <b>post-body</b> only.</p><p>If the match pattern is .*, specify the complete replacement. If the match pattern is (.*)xsl=(.*)\?(.*), specify the evaluation replacement for any text subpattern or retain the original subpattern. To retain the first subpattern, specify $1; to retain the second text subpattern, specify $2; and so forth. To retain the second text subpattern only and not use the third text subpattern, specify http://mantis:8000$2.</p>
   - CLI Alias: `stylesheet-expression`
+  - Not Valid When: `type`=`header-rewrite`|`content-type`
 - `stylesheet_unescape` (Boolean) Replace URL-encoded characters (for example, "%2F") with the equivalent literal character. Select on to replace escape sequences, or off to retain them.
   - CLI Alias: `stylesheet-unescape`
   - Default value: `true`
+  - Not Valid When: `type`=`header-rewrite`|`content-type`
 - `type` (String) Select the type of rule for the URL Rewrite Policy.
   - CLI Alias: `type`
   - Choices: `rewrite`, `absolute-rewrite`, `post-body`, `header-rewrite`, `content-type`

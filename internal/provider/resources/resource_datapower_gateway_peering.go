@@ -106,7 +106,7 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Default:             int64default.StaticInt64(16380),
 			},
 			"peer_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Gateway-peering group", "peer-group", "gateway_peering_group").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Gateway-peering group", "peer-group", "gateway_peering_group").AddNotValidWhen(models.GatewayPeeringPeerGroupIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"monitor_port": schema.Int64Attribute{
@@ -122,7 +122,7 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Default:             booldefault.StaticBool(true),
 			},
 			"enable_ssl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. In peer-based mode, ensure that all peers use the same TLS configuration.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. In peer-based mode, ensure that all peers use the same TLS configuration.", "", "").AddDefaultValue("false").AddNotValidWhen(models.GatewayPeeringEnableSSLIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -137,20 +137,21 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("memory"),
 			},
 			"local_directory": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store data. For example, <tt>local:///group1</tt> .", "local-directory", "").AddDefaultValue("local:///").AddRequiredWhen(models.GatewayPeeringLocalDirectoryCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store data. For example, <tt>local:///group1</tt> .", "local-directory", "").AddDefaultValue("local:///").AddRequiredWhen(models.GatewayPeeringLocalDirectoryCondVal.String()).AddNotValidWhen(models.GatewayPeeringLocalDirectoryIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^(local):"), "Must match :"+"^(local):"),
-					validators.ConditionalRequiredString(models.GatewayPeeringLocalDirectoryCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.GatewayPeeringLocalDirectoryCondVal, models.GatewayPeeringLocalDirectoryIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("local:///"),
 			},
 			"max_memory": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.", "max-memory", "").AddIntegerRange(0, 1048576).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.", "max-memory", "").AddIntegerRange(0, 1048576).AddNotValidWhen(models.GatewayPeeringMaxMemoryIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1048576),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.GatewayPeeringMaxMemoryIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

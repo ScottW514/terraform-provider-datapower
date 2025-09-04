@@ -114,13 +114,13 @@ func (r *WSStylePolicyRuleResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("none"),
 			},
 			"non_xml_processing": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Normally, processing is only performed on XML content. This option allows processing actions to be performed on Non-XML content as well.", "non-xml-processing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Normally, processing is only performed on XML content. This option allows processing actions to be performed on Non-XML content as well.", "non-xml-processing", "").AddDefaultValue("false").AddNotValidWhen(models.WSStylePolicyRuleNonXMLProcessingIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"unprocessed": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Permit rule to pass-through data unprocessed", "unprocessed", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Permit rule to pass-through data unprocessed", "unprocessed", "").AddDefaultValue("false").AddNotValidWhen(models.WSStylePolicyRuleUnprocessedIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

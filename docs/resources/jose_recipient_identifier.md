@@ -43,10 +43,12 @@ resource "datapower_jose_recipient_identifier" "test" {
   - CLI Alias: `key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: `type`=`key`
+  - Not Valid When: attribute is not conditionally required
 - `sskey` (String) Use the shared secret key to verify the recipient.
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: `type`=`sskey`
+  - Not Valid When: attribute is not conditionally required
 - `type` (String) Key material type used to verify the recipient.
   - CLI Alias: `type`
   - Choices: `key`, `sskey`

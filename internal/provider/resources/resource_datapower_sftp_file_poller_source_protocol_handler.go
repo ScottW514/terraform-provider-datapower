@@ -120,7 +120,7 @@ func (r *SFTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context
 				Default:             booldefault.StaticBool(false),
 			},
 			"success_rename_pattern": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>When Delete File on Success is off, enter the PCRE to use to rename the input file on success. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and you want to rename them to <tt>NNNNNN.processed</tt> , the match pattern would be <tt>\"([0-9]{6})\\.input$\"</tt> and the rename pattern would be <tt>\"$1.processed\"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>\"(.*)\"</tt> and the rename pattern would be <tt>\"../processed/$1\"</tt> .</p>", "success-rename-pattern", "").AddDefaultValue("$1.processed.ok").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>When Delete File on Success is off, enter the PCRE to use to rename the input file on success. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and you want to rename them to <tt>NNNNNN.processed</tt> , the match pattern would be <tt>\"([0-9]{6})\\.input$\"</tt> and the rename pattern would be <tt>\"$1.processed\"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>\"(.*)\"</tt> and the rename pattern would be <tt>\"../processed/$1\"</tt> .</p>", "success-rename-pattern", "").AddDefaultValue("$1.processed.ok").AddNotValidWhen(models.SFTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("$1.processed.ok"),
@@ -132,7 +132,7 @@ func (r *SFTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context
 				Default:             booldefault.StaticBool(false),
 			},
 			"error_rename_pattern": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When Delete File on Processing Error is not enabled, enter the PCRE to use to rename a file when it could not be processed.", "error-rename-pattern", "").AddDefaultValue("$0.processed.error").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When Delete File on Processing Error is not enabled, enter the PCRE to use to rename a file when it could not be processed.", "error-rename-pattern", "").AddDefaultValue("$0.processed.error").AddNotValidWhen(models.SFTPFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("$0.processed.error"),
@@ -144,10 +144,10 @@ func (r *SFTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context
 				Default:             booldefault.StaticBool(true),
 			},
 			"result_name_pattern": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>When Generate Result File is on, enter the PCRE to use as the match pattern to build the name of the result file. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and the desired result file name is <tt>NNNNNN.result</tt> , then the match pattern would be <tt>\"([0-9]{6})\\.input$\"</tt> and the result pattern would be <tt>\"$1.result\"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>\"(.*)\"</tt> and the result pattern would be <tt>\"../result/$1\"</tt> .</p>", "result-name-pattern", "").AddRequiredWhen(models.SFTPFilePollerSourceProtocolHandlerResultNamePatternCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>When Generate Result File is on, enter the PCRE to use as the match pattern to build the name of the result file. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and the desired result file name is <tt>NNNNNN.result</tt> , then the match pattern would be <tt>\"([0-9]{6})\\.input$\"</tt> and the result pattern would be <tt>\"$1.result\"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>\"(.*)\"</tt> and the result pattern would be <tt>\"../result/$1\"</tt> .</p>", "result-name-pattern", "").AddRequiredWhen(models.SFTPFilePollerSourceProtocolHandlerResultNamePatternCondVal.String()).AddNotValidWhen(models.SFTPFilePollerSourceProtocolHandlerResultNamePatternIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SFTPFilePollerSourceProtocolHandlerResultNamePatternCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SFTPFilePollerSourceProtocolHandlerResultNamePatternCondVal, models.SFTPFilePollerSourceProtocolHandlerResultNamePatternIgnoreVal, false),
 				},
 			},
 			"processing_seize_timeout": schema.Int64Attribute{
@@ -160,10 +160,10 @@ func (r *SFTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context
 				Default: int64default.StaticInt64(0),
 			},
 			"processing_seize_pattern": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the PCRE to find files that were renamed to indicate that they are in the \"being processed\" state but the processing was never completed.</p><p>The seize pattern contains two phrases. The first phrase is the portion of the file name with the configured processing suffix. The second phrase is the time stamp.</p><p>For example: <tt>(.*.processing).*[.*]([0-9]*)</tt> . This assumes that <tt>$1.processing</tt> was supplied as the renaming pattern.</p>", "processing-seize-pattern", "").AddRequiredWhen(models.SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the PCRE to find files that were renamed to indicate that they are in the \"being processed\" state but the processing was never completed.</p><p>The seize pattern contains two phrases. The first phrase is the portion of the file name with the configured processing suffix. The second phrase is the time stamp.</p><p>For example: <tt>(.*.processing).*[.*]([0-9]*)</tt> . This assumes that <tt>$1.processing</tt> was supplied as the renaming pattern.</p>", "processing-seize-pattern", "").AddRequiredWhen(models.SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal.String()).AddNotValidWhen(models.SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal, models.SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal, false),
 				},
 			},
 			"xml_manager": schema.StringAttribute{

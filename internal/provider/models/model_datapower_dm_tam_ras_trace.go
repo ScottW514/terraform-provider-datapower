@@ -220,19 +220,19 @@ func GetDmTAMRASTraceDataSourceSchema(description string, cliAlias string, refer
 				Computed:            true,
 			},
 			"tam_trace_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "tam-trace-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "tam-trace-file", "").AddRequiredWhen(DmTAMRASTraceTAMTraceFileCondVal.String()).AddNotValidWhen(DmTAMRASTraceTAMTraceFileIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"tam_trace_size": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.", "tam-trace-size", "").AddIntegerRange(100, 1000000).AddDefaultValue("100").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.", "tam-trace-size", "").AddIntegerRange(100, 1000000).AddDefaultValue("100").AddRequiredWhen(DmTAMRASTraceTAMTraceSizeCondVal.String()).AddNotValidWhen(DmTAMRASTraceTAMTraceSizeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"tam_trace_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the format of trace messages in the file.", "tam-trace-type", "").AddStringEnum("textfile", "utf8file", "xmlfile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the format of trace messages in the file.", "tam-trace-type", "").AddStringEnum("textfile", "utf8file", "xmlfile").AddRequiredWhen(DmTAMRASTraceTAMTraceTypeCondVal.String()).AddNotValidWhen(DmTAMRASTraceTAMTraceTypeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"tam_trace_components": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.", "tam-trace-components", "").AddDefaultValue("*:*.9").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.", "tam-trace-components", "").AddDefaultValue("*:*.9").AddRequiredWhen(DmTAMRASTraceTAMTraceComponentsCondVal.String()).AddNotValidWhen(DmTAMRASTraceTAMTraceComponentsIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"ldap_trace_enable": DataSourceSchema.BoolAttribute{
@@ -240,15 +240,15 @@ func GetDmTAMRASTraceDataSourceSchema(description string, cliAlias string, refer
 				Computed:            true,
 			},
 			"ldap_trace_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "ldap-trace-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "ldap-trace-file", "").AddRequiredWhen(DmTAMRASTraceLDAPTraceFileCondVal.String()).AddNotValidWhen(DmTAMRASTraceLDAPTraceFileIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"ldap_trace_size": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.", "ldap-trace-size", "").AddIntegerRange(10000, 10000000).AddDefaultValue("10000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.", "ldap-trace-size", "").AddIntegerRange(10000, 10000000).AddDefaultValue("10000").AddRequiredWhen(DmTAMRASTraceLDAPTraceSizeCondVal.String()).AddNotValidWhen(DmTAMRASTraceLDAPTraceSizeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"ldap_trace_level": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.", "ldap-trace-level", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.", "ldap-trace-level", "").AddIntegerRange(1, 65535).AddDefaultValue("1").AddRequiredWhen(DmTAMRASTraceLDAPTraceLevelCondVal.String()).AddNotValidWhen(DmTAMRASTraceLDAPTraceLevelIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"gs_kit_trace_enable": DataSourceSchema.BoolAttribute{
@@ -256,11 +256,11 @@ func GetDmTAMRASTraceDataSourceSchema(description string, cliAlias string, refer
 				Computed:            true,
 			},
 			"gs_kit_trace_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.", "gskit-trace-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.", "gskit-trace-file", "").AddRequiredWhen(DmTAMRASTraceGSKitTraceFileCondVal.String()).AddNotValidWhen(DmTAMRASTraceGSKitTraceFileIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"gs_kit_trace_flush": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.", "gskit-trace-flush", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.", "gskit-trace-flush", "").AddDefaultValue("false").AddRequiredWhen(DmTAMRASTraceGSKitTraceFlushCondVal.String()).AddNotValidWhen(DmTAMRASTraceGSKitTraceFlushIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -283,36 +283,36 @@ func GetDmTAMRASTraceResourceSchema(description string, cliAlias string, referen
 				Default:             booldefault.StaticBool(false),
 			},
 			"tam_trace_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "tam-trace-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "tam-trace-file", "").AddRequiredWhen(DmTAMRASTraceTAMTraceFileCondVal.String()).AddNotValidWhen(DmTAMRASTraceTAMTraceFileIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceFileCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceFileCondVal, DmTAMRASTraceTAMTraceFileIgnoreVal, false),
 				},
 			},
 			"tam_trace_size": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.", "tam-trace-size", "").AddIntegerRange(100, 1000000).AddDefaultValue("100").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.", "tam-trace-size", "").AddIntegerRange(100, 1000000).AddDefaultValue("100").AddRequiredWhen(DmTAMRASTraceTAMTraceSizeCondVal.String()).AddNotValidWhen(DmTAMRASTraceTAMTraceSizeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 1000000),
-					validators.ConditionalRequiredInt64(DmTAMRASTraceTAMTraceSizeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(DmTAMRASTraceTAMTraceSizeCondVal, DmTAMRASTraceTAMTraceSizeIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(100),
 			},
 			"tam_trace_type": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the format of trace messages in the file.", "tam-trace-type", "").AddStringEnum("textfile", "utf8file", "xmlfile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the format of trace messages in the file.", "tam-trace-type", "").AddStringEnum("textfile", "utf8file", "xmlfile").AddRequiredWhen(DmTAMRASTraceTAMTraceTypeCondVal.String()).AddNotValidWhen(DmTAMRASTraceTAMTraceTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("textfile", "utf8file", "xmlfile"),
-					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceTypeCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceTypeCondVal, DmTAMRASTraceTAMTraceTypeIgnoreVal, false),
 				},
 			},
 			"tam_trace_components": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.", "tam-trace-components", "").AddDefaultValue("*:*.9").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.", "tam-trace-components", "").AddDefaultValue("*:*.9").AddRequiredWhen(DmTAMRASTraceTAMTraceComponentsCondVal.String()).AddNotValidWhen(DmTAMRASTraceTAMTraceComponentsIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceComponentsCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmTAMRASTraceTAMTraceComponentsCondVal, DmTAMRASTraceTAMTraceComponentsIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("*:*.9"),
 			},
@@ -323,29 +323,29 @@ func GetDmTAMRASTraceResourceSchema(description string, cliAlias string, referen
 				Default:             booldefault.StaticBool(false),
 			},
 			"ldap_trace_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "ldap-trace-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.", "ldap-trace-file", "").AddRequiredWhen(DmTAMRASTraceLDAPTraceFileCondVal.String()).AddNotValidWhen(DmTAMRASTraceLDAPTraceFileIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmTAMRASTraceLDAPTraceFileCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmTAMRASTraceLDAPTraceFileCondVal, DmTAMRASTraceLDAPTraceFileIgnoreVal, false),
 				},
 			},
 			"ldap_trace_size": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.", "ldap-trace-size", "").AddIntegerRange(10000, 10000000).AddDefaultValue("10000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.", "ldap-trace-size", "").AddIntegerRange(10000, 10000000).AddDefaultValue("10000").AddRequiredWhen(DmTAMRASTraceLDAPTraceSizeCondVal.String()).AddNotValidWhen(DmTAMRASTraceLDAPTraceSizeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10000, 10000000),
-					validators.ConditionalRequiredInt64(DmTAMRASTraceLDAPTraceSizeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(DmTAMRASTraceLDAPTraceSizeCondVal, DmTAMRASTraceLDAPTraceSizeIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(10000),
 			},
 			"ldap_trace_level": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.", "ldap-trace-level", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.", "ldap-trace-level", "").AddIntegerRange(1, 65535).AddDefaultValue("1").AddRequiredWhen(DmTAMRASTraceLDAPTraceLevelCondVal.String()).AddNotValidWhen(DmTAMRASTraceLDAPTraceLevelIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
-					validators.ConditionalRequiredInt64(DmTAMRASTraceLDAPTraceLevelCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(DmTAMRASTraceLDAPTraceLevelCondVal, DmTAMRASTraceLDAPTraceLevelIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1),
 			},
@@ -356,14 +356,14 @@ func GetDmTAMRASTraceResourceSchema(description string, cliAlias string, referen
 				Default:             booldefault.StaticBool(false),
 			},
 			"gs_kit_trace_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.", "gskit-trace-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.", "gskit-trace-file", "").AddRequiredWhen(DmTAMRASTraceGSKitTraceFileCondVal.String()).AddNotValidWhen(DmTAMRASTraceGSKitTraceFileIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmTAMRASTraceGSKitTraceFileCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmTAMRASTraceGSKitTraceFileCondVal, DmTAMRASTraceGSKitTraceFileIgnoreVal, false),
 				},
 			},
 			"gs_kit_trace_flush": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.", "gskit-trace-flush", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.", "gskit-trace-flush", "").AddDefaultValue("false").AddRequiredWhen(DmTAMRASTraceGSKitTraceFlushCondVal.String()).AddNotValidWhen(DmTAMRASTraceGSKitTraceFlushIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),

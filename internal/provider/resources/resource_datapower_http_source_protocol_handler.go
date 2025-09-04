@@ -120,7 +120,7 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Default:             booldefault.StaticBool(true),
 			},
 			"max_persistent_connections_reuse": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times that a client can reuse a persistent connection. When this count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response, and the TCP connection is closed. The default value is 0, which means unlimited reuse.", "max-persistent-reuse", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times that a client can reuse a persistent connection. When this count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response, and the TCP connection is closed. The default value is 0, which means unlimited reuse.", "max-persistent-reuse", "").AddNotValidWhen(models.HTTPSourceProtocolHandlerMaxPersistentConnectionsReuseIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"allow_compression": schema.BoolAttribute{
@@ -130,17 +130,17 @@ func (r *HTTPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_web_socket_upgrade": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.", "websocket-upgrade", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.", "websocket-upgrade", "").AddDefaultValue("false").AddNotValidWhen(models.HTTPSourceProtocolHandlerAllowWebSocketUpgradeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"web_socket_idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.", "websocket-idle-timeout", "").AddIntegerRange(0, 86400).AddRequiredWhen(models.HTTPSourceProtocolHandlerWebSocketIdleTimeoutCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.", "websocket-idle-timeout", "").AddIntegerRange(0, 86400).AddRequiredWhen(models.HTTPSourceProtocolHandlerWebSocketIdleTimeoutCondVal.String()).AddNotValidWhen(models.HTTPSourceProtocolHandlerWebSocketIdleTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
-					validators.ConditionalRequiredInt64(models.HTTPSourceProtocolHandlerWebSocketIdleTimeoutCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(models.HTTPSourceProtocolHandlerWebSocketIdleTimeoutCondVal, models.HTTPSourceProtocolHandlerWebSocketIdleTimeoutIgnoreVal, false),
 				},
 			},
 			"max_url_len": schema.Int64Attribute{

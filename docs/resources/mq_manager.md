@@ -45,11 +45,14 @@ resource "datapower_mq_manager" "test" {
 - `automatic_backout` (Boolean) <p>Specify whether to enable automatic routing of undeliverable messages, which is the automatic backout of poison messages. A poison message is any message that the receiving application does not know how to process.</p><p>Usually an application rolls back the get of this message, which leaves the message on the input queue. However, the backout count ( <tt>MQMD.Backoutcount</tt> ) is incremented. As the queue manager continues to re-get the message, the backout count continues to increase. When the backout count exceeds the backout threshold, the queue manager moves the message to the backout queue.</p><p>When disabled, the poison message remains on the get queue and continues to be reprocessed by the client until the server queue manager that manages the get queue removes it or the client reroutes the offending message. The message can be rerouted by a custom stylesheet in the request rule.</p>
   - CLI Alias: `automatic-backout`
   - Default value: `false`
+  - Not Valid When: `units_of_work`!=`1`
 - `backout_queue_name` (String) Specify the name of the queue for undeliverable messages. This queue contains messages that exceeded the backout threshold. This queue must be managed by the same queue manager on the IBM MQ server as the defined GET queue. The backout queue, typically <tt>SYSTEM.DEAD.LETTER.QUEUE</tt> contains messages that cannot be processed or delivered.
   - CLI Alias: `backout-queue`
+  - Not Valid When: (`units_of_work`<`1` OR `automatic_backout`!=`true`)
 - `backout_threshold` (Number) Specify the total number of processing attempts. After all attempts fail, the following actions occur. <ul><li>The poison message is moved to the backout queue.</li><li>The unit of work that contains this message is committed.</li></ul><p>Enter a value that is equal to or greater than 1.</p>
   - CLI Alias: `backout-threshold`
   - Range: `1`-`65535`
+  - Not Valid When: (`units_of_work`<`1` OR `automatic_backout`!=`true`)
 - `cache_timeout` (Number) <p>Specify the duration in seconds to retain (keep alive) a dynamic connection in the connection cache. Enter a value in the range 0 - 65535. The default value is 60. Enter 0 to disable the timer.</p><p>Use a value that is greater than the negotiated heartbeat interval but less than the keep alive interval.</p><ul><li>The negotiated heartbeat interval is between the client and the IBM MQ server. The channel heartbeat defines the starting value for the negotiation.</li><li>The keep alive (timeout) interval is on the IBM MQ server. The <tt>KAINT</tt> attribute on the IBM MQ server defines the timeout value for a channel. Not all channels have a defined, explicit keep alive interval on the IBM MQ server. Some queue managers use an automatic timeout setting when the <tt>KAINT</tt> attribute set to <tt>AUTO</tt> . In these cases, the keep alive interval is the negotiated heartbeat interval plus 60 seconds.</li></ul><p>When an inactive connection reaches this threshold, the dynamic connection is removed from the local cache. When the cache no longer contains dynamic connections, the client deletes the dynamic queue manager. Without a dynamic queue manager, there is no connection with the IBM MQ server.</p><p>The cache timeout value is the only way to configure a timeout value with the IBM MQ server. No other local configuration setting can time out an IBM MQ connection.</p>
   - CLI Alias: `cache-timeout`
   - Range: `0`-`65535`
@@ -101,6 +104,7 @@ resource "datapower_mq_manager" "test" {
   - CLI Alias: `long-retry-interval`
   - Range: `1`-`65535`
   - Default value: `600`
+  - Not Valid When: `auto_retry`!=`true`
 - `maximum_message_size` (Number) Specify the maximum size in bytes of allowed messages. Enter a value that is equal to or greater than the <tt>MaxMsgLength</tt> attribute of the channel and of the queue on the IBM MQ server. Messages that are greater than this size are rejected. Enter a value in the range 1024 - 104857600.
   - CLI Alias: `maximum-message-size`
   - Range: `1024`-`104857600`
@@ -119,20 +123,24 @@ resource "datapower_mq_manager" "test" {
 - `permit_insecure_servers` (Boolean) When the configuration uses the TLS key repository, specify whether to permit connections to IBM MQ servers that do not support RFC 5746. Such servers are vulnerable to MITM attacks as documented in CVE-2009-3555. By default, insecure connections are rejected during the handshake.
   - CLI Alias: `permit-insecure-servers`
   - Default value: `false`
+  - Not Valid When: `ssl_key`=``
 - `q_mname` (String) Specify the name of the queue manager when the queue manager is not the default on the identified host.
   - CLI Alias: `queue-manager`
 - `reporting_interval` (Number) Specify the interval in seconds between error messages for failed connection attempts. This setting filters the generation of identical error messages to IBM MQ logging targets. The default value is 10.
   - CLI Alias: `reporting-interval`
   - Range: `1`-`65535`
   - Default value: `10`
+  - Not Valid When: `auto_retry`!=`true`
 - `retry_attempts` (Number) Specify the number of failed connection attempts. After the number is reached, the long interval is used. The default value is 6. When 0, the long retry interval is not used. The retry interval is used forever.
   - CLI Alias: `retry-attempts`
   - Range: `0`-`65535`
   - Default value: `6`
+  - Not Valid When: `auto_retry`!=`true`
 - `retry_interval` (Number) Specify the interval in seconds between failed connection attempts to the IBM MQ server. The default value is 10. This setting does not affect established connections.
   - CLI Alias: `retry-interval`
   - Range: `1`-`65535`
   - Default value: `10`
+  - Not Valid When: `auto_retry`!=`true`
 - `sharing_conversations` (Number) Specify the maximum number of conversations to share a single TCP connection. Enter a value in the range 1 - 5000. The default value is 1.
   - CLI Alias: `sharing-conversations`
   - Range: `1`-`5000`

@@ -154,11 +154,12 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 			},
 			"exclude_headers": models.GetDmMQHeadersResourceSchema("Specify the headers after MQMD to strip from the message. By default only the MQMD header is parsed.", "exclude-headers", "", false),
 			"concurrent_connections": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.", "concurrent-connections", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.", "concurrent-connections", "").AddIntegerRange(1, 65535).AddDefaultValue("1").AddNotValidWhen(models.MQv9PlusSourceProtocolHandlerConcurrentConnectionsIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQv9PlusSourceProtocolHandlerConcurrentConnectionsIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1),
 			},
@@ -190,10 +191,10 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Default: stringdefault.StaticString("None"),
 			},
 			"content_type_xpath": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression to extract Content-Type from IBM MQ header", "content-type-xpath", "").AddRequiredWhen(models.MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression to extract Content-Type from IBM MQ header", "content-type-xpath", "").AddRequiredWhen(models.MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal.String()).AddNotValidWhen(models.MQv9PlusSourceProtocolHandlerContentTypeXPathIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal, models.MQv9PlusSourceProtocolHandlerContentTypeXPathIgnoreVal, false),
 				},
 			},
 			"retrieve_backout_settings": schema.BoolAttribute{

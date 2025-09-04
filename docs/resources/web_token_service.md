@@ -47,6 +47,7 @@ resource "datapower_web_token_service" "test" {
   - Range: `10`-`250`
   - Default value: `25`
   - Required When: `debug_mode`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
@@ -54,11 +55,13 @@ resource "datapower_web_token_service" "test" {
 - `delay_errors` (Boolean) The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the appliance delays error messages for the defined duration. When disabled, the appliance does not delay error messages.
   - CLI Alias: `delay-errors`
   - Default value: `true`
+  - Not Valid When: `rewrite_errors`!=`true`
 - `delay_errors_duration` (Number) When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the appliance will not send error messages to the client until 3 seconds have elapsed since the appliance performed decryption on the requests. Enter any value in the range 250 - 300000. The default value is 1000.
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
   - Required When: (`delay_errors`=`true` AND `rewrite_errors`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `front_http_version` (String) Set the HTTP version for client-to-service connections. If the client submits an HTTP/1.0 request, the service on the DataPower appliance always replies with HTTP/1.0 compatible responses regardless of this setting. The default version is HTTP 1.1.
   - CLI Alias: `http-front-version`
@@ -121,13 +124,19 @@ Optional:
 - `ssl_server` (String) Specify the TLS server profile to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Required When: (`use_ssl`=`true` AND `ssl_server_config_type`=`server`)
+  - Not Valid When: attribute is not conditionally required
 - `ssl_server_config_type` (String) Specify the TLS profile type to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
+  - Required When: `use_ssl`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `ssl_sni_server` (String) Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Required When: (`use_ssl`=`true` AND `ssl_server_config_type`=`sni`)
+  - Not Valid When: attribute is not conditionally required
 - `use_ssl` (Boolean) Indicate whether to use the assigned TLS profile to control connections to this TCP port. When enabled, the service expects HTTPS requests on this port.
   - CLI Alias: `use-ssl`
   - Default value: `false`

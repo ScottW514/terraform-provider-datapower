@@ -129,15 +129,15 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-server", "ssl_server_profile").AddNotValidWhen(models.XSLProxyServiceSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-sni-server", "ssl_sni_server_profile").AddNotValidWhen(models.XSLProxyServiceSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-client", "ssl_client_profile").AddNotValidWhen(models.XSLProxyServiceSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -161,18 +161,18 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"remote_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.", "remote-ip-address", "").AddRequiredWhen(models.XSLProxyServiceRemoteAddressCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.", "remote-ip-address", "").AddRequiredWhen(models.XSLProxyServiceRemoteAddressCondVal.String()).AddNotValidWhen(models.XSLProxyServiceRemoteAddressIgnoreVal.String()).String,
 				Required:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.XSLProxyServiceRemoteAddressCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.XSLProxyServiceRemoteAddressCondVal, models.XSLProxyServiceRemoteAddressIgnoreVal, false),
 				},
 			},
 			"remote_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number to monitor. Used only when Type is static-backend.", "remote-port", "").AddIntegerRange(1, 65535).AddRequiredWhen(models.XSLProxyServiceRemotePortCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number to monitor. Used only when Type is static-backend.", "remote-port", "").AddIntegerRange(1, 65535).AddRequiredWhen(models.XSLProxyServiceRemotePortCondVal.String()).AddNotValidWhen(models.XSLProxyServiceRemotePortIgnoreVal.String()).String,
 				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
-					validators.ConditionalRequiredInt64(models.XSLProxyServiceRemotePortCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(models.XSLProxyServiceRemotePortCondVal, models.XSLProxyServiceRemotePortIgnoreVal, false),
 				},
 			},
 			"acl": schema.StringAttribute{
@@ -339,17 +339,17 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.XSLProxyServiceDebugHistoryCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.XSLProxyServiceDebugHistoryCondVal.String()).AddNotValidWhen(models.XSLProxyServiceDebugHistoryIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 250),
-					validators.ConditionalRequiredInt64(models.XSLProxyServiceDebugHistoryCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.XSLProxyServiceDebugHistoryCondVal, models.XSLProxyServiceDebugHistoryIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.", "debug-trigger", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.", "debug-trigger", "").AddNotValidWhen(models.XSLProxyServiceDebugTriggerIgnoreVal.String()).String,
 				NestedObject:        models.GetDmMSDebugTriggerTypeResourceSchema(),
 				Optional:            true,
 			},

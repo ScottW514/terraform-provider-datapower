@@ -100,7 +100,7 @@ func (r *PolicyAttachmentsResource) Schema(ctx context.Context, req resource.Sch
 				Default:             booldefault.StaticBool(false),
 			},
 			"ignored_policy_attachment_points": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Disable all policies attached by policy references at a configured attachment point leaving other policy references intact.", "ignore-attachment-point", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Disable all policies attached by policy references at a configured attachment point leaving other policy references intact.", "ignore-attachment-point", "").AddNotValidWhen(models.PolicyAttachmentsIgnoredPolicyAttachmentPointsIgnoreVal.String()).String,
 				NestedObject:        models.GetDmPolicyAttachmentPointResourceSchema(),
 				Optional:            true,
 			},

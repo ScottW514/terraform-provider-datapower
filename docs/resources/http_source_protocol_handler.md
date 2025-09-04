@@ -43,6 +43,7 @@ resource "datapower_http_source_protocol_handler" "test" {
 - `allow_web_socket_upgrade` (Boolean) Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.
   - CLI Alias: `websocket-upgrade`
   - Default value: `false`
+  - Not Valid When: `http_version`=`HTTP/1.0`
 - `allowed_features` (Attributes) Allowed methods and versions
   - CLI Alias: `allowed-features` (see [below for nested schema](#nestedatt--allowed_features))
 - `chunked_encoding` (Boolean) Specify whether to enable responses to use chunked transfer-encoding. By default, HTTP responses use <tt>Transfer-Encoding: chunked</tt> .
@@ -87,6 +88,7 @@ resource "datapower_http_source_protocol_handler" "test" {
   - CLI Alias: `max-header-name-len`
 - `max_persistent_connections_reuse` (Number) Specify the maximum number of times that a client can reuse a persistent connection. When this count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response, and the TCP connection is closed. The default value is 0, which means unlimited reuse.
   - CLI Alias: `max-persistent-reuse`
+  - Not Valid When: `persistent_connections`=`false`
 - `max_query_string_len` (Number) Specify the maximum length of the query string to allow in client requests. The query string is the portion of the URL after the ? character. The default value is 0, which indicates no limit.
   - CLI Alias: `max-querystring-len`
 - `max_total_hdr_len` (Number) Specify the maximum aggregate length of HTTP headers in bytes to allow. Enter a value in the range 5 - 128000. The default value is 128000.
@@ -108,6 +110,7 @@ resource "datapower_http_source_protocol_handler" "test" {
   - CLI Alias: `websocket-idle-timeout`
   - Range: `0`-`86400`
   - Required When: (`allow_web_socket_upgrade`=`true` AND `http_version`!=`HTTP/1.0`)
+  - Not Valid When: attribute is not conditionally required
 
 <a id="nestedatt--allowed_features"></a>
 ### Nested Schema for `allowed_features`

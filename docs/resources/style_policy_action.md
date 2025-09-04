@@ -41,250 +41,325 @@ resource "datapower_style_policy_action" "test" {
   - CLI Alias: `aaa-policy`
   - Reference to: `datapower_aaa_policy:id`
   - Required When: `type`=`aaa`
+  - Not Valid When: attribute is not conditionally required
 - `action_debug` (Boolean) Enable GatewayScript debug
   - CLI Alias: `debug`
   - Default value: `false`
+  - Not Valid When: `type`!=`gatewayscript`
 - `async_action` (List of String) Asynchronous actions
   - CLI Alias: `async-action`
+  - Not Valid When: `type`!=`event-sink`
 - `asynchronous` (Boolean) Specify whether to mark the action as asynchronous. When asynchronous, the action does not need to complete for the next action to start.
   - CLI Alias: `asynchronous`
   - Default value: `false`
+  - Not Valid When: `type`=`results-async`|`event-sink`|`method-rewrite`|`gatewayscript`|`jose-sign`|`jose-verify`|`jose-encrypt`|`jose-decrypt`
 - `attachment_uri` (String) Specify the attachment to strip. When omitted, all attachments are stripped from the context.
   - CLI Alias: `attachment-uri`
+  - Not Valid When: `type`!=`strip-attachments`
 - `checkpoint_event` (String) Event
   - CLI Alias: `event`
   - Choices: `Request`, `Response`, `Fault`, `AuthComplete`
   - Required When: `type`=`checkpoint`
+  - Not Valid When: attribute is not conditionally required
 - `condition` (Attributes List) Specify the conditions to check and action to run when a match is found A single condition maps an XPath expression to search for in the input context to an action to run when the condition is found. When no match is found, other conditions can be checked.
-  - CLI Alias: `condition` (see [below for nested schema](#nestedatt--condition))
+  - CLI Alias: `condition`
+  - Not Valid When: `type`!=`conditional` (see [below for nested schema](#nestedatt--condition))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `destination` (String) Specify the location of the resource, which might be either the source or the destination. Specify the location as either a URL or as a variable that expands to a URL.
   - CLI Alias: `destination`
   - Required When: `type`=`results-async`|`fetch`|`route-set`
+  - Not Valid When: `type`!=`results`|`log`
 - `dfdl_input_root_name` (String) Specify the root element in the DFDL model from which to start a parse. This property is only meaningful in the context of a DFDL parse. <p>For the input root name, specify the global xsd:element in the XSD file to use to begin the parsing of binary input. The input root name can be selected from the specified XSD file or specified as a variable. For a variable, it must resolve to a valid namespace URL with the name between braces ({}) as a prefix to the local part. For instance, if in the DFDL Schema, the target namespace is "http://example.com/messages" and the local element is &lt;xsd:element name="Message">...&lt;/xsd:element>, the variable must resolve to {http://example.com/messages}Message.</p><p>The schema author might specify the root parse element by using the ibmSchExtn:docRoot="true" element within the schema. For instance, &lt;xsd:element ibmSchExtn:docRoot="true" name="Message">...&lt;/xsd:element>. In this case, the input root name shows in the selection as the element name followed by (@ibmSchExtn:docRoot="true"). Use of another value for the DFDL input root name overrides the value that is specified in the schema.</p>
   - CLI Alias: `input-root-name`
+  - Not Valid When: (`type`!=`xformng` OR `input_language`!=`dfdl`)
 - `dynamic_schema` (String) Dynamic schema
   - CLI Alias: `dynamic-schema`
+  - Not Valid When: `type`!=`validate`
 - `dynamic_stylesheet` (String) Dynamic stylesheet
   - CLI Alias: `dynamic-stylesheet`
+  - Not Valid When: `type`!=`filter`|`route-action`|`xformpi`|`xformbin`|`xformng`|`xform`
 - `error_input` (String) Error input
   - CLI Alias: `error-input`
+  - Not Valid When: `type`!=`on-error`
 - `error_mode` (String) Error mode
   - CLI Alias: `error-mode`
   - Choices: `abort`, `continue`, `alternative`
   - Required When: `type`=`on-error`
+  - Not Valid When: attribute is not conditionally required
 - `error_output` (String) Error output
   - CLI Alias: `error-output`
+  - Not Valid When: `type`!=`on-error`
 - `gateway_script_location` (String) Specify the location of the GatewayScript file. The file location can be specified in one of the following formats. <ul><li>As a URL, where the file is in the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> directory.</li><li>As a context variable that expands to a URL, such as <tt>var://context/contextName/varName</tt> .</li><li>As a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context content runs as GatewayScript.</li></ul>
   - CLI Alias: `gatewayscript-location`
   - Required When: `type`=`gatewayscript`|`jose-sign`|`jose-verify`|`jose-encrypt`|`jose-decrypt`
+  - Not Valid When: attribute is not conditionally required
 - `input` (String) Specify the input context for the action, which identifies the context that contains the document to act. Enter the context name, the string <tt>PIPE</tt> for streaming mode, or the string <tt>INPUT</tt> to identify the original input of the policy rule.
   - CLI Alias: `input`
   - Required When: `type`!=`rewrite`|`route-set`|`on-error`|`method-rewrite`
+  - Not Valid When: attribute is not conditionally required
 - `input_conversion` (String) Input conversion
   - CLI Alias: `input-conversion`
   - Reference to: `datapower_http_input_conversion_map:id`
+  - Not Valid When: `type`!=`convert-http`
 - `input_descriptor` (String) Specify the input descriptor as understood according to the input language. <ul><li>When DFDL, the input descriptor must be a URL to a schema file that defines the input. The input descriptor can be a URL to a directory from which you can select a schema file a variable that resolves to a schema at run time.</li><li>When XML, do not specify an input descriptor.</li><li>When XSD, the input descriptor must be a URL to an XML schema.</li><li>When JSON, do not specify an input descriptor.</li></ul>
   - CLI Alias: `input-descriptor`
+  - Not Valid When: (`type`!=`xformng` OR `input_language`!=`xsd`|`dfdl`)
 - `input_language` (String) Input language
   - CLI Alias: `input-language`
   - Choices: `xml`, `dfdl`, `xsd`, `json`
   - Default value: `xml`
   - Required When: `type`=`xformng`
+  - Not Valid When: `type`!=`xformng`
 - `iterator_count` (Number) Specify the number of times to run the loop action. Enter a value in the range 1 - 32768.
   - CLI Alias: `iterator-count`
   - Range: `1`-`32768`
   - Required When: (`type`=`for-each` AND `iterator_type`=`COUNT`)
+  - Not Valid When: (`type`!=`for-each` OR `iterator_type`!=`COUNT`)
 - `iterator_expression` (String) XPath expression
   - CLI Alias: `iterator-expression`
   - Required When: (`type`=`for-each` AND `iterator_type`=`XPATH`)
+  - Not Valid When: (`type`!=`for-each` OR `iterator_type`!=`XPATH`)
 - `iterator_type` (String) Iterator type
   - CLI Alias: `iterator-type`
   - Choices: `XPATH`, `COUNT`
   - Default value: `XPATH`
   - Required When: `type`=`for-each`
+  - Not Valid When: `type`!=`for-each`
 - `jose_decrypt_type` (String) Identifier Type
   - CLI Alias: `jose-decrypt-type`
   - Choices: `identifiers`, `single-key`, `single-sskey`, `direct-key`
+  - Not Valid When: `type`!=`jose-decrypt`
 - `jose_serialization_type` (String) Serialization
   - CLI Alias: `serialization`
   - Choices: `compact`, `json`, `json_flat`
   - Required When: `type`=`jose-sign`|`jose-encrypt`
+  - Not Valid When: attribute is not conditionally required
 - `jose_verify_type` (String) Identifier type
   - CLI Alias: `jose-verify-type`
   - Choices: `identifiers`, `single-cert`, `single-sskey`
+  - Not Valid When: `type`!=`jose-verify`
 - `json_schema_url` (String) Specify the JSON schema for JSON document validation. Identify the schema with one of the following formats. <ul><li>Use a URL, for example, <tt>local:///valHigh.jsv</tt></li><li>Use a context variable that expands to a URL, for example, <tt>var://context/contextName/varName</tt></li><li>Use a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context runs as a JSON schema validation.</li></ul>
   - CLI Alias: `json-schema-url`
+  - Not Valid When: `type`!=`validate`
 - `jwe_direct_key_object` (String) Direct Key
   - CLI Alias: `direct-key`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: (`type`=`jose-decrypt` AND `jose_decrypt_type`=`direct-key`)
+  - Not Valid When: attribute is not conditionally required
 - `jwe_enc_algorithm` (String) Algorithm
   - CLI Alias: `jwe-enc`
   - Choices: `A128CBC-HS256`, `A192CBC-HS384`, `A256CBC-HS512`, `A128GCM`, `A192GCM`, `A256GCM`
   - Required When: `type`=`jose-encrypt`
+  - Not Valid When: attribute is not conditionally required
 - `jwe_header_object` (String) JWE Header
   - CLI Alias: `jwe-header`
   - Reference to: `datapower_jwe_header:id`
   - Required When: `type`=`jose-encrypt`
+  - Not Valid When: attribute is not conditionally required
 - `jws_signature_object` (String) Signature
   - CLI Alias: `jws-signature`
   - Reference to: `datapower_jws_signature:id`
   - Required When: `type`=`jose-sign`
+  - Not Valid When: attribute is not conditionally required
 - `jws_verify_strip_signature` (Boolean) Strip Signature
   - CLI Alias: `strip-signature`
   - Default value: `true`
+  - Not Valid When: `type`!=`jose-verify`
 - `log_level` (String) Log level
   - CLI Alias: `log-level`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Required When: `type`=`log`
+  - Not Valid When: attribute is not conditionally required
 - `log_type` (String) Log type
   - CLI Alias: `log-type`
   - Reference to: `datapower_log_label:id`
   - Required When: `type`=`log`
+  - Not Valid When: attribute is not conditionally required
 - `loop_action` (String) Loop action
   - CLI Alias: `loop-action`
   - Required When: `type`=`for-each`
+  - Not Valid When: attribute is not conditionally required
 - `method_rewrite_type` (String) Method
   - CLI Alias: `http-method`
   - Choices: `POST`, `GET`, `PUT`, `PATCH`, `DELETE`, `HEAD`
   - Default value: `GET`
   - Required When: `type`=`method-rewrite`|`fetch`
+  - Not Valid When: `type`!=`method-rewrite`|`fetch`
 - `method_type` (String) Method
   - CLI Alias: `http-method-limited`
   - Choices: `POST`, `GET`, `PUT`, `PATCH`, `DELETE`, `HEAD`
   - Default value: `POST`
   - Required When: (`type`=`results-async` OR (`type`=`results` AND `destination`!=``))
+  - Not Valid When: (`type`!=`results`|`results-async` OR (`type`=`results` AND `destination`=``))
 - `method_type2` (String) Method
   - CLI Alias: `http-method-limited2`
   - Choices: `POST`, `GET`, `PUT`, `PATCH`, `DELETE`, `HEAD`
   - Default value: `POST`
   - Required When: `type`=`log`
+  - Not Valid When: `type`!=`log`
 - `multiple_outputs` (Boolean) Specify whether to place parallel outputs into separate contexts. A results action can target several targets simultaneously by specifying a variable that contains an XML nodeset as the results target. <ul><li>When enabled, the context for the output context is ignored. The status of the individual attempts to reach the targets are recorded in separate contexts by appending a number. For example, the resultant context name is <tt>ctx_1</tt> for the <tt>ctx</tt> context name.</li><li>When not enabled, only one result is kept. <ul><li>In require-all mode, keep the first target that failed and has no remaining attempts or the last target to succeed.</li><li>In attempt-all mode, the last target attempted.</li><li>In first-available mode, the first target to succeed or the last to fail.</li></ul></li></ul>
   - CLI Alias: `multiple-outputs`
   - Default value: `false`
+  - Not Valid When: (`type`!=`results`|`for-each` OR (`type`=`results` AND `destination`=``))
 - `named_in_out_location_type` (String) Specify how to locate named inputs and outputs. Use values that are appropriate for your Transformation Extender configuration.
   - CLI Alias: `named-inouts`
   - Choices: `default`, `explicit`, `dynamic`, `interop`
   - Default value: `default`
+  - Not Valid When: `type`!=`xformbin`
 - `named_inputs` (Attributes List) Named inputs
-  - CLI Alias: `named-input` (see [below for nested schema](#nestedatt--named_inputs))
+  - CLI Alias: `named-input`
+  - Not Valid When: (`named_in_out_location_type`!=`explicit` AND `type`!=`xformbin`) (see [below for nested schema](#nestedatt--named_inputs))
 - `named_outputs` (Attributes List) Named outputs
-  - CLI Alias: `named-output` (see [below for nested schema](#nestedatt--named_outputs))
+  - CLI Alias: `named-output`
+  - Not Valid When: (`named_in_out_location_type`!=`explicit` AND `type`!=`xformbin`) (see [below for nested schema](#nestedatt--named_outputs))
 - `no_transcode_utf8` (Boolean) Specify whether the output from the convert action retains the input encoding or uses ISO 8859-1. An encoding is also known as a character set. For illustrative purposes, assume UTF-8 is the input encoding. <ul><li>When enabled and the input encoding is UTF-8, the output is UTF-8.</li><li>When not enabled and the input encoding is UTF-8, the output is ISO 8859-1. This behavior is the default behavior.</li></ul>
   - CLI Alias: `charset-transparency`
   - Default value: `false`
+  - Not Valid When: `type`!=`convert-http`
 - `output` (String) Specify the output context for the action, which identifies the context that receives the document when the action completes. Enter the context name, the string <tt>PIPE</tt> for streaming mode, or the string <tt>OUTPUT</tt> to identify the final output of the policy rule.
   - CLI Alias: `output`
   - Required When: `type`=`xformpi`|`xformbin`|`xformng`|`cryptobin`|`xform`|`convert-http`|`fetch`|`extract`|`call`|`gatewayscript`|`jose-sign`|`jose-verify`|`jose-encrypt`|`jose-decrypt`
+  - Not Valid When: `type`=`results-async`|`setvar`|`rewrite`|`route-set`|`strip-attachments`|`on-error`|`checkpoint`|`conditional`|`event-sink`|`method-rewrite`
 - `output_descriptor` (String) Specify the output descriptor as understood by the output language. When DFDL, the output descriptor must be a URL to a DFDL schema to serialize the output.
   - CLI Alias: `output-descriptor`
+  - Not Valid When: (`type`!=`xformng` OR `output_language`!=`dfdl`)
 - `output_language` (String) Output language
   - CLI Alias: `output-language`
   - Choices: `default`, `dfdl`
   - Default value: `default`
+  - Not Valid When: `type`!=`xformng`
 - `output_type` (String) Output type
   - CLI Alias: `output-type`
   - Choices: `default`, `binary`, `xml`
+  - Not Valid When: `type`!=`xformpi`|`xformbin`|`xformng`|`xform`|`results`|`log`|`fetch`
 - `parse_metrics_result_location` (String) Parse metrics result location
   - CLI Alias: `parse-settings-result-location`
   - Required When: (`type`=`parse` AND `parse_metrics_result_type`!=`none`)
+  - Not Valid When: `type`!=`parse`
 - `parse_metrics_result_type` (String) Parse metrics result type
   - CLI Alias: `parse-settings-result-type`
   - Choices: `none`, `xml`, `json`, `graphql`
   - Default value: `none`
+  - Not Valid When: `type`!=`parse`
 - `parse_settings_reference` (Attributes) Specify the configuration that defines the constraints against the documents to parse. Use any or all of the following ways to define the constraints. <ul><li>Specify a URL reference from which to retrieve the constraints definition.</li><li>Specify a literal configuration string in XML or JSON format that contains the constraints definition.</li><li>Specify an instance of the parse settings configuration object to retrieve constraints definition.</li></ul><p>Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method.</p>
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--parse_settings_reference))
 - `policy` (String) URL rewrite policy
   - CLI Alias: `urlrewrite-policy`
   - Reference to: `datapower_url_rewrite_policy:id`
   - Required When: `type`=`rewrite`
+  - Not Valid When: `type`!=`validate`|`xformpi`|`xformbin`|`xformng`|`xform`
 - `policy_key` (String) <b>Do not modify this value.</b> The DataPower Gateway uses this identifier to store the output from the action. The output can be used for external monitoring.
   - CLI Alias: `policy-key`
 - `recipient_identifier` (List of String) Recipient Identifiers
   - CLI Alias: `recipient-identifier`
   - Reference to: `datapower_jose_recipient_identifier:id`
   - Required When: (`type`=`jose-decrypt` AND `jose_decrypt_type`=`identifiers`)
+  - Not Valid When: attribute is not conditionally required
 - `results_mode` (String) Specify the processing mode for multiple targets. The default behavior, is first available.
   - CLI Alias: `results-mode`
   - Choices: `first-available`, `require-all`, `attempt-all`
   - Default value: `first-available`
+  - Not Valid When: `type`!=`results`|`results-async`
 - `retry_count` (Number) Specify the number of connection attempts. The default value is 0, which indicates that the operation fails immediately if the connection fails.
   - CLI Alias: `retry-count`
+  - Not Valid When: `type`!=`results`|`results-async`
 - `retry_interval` (Number) Specify the duration between connection attempts in milliseconds. The default value is 1000.
   - CLI Alias: `retry-interval`
   - Default value: `1000`
+  - Not Valid When: `type`!=`results`|`results-async`
 - `rule` (String) Processing rule
   - CLI Alias: `rule`
   - Required When: `type`=`call`
+  - Not Valid When: `type`!=`on-error`
 - `schema_url` (String) Specify XML schema for document validation regardless of any <tt>xsi:schemaLocation</tt> attributes contained with the document. Identify the schema with one of the following formats. <ul><li>Use a URL, for example, <tt>store:///valHigh.xsd</tt></li><li>Use a context variable that expands to a URL, for example, <tt>var://context/contextName/varName</tt></li><li>Use a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context runs as a schema validation.</li></ul>
   - CLI Alias: `schema-url`
+  - Not Valid When: `type`!=`validate`
 - `signature_identifier` (List of String) Signature Identifiers
   - CLI Alias: `signature-identifier`
   - Reference to: `datapower_jose_signature_identifier:id`
   - Required When: (`type`=`jose-verify` AND `jose_verify_type`=`identifiers`)
+  - Not Valid When: attribute is not conditionally required
 - `single_certificate` (String) Certificate
   - CLI Alias: `single-cert`
   - Reference to: `datapower_crypto_certificate:id`
   - Required When: (`type`=`jose-verify` AND `jose_verify_type`=`single-cert`)
+  - Not Valid When: attribute is not conditionally required
 - `single_key` (String) Private Key
   - CLI Alias: `single-key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: (`type`=`jose-decrypt` AND `jose_decrypt_type`=`single-key`)
+  - Not Valid When: attribute is not conditionally required
 - `single_sskey` (String) Shared Secret Key
   - CLI Alias: `single-sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: ((`type`=`jose-decrypt` AND `jose_decrypt_type`=`single-sskey`) OR (`type`=`jose-verify` AND `jose_verify_type`=`single-sskey`))
+  - Not Valid When: attribute is not conditionally required
 - `slm_policy` (String) SLM policy
   - CLI Alias: `slm`
   - Required When: `type`=`slm`
+  - Not Valid When: attribute is not conditionally required
 - `soap_validation` (String) Specify which parts of the SOAP message to validate. This setting does not affect the validation of the input context to ensure that it is a valid document.
   - CLI Alias: `soap-validation`
   - Choices: `body`, `body-or-detail`, `ignore-faults`, `envelope`
   - Default value: `body`
+  - Not Valid When: (`type`!=`validate` OR `wsdl_url`!=``)
 - `sql_data_source` (String) SQL Data Source
   - CLI Alias: `sql-source`
   - Reference to: `datapower_sql_data_source:id`
   - Required When: `type`=`sql`
+  - Not Valid When: attribute is not conditionally required
 - `sql_source_type` (String) SQL input method
   - CLI Alias: `sql-source-type`
   - Choices: `static`, `variable`, `stylesheet`, `static_internal`
   - Default value: `static`
   - Required When: `type`=`sql`
+  - Not Valid When: `type`!=`sql`
 - `sql_text` (String) SQL text
   - CLI Alias: `sql-text`
   - Required When: (`sql_source_type`=`static` AND `type`=`sql`)
+  - Not Valid When: (`type`!=`sql` OR `sql_source_type`=`stylesheet`|`variable`)
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: `type`!=`route-set`
 - `ssl_client_cred` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: (`type`!=`route-set` OR `ssl_client_config_type`!=`client`)
 - `stylesheet_parameters` (Attributes List) Stylesheet parameters
-  - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--stylesheet_parameters))
+  - CLI Alias: `parameter`
+  - Not Valid When: `type`!=`filter`|`route-action`|`xformpi`|`xformbin`|`xformng`|`cryptobin`|`xform`|`gatewayscript` (see [below for nested schema](#nestedatt--stylesheet_parameters))
 - `timeout` (Number) Specify the duration to wait for asynchronous actions to complete in milliseconds. After this period, an error is logged. A value of 0 indicates to wait forever.
   - CLI Alias: `timeout`
+  - Not Valid When: `type`!=`event-sink`
 - `transactional` (Boolean) Transactional
   - CLI Alias: `transactional`
   - Default value: `false`
+  - Not Valid When: `type`!=`results`|`results-async`
 - `transform` (String) Specify the location of the XSL stylesheet or transform file. The location uses one of the following formats. <ul><li>Use a URL, for example, <tt>store:///myTest.xsl</tt></li><li>Use a context variable that expands to a URL, for example, <tt>var://context/contextName/varName</tt></li><li>Use a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context runs as a stylesheet.</li></ul>
   - CLI Alias: `transform`
   - Required When: (`type`=`filter`|`cryptobin` OR (`type`=`xformng` AND `transform_language`!=`none`))
+  - Not Valid When: ((`type`=`xformng` AND `transform_language`=`none`) OR `type`!=`route-action`|`xformpi`|`xformbin`|`xformng`|`xform`|`sql`)
 - `transform_language` (String) Transform language
   - CLI Alias: `transform-language`
   - Choices: `none`, `xquery`
   - Default value: `none`
   - Required When: `type`=`xformng`
+  - Not Valid When: `type`!=`xformng`
 - `tx_audit_log` (String) ITX audit log
   - CLI Alias: `tx-audit-log`
+  - Not Valid When: (`type`!=`xformbin` OR `tx_mode`!=`dpa`)
 - `tx_map` (String) Specify the location of the Transformation Extender map file. The generated map file is either on the DataPower Gateway or on a remote HTTP or HTTPS server. Use one of the following formats. <ul><li>When the file is local, use &lt;directory>:///&lt;file></li><li>When the file is remote, use HTTP://&lt;path_qualified_file> or HTTPS://&lt;path_qualified_file></li></ul>
   - CLI Alias: `tx-map`
+  - Not Valid When: `type`!=`xformbin`
 - `tx_mode` (String) Specify the Transformation Extender mode to run the map. DPA is the only mode.
   - CLI Alias: `tx-mode`
   - Choices: `default`, `no-map`, `dpa`
+  - Not Valid When: `type`!=`xformbin`
 - `tx_top_level_map` (String) Specify the name of the Transformation Extender map in the map file. A map file can contain more than one map. When not specified, the transform uses the first map in the file.
   - CLI Alias: `tx-tlm`
+  - Not Valid When: (`type`!=`xformbin` OR `tx_mode`=`dpa`)
 - `type` (String) Action type
   - CLI Alias: `type`
   - Choices: `validate`, `filter`, `route-action`, `aaa`, `xformpi`, `xformbin`, `cryptobin`, `xform`, `convert-http`, `log`, `results`, `results-async`, `setvar`, `fetch`, `extract`, `rewrite`, `route-set`, `strip-attachments`, `call`, `on-error`, `checkpoint`, `slm`, `quota-enforcement`, `sql`, `conditional`, `for-each`, `event-sink`, `method-rewrite`, `xformng`, `gatewayscript`, `jose-sign`, `jose-verify`, `jose-encrypt`, `jose-decrypt`, `parse`
@@ -293,20 +368,28 @@ resource "datapower_style_policy_action" "test" {
   - CLI Alias: `summary`
 - `value` (String) Specify the variable value. The value can be a number, a string, or another variable URL.
   - CLI Alias: `value`
+  - Not Valid When: `type`!=`setvar`
 - `variable` (String) Specify the variable URL in one of the following formats. <ul><li>var://context/CONTEXT-NAME/VAR-NAME <p>This format is the primary way to reference variables. var://context/CONTEXT-NAME/_roottree is a special variable that holds the value of the context when used as input to an action. var://context/CONTEXT-NAME (or var://context/CONTEXT-NAME/) is treated as shorthand for var://context/CONTEXT-NAME/_roottree.</p></li><li>var://local/VAR-NAME <p>This format can be used to reference variables in the input or output context. Because this reference is context-sensitive, The use of var://context/CONTEXT-NAME/VAR-NAME is recommended.</p></li><li>var://system/CONTEXT-NAME/VAR-NAME <p>This format is used to reference global variables. These variables are rarely used.</p></li><li>var://service/SERVICE-NAME <p>This format is used to reference certain internal state variables. These variables are defined by the firmware.</p></li></ul>
   - CLI Alias: `variable`
+  - Not Valid When: (`type`!=`extract`|`setvar`|`sql` OR (`type`=`sql` AND `sql_source_type`!=`variable`))
 - `wsdl_attachment_part` (String) Specify the name of the WSDL message part that defines the content of a MIME attachment (mime:content/@part) to validate. The value must be the unqualified name of the message part. The name is the same as the part attribute on the corresponding <tt>mime:content</tt> component in the WSDL file. When not defined or <tt>*</tt> , the root MIME part is validated. The root MIME part is bound to a <tt>soap:body</tt> .
   - CLI Alias: `wsdl-attachment-part`
+  - Not Valid When: `type`!=`validate`
 - `wsdl_message_direction_or_name` (String) Specify the name or direction of the WSDL input, output, or fault that defines the service traffic to validate. Use one of the following values. <ul><li>The name of one or more WSDL input, output, or fault components.</li><ul><li><tt><i>operation</i> Request</tt> for a specific request.</li><li><tt><i>operation</i> Response"</tt> for a specific response.</li><li>The value of the <tt>name</tt> attribute for the <tt>&lt;fault></tt> element.</li></ul><li><tt>#input</tt> for the request direction in the WSDL file.</li><li><tt>#output</tt> for the response direction in the WSDL file.</li><li><tt>*</tt> for all inputs, outputs, and faults in the WSDL file.</li></ul><p>When specified and not <tt>*</tt> , only messages that are defined for inputs, outputs, and faults that match the specified name or direction are considered valid. Faults are considered valid for the response direction.</p>
   - CLI Alias: `wsdl-message-direction-or-name`
+  - Not Valid When: `type`!=`validate`
 - `wsdl_operation_name` (String) Specify the name of the WSDL operation that defines the service traffic to validate. The value must be the unqualified name of the operation or <tt>*</tt> for all operations. When specified and not <tt>*</tt> , only messages that are defined for operations that match the specified name are considered valid.
   - CLI Alias: `wsdl-operation`
+  - Not Valid When: `type`!=`validate`
 - `wsdl_port_q_name` (String) Specify the QName of the WSDL port that defines the service traffic to validate. The value must be a QName in the <tt>{namespace-uri}local-part</tt> format or <tt>*</tt> for all ports. When specified and not <tt>*</tt> , only messages that are defined for the named port are considered valid.
   - CLI Alias: `wsdl-port`
+  - Not Valid When: `type`!=`validate`
 - `wsdl_url` (String) Specify the URL of the WSDL file that defines the operations to use during the validate action. The WSDL file can reside on the local system or on the network. By default, the WSDL validation always applies to the entire input message, which can be modified by compile options on the XML manager. <p>Identify the WSDL with one of the following formats.</p><ul><li>Use a URL, for example, <tt>local:///myTest.wsdl</tt></li><li>Use a context variable that expands to a URL, for example, <tt>var://context/contextName/varName</tt></li><li>Use a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The context runs as a WSDL validation.</li></ul>
   - CLI Alias: `wsdl-url`
+  - Not Valid When: `type`!=`validate`
 - `xpath` (String) Specify the XPath expression to apply to the input context. Enter the XPath expression or a variable in the <tt>var://context/name</tt> format that expands to an XPath expression.
   - CLI Alias: `xpath`
+  - Not Valid When: `type`!=`extract`
 
 <a id="nestedatt--condition"></a>
 ### Nested Schema for `condition`

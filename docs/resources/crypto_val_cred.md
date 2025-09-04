@@ -44,15 +44,19 @@ resource "datapower_crypto_val_cred" "test" {
   - CLI Alias: `crldp`
   - Choices: `ignore`, `require`
   - Default value: `ignore`
+  - Not Valid When: `use_crl`=`false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `explicit_policy` (Boolean) Specify support for the initial explicit policy variable as defined by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty policy tree. Otherwise, the algorithm can end with an empty policy tree unless policy constraint extensions in the chain require an explicit policy.
   - CLI Alias: `explicit-policy`
   - Default value: `false`
+  - Not Valid When: `cert_validation_mode`!=`pkix`
 - `initial_policy_set` (List of String) Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>
   - CLI Alias: `initial-policy-set`
+  - Not Valid When: `cert_validation_mode`!=`pkix`
 - `require_crl` (Boolean) Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.
   - CLI Alias: `require-crl`
   - Default value: `false`
+  - Not Valid When: `use_crl`=`false`
 - `use_crl` (Boolean) Specify whether to check certificate revocation lists (CRLs) during certificate validation. When enabled, CRLs are checked. Otherwise, CRLs are not checked.
   - CLI Alias: `use-crl`
   - Default value: `true`

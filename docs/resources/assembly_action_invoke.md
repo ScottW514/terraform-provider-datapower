@@ -53,6 +53,7 @@ resource "datapower_assembly_action_invoke" "test" {
 - `cache_unsafe_response` (Boolean) Specify whether to cache responses to POST and PUT requests when the cache policy type is set to time to live. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.
   - CLI Alias: `cache-unsafe-response`
   - Default value: `false`
+  - Not Valid When: `cache_type`!=`TimeToLive`
 - `compression` (Boolean) Enable compression
   - CLI Alias: `compression`
   - Default value: `false`
@@ -78,6 +79,7 @@ resource "datapower_assembly_action_invoke" "test" {
   - Choices: `detect`, `graphql`, `json`
   - Default value: `detect`
   - Required When: (`method`=`Keep`|`POST` AND `backend_type`=`detect`|`graphql`)
+  - Not Valid When: (`method`!=`Keep`|`POST` OR `backend_type`!=`detect`|`graphql`)
 - `header_control_list` (String) Specify the control list that uses headers to accept or reject requests. By default, accepts all requests with headers.
   - CLI Alias: `header-control-list`
   - Reference to: `datapower_control_list:id`
@@ -85,6 +87,7 @@ resource "datapower_assembly_action_invoke" "test" {
 - `http2_required` (Boolean) Specify whether an HTTP/2 connection is required when connecting to the server. Only applicable when the HTTP version to the server is set to HTTP/2 and the connection uses TLS. The default value is off.
   - CLI Alias: `http2-required`
   - Default value: `false`
+  - Not Valid When: `http_version`!=`HTTP/2`
 - `http_version` (String) Specify the HTTP version for server-side connections. The default value is HTTP/1.1.
   - CLI Alias: `http-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`, `HTTP/2`
@@ -124,6 +127,7 @@ resource "datapower_assembly_action_invoke" "test" {
   - CLI Alias: `ttl`
   - Default value: `900`
   - Required When: `cache_type`=`TimeToLive`
+  - Not Valid When: `cache_type`!=`TimeToLive`
 - `timeout` (Number) Specify the duration in seconds to wait for a reply from the target. The default value is 60.
   - CLI Alias: `timeout`
   - Default value: `60`

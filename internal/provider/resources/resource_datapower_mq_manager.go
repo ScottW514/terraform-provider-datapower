@@ -185,23 +185,25 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: int64default.StaticInt64(0),
 			},
 			"automatic_backout": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable automatic routing of undeliverable messages, which is the automatic backout of poison messages. A poison message is any message that the receiving application does not know how to process.</p><p>Usually an application rolls back the get of this message, which leaves the message on the input queue. However, the backout count ( <tt>MQMD.Backoutcount</tt> ) is incremented. As the queue manager continues to re-get the message, the backout count continues to increase. When the backout count exceeds the backout threshold, the queue manager moves the message to the backout queue.</p><p>When disabled, the poison message remains on the get queue and continues to be reprocessed by the client until the server queue manager that manages the get queue removes it or the client reroutes the offending message. The message can be rerouted by a custom stylesheet in the request rule.</p>", "automatic-backout", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable automatic routing of undeliverable messages, which is the automatic backout of poison messages. A poison message is any message that the receiving application does not know how to process.</p><p>Usually an application rolls back the get of this message, which leaves the message on the input queue. However, the backout count ( <tt>MQMD.Backoutcount</tt> ) is incremented. As the queue manager continues to re-get the message, the backout count continues to increase. When the backout count exceeds the backout threshold, the queue manager moves the message to the backout queue.</p><p>When disabled, the poison message remains on the get queue and continues to be reprocessed by the client until the server queue manager that manages the get queue removes it or the client reroutes the offending message. The message can be rerouted by a custom stylesheet in the request rule.</p>", "automatic-backout", "").AddDefaultValue("false").AddNotValidWhen(models.MQManagerAutomaticBackoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"backout_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the total number of processing attempts. After all attempts fail, the following actions occur. <ul><li>The poison message is moved to the backout queue.</li><li>The unit of work that contains this message is committed.</li></ul><p>Enter a value that is equal to or greater than 1.</p>", "backout-threshold", "").AddIntegerRange(1, 65535).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the total number of processing attempts. After all attempts fail, the following actions occur. <ul><li>The poison message is moved to the backout queue.</li><li>The unit of work that contains this message is committed.</li></ul><p>Enter a value that is equal to or greater than 1.</p>", "backout-threshold", "").AddIntegerRange(1, 65535).AddNotValidWhen(models.MQManagerBackoutThresholdIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerBackoutThresholdIgnoreVal, false),
 				},
 			},
 			"backout_queue_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the queue for undeliverable messages. This queue contains messages that exceeded the backout threshold. This queue must be managed by the same queue manager on the IBM MQ server as the defined GET queue. The backout queue, typically <tt>SYSTEM.DEAD.LETTER.QUEUE</tt> contains messages that cannot be processed or delivered.", "backout-queue", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the queue for undeliverable messages. This queue contains messages that exceeded the backout threshold. This queue must be managed by the same queue manager on the IBM MQ server as the defined GET queue. The backout queue, typically <tt>SYSTEM.DEAD.LETTER.QUEUE</tt> contains messages that cannot be processed or delivered.", "backout-queue", "").AddNotValidWhen(models.MQManagerBackoutQueueNameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 48),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.MQManagerBackoutQueueNameIgnoreVal, false),
 				},
 			},
 			"total_connection_limit": schema.Int64Attribute{
@@ -236,7 +238,7 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 			},
 			"permit_insecure_servers": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When the configuration uses the TLS key repository, specify whether to permit connections to IBM MQ servers that do not support RFC 5746. Such servers are vulnerable to MITM attacks as documented in CVE-2009-3555. By default, insecure connections are rejected during the handshake.", "permit-insecure-servers", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When the configuration uses the TLS key repository, specify whether to permit connections to IBM MQ servers that do not support RFC 5746. Such servers are vulnerable to MITM attacks as documented in CVE-2009-3555. By default, insecure connections are rejected during the handshake.", "permit-insecure-servers", "").AddDefaultValue("false").AddNotValidWhen(models.MQManagerPermitInsecureServersIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -270,38 +272,42 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(true),
 			},
 			"retry_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between failed connection attempts to the IBM MQ server. The default value is 10. This setting does not affect established connections.", "retry-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between failed connection attempts to the IBM MQ server. The default value is 10. This setting does not affect established connections.", "retry-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("10").AddNotValidWhen(models.MQManagerRetryIntervalIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerRetryIntervalIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(10),
 			},
 			"retry_attempts": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of failed connection attempts. After the number is reached, the long interval is used. The default value is 6. When 0, the long retry interval is not used. The retry interval is used forever.", "retry-attempts", "").AddIntegerRange(0, 65535).AddDefaultValue("6").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of failed connection attempts. After the number is reached, the long interval is used. The default value is 6. When 0, the long retry interval is not used. The retry interval is used forever.", "retry-attempts", "").AddIntegerRange(0, 65535).AddDefaultValue("6").AddNotValidWhen(models.MQManagerRetryAttemptsIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerRetryAttemptsIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(6),
 			},
 			"long_retry_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the long retry interval in seconds for failed connections. The long retry interval is used after the number of retry attempts is reached. The default value is 600. The long retry interval must be greater than the retry interval.", "long-retry-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the long retry interval in seconds for failed connections. The long retry interval is used after the number of retry attempts is reached. The default value is 600. The long retry interval must be greater than the retry interval.", "long-retry-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("600").AddNotValidWhen(models.MQManagerLongRetryIntervalIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerLongRetryIntervalIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(600),
 			},
 			"reporting_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between error messages for failed connection attempts. This setting filters the generation of identical error messages to IBM MQ logging targets. The default value is 10.", "reporting-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between error messages for failed connection attempts. This setting filters the generation of identical error messages to IBM MQ logging targets. The default value is 10.", "reporting-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("10").AddNotValidWhen(models.MQManagerReportingIntervalIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerReportingIntervalIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(10),
 			},

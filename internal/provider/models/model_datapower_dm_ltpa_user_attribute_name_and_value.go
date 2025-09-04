@@ -82,11 +82,11 @@ func GetDmLTPAUserAttributeNameAndValueDataSourceSchema() DataSourceSchema.Neste
 				Computed:            true,
 			},
 			"ltpa_user_attribute_static_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").AddNotValidWhen(DmLTPAUserAttributeNameAndValueLTPAUserAttributeStaticValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"ltpa_user_attribute_xpath_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").AddNotValidWhen(DmLTPAUserAttributeNameAndValueLTPAUserAttributeXPathValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -108,11 +108,11 @@ func GetDmLTPAUserAttributeNameAndValueResourceSchema() ResourceSchema.NestedAtt
 				},
 			},
 			"ltpa_user_attribute_static_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").AddNotValidWhen(DmLTPAUserAttributeNameAndValueLTPAUserAttributeStaticValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ltpa_user_attribute_xpath_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").AddNotValidWhen(DmLTPAUserAttributeNameAndValueLTPAUserAttributeXPathValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 		},

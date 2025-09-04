@@ -99,10 +99,10 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.", "password-alias", "password_alias").AddRequiredWhen(models.SQLDataSourcePasswordAliasCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.", "password-alias", "password_alias").AddRequiredWhen(models.SQLDataSourcePasswordAliasCondVal.String()).AddNotValidWhen(models.SQLDataSourcePasswordAliasIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SQLDataSourcePasswordAliasCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SQLDataSourcePasswordAliasCondVal, models.SQLDataSourcePasswordAliasIgnoreVal, false),
 				},
 			},
 			"data_source_id": schema.StringAttribute{
@@ -124,11 +124,12 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(false),
 			},
 			"limit_returned_data_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the limit in KB on returned data from a <b>SELECT</b> statement. The default value is 128.", "limit-size", "").AddIntegerRange(1, 65535).AddDefaultValue("128").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the limit in KB on returned data from a <b>SELECT</b> statement. The default value is 128.", "limit-size", "").AddIntegerRange(1, 65535).AddDefaultValue("128").AddNotValidWhen(models.SQLDataSourceLimitReturnedDataSizeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SQLDataSourceLimitReturnedDataSizeIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(128),
 			},
@@ -147,12 +148,12 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: int64default.StaticInt64(10),
 			},
 			"oracle_data_source_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Data source type - Oracle", "oracle-datasource-type", "").AddStringEnum("SID", "ServiceName").AddDefaultValue("SID").AddRequiredWhen(models.SQLDataSourceOracleDataSourceTypeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Data source type - Oracle", "oracle-datasource-type", "").AddStringEnum("SID", "ServiceName").AddDefaultValue("SID").AddRequiredWhen(models.SQLDataSourceOracleDataSourceTypeCondVal.String()).AddNotValidWhen(models.SQLDataSourceOracleDataSourceTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("SID", "ServiceName"),
-					validators.ConditionalRequiredString(models.SQLDataSourceOracleDataSourceTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.SQLDataSourceOracleDataSourceTypeCondVal, models.SQLDataSourceOracleDataSourceTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("SID"),
 			},
@@ -173,69 +174,70 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             int64default.StaticInt64(180),
 			},
 			"load_balancing": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable Db2 workload balancing and automatic client reroute for Db2 for z/OS. <p>When enabled, this feature set uses the z/OS Sysplex Distributor for real-time load distribution of SQL calls to the sysplex-aware Db2 instance.</p><p>When enabled, you must specify the sysplex DVIPA as the data source host.</p>", "load-balancing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable Db2 workload balancing and automatic client reroute for Db2 for z/OS. <p>When enabled, this feature set uses the z/OS Sysplex Distributor for real-time load distribution of SQL calls to the sysplex-aware Db2 instance.</p><p>When enabled, you must specify the sysplex DVIPA as the data source host.</p>", "load-balancing", "").AddDefaultValue("false").AddNotValidWhen(models.SQLDataSourceLoadBalancingIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"encryption_method_mssql": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.", "mssql-encryption-method", "").AddStringEnum("NoEncryption", "SSL", "RequestSSL", "LoginSSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodMSSQLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.", "mssql-encryption-method", "").AddStringEnum("NoEncryption", "SSL", "RequestSSL", "LoginSSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodMSSQLCondVal.String()).AddNotValidWhen(models.SQLDataSourceEncryptionMethodMSSQLIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL", "RequestSSL", "LoginSSL"),
-					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodMSSQLCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodMSSQLCondVal, models.SQLDataSourceEncryptionMethodMSSQLIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("NoEncryption"),
 			},
 			"encryption_method_oracle": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "oracle-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodOracleCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "oracle-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodOracleCondVal.String()).AddNotValidWhen(models.SQLDataSourceEncryptionMethodOracleIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL"),
-					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodOracleCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodOracleCondVal, models.SQLDataSourceEncryptionMethodOracleIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("NoEncryption"),
 			},
 			"encryption_method_db2": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an IBM Db2 database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "db2-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodDB2CondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an IBM Db2 database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "db2-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodDB2CondVal.String()).AddNotValidWhen(models.SQLDataSourceEncryptionMethodDB2IgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL"),
-					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodDB2CondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodDB2CondVal, models.SQLDataSourceEncryptionMethodDB2IgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("NoEncryption"),
 			},
 			"truststore_ref": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Truststore", "truststore", "crypto_val_cred").AddRequiredWhen(models.SQLDataSourceTruststoreRefCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Truststore", "truststore", "crypto_val_cred").AddRequiredWhen(models.SQLDataSourceTruststoreRefCondVal.String()).AddNotValidWhen(models.SQLDataSourceTruststoreRefIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SQLDataSourceTruststoreRefCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SQLDataSourceTruststoreRefCondVal, models.SQLDataSourceTruststoreRefIgnoreVal, false),
 				},
 			},
 			"validate_server_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validate server certificate", "validate-server-certificate", "").AddStringEnum("Disabled", "Enabled").AddDefaultValue("Enabled").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Validate server certificate", "validate-server-certificate", "").AddStringEnum("Disabled", "Enabled").AddDefaultValue("Enabled").AddNotValidWhen(models.SQLDataSourceValidateServerCertificateIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("Disabled", "Enabled"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.SQLDataSourceValidateServerCertificateIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("Enabled"),
 			},
 			"host_name_in_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname that the certificate must contain for hostname validation. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.", "hostname-in-certificate", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname that the certificate must contain for hostname validation. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.", "hostname-in-certificate", "").AddNotValidWhen(models.SQLDataSourceHostNameInCertificateIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"validate_host_name": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to validate the hostname against the hostname in the server certificate. Hostname validate uses the value of the data source host. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.", "validate-host-name", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to validate the hostname against the hostname in the server certificate. Hostname validate uses the value of the data source host. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.", "validate-host-name", "").AddDefaultValue("true").AddNotValidWhen(models.SQLDataSourceValidateHostNameIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"keystore_ref": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Keystore", "keystore", "crypto_ident_cred").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Keystore", "keystore", "crypto_ident_cred").AddNotValidWhen(models.SQLDataSourceKeystoreRefIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

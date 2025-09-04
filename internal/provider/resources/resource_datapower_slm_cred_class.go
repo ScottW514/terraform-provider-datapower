@@ -95,32 +95,32 @@ func (r *SLMCredClassResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("aaa-mapped-credential"),
 			},
 			"cred_match_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Match Type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").AddRequiredWhen(models.SLMCredClassCredMatchTypeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Match Type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").AddRequiredWhen(models.SLMCredClassCredMatchTypeCondVal.String()).AddNotValidWhen(models.SLMCredClassCredMatchTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("per-extracted-value", "exact-match", "regexp-match"),
-					validators.ConditionalRequiredString(models.SLMCredClassCredMatchTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.SLMCredClassCredMatchTypeCondVal, models.SLMCredClassCredMatchTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("per-extracted-value"),
 			},
 			"cred_value": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Credential value", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Credential value", "value", "").AddNotValidWhen(models.SLMCredClassCredValueIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"stylesheet": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom stylesheet", "stylesheet", "").AddRequiredWhen(models.SLMCredClassStylesheetCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom stylesheet", "stylesheet", "").AddRequiredWhen(models.SLMCredClassStylesheetCondVal.String()).AddNotValidWhen(models.SLMCredClassStylesheetIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SLMCredClassStylesheetCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SLMCredClassStylesheetCondVal, models.SLMCredClassStylesheetIgnoreVal, false),
 				},
 			},
 			"header": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Request header", "header", "").AddRequiredWhen(models.SLMCredClassHeaderCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Request header", "header", "").AddRequiredWhen(models.SLMCredClassHeaderCondVal.String()).AddNotValidWhen(models.SLMCredClassHeaderIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SLMCredClassHeaderCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SLMCredClassHeaderCondVal, models.SLMCredClassHeaderIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

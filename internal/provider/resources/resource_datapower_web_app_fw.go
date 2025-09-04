@@ -142,18 +142,18 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the DataPower Gateway delays error messages for the defined duration. When disabled, the DataPower Gateway does not delay error messages.", "delay-errors", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the DataPower Gateway delays error messages for the defined duration. When disabled, the DataPower Gateway does not delay error messages.", "delay-errors", "").AddDefaultValue("true").AddNotValidWhen(models.WebAppFWDelayErrorsIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").AddRequiredWhen(models.WebAppFWDelayErrorsDurationCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").AddRequiredWhen(models.WebAppFWDelayErrorsDurationCondVal.String()).AddNotValidWhen(models.WebAppFWDelayErrorsDurationIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(250, 300000),
-					validators.ConditionalRequiredInt64(models.WebAppFWDelayErrorsDurationCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.WebAppFWDelayErrorsDurationCondVal, models.WebAppFWDelayErrorsDurationIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1000),
 			},
@@ -281,17 +281,17 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostics in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.WebAppFWDebugHistoryCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostics in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.WebAppFWDebugHistoryCondVal.String()).AddNotValidWhen(models.WebAppFWDebugHistoryIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 250),
-					validators.ConditionalRequiredInt64(models.WebAppFWDebugHistoryCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.WebAppFWDebugHistoryCondVal, models.WebAppFWDebugHistoryIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.", "debug-trigger", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.", "debug-trigger", "").AddNotValidWhen(models.WebAppFWDebugTriggerIgnoreVal.String()).String,
 				NestedObject:        models.GetDmMSDebugTriggerTypeResourceSchema(),
 				Optional:            true,
 			},
@@ -315,15 +315,15 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").AddNotValidWhen(models.WebAppFWSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddNotValidWhen(models.WebAppFWSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddNotValidWhen(models.WebAppFWSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

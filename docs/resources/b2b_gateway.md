@@ -45,16 +45,20 @@ resource "datapower_b2b_gateway" "test" {
 - `archive_file_name` (String) Specify the base file name for archive file. When archiving, the operation appends the current timestamp.
   - CLI Alias: `arch-file`
   - Required When: `archive_mode`=`archpurge`
+  - Not Valid When: `archive_mode`!=`archpurge`
 - `archive_location` (String) Specify the location for archive file. Enter the fully qualified name of the directory. To copy the archive file to an FTP server, ensure that the FTP policies in the XML manager enable image (binary) data transfer.
   - CLI Alias: `arch-dir`
   - Required When: `archive_mode`=`archpurge`
+  - Not Valid When: `archive_mode`!=`archpurge`
 - `archive_minimum_documents` (Number) Specify the minimum number of documents to retain in document storage after archival. The minimum value is 1. The default value is 100.
   - CLI Alias: `arch-minimum-documents`
   - Range: `1`-`65535`
   - Default value: `100`
+  - Not Valid When: `archive_mode`!=`archpurge`
 - `archive_minimum_size` (Number) Specify the minimum remaining size in KB of document storage that triggers archival. The default value is 1024.
   - CLI Alias: `arch-minimum-size`
   - Default value: `1024`
+  - Not Valid When: `archive_mode`!=`archpurge`
 - `archive_mode` (String) Purge mode
   - CLI Alias: `arch-mode`
   - Choices: `archpurge`, `purgeonly`
@@ -85,6 +89,7 @@ resource "datapower_b2b_gateway" "test" {
   - Range: `10`-`250`
   - Default value: `25`
   - Required When: `debug_mode`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `debug_mode` (String) Specify whether to enable diagnostics. Diagnostics are not intended for use in production environments. Diagnostics consume significant resources that can slow down processing.
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
@@ -123,6 +128,7 @@ resource "datapower_b2b_gateway" "test" {
   - CLI Alias: `arch-shaping-threshold`
   - Range: `10`-`10000`
   - Default value: `200`
+  - Not Valid When: `archive_monitor`=`false`
 - `sql_data_source` (String) SQL data source
   - CLI Alias: `sql-source`
   - Reference to: `datapower_sql_data_source:id`

@@ -91,17 +91,17 @@ func (r *JOSERecipientIdentifierResource) Schema(ctx context.Context, req resour
 				},
 			},
 			"key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the private key to verify the recipient.", "key", "crypto_key").AddRequiredWhen(models.JOSERecipientIdentifierKeyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the private key to verify the recipient.", "key", "crypto_key").AddRequiredWhen(models.JOSERecipientIdentifierKeyCondVal.String()).AddNotValidWhen(models.JOSERecipientIdentifierKeyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.JOSERecipientIdentifierKeyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.JOSERecipientIdentifierKeyCondVal, models.JOSERecipientIdentifierKeyIgnoreVal, false),
 				},
 			},
 			"sskey": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the recipient.", "sskey", "crypto_sskey").AddRequiredWhen(models.JOSERecipientIdentifierSSKeyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the recipient.", "sskey", "crypto_sskey").AddRequiredWhen(models.JOSERecipientIdentifierSSKeyCondVal.String()).AddNotValidWhen(models.JOSERecipientIdentifierSSKeyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.JOSERecipientIdentifierSSKeyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.JOSERecipientIdentifierSSKeyCondVal, models.JOSERecipientIdentifierSSKeyIgnoreVal, false),
 				},
 			},
 			"header_param": schema.ListNestedAttribute{

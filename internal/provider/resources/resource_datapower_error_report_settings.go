@@ -67,13 +67,13 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 			},
 			"upload_report": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to upload the error report to an NFS, RAID, SMTP, or FTP destination or write the error report to the local temporary directory. If you enable this feature:</p><ul><li>It enables the Failure Notification status provider, which tracks previous error reports</li><li>It changes the naming convention to include the serial number of the appliance and the timestamp, which prevents one report overwriting another</li></ul>", "upload-report", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to upload the error report to an NFS, RAID, SMTP, or FTP destination or write the error report to the local temporary directory. If you enable this feature:</p><ul><li>It enables the Failure Notification status provider, which tracks previous error reports</li><li>It changes the naming convention to include the serial number of the appliance and the timestamp, which prevents one report overwriting another</li></ul>", "upload-report", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsUploadReportIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_smtp": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to send an e-mail at start-up only that contains the error report. If you want to receive e-mail notification, use the upload error report property instead of this property.", "use-smtp", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to send an e-mail at start-up only that contains the error report. If you want to receive e-mail notification, use the upload error report property instead of this property.", "use-smtp", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsUseSmtpIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -85,19 +85,19 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_packet_capture": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use a background packet capture. This feature enables network packet capture for all interfaces including the internal loopback interface. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes the data from this packet capture data. This data helps to determine the messages that the appliance was processing when it encountered the problem.</p>", "ffdc packet-capture", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use a background packet capture. This feature enables network packet capture for all interfaces including the internal loopback interface. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes the data from this packet capture data. This data helps to determine the messages that the appliance was processing when it encountered the problem.</p>", "ffdc packet-capture", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsFFDCPacketCaptureIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_event_log_capture": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use a background log capture. This feature enables the capture of all log and trace points with minimal overhead. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes data from this log capture. This data can help IBM Support identify the problem.</p><p>These messages are independent of messages written to log and trace targets.</p>", "ffdc event-log", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use a background log capture. This feature enables the capture of all log and trace points with minimal overhead. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes data from this log capture. This data can help IBM Support identify the problem.</p><p>These messages are independent of messages written to log and trace targets.</p>", "ffdc event-log", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsFFDCEventLogCaptureIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_memory_leak_capture": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable automatic leak detection. This feature finds gradual memory leaks that occur steadily over time. This feature does not help in situations where messages are larger than the appliance can parse.</p><p>When enabled and if memory falls below an internal threshold, the appliance tracks all memory allocations. When the appliance reaches a critical condition that will lead to a crash, it generates an error report that contains information about memory allocation.</p><p>The configuration of the Throttle Settings affects this feature. The throttle settings can prevent the appliance from reaching the internal threshold.</p>", "ffdc memory-trace", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable automatic leak detection. This feature finds gradual memory leaks that occur steadily over time. This feature does not help in situations where messages are larger than the appliance can parse.</p><p>When enabled and if memory falls below an internal threshold, the appliance tracks all memory allocations. When the appliance reaches a critical condition that will lead to a crash, it generates an error report that contains information about memory allocation.</p><p>The configuration of the Throttle Settings affects this feature. The throttle settings can prevent the appliance from reaching the internal threshold.</p>", "ffdc memory-trace", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsFFDCMemoryLeakCaptureIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -115,90 +115,92 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 				Default:             booldefault.StaticBool(true),
 			},
 			"protocol": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol to use to upload the error report. Note that the selection you will see depends on your device features and licenses.", "protocol", "").AddStringEnum("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag").AddRequiredWhen(models.ErrorReportSettingsProtocolCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol to use to upload the error report. Note that the selection you will see depends on your device features and licenses.", "protocol", "").AddStringEnum("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag").AddRequiredWhen(models.ErrorReportSettingsProtocolCondVal.String()).AddNotValidWhen(models.ErrorReportSettingsProtocolIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag"),
-					validators.ConditionalRequiredString(models.ErrorReportSettingsProtocolCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsProtocolCondVal, models.ErrorReportSettingsProtocolIgnoreVal, false),
 				},
 			},
 			"location_identifier": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.", "location-id", "").AddRequiredWhen(models.ErrorReportSettingsLocationIdentifierCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.", "location-id", "").AddRequiredWhen(models.ErrorReportSettingsLocationIdentifierCondVal.String()).AddNotValidWhen(models.ErrorReportSettingsLocationIdentifierIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.ErrorReportSettingsLocationIdentifierCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsLocationIdentifierCondVal, models.ErrorReportSettingsLocationIdentifierIgnoreVal, false),
 				},
 			},
 			"smtp_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote SMTP server to which to send the error report.", "remote-address", "").AddRequiredWhen(models.ErrorReportSettingsSmtpServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote SMTP server to which to send the error report.", "remote-address", "").AddRequiredWhen(models.ErrorReportSettingsSmtpServerCondVal.String()).AddNotValidWhen(models.ErrorReportSettingsSmtpServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.NoneOf([]string{"127.0.0.1", "localhost"}...),
-					validators.ConditionalRequiredString(models.ErrorReportSettingsSmtpServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsSmtpServerCondVal, models.ErrorReportSettingsSmtpServerIgnoreVal, false),
 				},
 			},
 			"email_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address to which to send the error report.", "email-address", "").AddRequiredWhen(models.ErrorReportSettingsEmailAddressCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address to which to send the error report.", "email-address", "").AddRequiredWhen(models.ErrorReportSettingsEmailAddressCondVal.String()).AddNotValidWhen(models.ErrorReportSettingsEmailAddressIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.ErrorReportSettingsEmailAddressCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsEmailAddressCondVal, models.ErrorReportSettingsEmailAddressIgnoreVal, false),
 				},
 			},
 			"email_sender_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender ( <tt>MAIL FROM</tt> ). If not specified, the configuration uses the e-mail address of the recipient.", "email-sender-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender ( <tt>MAIL FROM</tt> ). If not specified, the configuration uses the e-mail address of the recipient.", "email-sender-address", "").AddNotValidWhen(models.ErrorReportSettingsEmailSenderAddressIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ftp_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote FTP server to which to upload the error report.", "ftp-server", "").AddRequiredWhen(models.ErrorReportSettingsFTPServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote FTP server to which to upload the error report.", "ftp-server", "").AddRequiredWhen(models.ErrorReportSettingsFTPServerCondVal.String()).AddNotValidWhen(models.ErrorReportSettingsFTPServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 128),
 					stringvalidator.NoneOf([]string{"127.0.0.1", "localhost"}...),
-					validators.ConditionalRequiredString(models.ErrorReportSettingsFTPServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsFTPServerCondVal, models.ErrorReportSettingsFTPServerIgnoreVal, false),
 				},
 			},
 			"ftp_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory on the FTP server to which to upload the error report. Use <tt>%2F</tt> to specify an absolute path.", "ftp-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory on the FTP server to which to upload the error report. Use <tt>%2F</tt> to specify an absolute path.", "ftp-path", "").AddNotValidWhen(models.ErrorReportSettingsFTPPathIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 128),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.ErrorReportSettingsFTPPathIgnoreVal, false),
 				},
 			},
 			"ftp_user_agent": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.", "ftp-user-agent", "http_user_agent").AddRequiredWhen(models.ErrorReportSettingsFTPUserAgentCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.", "ftp-user-agent", "http_user_agent").AddRequiredWhen(models.ErrorReportSettingsFTPUserAgentCondVal.String()).AddNotValidWhen(models.ErrorReportSettingsFTPUserAgentIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.ErrorReportSettingsFTPUserAgentCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsFTPUserAgentCondVal, models.ErrorReportSettingsFTPUserAgentIgnoreVal, false),
 				},
 			},
 			"nf_sm_ount": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the NFS mount point to which to upload the error report.", "nfs-mount", "nfs_static_mount").AddRequiredWhen(models.ErrorReportSettingsNFSMountCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the NFS mount point to which to upload the error report.", "nfs-mount", "nfs_static_mount").AddRequiredWhen(models.ErrorReportSettingsNFSMountCondVal.String()).AddNotValidWhen(models.ErrorReportSettingsNFSMountIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.ErrorReportSettingsNFSMountCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsNFSMountCondVal, models.ErrorReportSettingsNFSMountIgnoreVal, false),
 				},
 			},
 			"nfs_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This describes the NFS path location for the Error Report", "nfs-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This describes the NFS path location for the Error Report", "nfs-path", "").AddNotValidWhen(models.ErrorReportSettingsNFSPathIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"raid_volume": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the volume on the RAID array to which to upload the error report.", "raid-volume", "raid_volume").AddRequiredWhen(models.ErrorReportSettingsRaidVolumeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the volume on the RAID array to which to upload the error report.", "raid-volume", "raid_volume").AddRequiredWhen(models.ErrorReportSettingsRaidVolumeCondVal.String()).AddNotValidWhen(models.ErrorReportSettingsRaidVolumeIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.ErrorReportSettingsRaidVolumeCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ErrorReportSettingsRaidVolumeCondVal, models.ErrorReportSettingsRaidVolumeIgnoreVal, false),
 				},
 			},
 			"raid_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory on the RAID volume to which to upload the error report.", "raid-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory on the RAID volume to which to upload the error report.", "raid-path", "").AddNotValidWhen(models.ErrorReportSettingsRaidPathIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"report_history_kept": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the maximum number of local error reports to maintain when using the upload error report feature. After reaching this limit, the next local error report overwrites the oldest local error report. Use any value of 2 - 10. The default value is 5.</p><p>This feature only applies to locally stored error reports, including temporary and Raid.</p><p>To view the history, see the Failure Notification status provider.</p>", "report-history", "").AddIntegerRange(2, 10).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the maximum number of local error reports to maintain when using the upload error report feature. After reaching this limit, the next local error report overwrites the oldest local error report. Use any value of 2 - 10. The default value is 5.</p><p>This feature only applies to locally stored error reports, including temporary and Raid.</p><p>To view the history, see the Failure Notification status provider.</p>", "report-history", "").AddIntegerRange(2, 10).AddDefaultValue("5").AddNotValidWhen(models.ErrorReportSettingsReportHistoryKeptIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(2, 10),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.ErrorReportSettingsReportHistoryKeptIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(5),
 			},

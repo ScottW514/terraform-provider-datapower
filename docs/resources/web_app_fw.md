@@ -65,20 +65,24 @@ resource "datapower_web_app_fw" "test" {
   - Range: `10`-`250`
   - Default value: `25`
   - Required When: `debug_mode`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
 - `debug_trigger` (Attributes List) The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.
-  - CLI Alias: `debug-trigger` (see [below for nested schema](#nestedatt--debug_trigger))
+  - CLI Alias: `debug-trigger`
+  - Not Valid When: `debug_mode`!=`true` (see [below for nested schema](#nestedatt--debug_trigger))
 - `delay_errors` (Boolean) The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the DataPower Gateway delays error messages for the defined duration. When disabled, the DataPower Gateway does not delay error messages.
   - CLI Alias: `delay-errors`
   - Default value: `true`
+  - Not Valid When: `rewrite_errors`!=`true`
 - `delay_errors_duration` (Number) When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
   - Required When: (`delay_errors`=`true` AND `rewrite_errors`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `do_chunked_upload` (Boolean) Use the radio buttons to enable (on) or disable (off) the ability to send Content-Type Chunked Encoded documents to the back end server. When the device employs the HTTP/1.1 protocol, the body of the document can be delimited by either Content-Length or chunked encodings. While all servers will understand how to interpret Content-Length, many applications will fail to understand Chunked encoding. For this reason, Content-Length is the standard method used. However doing so interferes with the ability of the device to fully stream. To stream full documents towards the back end server, this property should be turned on. However, the back end server must be RFC 2616 compatible, because this feature cannot be renegotiated at run time, unlike all other HTTP/1.1 features which can be negotiated down at runtime if necessary. This property can also be enabled by configuring a User Agent to enable it on a per-URL basis.
   - CLI Alias: `chunked-uploads`
@@ -132,6 +136,7 @@ resource "datapower_web_app_fw" "test" {
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: `ssl_config_type`=`proxy`
 - `ssl_config_type` (String) TLS type
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
@@ -139,9 +144,11 @@ resource "datapower_web_app_fw" "test" {
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Not Valid When: `ssl_config_type`!=`server`
 - `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Not Valid When: `ssl_config_type`!=`sni`
 - `stream_output_to_back` (String) Select the desired streaming behavior.
   - CLI Alias: `stream-output-to-back`
   - Choices: `buffer-until-verification`, `stream-until-infraction`

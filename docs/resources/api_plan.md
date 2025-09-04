@@ -37,19 +37,26 @@ resource "datapower_api_plan" "test" {
 ### Optional
 
 - `assembly_burst_limit` (Attributes List) Specify the burst limit scheme that the rate limit assembly action enforces. This scheme defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.
-  - CLI Alias: `assembly-burst-limit` (see [below for nested schema](#nestedatt--assembly_burst_limit))
+  - CLI Alias: `assembly-burst-limit`
+  - Not Valid When: `use_limit_definitions`=`true` (see [below for nested schema](#nestedatt--assembly_burst_limit))
 - `assembly_burst_limit_definition` (Attributes List) Specify a burst limit definition that the rate limit assembly action enforces. A burst limit definition defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. A message is first checked against the burst limit scheme and then against the rate limit scheme.
-  - CLI Alias: `assembly-burst-limit-def` (see [below for nested schema](#nestedatt--assembly_burst_limit_definition))
+  - CLI Alias: `assembly-burst-limit-def`
+  - Not Valid When: `use_limit_definitions`=`false` (see [below for nested schema](#nestedatt--assembly_burst_limit_definition))
 - `assembly_count_limit` (Attributes List) Specify the count limit scheme that the rate limit assembly action enforces. This scheme defines the maximum count to allow and the actions to take when the limit is exceeded.
-  - CLI Alias: `assembly-count-limit` (see [below for nested schema](#nestedatt--assembly_count_limit))
+  - CLI Alias: `assembly-count-limit`
+  - Not Valid When: `use_limit_definitions`=`true` (see [below for nested schema](#nestedatt--assembly_count_limit))
 - `assembly_count_limit_definition` (Attributes List) Specify a count limit definition that the rate limit assembly action enforces. A count limit definition defines the maximum count that is allowed and the actions to take when the limit is exceeded.
-  - CLI Alias: `assembly-count-limit-def` (see [below for nested schema](#nestedatt--assembly_count_limit_definition))
+  - CLI Alias: `assembly-count-limit-def`
+  - Not Valid When: `use_limit_definitions`=`false` (see [below for nested schema](#nestedatt--assembly_count_limit_definition))
 - `assembly_rate_limit` (Attributes List) Specify the rate limit scheme that the rate limit assembly action enforces. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.
-  - CLI Alias: `assembly-rate-limit` (see [below for nested schema](#nestedatt--assembly_rate_limit))
+  - CLI Alias: `assembly-rate-limit`
+  - Not Valid When: `use_limit_definitions`=`true` (see [below for nested schema](#nestedatt--assembly_rate_limit))
 - `assembly_rate_limit_definition` (Attributes List) Specify a rate limit definition that the rate limit assembly action enforces. A rate limit definition defines the maximum rate that is allowed in a specified interval and the actions to take when the limit is exceeded.
-  - CLI Alias: `assembly-rate-limit-def` (see [below for nested schema](#nestedatt--assembly_rate_limit_definition))
+  - CLI Alias: `assembly-rate-limit-def`
+  - Not Valid When: `use_limit_definitions`=`false` (see [below for nested schema](#nestedatt--assembly_rate_limit_definition))
 - `burst_limit` (Attributes List) Specify the burst limit scheme to enforce. This scheme defines the maximum burst rate to allow during a specified interval. The burst limit helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.
-  - CLI Alias: `burst-limit` (see [below for nested schema](#nestedatt--burst_limit))
+  - CLI Alias: `burst-limit`
+  - Not Valid When: `use_rate_limit_group`=`true` (see [below for nested schema](#nestedatt--burst_limit))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `exclude_operation` (List of String) Exclude operation
   - CLI Alias: `exclude`
@@ -72,10 +79,12 @@ resource "datapower_api_plan" "test" {
   - CLI Alias: `product-version`
   - Default value: `1.0.0`
 - `rate_limit` (Attributes List) Specify the rate limit scheme to enforce. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.
-  - CLI Alias: `rate-limit` (see [below for nested schema](#nestedatt--rate_limit))
+  - CLI Alias: `rate-limit`
+  - Not Valid When: `use_rate_limit_group`=`true` (see [below for nested schema](#nestedatt--rate_limit))
 - `rate_limit_group` (String) Rate limit group
   - CLI Alias: `rate-limit-group`
   - Reference to: `datapower_rate_limit_definition_group:id`
+  - Not Valid When: `use_rate_limit_group`=`false`
 - `rate_limit_scope` (String) Specify the scope to apply the rate limit schemes to. You can apply schemes against the application or client ID. For example, <tt>application1</tt> has <tt>client1</tt> and <tt>client2</tt> , and the rate limit is 10 calls per hour. <ul><li>When against the application, <tt>application1</tt> limits 10 calls per hour from either <tt>client1</tt> or <tt>client2.</tt></li><li>When against the client ID, <tt>application1</tt> limits 10 calls per hour from each <tt>client1</tt> and <tt>client2</tt> .</li></ul>
   - CLI Alias: `rate-limit-scope`
   - Choices: `per-application`, `per-client-id`
@@ -105,23 +114,32 @@ Optional:
 
 - `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the burst limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
+  - Not Valid When: `burst`=`0`
 - `dynamic_value` (String) Indicates the dynamic value string for the burst limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the burst limit based on parameters other than those defined in the burst limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+  - Not Valid When: `burst`=`0`
 - `interval` (Number) Indicates the time interval for the burst limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
+  - Not Valid When: `burst`=`0`
 - `is_client` (Boolean) Indicates whether to apply the burst limit to the client or to an internal component. Client burst limits return a 429 error when exceeded. Non-client burst limits return a 503 error when exceeded. When set to <tt>off</tt> , burst limit information is not included in the response header.
   - Default value: `true`
+  - Not Valid When: `burst`=`0`
 - `unit` (String) Indicates the time unit for the burst limit. The default value is second.
   - Choices: `second`, `minute`
   - Default value: `second`
+  - Not Valid When: `burst`=`0`
 - `use_api_name` (Boolean) Indicates whether to use the API name as part of the burst limit key.
   - Default value: `false`
+  - Not Valid When: `burst`=`0`
 - `use_app_id` (Boolean) Indicates whether to use the application ID as part of the burst limit key.
   - Default value: `false`
+  - Not Valid When: `burst`=`0`
 - `use_client_id` (Boolean) Indicates whether to use the client ID as part of the burst limit key.
   - Default value: `false`
+  - Not Valid When: `burst`=`0`
 - `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the burst limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
+  - Not Valid When: `burst`=`0`
 
 
 <a id="nestedatt--assembly_burst_limit_definition"></a>
@@ -190,25 +208,35 @@ Optional:
 
 - `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
+  - Not Valid When: `rate`=`0`
 - `dynamic_value` (String) Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+  - Not Valid When: `rate`=`0`
 - `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `interval` (Number) Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
+  - Not Valid When: `rate`=`0`
 - `is_client` (Boolean) Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.
   - Default value: `true`
+  - Not Valid When: `rate`=`0`
 - `unit` (String) Indicates the time unit for the rate limit. The default value is second.
   - Choices: `second`, `minute`, `hour`, `day`, `week`
   - Default value: `second`
+  - Not Valid When: `rate`=`0`
 - `use_api_name` (Boolean) Indicates whether to use the API name as part of the rate limit key.
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `use_app_id` (Boolean) Indicates whether to use the application ID as part of the rate limit key.
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `use_client_id` (Boolean) Indicates whether to use the client ID as part of the rate limit key.
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
+  - Not Valid When: `rate`=`0`
 
 
 <a id="nestedatt--assembly_rate_limit_definition"></a>
@@ -235,23 +263,32 @@ Optional:
 
 - `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the burst limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
+  - Not Valid When: `burst`=`0`
 - `dynamic_value` (String) Indicates the dynamic value string for the burst limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the burst limit based on parameters other than those defined in the burst limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+  - Not Valid When: `burst`=`0`
 - `interval` (Number) Indicates the time interval for the burst limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
+  - Not Valid When: `burst`=`0`
 - `is_client` (Boolean) Indicates whether to apply the burst limit to the client or to an internal component. Client burst limits return a 429 error when exceeded. Non-client burst limits return a 503 error when exceeded. When set to <tt>off</tt> , burst limit information is not included in the response header.
   - Default value: `true`
+  - Not Valid When: `burst`=`0`
 - `unit` (String) Indicates the time unit for the burst limit. The default value is second.
   - Choices: `second`, `minute`
   - Default value: `second`
+  - Not Valid When: `burst`=`0`
 - `use_api_name` (Boolean) Indicates whether to use the API name as part of the burst limit key.
   - Default value: `false`
+  - Not Valid When: `burst`=`0`
 - `use_app_id` (Boolean) Indicates whether to use the application ID as part of the burst limit key.
   - Default value: `false`
+  - Not Valid When: `burst`=`0`
 - `use_client_id` (Boolean) Indicates whether to use the client ID as part of the burst limit key.
   - Default value: `false`
+  - Not Valid When: `burst`=`0`
 - `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the burst limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
+  - Not Valid When: `burst`=`0`
 
 
 <a id="nestedatt--dependency_actions"></a>
@@ -284,22 +321,32 @@ Optional:
 
 - `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
+  - Not Valid When: `rate`=`0`
 - `dynamic_value` (String) Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+  - Not Valid When: `rate`=`0`
 - `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `interval` (Number) Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
+  - Not Valid When: `rate`=`0`
 - `is_client` (Boolean) Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.
   - Default value: `true`
+  - Not Valid When: `rate`=`0`
 - `unit` (String) Indicates the time unit for the rate limit. The default value is second.
   - Choices: `second`, `minute`, `hour`, `day`, `week`
   - Default value: `second`
+  - Not Valid When: `rate`=`0`
 - `use_api_name` (Boolean) Indicates whether to use the API name as part of the rate limit key.
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `use_app_id` (Boolean) Indicates whether to use the application ID as part of the rate limit key.
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `use_client_id` (Boolean) Indicates whether to use the client ID as part of the rate limit key.
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
+  - Not Valid When: `rate`=`0`

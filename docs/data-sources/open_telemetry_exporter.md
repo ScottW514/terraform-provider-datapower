@@ -88,10 +88,16 @@ Read-Only:
 
 - `password` (String) Specify the password alias for authentication.
   - Reference to: `datapower_password_alias:id`
+  - Not Valid When: `skip`!=`false`
 - `reg_exp` (String) Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.
 - `remote_address` (String) Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.
+  - Required When: `skip`=`false`
+  - Not Valid When: attribute is not conditionally required
 - `remote_port` (Number) Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.
   - Range: `1`-`65535`
+  - Required When: `skip`=`false`
+  - Not Valid When: attribute is not conditionally required
 - `skip` (Boolean) Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.
   - Default value: `false`
 - `user_name` (String) Specify the username for authentication.
+  - Not Valid When: `skip`!=`false`

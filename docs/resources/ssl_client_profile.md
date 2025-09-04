@@ -37,10 +37,12 @@ resource "datapower_ssl_client_profile" "test" {
   - CLI Alias: `cache-size`
   - Range: `1`-`500000`
   - Default value: `100`
+  - Not Valid When: `caching`=`false`
 - `cache_timeout` (Number) Specify the duration in seconds that TLS sessions remain in the session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.
   - CLI Alias: `cache-timeout`
   - Range: `1`-`86400`
   - Default value: `300`
+  - Not Valid When: `caching`=`false`
 - `caching` (Boolean) Enable session caching
   - CLI Alias: `caching`
   - Default value: `true`
@@ -50,6 +52,7 @@ resource "datapower_ssl_client_profile" "test" {
 - `custom_sni_hostname` (String) Custom SNI hostname
   - CLI Alias: `custom-sni-hostname`
   - Required When: (`use_custom_sni_hostname`=`true` AND `ssl_client_features`=`use-sni`)
+  - Not Valid When: attribute is not conditionally required
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `disable_renegotiation` (Boolean) Disable renegotiation
   - CLI Alias: `disable-renegotiation`
@@ -63,6 +66,7 @@ resource "datapower_ssl_client_profile" "test" {
 - `hostname_validation_fail_on_error` (Boolean) Specify whether to terminate the handshake when hostname validation fails or to ignore the failure, log an event, and continue with server certificate validation. The default behavior is to ignore the failure, log an event, and continue with any configured server certificate validation.
   - CLI Alias: `hostname-validation-fail`
   - Default value: `false`
+  - Not Valid When: `validate_hostname`=`false`
 - `hostname_validation_flags` (Attributes) Specify the flags that fine tune the validation methods and settings during the handshake. The default behavior uses the subject DN only when the <tt>Subject Alternative Name</tt> (SAN) extension contains no DNS name.
   - CLI Alias: `hostname-validation-flags` (see [below for nested schema](#nestedatt--hostname_validation_flags))
 - `idcred` (String) Identification credentials
@@ -82,12 +86,14 @@ resource "datapower_ssl_client_profile" "test" {
   - CLI Alias: `use-custom-sni-hostname`
   - Default value: `false`
   - Required When: `ssl_client_features`=`use-sni`
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `valcred` (String) Validation credentials
   - CLI Alias: `valcred`
   - Reference to: `datapower_crypto_val_cred:id`
   - Required When: `validate_server_cert`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `validate_hostname` (Boolean) Validate server hostname
   - CLI Alias: `validate-hostname`
   - Default value: `false`

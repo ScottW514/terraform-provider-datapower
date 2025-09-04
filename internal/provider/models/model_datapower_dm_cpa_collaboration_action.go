@@ -104,11 +104,11 @@ func GetDmCPACollaborationActionDataSourceSchema() DataSourceSchema.NestedAttrib
 				Computed:            true,
 			},
 			"sender_setting": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2b_cpa_sender_setting").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2b_cpa_sender_setting").AddRequiredWhen(DmCPACollaborationActionSenderSettingCondVal.String()).AddNotValidWhen(DmCPACollaborationActionSenderSettingIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"receiver_setting": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2b_cpa_receiver_setting").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2b_cpa_receiver_setting").AddRequiredWhen(DmCPACollaborationActionReceiverSettingCondVal.String()).AddNotValidWhen(DmCPACollaborationActionReceiverSettingIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -142,17 +142,17 @@ func GetDmCPACollaborationActionResourceSchema() ResourceSchema.NestedAttributeO
 				Default: stringdefault.StaticString("cansend"),
 			},
 			"sender_setting": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2b_cpa_sender_setting").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2b_cpa_sender_setting").AddRequiredWhen(DmCPACollaborationActionSenderSettingCondVal.String()).AddNotValidWhen(DmCPACollaborationActionSenderSettingIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmCPACollaborationActionSenderSettingCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmCPACollaborationActionSenderSettingCondVal, DmCPACollaborationActionSenderSettingIgnoreVal, false),
 				},
 			},
 			"receiver_setting": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2b_cpa_receiver_setting").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2b_cpa_receiver_setting").AddRequiredWhen(DmCPACollaborationActionReceiverSettingCondVal.String()).AddNotValidWhen(DmCPACollaborationActionReceiverSettingIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmCPACollaborationActionReceiverSettingCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmCPACollaborationActionReceiverSettingCondVal, DmCPACollaborationActionReceiverSettingIgnoreVal, false),
 				},
 			},
 		},

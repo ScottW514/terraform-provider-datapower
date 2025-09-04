@@ -66,7 +66,7 @@ func GetDmRoutingPrefixDataSourceSchema() DataSourceSchema.NestedAttributeObject
 				Computed:            true,
 			},
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").AddRequiredWhen(DmRoutingPrefixNameCondVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -86,7 +86,7 @@ func GetDmRoutingPrefixResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("uri"),
 			},
 			"name": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").AddRequiredWhen(DmRoutingPrefixNameCondVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(DmRoutingPrefixNameCondVal, validators.Evaluation{}, false),

@@ -91,7 +91,7 @@ func GetDmSMTPPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 			},
 			"options": GetDmSMTPOptionsDataSourceSchema("Specify the SMTP options to enable for the client.", "", ""),
 			"auth": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").AddNotValidWhen(DmSMTPPolicyAuthIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -121,11 +121,12 @@ func GetDmSMTPPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 			},
 			"options": GetDmSMTPOptionsResourceSchema("Specify the SMTP options to enable for the client.", "", "", false),
 			"auth": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").AddNotValidWhen(DmSMTPPolicyAuthIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("plain", "login"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmSMTPPolicyAuthIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("plain"),
 			},

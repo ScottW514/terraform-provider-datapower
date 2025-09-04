@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &AssemblyActionRateLimitResource{}
@@ -91,35 +92,36 @@ func (r *AssemblyActionRateLimitResource) Schema(ctx context.Context, req resour
 				Default: stringdefault.StaticString("plan-default"),
 			},
 			"burst_limit": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Burst limits", "burst-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Burst limits", "burst-limit", "").AddNotValidWhen(models.AssemblyActionRateLimitBurstLimitIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"rate_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate limits", "rate-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Rate limits", "rate-limit", "").AddNotValidWhen(models.AssemblyActionRateLimitRateLimitIgnoreVal.String()).String,
 				NestedObject:        models.GetDmRateLimitInfoResourceSchema(),
 				Optional:            true,
 			},
 			"count_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Count limits", "count-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Count limits", "count-limit", "").AddNotValidWhen(models.AssemblyActionRateLimitCountLimitIgnoreVal.String()).String,
 				NestedObject:        models.GetDmCountLimitInfoResourceSchema(),
 				Optional:            true,
 			},
 			"rate_limit_definition": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit definitions", "rate-limit-definition", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit definitions", "rate-limit-definition", "").AddNotValidWhen(models.AssemblyActionRateLimitRateLimitDefinitionIgnoreVal.String()).String,
 				NestedObject:        models.GetDmRateLimitInfoDomainNamedResourceSchema(),
 				Optional:            true,
 			},
 			"rate_limit_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit group", "rate-limit-group", "rate_limit_definition_group").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit group", "rate-limit-group", "rate_limit_definition_group").AddNotValidWhen(models.AssemblyActionRateLimitRateLimitGroupIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"group_action": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to take for rate limits in the group. Each rate limit definition that the group references is consumed or replenished based on this setting. The default value is consume.", "group-action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to take for rate limits in the group. Each rate limit definition that the group references is consumed or replenished based on this setting. The default value is consume.", "group-action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").AddNotValidWhen(models.AssemblyActionRateLimitGroupActionIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("consume", "replenish"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.AssemblyActionRateLimitGroupActionIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("consume"),
 			},

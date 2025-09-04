@@ -100,11 +100,12 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: stringdefault.StaticString("read-write"),
 			},
 			"commit_identifier_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the branch, commit hash, or tag for read and write GitOps operations against the repository. Use of branch is the default setting.", "commit-id-type", "").AddStringEnum("branch", "tag", "commit").AddDefaultValue("branch").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the branch, commit hash, or tag for read and write GitOps operations against the repository. Use of branch is the default setting.", "commit-id-type", "").AddStringEnum("branch", "tag", "commit").AddDefaultValue("branch").AddNotValidWhen(models.GitOpsCommitIdentifierTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("branch", "tag", "commit"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.GitOpsCommitIdentifierTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("branch"),
 			},
@@ -117,62 +118,62 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Required:            true,
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.", "interval", "").AddIntegerRange(0, 1440).AddDefaultValue("5").AddRequiredWhen(models.GitOpsIntervalCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.", "interval", "").AddIntegerRange(0, 1440).AddDefaultValue("5").AddRequiredWhen(models.GitOpsIntervalCondVal.String()).AddNotValidWhen(models.GitOpsIntervalIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1440),
-					validators.ConditionalRequiredInt64(models.GitOpsIntervalCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.GitOpsIntervalCondVal, models.GitOpsIntervalIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(5),
 			},
 			"ssh_client_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SSH client profile", "ssh-client-profile", "ssh_client_profile").AddRequiredWhen(models.GitOpsSSHClientProfileCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("SSH client profile", "ssh-client-profile", "ssh_client_profile").AddRequiredWhen(models.GitOpsSSHClientProfileCondVal.String()).AddNotValidWhen(models.GitOpsSSHClientProfileIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.GitOpsSSHClientProfileCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.GitOpsSSHClientProfileCondVal, models.GitOpsSSHClientProfileIgnoreVal, false),
 				},
 			},
 			"username": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").AddRequiredWhen(models.GitOpsUsernameCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").AddRequiredWhen(models.GitOpsUsernameCondVal.String()).AddNotValidWhen(models.GitOpsUsernameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.GitOpsUsernameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.GitOpsUsernameCondVal, models.GitOpsUsernameIgnoreVal, false),
 				},
 			},
 			"password": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password", "password", "password_alias").AddRequiredWhen(models.GitOpsPasswordCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Password", "password", "password_alias").AddRequiredWhen(models.GitOpsPasswordCondVal.String()).AddNotValidWhen(models.GitOpsPasswordIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.GitOpsPasswordCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.GitOpsPasswordCondVal, models.GitOpsPasswordIgnoreVal, false),
 				},
 			},
 			"ssh_authorized_keys_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.", "ssh-authorized-keyfile", "").AddRequiredWhen(models.GitOpsSSHAuthorizedKeysFileCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.", "ssh-authorized-keyfile", "").AddRequiredWhen(models.GitOpsSSHAuthorizedKeysFileCondVal.String()).AddNotValidWhen(models.GitOpsSSHAuthorizedKeysFileIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.GitOpsSSHAuthorizedKeysFileCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.GitOpsSSHAuthorizedKeysFileCondVal, models.GitOpsSSHAuthorizedKeysFileIgnoreVal, false),
 				},
 			},
 			"tls_valcred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTPS validation credentials", "https-valcred", "crypto_val_cred").AddRequiredWhen(models.GitOpsTLSValcredCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("HTTPS validation credentials", "https-valcred", "crypto_val_cred").AddRequiredWhen(models.GitOpsTLSValcredCondVal.String()).AddNotValidWhen(models.GitOpsTLSValcredIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.GitOpsTLSValcredCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.GitOpsTLSValcredCondVal, models.GitOpsTLSValcredIgnoreVal, false),
 				},
 			},
 			"git_user": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt> .", "name", "").AddRequiredWhen(models.GitOpsGitUserCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt> .", "name", "").AddRequiredWhen(models.GitOpsGitUserCondVal.String()).AddNotValidWhen(models.GitOpsGitUserIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.GitOpsGitUserCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.GitOpsGitUserCondVal, models.GitOpsGitUserIgnoreVal, false),
 				},
 			},
 			"git_email": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt> .", "email", "").AddRequiredWhen(models.GitOpsGitEmailCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt> .", "email", "").AddRequiredWhen(models.GitOpsGitEmailCondVal.String()).AddNotValidWhen(models.GitOpsGitEmailIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.GitOpsGitEmailCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.GitOpsGitEmailCondVal, models.GitOpsGitEmailIgnoreVal, false),
 				},
 			},
 			"json_parse_settings": schema.StringAttribute{

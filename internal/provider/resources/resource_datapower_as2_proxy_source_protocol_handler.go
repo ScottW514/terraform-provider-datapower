@@ -120,7 +120,7 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Default:             booldefault.StaticBool(true),
 			},
 			"max_persistent_connections_reuse": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times a client can reuse a persistent connection. When the maximum reuse count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response and the TCP connection is closed. The default value is 0, which means unlimited reuse.", "max-persistent-reuse", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times a client can reuse a persistent connection. When the maximum reuse count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response and the TCP connection is closed. The default value is 0, which means unlimited reuse.", "max-persistent-reuse", "").AddNotValidWhen(models.AS2ProxySourceProtocolHandlerMaxPersistentConnectionsReuseIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"allow_compression": schema.BoolAttribute{
@@ -226,23 +226,23 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Default:             booldefault.StaticBool(true),
 			},
 			"visibility_event_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the URL of the MEIG visibility event endpoint. Enter the URL in the format of static IBM MQ URL that provides the information about the IBM MQ server name, queue manager name, and name of the channel configured in the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT", "visibility-event-endpoint", "").AddRequiredWhen(models.AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the URL of the MEIG visibility event endpoint. Enter the URL in the format of static IBM MQ URL that provides the information about the IBM MQ server name, queue manager name, and name of the channel configured in the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT", "visibility-event-endpoint", "").AddRequiredWhen(models.AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal.String()).AddNotValidWhen(models.AS2ProxySourceProtocolHandlerVisibilityEventEndpointIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal, models.AS2ProxySourceProtocolHandlerVisibilityEventEndpointIgnoreVal, false),
 				},
 			},
 			"enable_hmac_authentication": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Controls whether to use Hash-based Message Authentication Code (HMAC) to secure all visibility events sent to the visibility event endpoint. If HMAC is enabled in the Multi-Enterprise Integration Gateway server, you must enable HMAC authentication in the AS2 proxy handler to avoid message rejection.", "enable-hmac-authentication", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Controls whether to use Hash-based Message Authentication Code (HMAC) to secure all visibility events sent to the visibility event endpoint. If HMAC is enabled in the Multi-Enterprise Integration Gateway server, you must enable HMAC authentication in the AS2 proxy handler to avoid message rejection.", "enable-hmac-authentication", "").AddDefaultValue("true").AddNotValidWhen(models.AS2ProxySourceProtocolHandlerEnableHmacAuthenticationIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"hmac_passphrase_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the password alias of the passphrase used to calculate the HMAC token for message authentication and integrity checking in the Multi-Enterprise Integration Gateway server.", "hmac-passphrase-alias", "password_alias").AddRequiredWhen(models.AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the password alias of the passphrase used to calculate the HMAC token for message authentication and integrity checking in the Multi-Enterprise Integration Gateway server.", "hmac-passphrase-alias", "password_alias").AddRequiredWhen(models.AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal.String()).AddNotValidWhen(models.AS2ProxySourceProtocolHandlerHmacPassphraseAliasIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal, models.AS2ProxySourceProtocolHandlerHmacPassphraseAliasIgnoreVal, false),
 				},
 			},
 			"ssl_server_config_type": schema.StringAttribute{
@@ -255,11 +255,11 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS server profile to secure connections between clients and the DataPower Gateway.", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS server profile to secure connections between clients and the DataPower Gateway.", "ssl-server", "ssl_server_profile").AddNotValidWhen(models.AS2ProxySourceProtocolHandlerSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS SNI server profile to secure connections between clients and the DataPower Gateway.", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS SNI server profile to secure connections between clients and the DataPower Gateway.", "ssl-sni-server", "ssl_sni_server_profile").AddNotValidWhen(models.AS2ProxySourceProtocolHandlerSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_client_config_type": schema.StringAttribute{
@@ -272,7 +272,7 @@ func (r *AS2ProxySourceProtocolHandlerResource) Schema(ctx context.Context, req 
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddNotValidWhen(models.AS2ProxySourceProtocolHandlerSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

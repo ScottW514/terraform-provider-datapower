@@ -62,24 +62,29 @@ resource "datapower_sql_data_source" "test" {
   - Choices: `NoEncryption`, `SSL`
   - Default value: `NoEncryption`
   - Required When: `database`=`DB2`
+  - Not Valid When: `database`!=`DB2`
 - `encryption_method_mssql` (String) Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.
   - CLI Alias: `mssql-encryption-method`
   - Choices: `NoEncryption`, `SSL`, `RequestSSL`, `LoginSSL`
   - Default value: `NoEncryption`
   - Required When: `database`=`MSSQLServer`
+  - Not Valid When: `database`!=`MSSQLServer`
 - `encryption_method_oracle` (String) Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.
   - CLI Alias: `oracle-encryption-method`
   - Choices: `NoEncryption`, `SSL`
   - Default value: `NoEncryption`
   - Required When: `database`=`Oracle`
+  - Not Valid When: `database`!=`Oracle`
 - `host_name_in_certificate` (String) Specify the hostname that the certificate must contain for hostname validation. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.
   - CLI Alias: `hostname-in-certificate`
+  - Not Valid When: ((`database`!=`Oracle` OR `encryption_method_oracle`=`NoEncryption`) AND (`database`!=`MSSQLServer` OR `encryption_method_mssql`=`NoEncryption`))
 - `idle_timeout` (Number) Specify the duration that a connection from the connection pool can remain idle before the connection is released. Enter a value in the range 0 - 4294967295. The default value is 180. The value of 0 disables the timer.
   - CLI Alias: `idle-timeout`
   - Default value: `180`
 - `keystore_ref` (String) Keystore
   - CLI Alias: `keystore`
   - Reference to: `datapower_crypto_ident_cred:id`
+  - Not Valid When: ((`database`!=`Oracle` OR `encryption_method_oracle`=`NoEncryption`) AND (`database`!=`MSSQLServer` OR `encryption_method_mssql`=`NoEncryption`) AND (`database`!=`DB2` OR `encryption_method_db2`=`NoEncryption`))
 - `limit_returned_data` (Boolean) Specify whether to limit the data from a <b>SELECT</b> statement. By default, the response size is not limited.
   - CLI Alias: `limit`
   - Default value: `false`
@@ -87,9 +92,11 @@ resource "datapower_sql_data_source" "test" {
   - CLI Alias: `limit-size`
   - Range: `1`-`65535`
   - Default value: `128`
+  - Not Valid When: `limit_returned_data`!=`true`
 - `load_balancing` (Boolean) Specify whether to enable Db2 workload balancing and automatic client reroute for Db2 for z/OS. <p>When enabled, this feature set uses the z/OS Sysplex Distributor for real-time load distribution of SQL calls to the sysplex-aware Db2 instance.</p><p>When enabled, you must specify the sysplex DVIPA as the data source host.</p>
   - CLI Alias: `load-balancing`
   - Default value: `false`
+  - Not Valid When: `database`!=`DB2`
 - `max_connection` (Number) Specify the maximum number of concurrent SQL connections. Enter a value in the range 1 - 65535. The default value is 10.
   - CLI Alias: `maximum-connections`
   - Range: `1`-`65535`
@@ -99,25 +106,30 @@ resource "datapower_sql_data_source" "test" {
   - Choices: `SID`, `ServiceName`
   - Default value: `SID`
   - Required When: `database`=`Oracle`
+  - Not Valid When: `database`!=`Oracle`
 - `password_alias` (String) Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
   - Required When: NOT(`database`=`DB2` AND `encryption_method_db2`!=`NoEncryption` AND `keystore_ref`!=``)
+  - Not Valid When: (`database`=`DB2` AND `encryption_method_db2`!=`NoEncryption` AND `keystore_ref`!=``)
 - `sql_data_source_config_nv_pairs` (Attributes List) Specify configuration parameters for the data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some parameters in the configuration file are informational and define characteristics about the environment. These parameters cannot be modified.
   - CLI Alias: `sql-config-param` (see [below for nested schema](#nestedatt--sql_data_source_config_nv_pairs))
 - `truststore_ref` (String) Truststore
   - CLI Alias: `truststore`
   - Reference to: `datapower_crypto_val_cred:id`
   - Required When: ((`database`=`Oracle` AND `encryption_method_oracle`!=`NoEncryption`) OR (`database`=`MSSQLServer` AND `encryption_method_mssql`!=`NoEncryption`) OR (`database`=`DB2` AND `encryption_method_db2`!=`NoEncryption`))
+  - Not Valid When: ((`database`!=`Oracle` OR `encryption_method_oracle`=`NoEncryption`) AND (`database`!=`MSSQLServer` OR `encryption_method_mssql`=`NoEncryption`) AND (`database`!=`DB2` OR `encryption_method_db2`=`NoEncryption`))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `validate_host_name` (Boolean) Specify whether to validate the hostname against the hostname in the server certificate. Hostname validate uses the value of the data source host. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.
   - CLI Alias: `validate-host-name`
   - Default value: `true`
+  - Not Valid When: (`database`!=`DB2` OR `encryption_method_db2`=`NoEncryption`)
 - `validate_server_certificate` (String) Validate server certificate
   - CLI Alias: `validate-server-certificate`
   - Choices: `Disabled`, `Enabled`
   - Default value: `Enabled`
+  - Not Valid When: ((`database`!=`Oracle` OR `encryption_method_oracle`=`NoEncryption`) AND (`database`!=`MSSQLServer` OR `encryption_method_mssql`=`NoEncryption`) AND (`database`!=`DB2` OR `encryption_method_db2`=`NoEncryption`))
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

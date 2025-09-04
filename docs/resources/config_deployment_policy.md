@@ -73,5 +73,9 @@ Optional:
 
 - `property` (String) Specifies the name of the property to add.
   - CLI Alias: `name`
+  - Required When: `type`=`add`
+  - Not Valid When: attribute is not conditionally required
 - `value` (String) Specifies the value of the added or changed property. To change a property value, you can use an explicit value or a value that contains a variable in the <tt>${ <i>variable</i> }</tt> format. If you use variables, you need a deployment policy variable configuration to map the variable to its replacement value. For example, when the value is <tt>${newName}</tt> or <tt>${newName}_Service</tt> , a referenced deployment policy variable configuration must map the <tt>newName</tt> variable to an explicit replacement value.
   - CLI Alias: `value`
+  - Required When: `type`=`add`|`change`
+  - Not Valid When: attribute is not conditionally required

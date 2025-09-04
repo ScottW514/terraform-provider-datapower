@@ -142,7 +142,7 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"pre_auth_msg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the banner message to display to users before the login prompt. White space characters ( <tt>\\n</tt> , <tt>\\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.", "preauth-msg", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the banner message to display to users before the login prompt. White space characters ( <tt>\\n</tt> , <tt>\\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.", "preauth-msg", "").AddNotValidWhen(models.SSHServerProfilePreAuthMsgIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"host_key_alg":       models.GetDmHostKeyAlgorithmsResourceSchema("Host key algorithms", "host-key-alg", "", false),

@@ -69,11 +69,13 @@ resource "datapower_as1_poller_source_protocol_handler" "test" {
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
   - Required When: (`conn_security`!=`none` AND `ssl_client_config_type`=`client`)
+  - Not Valid When: attribute is not conditionally required
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
   - Required When: `conn_security`!=`none`
+  - Not Valid When: `conn_security`=`none`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

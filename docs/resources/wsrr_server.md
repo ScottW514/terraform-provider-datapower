@@ -44,6 +44,7 @@ resource "datapower_wsrr_server" "test" {
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: `ssl_client_config_type`!=`client`
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
   - Choices: `client`

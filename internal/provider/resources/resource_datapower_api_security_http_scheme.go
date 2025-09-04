@@ -91,26 +91,26 @@ func (r *APISecurityHTTPSchemeResource) Schema(ctx context.Context, req resource
 				},
 			},
 			"bearer_format": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the bearer token is formatted. The format is primarily a hint.", "bearer-format", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the bearer token is formatted. The format is primarily a hint.", "bearer-format", "").AddNotValidWhen(models.APISecurityHTTPSchemeBearerFormatIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"bearer_validation_method": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Bearer validation method", "bearer-validation-method", "").AddStringEnum("external-url", "udp", "none").AddRequiredWhen(models.APISecurityHTTPSchemeBearerValidationMethodCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Bearer validation method", "bearer-validation-method", "").AddStringEnum("external-url", "udp", "none").AddRequiredWhen(models.APISecurityHTTPSchemeBearerValidationMethodCondVal.String()).AddNotValidWhen(models.APISecurityHTTPSchemeBearerValidationMethodIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("external-url", "udp", "none"),
-					validators.ConditionalRequiredString(models.APISecurityHTTPSchemeBearerValidationMethodCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.APISecurityHTTPSchemeBearerValidationMethodCondVal, models.APISecurityHTTPSchemeBearerValidationMethodIgnoreVal, false),
 				},
 			},
 			"bearer_validation_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.", "bearer-validation-endpoint", "").AddRequiredWhen(models.APISecurityHTTPSchemeBearerValidationEndpointCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.", "bearer-validation-endpoint", "").AddRequiredWhen(models.APISecurityHTTPSchemeBearerValidationEndpointCondVal.String()).AddNotValidWhen(models.APISecurityHTTPSchemeBearerValidationEndpointIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.APISecurityHTTPSchemeBearerValidationEndpointCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.APISecurityHTTPSchemeBearerValidationEndpointCondVal, models.APISecurityHTTPSchemeBearerValidationEndpointIgnoreVal, false),
 				},
 			},
 			"bearer_validation_tls_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.", "bearer-validation-tls-profile", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.", "bearer-validation-tls-profile", "ssl_client_profile").AddNotValidWhen(models.APISecurityHTTPSchemeBearerValidationTLSProfileIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

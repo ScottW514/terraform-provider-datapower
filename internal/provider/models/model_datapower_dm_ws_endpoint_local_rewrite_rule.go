@@ -112,15 +112,15 @@ func GetDmWSEndpointLocalRewriteRuleDataSourceSchema() DataSourceSchema.NestedAt
 				Computed:            true,
 			},
 			"local_endpoint_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").AddNotValidWhen(DmWSEndpointLocalRewriteRuleLocalEndpointProtocolIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"local_endpoint_hostname": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").AddNotValidWhen(DmWSEndpointLocalRewriteRuleLocalEndpointHostnameIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"local_endpoint_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").AddNotValidWhen(DmWSEndpointLocalRewriteRuleLocalEndpointPortIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"local_endpoint_uri": DataSourceSchema.StringAttribute{
@@ -128,7 +128,7 @@ func GetDmWSEndpointLocalRewriteRuleDataSourceSchema() DataSourceSchema.NestedAt
 				Computed:            true,
 			},
 			"front_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the Front Side Handler to use to determine the IP address, port, and protocol.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Front Side Handler to use to determine the IP address, port, and protocol.", "", "").AddRequiredWhen(DmWSEndpointLocalRewriteRuleFrontProtocolCondVal.String()).AddNotValidWhen(DmWSEndpointLocalRewriteRuleFrontProtocolIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"use_front_protocol": DataSourceSchema.BoolAttribute{
@@ -157,22 +157,23 @@ func GetDmWSEndpointLocalRewriteRuleResourceSchema() ResourceSchema.NestedAttrib
 				Default:             stringdefault.StaticString(".*"),
 			},
 			"local_endpoint_protocol": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").AddNotValidWhen(DmWSEndpointLocalRewriteRuleLocalEndpointProtocolIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "http", "https"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmWSEndpointLocalRewriteRuleLocalEndpointProtocolIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("default"),
 			},
 			"local_endpoint_hostname": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").AddNotValidWhen(DmWSEndpointLocalRewriteRuleLocalEndpointHostnameIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_endpoint_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").AddNotValidWhen(DmWSEndpointLocalRewriteRuleLocalEndpointPortIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"local_endpoint_uri": ResourceSchema.StringAttribute{
@@ -180,10 +181,10 @@ func GetDmWSEndpointLocalRewriteRuleResourceSchema() ResourceSchema.NestedAttrib
 				Optional:            true,
 			},
 			"front_protocol": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the Front Side Handler to use to determine the IP address, port, and protocol.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Front Side Handler to use to determine the IP address, port, and protocol.", "", "").AddRequiredWhen(DmWSEndpointLocalRewriteRuleFrontProtocolCondVal.String()).AddNotValidWhen(DmWSEndpointLocalRewriteRuleFrontProtocolIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSEndpointLocalRewriteRuleFrontProtocolCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSEndpointLocalRewriteRuleFrontProtocolCondVal, DmWSEndpointLocalRewriteRuleFrontProtocolIgnoreVal, false),
 				},
 			},
 			"use_front_protocol": ResourceSchema.BoolAttribute{

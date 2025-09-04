@@ -34,6 +34,7 @@ resource "datapower_api_operation" "test" {
 
 - `consume` (List of String) Specify MIME types that the operation can consume. This setting overrides the API-level consume declaration that is defined in the API definition.
   - CLI Alias: `consume`
+  - Not Valid When: `remove_consume`=`true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `method` (String) Method
   - CLI Alias: `method`
@@ -59,6 +60,7 @@ resource "datapower_api_operation" "test" {
 - `security` (List of String) Specify the alternative security requirements to enforce for the operation (that is, there is a logical OR between the security requirements). This setting overrides any declared API-level security.
   - CLI Alias: `security`
   - Reference to: `datapower_api_security_requirement:id`
+  - Not Valid When: `remove_security`=`true`
 - `soap_action` (String) SOAP action
   - CLI Alias: `soap-action`
 - `soap_element_name` (String) SOAP element name

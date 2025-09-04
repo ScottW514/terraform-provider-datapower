@@ -102,7 +102,7 @@ func GetDmAssemblyFunctionParameterDataSourceSchema() DataSourceSchema.NestedAtt
 				Computed:            true,
 			},
 			"required": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether this parameter requires a value in an assembly function call.", "required", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether this parameter requires a value in an assembly function call.", "required", "").AddDefaultValue("true").AddNotValidWhen(DmAssemblyFunctionParameterRequiredIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -142,7 +142,7 @@ func GetDmAssemblyFunctionParameterResourceSchema() ResourceSchema.NestedAttribu
 				Default: stringdefault.StaticString("string"),
 			},
 			"required": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether this parameter requires a value in an assembly function call.", "required", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether this parameter requires a value in an assembly function call.", "required", "").AddDefaultValue("true").AddNotValidWhen(DmAssemblyFunctionParameterRequiredIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),

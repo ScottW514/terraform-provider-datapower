@@ -34,11 +34,13 @@ resource "datapower_file_system_usage_monitor" "test" {
   - Range: `0`-`100`
   - Default value: `90`
   - Required When: `all_system`=`true`
+  - Not Valid When: `all_system`=`false`
 - `all_system_warning_threshold` (Number) Specify the usage threshold to generate a warning event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `all-system-warning`
   - Range: `0`-`100`
   - Default value: `75`
   - Required When: `all_system`=`true`
+  - Not Valid When: `all_system`=`false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`

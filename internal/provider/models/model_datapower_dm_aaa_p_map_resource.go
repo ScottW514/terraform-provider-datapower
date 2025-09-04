@@ -150,27 +150,27 @@ func GetDmAAAPMapResourceDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"mr_custom_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "custom-url", "").AddRequiredWhen(DmAAAPMapResourceMRCustomURLCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRCustomURLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"mr_map_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map resources.", "xmlfile-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map resources.", "xmlfile-url", "").AddRequiredWhen(DmAAAPMapResourceMRMapURLCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRMapURLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"mr_map_xpath": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the extracted resource.", "xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the extracted resource.", "xpath", "").AddRequiredWhen(DmAAAPMapResourceMRMapXPathCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRMapXPathIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"mr_tam_map": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Access Manager style-mapping resource. Access Manager organizes resources into a hierarchical protected object space. The default value is WebSEAL.", "tam-mapping", "").AddStringEnum("TFIM", "TAMBI", "WebSEAL", "Custom").AddDefaultValue("WebSEAL").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Access Manager style-mapping resource. Access Manager organizes resources into a hierarchical protected object space. The default value is WebSEAL.", "tam-mapping", "").AddStringEnum("TFIM", "TAMBI", "WebSEAL", "Custom").AddDefaultValue("WebSEAL").AddRequiredWhen(DmAAAPMapResourceMRTAMMapCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRTAMMapIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"mr_tam_instance_prefix": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the prefix to add based on the mapping style. Each protected object space has a defined convention. These different options help to map extracted resources to a resource string that follow a Tivoli naming convention.</p><ul><li>For the custom mapping style, specify the string to add as the prefix. In other words, use the <i>prefix</i> format.</li><li>For the TAMBI mapping style, specify the queue manager and queue, and separate the queue manager and the queue with a forward slash. In other words, use the <tt>/PDMQ/ <i>prefix</i></tt> format.</li><li>For the TFIM mapping style, specify the name of the Federated Identity Manager domain. In other words, use the <tt>/itfim-wssm/wssm-default/ <i>prefix</i></tt> format.</li><li>For the WebSEAL mapping style, specify the name of the WebSEAL instance. In other words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>", "tam-prefix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the prefix to add based on the mapping style. Each protected object space has a defined convention. These different options help to map extracted resources to a resource string that follow a Tivoli naming convention.</p><ul><li>For the custom mapping style, specify the string to add as the prefix. In other words, use the <i>prefix</i> format.</li><li>For the TAMBI mapping style, specify the queue manager and queue, and separate the queue manager and the queue with a forward slash. In other words, use the <tt>/PDMQ/ <i>prefix</i></tt> format.</li><li>For the TFIM mapping style, specify the name of the Federated Identity Manager domain. In other words, use the <tt>/itfim-wssm/wssm-default/ <i>prefix</i></tt> format.</li><li>For the WebSEAL mapping style, specify the name of the WebSEAL instance. In other words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>", "tam-prefix", "").AddRequiredWhen(DmAAAPMapResourceMRTAMInstancePrefixCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRTAMInstancePrefixIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"mr_tam_web_seal_dyn_url_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "webseal-dynurl-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "webseal-dynurl-file", "").AddNotValidWhen(DmAAAPMapResourceMRTAMWebSEALDynURLFileIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -196,45 +196,45 @@ func GetDmAAAPMapResourceResourceSchema(description string, cliAlias string, ref
 				Default: stringdefault.StaticString("none"),
 			},
 			"mr_custom_url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "custom-url", "").AddRequiredWhen(DmAAAPMapResourceMRCustomURLCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRCustomURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPMapResourceMRCustomURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPMapResourceMRCustomURLCondVal, DmAAAPMapResourceMRCustomURLIgnoreVal, false),
 				},
 			},
 			"mr_map_url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map resources.", "xmlfile-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map resources.", "xmlfile-url", "").AddRequiredWhen(DmAAAPMapResourceMRMapURLCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRMapURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPMapResourceMRMapURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPMapResourceMRMapURLCondVal, DmAAAPMapResourceMRMapURLIgnoreVal, false),
 				},
 			},
 			"mr_map_xpath": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the extracted resource.", "xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the extracted resource.", "xpath", "").AddRequiredWhen(DmAAAPMapResourceMRMapXPathCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRMapXPathIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPMapResourceMRMapXPathCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPMapResourceMRMapXPathCondVal, DmAAAPMapResourceMRMapXPathIgnoreVal, false),
 				},
 			},
 			"mr_tam_map": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Access Manager style-mapping resource. Access Manager organizes resources into a hierarchical protected object space. The default value is WebSEAL.", "tam-mapping", "").AddStringEnum("TFIM", "TAMBI", "WebSEAL", "Custom").AddDefaultValue("WebSEAL").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Access Manager style-mapping resource. Access Manager organizes resources into a hierarchical protected object space. The default value is WebSEAL.", "tam-mapping", "").AddStringEnum("TFIM", "TAMBI", "WebSEAL", "Custom").AddDefaultValue("WebSEAL").AddRequiredWhen(DmAAAPMapResourceMRTAMMapCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRTAMMapIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("TFIM", "TAMBI", "WebSEAL", "Custom"),
-					validators.ConditionalRequiredString(DmAAAPMapResourceMRTAMMapCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmAAAPMapResourceMRTAMMapCondVal, DmAAAPMapResourceMRTAMMapIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("WebSEAL"),
 			},
 			"mr_tam_instance_prefix": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the prefix to add based on the mapping style. Each protected object space has a defined convention. These different options help to map extracted resources to a resource string that follow a Tivoli naming convention.</p><ul><li>For the custom mapping style, specify the string to add as the prefix. In other words, use the <i>prefix</i> format.</li><li>For the TAMBI mapping style, specify the queue manager and queue, and separate the queue manager and the queue with a forward slash. In other words, use the <tt>/PDMQ/ <i>prefix</i></tt> format.</li><li>For the TFIM mapping style, specify the name of the Federated Identity Manager domain. In other words, use the <tt>/itfim-wssm/wssm-default/ <i>prefix</i></tt> format.</li><li>For the WebSEAL mapping style, specify the name of the WebSEAL instance. In other words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>", "tam-prefix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the prefix to add based on the mapping style. Each protected object space has a defined convention. These different options help to map extracted resources to a resource string that follow a Tivoli naming convention.</p><ul><li>For the custom mapping style, specify the string to add as the prefix. In other words, use the <i>prefix</i> format.</li><li>For the TAMBI mapping style, specify the queue manager and queue, and separate the queue manager and the queue with a forward slash. In other words, use the <tt>/PDMQ/ <i>prefix</i></tt> format.</li><li>For the TFIM mapping style, specify the name of the Federated Identity Manager domain. In other words, use the <tt>/itfim-wssm/wssm-default/ <i>prefix</i></tt> format.</li><li>For the WebSEAL mapping style, specify the name of the WebSEAL instance. In other words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>", "tam-prefix", "").AddRequiredWhen(DmAAAPMapResourceMRTAMInstancePrefixCondVal.String()).AddNotValidWhen(DmAAAPMapResourceMRTAMInstancePrefixIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPMapResourceMRTAMInstancePrefixCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPMapResourceMRTAMInstancePrefixCondVal, DmAAAPMapResourceMRTAMInstancePrefixIgnoreVal, false),
 				},
 			},
 			"mr_tam_web_seal_dyn_url_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "webseal-dynurl-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the DynURL file. The file must be in the <tt>local:</tt> or <tt>store:</tt> directory. When configured and an entry matches a request, the DynURL output replaces the output of the extracted resource string that is added to the prefix.", "webseal-dynurl-file", "").AddNotValidWhen(DmAAAPMapResourceMRTAMWebSEALDynURLFileIgnoreVal.String()).String,
 				Optional:            true,
 			},
 		},

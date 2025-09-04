@@ -113,16 +113,17 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: stringdefault.StaticString("virtual-ephemeral"),
 			},
 			"persistent_filesystem_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to retain a connection to a virtual file system after all FTP control connections from user identities are disconnected. When the timer expires, the virtual file system is destroyed. All response files that were not deleted by the FTP client are deleted from their storage area. Enter a value in the range 1 - 43200. The default value is 600.", "persistent-filesystem-timeout", "").AddIntegerRange(1, 43200).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to retain a connection to a virtual file system after all FTP control connections from user identities are disconnected. When the timer expires, the virtual file system is destroyed. All response files that were not deleted by the FTP client are deleted from their storage area. Enter a value in the range 1 - 43200. The default value is 600.", "persistent-filesystem-timeout", "").AddIntegerRange(1, 43200).AddDefaultValue("600").AddNotValidWhen(models.FTPServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 43200),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(600),
 			},
 			"virtual_directories": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directories to create in virtual file system that the FTP server presents. The FTP client can use all of these directories to write file to be processed. The root directory (/) is always present, cannot be created, and is its own response directory.", "virtual-directory", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directories to create in virtual file system that the FTP server presents. The FTP client can use all of these directories to write file to be processed. The root directory (/) is always present, cannot be created, and is its own response directory.", "virtual-directory", "").AddNotValidWhen(models.FTPServerSourceProtocolHandlerVirtualDirectoriesIgnoreVal.String()).String,
 				NestedObject:        models.GetDmFTPServerVirtualDirectoryResourceSchema(),
 				Optional:            true,
 			},
@@ -178,71 +179,74 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: stringdefault.StaticString("allow"),
 			},
 			"use_pasv_port_range": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to limit the port range for passive connections. <p>When enabled and the FTP server receives a <tt>PASV</tt> or <tt>EPSV</tt> command from the FTP client, the available port range is restricted from the listening port range 1024 - 65534. Use this setting when a firewall mandates that incoming FTP data connections on only a limited range of ports when it cannot sniff the FTP control connection.</p><p>The specified range limits how many FTP clients can be in the state between the receipt of the 227 response code to the <tt>PASV</tt> or <tt>EPSV</tt> command and the establishment of the FTP data connection. You can limit the pressure on this limited range by adjusting the idle timeout for passive data connections.</p><p><b>Note:</b> Do not configure a port range that overlaps with other services on the system. The system provides no check for these port conflicts. Generally, the other service allocates the ports, which makes these ports unavailable for the FTP server. The FTP server allocates these listing ports dynamically.</p>", "passive-port-range", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to limit the port range for passive connections. <p>When enabled and the FTP server receives a <tt>PASV</tt> or <tt>EPSV</tt> command from the FTP client, the available port range is restricted from the listening port range 1024 - 65534. Use this setting when a firewall mandates that incoming FTP data connections on only a limited range of ports when it cannot sniff the FTP control connection.</p><p>The specified range limits how many FTP clients can be in the state between the receipt of the 227 response code to the <tt>PASV</tt> or <tt>EPSV</tt> command and the establishment of the FTP data connection. You can limit the pressure on this limited range by adjusting the idle timeout for passive data connections.</p><p><b>Note:</b> Do not configure a port range that overlaps with other services on the system. The system provides no check for these port conflicts. Generally, the other service allocates the ports, which makes these ports unavailable for the FTP server. The FTP server allocates these listing ports dynamically.</p>", "passive-port-range", "").AddDefaultValue("false").AddNotValidWhen(models.FTPServerSourceProtocolHandlerUsePasvPortRangeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pasv_min_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the lowest port in the passive port range for data connections. This value must be less than the value of the maximum passive port. Enter a value in the range 1024 - 65534.", "passive-port-min", "").AddIntegerRange(1024, 65534).AddDefaultValue("1024").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the lowest port in the passive port range for data connections. This value must be less than the value of the maximum passive port. Enter a value in the range 1024 - 65534.", "passive-port-min", "").AddIntegerRange(1024, 65534).AddDefaultValue("1024").AddNotValidWhen(models.FTPServerSourceProtocolHandlerPasvMinPortIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1024, 65534),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerPasvMinPortIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1024),
 			},
 			"pasv_max_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the highest port in the passive port range for data connections. This value must be greater than the value of the minimum passive port. Enter a value in the range 1024 - 65534.", "passive-port-max", "").AddIntegerRange(1024, 65534).AddDefaultValue("1050").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the highest port in the passive port range for data connections. This value must be greater than the value of the minimum passive port. Enter a value in the range 1024 - 65534.", "passive-port-max", "").AddIntegerRange(1024, 65534).AddDefaultValue("1050").AddNotValidWhen(models.FTPServerSourceProtocolHandlerPasvMaxPortIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1024, 65534),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerPasvMaxPortIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1050),
 			},
 			"pasv_idle_time_out": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that the server waits for a client to establish a passive connection. Enter a value in the range 5 - 300. The default value is 60. <p>This setting controls the amount of time in seconds between when the FTP server issues code 227 (Entering Passive Mode) in response to the <tt>PASV</tt> or <tt>EPSV</tt> command from the FTP client and when the FTP client must establish a TCP data connection to the listening port and issue a data transfer command.</p><ul><li>If the data connection is not established within the timeout period, the listening port will be closed. If a data transfer command is issued after the port is closed, the command fails with code 425 and the <tt>Failed to open data connection</tt> message.</li><li>If the data connection is established but no data transfer command is issued within the timeout period, the TCP data connection will be closed. Any data transfer command after the timeout will be treated as if the <tt>PASV</tt> or <tt>EPSV</tt> command was never issued. The command fails with code 425 and the <tt>Require PASV or PORT command first</tt> message.</li></ul>", "passive-idle-timeout", "").AddIntegerRange(5, 300).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that the server waits for a client to establish a passive connection. Enter a value in the range 5 - 300. The default value is 60. <p>This setting controls the amount of time in seconds between when the FTP server issues code 227 (Entering Passive Mode) in response to the <tt>PASV</tt> or <tt>EPSV</tt> command from the FTP client and when the FTP client must establish a TCP data connection to the listening port and issue a data transfer command.</p><ul><li>If the data connection is not established within the timeout period, the listening port will be closed. If a data transfer command is issued after the port is closed, the command fails with code 425 and the <tt>Failed to open data connection</tt> message.</li><li>If the data connection is established but no data transfer command is issued within the timeout period, the TCP data connection will be closed. Any data transfer command after the timeout will be treated as if the <tt>PASV</tt> or <tt>EPSV</tt> command was never issued. The command fails with code 425 and the <tt>Require PASV or PORT command first</tt> message.</li></ul>", "passive-idle-timeout", "").AddIntegerRange(5, 300).AddDefaultValue("60").AddNotValidWhen(models.FTPServerSourceProtocolHandlerPasvIdleTimeOutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(5, 300),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerPasvIdleTimeOutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(60),
 			},
 			"disable_pasv_ip_check": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>", "passive-promiscuous", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>", "passive-promiscuous", "").AddDefaultValue("false").AddNotValidWhen(models.FTPServerSourceProtocolHandlerDisablePASVIPCheckIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"disable_port_ip_check": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>", "port-promiscuous", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>", "port-promiscuous", "").AddDefaultValue("false").AddNotValidWhen(models.FTPServerSourceProtocolHandlerDisablePORTIPCheckIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_alternate_pasv_addr": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use an alternate PASV IP address. When enabled, you can override the IP address that the FTP client presents to the server in passive mode. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>", "allow-passive-addr", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use an alternate PASV IP address. When enabled, you can override the IP address that the FTP client presents to the server in passive mode. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>", "allow-passive-addr", "").AddDefaultValue("false").AddNotValidWhen(models.FTPServerSourceProtocolHandlerUseAlternatePASVAddrIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"alternate_pasv_addr": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address to return to the FTP client in response to a <tt>PASV</tt> command. This setting does not change the IP address that the FTP server listens, which is always the IP address for the FTP data connection. This value is used when the FTP server is behind a firewall that is not FTP-aware.", "passive-addr", "").AddRequiredWhen(models.FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address to return to the FTP client in response to a <tt>PASV</tt> command. This setting does not change the IP address that the FTP server listens, which is always the IP address for the FTP data connection. This value is used when the FTP server is behind a firewall that is not FTP-aware.", "passive-addr", "").AddRequiredWhen(models.FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal.String()).AddNotValidWhen(models.FTPServerSourceProtocolHandlerAlternatePASVAddrIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal, models.FTPServerSourceProtocolHandlerAlternatePASVAddrIgnoreVal, false),
 				},
 			},
 			"allow_list_cmd": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to support the FTP <tt>LIST</tt> command. When enabled, the FTP server makes a distinction between the <tt>LIST</tt> and <tt>NLST</tt> commands. By default, the server always respond with an <tt>NLST</tt> to list files. <p>This setting is only supported by the FTP server handler for a multiprotocol gateway or web service proxy.</p>", "list-cmd", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to support the FTP <tt>LIST</tt> command. When enabled, the FTP server makes a distinction between the <tt>LIST</tt> and <tt>NLST</tt> commands. By default, the server always respond with an <tt>NLST</tt> to list files. <p>This setting is only supported by the FTP server handler for a multiprotocol gateway or web service proxy.</p>", "list-cmd", "").AddDefaultValue("false").AddNotValidWhen(models.FTPServerSourceProtocolHandlerAllowLISTCmdIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_dele_cmd": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to support the FTP <tt>DELE</tt> command. When enabled, the <tt>DELE</tt> command can be passed to the FTP server. The default behavior is to not support the <tt>DELE</tt> command. <p>This setting is only valid in a transparent file system. This setting is only supported by the FTP server handler for a multiprotocol gateway or web service proxy.</p>", "dele-cmd", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to support the FTP <tt>DELE</tt> command. When enabled, the <tt>DELE</tt> command can be passed to the FTP server. The default behavior is to not support the <tt>DELE</tt> command. <p>This setting is only valid in a transparent file system. This setting is only supported by the FTP server handler for a multiprotocol gateway or web service proxy.</p>", "dele-cmd", "").AddDefaultValue("false").AddNotValidWhen(models.FTPServerSourceProtocolHandlerAllowDELECmdIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -269,24 +273,26 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default:             booldefault.StaticBool(false),
 			},
 			"unique_filename_prefix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix for file names that the FTP <tt>STOU</tt> command generates. For the prefix, the directory separator (/ character) is not allowed. The default value is an empty string, which indicates to not add a prefix. <p><b>Note:</b> Processing adds a numeric suffix.</p>", "unique-filename-prefix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix for file names that the FTP <tt>STOU</tt> command generates. For the prefix, the directory separator (/ character) is not allowed. The default value is an empty string, which indicates to not add a prefix. <p><b>Note:</b> Processing adds a numeric suffix.</p>", "unique-filename-prefix", "").AddNotValidWhen(models.FTPServerSourceProtocolHandlerUniqueFilenamePrefixIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^[^/]*$"), "Must match :"+"^[^/]*$"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerUniqueFilenamePrefixIgnoreVal, false),
 				},
 			},
 			"allow_rest": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the FTP client can use the FTP <tt>REST</tt> command after an interrupted file transfer. Restart ( <tt>REST</tt> ) is supported in the BSD stream style as described in <tt>draft-ietf-ftpext-mlst-16.txt</tt> . The MODE B style that is described in RFC 959 is not supported. The FTP server must be configured with a virtual persistent file system. <p>For written files, the server delays the processing until a timer expires or until the next FTP command other than a <tt>SIZE</tt> or <tt>REST</tt> command. With this processing, the FTP client can return and resume the transfer by using the <tt>SIZE</tt> , <tt>REST</tt> , and <tt>STOR</tt> commands. The argument to the <tt>REST</tt> command must be the same as the byte count the the <tt>SIZE</tt> command returned.</p>", "allow-restart", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the FTP client can use the FTP <tt>REST</tt> command after an interrupted file transfer. Restart ( <tt>REST</tt> ) is supported in the BSD stream style as described in <tt>draft-ietf-ftpext-mlst-16.txt</tt> . The MODE B style that is described in RFC 959 is not supported. The FTP server must be configured with a virtual persistent file system. <p>For written files, the server delays the processing until a timer expires or until the next FTP command other than a <tt>SIZE</tt> or <tt>REST</tt> command. With this processing, the FTP client can return and resume the transfer by using the <tt>SIZE</tt> , <tt>REST</tt> , and <tt>STOR</tt> commands. The argument to the <tt>REST</tt> command must be the same as the byte count the the <tt>SIZE</tt> command returned.</p>", "allow-restart", "").AddDefaultValue("false").AddNotValidWhen(models.FTPServerSourceProtocolHandlerAllowRESTIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"restart_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for a restart. When restart ( <tt>REST</tt> ) is enabled, the FTP client must reconnect to the server and use the <tt>SIZE</tt> , <tt>REST</tt> , and <tt>STOR</tt> commands to continue an interrupted file transfer. When this timer elapses, the previously received data on the data connection is passed to the DataPower service. This timer is canceled when a command other than <tt>SIZE</tt> or <tt>REST</tt> is received on the FTP control connection.", "restart-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("240").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for a restart. When restart ( <tt>REST</tt> ) is enabled, the FTP client must reconnect to the server and use the <tt>SIZE</tt> , <tt>REST</tt> , and <tt>STOR</tt> commands to continue an interrupted file transfer. When this timer elapses, the previously received data on the data connection is passed to the DataPower service. This timer is canceled when a command other than <tt>SIZE</tt> or <tt>REST</tt> is received on the FTP control connection.", "restart-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("240").AddNotValidWhen(models.FTPServerSourceProtocolHandlerRestartTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerRestartTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(240),
 			},
@@ -300,41 +306,45 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(0),
 			},
 			"response_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to make response files available to FTP client for gateway transactions that are started by using an FTP STOR or SOUT operation.", "response-type", "").AddStringEnum("none", "virtual-filesystem").AddDefaultValue("none").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to make response files available to FTP client for gateway transactions that are started by using an FTP STOR or SOUT operation.", "response-type", "").AddStringEnum("none", "virtual-filesystem").AddDefaultValue("none").AddNotValidWhen(models.FTPServerSourceProtocolHandlerResponseTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "virtual-filesystem"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerResponseTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("none"),
 			},
 			"response_storage": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Response storage", "response-storage", "").AddStringEnum("temporary", "nfs").AddDefaultValue("temporary").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Response storage", "response-storage", "").AddStringEnum("temporary", "nfs").AddDefaultValue("temporary").AddNotValidWhen(models.FTPServerSourceProtocolHandlerResponseStorageIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("temporary", "nfs"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerResponseStorageIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("temporary"),
 			},
 			"temporary_storage_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in MB for the temporary file system. Enter a value in the range 1 - 2048. The default value is 32.", "filesystem-size", "").AddIntegerRange(1, 2048).AddDefaultValue("32").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in MB for the temporary file system. Enter a value in the range 1 - 2048. The default value is 32.", "filesystem-size", "").AddIntegerRange(1, 2048).AddDefaultValue("32").AddNotValidWhen(models.FTPServerSourceProtocolHandlerTemporaryStorageSizeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 2048),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerTemporaryStorageSizeIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(32),
 			},
 			"response_nf_sm_ount": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When the response type is virtual file system and response storage is NFS, specify the NFS static mount to store response files. Each response file has a unique file name in the NFS directory. The name of the response file is not related to the file name that the virtual file system presents to the FTP client. Generally, this NFS directory is not made available through the FTP server. Do not use this directory for any other purpose.", "response-nfs-mount", "nfs_static_mount").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When the response type is virtual file system and response storage is NFS, specify the NFS static mount to store response files. Each response file has a unique file name in the NFS directory. The name of the response file is not related to the file name that the virtual file system presents to the FTP client. Generally, this NFS directory is not made available through the FTP server. Do not use this directory for any other purpose.", "response-nfs-mount", "nfs_static_mount").AddNotValidWhen(models.FTPServerSourceProtocolHandlerResponseNFSMountIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"response_suffix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When the response type is a virtual file system, specify the suffix to add when generating response files. The directory separator (/ character) is not allowed. If the response type is a virtual file system and the FTP client is writing in virtual directories that do not have a response directory or if the response directory is the same as the virtual directory, this value must have a non-empty value. If empty, the response attempts to overwrite the request, which is not allowed. The default value is an empty string.", "response-suffix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When the response type is a virtual file system, specify the suffix to add when generating response files. The directory separator (/ character) is not allowed. If the response type is a virtual file system and the FTP client is writing in virtual directories that do not have a response directory or if the response directory is the same as the virtual directory, this value must have a non-empty value. If empty, the response attempts to overwrite the request, which is not allowed. The default value is an empty string.", "response-suffix", "").AddNotValidWhen(models.FTPServerSourceProtocolHandlerResponseSuffixIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^[^/]*$"), "Must match :"+"^[^/]*$"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.FTPServerSourceProtocolHandlerResponseSuffixIgnoreVal, false),
 				},
 			},
 			"ssl_server_config_type": schema.StringAttribute{
@@ -348,17 +358,17 @@ func (r *FTPServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").AddRequiredWhen(models.FTPServerSourceProtocolHandlerSSLServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").AddRequiredWhen(models.FTPServerSourceProtocolHandlerSSLServerCondVal.String()).AddNotValidWhen(models.FTPServerSourceProtocolHandlerSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerSSLServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerSSLServerCondVal, models.FTPServerSourceProtocolHandlerSSLServerIgnoreVal, false),
 				},
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.FTPServerSourceProtocolHandlerSSLSNIServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.FTPServerSourceProtocolHandlerSSLSNIServerCondVal.String()).AddNotValidWhen(models.FTPServerSourceProtocolHandlerSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerSSLSNIServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.FTPServerSourceProtocolHandlerSSLSNIServerCondVal, models.FTPServerSourceProtocolHandlerSSLSNIServerIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

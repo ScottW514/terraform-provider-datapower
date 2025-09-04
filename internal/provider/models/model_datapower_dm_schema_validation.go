@@ -113,15 +113,15 @@ func GetDmSchemaValidationDataSourceSchema() DataSourceSchema.NestedAttributeObj
 				Computed:            true,
 			},
 			"schema_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.", "", "").AddRequiredWhen(DmSchemaValidationSchemaURLCondVal.String()).AddNotValidWhen(DmSchemaValidationSchemaURLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"url_rewrite_policy": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.", "", "url_rewrite_policy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.", "", "url_rewrite_policy").AddRequiredWhen(DmSchemaValidationURLRewritePolicyCondVal.String()).AddNotValidWhen(DmSchemaValidationURLRewritePolicyIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"dynamic_schema": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.", "", "").AddRequiredWhen(DmSchemaValidationDynamicSchemaCondVal.String()).AddNotValidWhen(DmSchemaValidationDynamicSchemaIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -143,24 +143,24 @@ func GetDmSchemaValidationResourceSchema() ResourceSchema.NestedAttributeObject 
 				},
 			},
 			"schema_url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.", "", "").AddRequiredWhen(DmSchemaValidationSchemaURLCondVal.String()).AddNotValidWhen(DmSchemaValidationSchemaURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSchemaValidationSchemaURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmSchemaValidationSchemaURLCondVal, DmSchemaValidationSchemaURLIgnoreVal, false),
 				},
 			},
 			"url_rewrite_policy": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.", "", "url_rewrite_policy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.", "", "url_rewrite_policy").AddRequiredWhen(DmSchemaValidationURLRewritePolicyCondVal.String()).AddNotValidWhen(DmSchemaValidationURLRewritePolicyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSchemaValidationURLRewritePolicyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmSchemaValidationURLRewritePolicyCondVal, DmSchemaValidationURLRewritePolicyIgnoreVal, false),
 				},
 			},
 			"dynamic_schema": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.", "", "").AddRequiredWhen(DmSchemaValidationDynamicSchemaCondVal.String()).AddNotValidWhen(DmSchemaValidationDynamicSchemaIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSchemaValidationDynamicSchemaCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmSchemaValidationDynamicSchemaCondVal, DmSchemaValidationDynamicSchemaIgnoreVal, false),
 				},
 			},
 		},

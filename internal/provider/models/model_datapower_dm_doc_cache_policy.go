@@ -170,7 +170,7 @@ func GetDmDocCachePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				Computed:            true,
 			},
 			"ttl": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("900").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("900").AddRequiredWhen(DmDocCachePolicyTTLCondVal.String()).AddNotValidWhen(DmDocCachePolicyTTLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"priority": DataSourceSchema.Int64Attribute{
@@ -178,27 +178,27 @@ func GetDmDocCachePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				Computed:            true,
 			},
 			"xc10grid": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").AddNotValidWhen(DmDocCachePolicyXC10GridIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"cache_backend_responses": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to requests from back-end servers.", "cache-backend-response", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to requests from back-end servers.", "cache-backend-response", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyCacheBackendResponsesIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"http_cache_validation": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.", "http-cache-validation", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.", "http-cache-validation", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyHTTPCacheValidationIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"return_expired": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>", "return-expired", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>", "return-expired", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyReturnExpiredIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"rest_invalidation": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.", "rest-invalidation", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.", "rest-invalidation", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyRESTInvalidationIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"cache_unsafe_response": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyCacheUnsafeResponseIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -222,12 +222,12 @@ func GetDmDocCachePolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("protocol"),
 			},
 			"ttl": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("900").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("900").AddRequiredWhen(DmDocCachePolicyTTLCondVal.String()).AddNotValidWhen(DmDocCachePolicyTTLIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 31708800),
-					validators.ConditionalRequiredInt64(DmDocCachePolicyTTLCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(DmDocCachePolicyTTLCondVal, DmDocCachePolicyTTLIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(900),
 			},
@@ -241,35 +241,35 @@ func GetDmDocCachePolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: int64default.StaticInt64(128),
 			},
 			"xc10grid": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").AddNotValidWhen(DmDocCachePolicyXC10GridIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"cache_backend_responses": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to requests from back-end servers.", "cache-backend-response", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to requests from back-end servers.", "cache-backend-response", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyCacheBackendResponsesIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"http_cache_validation": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.", "http-cache-validation", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.", "http-cache-validation", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyHTTPCacheValidationIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"return_expired": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>", "return-expired", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>", "return-expired", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyReturnExpiredIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"rest_invalidation": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.", "rest-invalidation", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.", "rest-invalidation", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyRESTInvalidationIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"cache_unsafe_response": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyCacheUnsafeResponseIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),

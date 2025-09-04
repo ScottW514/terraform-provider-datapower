@@ -60,6 +60,10 @@ Optional:
 Read-Only:
 
 - `hostname` (String) Specify the host name of the other system in the high availability cluster.
+  - Required When: `ha_enabled`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `port` (Number) Specify the listening port on the other system in the high availability cluster.
   - Range: `1`-`65535`
   - Default value: `1320`
+  - Required When: `ha_enabled`=`true`
+  - Not Valid When: attribute is not conditionally required

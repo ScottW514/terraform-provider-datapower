@@ -91,7 +91,7 @@ func GetDmExternalAttachedPolicyDataSourceSchema() DataSourceSchema.NestedAttrib
 				Computed:            true,
 			},
 			"external_attach_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a WSDL component formatted {ns}ncname", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a WSDL component formatted {ns}ncname", "", "").AddRequiredWhen(DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal.String()).AddNotValidWhen(DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"external_attach_policy_url": DataSourceSchema.StringAttribute{
@@ -99,7 +99,7 @@ func GetDmExternalAttachedPolicyDataSourceSchema() DataSourceSchema.NestedAttrib
 				Computed:            true,
 			},
 			"external_attach_policy_fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").AddNotValidWhen(DmExternalAttachedPolicyExternalAttachPolicyFragmentIDIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"external_attach_message_content_filter": DataSourceSchema.StringAttribute{
@@ -125,10 +125,10 @@ func GetDmExternalAttachedPolicyResourceSchema() ResourceSchema.NestedAttributeO
 				},
 			},
 			"external_attach_wsdl_component_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a WSDL component formatted {ns}ncname", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a WSDL component formatted {ns}ncname", "", "").AddRequiredWhen(DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal.String()).AddNotValidWhen(DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal, DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal, false),
 				},
 			},
 			"external_attach_policy_url": ResourceSchema.StringAttribute{
@@ -136,7 +136,7 @@ func GetDmExternalAttachedPolicyResourceSchema() ResourceSchema.NestedAttributeO
 				Required:            true,
 			},
 			"external_attach_policy_fragment_id": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").AddNotValidWhen(DmExternalAttachedPolicyExternalAttachPolicyFragmentIDIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"external_attach_message_content_filter": ResourceSchema.StringAttribute{

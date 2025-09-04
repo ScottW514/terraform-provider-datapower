@@ -39,6 +39,7 @@ resource "datapower_web_app_error_handling_policy" "test" {
   - CLI Alias: `error-rule`
   - Reference to: `datapower_style_policy_rule:id`
   - Required When: `type`=`error-rule`
+  - Not Valid When: attribute is not conditionally required
 - `type` (String) Specify the mode for error handling. The default value is standard.
   - CLI Alias: `type`
   - Choices: `standard`, `redirect`, `proxy`, `error-rule`
@@ -46,6 +47,7 @@ resource "datapower_web_app_error_handling_policy" "test" {
 - `url` (String) URL
   - CLI Alias: `error-url`
   - Required When: `type`=`redirect`|`proxy`
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

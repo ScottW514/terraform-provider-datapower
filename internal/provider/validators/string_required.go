@@ -41,11 +41,20 @@ func (v conditionalRequiredString) MarkdownDescription(ctx context.Context) stri
 }
 
 func (v conditionalRequiredString) ValidateString(ctx context.Context, req validator.StringRequest, resp *validator.StringResponse) {
-	if req.ConfigValue.IsNull() && !v.HasDefault && v.RequiredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
+	matchesRequired := v.RequiredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path)
+	if !req.ConfigValue.IsNull() && matchesRequired {
+		return
+	} else if req.ConfigValue.IsNull() && !v.HasDefault && matchesRequired {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",
 			fmt.Sprintf("Attribute '%s' is required when %s", req.Path, v.RequiredConditions.String()),
+		)
+	} else if !req.ConfigValue.IsNull() && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
+		resp.Diagnostics.AddAttributeError(
+			req.Path,
+			"Invalid Attribute Configuration",
+			fmt.Sprintf("Attribute '%s' is not expected when %s", req.Path, v.IgnoredConditions.String()),
 		)
 	}
 }

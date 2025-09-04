@@ -81,22 +81,22 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"ssh_au_method": models.GetDmRBMSSHAuthenticateTypeResourceSchema("Specify the method to authenticate SSH users. <ul><li>When no method, the user is prompted for both username and password.</li><li>When password, the user is prompted for the password. For this method, the username must be part of the invocation. With the ssh command, the invocation is in the ssh username@host format.</li><li>When user certificate, the user is not prompted for input. The connection is successful when the invocation provides a signed SSH user certificate that is verified by the CA public key file in the <tt>cert:</tt> directory. With the ssh command, the invocation must include the -i file parameter.</li><li>When both certificate and password, processing attempts to first authenticate with the provided signed SSH user certificate. If unsuccessful, prompts for the password.</li><li>Supported RBM authentication methods with SSH authentication method are local and LDAP. <ul><li>Local authentication method extracts the certificate identity and attempts login with local User of that name.</li><li>LDAP authentication method constructs the DN through LDAP search or by applying the configured prefix and suffix. Since SSH authentication completes prior to the Authentication step no LDAP bind or authenticate will take place.</li></ul></li></ul>", "ssh-au-method", "", false),
 			"ca_pub_key_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate authority (CA) public key file in the <tt>cert:</tt> directory for SSH authentication with SSH user certificates. This public key file contains the public key for one or more certificate authorities.", "ssh-ca-pubkey-file", "").AddRequiredWhen(models.RBMSettingsCAPubKeyFileCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate authority (CA) public key file in the <tt>cert:</tt> directory for SSH authentication with SSH user certificates. This public key file contains the public key for one or more certificate authorities.", "ssh-ca-pubkey-file", "").AddRequiredWhen(models.RBMSettingsCAPubKeyFileCondVal.String()).AddNotValidWhen(models.RBMSettingsCAPubKeyFileIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsCAPubKeyFileCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsCAPubKeyFileCondVal, models.RBMSettingsCAPubKeyFileIgnoreVal, false),
 				},
 			},
 			"revoked_keys": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the OpenSSH public keys to revoke for SSH authentication. Each entry is the public key file in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory and must be in the OpenSSH public key format. These keys are signed by the CA user public key file.", "ssh-revoked-keys", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the OpenSSH public keys to revoke for SSH authentication. Each entry is the public key file in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory and must be in the OpenSSH public key format. These keys are signed by the CA user public key file.", "ssh-revoked-keys", "").AddNotValidWhen(models.RBMSettingsRevokedKeysIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"au_zos_nss_config": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("z/OS NSS client", "zos-nss-au", "zos_nss_client").AddRequiredWhen(models.RBMSettingsAUZOSNSSConfigCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("z/OS NSS client", "zos-nss-au", "zos_nss_client").AddRequiredWhen(models.RBMSettingsAUZOSNSSConfigCondVal.String()).AddNotValidWhen(models.RBMSettingsAUZOSNSSConfigIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsAUZOSNSSConfigCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsAUZOSNSSConfigCondVal, models.RBMSettingsAUZOSNSSConfigIgnoreVal, false),
 				},
 			},
 			"au_oidc_scope": schema.StringAttribute{
@@ -131,86 +131,86 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"au_kerberos_keytab": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Kerberos keytab", "au-kerberos-keytab", "crypto_kerberos_keytab").AddRequiredWhen(models.RBMSettingsAUKerberosKeytabCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Kerberos keytab", "au-kerberos-keytab", "crypto_kerberos_keytab").AddRequiredWhen(models.RBMSettingsAUKerberosKeytabCondVal.String()).AddNotValidWhen(models.RBMSettingsAUKerberosKeytabIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsAUKerberosKeytabCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsAUKerberosKeytabCondVal, models.RBMSettingsAUKerberosKeytabIgnoreVal, false),
 				},
 			},
 			"au_custom_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom URL", "au-custom-url", "").AddRequiredWhen(models.RBMSettingsAUCustomURLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom URL", "au-custom-url", "").AddRequiredWhen(models.RBMSettingsAUCustomURLCondVal.String()).AddNotValidWhen(models.RBMSettingsAUCustomURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsAUCustomURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsAUCustomURLCondVal, models.RBMSettingsAUCustomURLIgnoreVal, false),
 				},
 			},
 			"au_info_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the XML file for authentication. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file to map credentials.", "au-info-url", "").AddRequiredWhen(models.RBMSettingsAUInfoURLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the XML file for authentication. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file to map credentials.", "au-info-url", "").AddRequiredWhen(models.RBMSettingsAUInfoURLCondVal.String()).AddNotValidWhen(models.RBMSettingsAUInfoURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsAUInfoURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsAUInfoURLCondVal, models.RBMSettingsAUInfoURLIgnoreVal, false),
 				},
 			},
 			"au_ssl_valcred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials", "au-valcred", "crypto_val_cred").AddRequiredWhen(models.RBMSettingsAUSSLValcredCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials", "au-valcred", "crypto_val_cred").AddRequiredWhen(models.RBMSettingsAUSSLValcredCondVal.String()).AddNotValidWhen(models.RBMSettingsAUSSLValcredIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsAUSSLValcredCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsAUSSLValcredCondVal, models.RBMSettingsAUSSLValcredIgnoreVal, false),
 				},
 			},
 			"au_host": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Server host", "au-server-host", "").AddRequiredWhen(models.RBMSettingsAUHostCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Server host", "au-server-host", "").AddRequiredWhen(models.RBMSettingsAUHostCondVal.String()).AddNotValidWhen(models.RBMSettingsAUHostIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsAUHostCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsAUHostCondVal, models.RBMSettingsAUHostIgnoreVal, false),
 				},
 			},
 			"au_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Server port", "au-server-port", "").AddRequiredWhen(models.RBMSettingsAUPortCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Server port", "au-server-port", "").AddRequiredWhen(models.RBMSettingsAUPortCondVal.String()).AddNotValidWhen(models.RBMSettingsAUPortIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(models.RBMSettingsAUPortCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(models.RBMSettingsAUPortCondVal, models.RBMSettingsAUPortIgnoreVal, false),
 				},
 			},
 			"au_ldap_search_for_dn": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve the user DN with an LDAP search. <ul><li>When enabled, the login name presented by the user is used with the LDAP search parameters for an LDAP search to retrieve the user DN.</li><li>When disabled, the login name presented by the user is used with the LDAP prefix and suffix to construct the user DN.</li></ul>", "au-ldap-search", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve the user DN with an LDAP search. <ul><li>When enabled, the login name presented by the user is used with the LDAP search parameters for an LDAP search to retrieve the user DN.</li><li>When disabled, the login name presented by the user is used with the LDAP prefix and suffix to construct the user DN.</li></ul>", "au-ldap-search", "").AddDefaultValue("false").AddNotValidWhen(models.RBMSettingsAULDAPSearchForDNIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"au_ldap_bind_dn": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind DN", "au-ldap-bind-dn", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind DN", "au-ldap-bind-dn", "").AddNotValidWhen(models.RBMSettingsAULDAPBindDNIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"au_ldap_bind_password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind password alias", "au-ldap-bind-password-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind password alias", "au-ldap-bind-password-alias", "password_alias").AddNotValidWhen(models.RBMSettingsAULDAPBindPasswordAliasIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"au_ldap_search_parameters": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP search parameters", "au-ldap-parameters", "ldap_search_parameters").AddRequiredWhen(models.RBMSettingsAULDAPSearchParametersCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("LDAP search parameters", "au-ldap-parameters", "ldap_search_parameters").AddRequiredWhen(models.RBMSettingsAULDAPSearchParametersCondVal.String()).AddNotValidWhen(models.RBMSettingsAULDAPSearchParametersIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsAULDAPSearchParametersCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsAULDAPSearchParametersCondVal, models.RBMSettingsAULDAPSearchParametersIgnoreVal, false),
 				},
 			},
 			"au_ldap_prefix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the string to add before the username to form the DN. If this value is <tt>CN=</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP suffix is <tt>O=example.com</tt> .", "ldap-prefix", "").AddDefaultValue("cn=").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the string to add before the username to form the DN. If this value is <tt>CN=</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP suffix is <tt>O=example.com</tt> .", "ldap-prefix", "").AddDefaultValue("cn=").AddNotValidWhen(models.RBMSettingsAULDAPPrefixIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("cn="),
 			},
 			"au_force_dn_ldap_order": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>", "au-force-dn-ldap-order", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>", "au-force-dn-ldap-order", "").AddDefaultValue("false").AddNotValidWhen(models.RBMSettingsAUForceDNLDAPOrderIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ldap_suffix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the string to add after the username to form the DN. If this value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .", "ldap-suffix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the string to add after the username to form the DN. If this value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .", "ldap-suffix", "").AddNotValidWhen(models.RBMSettingsLDAPsuffixIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"au_ldap_load_balance_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the load balancer group of LDAP servers. This setting overrides the settings for the server host and port.", "loadbalancer-group", "load_balancer_group").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the load balancer group of LDAP servers. This setting overrides the settings for the server host and port.", "loadbalancer-group", "load_balancer_group").AddNotValidWhen(models.RBMSettingsAULDAPLoadBalanceGroupIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"au_cache_allow": schema.StringAttribute{
@@ -223,20 +223,22 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: stringdefault.StaticString("absolute"),
 			},
 			"au_cache_ttl": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expiry for cached authentication decisions. Enter a value in the range 1 - 86400. The default value is 600.", "au-cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expiry for cached authentication decisions. Enter a value in the range 1 - 86400. The default value is 600.", "au-cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("600").AddNotValidWhen(models.RBMSettingsAUCacheTTLIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.RBMSettingsAUCacheTTLIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(600),
 			},
 			"au_ldap_read_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.", "au-ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.", "au-ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").AddNotValidWhen(models.RBMSettingsAULDAPReadTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.RBMSettingsAULDAPReadTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(60),
 			},
@@ -250,94 +252,97 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: stringdefault.StaticString("local"),
 			},
 			"mc_custom_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom URL", "mc-custom-url", "").AddRequiredWhen(models.RBMSettingsMCCustomURLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom URL", "mc-custom-url", "").AddRequiredWhen(models.RBMSettingsMCCustomURLCondVal.String()).AddNotValidWhen(models.RBMSettingsMCCustomURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsMCCustomURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsMCCustomURLCondVal, models.RBMSettingsMCCustomURLIgnoreVal, false),
 				},
 			},
 			"mc_ldap_search_for_group": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to search LDAP to retrieve all user groups that match the query. <ul><li>When enabled, the authenticated DN of the user and the LDAP search parameters are used as part of the LDAP search to retrieve all user groups that match the query. When a user belongs to multiple groups, the resultant access policy for this user is additive not most restrictive.</li><li>When disabled, the authenticated identity of the user (DN or user group of local user) is used directly as the input credential.</li></ul>", "mc-ldap-search", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to search LDAP to retrieve all user groups that match the query. <ul><li>When enabled, the authenticated DN of the user and the LDAP search parameters are used as part of the LDAP search to retrieve all user groups that match the query. When a user belongs to multiple groups, the resultant access policy for this user is additive not most restrictive.</li><li>When disabled, the authenticated identity of the user (DN or user group of local user) is used directly as the input credential.</li></ul>", "mc-ldap-search", "").AddDefaultValue("false").AddNotValidWhen(models.RBMSettingsMCLDAPSearchForGroupIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"mc_host": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Server host", "mc-server-host", "").AddRequiredWhen(models.RBMSettingsMCHostCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Server host", "mc-server-host", "").AddRequiredWhen(models.RBMSettingsMCHostCondVal.String()).AddNotValidWhen(models.RBMSettingsMCHostIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsMCHostCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsMCHostCondVal, models.RBMSettingsMCHostIgnoreVal, false),
 				},
 			},
 			"mc_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Server port", "mc-server-port", "").AddRequiredWhen(models.RBMSettingsMCPortCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Server port", "mc-server-port", "").AddRequiredWhen(models.RBMSettingsMCPortCondVal.String()).AddNotValidWhen(models.RBMSettingsMCPortIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(models.RBMSettingsMCPortCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(models.RBMSettingsMCPortCondVal, models.RBMSettingsMCPortIgnoreVal, false),
 				},
 			},
 			"mc_ldap_load_balance_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Load balancer group", "mc-loadbalancer-group", "load_balancer_group").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Load balancer group", "mc-loadbalancer-group", "load_balancer_group").AddNotValidWhen(models.RBMSettingsMCLDAPLoadBalanceGroupIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"mc_ldap_bind_dn": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind DN", "mc-ldap-bind-dn", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind DN", "mc-ldap-bind-dn", "").AddNotValidWhen(models.RBMSettingsMCLDAPBindDNIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"mc_ldap_bind_password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind password alias", "mc-ldap-bind-password-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind password alias", "mc-ldap-bind-password-alias", "password_alias").AddNotValidWhen(models.RBMSettingsMCLDAPBindPasswordAliasIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"mc_ldap_search_parameters": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP search parameters", "mc-ldap-parameters", "ldap_search_parameters").AddRequiredWhen(models.RBMSettingsMCLDAPSearchParametersCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("LDAP search parameters", "mc-ldap-parameters", "ldap_search_parameters").AddRequiredWhen(models.RBMSettingsMCLDAPSearchParametersCondVal.String()).AddNotValidWhen(models.RBMSettingsMCLDAPSearchParametersIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsMCLDAPSearchParametersCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsMCLDAPSearchParametersCondVal, models.RBMSettingsMCLDAPSearchParametersIgnoreVal, false),
 				},
 			},
 			"mc_info_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the XML file to map credentials. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file for authentication.", "mc-info-url", "").AddRequiredWhen(models.RBMSettingsMCInfoURLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the XML file to map credentials. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file for authentication.", "mc-info-url", "").AddRequiredWhen(models.RBMSettingsMCInfoURLCondVal.String()).AddNotValidWhen(models.RBMSettingsMCInfoURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.RBMSettingsMCInfoURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.RBMSettingsMCInfoURLCondVal, models.RBMSettingsMCInfoURLIgnoreVal, false),
 				},
 			},
 			"mc_ldap_read_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.", "mc-ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.", "mc-ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").AddNotValidWhen(models.RBMSettingsMCLDAPReadTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.RBMSettingsMCLDAPReadTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(60),
 			},
 			"ldap_version": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP version", "ldap-version", "").AddStringEnum("v2", "v3").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("LDAP version", "ldap-version", "").AddStringEnum("v2", "v3").AddNotValidWhen(models.RBMSettingsLDAPVersionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("v2", "v3"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.RBMSettingsLDAPVersionIgnoreVal, false),
 				},
 			},
 			"fallback_login": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use local user accounts as fallback users if remote authentication fails. With fallback users, local user accounts can log on to the DataPower Gateway if authentication fails or during a network outage that affects primary authentication. The recommendation is to restrict fallback users to a subset of local user accounts. <p><b>Note: </b>When authentication uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions unless fallback users are supported.</p>", "fallback-login", "").AddStringEnum("disabled", "local", "restricted").AddDefaultValue("disabled").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use local user accounts as fallback users if remote authentication fails. With fallback users, local user accounts can log on to the DataPower Gateway if authentication fails or during a network outage that affects primary authentication. The recommendation is to restrict fallback users to a subset of local user accounts. <p><b>Note: </b>When authentication uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions unless fallback users are supported.</p>", "fallback-login", "").AddStringEnum("disabled", "local", "restricted").AddDefaultValue("disabled").AddNotValidWhen(models.RBMSettingsFallbackLoginIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("disabled", "local", "restricted"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.RBMSettingsFallbackLoginIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("disabled"),
 			},
 			"fallback_user": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Fallback users", "fallback-user", "user").AddRequiredWhen(models.RBMSettingsFallbackUserCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Fallback users", "fallback-user", "user").AddRequiredWhen(models.RBMSettingsFallbackUserCondVal.String()).AddNotValidWhen(models.RBMSettingsFallbackUserIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
 					listvalidator.ValueStringsAre(),
-					validators.ConditionalRequiredList(models.RBMSettingsFallbackUserCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredList(models.RBMSettingsFallbackUserCondVal, models.RBMSettingsFallbackUserIgnoreVal, false),
 				},
 			},
 			"apply_to_cli": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enforce the RBM policy on CLI sessions. When authentication uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions unless fallback users are supported.", "apply-cli", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enforce the RBM policy on CLI sessions. When authentication uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions unless fallback users are supported.", "apply-cli", "").AddDefaultValue("false").AddNotValidWhen(models.RBMSettingsApplyToCLIIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -388,12 +393,12 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_password_age": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expiry for passwords. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 90.</li><li>When common criteria is not enabled, the default value is 30.</li></ul>", "pwd-max-age", "").AddIntegerRange(1, 65535).AddDefaultValue("30").AddRequiredWhen(models.RBMSettingsMaxPasswordAgeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expiry for passwords. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 90.</li><li>When common criteria is not enabled, the default value is 30.</li></ul>", "pwd-max-age", "").AddIntegerRange(1, 65535).AddDefaultValue("30").AddRequiredWhen(models.RBMSettingsMaxPasswordAgeCondVal.String()).AddNotValidWhen(models.RBMSettingsMaxPasswordAgeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
-					validators.ConditionalRequiredInt64(models.RBMSettingsMaxPasswordAgeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.RBMSettingsMaxPasswordAgeCondVal, models.RBMSettingsMaxPasswordAgeIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(30),
 			},
@@ -404,12 +409,12 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default:             booldefault.StaticBool(false),
 			},
 			"num_old_passwords": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of recent passwords to track to prevent reuse. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 3.</li><li>When common criteria is not enabled, the default value is 5.</li></ul>", "pwd-max-history", "").AddIntegerRange(1, 65535).AddDefaultValue("5").AddRequiredWhen(models.RBMSettingsNumOldPasswordsCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of recent passwords to track to prevent reuse. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 3.</li><li>When common criteria is not enabled, the default value is 5.</li></ul>", "pwd-max-history", "").AddIntegerRange(1, 65535).AddDefaultValue("5").AddRequiredWhen(models.RBMSettingsNumOldPasswordsCondVal.String()).AddNotValidWhen(models.RBMSettingsNumOldPasswordsIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
-					validators.ConditionalRequiredInt64(models.RBMSettingsNumOldPasswordsCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.RBMSettingsNumOldPasswordsCondVal, models.RBMSettingsNumOldPasswordsIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(5),
 			},
@@ -441,7 +446,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: int64default.StaticInt64(1),
 			},
 			"mc_force_dn_ldap_order": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>", "mc-force-dn-ldap-order", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>", "mc-force-dn-ldap-order", "").AddDefaultValue("false").AddNotValidWhen(models.RBMSettingsMCForceDNLDAPOrderIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -456,29 +461,31 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: stringdefault.StaticString("md5crypt"),
 			},
 			"ldap_ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.RBMSettingsLDAPSSLClientConfigTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.RBMSettingsLDAPSSLClientConfigTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("client"),
 			},
 			"ldap_ssl_client_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddNotValidWhen(models.RBMSettingsLDAPSSLClientProfileIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"mc_ldap_ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "mc-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "mc-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.RBMSettingsMCLDAPSSLClientConfigTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.RBMSettingsMCLDAPSSLClientConfigTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("client"),
 			},
 			"mc_ldap_ssl_client_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "mc-ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "mc-ssl-client", "ssl_client_profile").AddNotValidWhen(models.RBMSettingsMCLDAPSSLClientProfileIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

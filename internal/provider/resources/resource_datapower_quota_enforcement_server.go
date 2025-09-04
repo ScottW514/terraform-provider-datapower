@@ -95,55 +95,56 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 				Default:             booldefault.StaticBool(false),
 			},
 			"enable_ssl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether TLS is used to secure connection among the peers of the peer group. By default, the TLS is enabled.", "enable-ssl", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether TLS is used to secure connection among the peers of the peer group. By default, the TLS is enabled.", "enable-ssl", "").AddDefaultValue("true").AddNotValidWhen(models.QuotaEnforcementServerEnableSSLIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_crypto_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the key alias for the DataPower Gateway to authenticate a peer of the DataPower Gateway during the TLS handshake.", "ssl-key", "crypto_key").AddRequiredWhen(models.QuotaEnforcementServerSSLCryptoKeyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the key alias for the DataPower Gateway to authenticate a peer of the DataPower Gateway during the TLS handshake.", "ssl-key", "crypto_key").AddRequiredWhen(models.QuotaEnforcementServerSSLCryptoKeyCondVal.String()).AddNotValidWhen(models.QuotaEnforcementServerSSLCryptoKeyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.QuotaEnforcementServerSSLCryptoKeyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.QuotaEnforcementServerSSLCryptoKeyCondVal, models.QuotaEnforcementServerSSLCryptoKeyIgnoreVal, false),
 				},
 			},
 			"ssl_crypto_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the certificate alias that is sent to a peer when the DataPower Gateway negotiates a TLS connection with the peer.", "ssl-cert", "crypto_certificate").AddRequiredWhen(models.QuotaEnforcementServerSSLCryptoCertificateCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the certificate alias that is sent to a peer when the DataPower Gateway negotiates a TLS connection with the peer.", "ssl-cert", "crypto_certificate").AddRequiredWhen(models.QuotaEnforcementServerSSLCryptoCertificateCondVal.String()).AddNotValidWhen(models.QuotaEnforcementServerSSLCryptoCertificateIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.QuotaEnforcementServerSSLCryptoCertificateCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.QuotaEnforcementServerSSLCryptoCertificateCondVal, models.QuotaEnforcementServerSSLCryptoCertificateIgnoreVal, false),
 				},
 			},
 			"ip_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the IP address of the DataPower Gateway for other peers to connect to. The IP address can be the IP address on any interface of the DataPower Gateway and must be accessible by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::. This IP address uniquely identifies the DataPower Gateway.</p><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address.</p>", "ip-address", "").AddRequiredWhen(models.QuotaEnforcementServerIPAddressCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the IP address of the DataPower Gateway for other peers to connect to. The IP address can be the IP address on any interface of the DataPower Gateway and must be accessible by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::. This IP address uniquely identifies the DataPower Gateway.</p><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address.</p>", "ip-address", "").AddRequiredWhen(models.QuotaEnforcementServerIPAddressCondVal.String()).AddNotValidWhen(models.QuotaEnforcementServerIPAddressIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
-					validators.ConditionalRequiredString(models.QuotaEnforcementServerIPAddressCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.QuotaEnforcementServerIPAddressCondVal, models.QuotaEnforcementServerIPAddressIgnoreVal, false),
 				},
 			},
 			"peers": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies peers of the DataPower Gateway in the peer group. The DataPower Gateway connects to each peer in the order in which peers are added in the list. It is not necessary to specify all peers in the Peers list.</p><ul><li>When the DataPower Gateway connects to no peer in the list, this DataPower Gateway is the first active server and joins the peer group as the primary node.</li><li>When the DataPower Gateway connects to any peer in the list, it joins the peer group as a replica.</li></ul><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address. Aliasing can help when you move configurations among appliances.</p><p>Note: Do not specify the IP address or hostname of this DataPower Gateway.</p>", "peer", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies peers of the DataPower Gateway in the peer group. The DataPower Gateway connects to each peer in the order in which peers are added in the list. It is not necessary to specify all peers in the Peers list.</p><ul><li>When the DataPower Gateway connects to no peer in the list, this DataPower Gateway is the first active server and joins the peer group as the primary node.</li><li>When the DataPower Gateway connects to any peer in the list, it joins the peer group as a replica.</li></ul><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address. Aliasing can help when you move configurations among appliances.</p><p>Note: Do not specify the IP address or hostname of this DataPower Gateway.</p>", "peer", "").AddNotValidWhen(models.QuotaEnforcementServerPeersIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
 					listvalidator.ValueStringsAre(
 						stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
 					),
+					validators.ConditionalRequiredList(validators.Evaluation{}, models.QuotaEnforcementServerPeersIgnoreVal, false),
 				},
 			},
 			"priority": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the priority that is used to decide which replica is promoted to the primary node when failover occurs.</p><p>Enter a value in range 0 - 255. The default value is 100. The replica with the lowest priority number is promoted. A replica with the value of 0 can never be promoted.</p>", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").AddRequiredWhen(models.QuotaEnforcementServerPriorityCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the priority that is used to decide which replica is promoted to the primary node when failover occurs.</p><p>Enter a value in range 0 - 255. The default value is 100. The replica with the lowest priority number is promoted. A replica with the value of 0 can never be promoted.</p>", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").AddRequiredWhen(models.QuotaEnforcementServerPriorityCondVal.String()).AddNotValidWhen(models.QuotaEnforcementServerPriorityIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 255),
-					validators.ConditionalRequiredInt64(models.QuotaEnforcementServerPriorityCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.QuotaEnforcementServerPriorityCondVal, models.QuotaEnforcementServerPriorityIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(100),
 			},
 			"strict_mode": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Based on your requirements for quota enforcement, enable or disable strict mode. By default, the strict mode is enabled.", "strict-mode", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Based on your requirements for quota enforcement, enable or disable strict mode. By default, the strict mode is enabled.", "strict-mode", "").AddDefaultValue("true").AddNotValidWhen(models.QuotaEnforcementServerStrictModeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),

@@ -82,26 +82,26 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 				Default:             booldefault.StaticBool(true),
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.", "http-ip-address", "").AddDefaultValue("0.0.0.0").AddRequiredWhen(models.InteropServiceLocalAddressCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.", "http-ip-address", "").AddDefaultValue("0.0.0.0").AddRequiredWhen(models.InteropServiceLocalAddressCondVal.String()).AddNotValidWhen(models.InteropServiceLocalAddressIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.InteropServiceLocalAddressCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.InteropServiceLocalAddressCondVal, models.InteropServiceLocalAddressIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "http-port", "").AddIntegerRange(1000, 61000).AddDefaultValue("9990").AddRequiredWhen(models.InteropServiceLocalPortCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "http-port", "").AddIntegerRange(1000, 61000).AddDefaultValue("9990").AddRequiredWhen(models.InteropServiceLocalPortCondVal.String()).AddNotValidWhen(models.InteropServiceLocalPortIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1000, 61000),
-					validators.ConditionalRequiredInt64(models.InteropServiceLocalPortCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.InteropServiceLocalPortCondVal, models.InteropServiceLocalPortIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(9990),
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "http-acl", "access_control_list").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "http-acl", "access_control_list").AddNotValidWhen(models.InteropServiceACLIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"https_service": schema.BoolAttribute{
@@ -111,50 +111,50 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 				Default:             booldefault.StaticBool(false),
 			},
 			"https_local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.", "https-ip-address", "").AddDefaultValue("0.0.0.0").AddRequiredWhen(models.InteropServiceHttpsLocalAddressCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.", "https-ip-address", "").AddDefaultValue("0.0.0.0").AddRequiredWhen(models.InteropServiceHttpsLocalAddressCondVal.String()).AddNotValidWhen(models.InteropServiceHttpsLocalAddressIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.InteropServiceHttpsLocalAddressCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.InteropServiceHttpsLocalAddressCondVal, models.InteropServiceHttpsLocalAddressIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("0.0.0.0"),
 			},
 			"https_local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "https-port", "").AddIntegerRange(1000, 61000).AddDefaultValue("9991").AddRequiredWhen(models.InteropServiceHttpsLocalPortCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "https-port", "").AddIntegerRange(1000, 61000).AddDefaultValue("9991").AddRequiredWhen(models.InteropServiceHttpsLocalPortCondVal.String()).AddNotValidWhen(models.InteropServiceHttpsLocalPortIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1000, 61000),
-					validators.ConditionalRequiredInt64(models.InteropServiceHttpsLocalPortCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.InteropServiceHttpsLocalPortCondVal, models.InteropServiceHttpsLocalPortIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(9991),
 			},
 			"https_acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "https-acl", "access_control_list").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "https-acl", "access_control_list").AddNotValidWhen(models.InteropServiceHttpsACLIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_server_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").AddRequiredWhen(models.InteropServiceSSLServerConfigTypeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").AddRequiredWhen(models.InteropServiceSSLServerConfigTypeCondVal.String()).AddNotValidWhen(models.InteropServiceSSLServerConfigTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
-					validators.ConditionalRequiredString(models.InteropServiceSSLServerConfigTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.InteropServiceSSLServerConfigTypeCondVal, models.InteropServiceSSLServerConfigTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").AddRequiredWhen(models.InteropServiceSSLServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "ssl_server_profile").AddRequiredWhen(models.InteropServiceSSLServerCondVal.String()).AddNotValidWhen(models.InteropServiceSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.InteropServiceSSLServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.InteropServiceSSLServerCondVal, models.InteropServiceSSLServerIgnoreVal, false),
 				},
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.InteropServiceSSLSNIServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.InteropServiceSSLSNIServerCondVal.String()).AddNotValidWhen(models.InteropServiceSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.InteropServiceSSLSNIServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.InteropServiceSSLSNIServerCondVal, models.InteropServiceSSLSNIServerIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

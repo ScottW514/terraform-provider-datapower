@@ -148,31 +148,31 @@ func GetDmMatchRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"http_tag": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the name of the HTTP header to examine.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the name of the HTTP header to examine.", "", "").AddRequiredWhen(DmMatchRuleHttpTagCondVal.String()).AddNotValidWhen(DmMatchRuleHttpTagIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"http_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the value match for the HTTP header. Enter a match pattern or a literal string.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the value match for the HTTP header. Enter a match pattern or a literal string.", "", "").AddRequiredWhen(DmMatchRuleHttpValueCondVal.String()).AddNotValidWhen(DmMatchRuleHttpValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The URL match expression.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The URL match expression.", "", "").AddRequiredWhen(DmMatchRuleUrlCondVal.String()).AddNotValidWhen(DmMatchRuleUrlIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"error_code": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The error code match expression.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The error code match expression.", "", "").AddRequiredWhen(DmMatchRuleErrorCodeCondVal.String()).AddNotValidWhen(DmMatchRuleErrorCodeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"xpath_expression": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The XPath match expression.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The XPath match expression.", "", "").AddRequiredWhen(DmMatchRuleXPATHExpressionCondVal.String()).AddNotValidWhen(DmMatchRuleXPATHExpressionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"method": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The HTTP method.", "", "").AddStringEnum("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The HTTP method.", "", "").AddStringEnum("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default").AddDefaultValue("default").AddRequiredWhen(DmMatchRuleMethodCondVal.String()).AddNotValidWhen(DmMatchRuleMethodIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"custom_method": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For a custom method, the custom HTTP method.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For a custom method, the custom HTTP method.", "", "").AddRequiredWhen(DmMatchRuleCustomMethodCondVal.String()).AddNotValidWhen(DmMatchRuleCustomMethodIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -190,57 +190,57 @@ func GetDmMatchRuleResourceSchema() ResourceSchema.NestedAttributeObject {
 				},
 			},
 			"http_tag": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the name of the HTTP header to examine.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the name of the HTTP header to examine.", "", "").AddRequiredWhen(DmMatchRuleHttpTagCondVal.String()).AddNotValidWhen(DmMatchRuleHttpTagIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMatchRuleHttpTagCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMatchRuleHttpTagCondVal, DmMatchRuleHttpTagIgnoreVal, false),
 				},
 			},
 			"http_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the value match for the HTTP header. Enter a match pattern or a literal string.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the value match for the HTTP header. Enter a match pattern or a literal string.", "", "").AddRequiredWhen(DmMatchRuleHttpValueCondVal.String()).AddNotValidWhen(DmMatchRuleHttpValueIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMatchRuleHttpValueCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMatchRuleHttpValueCondVal, DmMatchRuleHttpValueIgnoreVal, false),
 				},
 			},
 			"url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The URL match expression.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The URL match expression.", "", "").AddRequiredWhen(DmMatchRuleUrlCondVal.String()).AddNotValidWhen(DmMatchRuleUrlIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMatchRuleUrlCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMatchRuleUrlCondVal, DmMatchRuleUrlIgnoreVal, false),
 				},
 			},
 			"error_code": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The error code match expression.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The error code match expression.", "", "").AddRequiredWhen(DmMatchRuleErrorCodeCondVal.String()).AddNotValidWhen(DmMatchRuleErrorCodeIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMatchRuleErrorCodeCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMatchRuleErrorCodeCondVal, DmMatchRuleErrorCodeIgnoreVal, false),
 				},
 			},
 			"xpath_expression": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The XPath match expression.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The XPath match expression.", "", "").AddRequiredWhen(DmMatchRuleXPATHExpressionCondVal.String()).AddNotValidWhen(DmMatchRuleXPATHExpressionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMatchRuleXPATHExpressionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMatchRuleXPATHExpressionCondVal, DmMatchRuleXPATHExpressionIgnoreVal, false),
 				},
 			},
 			"method": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The HTTP method.", "", "").AddStringEnum("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The HTTP method.", "", "").AddStringEnum("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default").AddDefaultValue("default").AddRequiredWhen(DmMatchRuleMethodCondVal.String()).AddNotValidWhen(DmMatchRuleMethodIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default"),
-					validators.ConditionalRequiredString(DmMatchRuleMethodCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmMatchRuleMethodCondVal, DmMatchRuleMethodIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("default"),
 			},
 			"custom_method": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For a custom method, the custom HTTP method.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For a custom method, the custom HTTP method.", "", "").AddRequiredWhen(DmMatchRuleCustomMethodCondVal.String()).AddNotValidWhen(DmMatchRuleCustomMethodIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 8192),
 					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9!#$%&'*+-.^_`|~]*$"), "Must match :"+"^[a-zA-Z0-9!#$%&'*+-.^_`|~]*$"),
-					validators.ConditionalRequiredString(DmMatchRuleCustomMethodCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMatchRuleCustomMethodCondVal, DmMatchRuleCustomMethodIgnoreVal, false),
 				},
 			},
 		},

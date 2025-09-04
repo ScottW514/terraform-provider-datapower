@@ -20,7 +20,6 @@ resource "datapower_api_connect_gateway_service" "test" {
   local_address   = "0.0.0.0"
   local_port      = 3000
   gateway_peering = "default-gateway-peering"
-  proxy_policy    = { proxy_policy_enable = false, remote_address = "localhost", remote_port = 8080 }
 }
 ```
 
@@ -52,13 +51,16 @@ resource "datapower_api_connect_gateway_service" "test" {
   - Reference to: `datapower_gateway_peering_manager:id`
   - Default value: `default`
   - Required When: `v5compatibility_mode`=`false`
+  - Not Valid When: `v5compatibility_mode`=`true`
 - `ip_multicast` (String) Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.
   - CLI Alias: `ip-multicast`
   - Reference to: `datapower_ip_multicast:id`
   - Required When: (`v5c_slm_mode`=`multicast` AND `v5compatibility_mode`=`true`)
+  - Not Valid When: (`v5c_slm_mode`!=`multicast` OR `v5compatibility_mode`=`false`)
 - `ip_unicast` (String) Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.
   - CLI Alias: `ip-unicast`
   - Required When: (`v5c_slm_mode`=`unicast` AND `v5compatibility_mode`=`true`)
+  - Not Valid When: (`v5c_slm_mode`!=`unicast` OR `v5compatibility_mode`=`false`)
 - `jwt_url` (String) JWT URL
   - CLI Alias: `jwt-url`
 - `jwt_validation_mode` (String) Specify the JWT validation mode. This property does not control whether a token is validated. This property controls whether transactions fail when validation fails.
@@ -79,6 +81,7 @@ resource "datapower_api_connect_gateway_service" "test" {
 - `user_defined_policies` (List of String) Specify user-defined policies to advertise to API Connect for use in the API Connect Assembly Editor. This property is meaningful when the gateway type is an API gateway. <p>For an assembly function that is a user-defined policy, configure the assembly function with a mechanism other than a watched file that is processed by a configuration sequence. Objects that are created through the processing of configuration sequences are not persisted to the startup configuration. The preferred method for user-defined policies is to define them explicitly so that they persist to the startup configuration.</p>
   - CLI Alias: `user-defined-policies`
   - Reference to: `datapower_assembly_function:id`
+  - Not Valid When: `v5compatibility_mode`!=`false`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `v5c_slm_mode` (String) Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.
@@ -86,6 +89,7 @@ resource "datapower_api_connect_gateway_service" "test" {
   - Choices: `autounicast`, `unicast`, `multicast`
   - Default value: `autounicast`
   - Required When: `v5compatibility_mode`=`true`
+  - Not Valid When: `v5compatibility_mode`=`false`
 - `v5compatibility_mode` (Boolean) Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>
   - CLI Alias: `v5-compatibility-mode`
   - Default value: `true`
@@ -110,12 +114,12 @@ Optional:
 <a id="nestedatt--proxy_policy"></a>
 ### Nested Schema for `proxy_policy`
 
-Required:
-
-- `remote_address` (String) Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.
-- `remote_port` (Number) Specify the listening port on the proxy to connect to the API Manager endpoint.
-
 Optional:
 
 - `proxy_policy_enable` (Boolean) Specify whether to enable a proxy to connect to API Manager.
-  - Default value: `false`
+- `remote_address` (String) Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.
+  - Required When: `proxy_policy_enable`=`true`
+  - Not Valid When: `proxy_policy_enable`=`false`
+- `remote_port` (Number) Specify the listening port on the proxy to connect to the API Manager endpoint.
+  - Required When: `proxy_policy_enable`=`true`
+  - Not Valid When: `proxy_policy_enable`=`false`

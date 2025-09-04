@@ -75,6 +75,8 @@ Optional:
 - `auto_generated_by_web_gui` (Boolean) Read-only property. When enabled, the statement was created as part of a default SLM configuration.
   - Default value: `false`
 - `burst_limit` (Number) Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>
+  - Required When: `thresh_algorithm`=`token-bucket`
+  - Not Valid When: attribute is not conditionally required
 - `cred_class` (String) Specify the credential class that defines the users (credentials) to be subject to policy restrictions. Without a credential class, the appliance considers all messages as belonging to a single global user. Therefore, the statement applies to all messages that are identified as valid resources without respect to credential classification.
   - Reference to: `datapower_slm_cred_class:id`
 - `maximum_resources_and_credentials_for_threshold` (Number) Specify the maximum number of combinations of credentials and resources. This property limits the number of combinations and allows the setting of a maximum memory-consumption threshold. The default value is 5000.
@@ -86,6 +88,7 @@ Optional:
 - `release_threshold_level` (Number) Specify the stop point of the high-low algorithm. The stop point is the low threshold. The start point is the high threshold that is defined as the threshold level property.
   - Range: `0`-`9007199254740991`
   - Default value: `0`
+  - Not Valid When: `thresh_algorithm`!=`high-low-thresholds`
 - `reporting_aggregation_interval` (Number) Specify the base aggregation level in minutes for the reporting statistics. This property is independent of the threshold interval.
 - `rsrc_class` (String) Specify the resource class that defines a resources to be subject to policy restrictions. Without a resource class, the statement applies to all messages that pass the credential classification.
   - Reference to: `datapower_slm_rsrc_class:id`
@@ -95,6 +98,7 @@ Optional:
   - Choices: `greater-than`, `less-than`, `token-bucket`, `high-low-thresholds`
   - Default value: `greater-than`
 - `thresh_interval_length` (Number) Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>
+  - Not Valid When: `thresh_interval_type`=`concurrent`
 - `thresh_interval_type` (String) Specify the type of intervals to measure. The default is a fixed interval.
   - Choices: `fixed`, `moving`, `concurrent`
   - Default value: `fixed`

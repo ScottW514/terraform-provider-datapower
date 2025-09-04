@@ -104,20 +104,20 @@ func (r *DNSNameServiceResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("first-alive"),
 			},
 			"max_retries": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the maximum number of resolution attempts to send a query to the list of name servers before an error is returned. By default, an unacknowledged resolution request is attempted 3 times.", "retries", "").AddDefaultValue("2").AddRequiredWhen(models.DNSNameServiceMaxRetriesCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the maximum number of resolution attempts to send a query to the list of name servers before an error is returned. By default, an unacknowledged resolution request is attempted 3 times.", "retries", "").AddDefaultValue("2").AddRequiredWhen(models.DNSNameServiceMaxRetriesCondVal.String()).AddNotValidWhen(models.DNSNameServiceMaxRetriesIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(models.DNSNameServiceMaxRetriesCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.DNSNameServiceMaxRetriesCondVal, models.DNSNameServiceMaxRetriesIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(2),
 			},
 			"timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the duration in seconds that the resolver waits for a response from a DNS server. After expiry, the resolver attempts the query to a different DNS server. The default value is 5.", "timeout", "").AddDefaultValue("5").AddRequiredWhen(models.DNSNameServiceTimeoutCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the duration in seconds that the resolver waits for a response from a DNS server. After expiry, the resolver attempts the query to a different DNS server. The default value is 5.", "timeout", "").AddDefaultValue("5").AddRequiredWhen(models.DNSNameServiceTimeoutCondVal.String()).AddNotValidWhen(models.DNSNameServiceTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(models.DNSNameServiceTimeoutCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.DNSNameServiceTimeoutCondVal, models.DNSNameServiceTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(5),
 			},

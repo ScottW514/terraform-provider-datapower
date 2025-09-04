@@ -266,10 +266,13 @@ Read-Only:
   - Reference to: `datapower_conformance_policy:id`
 - `conformance_policy_fragment_id` (String) Matches Fragment Identifier
 - `conformance_policy_subscription` (String) Select a subscription.
+  - Required When: `conformance_policy_wsdl_component_type`=`subscription`
+  - Not Valid When: attribute is not conditionally required
 - `conformance_policy_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
   - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
   - Default value: `all`
 - `conformance_policy_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
+  - Not Valid When: `conformance_policy_wsdl_component_type`=`subscription`
 
 
 <a id="nestedatt--result--operation_policy_subject_opt_out"></a>
@@ -280,10 +283,13 @@ Read-Only:
 - `ignored_subjects` (Attributes) Ignored Subjects (see [below for nested schema](#nestedatt--result--operation_policy_subject_opt_out--ignored_subjects))
 - `policy_subject_opt_out_fragment_id` (String) Matches Fragment Identifier
 - `policy_subject_opt_out_subscription` (String) Select a subscription.
+  - Required When: `policy_subject_opt_out_wsdl_component_type`=`subscription`
+  - Not Valid When: attribute is not conditionally required
 - `policy_subject_opt_out_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
   - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
   - Default value: `all`
 - `policy_subject_opt_out_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
+  - Not Valid When: `policy_subject_opt_out_wsdl_component_type`=`subscription`
 
 <a id="nestedatt--result--operation_policy_subject_opt_out--ignored_subjects"></a>
 ### Nested Schema for `result.operation_policy_subject_opt_out.ignored_subjects`
@@ -313,10 +319,13 @@ Read-Only:
   - Default value: `normal`
 - `scheduler_priority_fragment_id` (String) Matches Fragment Identifier
 - `scheduler_priority_subscription` (String) Select a subscription.
+  - Required When: `scheduler_priority_wsdl_component_type`=`subscription`
+  - Not Valid When: attribute is not conditionally required
 - `scheduler_priority_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
   - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
   - Default value: `all`
 - `scheduler_priority_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
+  - Not Valid When: `scheduler_priority_wsdl_component_type`=`subscription`
 
 
 <a id="nestedatt--result--policy_parameter"></a>
@@ -328,10 +337,13 @@ Read-Only:
 - `policy_param_parameters` (String) Reference to policy parameter object.
   - Reference to: `datapower_policy_parameters:id`
 - `policy_param_subscription` (String) Select a subscription.
+  - Required When: `policy_param_wsdl_component_type`=`subscription`
+  - Not Valid When: attribute is not conditionally required
 - `policy_param_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
   - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
   - Default value: `all`
 - `policy_param_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
+  - Not Valid When: `policy_param_wsdl_component_type`=`subscription`
 
 
 <a id="nestedatt--result--reliable_messaging"></a>
@@ -345,10 +357,13 @@ Read-Only:
 - `options` (Attributes) Reliable Messaging Options (see [below for nested schema](#nestedatt--result--reliable_messaging--options))
 - `reliable_messaging_fragment_id` (String) Matches Fragment Identifier
 - `reliable_messaging_subscription` (String) Select a subscription.
+  - Required When: `reliable_messaging_wsdl_component_type`=`subscription`
+  - Not Valid When: attribute is not conditionally required
 - `reliable_messaging_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
   - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
   - Default value: `all`
 - `reliable_messaging_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
+  - Not Valid When: `reliable_messaging_wsdl_component_type`=`subscription`
 
 <a id="nestedatt--result--reliable_messaging--options"></a>
 ### Nested Schema for `result.reliable_messaging.options`

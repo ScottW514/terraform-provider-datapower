@@ -121,15 +121,15 @@ func GetDmGitOpsTemplateEntryDataSourceSchema() DataSourceSchema.NestedAttribute
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value that is specific to the template type. <ul><li>When change, specify the replacement value for the identified property in this specific named object instance.</li><li>When custom, specify the transform to insert a template value</li></ul>", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value that is specific to the template type. <ul><li>When change, specify the replacement value for the identified property in this specific named object instance.</li><li>When custom, specify the transform to insert a template value</li></ul>", "value", "").AddRequiredWhen(DmGitOpsTemplateEntryValueCondVal.String()).AddNotValidWhen(DmGitOpsTemplateEntryValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"value_inverse": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value inverse. This value is the inverse transform to replace the template value with the wanted value.", "value-inverse", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value inverse. This value is the inverse transform to replace the template value with the wanted value.", "value-inverse", "").AddRequiredWhen(DmGitOpsTemplateEntryValueInverseCondVal.String()).AddNotValidWhen(DmGitOpsTemplateEntryValueInverseIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"value_validate": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the query to validate the replaced value at the specified location. The query to return <tt>true</tt> when the template value is found at the specified location and <tt>false</tt> when the template value is not found at the specified location. The query is in the following format. <p><code>configuration.%Class[$match(`@name`, /^%Name/)]%ValueValidate</code></p>", "value-validate", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the query to validate the replaced value at the specified location. The query to return <tt>true</tt> when the template value is found at the specified location and <tt>false</tt> when the template value is not found at the specified location. The query is in the following format. <p><code>configuration.%Class[$match(`@name`, /^%Name/)]%ValueValidate</code></p>", "value-validate", "").AddNotValidWhen(DmGitOpsTemplateEntryValueValidateIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -161,21 +161,21 @@ func GetDmGitOpsTemplateEntryResourceSchema() ResourceSchema.NestedAttributeObje
 				Required:            true,
 			},
 			"value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value that is specific to the template type. <ul><li>When change, specify the replacement value for the identified property in this specific named object instance.</li><li>When custom, specify the transform to insert a template value</li></ul>", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value that is specific to the template type. <ul><li>When change, specify the replacement value for the identified property in this specific named object instance.</li><li>When custom, specify the transform to insert a template value</li></ul>", "value", "").AddRequiredWhen(DmGitOpsTemplateEntryValueCondVal.String()).AddNotValidWhen(DmGitOpsTemplateEntryValueIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmGitOpsTemplateEntryValueCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmGitOpsTemplateEntryValueCondVal, DmGitOpsTemplateEntryValueIgnoreVal, false),
 				},
 			},
 			"value_inverse": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value inverse. This value is the inverse transform to replace the template value with the wanted value.", "value-inverse", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value inverse. This value is the inverse transform to replace the template value with the wanted value.", "value-inverse", "").AddRequiredWhen(DmGitOpsTemplateEntryValueInverseCondVal.String()).AddNotValidWhen(DmGitOpsTemplateEntryValueInverseIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmGitOpsTemplateEntryValueInverseCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmGitOpsTemplateEntryValueInverseCondVal, DmGitOpsTemplateEntryValueInverseIgnoreVal, false),
 				},
 			},
 			"value_validate": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the query to validate the replaced value at the specified location. The query to return <tt>true</tt> when the template value is found at the specified location and <tt>false</tt> when the template value is not found at the specified location. The query is in the following format. <p><code>configuration.%Class[$match(`@name`, /^%Name/)]%ValueValidate</code></p>", "value-validate", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the query to validate the replaced value at the specified location. The query to return <tt>true</tt> when the template value is found at the specified location and <tt>false</tt> when the template value is not found at the specified location. The query is in the following format. <p><code>configuration.%Class[$match(`@name`, /^%Name/)]%ValueValidate</code></p>", "value-validate", "").AddNotValidWhen(DmGitOpsTemplateEntryValueValidateIgnoreVal.String()).String,
 				Optional:            true,
 			},
 		},

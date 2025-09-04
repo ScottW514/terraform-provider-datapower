@@ -95,15 +95,15 @@ func (r *OperationRateLimitResource) Schema(ctx context.Context, req resource.Sc
 				Default:             booldefault.StaticBool(false),
 			},
 			"rate_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit", "rate-limit", "").AddRequiredWhen(models.OperationRateLimitRateLimitCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit", "rate-limit", "").AddRequiredWhen(models.OperationRateLimitRateLimitCondVal.String()).AddNotValidWhen(models.OperationRateLimitRateLimitIgnoreVal.String()).String,
 				NestedObject:        models.GetDmAPIRateLimitResourceSchema(),
 				Optional:            true,
 				Validators: []validator.List{
-					validators.ConditionalRequiredList(models.OperationRateLimitRateLimitCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredList(models.OperationRateLimitRateLimitCondVal, models.OperationRateLimitRateLimitIgnoreVal, false),
 				},
 			},
 			"rate_limit_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit group", "rate-limit-group", "rate_limit_definition_group").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit group", "rate-limit-group", "rate_limit_definition_group").AddNotValidWhen(models.OperationRateLimitRateLimitGroupIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

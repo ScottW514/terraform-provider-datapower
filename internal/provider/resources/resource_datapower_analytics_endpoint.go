@@ -91,17 +91,17 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.AnalyticsEndpointSSLClientCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.AnalyticsEndpointSSLClientCondVal.String()).AddNotValidWhen(models.AnalyticsEndpointSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AnalyticsEndpointSSLClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointSSLClientCondVal, models.AnalyticsEndpointSSLClientIgnoreVal, false),
 				},
 			},
 			"request_topic": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Request topic", "request-topic", "").AddRequiredWhen(models.AnalyticsEndpointRequestTopicCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Request topic", "request-topic", "").AddRequiredWhen(models.AnalyticsEndpointRequestTopicCondVal.String()).AddNotValidWhen(models.AnalyticsEndpointRequestTopicIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AnalyticsEndpointRequestTopicCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointRequestTopicCondVal, models.AnalyticsEndpointRequestTopicIgnoreVal, false),
 				},
 			},
 			"max_records": schema.Int64Attribute{
@@ -141,66 +141,67 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Default: int64default.StaticInt64(600),
 			},
 			"delivery_connections": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of connections to establish per delivery to the remote server to offload analytics data. Each connection can carry a bulk activity log. Enter a value in the range 1 - 100. The default value is 1.", "delivery-connections", "").AddIntegerRange(1, 100).AddDefaultValue("1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of connections to establish per delivery to the remote server to offload analytics data. Each connection can carry a bulk activity log. Enter a value in the range 1 - 100. The default value is 1.", "delivery-connections", "").AddIntegerRange(1, 100).AddDefaultValue("1").AddNotValidWhen(models.AnalyticsEndpointDeliveryConnectionsIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.AnalyticsEndpointDeliveryConnectionsIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1),
 			},
 			"enable_jwt": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable JWT feature sending logs to analytics server.", "enable-jwt", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable JWT feature sending logs to analytics server.", "enable-jwt", "").AddDefaultValue("false").AddNotValidWhen(models.AnalyticsEndpointEnableJWTIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"management_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of management platform endpoint to retrieve a JWT. The URL must use the <tt>http</tt> or <tt>https</tt> protocol.", "management-url", "").AddRequiredWhen(models.AnalyticsEndpointManagementURLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of management platform endpoint to retrieve a JWT. The URL must use the <tt>http</tt> or <tt>https</tt> protocol.", "management-url", "").AddRequiredWhen(models.AnalyticsEndpointManagementURLCondVal.String()).AddNotValidWhen(models.AnalyticsEndpointManagementURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AnalyticsEndpointManagementURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointManagementURLCondVal, models.AnalyticsEndpointManagementURLIgnoreVal, false),
 				},
 			},
 			"management_url_ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Management platform TLS client profile", "management-ssl-client", "ssl_client_profile").AddRequiredWhen(models.AnalyticsEndpointManagementURL_SSLClientCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Management platform TLS client profile", "management-ssl-client", "ssl_client_profile").AddRequiredWhen(models.AnalyticsEndpointManagementURL_SSLClientCondVal.String()).AddNotValidWhen(models.AnalyticsEndpointManagementURL_SSLClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AnalyticsEndpointManagementURL_SSLClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointManagementURL_SSLClientCondVal, models.AnalyticsEndpointManagementURL_SSLClientIgnoreVal, false),
 				},
 			},
 			"client_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "clientid", "").AddRequiredWhen(models.AnalyticsEndpointClientIDCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "clientid", "").AddRequiredWhen(models.AnalyticsEndpointClientIDCondVal.String()).AddNotValidWhen(models.AnalyticsEndpointClientIDIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AnalyticsEndpointClientIDCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointClientIDCondVal, models.AnalyticsEndpointClientIDIgnoreVal, false),
 				},
 			},
 			"client_secret_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client secret", "client-secret-alias", "password_alias").AddRequiredWhen(models.AnalyticsEndpointClientSecretAliasCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Client secret", "client-secret-alias", "password_alias").AddRequiredWhen(models.AnalyticsEndpointClientSecretAliasCondVal.String()).AddNotValidWhen(models.AnalyticsEndpointClientSecretAliasIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 127),
-					validators.ConditionalRequiredString(models.AnalyticsEndpointClientSecretAliasCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointClientSecretAliasCondVal, models.AnalyticsEndpointClientSecretAliasIgnoreVal, false),
 				},
 			},
 			"grant_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.", "grant-type", "").AddStringEnum("implicit", "password", "application", "accessCode").AddRequiredWhen(models.AnalyticsEndpointGrantTypeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.", "grant-type", "").AddStringEnum("implicit", "password", "application", "accessCode").AddRequiredWhen(models.AnalyticsEndpointGrantTypeCondVal.String()).AddNotValidWhen(models.AnalyticsEndpointGrantTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("implicit", "password", "application", "accessCode"),
-					validators.ConditionalRequiredString(models.AnalyticsEndpointGrantTypeCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointGrantTypeCondVal, models.AnalyticsEndpointGrantTypeIgnoreVal, false),
 				},
 			},
 			"scope": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.", "scope", "").AddRequiredWhen(models.AnalyticsEndpointScopeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.", "scope", "").AddRequiredWhen(models.AnalyticsEndpointScopeCondVal.String()).AddNotValidWhen(models.AnalyticsEndpointScopeIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AnalyticsEndpointScopeCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AnalyticsEndpointScopeCondVal, models.AnalyticsEndpointScopeIgnoreVal, false),
 				},
 			},
 			"persistent_connection": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to negotiate persistent connections. By default, persistent connections are enabled. The HTTP/2 protocol controls persistent connections and reuse. Therefore, these settings are ignored.", "persistent-connection", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to negotiate persistent connections. By default, persistent connections are enabled. The HTTP/2 protocol controls persistent connections and reuse. Therefore, these settings are ignored.", "persistent-connection", "").AddDefaultValue("true").AddNotValidWhen(models.AnalyticsEndpointPersistentConnectionIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -215,11 +216,12 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Default: int64default.StaticInt64(90),
 			},
 			"persistent_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the inter-transaction timeout for connections, which is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 60.", "persistent-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the inter-transaction timeout for connections, which is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 60.", "persistent-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("60").AddNotValidWhen(models.AnalyticsEndpointPersistentTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.AnalyticsEndpointPersistentTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(60),
 			},

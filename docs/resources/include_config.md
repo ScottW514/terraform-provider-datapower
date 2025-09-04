@@ -39,6 +39,7 @@ resource "datapower_include_config" "test" {
   - CLI Alias: `interface-detection`
   - Default value: `false`
   - Required When: `on_startup`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `on_startup` (Boolean) Specify whether to import the configuration file on startup. The default behavior is to import on startup. <ul><li>When enabled, the configuration file is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
   - CLI Alias: `auto-execute`
   - Default value: `true`

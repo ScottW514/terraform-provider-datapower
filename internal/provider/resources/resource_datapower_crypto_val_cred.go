@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &CryptoValCredResource{}
@@ -102,27 +103,28 @@ func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(true),
 			},
 			"require_crl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.", "require-crl", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.", "require-crl", "").AddDefaultValue("false").AddNotValidWhen(models.CryptoValCredRequireCRLIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"crl_dp_handling": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.", "crldp", "").AddStringEnum("ignore", "require").AddDefaultValue("ignore").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.", "crldp", "").AddStringEnum("ignore", "require").AddDefaultValue("ignore").AddNotValidWhen(models.CryptoValCredCRLDPHandlingIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ignore", "require"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.CryptoValCredCRLDPHandlingIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("ignore"),
 			},
 			"initial_policy_set": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>", "initial-policy-set", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>", "initial-policy-set", "").AddNotValidWhen(models.CryptoValCredInitialPolicySetIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"explicit_policy": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify support for the initial explicit policy variable as defined by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty policy tree. Otherwise, the algorithm can end with an empty policy tree unless policy constraint extensions in the chain require an explicit policy.", "explicit-policy", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify support for the initial explicit policy variable as defined by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty policy tree. Otherwise, the algorithm can end with an empty policy tree unless policy constraint extensions in the chain require an explicit policy.", "explicit-policy", "").AddDefaultValue("false").AddNotValidWhen(models.CryptoValCredExplicitPolicyIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

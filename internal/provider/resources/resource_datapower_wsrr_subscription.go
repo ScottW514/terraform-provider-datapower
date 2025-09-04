@@ -115,11 +115,12 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("poll"),
 			},
 			"refresh_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").AddNotValidWhen(models.WSRRSubscriptionRefreshIntervalIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(60, 4294967),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.WSRRSubscriptionRefreshIntervalIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(86400),
 			},
@@ -130,7 +131,7 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"object_version": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Object version", "version", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Object version", "version", "").AddNotValidWhen(models.WSRRSubscriptionObjectVersionIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"fetch_policy_attachments": schema.BoolAttribute{

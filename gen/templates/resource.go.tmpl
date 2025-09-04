@@ -97,6 +97,9 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 		{{- if len .RequiredWhen -}}
 					.AddRequiredWhen(models.{{$root.Name}}{{.Name}}CondVal.String())
 		{{- end -}}
+		{{- if len .IgnoredWhen -}}
+					.AddNotValidWhen(models.{{$root.Name}}{{.Name}}IgnoreVal.String())
+		{{- end -}}
 					.String,
 		{{- if isList .}}
 			{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
@@ -146,8 +149,8 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 						{{- if and (eq .Type "List") (or (eq .ElementType "String") (eq .ElementType "Int64"))}}
 					),
                         {{- end}}
-                        {{- if len .RequiredWhen}}
-                    validators.ConditionalRequired{{.Type}}(models.{{$root.Name}}{{.Name}}CondVal, validators.Evaluation{}, {{if len .Default}}true{{else}}false{{end}}),
+                        {{- if or (len .RequiredWhen) (len .IgnoredWhen)}}
+                    validators.ConditionalRequired{{.Type}}({{if len .RequiredWhen}}models.{{$root.Name}}{{.Name}}CondVal{{else}}validators.Evaluation{}{{end}}, {{if len .IgnoredWhen}}models.{{$root.Name}}{{.Name}}IgnoreVal{{else}}validators.Evaluation{}{{end}}, {{if len .Default}}true{{else}}false{{end}}),
                         {{- end}}
                 },
                     {{- end}}

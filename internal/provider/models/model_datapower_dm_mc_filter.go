@@ -114,19 +114,19 @@ func GetDmMCFilterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"http_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field. Available for HTTP header-based filters.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field. Available for HTTP header-based filters.", "", "").AddRequiredWhen(DmMCFilterHttpNameCondVal.String()).AddNotValidWhen(DmMCFilterHttpNameIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"http_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").AddRequiredWhen(DmMCFilterHttpValueCondVal.String()).AddNotValidWhen(DmMCFilterHttpValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"xpath_expression": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").AddRequiredWhen(DmMCFilterXPathExpressionCondVal.String()).AddNotValidWhen(DmMCFilterXPathExpressionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"xpath_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").AddRequiredWhen(DmMCFilterXPathValueCondVal.String()).AddNotValidWhen(DmMCFilterXPathValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -148,31 +148,31 @@ func GetDmMCFilterResourceSchema() ResourceSchema.NestedAttributeObject {
 				},
 			},
 			"http_name": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field. Available for HTTP header-based filters.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field. Available for HTTP header-based filters.", "", "").AddRequiredWhen(DmMCFilterHttpNameCondVal.String()).AddNotValidWhen(DmMCFilterHttpNameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMCFilterHttpNameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMCFilterHttpNameCondVal, DmMCFilterHttpNameIgnoreVal, false),
 				},
 			},
 			"http_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.", "", "").AddRequiredWhen(DmMCFilterHttpValueCondVal.String()).AddNotValidWhen(DmMCFilterHttpValueIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMCFilterHttpValueCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMCFilterHttpValueCondVal, DmMCFilterHttpValueIgnoreVal, false),
 				},
 			},
 			"xpath_expression": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.", "", "").AddRequiredWhen(DmMCFilterXPathExpressionCondVal.String()).AddNotValidWhen(DmMCFilterXPathExpressionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMCFilterXPathExpressionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMCFilterXPathExpressionCondVal, DmMCFilterXPathExpressionIgnoreVal, false),
 				},
 			},
 			"xpath_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the contents of the element for the XPath expression. Available for XPath-based filters.", "", "").AddRequiredWhen(DmMCFilterXPathValueCondVal.String()).AddNotValidWhen(DmMCFilterXPathValueIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMCFilterXPathValueCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMCFilterXPathValueCondVal, DmMCFilterXPathValueIgnoreVal, false),
 				},
 			},
 		},

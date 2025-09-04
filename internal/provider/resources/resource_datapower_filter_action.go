@@ -102,7 +102,7 @@ func (r *FilterActionResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("debug"),
 			},
 			"block_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify an optional interval during which an over-threshold message type is denied service. Meaningful only when the message is rejected due to policy or shaping queue overflow. This value is the duration of service denial in milliseconds. The default value is 0, indicates that over-threshold messages are dropped but no service denial penalty is imposed.", "block-interval", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify an optional interval during which an over-threshold message type is denied service. Meaningful only when the message is rejected due to policy or shaping queue overflow. This value is the duration of service denial in milliseconds. The default value is 0, indicates that over-threshold messages are dropped but no service denial penalty is imposed.", "block-interval", "").AddNotValidWhen(models.FilterActionBlockIntervalIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

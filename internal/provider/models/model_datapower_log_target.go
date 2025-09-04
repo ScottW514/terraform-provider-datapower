@@ -563,28 +563,35 @@ var LogTargetRemoteAddressIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
 var LogTargetRemotePortIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-and",
+	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
 		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "type",
-			AttrType:    "String",
-			AttrDefault: "file",
-			Value:       []string{"file"},
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "file",
+					Value:       []string{"file"},
+				},
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "archive_mode",
+					AttrType:    "String",
+					AttrDefault: "rotate",
+					Value:       []string{"upload"},
+				},
+			},
 		},
 		{
 			Evaluation:  "property-value-not-in-list",
-			Attribute:   "archive_mode",
+			Attribute:   "type",
 			AttrType:    "String",
-			AttrDefault: "rotate",
-			Value:       []string{"upload"},
+			AttrDefault: "file",
+			Value:       []string{"syslog", "syslog-tcp", "smtp", "file"},
 		},
 	},
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"syslog", "syslog-tcp", "smtp", "file"},
 }
 var LogTargetRemoteLoginIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",

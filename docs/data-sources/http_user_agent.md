@@ -120,6 +120,7 @@ Read-Only:
 - `encrypt_data` (String) Specify the use of encryption of file transfers. Compatible with NAT in all settings.
   - Choices: `enc-data-off`, `enc-data-opt`, `enc-data-req`
   - Default value: `enc-data-off`
+  - Not Valid When: `auth_tls`=`auth-off`
 - `passive` (String) Specify the use of FTP passive mode to control in which direction FTP data connections are made.
   - Choices: `pasv-off`, `pasv-opt`, `pasv-req`
   - Default value: `pasv-req`
@@ -135,6 +136,7 @@ Read-Only:
 - `use_ccc` (String) Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.
   - Choices: `ccc-off`, `ccc-opt`, `ccc-req`
   - Default value: `ccc-off`
+  - Not Valid When: `auth_tls`=`auth-off`
 
 
 <a id="nestedatt--result--header_retention_policies"></a>
@@ -168,6 +170,7 @@ Read-Only:
 
 - `http2_required` (Boolean) Specify whether HTTP/2 is required when the version is HTTP/2.
   - Default value: `false`
+  - Not Valid When: `version`!=`HTTP/2`
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `version` (String) Specify the HTTP version to use.
   - Choices: `HTTP/1.0`, `HTTP/1.1`, `HTTP/2`
@@ -181,7 +184,11 @@ Read-Only:
 
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `remote_address` (String) Specify the hostname or IP address of the remote HTTP server.
+  - Required When: `skip`=`false`
+  - Not Valid When: attribute is not conditionally required
 - `remote_port` (Number) Specify the port on the remote HTTP server.
+  - Required When: `skip`=`false`
+  - Not Valid When: attribute is not conditionally required
 - `skip` (Boolean) Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.
   - Default value: `false`
 
@@ -216,6 +223,7 @@ Read-Only:
 - `auth` (String) Specify the method to authenticate the SMTP client.
   - Choices: `plain`, `login`
   - Default value: `plain`
+  - Not Valid When: `options`!=`auth`
 - `options` (Attributes) Specify the SMTP options to enable for the client. (see [below for nested schema](#nestedatt--result--smtp_policies--options))
 - `recipient` (String) Specify the e-mail address of the recipient ("To:")
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
@@ -252,6 +260,8 @@ Read-Only:
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `ssl_client` (String) Specify the TLS client profile to secure connections with targets
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: `ssl_client_config_type`=`client`
+  - Not Valid When: attribute is not conditionally required
 - `ssl_client_config_type` (String) Specify the type of TLS profile to secure connections with targets
   - Choices: `client`
   - Default value: `client`

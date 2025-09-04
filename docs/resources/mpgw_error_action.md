@@ -38,19 +38,25 @@ resource "datapower_mpgw_error_action" "test" {
   - CLI Alias: `rule`
   - Reference to: `datapower_style_policy_rule:id`
   - Required When: `type`=`error-rule`
+  - Not Valid When: attribute is not conditionally required
 - `header_injection` (Attributes List) Specify the name and the value for the HTTP header that the appliance injects.
-  - CLI Alias: `header-inject` (see [below for nested schema](#nestedatt--header_injection))
+  - CLI Alias: `header-inject`
+  - Not Valid When: `type`!=`proxy`|`static` (see [below for nested schema](#nestedatt--header_injection))
 - `local_url` (String) Specify the URL of the local error page.
   - CLI Alias: `local-url`
   - Required When: `type`=`static`
+  - Not Valid When: attribute is not conditionally required
 - `reason_phrase` (String) Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.
   - CLI Alias: `reason-phrase`
+  - Not Valid When: `type`!=`proxy`|`static`
 - `remote_url` (String) Specify the URL of the remote error page.
   - CLI Alias: `remote-url`
   - Required When: `type`=`redirect`|`proxy`
+  - Not Valid When: attribute is not conditionally required
 - `status_code` (Number) Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.
   - CLI Alias: `status-code`
   - Range: `100`-`999`
+  - Not Valid When: `type`!=`proxy`|`static`
 - `type` (String) Select which mode to handle the errors and generate the responses. The default mode is "Static (Local)".
   - CLI Alias: `type`
   - Choices: `error-rule`, `proxy`, `redirect`, `static`

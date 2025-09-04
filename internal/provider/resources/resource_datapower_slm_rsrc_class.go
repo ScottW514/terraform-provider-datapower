@@ -95,53 +95,53 @@ func (r *SLMRsrcClassResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("aaa-mapped-resource"),
 			},
 			"rsrc_match_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Match type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").AddRequiredWhen(models.SLMRsrcClassRsrcMatchTypeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Match type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").AddRequiredWhen(models.SLMRsrcClassRsrcMatchTypeCondVal.String()).AddNotValidWhen(models.SLMRsrcClassRsrcMatchTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("per-extracted-value", "exact-match", "regexp-match"),
-					validators.ConditionalRequiredString(models.SLMRsrcClassRsrcMatchTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.SLMRsrcClassRsrcMatchTypeCondVal, models.SLMRsrcClassRsrcMatchTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("per-extracted-value"),
 			},
 			"rsrc_value": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Resource value", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Resource value", "value", "").AddNotValidWhen(models.SLMRsrcClassRsrcValueIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"stylesheet": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom stylesheet", "stylesheet", "").AddRequiredWhen(models.SLMRsrcClassStylesheetCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom stylesheet", "stylesheet", "").AddRequiredWhen(models.SLMRsrcClassStylesheetCondVal.String()).AddNotValidWhen(models.SLMRsrcClassStylesheetIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SLMRsrcClassStylesheetCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SLMRsrcClassStylesheetCondVal, models.SLMRsrcClassStylesheetIgnoreVal, false),
 				},
 			},
 			"xpath_filter": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XPath filter", "xpath-filter", "").AddRequiredWhen(models.SLMRsrcClassXPathFilterCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("XPath filter", "xpath-filter", "").AddRequiredWhen(models.SLMRsrcClassXPathFilterCondVal.String()).AddNotValidWhen(models.SLMRsrcClassXPathFilterIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SLMRsrcClassXPathFilterCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SLMRsrcClassXPathFilterCondVal, models.SLMRsrcClassXPathFilterIgnoreVal, false),
 				},
 			},
 			"subscription": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("UDDI subscription (deprecated)", "subscription", "").AddRequiredWhen(models.SLMRsrcClassSubscriptionCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("UDDI subscription (deprecated)", "subscription", "").AddRequiredWhen(models.SLMRsrcClassSubscriptionCondVal.String()).AddNotValidWhen(models.SLMRsrcClassSubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SLMRsrcClassSubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SLMRsrcClassSubscriptionCondVal, models.SLMRsrcClassSubscriptionIgnoreVal, false),
 				},
 			},
 			"wsrr_subscription": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "wsrr-subscription", "wsrr_subscription").AddRequiredWhen(models.SLMRsrcClassWSRRSubscriptionCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "wsrr-subscription", "wsrr_subscription").AddRequiredWhen(models.SLMRsrcClassWSRRSubscriptionCondVal.String()).AddNotValidWhen(models.SLMRsrcClassWSRRSubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SLMRsrcClassWSRRSubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SLMRsrcClassWSRRSubscriptionCondVal, models.SLMRsrcClassWSRRSubscriptionIgnoreVal, false),
 				},
 			},
 			"wsrr_saved_search_subscription": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSRR saved search subscription", "wsrr-saved-search-subscription", "wsrr_saved_search_subscription").AddRequiredWhen(models.SLMRsrcClassWSRRSavedSearchSubscriptionCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("WSRR saved search subscription", "wsrr-saved-search-subscription", "wsrr_saved_search_subscription").AddRequiredWhen(models.SLMRsrcClassWSRRSavedSearchSubscriptionCondVal.String()).AddNotValidWhen(models.SLMRsrcClassWSRRSavedSearchSubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SLMRsrcClassWSRRSavedSearchSubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SLMRsrcClassWSRRSavedSearchSubscriptionCondVal, models.SLMRsrcClassWSRRSavedSearchSubscriptionIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

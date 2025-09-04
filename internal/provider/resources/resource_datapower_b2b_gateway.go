@@ -169,23 +169,23 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: stringdefault.StaticString("archpurge"),
 			},
 			"archive_location": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location for archive file. Enter the fully qualified name of the directory. To copy the archive file to an FTP server, ensure that the FTP policies in the XML manager enable image (binary) data transfer.", "arch-dir", "").AddRequiredWhen(models.B2BGatewayArchiveLocationCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location for archive file. Enter the fully qualified name of the directory. To copy the archive file to an FTP server, ensure that the FTP policies in the XML manager enable image (binary) data transfer.", "arch-dir", "").AddRequiredWhen(models.B2BGatewayArchiveLocationCondVal.String()).AddNotValidWhen(models.B2BGatewayArchiveLocationIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.B2BGatewayArchiveLocationCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BGatewayArchiveLocationCondVal, models.B2BGatewayArchiveLocationIgnoreVal, false),
 				},
 			},
 			"archive_file_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base file name for archive file. When archiving, the operation appends the current timestamp.", "arch-file", "").AddRequiredWhen(models.B2BGatewayArchiveFileNameCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base file name for archive file. When archiving, the operation appends the current timestamp.", "arch-file", "").AddRequiredWhen(models.B2BGatewayArchiveFileNameCondVal.String()).AddNotValidWhen(models.B2BGatewayArchiveFileNameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 128),
 					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9.-]+$"), "Must match :"+"^[_a-zA-Z0-9.-]+$"),
-					validators.ConditionalRequiredString(models.B2BGatewayArchiveFileNameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BGatewayArchiveFileNameCondVal, models.B2BGatewayArchiveFileNameIgnoreVal, false),
 				},
 			},
 			"archive_minimum_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum remaining size in KB of document storage that triggers archival. The default value is 1024.", "arch-minimum-size", "").AddDefaultValue("1024").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum remaining size in KB of document storage that triggers archival. The default value is 1024.", "arch-minimum-size", "").AddDefaultValue("1024").AddNotValidWhen(models.B2BGatewayArchiveMinimumSizeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(1024),
@@ -200,11 +200,12 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(90),
 			},
 			"archive_minimum_documents": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum number of documents to retain in document storage after archival. The minimum value is 1. The default value is 100.", "arch-minimum-documents", "").AddIntegerRange(1, 65535).AddDefaultValue("100").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum number of documents to retain in document storage after archival. The minimum value is 1. The default value is 100.", "arch-minimum-documents", "").AddIntegerRange(1, 65535).AddDefaultValue("100").AddNotValidWhen(models.B2BGatewayArchiveMinimumDocumentsIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.B2BGatewayArchiveMinimumDocumentsIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(100),
 			},
@@ -233,11 +234,12 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default:             booldefault.StaticBool(true),
 			},
 			"shaping_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum TPS to allow during archival. When the threshold is reached, the service queues transactions. When the queue is full, the service rejects transactions and generates a log message. Enter a value in the range 10 - 10000. The default value is 200.", "arch-shaping-threshold", "").AddIntegerRange(10, 10000).AddDefaultValue("200").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum TPS to allow during archival. When the threshold is reached, the service queues transactions. When the queue is full, the service rejects transactions and generates a log message. Enter a value in the range 10 - 10000. The default value is 200.", "arch-shaping-threshold", "").AddIntegerRange(10, 10000).AddDefaultValue("200").AddNotValidWhen(models.B2BGatewayShapingThresholdIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 10000),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.B2BGatewayShapingThresholdIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(200),
 			},
@@ -263,12 +265,12 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of transactions to capture for diagnostics. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.B2BGatewayDebugHistoryCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of transactions to capture for diagnostics. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.B2BGatewayDebugHistoryCondVal.String()).AddNotValidWhen(models.B2BGatewayDebugHistoryIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 250),
-					validators.ConditionalRequiredInt64(models.B2BGatewayDebugHistoryCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.B2BGatewayDebugHistoryCondVal, models.B2BGatewayDebugHistoryIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},

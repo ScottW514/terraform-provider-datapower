@@ -157,18 +157,18 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"graphql_schema": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema location", "graphql-schema", "api_schema").AddRequiredWhen(models.APIDefinitionGraphQLSchemaCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema location", "graphql-schema", "api_schema").AddRequiredWhen(models.APIDefinitionGraphQLSchemaCondVal.String()).AddNotValidWhen(models.APIDefinitionGraphQLSchemaIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.APIDefinitionGraphQLSchemaCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.APIDefinitionGraphQLSchemaCondVal, models.APIDefinitionGraphQLSchemaIgnoreVal, false),
 				},
 			},
 			"wsdl_advertised_schema_location": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL advertised schema location", "wsdl-advertised-schema-location", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("WSDL advertised schema location", "wsdl-advertised-schema-location", "").AddNotValidWhen(models.APIDefinitionWsdlAdvertisedSchemaLocationIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"wsdl_validation_schema": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL validation schema location", "wsdl-validation-schema", "api_schema").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("WSDL validation schema location", "wsdl-validation-schema", "api_schema").AddNotValidWhen(models.APIDefinitionWsdlValidationSchemaIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"security_requirement": schema.ListAttribute{
@@ -183,18 +183,18 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(false),
 			},
 			"api_mutual_tls_source": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the sources to obtain the client certificate for mutual TLS. Because you can define multiple ways to obtain the source, ensure that you sequence the methods appropriately.", "api-mutual-tls-source", "").AddStringEnum("header", "tls_cert").AddRequiredWhen(models.APIDefinitionAPIMutualTLSSourceCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the sources to obtain the client certificate for mutual TLS. Because you can define multiple ways to obtain the source, ensure that you sequence the methods appropriately.", "api-mutual-tls-source", "").AddStringEnum("header", "tls_cert").AddRequiredWhen(models.APIDefinitionAPIMutualTLSSourceCondVal.String()).AddNotValidWhen(models.APIDefinitionAPIMutualTLSSourceIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
 					listvalidator.ValueStringsAre(
 						stringvalidator.OneOf("header", "tls_cert"),
 					),
-					validators.ConditionalRequiredList(models.APIDefinitionAPIMutualTLSSourceCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredList(models.APIDefinitionAPIMutualTLSSourceCondVal, models.APIDefinitionAPIMutualTLSSourceIgnoreVal, false),
 				},
 			},
 			"api_mutual_tls_header_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP header that contains the client certificate for mutual TLS. The default value is <tt>X-Client-Certificate</tt> .", "api-mutual-tls-header-name", "").AddDefaultValue("X-Client-Certificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP header that contains the client certificate for mutual TLS. The default value is <tt>X-Client-Certificate</tt> .", "api-mutual-tls-header-name", "").AddDefaultValue("X-Client-Certificate").AddNotValidWhen(models.APIDefinitionAPIMutualTLSHeaderNameIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("X-Client-Certificate"),
@@ -226,20 +226,22 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(false),
 			},
 			"content": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the content to log on success. When set to payload data, you must enable message buffering to capture all request and response data.", "success-content", "").AddStringEnum("none", "activity", "header", "payload").AddDefaultValue("activity").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the content to log on success. When set to payload data, you must enable message buffering to capture all request and response data.", "success-content", "").AddStringEnum("none", "activity", "header", "payload").AddDefaultValue("activity").AddNotValidWhen(models.APIDefinitionContentIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "activity", "header", "payload"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.APIDefinitionContentIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("activity"),
 			},
 			"error_content": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the content to log on error. When set to payload data, you must enable message buffering to capture all request and response data.", "error-content", "").AddStringEnum("none", "activity", "header", "payload").AddDefaultValue("payload").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the content to log on error. When set to payload data, you must enable message buffering to capture all request and response data.", "error-content", "").AddStringEnum("none", "activity", "header", "payload").AddDefaultValue("payload").AddNotValidWhen(models.APIDefinitionErrorContentIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "activity", "header", "payload"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.APIDefinitionErrorContentIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("payload"),
 			},
@@ -333,7 +335,7 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(true),
 			},
 			"force_http500_for_soap11": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Force HTTP 500 for SOAP 1.1", "force-http-500-for-soap11", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Force HTTP 500 for SOAP 1.1", "force-http-500-for-soap11", "").AddDefaultValue("false").AddNotValidWhen(models.APIDefinitionForceHttp500ForSoap11IgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WSRRSavedSearchSubscriptionResource{}
@@ -106,11 +107,12 @@ func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req re
 				Default: stringdefault.StaticString("poll"),
 			},
 			"refresh_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").AddNotValidWhen(models.WSRRSavedSearchSubscriptionRefreshIntervalIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(60, 4294967),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.WSRRSavedSearchSubscriptionRefreshIntervalIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(86400),
 			},

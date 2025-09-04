@@ -26,10 +26,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -38,16 +36,6 @@ type DmSAMLAttributeNameAndValue struct {
 	Uri       types.String `tfsdk:"uri"`
 	LocalName types.String `tfsdk:"local_name"`
 	Value     types.String `tfsdk:"value"`
-}
-
-var DmSAMLAttributeNameAndValueURICondVal = validators.Evaluation{
-	Evaluation: "logical-false",
-}
-var DmSAMLAttributeNameAndValueLocalNameCondVal = validators.Evaluation{
-	Evaluation: "logical-false",
-}
-var DmSAMLAttributeNameAndValueValueCondVal = validators.Evaluation{
-	Evaluation: "logical-false",
 }
 
 var DmSAMLAttributeNameAndValueObjectType = map[string]attr.Type{
@@ -86,23 +74,14 @@ func GetDmSAMLAttributeNameAndValueResourceSchema() ResourceSchema.NestedAttribu
 			"uri": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the namespace URI for the attribute. The namespace URI must match to a name. If blank, the null namespace is used. For example, <tt>http://www.examples.com</tt> matches a message with the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>", "", "").String,
 				Optional:            true,
-				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSAMLAttributeNameAndValueURICondVal, validators.Evaluation{}, false),
-				},
 			},
 			"local_name": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the local name of the attribute. For example, <tt>cats</tt> matches a message with the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>", "", "").String,
 				Optional:            true,
-				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSAMLAttributeNameAndValueLocalNameCondVal, validators.Evaluation{}, false),
-				},
 			},
 			"value": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the value for the attribute with the corresponding name. For example, <tt>Winchester</tt> matches the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>", "", "").String,
 				Optional:            true,
-				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSAMLAttributeNameAndValueValueCondVal, validators.Evaluation{}, false),
-				},
 			},
 		},
 	}

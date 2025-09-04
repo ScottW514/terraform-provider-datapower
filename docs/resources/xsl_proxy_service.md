@@ -40,10 +40,12 @@ resource "datapower_xsl_proxy_service" "test" {
 - `remote_address` (String) Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.
   - CLI Alias: `remote-ip-address`
   - Required When: `type`=`static-backend`
+  - Not Valid When: attribute is not conditionally required
 - `remote_port` (Number) Specify the port number to monitor. Used only when Type is static-backend.
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
   - Required When: `type`=`static-backend`
+  - Not Valid When: attribute is not conditionally required
 
 ### Optional
 
@@ -64,12 +66,14 @@ resource "datapower_xsl_proxy_service" "test" {
   - Range: `10`-`250`
   - Default value: `25`
   - Required When: `debug_mode`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
 - `debug_trigger` (Attributes List) The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.
-  - CLI Alias: `debug-trigger` (see [below for nested schema](#nestedatt--debug_trigger))
+  - CLI Alias: `debug-trigger`
+  - Not Valid When: `debug_mode`!=`true` (see [below for nested schema](#nestedatt--debug_trigger))
 - `default_param_namespace` (String) If a stylesheet parameter is defined without a namespace (or without explicitly specifying the null namespace), then this is the namespace into which the parameter will be assigned.
   - CLI Alias: `default-param-namespace`
   - Default value: `http://www.datapower.com/param/config`
@@ -143,13 +147,16 @@ resource "datapower_xsl_proxy_service" "test" {
   - Default value: `http://www.datapower.com/param/query`
 - `ssl_client` (String) - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: `ssl_config_type`=`proxy`
 - `ssl_config_type` (String) - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
 - `ssl_server` (String) - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Not Valid When: `ssl_config_type`!=`server`
 - `ssl_sni_server` (String) - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Not Valid When: `ssl_config_type`!=`sni`
 - `style_policy` (String) - CLI Alias: `stylesheet-policy`
   - Reference to: `datapower_style_policy:id`
   - Default value: `default`

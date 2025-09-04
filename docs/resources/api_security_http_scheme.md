@@ -33,16 +33,20 @@ resource "datapower_api_security_http_scheme" "test" {
 
 - `bearer_format` (String) Specify how the bearer token is formatted. The format is primarily a hint.
   - CLI Alias: `bearer-format`
+  - Not Valid When: `scheme`!=`bearer`
 - `bearer_validation_endpoint` (String) Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.
   - CLI Alias: `bearer-validation-endpoint`
   - Required When: (`scheme`=`bearer` AND `bearer_validation_method`=`external-url`)
+  - Not Valid When: attribute is not conditionally required
 - `bearer_validation_method` (String) Bearer validation method
   - CLI Alias: `bearer-validation-method`
   - Choices: `external-url`, `udp`, `none`
   - Required When: `scheme`=`bearer`
+  - Not Valid When: attribute is not conditionally required
 - `bearer_validation_tls_profile` (String) Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.
   - CLI Alias: `bearer-validation-tls-profile`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: (`scheme`!=`bearer` OR `bearer_validation_method`!=`external-url`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `scheme` (String) Specify the HTTP authentication security scheme. The only supported value is <tt>bearer</tt> .
   - CLI Alias: `http-scheme`

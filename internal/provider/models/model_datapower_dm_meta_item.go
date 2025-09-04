@@ -75,7 +75,7 @@ func GetDmMetaItemDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"data_source": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For custom items only, enter the name of the protocol header or the name of the variable (service, context, or system) that contains the data to be returned in the metadata XML nodeset. The provided value is the name of the element in the returned nodeset that contains the data.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For custom items only, enter the name of the protocol header or the name of the variable (service, context, or system) that contains the data to be returned in the metadata XML nodeset. The provided value is the name of the element in the returned nodeset that contains the data.", "", "").AddRequiredWhen(DmMetaItemDataSourceCondVal.String()).AddNotValidWhen(DmMetaItemDataSourceIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -97,10 +97,10 @@ func GetDmMetaItemResourceSchema() ResourceSchema.NestedAttributeObject {
 				Required:            true,
 			},
 			"data_source": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For custom items only, enter the name of the protocol header or the name of the variable (service, context, or system) that contains the data to be returned in the metadata XML nodeset. The provided value is the name of the element in the returned nodeset that contains the data.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For custom items only, enter the name of the protocol header or the name of the variable (service, context, or system) that contains the data to be returned in the metadata XML nodeset. The provided value is the name of the element in the returned nodeset that contains the data.", "", "").AddRequiredWhen(DmMetaItemDataSourceCondVal.String()).AddNotValidWhen(DmMetaItemDataSourceIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmMetaItemDataSourceCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmMetaItemDataSourceCondVal, DmMetaItemDataSourceIgnoreVal, false),
 				},
 			},
 		},

@@ -86,26 +86,26 @@ func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"ha_other_hosts": models.GetDmB2BHAHostResourceSchema("Alternate host", "ha-other-hosts", "", false),
 			"ha_local_ip": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Replication address", "ha-local-ip", "").AddRequiredWhen(models.B2BPersistenceHALocalIPCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Replication address", "ha-local-ip", "").AddRequiredWhen(models.B2BPersistenceHALocalIPCondVal.String()).AddNotValidWhen(models.B2BPersistenceHALocalIPIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.B2BPersistenceHALocalIPCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BPersistenceHALocalIPCondVal, models.B2BPersistenceHALocalIPIgnoreVal, false),
 				},
 			},
 			"ha_local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Replication port", "ha-local-port", "").AddDefaultValue("1320").AddRequiredWhen(models.B2BPersistenceHALocalPortCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Replication port", "ha-local-port", "").AddDefaultValue("1320").AddRequiredWhen(models.B2BPersistenceHALocalPortCondVal.String()).AddNotValidWhen(models.B2BPersistenceHALocalPortIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(models.B2BPersistenceHALocalPortCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.B2BPersistenceHALocalPortCondVal, models.B2BPersistenceHALocalPortIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1320),
 			},
 			"ha_virtual_ip": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Virtual IP address", "ha-virtual-ip", "").AddRequiredWhen(models.B2BPersistenceHAVirtualIPCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Virtual IP address", "ha-virtual-ip", "").AddRequiredWhen(models.B2BPersistenceHAVirtualIPCondVal.String()).AddNotValidWhen(models.B2BPersistenceHAVirtualIPIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.B2BPersistenceHAVirtualIPCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BPersistenceHAVirtualIPCondVal, models.B2BPersistenceHAVirtualIPIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

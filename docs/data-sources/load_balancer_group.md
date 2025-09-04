@@ -84,6 +84,8 @@ Read-Only:
 - `affinity_mode` (String) The mode of session affinity applied to this load balancer group.
   - CLI Alias: `affinity-mode`
   - Choices: `active`, `activeConditional`
+  - Default value: `activeConditional`
+  - Not Valid When: `affinity_wlm_override`=`false`
 - `affinity_wlm_override` (Boolean) Overrides the WebSphere Cell Session Affinity cluster configuration with the DataPower Gateway configuration information below.
   - CLI Alias: `override-wlm-affinity`
   - Default value: `false`
@@ -125,9 +127,11 @@ Read-Only:
 - `enforce_timeout` (Boolean) Indicates whether the health check timeout value is used to interrupt and end a health transaction. By default, the health check timeout only compares the actual time that the request took. With the default behavior, the health check timeout is not used to interrupt the transaction.
   - CLI Alias: `enforce-timeout`
   - Default value: `false`
+  - Not Valid When: `ssl`=`LDAP`|`IMSConnect`|`TCPConnection`
 - `filter` (String) Enter the URL of the stylesheet that evaluates the server response using the XPath Expression entered above. The default is supplied on this DataPower device.
   - CLI Alias: `filter`
   - Default value: `store:///healthcheck.xsl`
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`true`)
 - `frequency` (Number) Enter an integer between 5 and 86400 to indicate the number of seconds to wait between health check posts. The default is 180.
   - CLI Alias: `frequency`
   - Range: `5`-`86400`
@@ -135,47 +139,64 @@ Read-Only:
 - `gateway_script_checks` (Boolean) Enables or disables GatewayScript health check processing. If enabled, content of health check requests and responses can be of any type and the response evaluator will be a GatewayScript file.
   - CLI Alias: `gatewayscript-checks`
   - Default value: `false`
+  - Not Valid When: `ssl`=`LDAP`|`IMSConnect`|`TCPConnection`
 - `gateway_script_custom_req_method` (String) The name of the custom method to use for Standard health check requests when GatewayScript processing is enabled.
   - CLI Alias: `request-custom-method`
+  - Required When: (`ssl`=`Standard` AND `gateway_script_checks`=`true` AND `gateway_script_req_method`=`Custom`)
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`false` OR `gateway_script_req_method`=`GET`|`POST`|`PUT`|`HEAD`)
 - `gateway_script_req_content_type` (String) Enter the content type of the Request Document for Standard health checks with GatewayScript.
   - CLI Alias: `request-content-type`
   - Default value: `application/json`
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`false` OR `gateway_script_req_method`=`GET`|`HEAD`)
 - `gateway_script_req_doc` (String) Enter the URL of the Request Document. This might be a file on the local flash filesystem (for example, local:///healthcheck.xml). This document is included in the request to the server if the POST, PUT, or Custom method is selected for Standard health checks with GatewayScript. If the HTTP method is Custom, the request document is optional.
   - CLI Alias: `request-doc`
   - Default value: `store:///healthcheck.json`
+  - Required When: (`ssl`=`Standard` AND `gateway_script_checks`=`true` AND `gateway_script_req_method`=`POST`|`PUT`)
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`false` OR `gateway_script_req_method`=`GET`|`HEAD`)
 - `gateway_script_req_method` (String) The HTTP method to use for Standard health checks with GatewayScript. If Custom is selected, a custom method name must also be specified.
   - CLI Alias: `request-method`
   - Choices: `GET`, `HEAD`, `POST`, `PUT`, `Custom`
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`false`)
 - `gateway_script_rsp_handler` (String) Enter the URL of the GatewayScript file that evaluates the server response using the Response Evaluator Metadata. The default GatewayScript file is supplied on the DataPower Gateway.
   - CLI Alias: `response-evaluator`
   - Default value: `store:///healthcheck.js`
+  - Required When: (`gateway_script_checks`=`true` AND `ssl`=`Standard`)
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`false`)
 - `gateway_script_rsp_handler_metadata` (String) Enter a string to be used by the GatewayScript Response Evaluator to help determine the state of the server's health.
   - CLI Alias: `response-evaluator-metadata`
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`false`)
 - `independent_checks` (Boolean) Indicates whether the health checks within a Load Balancer Group run independently of one another. By default, health checks within a Load Balancer Group run sequentially. With the default behavior, if a server hangs, all the other health checks for the other members are delayed.
   - CLI Alias: `independent-checks`
   - Default value: `false`
+  - Not Valid When: `ssl`=`LDAP`|`IMSConnect`|`TCPConnection`
 - `input` (String) Enter the URL of the SOAP Request Document. This may be a file on the local flash filesystem (for example, local:///healthcheck.xml). This document is POSTed to the server if Send SOAP Request is on.
   - CLI Alias: `send-soap`
   - Default value: `store:///healthcheck.xml`
+  - Not Valid When: (`post`=`false` OR `gateway_script_checks`=`true` OR `ssl`=`LDAP`|`IMSConnect`|`TCPConnection`)
 - `port` (Number) Enter the TCP Port number to test. The remote port and the member server health port interact differently depending on the type of the health check. <ul><li>Standard: The member server health port is used if specified. If not specified, the remote port in the load balancer group health check is used.</li><li>LDAP: The remote port in the load balancer group health check only is used. A specification of a health port for the member server is ignored.</li><li>IMS: The health port of the member only is used. The remote port in the load balancer group health check is ignored.</li></ul>
   - CLI Alias: `target-port`
   - Default value: `80`
 - `post` (Boolean) When set to on, the SOAP Request Document will be submitted to the web service via an HTTP POST operation. When set to off (without a request document), an HTTP Get operation is sent. The expected response is always valid XML and it is then analyzed using the Xpath Expression to verify the state of health of the server.
   - CLI Alias: `use-soap`
   - Default value: `true`
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`true`)
 - `ssl` (String) Type of health check to perform. In TCP mode (TCP Connection health check type), a health check is performed with a TCP connection request. In HTTP mode (Standard health check type), a health check is performed with an HTTP GET or HTTP POST.
   - CLI Alias: `type`
   - Choices: `Standard`, `LDAP`, `IMSConnect`, `TCPConnection`, `on`, `off`
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: (`ssl_client_config_type`!=`client` OR `ssl`!=`Standard`)
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: `ssl`!=`Standard`
 - `tcp_connection_type` (String) When set to full, a TCP Connection health check will perform a complete three-way handshake to establish a connection, followed by a four-way handshake to close the connection. When set to partial, a TCP Connection health check will perform a half-open connection to check a member's health. The three-way handshake to establish a connection will not be completed for partial connection types.
   - CLI Alias: `tcp-conn-type`
   - Choices: `Full`, `Partial`
+  - Required When: `ssl`=`TCPConnection`
+  - Not Valid When: `ssl`=`LDAP`|`IMSConnect`|`Standard`
 - `timeout` (Number) Enter an integer between 2 and 86400 to indicate the number of seconds to wait for a response to a health check post. The default is 10.
   - CLI Alias: `timeout`
   - Range: `2`-`86400`
@@ -183,9 +204,11 @@ Read-Only:
 - `uri` (String) The relative URI to test for each member of the group. XXX in http://www.foobar.com/XXX.
   - CLI Alias: `target-uri`
   - Default value: `/`
+  - Not Valid When: `ssl`=`LDAP`|`IMSConnect`|`TCPConnection`
 - `xpath` (String) Enter an XPath Expression that verifies the health of the server. The expression is applied to the server's response to the health check POST. If the expression is true, the server is healthy. Otherwise, the server health state is softdown until it passes a health check.
   - CLI Alias: `xpath`
   - Default value: `/`
+  - Not Valid When: (`ssl`=`LDAP`|`IMSConnect`|`TCPConnection` OR `gateway_script_checks`=`true`)
 
 
 <a id="nestedatt--result--lb_group_members"></a>
@@ -194,6 +217,7 @@ Read-Only:
 Read-Only:
 
 - `activity` (String) DEPRECATED.
+  - Not Valid When: attribute is not conditionally required
 - `health_port` (Number) Specifies the TCP Port number to test.
 - `lb_member_state` (String) Enable or Disable the Load Balancer Member. If the Administrative State is disabled, the member are not used in health or forwarding checks.
   - CLI Alias: `admin-state`

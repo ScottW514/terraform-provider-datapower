@@ -93,7 +93,7 @@ func (r *WebSphereJMSSourceProtocolHandlerResource) Schema(ctx context.Context, 
 				Optional:            true,
 			},
 			"strict_message_order": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enable to work smoothly with WebSphere server when the \"Strict Message Ordering\" option in the corresponding destination is checked.</p>", "strict-message-order", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enable to work smoothly with WebSphere server when the \"Strict Message Ordering\" option in the corresponding destination is checked.</p>", "strict-message-order", "").AddDefaultValue("false").AddNotValidWhen(models.WebSphereJMSSourceProtocolHandlerStrictMessageOrderIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

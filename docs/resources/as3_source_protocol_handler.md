@@ -46,18 +46,22 @@ resource "datapower_as3_source_protocol_handler" "test" {
 - `allow_dele_cmd` (Boolean) Specify whether to support the FTP <tt>DELE</tt> command. When enabled, the <tt>DELE</tt> command can be passed to the FTP server. The default behavior is to not support the <tt>DELE</tt> command. <p>This setting is only valid in a transparent file system. This setting is only supported by the FTP server handler for a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `dele-cmd`
   - Default value: `false`
+  - Not Valid When: `filesystem_type`!=`transparent`
 - `allow_list_cmd` (Boolean) Specify whether to support the FTP <tt>LIST</tt> command. When enabled, the FTP server makes a distinction between the <tt>LIST</tt> and <tt>NLST</tt> commands. By default, the server always respond with an <tt>NLST</tt> to list files. <p>This setting is only supported by the FTP server handler for a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `list-cmd`
   - Default value: `false`
+  - Not Valid When: `filesystem_type`!=`transparent`
 - `allow_rest` (Boolean) Specify whether the FTP client can use the FTP <tt>REST</tt> command after an interrupted file transfer. Restart ( <tt>REST</tt> ) is supported in the BSD stream style as described in <tt>draft-ietf-ftpext-mlst-16.txt</tt> . The MODE B style that is described in RFC 959 is not supported. The FTP server must be configured with a virtual persistent file system. <p>For written files, the server delays the processing until a timer expires or until the next FTP command other than a <tt>SIZE</tt> or <tt>REST</tt> command. With this processing, the FTP client can return and resume the transfer by using the <tt>SIZE</tt> , <tt>REST</tt> , and <tt>STOR</tt> commands. The argument to the <tt>REST</tt> command must be the same as the byte count the the <tt>SIZE</tt> command returned.</p>
   - CLI Alias: `allow-restart`
   - Default value: `false`
+  - Not Valid When: `filesystem_type`!=`virtual-persistent`
 - `allow_stou` (Boolean) Specify whether the FTP client can use the FTP <tt>STOU</tt> command to generate unique file names. When enabled, the FTP server generates a unique file name for each transferred file.
   - CLI Alias: `allow-unique-filename`
   - Default value: `false`
 - `alternate_pasv_addr` (String) Specify the IP address to return to the FTP client in response to a <tt>PASV</tt> command. This setting does not change the IP address that the FTP server listens, which is always the IP address for the FTP data connection. This value is used when the FTP server is behind a firewall that is not FTP-aware.
   - CLI Alias: `passive-addr`
   - Required When: `use_alternate_pasv_addr`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `certificate_aaa_policy` (String) Specify the AAA policy to determine whether a password is required. This AAA policy provides secondary authentication of the information in the presented TLS certificate during TLS negotiation. Primary authentication is done by the TLS profile, which can reject the certificate. This authentication stage controls whether an FTP password is demanded or not. If authentication succeeds, the FTP client can use the <tt>USER</tt> command to login after the <tt>AUTH TLS</tt> command. If authentication fails, the FTP client must use both the <tt>USER</tt> and <b>PASS</b> commands to complete the login process. Without this AAA policy, the FTP client must use the <tt>USER</tt> and <tt>PASS</tt> commands.
   - CLI Alias: `certificate-aaa-policy`
   - Reference to: `datapower_aaa_policy:id`
@@ -72,9 +76,11 @@ resource "datapower_as3_source_protocol_handler" "test" {
 - `disable_pasv_ip_check` (Boolean) Specify whether to disable the IP security check for passive data connections. This check verifies that the client IP address that connects to the data connection is the same IP address that established the control connection. This check is the expected behavior for an FTP server. Disable this check only when the incoming connection is not from the same client as the control connection. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `passive-promiscuous`
   - Default value: `false`
+  - Not Valid When: `passive`=`disallow`
 - `disable_port_ip_check` (Boolean) Specify whether to disable the IP security check for active data connections. This check verifies that the outgoing data connection can connect to only the client. This check is the expected behavior for an FTP server. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `port-promiscuous`
   - Default value: `false`
+  - Not Valid When: `passive`=`require`
 - `filesystem_type` (String) Specify the file system type that the FTP server presents.
   - CLI Alias: `filesystem`
   - Choices: `virtual-ephemeral`, `virtual-persistent`, `transparent`
@@ -104,18 +110,22 @@ resource "datapower_as3_source_protocol_handler" "test" {
   - CLI Alias: `passive-idle-timeout`
   - Range: `5`-`300`
   - Default value: `60`
+  - Not Valid When: `passive`=`disallow`
 - `pasv_max_port` (Number) Specify the highest port in the passive port range for data connections. This value must be greater than the value of the minimum passive port. Enter a value in the range 1024 - 65534.
   - CLI Alias: `passive-port-max`
   - Range: `1024`-`65534`
   - Default value: `1050`
+  - Not Valid When: (`passive`=`disallow` OR `use_pasv_port_range`=`false`)
 - `pasv_min_port` (Number) Specify the lowest port in the passive port range for data connections. This value must be less than the value of the maximum passive port. Enter a value in the range 1024 - 65534.
   - CLI Alias: `passive-port-min`
   - Range: `1024`-`65534`
   - Default value: `1024`
+  - Not Valid When: (`passive`=`disallow` OR `use_pasv_port_range`=`false`)
 - `persistent_filesystem_timeout` (Number) Specify the duration in seconds to retain a connection to a virtual file system after all FTP control connections from user identities are disconnected. When the timer expires, the virtual file system is destroyed. All response files that were not deleted by the FTP client are deleted from their storage area. Enter a value in the range 1 - 43200. The default value is 600.
   - CLI Alias: `persistent-filesystem-timeout`
   - Range: `1`-`43200`
   - Default value: `600`
+  - Not Valid When: `filesystem_type`!=`virtual-persistent`
 - `require_tls` (String) Specify whether FTP control connections require TLS encryption. For implicit or explicit FTP, you must complete the configuration by specifying the TLS profile to secure connections.
   - CLI Alias: `require-tls`
   - Choices: `off`, `explicit`, `implicit`
@@ -123,25 +133,32 @@ resource "datapower_as3_source_protocol_handler" "test" {
 - `response_nf_sm_ount` (String) Response NFS mount
   - CLI Alias: `response-nfs-mount`
   - Reference to: `datapower_nfs_static_mount:id`
+  - Not Valid When: (`response_type`!=`virtual-filesystem` OR `response_storage`!=`nfs` OR `filesystem_type`!=`virtual-ephemeral`|`virtual-persistent`)
 - `response_storage` (String) Response storage
   - CLI Alias: `response-storage`
   - Choices: `temporary`, `nfs`
   - Default value: `temporary`
+  - Not Valid When: (`response_type`!=`virtual-filesystem` OR `filesystem_type`!=`virtual-ephemeral`|`virtual-persistent`)
 - `response_suffix` (String) Response suffix
   - CLI Alias: `response-suffix`
+  - Not Valid When: (`response_type`!=`virtual-filesystem`|`ftp-client` OR `filesystem_type`!=`virtual-ephemeral`|`virtual-persistent`)
 - `response_type` (String) Response type
   - CLI Alias: `response-type`
   - Choices: `none`, `virtual-filesystem`
   - Default value: `none`
+  - Not Valid When: `filesystem_type`!=`virtual-ephemeral`|`virtual-persistent`
 - `response_url` (String) Response URL
   - CLI Alias: `response-url`
+  - Not Valid When: (`response_type`!=`ftp-client` OR `filesystem_type`!=`virtual-ephemeral`|`virtual-persistent`)
 - `restart_timeout` (Number) Specify the duration in seconds to wait for a restart. When restart ( <tt>REST</tt> ) is enabled, the FTP client must reconnect to the server and use the <tt>SIZE</tt> , <tt>REST</tt> , and <tt>STOR</tt> commands to continue an interrupted file transfer. When this timer elapses, the previously received data on the data connection is passed to the DataPower service. This timer is canceled when a command other than <tt>SIZE</tt> or <tt>REST</tt> is received on the FTP control connection.
   - CLI Alias: `restart-timeout`
   - Default value: `240`
+  - Not Valid When: (`allow_rest`!=`true` OR `filesystem_type`!=`virtual-persistent`)
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
   - Required When: (`require_tls`=`explicit`|`implicit` AND `ssl_server_config_type`=`server`)
+  - Not Valid When: `ssl_server_config_type`!=`server`
 - `ssl_server_config_type` (String) Specify the type of TLS profile type to secure connections from clients. When a TLS profile is assigned, the FTP <tt>AUTH TLS</tt> command is enabled and clients can encrypt FTP control connection.
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
@@ -151,22 +168,28 @@ resource "datapower_as3_source_protocol_handler" "test" {
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
   - Required When: (`require_tls`=`explicit`|`implicit` AND `ssl_server_config_type`=`sni`)
+  - Not Valid When: `ssl_server_config_type`!=`sni`
 - `temporary_storage_size` (Number) Temporary storage size
   - CLI Alias: `filesystem-size`
   - Range: `1`-`2048`
   - Default value: `32`
+  - Not Valid When: (`response_storage`!=`temporary` OR `filesystem_type`!=`virtual-ephemeral`|`virtual-persistent`)
 - `unique_filename_prefix` (String) Specify the prefix for file names that the FTP <tt>STOU</tt> command generates. For the prefix, the directory separator (/ character) is not allowed. The default value is an empty string, which indicates to not add a prefix. <p><b>Note:</b> Processing adds a numeric suffix.</p>
   - CLI Alias: `unique-filename-prefix`
+  - Not Valid When: `allow_stou`!=`true`
 - `use_alternate_pasv_addr` (Boolean) Specify whether to use an alternate PASV IP address. When enabled, you can override the IP address that the FTP client presents to the server in passive mode. <p>This setting is supported by only the FTP server handler with a multiprotocol gateway or web service proxy.</p>
   - CLI Alias: `allow-passive-addr`
   - Default value: `false`
+  - Not Valid When: `passive`=`disallow`
 - `use_pasv_port_range` (Boolean) Specify whether to limit the port range for passive connections. <p>When enabled and the FTP server receives a <tt>PASV</tt> or <tt>EPSV</tt> command from the FTP client, the available port range is restricted from the listening port range 1024 - 65534. Use this setting when a firewall mandates that incoming FTP data connections on only a limited range of ports when it cannot sniff the FTP control connection.</p><p>The specified range limits how many FTP clients can be in the state between the receipt of the 227 response code to the <tt>PASV</tt> or <tt>EPSV</tt> command and the establishment of the FTP data connection. You can limit the pressure on this limited range by adjusting the idle timeout for passive data connections.</p><p><b>Note:</b> Do not configure a port range that overlaps with other services on the system. The system provides no check for these port conflicts. Generally, the other service allocates the ports, which makes these ports unavailable for the FTP server. The FTP server allocates these listing ports dynamically.</p>
   - CLI Alias: `passive-port-range`
   - Default value: `false`
+  - Not Valid When: `passive`=`disallow`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `virtual_directories` (Attributes List) Specify the directories to create in virtual file system that the FTP server presents. The FTP client can use all of these directories to write file to be processed. The root directory (/) is always present, cannot be created, and is its own response directory.
-  - CLI Alias: `virtual-directory` (see [below for nested schema](#nestedatt--virtual_directories))
+  - CLI Alias: `virtual-directory`
+  - Not Valid When: `filesystem_type`!=`virtual-ephemeral`|`virtual-persistent` (see [below for nested schema](#nestedatt--virtual_directories))
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

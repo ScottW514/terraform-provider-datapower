@@ -78,6 +78,7 @@ Read-Only:
 - `required` (Boolean) Specify whether this parameter requires a value in an assembly function call.
   - CLI Alias: `required`
   - Default value: `true`
+  - Not Valid When: `value`!=``
 - `schema` (String) Specify the API schema to verify the parameter type.
   - CLI Alias: `schema`
   - Reference to: `datapower_api_schema:id`

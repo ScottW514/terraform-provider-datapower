@@ -123,11 +123,11 @@ func (r *ConfigSequenceResource) Schema(ctx context.Context, req resource.Schema
 				Default:             booldefault.StaticBool(false),
 			},
 			"output_location": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store the output files that processing generates. When not specified, the input file location is used.", "output-location", "").AddDefaultValue("logtemp:///").AddRequiredWhen(models.ConfigSequenceOutputLocationCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store the output files that processing generates. When not specified, the input file location is used.", "output-location", "").AddDefaultValue("logtemp:///").AddRequiredWhen(models.ConfigSequenceOutputLocationCondVal.String()).AddNotValidWhen(models.ConfigSequenceOutputLocationIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.ConfigSequenceOutputLocationCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.ConfigSequenceOutputLocationCondVal, models.ConfigSequenceOutputLocationIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("logtemp:///"),
 			},

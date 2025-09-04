@@ -48,6 +48,7 @@ resource "datapower_count_monitor" "test" {
 - `max_source_s` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
   - CLI Alias: `distinct-sources`
   - Default value: `10000`
+  - Not Valid When: `source`!=`each-ip`|`ip-from-header`
 - `measure` (String) Select the action that advances the counter. The default is Requests.
   - CLI Alias: `measure`
   - Choices: `requests`, `responses`, `xpath`, `errors`

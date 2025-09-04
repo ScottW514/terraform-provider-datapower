@@ -152,10 +152,10 @@ func (r *SocialLoginPolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default:             booldefault.StaticBool(true),
 			},
 			"jwt_validator": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT Validator configuration that defines how to validate and verify the ID token.", "jwt-validator", "aaa_jwt_validator").AddRequiredWhen(models.SocialLoginPolicyJWTValidatorCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT Validator configuration that defines how to validate and verify the ID token.", "jwt-validator", "aaa_jwt_validator").AddRequiredWhen(models.SocialLoginPolicyJWTValidatorCondVal.String()).AddNotValidWhen(models.SocialLoginPolicyJWTValidatorIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SocialLoginPolicyJWTValidatorCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SocialLoginPolicyJWTValidatorCondVal, models.SocialLoginPolicyJWTValidatorIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

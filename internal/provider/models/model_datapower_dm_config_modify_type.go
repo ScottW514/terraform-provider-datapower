@@ -89,11 +89,11 @@ func GetDmConfigModifyTypeDataSourceSchema() DataSourceSchema.NestedAttributeObj
 				Computed:            true,
 			},
 			"property": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the property to add.", "name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the property to add.", "name", "").AddRequiredWhen(DmConfigModifyTypePropertyCondVal.String()).AddNotValidWhen(DmConfigModifyTypePropertyIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of the added or changed property. To change a property value, you can use an explicit value or a value that contains a variable in the <tt>${ <i>variable</i> }</tt> format. If you use variables, you need a deployment policy variable configuration to map the variable to its replacement value. For example, when the value is <tt>${newName}</tt> or <tt>${newName}_Service</tt> , a referenced deployment policy variable configuration must map the <tt>newName</tt> variable to an explicit replacement value.", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of the added or changed property. To change a property value, you can use an explicit value or a value that contains a variable in the <tt>${ <i>variable</i> }</tt> format. If you use variables, you need a deployment policy variable configuration to map the variable to its replacement value. For example, when the value is <tt>${newName}</tt> or <tt>${newName}_Service</tt> , a referenced deployment policy variable configuration must map the <tt>newName</tt> variable to an explicit replacement value.", "value", "").AddRequiredWhen(DmConfigModifyTypeValueCondVal.String()).AddNotValidWhen(DmConfigModifyTypeValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -118,17 +118,17 @@ func GetDmConfigModifyTypeResourceSchema() ResourceSchema.NestedAttributeObject 
 				},
 			},
 			"property": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the property to add.", "name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the property to add.", "name", "").AddRequiredWhen(DmConfigModifyTypePropertyCondVal.String()).AddNotValidWhen(DmConfigModifyTypePropertyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmConfigModifyTypePropertyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmConfigModifyTypePropertyCondVal, DmConfigModifyTypePropertyIgnoreVal, false),
 				},
 			},
 			"value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of the added or changed property. To change a property value, you can use an explicit value or a value that contains a variable in the <tt>${ <i>variable</i> }</tt> format. If you use variables, you need a deployment policy variable configuration to map the variable to its replacement value. For example, when the value is <tt>${newName}</tt> or <tt>${newName}_Service</tt> , a referenced deployment policy variable configuration must map the <tt>newName</tt> variable to an explicit replacement value.", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of the added or changed property. To change a property value, you can use an explicit value or a value that contains a variable in the <tt>${ <i>variable</i> }</tt> format. If you use variables, you need a deployment policy variable configuration to map the variable to its replacement value. For example, when the value is <tt>${newName}</tt> or <tt>${newName}_Service</tt> , a referenced deployment policy variable configuration must map the <tt>newName</tt> variable to an explicit replacement value.", "value", "").AddRequiredWhen(DmConfigModifyTypeValueCondVal.String()).AddNotValidWhen(DmConfigModifyTypeValueIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmConfigModifyTypeValueCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmConfigModifyTypeValueCondVal, DmConfigModifyTypeValueIgnoreVal, false),
 				},
 			},
 		},

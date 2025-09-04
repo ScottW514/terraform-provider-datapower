@@ -43,6 +43,7 @@ resource "datapower_b2b_profile" "test" {
   - CLI Alias: `as-allow-dup-msg`
   - Choices: `never`, `always`, `on-error`
   - Default value: `never`
+  - Not Valid When: `profile_type`=`internal`
 - `business_id_duns` (List of String) Specify the 9-digit DUNS (Data Universal Numbering System) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.
   - CLI Alias: `business-id-duns`
 - `business_id_duns4` (List of String) Specifies the 13-digit D-U-N-S (Data Universal Numbering System + 4) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.
@@ -59,153 +60,199 @@ resource "datapower_b2b_profile" "test" {
   - CLI Alias: `ebms3-allow-dup-msg`
   - Choices: `never`, `always`, `on-error`
   - Default value: `never`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms3_default_signer_cert` (String) Specify the default validation certificate to verify the signature of an inbound ebMS3 message or a receipt. This certificate is used when the <tt>keyInfo</tt> element is missing or the signature method is unsupported.
   - CLI Alias: `ebms3-default-signer-cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms3_duplicate_detection_notification` (Boolean) Specify whether to enable duplicate detection notification. When enabled, send notification to the message consumer when a duplicate message is detected. The default behavior is disabled.
   - CLI Alias: `ebms3-duplicate-detection-notification`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms3_inbound_decrypt_id_cred` (String) Inbound decryption identification credentials
   - CLI Alias: `ebms3-decrypt-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
   - Required When: (`profile_type`=`internal` AND `ebms3_inbound_require_encrypted`=`true`)
+  - Not Valid When: `profile_type`=`external`
 - `ebms3_inbound_require_compressed` (Boolean) Specify whether internal partners require compressed inbound ebMS3 messages. The default behavior is not to require compression.
   - CLI Alias: `ebms3-require-compressed`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `ebms3_inbound_require_encrypted` (Boolean) Specify whether inbound ebMS3 messages must be encrypted. The default behavior is off.
   - CLI Alias: `ebms3-require-encrypted`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `ebms3_inbound_require_signed` (Boolean) Specify whether inbound ebMS3 messages must be signed. The default behavior is off.
   - CLI Alias: `ebms3-require-signed`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `ebms3_inbound_verify_val_cred` (String) Inbound signature validation credentials
   - CLI Alias: `ebms3-verify-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms3_outbound_sign` (Boolean) Specify whether to sign outbound messages. The default behavior is off. <ul><li>When enabled, signs outbound messages with the configured identification credentials and algorithm. If the configuration of a destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>When disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound receipt signal messages. Regardless of this setting and whether an external partner requests a signed receipt signal, the outbound receipt signal is signed when this internal partner has a configured identification credentials.</p>
   - CLI Alias: `ebms3-sign`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `ebms3_outbound_sign_digest_alg` (String) Specify the algorithm to hash the payload during signing. The default value is sha1. See http://www.w3.org/TR/xmldsig-core/
   - CLI Alias: `ebms3-sign-digest-alg`
   - Choices: `sha1`, `sha256`, `sha512`, `ripemd160`, `sha224`, `sha384`, `md5`
   - Default value: `sha1`
+  - Not Valid When: (`profile_type`=`external` OR `ebms3_outbound_sign`=`false`)
 - `ebms3_outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or outbound receipt signal. The outbound receipt signal is signed if requested by a partner and this setting is configured.
   - CLI Alias: `ebms3-sign-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
   - Required When: (`profile_type`=`internal` AND `ebms3_outbound_sign`=`true`)
+  - Not Valid When: `profile_type`=`external`
 - `ebms3_outbound_signature_alg` (String) Specify the algorithm to sign outbound ebMS3 messages. The default value is dsa-sha1, which is recommended by the ebMS specification.
   - CLI Alias: `ebms3-signature-alg`
   - Choices: `dsa-sha1`, `rsa-sha1`, `rsa-sha256`, `rsa-sha384`, `rsa-sha512`, `rsa-ripemd160`, `rsa-ripemd160-2010`, `sha256-rsa-MGF1`, `rsa-md5`, `ecdsa-sha1`, `ecdsa-sha224`, `ecdsa-sha256`, `ecdsa-sha384`, `ecdsa-sha512`
   - Default value: `rsa-sha1`
+  - Not Valid When: (`profile_type`=`external` OR `ebms3_outbound_sign`=`false`)
 - `ebms3_outbound_signature_c14n_alg` (String) Specify the algorithm to canonicalize the SOAP Envelope XML and exclude comments before signing outbound ebMS3 messages. The default value is exc-c14n, which is recommended by the ebMS specification.
   - CLI Alias: `ebms3-signature-c14n-alg`
   - Choices: `c14n`, `exc-c14n`, `c14n-comments`, `exc-c14n-comments`, `c14n11`, `c14n11-comments`
+  - Not Valid When: (`profile_type`=`external` OR `ebms3_outbound_sign`=`false`)
 - `ebms3_receipt_ssl_client` (String) Receipt/Error TLS client profile
   - CLI Alias: `ebms3-receipt-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
   - Required When: (`ebms3_receipt_ssl_client_config_type`=`client` AND (`ebms_receipt_url` protocol=`https` OR `ebms_inbound_error_url` protocol=`https`) AND `profile_type`=`external` AND `ebms_inbound_send_receipt`=`true` AND `ebms_inbound_receipt_reply_pattern`=`Callback`)
+  - Not Valid When: (`ebms3_receipt_ssl_client_config_type`!=`client` OR `profile_type`=`internal`)
 - `ebms3_receipt_ssl_client_config_type` (String) Receipt/Error TLS client type
   - CLI Alias: `ebms3-receipt-ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_ack_ssl_client` (String) Acknowledgment/Error TLS client profile
   - CLI Alias: `ebmsack-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: (`ebms_ack_ssl_client_config_type`!=`client` OR `profile_type`=`internal`)
 - `ebms_ack_ssl_client_config_type` (String) Acknowledgment/Error TLS client type
   - CLI Alias: `ebmsack-ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_ack_url` (String) Specify the redirection URL to send the acknowledgment message when received ebMS2 message requests an asynchronous response. When an asynchronous reply is requested by the inbound ebMS2 document, this field is required to determine where to send the acknowledgment.
   - CLI Alias: `ebms-ack-url`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_action` (String) Specify the action to package in the outbound ebMS2 message header. This value is used when the B2B gateway is CPA-enforced.
   - CLI Alias: `ebms-action`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_allow_duplicate_message` (String) Specify when to allow and reprocess duplicate ebMS2 inbound messages. The default behavior is never. This option does not apply to acknowledgments.
   - CLI Alias: `ebms-allow-dup-msg`
   - Choices: `never`, `always`, `on-error`
   - Default value: `never`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_cpa_id` (String) Specify the CPA ID to package in the outbound ebMS2 message header. This value is used when the B2B gateway is CPA-enforced.
   - CLI Alias: `ebms-cpa-id`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_default_signer_cert` (String) Specify the default validation certificate to verify the signature of an inbound ebMS2 message or an acknowledgment. The default signature validation certificate is used if either the <tt>keyInfo</tt> element is missing or signature method is unsupported.
   - CLI Alias: `ebms-default-signer-cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_enable_cpa_binding` (Boolean) Specify whether to enable CPA bindings. When enabled, the CPA, service, and action that are specified by the matched CPA binding are used for the outbound ebMS2 messages instead of the default CPA, service, and action of the external profile. The CPA binding is matched by the internal partner profile.
   - CLI Alias: `ebms-enable-cpa-bindings`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_error_url` (String) Specify the redirection URL to send the error message when received ebMS2 message requests an asynchronous response. When an asynchronous reply is requested by the inbound ebMS2 document, this field is used as the error reporting location to send the error message that contains the error code and the description of the problem. Error URL cannot be empty when the acknowledgment URL is specified.
   - CLI Alias: `ebms-error-url`
   - Required When: `ebms_ack_url`!=``
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_inbound_decrypt_id_cred` (String) Specify the identification credentials to decrypt inbound ebMS2 messages.
   - CLI Alias: `ebms-decrypt-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
   - Required When: (`profile_type`=`internal` AND `ebms_inbound_require_encrypted`=`true`)
+  - Not Valid When: `profile_type`=`external`
 - `ebms_inbound_error_url` (String) When the error is sent asynchronously, specify the URL to send the error signal.
   - CLI Alias: `ebms-inbound-error-url`
   - Required When: (`ebms_inbound_send_receipt`=`true` AND `ebms_inbound_receipt_reply_pattern`=`Callback` AND `profile_type`=`external`)
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_inbound_receipt_reply_pattern` (String) Specify the pattern to send the receipt signal. The default behavior is response.
   - CLI Alias: `ebms-inbound-receipt-reply-pattern`
   - Choices: `Response`, `Callback`
   - Default value: `Response`
+  - Not Valid When: (`profile_type`=`internal` OR `ebms_inbound_send_receipt`=`false`)
 - `ebms_inbound_require_encrypted` (Boolean) Specify whether inbound ebMS2 messages must be encrypted. The default behavior is off.
   - CLI Alias: `ebms-require-encrypted`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `ebms_inbound_require_signed` (Boolean) Specify whether inbound ebMS2 messages must be signed. The default behavior is off.
   - CLI Alias: `ebms-require-signed`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `ebms_inbound_send_receipt` (Boolean) Specify whether to reply to the MSH with a receipt signal message for the received ebMS messages. The default behavior is off.
   - CLI Alias: `ebms-inbound-send-receipt`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_inbound_send_signed_receipt` (Boolean) Specify whether to reply to the MSH with a signed receipt signal message for the received ebMS3 message. The default behavior is off.
   - CLI Alias: `ebms-inbound-send-signed-receipt`
   - Default value: `false`
+  - Not Valid When: (`profile_type`=`internal` OR `ebms_inbound_send_receipt`=`false`)
 - `ebms_inbound_verify_val_cred` (String) Specify the validation credentials to verify the signature on an acknowledgment or inbound ebMS2 message. For ebMS2 messages, only <tt>X509Data</tt> and <tt>KeyName</tt> signature methods are supported.
   - CLI Alias: `ebms-verify-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_message_properties` (Attributes List) Specify the <tt>eb:Property</tt> elements to add to the <tt>eb:MessageProperties</tt> node. Define message properties to meet your business needs and the agreement between partners.
-  - CLI Alias: `ebms-messageproperties` (see [below for nested schema](#nestedatt--ebms_message_properties))
+  - CLI Alias: `ebms-messageproperties`
+  - Not Valid When: `profile_type`=`internal` (see [below for nested schema](#nestedatt--ebms_message_properties))
 - `ebms_notification` (Boolean) Specify whether to enable notification. When enabled, send notifications to the message producer or consumer when there are specific errors. The default behavior is off.
   - CLI Alias: `ebms-notification`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `ebms_notification_ssl_client` (String) Notification TLS client profile
   - CLI Alias: `ebms-notification-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
   - Required When: (`ebms_notification_ssl_client_config_type`=`client` AND `ebms_notification_url` protocol=`https` AND `profile_type`=`internal` AND `ebms_notification`=`true`)
+  - Not Valid When: (`ebms_notification_ssl_client_config_type`!=`client` OR `profile_type`=`external` OR `ebms_notification_url` protocol!=`https`)
 - `ebms_notification_ssl_client_config_type` (String) Notification TLS client type
   - CLI Alias: `ebms-notification-ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: (`profile_type`=`external` OR `ebms_notification_url` protocol!=`https`)
 - `ebms_notification_url` (String) Notification URL
   - CLI Alias: `ebms-notification-url`
   - Required When: `ebms_notification`=`true`
+  - Not Valid When: `profile_type`=`external`
 - `ebms_outbound_sign` (Boolean) Specify whether to sign outbound messages. The default behavior is disabled. <ul><li>If enabled, signs outbound messages with the configured identification credentials and algorithm. If the configuration of a destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>If disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound acknowledgment messages. Regardless of this setting and if a partner requests a signed acknowledgment, the outbound acknowledgment is signed if this partner has a configured identification credentials.</p>
   - CLI Alias: `ebms-sign`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `ebms_outbound_sign_digest_alg` (String) Specify the algorithm to hash the payload during signing. The default value is sha1. See http://www.w3.org/TR/xmldsig-core/
   - CLI Alias: `ebms-sign-digest-alg`
   - Choices: `sha1`, `sha256`, `sha512`, `ripemd160`, `sha224`, `sha384`, `md5`
   - Default value: `sha1`
+  - Not Valid When: (`profile_type`=`external` OR `ebms_outbound_sign`=`false`)
 - `ebms_outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or acknowledgment. The outbound acknowledgment is signed if requested by a partner and this setting is configured. For ebMS2 messages, only <tt>X509Data</tt> and <tt>KeyName</tt> signature methods are supported.
   - CLI Alias: `ebms-sign-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
   - Required When: (`profile_type`=`internal` AND `ebms_outbound_sign`=`true`)
+  - Not Valid When: `profile_type`=`external`
 - `ebms_outbound_signature_alg` (String) Specify the algorithm to sign the outbound ebMS2 message. The default value is dsa-sha1, which is recommended by the ebMS specification.
   - CLI Alias: `ebms-signature-alg`
   - Choices: `dsa-sha1`, `rsa-sha1`, `rsa-sha256`, `rsa-sha384`, `rsa-sha512`, `rsa-ripemd160`, `rsa-ripemd160-2010`, `sha256-rsa-MGF1`, `rsa-md5`, `ecdsa-sha1`, `ecdsa-sha224`, `ecdsa-sha256`, `ecdsa-sha384`, `ecdsa-sha512`
   - Default value: `dsa-sha1`
+  - Not Valid When: (`profile_type`=`external` OR `ebms_outbound_sign`=`false`)
 - `ebms_outbound_signature_c14n_alg` (String) Specify the algorithm to canonicalize the SOAP Envelope XML and exclude comments before signing outbound ebMS2 message. The default value is c14n, which is recommended by the ebMS specification.
   - CLI Alias: `ebms-signature-c14n-alg`
   - Choices: `c14n`, `exc-c14n`, `c14n-comments`, `exc-c14n-comments`, `c14n11`, `c14n11-comments`
   - Default value: `c14n`
+  - Not Valid When: (`profile_type`=`external` OR `ebms_outbound_sign`=`false`)
 - `ebms_persist_duration` (Number) Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
   - CLI Alias: `ebms-persist-duration`
   - Range: `0`-`6000000`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_profile_cpa_bindings` (Attributes List) Specify the CPA binding for the external partner profile. A CPA binding binds a CPA entry (CPA, service, and action) that you prefer to use. When a CPA entry is matched through the internal partner profile, outbound messages from the internal partner use the CPA, service, and action that are specified by the matched CPA entry. You must have the CPA entry in the ebXML settings of the associated B2B gateway before you add the entry to the CPA bindings list.
-  - CLI Alias: `profile-cpa-binding` (see [below for nested schema](#nestedatt--ebms_profile_cpa_bindings))
+  - CLI Alias: `profile-cpa-binding`
+  - Not Valid When: (`profile_type`=`internal` OR `ebms_enable_cpa_binding`=`false`) (see [below for nested schema](#nestedatt--ebms_profile_cpa_bindings))
 - `ebms_receipt_url` (String) When the receipt reply pattern is callback, specify the URL to send the receipt signal.
   - CLI Alias: `ebms-receipt-url`
   - Required When: (`ebms_inbound_send_receipt`=`true` AND `ebms_inbound_receipt_reply_pattern`=`Callback` AND `profile_type`=`external`)
+  - Not Valid When: (`profile_type`=`internal` OR `ebms_inbound_receipt_reply_pattern`=`Response` OR `ebms_inbound_send_receipt`=`false`)
 - `ebms_role` (String) Specify the name of authorized role of the party. When sending outbound message, the role associated with internal partner presents the <tt>From</tt> party and the role associated with external partner presents the <tt>To</tt> party. The value is referencing the <tt>Role</tt> specified in CPA. A <tt>Role</tt> is better defined as a URI, for example, http://rosettanet.org/roles/buyer.
   - CLI Alias: `ebms-role`
 - `ebms_service` (String) Specify the service to package in the outbound ebMS2 message header. This value is used when when the B2B gateway is CPA-enforced.
   - CLI Alias: `ebms-service`
+  - Not Valid When: `profile_type`=`internal`
 - `ebms_start_parameter` (Boolean) Specify whether to generate a start parameter for the ebMS2 message. The start parameter identifies the root part of the ebMS message. This setting is disabled by default. If enabled, the start parameter is generated with this value enclosed in angle brackets.
   - CLI Alias: `ebms-start-parameter`
   - Default value: `false`
@@ -215,41 +262,52 @@ resource "datapower_b2b_profile" "test" {
   - CLI Alias: `decrypt-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
   - Required When: (`profile_type`=`internal` AND `inbound_require_encrypted`=`true`)
+  - Not Valid When: `profile_type`=`external`
 - `inbound_require_encrypted` (Boolean) Specify whether inbound AS messages must be encrypted. The default behavior is off.
   - CLI Alias: `require-encrypted`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `inbound_require_signed` (Boolean) Specify whether inbound AS messages must be signed. The default behavior is off.
   - CLI Alias: `require-signed`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `inbound_verify_val_cred` (String) Inbound signature validation credentials
   - CLI Alias: `verify-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Not Valid When: `profile_type`=`internal`
 - `mdn_ssl_client` (String) MDN TLS client profile
   - CLI Alias: `mdn-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: (`mdn_ssl_client_config_type`!=`client` OR `profile_type`=`internal`)
 - `mdn_ssl_client_config_type` (String) MDN TLS client type
   - CLI Alias: `mdn-ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: `profile_type`=`internal`
 - `outbound_sign` (Boolean) Specify whether to sign outbound messages. The default behavior is off. <ul><li>If enabled, sign outbound messages with the configured identification credentials and algorithm. If the destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>If disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound MDN messages. Regardless of this setting and if a partner requests a signed MDN, the outbound MDN is signed if this partner has a configured identification credentials.</p>
   - CLI Alias: `sign`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `outbound_sign_digest_alg` (String) Signing digest algorithm
   - CLI Alias: `sign-digest-alg`
   - Choices: `sha1`, `md5`, `sha256`, `sha384`, `sha512`
   - Default value: `sha1`
+  - Not Valid When: (`profile_type`=`external` OR `outbound_sign`=`false`)
 - `outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or outbound MDN. The outbound MDN is signed if requested by a partner and this setting is configured.
   - CLI Alias: `sign-idcred`
   - Reference to: `datapower_crypto_ident_cred:id`
   - Required When: (`profile_type`=`internal` AND `outbound_sign`=`true`)
+  - Not Valid When: `profile_type`=`external`
 - `outbound_sign_mic_alg_version` (String) Specify the S/MIME specification version to generate the micalg parameter value in a multipart/signed message. The following value is a sample <tt>Content-Type</tt> header of the multipart/signed message. <p><tt>Content-Type: multipart/signed;protocol="application/pkcs7-signature";micalg=sha1; boundary=...</tt></p><p>The micalg parameter indicates which message digest algorithm (such as, MD5, SHA-1, SHA-256, SHA-384, and SHA-512) to use in the calculation of the Message Integrity Check (MIC). The formats of the micalg value differ between S/MIME Version 3.1 (RFC 3851) and Version 3.2 (RFC 5751).</p><ul><li>In Version 3.1, the micalg parameter value has micalg=[md5|sha1|sha256|sha384|sha512].</li><li>In Version 3.2, the micalg parameter value has micalg=[md5|sha-1|sha-256|sha-384|sha-512].</li></ul>
   - CLI Alias: `sign-micalg-version`
   - Choices: `SMIME3.1`, `SMIME3.2`
+  - Not Valid When: `profile_type`=`external`
 - `override_asid` (String) Specify the override the identifiers in AS message headers. <ul><li>For outbound messages, the value to use for the <tt>AS*-From</tt> or <tt>AS*-To</tt> header, where * is 1, 2, or 3. If blank, the transaction retains the identifiers that were extracted from the message payload.</li><li>For inbound messages, the value becomes another valid identifier for the partner in addition to those already defined for the partner.</li></ul>
   - CLI Alias: `override-as-identifier`
 - `preserve_filename` (Boolean) Specify whether to expose the <tt>Content-Disposition</tt> header of inbound AS messages for file name preservation. According to RFC 2183, the file name information is optional in <tt>Content-Disposition</tt> header. When enabled, the <tt>Content-Disposition</tt> header of the inbound AS message is exposed if the inbound AS message is in S/MIME format. Then, the receiving partner can retrieve the original file name that is contained in the header and transfer the received file to its backend system with the received file name.
   - CLI Alias: `preserve-filename`
   - Default value: `false`
+  - Not Valid When: `profile_type`=`external`
 - `profile_type` (String) Specify whether the profile is for an internal or external partner. The default value is internal.
   - CLI Alias: `profile-type`
   - Choices: `internal`, `external`
@@ -277,215 +335,289 @@ Optional:
   - CLI Alias: `ack-time`
   - Range: `1`-`3600`
   - Default value: `1800`
+  - Not Valid When: (`dest_url` protocol!=`as1`|`as2`|`as2s`|`as3` OR `as_mdn_request`!=`true`)
 - `as1_mdn_redirect_email` (String) Specify the redirection email address for the MDN to outbound AS1 messages. The partner that receives the outbound AS1 message sends the MDN to this email address. When blank, the redirection email in the <tt>From</tt> address of the outgoing message (the default email address of the sending internal partner).
   - CLI Alias: `as1-mdn-email`
+  - Not Valid When: (`dest_url` protocol!=`as1` OR `as_mdn_request`!=`true`)
 - `as2_mdn_redirect_url` (String) Specify the redirection URL for the MDN to outbound AS2 messages.
   - CLI Alias: `as2-mdn-url`
+  - Not Valid When: (`dest_url` protocol!=`as2`|`as2s` OR `as_mdn_request`!=`true` OR `as_mdn_request_async`!=`true`)
 - `as3_mdn_redirect_url` (String) Specify the redirection URL for the MDN to outbound AS3 messages.
   - CLI Alias: `as3-mdn-url`
+  - Not Valid When: (`dest_url` protocol!=`as3` OR `as_mdn_request`!=`true`)
 - `as_compress` (Boolean) Specify whether to compress the body of outbound AS messages. The default behavior is disabled.
   - CLI Alias: `as-compress`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`as1`|`as2`|`as2s`|`as3`
 - `as_compress_before_sign` (Boolean) Specify whether to compress the body of outbound AS messages before signing. The default behavior is disabled. <ul><li>If enabled, compress the message body before signing.</li><li>If disabled, sign the message before compressing the message body.</li></ul>
   - CLI Alias: `as-compress-before-sign`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`as1`|`as2`|`as2s`|`as3` OR `as_compress`=`false`)
 - `as_encrypt` (Boolean) Specify whether to encrypt the body of outgoing AS messages. The default behavior is disabled.
   - CLI Alias: `as-encrypt`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`as1`|`as2`|`as2s`|`as3`
 - `as_encrypt_alg` (String) Specify the symmetric encryption algorithm to encrypt outbound AS messages.
   - CLI Alias: `as-encrypt-alg`
   - Choices: `3des`, `des`, `rc2-128`, `rc2-64`, `rc2-40`, `aes-128`, `aes-192`, `aes-256`
   - Default value: `3des`
+  - Not Valid When: (`dest_url` protocol!=`as1`|`as2`|`as2s`|`as3` OR `as_encrypt`!=`true`)
 - `as_encrypt_cert` (String) Specify the certificate to encrypt outbound AS messages. Use the name of a certificate.
   - CLI Alias: `as-encrypt-cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: (`dest_url` protocol=`as1`|`as2`|`as2s`|`as3` AND `as_encrypt`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `as_mdn_request` (Boolean) Specify whether to request an MDN for outbound AS messages. The default behavior is disabled.
   - CLI Alias: `as-mdn-request`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`as1`|`as2`|`as2s`|`as3`
 - `as_mdn_request_async` (Boolean) Specify whether the MDN request for outbound AS messages is asynchronous. The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If disabled, the MDN request is synchronous</li></ul>
   - CLI Alias: `as-mdn-request-async`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`as2`|`as2s` OR `as_mdn_request`=`false`)
 - `as_mdn_request_signed` (Boolean) Specify whether to request a signed MDN instead of an unsigned one. The default behavior is an unsigned one.
   - CLI Alias: `as-mdn-request-signed`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`as1`|`as2`|`as2s`|`as3` OR `as_mdn_request`=`false`)
 - `as_mdn_request_signed_algs` (String) Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .
   - CLI Alias: `as-mdn-request-signed-algs`
   - Default value: `sha1,md5`
+  - Not Valid When: (`dest_url` protocol!=`as1`|`as2`|`as2s`|`as3` OR `as_mdn_request`=`false` OR `as_mdn_request_signed`=`false`)
 - `as_send_unsigned` (Boolean) Specify whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages when the sender has signing credentials.</li></ul>
   - CLI Alias: `as-send-unsigned`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`as1`|`as2`|`as2s`|`as3`
 - `auth_tls` (String) Specify the use of TLS to secure connections with the FTP <tt>AUTH TLS</tt> command.
   - CLI Alias: `ftp-auth-tls`
   - Choices: `auth-off`, `auth-tls-opt`, `auth-tls-req`, `auth-tls-imp`
   - Default value: `auth-off`
+  - Not Valid When: (`dest_url` protocol!=`ftp`|`as3` OR `enable_ftp_settings`!=`true`)
 - `binary_transfer_mode` (String) Specify whether to transfer the message payload in binary mode.
   - CLI Alias: `binary-transfer-mode`
   - Choices: `auto-detect`, `enforce`
   - Default value: `auto-detect`
+  - Not Valid When: `dest_url` protocol!=`as1`|`as2`|`as2s`|`as3`
 - `data_type` (String) Specify the data type of file transfers.
   - CLI Alias: `ftp-data-type`
   - Choices: `ascii`, `binary`
   - Default value: `binary`
+  - Not Valid When: (`dest_url` protocol!=`ftp`|`as3` OR `enable_ftp_settings`!=`true`)
 - `ebms_ack_request` (Boolean) Specify whether to request an acknowledgment for outbound ebMS2 messages. The default behavior is off.
   - CLI Alias: `ebms-ack-request`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`ebms2`|`ebms2s`
 - `ebms_ack_request_signed` (Boolean) Specify whether to request a signed acknowledgment. The default behavior is off.
   - CLI Alias: `ebms-ack-request-signed`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`ebms2`|`ebms2s` OR `ebms_ack_request`=`false`)
 - `ebms_action` (String) Specify the value of action element in outbound ebMS2 request. For example, <tt>NewPurchaseOrder</tt> . This value is used when the B2B gateway is not CPA-enforced.
   - CLI Alias: `ebms-action`
+  - Not Valid When: `dest_url` protocol!=`ebms2`|`ebms2s`
 - `ebms_agreement_ref` (String) Specify the reference to the agreement that governs this message exchange. This value maps to <tt>eb:AgreementRef</tt> in the message header.
   - CLI Alias: `ebms-agreementref`
+  - Not Valid When: `dest_url` protocol!=`ebms3`|`ebms3s`
 - `ebms_compress` (Boolean) Specify whether to compress the body of outbound ebMS messages. The default behavior is off.
   - CLI Alias: `ebms-compress`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`ebms3`|`ebms3s`
 - `ebms_cpa_id` (String) Specify the CPA ID in the message that is sent to the destination partner. You can use the value to identify the sender and the recipient. This value is used when the B2B gateway is not CPA-enforced.
   - CLI Alias: `ebms-cpa-id`
+  - Not Valid When: `dest_url` protocol!=`ebms2`|`ebms2s`
 - `ebms_duplicate_elimination_request` (Boolean) Specify whether to request that the receiving partner checks for duplicates of outbound messages. If enabled, the receiving business partner should ignore duplicate message received. The default behavior is on.
   - CLI Alias: `ebms-duplicate-elimination-request`
   - Default value: `true`
+  - Not Valid When: `dest_url` protocol!=`ebms2`|`ebms2s`
 - `ebms_encrypt` (Boolean) Specify whether to encrypt the body of outgoing ebMS messages.
   - CLI Alias: `ebms-encrypt`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`ebms2`|`ebms2s`|`ebms3`|`ebms3s`
 - `ebms_encrypt_alg` (String) Specify the encryption algorithm to encrypt outbound ebMS2 messages.
   - CLI Alias: `ebms-encrypt-alg`
   - Choices: `http://www.w3.org/2001/04/xmlenc#tripledes-cbc`, `http://www.w3.org/2001/04/xmlenc#aes128-cbc`, `http://www.w3.org/2001/04/xmlenc#aes192-cbc`, `http://www.w3.org/2001/04/xmlenc#aes256-cbc`, `http://www.w3.org/2009/xmlenc11#aes128-gcm`, `http://www.w3.org/2009/xmlenc11#aes192-gcm`, `http://www.w3.org/2009/xmlenc11#aes256-gcm`
   - Default value: `http://www.w3.org/2001/04/xmlenc#tripledes-cbc`
+  - Not Valid When: (`dest_url` protocol!=`ebms2`|`ebms2s`|`ebms3`|`ebms3s` OR `ebms_encrypt`!=`true`)
 - `ebms_encrypt_cert` (String) Specify the certificate to encrypt outbound messages.
   - CLI Alias: `ebms-encrypt-cert`
   - Reference to: `datapower_crypto_certificate:id`
+  - Required When: (`dest_url` protocol=`ebms2`|`ebms2s`|`ebms3`|`ebms3s` AND `ebms_encrypt`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `ebms_include_time_to_live` (Boolean) Specify whether the sending partner includes the <tt>TimeToLive</tt> element in the outbound ebMS2 message header. The <tt>TimeToLive</tt> element indicates when the message expires. <ul><li>If the receiving partner receives the message before it expires, the receiving partner accepts the message.</li><li>If the receiving partner receives the message after it expires, the receiving partner rejects the message.</li></ul>
   - CLI Alias: `ebms-include-time-to-live`
   - Default value: `true`
+  - Not Valid When: (`dest_url` protocol!=`ebms2`|`ebms2s` OR `ebms_retry`!=`true`)
 - `ebms_key_encrypt_alg` (String) Specify the ebMS3 asymmetric key transport algorithm to encrypt outbound ebMS3 messages. By default, encrypts with RSA Version 1.5.
   - CLI Alias: `ebms-key-encrypt-alg`
   - Choices: `http://www.w3.org/2001/04/xmlenc#rsa-1_5`, `http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p`, `http://www.w3.org/2009/xmlenc11#rsa-oaep`
   - Default value: `http://www.w3.org/2001/04/xmlenc#rsa-1_5`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_encrypt`!=`true`)
 - `ebms_max_retries` (Number) Specify the number of retransmit attempts. Enter a value in the range 1 - 30. The default value is 3.
   - CLI Alias: `ebms-max-retries`
   - Range: `1`-`30`
   - Default value: `3`
+  - Not Valid When: (`dest_url` protocol!=`ebms2`|`ebms2s` OR `ebms_ack_request`!=`true` OR `ebms_retry`=`false`)
 - `ebms_message_exchange_pattern` (String) Specify the message exchange pattern (MEP) to use. The MEP defines how a business partner exchanges messages with another business partner. The default value is one-way push.
   - CLI Alias: `ebms-mep`
   - Choices: `one-way-push`, `one-way-pull`
   - Default value: `one-way-push`
+  - Required When: `dest_url` protocol=`ebms3`|`ebms3s`
+  - Not Valid When: `dest_url` protocol!=`ebms3`|`ebms3s`
 - `ebms_message_partition_channel` (String) When the MEP is one-way pull, specify the message partition channel (MPC) to pull messages. In the one-way pull mode, a message remains in MPC storage until the B2B gateway receives an authenticated and authorized pull request.
   - CLI Alias: `ebms-mpc`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_message_exchange_pattern`=`one-way-push`)
 - `ebms_mpc_auth_method` (String) Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.
   - CLI Alias: `embs-mpc-auth-method`
   - Choices: `username-token`, `cert`
   - Default value: `username-token`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_message_exchange_pattern`=`one-way-push`)
 - `ebms_mpc_verify_val_cred` (String) When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.
   - CLI Alias: `ebms-mpc-verify-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_mpc_auth_method`=`username-token` OR `ebms_message_exchange_pattern`=`one-way-push`)
 - `ebms_outbound_receipt_reply_pattern` (String) Specifies the pattern to send the receipt signal. The default behavior is response.
   - CLI Alias: `ebms-outbound-receipt-reply-pattern`
   - Choices: `Response`, `Callback`
   - Default value: `Response`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_outbound_request_receipt`=`false` OR `ebms_message_exchange_pattern`=`one-way-pull`)
 - `ebms_outbound_reception_awareness_notification` (Boolean) Specify whether to send a reception awareness error notification to the ebMS3 message producer. The default behavior is off. The B2B gateway reports a reception awareness error to the message producer if the receipt signal message is not received for a sent message.
   - CLI Alias: `ebms-reception-awareness-notification`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_outbound_request_receipt`=`false`)
 - `ebms_outbound_reception_awareness_timeout` (Number) Specify the duration in seconds to wait for the receipt signal. Enter a value in the range 3 - 7200. The default value is 300. If the B2B gateway does not receive the receipt signal after this duration, the B2B gateway sends a reception awareness error notification to the message producer.
   - CLI Alias: `ebms-reception-awareness-timeout`
   - Range: `3`-`7200`
   - Default value: `300`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_outbound_request_receipt`=`false` OR `ebms_outbound_reception_awareness_notification`=`false` OR (`ebms_outbound_receipt_reply_pattern`=`Response` AND `ebms_message_exchange_pattern`=`one-way-push`))
 - `ebms_outbound_request_receipt` (Boolean) Specify whether to request a receipt signal for a sent ebMS3 message. The default behavior is off.
   - CLI Alias: `ebms-outbound-request-receipt`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`ebms3`|`ebms3s`
 - `ebms_outbound_request_signed_receipt` (Boolean) Specify whether to request a signed receipt. The default behavior is off.
   - CLI Alias: `ebms-outbound-request-signed-receipt`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_outbound_request_receipt`=`false`)
 - `ebms_p_mode` (String) Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.
   - CLI Alias: `ebms-pmode`
+  - Not Valid When: `dest_url` protocol!=`ebms3`|`ebms3s`
 - `ebms_retry` (Boolean) Specify whether to retransmit unacknowledged outbound messages. The default behavior is off.
   - CLI Alias: `ebms-retry`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`ebms2`|`ebms2s` OR `ebms_ack_request`!=`true`)
 - `ebms_retry_interval` (Number) Specify the interval in seconds between retry attempts. Enter a value in the range 1 - 3600. This default value is 1800.
   - CLI Alias: `ebms-retry-interval`
   - Range: `1`-`3600`
   - Default value: `1800`
+  - Not Valid When: (`dest_url` protocol!=`ebms2`|`ebms2s` OR `ebms_retry`=`false`)
 - `ebms_send_unsigned` (Boolean) Controls whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages only if the sender has signing credentials.</li></ul>
   - CLI Alias: `ebms-send-unsigned`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`ebms2`|`ebms2s`|`ebms3`|`ebms3s`
 - `ebms_service` (String) Specify the value of service element in outbound ebMS2 request that acts on the message. For example, <tt>urn:services:SupplierOrderProcessing</tt> . This value is used when the B2B gateway is not CPA-enforced. The value can be a string or a URI. If a non-URI string is specified, you must specify the value of <b>Service Type</b>.
   - CLI Alias: `ebms-service`
+  - Not Valid When: `dest_url` protocol!=`ebms2`|`ebms2s`
 - `ebms_service_type` (String) Specify the value of the type attribute in the ebMS SOAP message. When blank, ensure that the service value is a URI.
   - CLI Alias: `ebms-service-type`
+  - Not Valid When: `dest_url` protocol!=`ebms2`|`ebms2s`
 - `ebms_soap_body` (Boolean) When compression is not enabled, specify whether to send messages in the SOAP <tt>Body</tt> .
   - CLI Alias: `ebms-soapbody`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`ebms3`|`ebms3s` OR `ebms_compress`=`true`)
 - `ebms_sync_reply_mode` (String) Specify whether the response/acknowledgment is synchronous or asynchronous. The syncReplyMode parameter indicates to the receiving partner whether to return the business response or acknowledgment in the same connection. None means asynchronous.
   - CLI Alias: `ebms-syncreply-mode`
   - Choices: `mshSignalsOnly`, `none`
   - Default value: `none`
+  - Not Valid When: (`dest_url` protocol!=`ebms2`|`ebms2s`)
 - `email_address` (String) Specify the destination email address for messages sent to this partner.
   - CLI Alias: `email-address`
+  - Required When: `dest_url` protocol=`as1`|`dpsmtp`
+  - Not Valid When: `dest_url` protocol!=`as1`|`dpsmtp`
 - `enable_ftp_settings` (Boolean) Specify whether to override the FTP client policy. This policy is defined in user agent of the XML manager for the B2B gateway. <ul><li>When enabled, define the overrides with the advanced AS3 or FTP settings.</li><li>When disabled, uses the original FTP client policy.</li></ul>
   - CLI Alias: `enable-ftp-settings`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`ftp`|`as3`
 - `enabled_doc_type` (Attributes) Specify the document types to support.
   - CLI Alias: `enabled-doc-type` (see [below for nested schema](#nestedatt--destinations--enabled_doc_type))
 - `encrypt_data` (String) Specify the encryption of file transfers with the FTP <tt>PROT P</tt> command.
   - CLI Alias: `ftp-encrypt-data`
   - Choices: `enc-data-off`, `enc-data-opt`, `enc-data-req`
   - Default value: `enc-data-off`
+  - Not Valid When: (`dest_url` protocol!=`ftp`|`as3` OR `enable_ftp_settings`!=`true` OR `auth_tls`=`auth-off`)
 - `max_resends` (Number) Specify the number of attempts to retransmit a message. Enter a value in the range 1 - 30. The default value is 3.
   - CLI Alias: `max-resends`
   - Range: `1`-`30`
   - Default value: `3`
+  - Not Valid When: (`dest_url` protocol!=`as1`|`as2`|`as2s`|`as3` OR `as_mdn_request`!=`true` OR `retransmit`!=`true`)
 - `override_timeout` (Number) Specify the duration to maintain an idle connection in seconds. Enter a value in the range 3 - 7200. The default value is 300.
   - CLI Alias: `timeout`
   - Range: `3`-`7200`
   - Default value: `300`
+  - Not Valid When: `ebms_message_exchange_pattern`=`one-way-pull`
 - `passive` (String) Specify the use of FTP passive mode with the FTP <tt>PASV</tt> command.
   - CLI Alias: `ftp-passive`
   - Choices: `pasv-off`, `pasv-opt`, `pasv-req`
   - Default value: `pasv-req`
+  - Not Valid When: (`dest_url` protocol!=`ftp`|`as3` OR `enable_ftp_settings`!=`true`)
 - `password_alias` (String) Specify the password alias to override in the basic authentication policy of the user agent.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
+  - Not Valid When: `dest_url` protocol!=`as2`|`as2s`|`as3`|`ebms2`|`ebms2s`|`ebms3`|`ebms3s`|`http`|`https`|`ftp`
 - `quoted_commands` (String) Specify the FTP quoted commands list that defines the command to send to the FTP server. before each <tt>STOU</tt> , <tt>STOR</tt> , or <tt>RETR</tt> command. The commands in the list cannot be data-transfer related commands.
   - CLI Alias: `ftp-quoted-commands`
   - Reference to: `datapower_ftp_quote_commands:id`
+  - Not Valid When: (`dest_url` protocol!=`ftp`|`as3` OR `enable_ftp_settings`!=`true`)
 - `retransmit` (Boolean) Specify whether to retransmit messages. The default behavior is off.
   - CLI Alias: `retransmit`
   - Default value: `false`
+  - Not Valid When: (`dest_url` protocol!=`as1`|`as2`|`as2s`|`as3` OR `as_mdn_request`!=`true`)
 - `size_check` (String) Specify whether to check the size of file after transfer with the FTP <tt>SIZE</tt> command. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate responses for files transferred in ASCII mode. If you get such errors, disable this feature or reconfigure vsftpd.
   - CLI Alias: `ftp-size-check`
   - Choices: `size-check-optional`, `size-check-disabled`
   - Default value: `size-check-optional`
+  - Not Valid When: (`dest_url` protocol!=`ftp`|`as3` OR `enable_ftp_settings`!=`true`)
 - `slash_stou` (String) Specify how to manage unique files when the name contains a trailing slash with either the FTP <tt>STOU</tt> or <tt>STOR</tt> command. Some FTP servers do not support the <tt>STOU</tt> command.
   - CLI Alias: `ftp-slash-stou`
   - Choices: `slash-stou-off`, `slash-stou-on`
   - Default value: `slash-stou-on`
+  - Not Valid When: (`dest_url` protocol!=`ftp`|`as3` OR `enable_ftp_settings`!=`true`)
 - `smtp_server_connection` (String) Specify the SMTP server connection to send email messages. By default, the gateway uses the default SMTP server connection.
   - CLI Alias: `smtp-server-connection`
   - Reference to: `datapower_smtp_server_connection:id`
   - Default value: `default`
+  - Required When: `dest_url` protocol=`as1`|`dpsmtp`
+  - Not Valid When: `dest_url` protocol!=`as1`|`dpsmtp`
 - `ssh_client_connection` (String) Specify the SSH profile for SSH client connections and authentication.
   - CLI Alias: `ssh-client-connection`
   - Reference to: `datapower_ssh_client_profile:id`
+  - Required When: `dest_url` protocol=`sftp`
+  - Not Valid When: `dest_url` protocol!=`sftp`
 - `ssl_client` (String) Specify the TLS client profile to secure connections with targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Required When: (`ssl_client_config_type`=`client` AND `dest_url` protocol=`as2s`|`https`|`dpimsssl`|`ebms2s`|`ebms3s`)
+  - Not Valid When: (`ssl_client_config_type`!=`client` OR `dest_url` protocol!=`as2s`|`as3`|`https`|`ftp`|`mq`|`mqfte`|`dpimsssl`|`ebms2s`)
 - `ssl_client_config_type` (String) Specify the type of TLS profile type to secure connections with targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: `dest_url` protocol!=`as2s`|`as3`|`https`|`ftp`|`mq`|`mqfte`|`dpimsssl`|`ebms2s`|`ebms3s`
 - `use_ccc` (String) Specify the use of command encryption after authentication with the FTP <tt>CCC</tt> command.
   - CLI Alias: `ftp-use-ccc`
   - Choices: `ccc-off`, `ccc-opt`, `ccc-req`
   - Default value: `ccc-off`
+  - Not Valid When: (`dest_url` protocol!=`ftp`|`as3` OR `enable_ftp_settings`!=`true` OR `auth_tls`=`auth-off`)
 - `use_unique_filenames` (Boolean) Specify whether to generate a unique file name for puts to a remote directory.
   - CLI Alias: `use-unique-filenames`
   - Default value: `false`
+  - Not Valid When: `dest_url` protocol!=`as3`|`ftp`|`sftp`|`dpnfs`|`mqfte`|`dpmqfte`|`idgmqmft`
 - `user_name` (String) Specify the username to override in the basic authentication policy of the user agent.
   - CLI Alias: `username`
+  - Not Valid When: `dest_url` protocol!=`as2`|`as2s`|`as3`|`ebms2`|`ebms2s`|`ebms3`|`ebms3s`|`http`|`https`|`ftp`
 - `user_name_token` (String) For ebMS3, the WS-Security UsernameToken authorizes received messages. Enter the username for the wsse:UsernameToken element to package in the SOAP header of the message to send. <ul><li>For one-way push exchange pattern, specify the username token to package in messages to send.</li><li>For one-way pull exchange pattern outbound messages, when the MPC authentication method is username token, specify the username to store messages in the MPC.</li><li>For one-way pull exchange pattern inbound messages, specify the username token to package in pull requests.</li></ul>
   - CLI Alias: `username-token`
+  - Not Valid When: ((`ebms_mpc_auth_method`=`cert` AND `ebms_message_exchange_pattern`=`one-way-pull`) OR `dest_url` protocol!=`ebms3`|`ebms3s`)
 - `user_name_token_password_alias` (String) Specify the password alias of the username for the wsse:UsernameToken element.
   - CLI Alias: `username-token-password-alias`
   - Reference to: `datapower_password_alias:id`
+  - Not Valid When: ((`ebms_mpc_auth_method`=`cert` AND `ebms_message_exchange_pattern`=`one-way-pull`) OR `dest_url` protocol!=`ebms3`|`ebms3s`)
 
 <a id="nestedatt--destinations--enabled_doc_type"></a>
 ### Nested Schema for `destinations.enabled_doc_type`

@@ -138,7 +138,7 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("strip"),
 			},
 			"default_map_value": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("An value that does not have a matching entry in the validation list is changed to this value if the no match policy is 'set'.", "unvalidated-fixup-map", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("An value that does not have a matching entry in the validation list is changed to this value if the no match policy is 'set'.", "unvalidated-fixup-map", "").AddNotValidWhen(models.NameValueProfileDefaultMapValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"default_xss": schema.BoolAttribute{
@@ -148,11 +148,11 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"no_match_xss_patterns_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "unvalidated-xss-patternsfile", "").AddDefaultValue("store:///XSS-Patterns.xml").AddRequiredWhen(models.NameValueProfileNoMatchXSSPatternsFileCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "unvalidated-xss-patternsfile", "").AddDefaultValue("store:///XSS-Patterns.xml").AddRequiredWhen(models.NameValueProfileNoMatchXSSPatternsFileCondVal.String()).AddNotValidWhen(models.NameValueProfileNoMatchXSSPatternsFileIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.NameValueProfileNoMatchXSSPatternsFileCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.NameValueProfileNoMatchXSSPatternsFileCondVal, models.NameValueProfileNoMatchXSSPatternsFileIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("store:///XSS-Patterns.xml"),
 			},

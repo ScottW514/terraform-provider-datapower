@@ -84,17 +84,17 @@ func (r *B2BCPACollaborationResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 			},
 			"internal_role": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the internal partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Buyer</tt> role has the authority for purchasing actions.", "internal-role", "").AddRequiredWhen(models.B2BCPACollaborationInternalRoleCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the internal partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Buyer</tt> role has the authority for purchasing actions.", "internal-role", "").AddRequiredWhen(models.B2BCPACollaborationInternalRoleCondVal.String()).AddNotValidWhen(models.B2BCPACollaborationInternalRoleIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.B2BCPACollaborationInternalRoleCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BCPACollaborationInternalRoleCondVal, models.B2BCPACollaborationInternalRoleIgnoreVal, false),
 				},
 			},
 			"external_role": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the external partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Supplier</tt> role has the authority for selling actions.", "external-role", "").AddRequiredWhen(models.B2BCPACollaborationExternalRoleCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the external partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Supplier</tt> role has the authority for selling actions.", "external-role", "").AddRequiredWhen(models.B2BCPACollaborationExternalRoleCondVal.String()).AddNotValidWhen(models.B2BCPACollaborationExternalRoleIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.B2BCPACollaborationExternalRoleCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BCPACollaborationExternalRoleCondVal, models.B2BCPACollaborationExternalRoleIgnoreVal, false),
 				},
 			},
 			"process_specification": schema.StringAttribute{
@@ -106,21 +106,21 @@ func (r *B2BCPACollaborationResource) Schema(ctx context.Context, req resource.S
 				Required:            true,
 			},
 			"service_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the service type. If you specify the type, the value is present in the type attribute of the <tt>Service</tt> element within the message to be sent. If the type is empty, the value of the <tt>Service</tt> element must be a URI.", "service-type", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the service type. If you specify the type, the value is present in the type attribute of the <tt>Service</tt> element within the message to be sent. If the type is empty, the value of the <tt>Service</tt> element must be a URI.", "service-type", "").AddNotValidWhen(models.B2BCPACollaborationServiceTypeIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"sender_msh_setting": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal sender to send ebMS MSH signals to send MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "sender-msh-setting", "b2b_cpa_sender_setting").AddRequiredWhen(models.B2BCPACollaborationSenderMshSettingCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal sender to send ebMS MSH signals to send MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "sender-msh-setting", "b2b_cpa_sender_setting").AddRequiredWhen(models.B2BCPACollaborationSenderMshSettingCondVal.String()).AddNotValidWhen(models.B2BCPACollaborationSenderMshSettingIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.B2BCPACollaborationSenderMshSettingCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BCPACollaborationSenderMshSettingCondVal, models.B2BCPACollaborationSenderMshSettingIgnoreVal, false),
 				},
 			},
 			"receiver_msh_setting": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal receiver to receive ebMS MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "receiver-msh-setting", "b2b_cpa_receiver_setting").AddRequiredWhen(models.B2BCPACollaborationReceiverMshSettingCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal receiver to receive ebMS MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "receiver-msh-setting", "b2b_cpa_receiver_setting").AddRequiredWhen(models.B2BCPACollaborationReceiverMshSettingCondVal.String()).AddNotValidWhen(models.B2BCPACollaborationReceiverMshSettingIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.B2BCPACollaborationReceiverMshSettingCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.B2BCPACollaborationReceiverMshSettingCondVal, models.B2BCPACollaborationReceiverMshSettingIgnoreVal, false),
 				},
 			},
 			"actions": schema.ListNestedAttribute{

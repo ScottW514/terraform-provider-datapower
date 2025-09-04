@@ -54,6 +54,7 @@ resource "datapower_web_sphere_jms_source_protocol_handler" "test" {
 - `strict_message_order` (Boolean) <p>Enable to work smoothly with WebSphere server when the "Strict Message Ordering" option in the corresponding destination is checked.</p>
   - CLI Alias: `strict-message-order`
   - Default value: `false`
+  - Not Valid When: `async_message_processing`=`true`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

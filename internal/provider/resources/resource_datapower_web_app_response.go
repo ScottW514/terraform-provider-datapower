@@ -132,10 +132,10 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.", "response-xml-rule", "style_policy_rule").AddRequiredWhen(models.WebAppResponseXMLRuleCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.", "response-xml-rule", "style_policy_rule").AddRequiredWhen(models.WebAppResponseXMLRuleCondVal.String()).AddNotValidWhen(models.WebAppResponseXMLRuleIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.WebAppResponseXMLRuleCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.WebAppResponseXMLRuleCondVal, models.WebAppResponseXMLRuleIgnoreVal, false),
 				},
 			},
 			"non_xml_policy": schema.StringAttribute{
@@ -148,10 +148,10 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"non_xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.", "response-nonxml-rule", "style_policy_rule").AddRequiredWhen(models.WebAppResponseNonXMLRuleCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.", "response-nonxml-rule", "style_policy_rule").AddRequiredWhen(models.WebAppResponseNonXMLRuleCondVal.String()).AddNotValidWhen(models.WebAppResponseNonXMLRuleIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.WebAppResponseNonXMLRuleCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.WebAppResponseNonXMLRuleCondVal, models.WebAppResponseNonXMLRuleIgnoreVal, false),
 				},
 			},
 			"error_policy": schema.StringAttribute{

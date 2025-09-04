@@ -88,16 +88,16 @@ func (r *APIRuleResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default:             booldefault.StaticBool(false),
 			},
 			"actions": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the processing actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.", "action", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the processing actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.", "action", "").AddNotValidWhen(models.APIRuleActionsIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"dynamic_actions": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.", "dynamic-action", "").AddRequiredWhen(models.APIRuleDynamicActionsCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.", "dynamic-action", "").AddRequiredWhen(models.APIRuleDynamicActionsCondVal.String()).AddNotValidWhen(models.APIRuleDynamicActionsIgnoreVal.String()).String,
 				NestedObject:        models.GetDmDynamicStylePolicyActionBaseReferenceResourceSchema(),
 				Optional:            true,
 				Validators: []validator.List{
-					validators.ConditionalRequiredList(models.APIRuleDynamicActionsCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredList(models.APIRuleDynamicActionsCondVal, models.APIRuleDynamicActionsIgnoreVal, false),
 				},
 			},
 			"user_summary": schema.StringAttribute{

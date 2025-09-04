@@ -66,6 +66,8 @@ Optional:
 Read-Only:
 
 - `data_source` (String) For custom items only, enter the name of the protocol header or the name of the variable (service, context, or system) that contains the data to be returned in the metadata XML nodeset. The provided value is the name of the element in the returned nodeset that contains the data.
+  - Required When: `meta_category`=`header`|`variable`
+  - Not Valid When: attribute is not conditionally required
 - `meta_category` (String) Select the category for the Metadata Item. The Metadata Item selections change according to the selected category. To create a custom Metadata Item, select either Custom Header or Custom Variable. For a custom Metadata Item, specify the name of the metadata item and its data source.
   - Choices: `all`, `mq`, `tibco`, `wasjms`, `http`, `CUSTOMIZABLE`, `header`, `variable`
 - `meta_name` (String) <p>For all except custom items, select a Metadata Item. The list provides an alias for the actual name of a protocol header or system variable. The elements contained in the XML nodeset that is returned by the Processing Metadata object have names that correspond to the actual data source</p><p>For custom items, enter an alphanumeric string for this custom alias. The string cannot contain white space.</p>

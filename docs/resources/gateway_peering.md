@@ -40,6 +40,7 @@ resource "datapower_gateway_peering" "test" {
   - Default value: `true`
 - `enable_ssl` (Boolean) Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. In peer-based mode, ensure that all peers use the same TLS configuration.
   - Default value: `false`
+  - Not Valid When: `peer_group`!=``
 - `local_address` (String) Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.
   - CLI Alias: `local-address`
   - Required When: (`enable_peer_group`=`true` OR (`enable_peer_group`=`false` AND `peer_group`=``))
@@ -47,12 +48,14 @@ resource "datapower_gateway_peering" "test" {
   - CLI Alias: `local-directory`
   - Default value: `local:///`
   - Required When: `persistence_location`=`local`
+  - Not Valid When: attribute is not conditionally required
 - `local_port` (Number) Specify the port that the gateway service listens on. The default value is 16380. Ensure that all peers use the same port.
   - CLI Alias: `local-port`
   - Default value: `16380`
 - `max_memory` (Number) Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.
   - CLI Alias: `max-memory`
   - Range: `0`-`1048576`
+  - Not Valid When: `persistence_location`!=`memory`
 - `monitor_port` (Number) Specify the port to monitor for state synchronization. The default value is 26380. Ensure that all peers use the same port.
   - CLI Alias: `monitor-port`
   - Default value: `26380`
@@ -62,6 +65,7 @@ resource "datapower_gateway_peering" "test" {
 - `peer_group` (String) Gateway-peering group
   - CLI Alias: `peer-group`
   - Reference to: `datapower_gateway_peering_group:id`
+  - Not Valid When: `enable_peer_group`!=`true`
 - `persistence_location` (String) Specify where to store data. Ensure that all peers in the group store data in the same location.
   - CLI Alias: `persistence`
   - Choices: `memory`, `local`, `raid`

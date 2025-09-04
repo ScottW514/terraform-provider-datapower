@@ -59,6 +59,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
 - `enable_hmac_authentication` (Boolean) Controls whether to use Hash-based Message Authentication Code (HMAC) to secure all visibility events sent to the visibility event endpoint. If HMAC is enabled in the Multi-Enterprise Integration Gateway server, you must enable HMAC authentication in the AS2 proxy handler to avoid message rejection.
   - CLI Alias: `enable-hmac-authentication`
   - Default value: `true`
+  - Not Valid When: `enable_visibility_event`!=`true`
 - `enable_passthrough` (Boolean) Controls whether to pass the original AS2 requests to the processing policy of DataPower service. <ul><li>When enabled, the AS2 proxy handler passes the original AS2 requests to DataPower service processing policy.</li><li>When disabled, the AS2 proxy handler first uses the cryptographic information in the partner exchange profile to decrypt the incoming AS2 requests and verify the signature. The AS2 proxy handler then passes the decrypted request body with signature removed to DataPower service for processing.</li></ul>
   - CLI Alias: `enable-passthrough`
   - Default value: `true`
@@ -69,6 +70,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
   - CLI Alias: `hmac-passphrase-alias`
   - Reference to: `datapower_password_alias:id`
   - Required When: (`enable_visibility_event`=`true` AND `enable_hmac_authentication`=`true`)
+  - Not Valid When: (`enable_visibility_event`!=`true` OR `enable_hmac_authentication`!=`true`)
 - `http_version` (String) Specify the HTTP version for client connections. The default value is HTTP/1.1.
   - CLI Alias: `http-client-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`
@@ -90,6 +92,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
   - Default value: `0`
 - `max_persistent_connections_reuse` (Number) Specify the maximum number of times a client can reuse a persistent connection. When the maximum reuse count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response and the TCP connection is closed. The default value is 0, which means unlimited reuse.
   - CLI Alias: `max-persistent-reuse`
+  - Not Valid When: `persistent_connections`=`false`
 - `max_total_hdr_len` (Number) Specify the maximum aggregate length of incoming HTTP headers in bytes to allow. Enter a value in the range 5 - 128000. The default value is 128000.
   - CLI Alias: `max-total-header-len`
   - Range: `5`-`128000`
@@ -112,6 +115,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: `ssl_client_config_type`!=`client`
 - `ssl_client_config_type` (String) <p>The TLS profile type to secure connections between the DataPower Gateway and the remote Multi-Enterprise Integration Gateway server. This communication must be TLS protected. You can define the TLS proxy profile for this communication in one of the following places:</p><ul><li>Define the TLS profile in the user agent that is assigned to the XML manager for the DataPower service service.</li><li>Define the TLS profile here.</li></ul><p>Ensure that the TLS profile is defined in one of these places. Without the remote TLS profile, processing is stopped and an error is logged.</p>
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
@@ -119,6 +123,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
 - `ssl_server` (String) The TLS server profile to secure connections between clients and the DataPower Gateway.
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Not Valid When: `ssl_server_config_type`!=`server`
 - `ssl_server_config_type` (String) The TLS profile type to secure connections between clients and the DataPower Gateway.
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
@@ -126,11 +131,13 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
 - `ssl_sni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Not Valid When: `ssl_server_config_type`!=`sni`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `visibility_event_endpoint` (String) Specifies the URL of the MEIG visibility event endpoint. Enter the URL in the format of static IBM MQ URL that provides the information about the IBM MQ server name, queue manager name, and name of the channel configured in the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT
   - CLI Alias: `visibility-event-endpoint`
   - Required When: `enable_visibility_event`=`true`
+  - Not Valid When: `enable_visibility_event`!=`true`
 - `xml_manager` (String) Specifies an existing XML manager. An XML manager obtains and manages XML documents, stylesheets, and other document resources on behalf of one or more services.
   - CLI Alias: `xml-manager`
   - Reference to: `datapower_xml_manager:id`

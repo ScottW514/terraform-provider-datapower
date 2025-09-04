@@ -129,19 +129,19 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default:             booldefault.StaticBool(false),
 			},
 			"encrypt_sskey": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-sskey", "crypto_sskey").AddRequiredWhen(models.WXSGridEncryptSSKeyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-sskey", "crypto_sskey").AddRequiredWhen(models.WXSGridEncryptSSKeyCondVal.String()).AddNotValidWhen(models.WXSGridEncryptSSKeyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.WXSGridEncryptSSKeyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.WXSGridEncryptSSKeyCondVal, models.WXSGridEncryptSSKeyIgnoreVal, false),
 				},
 			},
 			"encrypt_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PKCS #7 algorithm for encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-alg", "").AddStringEnum("tripledes-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "rc2-40-cbc", "rc2-64-cbc", "rc2-cbc").AddDefaultValue("tripledes-cbc").AddRequiredWhen(models.WXSGridEncryptAlgCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PKCS #7 algorithm for encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-alg", "").AddStringEnum("tripledes-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "rc2-40-cbc", "rc2-64-cbc", "rc2-cbc").AddDefaultValue("tripledes-cbc").AddRequiredWhen(models.WXSGridEncryptAlgCondVal.String()).AddNotValidWhen(models.WXSGridEncryptAlgIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("tripledes-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "rc2-40-cbc", "rc2-64-cbc", "rc2-cbc"),
-					validators.ConditionalRequiredString(models.WXSGridEncryptAlgCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.WXSGridEncryptAlgCondVal, models.WXSGridEncryptAlgIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("tripledes-cbc"),
 			},
@@ -152,12 +152,12 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default:             booldefault.StaticBool(false),
 			},
 			"key_obfuscation_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.", "key-obfuscation-alg", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha256").AddRequiredWhen(models.WXSGridKeyObfuscationAlgCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.", "key-obfuscation-alg", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha256").AddRequiredWhen(models.WXSGridKeyObfuscationAlgCondVal.String()).AddNotValidWhen(models.WXSGridKeyObfuscationAlgIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5"),
-					validators.ConditionalRequiredString(models.WXSGridKeyObfuscationAlgCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.WXSGridKeyObfuscationAlgCondVal, models.WXSGridKeyObfuscationAlgIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("sha256"),
 			},

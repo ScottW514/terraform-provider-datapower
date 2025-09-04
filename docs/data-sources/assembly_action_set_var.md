@@ -78,5 +78,8 @@ Read-Only:
   - CLI Alias: `type`
   - Choices: `any`, `string`, `number`, `boolean`
   - Default value: `any`
+  - Not Valid When: `action`=`clear`
 - `value` (String) Specify the value of the variable. You must define this property to set or add a variable. <p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$(property_name)</tt> when the assembly action does not have a property with the same name.</p><p>When you assign value, comply with the following rules. Otherwise, error occurs and the action fails.</p><ul><li>The value must match the specified data type: number, string, or Boolean.</li><li>The value for the <tt>message.status.code</tt> variable must be a valid HTTP status code.</li></ul>
   - CLI Alias: `value`
+  - Required When: `action`!=`clear`
+  - Not Valid When: `action`=`clear`

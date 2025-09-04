@@ -42,7 +42,8 @@ resource "datapower_policy_attachments" "test" {
 - `external_policy` (Attributes List) Associate an external policy with a service.
   - CLI Alias: `external-policy` (see [below for nested schema](#nestedatt--external_policy))
 - `ignored_policy_attachment_points` (Attributes List) Disable all policies attached by policy references at a configured attachment point leaving other policy references intact.
-  - CLI Alias: `ignore-attachment-point` (see [below for nested schema](#nestedatt--ignored_policy_attachment_points))
+  - CLI Alias: `ignore-attachment-point`
+  - Not Valid When: `policy_references`=`false` (see [below for nested schema](#nestedatt--ignored_policy_attachment_points))
 - `policy_references` (Boolean) Enable policies attached to WSDL using PolicyURI attributes and PolicyReference elements. These attachments are sometimes called XML element attachments. If 'off', all PolicyURI attributes and PolicyReference elements are ignored and only external policies are enforced.
   - CLI Alias: `policy-references`
   - Default value: `false`
@@ -84,9 +85,12 @@ Optional:
 - `external_attach_message_content_filter_service_provider` (String) Enter the name of the message content filters object that specifies the service provider
   - Reference to: `datapower_message_content_filters:id`
 - `external_attach_policy_fragment_id` (String) Matches Fragment Identifier
+  - Not Valid When: `external_attach_wsdl_component_type`=`rest`
 - `external_attach_wsdl_component_type` (String) Select a type of Component
   - Choices: `service`, `port`, `fragmentid`, `rest`
 - `external_attach_wsdl_component_value` (String) Enter the qname of a WSDL component formatted {ns}ncname
+  - Required When: `external_attach_wsdl_component_type`!=`rest`
+  - Not Valid When: `external_attach_wsdl_component_type`=`rest`
 
 
 <a id="nestedatt--ignored_policy_attachment_points"></a>

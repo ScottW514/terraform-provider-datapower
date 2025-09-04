@@ -302,7 +302,6 @@ resource "datapower_api_connect_gateway_service" "test" {
   local_address = "0.0.0.0"
   local_port = 3000
   gateway_peering = "default-gateway-peering"
-  proxy_policy = {proxy_policy_enable = false, remote_address = "localhost", remote_port = 8080}
 }`,
     Data: `
 data "datapower_api_connect_gateway_service" "test" {
@@ -318,8 +317,6 @@ resource "datapower_api_definition" "test" {
   app_domain = "acceptance_test"
   base_path = "/"
   path = ["AccTest_APIPath"]
-  content = "activity"
-  error_content = "payload"
 }`,
     Data: `
 data "datapower_api_definition" "test" {
@@ -331,8 +328,6 @@ resource "datapower_api_definition" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   base_path = "/"
   path = [datapower_api_path.acc_test.id]
-  content = "activity"
-  error_content = "payload"
 }`,
     ModelOnly:    false,
 }
@@ -2261,12 +2256,10 @@ var DmAPIBurstLimitTestConfig = ModelTestConfig{
 var DmAPICGSProxyPolicyTestConfig = ModelTestConfig{
     Name:         "DmAPICGSProxyPolicy",
     Model: `{
-  proxy_policy_enable = false
   remote_address = "localhost"
   remote_port = 8080
 }`,
     ModelTestBed: `{
-  proxy_policy_enable = false
   remote_address = "localhost"
   remote_port = 8080
 }`,
@@ -4829,7 +4822,6 @@ resource "datapower_git_ops" "test" {
   app_domain = "acceptance_test"
   connection_type = "https"
   mode = "read-write"
-  commit_identifier_type = "branch"
   commit_identifier = "main"
   remote_location = "https://github.com/ScottW514/terraform-provider-datapower"
   username = "gitusername"

@@ -40,9 +40,11 @@ resource "datapower_ssl_sni_server_profile" "test" {
   - CLI Alias: `max-duration`
   - Range: `1`-`691200`
   - Default value: `3600`
+  - Not Valid When: `ssl_options`!=`max-duration`
 - `number_of_renegotiation_allowed` (Number) Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.
   - CLI Alias: `max-renegotiation-allowed`
   - Range: `0`-`512`
+  - Not Valid When: `ssl_options`!=`max-renegotiation`
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--protocols))
 - `sni_server_default` (String) Specify the TLS server profile to process requests when the client does not send a <tt>ClientHello</tt> SNI extension. <p>The request is rejected when either of the following conditions apply. <ul><li>The client sends a <tt>ClientHello</tt> SNI extension that does not match a hostname in the map.</li><li>The client does not send a <tt>ClientHello</tt> SNI extension</li></ul></p>

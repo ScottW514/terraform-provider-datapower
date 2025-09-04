@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &LoadBalancerGroupResource{}
@@ -103,28 +104,30 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Default:             booldefault.StaticBool(false),
 			},
 			"wlm_retrieval": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Contains the back end work load management repository selection type. Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS) Network Deployment (ND) or WAS Virtual Enterprise (VE).", "wlm-type", "").AddStringEnum("use-websphere").AddDefaultValue("use-websphere").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Contains the back end work load management repository selection type. Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS) Network Deployment (ND) or WAS Virtual Enterprise (VE).", "wlm-type", "").AddStringEnum("use-websphere").AddDefaultValue("use-websphere").AddNotValidWhen(models.LoadBalancerGroupWLMRetrievalIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("use-websphere"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.LoadBalancerGroupWLMRetrievalIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("use-websphere"),
 			},
 			"web_sphere_cell_config": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("If you selected 'WebSphere Cell' for Workload Management Retrieval, you need to select a WebSphere Cell object that retrieves this information. If no objects are available in the pull down, you must create one.", "websphere-cell", "wcc_service").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("If you selected 'WebSphere Cell' for Workload Management Retrieval, you need to select a WebSphere Cell object that retrieves this information. If no objects are available in the pull down, you must create one.", "websphere-cell", "wcc_service").AddNotValidWhen(models.LoadBalancerGroupWebSphereCellConfigIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"wlm_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The Workload Management Group Name is used to define a group. In a WebSphere Application Server environment, the back end group is a cluster name. Once specified, the Load Balancer Group will be populated with the members and weights retrieved from the back end.", "wlm-group", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The Workload Management Group Name is used to define a group. In a WebSphere Application Server environment, the back end group is a cluster name. Once specified, the Load Balancer Group will be populated with the members and weights retrieved from the back end.", "wlm-group", "").AddNotValidWhen(models.LoadBalancerGroupWLMGroupIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"wlm_transport": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify either HTTP or HTTPS for the Load Balancer Group protocol. This protocol is used to forward traffic between the DataPower Gateway and the members of the Load Balancer Group.", "wlm-transport", "").AddStringEnum("http", "https").AddDefaultValue("http").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify either HTTP or HTTPS for the Load Balancer Group protocol. This protocol is used to forward traffic between the DataPower Gateway and the members of the Load Balancer Group.", "wlm-transport", "").AddStringEnum("http", "https").AddDefaultValue("http").AddNotValidWhen(models.LoadBalancerGroupWLMTransportIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("http", "https"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.LoadBalancerGroupWLMTransportIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("http"),
 			},
@@ -162,14 +165,14 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Default:             booldefault.StaticBool(false),
 			},
 			"application_routing": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>If set to on, the load balancer group will route to the back end cluster depending on the following conditions.</p><ul><li>the application for which this request is targeted</li><li>the application status on the back end servers</li></ul><p>Application Routing is required for Application Edition (group or atomic) rollout. If you need Application Edition support, set the Update Type to Subscribe in the WebSphere Cell object.</p>", "appl-routing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>If set to on, the load balancer group will route to the back end cluster depending on the following conditions.</p><ul><li>the application for which this request is targeted</li><li>the application status on the back end servers</li></ul><p>Application Routing is required for Application Edition (group or atomic) rollout. If you need Application Edition support, set the Update Type to Subscribe in the WebSphere Cell object.</p>", "appl-routing", "").AddDefaultValue("false").AddNotValidWhen(models.LoadBalancerGroupApplicationRoutingIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"lb_group_affinity_conf": models.GetDmLBGroupAffinityResourceSchema("Session affinity allows applications to maintain sessions with clients.", "session-affinity", "", false),
 			"monitored_cookies": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The DataPower Gateway enforces session affinity when the application server attempts to establish session affinity using one of these cookie names.", "monitored-cookie", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The DataPower Gateway enforces session affinity when the application server attempts to establish session affinity using one of these cookie names.", "monitored-cookie", "").AddNotValidWhen(models.LoadBalancerGroupMonitoredCookiesIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

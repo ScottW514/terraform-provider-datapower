@@ -73,6 +73,9 @@ Optional:
 Read-Only:
 
 - `proxy_policy_enable` (Boolean) Specify whether to enable a proxy to connect to API Manager.
-  - Default value: `false`
 - `remote_address` (String) Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.
+  - Required When: `proxy_policy_enable`=`true`
+  - Not Valid When: `proxy_policy_enable`=`false`
 - `remote_port` (Number) Specify the listening port on the proxy to connect to the API Manager endpoint.
+  - Required When: `proxy_policy_enable`=`true`
+  - Not Valid When: `proxy_policy_enable`=`false`

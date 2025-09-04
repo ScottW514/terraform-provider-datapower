@@ -84,7 +84,7 @@ func GetDmLBGroupMemberDataSourceSchema() DataSourceSchema.NestedAttributeObject
 				Computed:            true,
 			},
 			"activity": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").AddNotValidWhen(DmLBGroupMemberActivityIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"health_port": DataSourceSchema.Int64Attribute{
@@ -120,7 +120,7 @@ func GetDmLBGroupMemberResourceSchema() ResourceSchema.NestedAttributeObject {
 				Optional:            true,
 			},
 			"activity": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").AddNotValidWhen(DmLBGroupMemberActivityIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"health_port": ResourceSchema.Int64Attribute{

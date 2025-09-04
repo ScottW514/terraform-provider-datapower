@@ -79,11 +79,11 @@ func GetDmB2BHAHostDataSourceSchema(description string, cliAlias string, referen
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"hostname": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").AddRequiredWhen(DmB2BHAHostHostnameCondVal.String()).AddNotValidWhen(DmB2BHAHostHostnameIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").AddRequiredWhen(DmB2BHAHostPortCondVal.String()).AddNotValidWhen(DmB2BHAHostPortIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -100,19 +100,19 @@ func GetDmB2BHAHostResourceSchema(description string, cliAlias string, reference
 			)),
 		Attributes: map[string]ResourceSchema.Attribute{
 			"hostname": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").AddRequiredWhen(DmB2BHAHostHostnameCondVal.String()).AddNotValidWhen(DmB2BHAHostHostnameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmB2BHAHostHostnameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmB2BHAHostHostnameCondVal, DmB2BHAHostHostnameIgnoreVal, false),
 				},
 			},
 			"port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").AddRequiredWhen(DmB2BHAHostPortCondVal.String()).AddNotValidWhen(DmB2BHAHostPortIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
-					validators.ConditionalRequiredInt64(DmB2BHAHostPortCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(DmB2BHAHostPortCondVal, DmB2BHAHostPortIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1320),
 			},

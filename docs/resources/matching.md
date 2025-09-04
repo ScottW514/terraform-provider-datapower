@@ -71,11 +71,25 @@ Required:
 Optional:
 
 - `custom_method` (String) For a custom method, the custom HTTP method.
+  - Required When: `method`=`custom`
+  - Not Valid When: attribute is not conditionally required
 - `error_code` (String) The error code match expression.
+  - Required When: `type`=`errorcode`
+  - Not Valid When: attribute is not conditionally required
 - `http_tag` (String) For HTTP matching, the name of the HTTP header to examine.
+  - Required When: `type`=`http`
+  - Not Valid When: attribute is not conditionally required
 - `http_value` (String) For HTTP matching, the value match for the HTTP header. Enter a match pattern or a literal string.
+  - Required When: `type`=`http`
+  - Not Valid When: attribute is not conditionally required
 - `method` (String) The HTTP method.
   - Choices: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `TRACE`, `custom`, `default`
   - Default value: `default`
+  - Required When: `type`=`method`
+  - Not Valid When: attribute is not conditionally required
 - `url` (String) The URL match expression.
+  - Required When: `type`=`url`|`fullyqualifiedurl`|`host`
+  - Not Valid When: attribute is not conditionally required
 - `xpath_expression` (String) The XPath match expression.
+  - Required When: `type`=`xpath`
+  - Not Valid When: attribute is not conditionally required

@@ -60,6 +60,7 @@ resource "datapower_sftp_file_poller_source_protocol_handler" "test" {
 - `error_rename_pattern` (String) When Delete File on Processing Error is not enabled, enter the PCRE to use to rename a file when it could not be processed.
   - CLI Alias: `error-rename-pattern`
   - Default value: `$0.processed.error`
+  - Not Valid When: `delete_on_error`=`true`
 - `generate_result_file` (Boolean) <p>Select whether to create a result file after processing an input file.</p><ul><li>When enabled, creates the result file using the naming pattern specified by Result File Name Pattern.</li><li>When not enabled, does not create the result file.</li></ul>
   - CLI Alias: `result`
   - Default value: `true`
@@ -72,6 +73,7 @@ resource "datapower_sftp_file_poller_source_protocol_handler" "test" {
 - `processing_seize_pattern` (String) <p>Enter the PCRE to find files that were renamed to indicate that they are in the "being processed" state but the processing was never completed.</p><p>The seize pattern contains two phrases. The first phrase is the portion of the file name with the configured processing suffix. The second phrase is the time stamp.</p><p>For example: <tt>(.*.processing).*[.*]([0-9]*)</tt> . This assumes that <tt>$1.processing</tt> was supplied as the renaming pattern.</p>
   - CLI Alias: `processing-seize-pattern`
   - Required When: `processing_seize_timeout`!=`0`
+  - Not Valid When: `processing_seize_timeout`=`0`
 - `processing_seize_timeout` (Number) <p>Specify the duration in seconds to wait to process a file that is in the processing state. Enter a value in the range 0 - 1000. The default value is 0, which means disabled.</p><p>Processing seizure allows failure handling of a poller when more than one poller polls the same target. If another poller renames a file and does not process and rename or delete it in the specified time, another poller can take over processing. A poller attempts to take over processing when the following conditions are met when compared to the processing seize pattern.</p><ol><li>The seize pattern includes the portion of the file name with the configured processing suffix to match.</li><li>The time stamp is further in the past than the wait time specified by the timeout.</li></ol><p>When these conditions are met, another poller renames the file with a fresh time stamp and processes the file. The processing assumes that the rename operation succeeded.</p>
   - CLI Alias: `processing-seize-timeout`
   - Range: `0`-`1000`
@@ -79,9 +81,11 @@ resource "datapower_sftp_file_poller_source_protocol_handler" "test" {
 - `result_name_pattern` (String) <p>When Generate Result File is on, enter the PCRE to use as the match pattern to build the name of the result file. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and the desired result file name is <tt>NNNNNN.result</tt> , then the match pattern would be <tt>"([0-9]{6})\.input$"</tt> and the result pattern would be <tt>"$1.result"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>"(.*)"</tt> and the result pattern would be <tt>"../result/$1"</tt> .</p>
   - CLI Alias: `result-name-pattern`
   - Required When: `generate_result_file`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `success_rename_pattern` (String) <p>When Delete File on Success is off, enter the PCRE to use to rename the input file on success. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and you want to rename them to <tt>NNNNNN.processed</tt> , the match pattern would be <tt>"([0-9]{6})\.input$"</tt> and the rename pattern would be <tt>"$1.processed"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>"(.*)"</tt> and the rename pattern would be <tt>"../processed/$1"</tt> .</p>
   - CLI Alias: `success-rename-pattern`
   - Default value: `$1.processed.ok`
+  - Not Valid When: `delete_on_success`=`true`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `xml_manager` (String) An XML Manager manages the compilation and caching of stylesheets and documents. The XML Manager can also control the size and depth of messages processed by this host. Specify an existing XML Manager. More than one service may use the same XML Manager.

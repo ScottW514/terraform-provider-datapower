@@ -43,6 +43,7 @@ resource "datapower_dns_name_service" "test" {
   - CLI Alias: `retries`
   - Default value: `2`
   - Required When: `load_balance_algorithm`=`first-alive`
+  - Not Valid When: `load_balance_algorithm`!=`first-alive`
 - `name_servers` (Attributes List) Specify the list of DNS servers to contact to resolve hostnames. If you define multiple servers, ensure that the sequence to contact the servers is your preferred order.
   - CLI Alias: `name-server` (see [below for nested schema](#nestedatt--name_servers))
 - `search_domains` (Attributes List) Specify the list of search domains to resolve partial hostnames.
@@ -53,6 +54,7 @@ resource "datapower_dns_name_service" "test" {
   - CLI Alias: `timeout`
   - Default value: `5`
   - Required When: `load_balance_algorithm`=`first-alive`
+  - Not Valid When: `load_balance_algorithm`!=`first-alive`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

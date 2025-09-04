@@ -93,18 +93,18 @@ func (r *XACMLPDPResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default:             booldefault.StaticBool(false),
 			},
 			"general_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.", "general-policy", "").AddRequiredWhen(models.XACMLPDPGeneralPolicyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.", "general-policy", "").AddRequiredWhen(models.XACMLPDPGeneralPolicyCondVal.String()).AddNotValidWhen(models.XACMLPDPGeneralPolicyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.XACMLPDPGeneralPolicyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.XACMLPDPGeneralPolicyCondVal, models.XACMLPDPGeneralPolicyIgnoreVal, false),
 				},
 			},
 			"combining_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the policy-combining algorithm when not using a top-level comprehensive XACML policy file. The default is First Applicable.", "combining-alg", "").AddStringEnum("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable").AddRequiredWhen(models.XACMLPDPCombiningAlgCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the policy-combining algorithm when not using a top-level comprehensive XACML policy file. The default is First Applicable.", "combining-alg", "").AddStringEnum("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable").AddRequiredWhen(models.XACMLPDPCombiningAlgCondVal.String()).AddNotValidWhen(models.XACMLPDPCombiningAlgIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable"),
-					validators.ConditionalRequiredString(models.XACMLPDPCombiningAlgCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.XACMLPDPCombiningAlgCondVal, models.XACMLPDPCombiningAlgIgnoreVal, false),
 				},
 			},
 			"dependent_policy": schema.ListAttribute{

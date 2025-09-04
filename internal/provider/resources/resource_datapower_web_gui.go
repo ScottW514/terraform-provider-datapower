@@ -111,14 +111,14 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server profile", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server profile", "ssl-server", "ssl_server_profile").AddNotValidWhen(models.WebGUISSLServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.WebGUISSLSNIServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.WebGUISSLSNIServerCondVal.String()).AddNotValidWhen(models.WebGUISSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.WebGUISSLSNIServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.WebGUISSLSNIServerCondVal, models.WebGUISSLSNIServerIgnoreVal, false),
 				},
 			},
 			"enable_sts": schema.BoolAttribute{

@@ -42,6 +42,9 @@ type Evaluation struct {
 }
 
 func (e *Evaluation) matchesConditions(ctx context.Context, config *tfsdk.Config, diag *diag.Diagnostics, attrPath path.Path) bool {
+	if e.Evaluation == "" {
+		return false
+	}
 	if e.Evaluation[0:7] != "logical" && len(e.Attribute) == 0 {
 		diag.AddAttributeWarning(attrPath, "Attribute Validation Bug", "Attribute Missing. Report this to the provider developers.")
 		return false
@@ -61,8 +64,6 @@ func (e *Evaluation) matchesConditions(ctx context.Context, config *tfsdk.Config
 	switch e.Evaluation {
 	case "logical-true":
 		return true
-	case "logical-false":
-		return false
 	case "logical-not":
 		return !e.Conditions[0].matchesConditions(ctx, config, diag, attrPath)
 	case "logical-and":
@@ -251,9 +252,7 @@ func (e *Evaluation) getBoolMapString(ctx context.Context, config *tfsdk.Config,
 func (e *Evaluation) String() string {
 	switch e.Evaluation {
 	case "logical-true":
-		return "ALWAYS"
-	case "logical-false":
-		return "NEVER"
+		return "attribute is not conditionally required"
 	case "logical-not":
 		return fmt.Sprintf("NOT%s", e.Conditions[0].String())
 	case "logical-and":

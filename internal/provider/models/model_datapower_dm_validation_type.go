@@ -101,7 +101,7 @@ func GetDmValidationTypeDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				Computed:            true,
 			},
 			"map_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").AddNotValidWhen(DmValidationTypeMapValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"xss": DataSourceSchema.BoolAttribute{
@@ -109,7 +109,7 @@ func GetDmValidationTypeDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				Computed:            true,
 			},
 			"xss_patterns_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").AddRequiredWhen(DmValidationTypeXSSPatternsFileCondVal.String()).AddNotValidWhen(DmValidationTypeXSSPatternsFileIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -137,7 +137,7 @@ func GetDmValidationTypeResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("error"),
 			},
 			"map_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").AddNotValidWhen(DmValidationTypeMapValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"xss": ResourceSchema.BoolAttribute{
@@ -147,11 +147,11 @@ func GetDmValidationTypeResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default:             booldefault.StaticBool(false),
 			},
 			"xss_patterns_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").AddRequiredWhen(DmValidationTypeXSSPatternsFileCondVal.String()).AddNotValidWhen(DmValidationTypeXSSPatternsFileIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmValidationTypeXSSPatternsFileCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmValidationTypeXSSPatternsFileCondVal, DmValidationTypeXSSPatternsFileIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("store:///XSS-Patterns.xml"),
 			},

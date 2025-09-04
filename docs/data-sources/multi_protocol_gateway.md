@@ -236,10 +236,13 @@ Read-Only:
 - `policy_param_parameters` (String) Reference to policy parameter object.
   - Reference to: `datapower_policy_parameters:id`
 - `policy_param_subscription` (String) Select a subscription.
+  - Required When: `policy_param_wsdl_component_type`=`subscription`
+  - Not Valid When: attribute is not conditionally required
 - `policy_param_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
   - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
   - Default value: `all`
 - `policy_param_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
+  - Not Valid When: `policy_param_wsdl_component_type`=`subscription`
 
 
 <a id="nestedatt--result--stylesheet_parameters"></a>

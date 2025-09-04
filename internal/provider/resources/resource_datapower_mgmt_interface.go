@@ -87,11 +87,11 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             stringdefault.StaticString("xml-mgmt"),
 			},
 			"slm_peering": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SLM update interval", "slm-peering", "").AddDefaultValue("10").AddRequiredWhen(models.MgmtInterfaceSLMPeeringCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("SLM update interval", "slm-peering", "").AddDefaultValue("10").AddRequiredWhen(models.MgmtInterfaceSLMPeeringCondVal.String()).AddNotValidWhen(models.MgmtInterfaceSLMPeeringIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(models.MgmtInterfaceSLMPeeringCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.MgmtInterfaceSLMPeeringCondVal, models.MgmtInterfaceSLMPeeringIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(10),
 			},
@@ -106,14 +106,14 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server profile", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server profile", "ssl-server", "ssl_server_profile").AddNotValidWhen(models.MgmtInterfaceSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.MgmtInterfaceSSLSNIServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.MgmtInterfaceSSLSNIServerCondVal.String()).AddNotValidWhen(models.MgmtInterfaceSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.MgmtInterfaceSSLSNIServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.MgmtInterfaceSSLSNIServerCondVal, models.MgmtInterfaceSSLSNIServerIgnoreVal, false),
 				},
 			},
 			"local_address": schema.StringAttribute{

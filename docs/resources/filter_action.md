@@ -34,6 +34,7 @@ resource "datapower_filter_action" "test" {
 
 - `block_interval` (Number) Specify an optional interval during which an over-threshold message type is denied service. Meaningful only when the message is rejected due to policy or shaping queue overflow. This value is the duration of service denial in milliseconds. The default value is 0, indicates that over-threshold messages are dropped but no service denial penalty is imposed.
   - CLI Alias: `block-interval`
+  - Not Valid When: `type`=`notify`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `log_level` (String) Specify the priority of the log message that is generated when a monitored message type exceeds a threshold value.
   - CLI Alias: `log-priority`

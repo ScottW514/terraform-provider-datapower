@@ -53,11 +53,15 @@ Read-Only:
 
 - `bind_dn` (String) A string containing the DN to login to the LDAP server.
   - CLI Alias: `bind-dn`
+  - Not Valid When: `fetch_type`=`http`
 - `bind_pass_alias` (String) A string containing the password alias of the password to login to the LDAP server.
   - CLI Alias: `bind-pass-alias`
   - Reference to: `datapower_password_alias:id`
+  - Not Valid When: `fetch_type`=`http`
 - `dn` (String) A string containing the DN of the CA that issued the target CRL.
   - CLI Alias: `read-dn`
+  - Required When: `fetch_type`=`ldap`
+  - Not Valid When: attribute is not conditionally required
 - `fetch_type` (String) Select the protocol to obtain the CRL from the authority.
   - Choices: `http`, `ldap`
 - `issuer_valcred` (String) The validation credentials to verify the authenticity of the CRL issuer and, therefor, the CRL. The certificate that the CRL issuer uses must be in the validation credentials for the CRL to be valid.
@@ -67,10 +71,12 @@ Read-Only:
   - CLI Alias: `ldap-readtimeout`
   - Range: `0`-`86400`
   - Default value: `60`
+  - Not Valid When: `fetch_type`=`http`
 - `ldap_version` (String) The LDAP server version.
   - CLI Alias: `ldap-version`
   - Choices: `v2`, `v3`
   - Default value: `v2`
+  - Not Valid When: `fetch_type`=`http`
 - `name` (String) Enter the name of the CRL retrieval policy.
 - `refresh_interval` (Number) The interval in minutes between CRL updates. Enter a value in the range 1 - 1440. The default value is 240.
   - CLI Alias: `refresh`
@@ -78,14 +84,21 @@ Read-Only:
   - Default value: `240`
 - `remote_address` (String) Specify the host name or IP address of the LDAP server to obtain the CRL.
   - CLI Alias: `remote-address`
+  - Required When: `fetch_type`=`ldap`
+  - Not Valid When: attribute is not conditionally required
 - `remote_port` (Number) The remote LDAP port. Enter a value in the range 1 - 65535. The default value is 389. For LDAP over TLS, the standard port is 636.
   - Default value: `389`
+  - Required When: `fetch_type`=`ldap`
+  - Not Valid When: attribute is not conditionally required
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: `ssl_client_config_type`!=`client`
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
 - `url` (String) A URL that specifies the location of the CRL.
   - CLI Alias: `fetch-url`
+  - Required When: `fetch_type`=`http`
+  - Not Valid When: attribute is not conditionally required

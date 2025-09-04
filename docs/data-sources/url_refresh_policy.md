@@ -71,6 +71,8 @@ Read-Only:
 - `url_refresh_interval` (Number) Not used when the refresh rule type is no-cache, specifies the update frequency for stylesheets that fulfill the match criteria.
   - CLI Alias: `interval`
   - Default value: `0`
+  - Required When: `url_refresh_policy`=`default`|`no-flush`|`protocol-specified`
+  - Not Valid When: `url_refresh_policy`=`no-cache`
 - `url_refresh_policy` (String) Specify how to cache a stylesheet that is obtained with a URL refresh operation. The default is default.
   - CLI Alias: `type`
   - Choices: `default`, `no-cache`, `no-flush`, `protocol-specified`

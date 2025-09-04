@@ -55,10 +55,12 @@ resource "datapower_wxs_grid" "test" {
   - Choices: `tripledes-cbc`, `aes128-cbc`, `aes192-cbc`, `aes256-cbc`, `rc2-40-cbc`, `rc2-64-cbc`, `rc2-cbc`
   - Default value: `tripledes-cbc`
   - Required When: `encrypt`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `encrypt_sskey` (String) Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.
   - CLI Alias: `encrypt-sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: `encrypt`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `key_obfuscation` (Boolean) Indicate whether to apply a hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.
   - CLI Alias: `key-obfuscation`
   - Default value: `false`
@@ -67,6 +69,7 @@ resource "datapower_wxs_grid" "test" {
   - Choices: `sha1`, `sha256`, `sha512`, `ripemd160`, `sha224`, `sha384`, `md5`
   - Default value: `sha256`
   - Required When: `key_obfuscation`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`

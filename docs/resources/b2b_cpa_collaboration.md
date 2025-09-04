@@ -49,21 +49,26 @@ resource "datapower_b2b_cpa_collaboration" "test" {
 - `external_role` (String) Specify the name of the authorized role of the external partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Supplier</tt> role has the authority for selling actions.
   - CLI Alias: `external-role`
   - Required When: `service`!=`urn:oasis:names:tc:ebxml-msg:service`
+  - Not Valid When: `service`=`urn:oasis:names:tc:ebxml-msg:service`
 - `internal_role` (String) Specify the name of the authorized role of the internal partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Buyer</tt> role has the authority for purchasing actions.
   - CLI Alias: `internal-role`
   - Required When: `service`!=`urn:oasis:names:tc:ebxml-msg:service`
+  - Not Valid When: `service`=`urn:oasis:names:tc:ebxml-msg:service`
 - `process_specification` (String) Specify the location of the process specification document that defines the interactions between the internal and external partners. For example, <tt>http://www.rosettanet.org/processes/3A4</tt> .
   - CLI Alias: `process-spec`
 - `receiver_msh_setting` (String) Specify the name of the default MSH signal receiver to receive ebMS MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .
   - CLI Alias: `receiver-msh-setting`
   - Reference to: `datapower_b2b_cpa_receiver_setting:id`
   - Required When: `service`=`urn:oasis:names:tc:ebxml-msg:service`
+  - Not Valid When: attribute is not conditionally required
 - `sender_msh_setting` (String) Specify the name of the default MSH signal sender to send ebMS MSH signals to send MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .
   - CLI Alias: `sender-msh-setting`
   - Reference to: `datapower_b2b_cpa_sender_setting:id`
   - Required When: `service`=`urn:oasis:names:tc:ebxml-msg:service`
+  - Not Valid When: attribute is not conditionally required
 - `service_type` (String) Specify the value of the service type. If you specify the type, the value is present in the type attribute of the <tt>Service</tt> element within the message to be sent. If the type is empty, the value of the <tt>Service</tt> element must be a URI.
   - CLI Alias: `service-type`
+  - Not Valid When: `service`=`urn:oasis:names:tc:ebxml-msg:service`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
@@ -86,9 +91,13 @@ Optional:
 - `receiver_setting` (String) Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.
   - CLI Alias: `receiver-setting`
   - Reference to: `datapower_b2b_cpa_receiver_setting:id`
+  - Required When: `capability`=`canreceive`
+  - Not Valid When: `capability`!=`canreceive`
 - `sender_setting` (String) Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.
   - CLI Alias: `sender-setting`
   - Reference to: `datapower_b2b_cpa_sender_setting:id`
+  - Required When: `capability`=`cansend`
+  - Not Valid When: `capability`!=`cansend`
 
 
 <a id="nestedatt--dependency_actions"></a>

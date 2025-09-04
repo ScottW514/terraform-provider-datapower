@@ -41,22 +41,27 @@ resource "datapower_analytics_endpoint" "test" {
 - `client_id` (String) Client ID
   - CLI Alias: `clientid`
   - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
+  - Not Valid When: (`analytics_server_url` protocol!=`http`|`https` OR `enable_jwt`!=`true`)
 - `client_secret_alias` (String) Client secret
   - CLI Alias: `client-secret-alias`
   - Reference to: `datapower_password_alias:id`
   - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
+  - Not Valid When: (`analytics_server_url` protocol!=`http`|`https` OR `enable_jwt`!=`true`)
 - `delivery_connections` (Number) Specify the number of connections to establish per delivery to the remote server to offload analytics data. Each connection can carry a bulk activity log. Enter a value in the range 1 - 100. The default value is 1.
   - CLI Alias: `delivery-connections`
   - Range: `1`-`100`
   - Default value: `1`
+  - Not Valid When: `analytics_server_url` protocol!=`dpkafka`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enable_jwt` (Boolean) Enable JWT feature sending logs to analytics server.
   - CLI Alias: `enable-jwt`
   - Default value: `false`
+  - Not Valid When: `analytics_server_url` protocol!=`http`|`https`
 - `grant_type` (String) Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.
   - CLI Alias: `grant-type`
   - Choices: `implicit`, `password`, `application`, `accessCode`
   - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
+  - Not Valid When: (`analytics_server_url` protocol!=`http`|`https` OR `enable_jwt`!=`true`)
 - `interval` (Number) Specify the interval in seconds between offloads. Data is offloaded at this interval or when an API gateway reaches 80% of the value set for maximum records. Enter a value in the range 1 - 3600. The default value is 600
   - CLI Alias: `interval`
   - Range: `1`-`3600`
@@ -64,10 +69,12 @@ resource "datapower_analytics_endpoint" "test" {
 - `management_url` (String) Specify the URL of management platform endpoint to retrieve a JWT. The URL must use the <tt>http</tt> or <tt>https</tt> protocol.
   - CLI Alias: `management-url`
   - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
+  - Not Valid When: (`enable_jwt`!=`true` OR `analytics_server_url` protocol!=`http`|`https`)
 - `management_url_ssl_client` (String) Management platform TLS client profile
   - CLI Alias: `management-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
   - Required When: (`enable_jwt`=`true` AND `management_url` protocol=`https` AND `analytics_server_url` protocol=`http`|`https`)
+  - Not Valid When: (`enable_jwt`!=`true` OR `management_url` protocol=`http` OR `analytics_server_url` protocol=`dpkafka`)
 - `max_delivery_memory_mb` (Number) Specify the maximum size for each delivery in MB. Enter a value in the range 1 - 1024. The default value is 512.
   - CLI Alias: `max-delivery-size`
   - Range: `1`-`1024`
@@ -83,20 +90,25 @@ resource "datapower_analytics_endpoint" "test" {
 - `persistent_connection` (Boolean) Specify whether to negotiate persistent connections. By default, persistent connections are enabled. The HTTP/2 protocol controls persistent connections and reuse. Therefore, these settings are ignored.
   - CLI Alias: `persistent-connection`
   - Default value: `true`
+  - Not Valid When: `analytics_server_url` protocol!=`http`|`https`
 - `persistent_timeout` (Number) Specify the inter-transaction timeout for connections, which is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 60.
   - CLI Alias: `persistent-timeout`
   - Range: `1`-`86400`
   - Default value: `60`
+  - Not Valid When: (`persistent_connection`=`false` OR `analytics_server_url` protocol!=`http`|`https`)
 - `request_topic` (String) Request topic
   - CLI Alias: `request-topic`
   - Required When: `analytics_server_url` protocol=`dpkafka`
+  - Not Valid When: `analytics_server_url` protocol!=`dpkafka`
 - `scope` (String) Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.
   - CLI Alias: `scope`
   - Required When: (`enable_jwt`=`true` AND `analytics_server_url` protocol=`http`|`https`)
+  - Not Valid When: (`analytics_server_url` protocol!=`http`|`https` OR `enable_jwt`!=`true`)
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
   - Required When: `analytics_server_url` protocol=`https`
+  - Not Valid When: `analytics_server_url` protocol!=`https`
 - `timeout` (Number) Specify the intra-transaction timeout for connections, which is the maximum idle time to allow in a transaction. This timer monitors idle time in the data transfer process. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 90.
   - CLI Alias: `timeout`
   - Range: `1`-`86400`

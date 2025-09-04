@@ -56,10 +56,12 @@ resource "datapower_wsrr_subscription" "test" {
   - Required When: `object_type`!=`service-version`
 - `object_version` (String) Object version
   - CLI Alias: `version`
+  - Not Valid When: `use_version`=`false`
 - `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.
   - CLI Alias: `refresh-interval`
   - Range: `60`-`4294967`
   - Default value: `86400`
+  - Not Valid When: `method`!=`poll`
 - `use_version` (Boolean) Specify whether to query the registry for a specific object version. Set this property when the registry contains more than one version of an object.
   - CLI Alias: `use-version`
   - Default value: `false`

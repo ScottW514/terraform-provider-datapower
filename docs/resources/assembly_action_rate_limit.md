@@ -37,22 +37,28 @@ resource "datapower_assembly_action_rate_limit" "test" {
   - Default value: `false`
 - `burst_limit` (List of String) Burst limits
   - CLI Alias: `burst-limit`
+  - Not Valid When: `source`=`plan-default`|`domain-named`|`group`
 - `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
 - `count_limit` (Attributes List) Count limits
-  - CLI Alias: `count-limit` (see [below for nested schema](#nestedatt--count_limit))
+  - CLI Alias: `count-limit`
+  - Not Valid When: `source`=`plan-default`|`domain-named`|`group` (see [below for nested schema](#nestedatt--count_limit))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `group_action` (String) Specify the action to take for rate limits in the group. Each rate limit definition that the group references is consumed or replenished based on this setting. The default value is consume.
   - CLI Alias: `group-action`
   - Choices: `consume`, `replenish`
   - Default value: `consume`
+  - Not Valid When: `source`!=`group`
 - `rate_limit` (Attributes List) Rate limits
-  - CLI Alias: `rate-limit` (see [below for nested schema](#nestedatt--rate_limit))
+  - CLI Alias: `rate-limit`
+  - Not Valid When: `source`=`plan-default`|`domain-named`|`group` (see [below for nested schema](#nestedatt--rate_limit))
 - `rate_limit_definition` (Attributes List) Rate limit definitions
-  - CLI Alias: `rate-limit-definition` (see [below for nested schema](#nestedatt--rate_limit_definition))
+  - CLI Alias: `rate-limit-definition`
+  - Not Valid When: `source`!=`domain-named` (see [below for nested schema](#nestedatt--rate_limit_definition))
 - `rate_limit_group` (String) Rate limit group
   - CLI Alias: `rate-limit-group`
   - Reference to: `datapower_rate_limit_definition_group:id`
+  - Not Valid When: `source`!=`group`
 - `source` (String) Specify the source of the limits to apply to the assembly. By default, rate limits and burst limits in the API plan are applied.
   - CLI Alias: `source`
   - Choices: `plan-default`, `collection-named`, `plan-named`, `gateway-named`, `domain-named`, `group`

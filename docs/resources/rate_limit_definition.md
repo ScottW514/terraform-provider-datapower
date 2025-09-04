@@ -42,22 +42,28 @@ resource "datapower_rate_limit_definition" "test" {
 - `auto_replenish` (Boolean) Specify whether the count limit is automatically replenished at the end of the transaction. By default, the count limit is automatically replenished. When disabled, the count limit is replenished only by applying a rate limit assembly action that contains the count limit with a replenish operation.
   - CLI Alias: `auto-replenish`
   - Default value: `true`
+  - Not Valid When: `type`!=`count`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `dynamic_value` (String) Specify the dynamic value string for the rate limit, which should contain one or more context variables. The default value is an empty string. <p>The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a username, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value.</p><p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context. The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p><tt>context.set("my.server", "server34")</tt></p>
   - CLI Alias: `dynamic-value`
+  - Not Valid When: `rate`=`0`
 - `emulate_burst_headers` (Boolean) Specify whether to return information about the rate limit in burst limit response headers instead of in rate limit response headers. By default, the information is in rate limit headers. When enabled, information is in burst limit headers.
   - CLI Alias: `emulate-burst-headers`
   - Default value: `false`
+  - Not Valid When: `type`!=`rate`
 - `hard_limit` (Boolean) Specify whether to reject requests when the specified rate limit is exceeded. By default, requests are rejected when the limit is exceeded. When disabled, requests are accepted but a warning is logged.
   - CLI Alias: `hard-limit`
   - Default value: `true`
+  - Not Valid When: (`rate`=`0` OR `type`=`burst`)
 - `interval` (Number) Specify the interval for the rate limit. Enter a value that is greater than or equal to 1. The default value is 1.
   - CLI Alias: `interval`
   - Range: `1`-`65535`
   - Default value: `1`
+  - Not Valid When: (`rate`=`0` OR `type`=`count`)
 - `is_client` (Boolean) Specify whether to apply the rate limit to the client or to an internal component. By default, the rate limit is applied to the client. Client rate limits return a 429 error when exceeded. When disabled, rate limit information is not applied to the client. Non-client rate limits return a 503 error when exceeded.
   - CLI Alias: `is-client`
   - Default value: `true`
+  - Not Valid When: `rate`=`0`
 - `parameters` (Attributes List) Parameters
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameters))
 - `response_headers` (Boolean) Specify whether response headers include rate limit information. By default, headers include rate limit information. When disabled, headers exclude rate limit information.
@@ -73,26 +79,32 @@ resource "datapower_rate_limit_definition" "test" {
   - CLI Alias: `unit`
   - Choices: `second`, `minute`, `hour`, `day`, `week`
   - Default value: `minute`
+  - Not Valid When: (`rate`=`0` OR `type`=`count`)
 - `use_api_name` (Boolean) Specify whether to include the API name in the rate limit key. By default, the API name is not included. When enabled, the API name is included.
   - CLI Alias: `use-api-name`
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `use_app_id` (Boolean) Specify whether to include the application ID in the rate limit key. By default, the application ID is not included. When enabled, the application ID is included.
   - CLI Alias: `use-app-id`
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `use_cache` (Boolean) Specify whether to use a cache to store rate limit information. A cache might be faster when the number of API calls is low. A cache can cause degraded performance when the number of API calls is exceptionally high. By default, a cache cannot store information. When enabled, the cache can store information.
   - CLI Alias: `use-cache`
   - Default value: `false`
 - `use_client_id` (Boolean) Specify whether to include the client ID in the rate limit key. By default, the client ID is not included. When enabled, the client ID is included.
   - CLI Alias: `use-client-id`
   - Default value: `false`
+  - Not Valid When: `rate`=`0`
 - `use_interval_offset` (Boolean) Specify whether to allow limit intervals to start at different offsets. By default, intervals can start at different offsets. When disabled, intervals cannot start at different offsets.
   - CLI Alias: `use-interval-offset`
   - Default value: `true`
+  - Not Valid When: `type`=`count`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `weight` (String) Specify a JSONata expression to assign a weight value to the rate limit. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - CLI Alias: `weight`
   - Default value: `1`
+  - Not Valid When: `rate`=`0`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &APIOperationResource{}
@@ -106,13 +107,14 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default:             booldefault.StaticBool(false),
 			},
 			"consume": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify MIME types that the operation can consume. This setting overrides the API-level consume declaration that is defined in the API definition.", "consume", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify MIME types that the operation can consume. This setting overrides the API-level consume declaration that is defined in the API definition.", "consume", "").AddNotValidWhen(models.APIOperationConsumeIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
 					listvalidator.ValueStringsAre(
 						stringvalidator.RegexMatches(regexp.MustCompile("[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_]{0,126}\\/[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_+.]{0,126}(;\\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_=\"]{0,126})*$"), "Must match :"+"[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_]{0,126}\\/[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_+.]{0,126}(;\\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_=\"]{0,126})*$"),
 					),
+					validators.ConditionalRequiredList(validators.Evaluation{}, models.APIOperationConsumeIgnoreVal, false),
 				},
 			},
 			"produce": schema.ListAttribute{
@@ -146,7 +148,7 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default:             booldefault.StaticBool(false),
 			},
 			"security": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the alternative security requirements to enforce for the operation (that is, there is a logical OR between the security requirements). This setting overrides any declared API-level security.", "security", "api_security_requirement").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the alternative security requirements to enforce for the operation (that is, there is a logical OR between the security requirements). This setting overrides any declared API-level security.", "security", "api_security_requirement").AddNotValidWhen(models.APIOperationSecurityIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

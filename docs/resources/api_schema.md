@@ -41,22 +41,29 @@ resource "datapower_api_schema" "test" {
   - CLI Alias: `summary`
 - `wsdl_attachment_part` (String) Specify the mime:content to validate in the format <tt>mime:content/@part</tt> . The value must be the unqualified name of the message part. The name is the same as the part attribute on the corresponding <tt>mime:content</tt> component in the WSDL file. When not specified or <tt>*</tt> , the root MIME part is validated. The root MIME part is bound to a <tt>soap:Body</tt> .
   - CLI Alias: `wsdl-attachment-part`
+  - Not Valid When: `xml_type`!=`wsdl`
 - `wsdl_message_direction_or_name` (String) Specify the <tt>wsdl:input</tt> , <tt>wsdl:output</tt> , or <tt>wsdl:fault</tt> for the traffic to validate. The value must be the name of one or more WSDL input, output, or fault components, or <tt>#input</tt> or <tt>#output</tt> for the request and response directions respectively, or <tt>*</tt> for all inputs, outputs, and faults in the WSDL file. When specified and not <tt>*</tt> , only messages that match the specified direction or name are valid. Faults are valid for the response direction.
   - CLI Alias: `wsdl-message-direction-or-name`
+  - Not Valid When: `xml_type`!=`wsdl`
 - `wsdl_operation_name` (String) Specify the <tt>wsdl:operation</tt> for the traffic to validate. The value should be the unqualified name of the operation or <tt>*</tt> for all operations in the WSDL file. When specified and not <tt>*</tt> , only messages for the named operation are valid.
   - CLI Alias: `wsdl-operation`
+  - Not Valid When: `xml_type`!=`wsdl`
 - `wsdl_port_q_name` (String) Specify the <tt>wsdl:port</tt> for the traffic to validate. The value should be a QName in the form <tt>{namespace-uri}local-part</tt> or <tt>*</tt> for all ports in the WSDL file. When specified and not <tt>*</tt> , only messages for the named port are valid.
   - CLI Alias: `wsdl-port`
+  - Not Valid When: `xml_type`!=`wsdl`
 - `wsdl_schema_url` (String) Specify the schema URL for WSDL message validation. For example, <tt>local:///petstore-Pet.wsdl</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `wsdl-schema-url`
+  - Not Valid When: `xml_type`!=`wsdl`
 - `xml_schema_url` (String) Specify the schema URL for XML message validation. For example, <tt>local:///petstore-Pet.xsd</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `xml-schema-url`
+  - Not Valid When: `xml_type`!=`xml`
 - `xml_type` (String) XML type
   - CLI Alias: `xml-type`
   - Choices: `xml`, `wsdl`
 - `xml_validation_mode` (String) XML validation mode
   - CLI Alias: `xml-validation-mode`
   - Choices: `xsd`, `soap-body`
+  - Not Valid When: `xml_type`!=`xml`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

@@ -38,6 +38,7 @@ resource "datapower_name_value_profile" "test" {
   - Default value: `strip`
 - `default_map_value` (String) An value that does not have a matching entry in the validation list is changed to this value if the no match policy is 'set'.
   - CLI Alias: `unvalidated-fixup-map`
+  - Not Valid When: `default_fixup`!=`set`
 - `default_xss` (Boolean) This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.
   - CLI Alias: `unvalidated-xss-check`
   - Default value: `false`
@@ -62,6 +63,7 @@ resource "datapower_name_value_profile" "test" {
   - CLI Alias: `unvalidated-xss-patternsfile`
   - Default value: `store:///XSS-Patterns.xml`
   - Required When: `default_xss`=`true`
+  - Not Valid When: `default_xss`!=`true`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `validation_list` (Attributes List) Each pair submitted to this profile consults this validation list, looking for the first regular expression match of the name against the name expression in the list. When that is found, the corresponding value constraint is matched against the value portion of the name-value pair. If that does not match, the policy applies the 'fixup' attribute to the submitted value. That may result in no change, the pair being removed, an error being generated, or the value being mapped to a known constant.
@@ -98,7 +100,10 @@ Optional:
   - Choices: `passthrough`, `strip`, `error`, `set`
   - Default value: `error`
 - `map_value` (String) An value that fails validation is changed to this value if the failure policy is 'set'.
+  - Not Valid When: `fixup`!=`set`
 - `xss` (Boolean) This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.
   - Default value: `false`
 - `xss_patterns_file` (String) Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.
   - Default value: `store:///XSS-Patterns.xml`
+  - Required When: `xss`=`true`
+  - Not Valid When: `xss`!=`true`

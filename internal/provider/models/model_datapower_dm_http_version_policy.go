@@ -74,7 +74,7 @@ func GetDmHTTPVersionPolicyDataSourceSchema() DataSourceSchema.NestedAttributeOb
 				Computed:            true,
 			},
 			"http2_required": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether HTTP/2 is required when the version is HTTP/2.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether HTTP/2 is required when the version is HTTP/2.", "", "").AddDefaultValue("false").AddNotValidWhen(DmHTTPVersionPolicyHTTP2RequiredIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -98,7 +98,7 @@ func GetDmHTTPVersionPolicyResourceSchema() ResourceSchema.NestedAttributeObject
 				Default: stringdefault.StaticString("HTTP/1.1"),
 			},
 			"http2_required": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether HTTP/2 is required when the version is HTTP/2.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether HTTP/2 is required when the version is HTTP/2.", "", "").AddDefaultValue("false").AddNotValidWhen(DmHTTPVersionPolicyHTTP2RequiredIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),

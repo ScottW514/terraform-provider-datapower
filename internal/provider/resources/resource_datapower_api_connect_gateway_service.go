@@ -117,11 +117,11 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				},
 			},
 			"gateway_peering_manager": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.", "gateway-peering-manager", "gateway_peering_manager").AddDefaultValue("default").AddRequiredWhen(models.APIConnectGatewayServiceGatewayPeeringManagerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.", "gateway-peering-manager", "gateway_peering_manager").AddDefaultValue("default").AddRequiredWhen(models.APIConnectGatewayServiceGatewayPeeringManagerCondVal.String()).AddNotValidWhen(models.APIConnectGatewayServiceGatewayPeeringManagerIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.APIConnectGatewayServiceGatewayPeeringManagerCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceGatewayPeeringManagerCondVal, models.APIConnectGatewayServiceGatewayPeeringManagerIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("default"),
 			},
@@ -132,32 +132,32 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_defined_policies": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify user-defined policies to advertise to API Connect for use in the API Connect Assembly Editor. This property is meaningful when the gateway type is an API gateway. <p>For an assembly function that is a user-defined policy, configure the assembly function with a mechanism other than a watched file that is processed by a configuration sequence. Objects that are created through the processing of configuration sequences are not persisted to the startup configuration. The preferred method for user-defined policies is to define them explicitly so that they persist to the startup configuration.</p>", "user-defined-policies", "assembly_function").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify user-defined policies to advertise to API Connect for use in the API Connect Assembly Editor. This property is meaningful when the gateway type is an API gateway. <p>For an assembly function that is a user-defined policy, configure the assembly function with a mechanism other than a watched file that is processed by a configuration sequence. Objects that are created through the processing of configuration sequences are not persisted to the startup configuration. The preferred method for user-defined policies is to define them explicitly so that they persist to the startup configuration.</p>", "user-defined-policies", "assembly_function").AddNotValidWhen(models.APIConnectGatewayServiceUserDefinedPoliciesIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"v5c_slm_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.", "slm-mode", "").AddStringEnum("autounicast", "unicast", "multicast").AddDefaultValue("autounicast").AddRequiredWhen(models.APIConnectGatewayServiceV5CSlmModeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.", "slm-mode", "").AddStringEnum("autounicast", "unicast", "multicast").AddDefaultValue("autounicast").AddRequiredWhen(models.APIConnectGatewayServiceV5CSlmModeCondVal.String()).AddNotValidWhen(models.APIConnectGatewayServiceV5CSlmModeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("autounicast", "unicast", "multicast"),
-					validators.ConditionalRequiredString(models.APIConnectGatewayServiceV5CSlmModeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceV5CSlmModeCondVal, models.APIConnectGatewayServiceV5CSlmModeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("autounicast"),
 			},
 			"ip_multicast": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.", "ip-multicast", "ip_multicast").AddRequiredWhen(models.APIConnectGatewayServiceIPMulticastCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.", "ip-multicast", "ip_multicast").AddRequiredWhen(models.APIConnectGatewayServiceIPMulticastCondVal.String()).AddNotValidWhen(models.APIConnectGatewayServiceIPMulticastIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.APIConnectGatewayServiceIPMulticastCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceIPMulticastCondVal, models.APIConnectGatewayServiceIPMulticastIgnoreVal, false),
 				},
 			},
 			"ip_unicast": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.", "ip-unicast", "").AddRequiredWhen(models.APIConnectGatewayServiceIPUnicastCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.", "ip-unicast", "").AddRequiredWhen(models.APIConnectGatewayServiceIPUnicastCondVal.String()).AddNotValidWhen(models.APIConnectGatewayServiceIPUnicastIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.APIConnectGatewayServiceIPUnicastCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.APIConnectGatewayServiceIPUnicastCondVal, models.APIConnectGatewayServiceIPUnicastIgnoreVal, false),
 				},
 			},
 			"jwt_validation_mode": schema.StringAttribute{

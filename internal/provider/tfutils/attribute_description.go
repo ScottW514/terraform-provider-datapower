@@ -81,3 +81,9 @@ func (d *AttributeDescription) AddRequiredWhen(condRequired string) *AttributeDe
 	d.String = fmt.Sprintf("%s  - Required When: %s\n", d.String, condRequired)
 	return d
 }
+
+// AddNotValidWhen adds required when conditions.
+func (d *AttributeDescription) AddNotValidWhen(condNotValid string) *AttributeDescription {
+	d.String = fmt.Sprintf("%s  - Not Valid When: %s\n", d.String, condNotValid)
+	return d
+}

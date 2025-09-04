@@ -76,7 +76,12 @@ Read-Only:
   - Default value: `change`
 - `value` (String) Specify the value that is specific to the template type. <ul><li>When change, specify the replacement value for the identified property in this specific named object instance.</li><li>When custom, specify the transform to insert a template value</li></ul>
   - CLI Alias: `value`
+  - Required When: `template_type`!=`delete`
+  - Not Valid When: `template_type`=`delete`
 - `value_inverse` (String) Specify the value inverse. This value is the inverse transform to replace the template value with the wanted value.
   - CLI Alias: `value-inverse`
+  - Required When: `template_type`=`custom`
+  - Not Valid When: `template_type`!=`custom`
 - `value_validate` (String) Specify the query to validate the replaced value at the specified location. The query to return <tt>true</tt> when the template value is found at the specified location and <tt>false</tt> when the template value is not found at the specified location. The query is in the following format. <p><code>configuration.%Class[$match(`@name`, /^%Name/)]%ValueValidate</code></p>
   - CLI Alias: `value-validate`
+  - Not Valid When: `template_type`!=`custom`

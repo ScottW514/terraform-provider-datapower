@@ -130,10 +130,10 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and the NSS server.", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.ZosNSSClientSSLClientCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and the NSS server.", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.ZosNSSClientSSLClientCondVal.String()).AddNotValidWhen(models.ZosNSSClientSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.ZosNSSClientSSLClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.ZosNSSClientSSLClientCondVal, models.ZosNSSClientSSLClientIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -36,6 +36,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &ThrottlerResource{}
@@ -124,11 +125,12 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(false),
 			},
 			"log_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the criticality level for throttle messages. By default, logging is at debug level.", "status-loglevel", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("debug").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the criticality level for throttle messages. By default, logging is at debug level.", "status-loglevel", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("debug").AddNotValidWhen(models.ThrottlerLogLevelIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.ThrottlerLogLevelIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("debug"),
 			},

@@ -42,14 +42,17 @@ resource "datapower_ssl_server_profile" "test" {
 - `allow_legacy_renegotiation` (Boolean) Specify whether to allow TLS renegotiation with TLS clients that do not support RFC 5746. By default, this support is disabled because renegotiation is vulnerable to man-in-the-middle attacks as documented in CVE-2009-3555. Renegotiation with TLS clients that support RFC 5746 is permitted regardless of the setting.
   - CLI Alias: `allow-legacy-renegotiation`
   - Default value: `false`
+  - Not Valid When: (`ssl_options`=`max-renegotiation` AND `number_of_renegotiation_allowed`=`0`)
 - `cache_size` (Number) Specify the maximum number of entries (multiplied by 1024) in the session cache. Enter a value in the range 1 - 500. The default value is 20.
   - CLI Alias: `cache-size`
   - Range: `1`-`500`
   - Default value: `20`
+  - Not Valid When: `caching`=`false`
 - `cache_timeout` (Number) Specify the number of seconds that TLS sessions are allowed to remain in the TLS session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.
   - CLI Alias: `cache-timeout`
   - Range: `1`-`86400`
   - Default value: `300`
+  - Not Valid When: `caching`=`false`
 - `caching` (Boolean) Enable session caching
   - CLI Alias: `caching`
   - Default value: `true`
@@ -67,19 +70,23 @@ resource "datapower_ssl_server_profile" "test" {
   - CLI Alias: `max-duration`
   - Range: `1`-`11520`
   - Default value: `60`
+  - Not Valid When: `ssl_options`!=`max-duration`
 - `number_of_renegotiation_allowed` (Number) Specify the maximum number of client initiated renegotiations to allow. Enter a value in the range 0 - 512. The default value is 0, which indicates TLS client initiated renegotiation is not allowed.
   - CLI Alias: `max-renegotiation-allowed`
   - Range: `0`-`512`
   - Default value: `0`
+  - Not Valid When: `ssl_options`!=`max-renegotiation`
 - `prefer_server_ciphers` (Boolean) Use server cipher suite preferences
   - CLI Alias: `prefer-server-ciphers`
   - Default value: `true`
 - `prioritize_cha_cha` (Boolean) Specify whether to move ChaCha20-Poly1305 cipher to the top of preference list sent to the client when this cipher is at the top of client cipher list When server cipher suite preferences is in effect, enabling this property temporarily moves the ChaCha20-Poly1305 cipher to the top of preference list when clients that present ChaCha20-Poly1305 cipher have this cipher at the top of their preference list. This setting allows the client to negotiate ChaCha20-Poly1305 cipher while other clients can use other ciphers.
   - CLI Alias: `prioritize-chacha`
   - Default value: `false`
+  - Not Valid When: `prefer_server_ciphers`=`false`
 - `prohibit_resume_on_reneg` (Boolean) Prohibit session resumption on renegotiation
   - CLI Alias: `prohibit-resume-on-reneg`
   - Default value: `false`
+  - Not Valid When: (`ssl_options`=`max-renegotiation` AND `number_of_renegotiation_allowed`=`0`)
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--protocols))
 - `request_client_auth` (Boolean) Request client authentication
@@ -88,12 +95,14 @@ resource "datapower_ssl_server_profile" "test" {
 - `require_client_auth` (Boolean) Specify whether to require client authentication during the TLS handshake. When enabled, the handshake is aborted if the client certificate is not provided. Otherwise, the request does not fail when there is no client certificate.
   - CLI Alias: `require-client-auth`
   - Default value: `true`
+  - Not Valid When: `request_client_auth`=`false`
 - `require_closure_notification` (Boolean) Require closure notification
   - CLI Alias: `require-closure-notification`
   - Default value: `true`
 - `send_client_auth_ca_list` (Boolean) Send client authentication CA list
   - CLI Alias: `send-client-auth-ca-list`
   - Default value: `true`
+  - Not Valid When: (`request_client_auth`=`false` OR `validate_client_cert`=`false`)
 - `sig_algs` (List of String) Specify the signature algorithms to advertise and support. An empty list uses the default algorithms.
   - CLI Alias: `sign-alg`
   - Choices: `ecdsa_secp256r1_sha256`, `ecdsa_secp384r1_sha384`, `ecdsa_secp521r1_sha512`, `ed25519`, `ed448`, `ecdsa_sha224`, `ecdsa_sha1`, `rsa_pss_rsae_sha256`, `rsa_pss_rsae_sha384`, `rsa_pss_rsae_sha512`, `rsa_pss_pss_sha256`, `rsa_pss_pss_sha384`, `rsa_pss_pss_sha512`, `rsa_pkcs1_sha256`, `rsa_pkcs1_sha384`, `rsa_pkcs1_sha512`, `rsa_pkcs1_sha224`, `rsa_pkcs1_sha1`, `dsa_sha256`, `dsa_sha384`, `dsa_sha512`, `dsa_sha224`, `dsa_sha1`
@@ -105,9 +114,11 @@ resource "datapower_ssl_server_profile" "test" {
   - CLI Alias: `valcred`
   - Reference to: `datapower_crypto_val_cred:id`
   - Required When: (`request_client_auth`=`true` AND `validate_client_cert`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `validate_client_cert` (Boolean) Validate client certificate
   - CLI Alias: `validate-client-cert`
   - Default value: `true`
+  - Not Valid When: `request_client_auth`=`false`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

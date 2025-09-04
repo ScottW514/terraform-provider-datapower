@@ -45,6 +45,7 @@ resource "datapower_forms_login_policy" "test" {
   - CLI Alias: `cookie-attributes`
   - Reference to: `datapower_cookie_attribute_policy:id`
   - Required When: `use_cookie_attributes`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `default_url` (String) Specify the URL fragment on the application server to go to after a successful login. The field is only used when the user was not redirected to the login page. This fragment is relative to the root directory. The URL fragment with the address of the service forms the complete URL of the default page for the application. The default value is <tt>/</tt> .
   - CLI Alias: `default-url`
   - Default value: `/`
@@ -62,6 +63,7 @@ resource "datapower_forms_login_policy" "test" {
   - CLI Alias: `script-location`
   - Default value: `store:///Form-Generate-HTML.xsl`
   - Required When: `form_support_type`=`custom`
+  - Not Valid When: `form_support_type`!=`custom`
 - `form_support_type` (String) Specify whether to use static HTML pages or a custom file to generate the HTML pages. By default, uses static pages from an explicit location.
   - CLI Alias: `support-type`
   - Choices: `static`, `custom`
@@ -71,22 +73,27 @@ resource "datapower_forms_login_policy" "test" {
   - Choices: `backend`, `appliance`
   - Default value: `backend`
   - Required When: `form_support_type`=`static`
+  - Not Valid When: attribute is not conditionally required
 - `inactivity_timeout` (Number) Specify the duration in seconds for an inactive session. The default value is 600. A value of 0 disables the timer.
   - CLI Alias: `inactivity-timeout`
   - Default value: `600`
   - Required When: `use_cookie_attributes`=`false`
+  - Not Valid When: attribute is not conditionally required
 - `local_error_page` (String) Specify the location of the error page on the DataPower Gateway. The default value is <tt>store:///ErrorPage.htm</tt> .
   - CLI Alias: `local-error-page`
   - Default value: `store:///ErrorPage.htm`
   - Required When: (`forms_location`=`appliance` AND `form_support_type`=`static`)
+  - Not Valid When: (`form_support_type`!=`static` OR `forms_location`=`backend`)
 - `local_login_form` (String) Specify the location of the login form on the DataPower Gateway. The default value is <tt>store:///LoginPage.htm</tt> .
   - CLI Alias: `local-login-page`
   - Default value: `store:///LoginPage.htm`
   - Required When: (`forms_location`=`appliance` AND `form_support_type`=`static`)
+  - Not Valid When: (`form_support_type`!=`static` OR `forms_location`=`backend`)
 - `local_logout_page` (String) Specify the location of the logout page on the DataPower Gateway. The default value is <tt>store:///LogoutPage.htm</tt> .
   - CLI Alias: `local-logout-page`
   - Default value: `store:///LogoutPage.htm`
   - Required When: (`forms_location`=`appliance` AND `form_support_type`=`static`)
+  - Not Valid When: (`form_support_type`!=`static` OR `forms_location`=`backend`)
 - `login_form` (String) Specify the URL fragment of the login page on the application server. This page collects username and password information. The default value is <tt>/LoginPage.htm</tt> .
   - CLI Alias: `login-url`
   - Default value: `/LoginPage.htm`
@@ -104,18 +111,22 @@ resource "datapower_forms_login_policy" "test" {
   - Choices: `urlin`, `host`
   - Default value: `urlin`
   - Required When: `form_support_type`=`static`
+  - Not Valid When: attribute is not conditionally required
 - `session_lifetime` (Number) Specify the maximum duration in seconds before the user must reauthentication. The default value is 10800. The minimum value is 1. The special value of 0 sets the value to the default value of 10800.
   - CLI Alias: `session-lifetime`
   - Default value: `10800`
   - Required When: `use_cookie_attributes`=`false`
+  - Not Valid When: attribute is not conditionally required
 - `shared_secret` (String) Specify the shared secret that protects cookies. The shared secret key protects cookies that the service generates and consumes. If allowed, all members in the standby group must use the same shared secret.
   - CLI Alias: `shared-secret`
   - Reference to: `datapower_crypto_sskey:id`
+  - Not Valid When: `enable_migration`=`false`
 - `ssl_port` (Number) Specify the listening port to secure TLS redirection during the login transaction. The default value is 8080.
   - CLI Alias: `ssl-port`
   - Range: `1`-`65535`
   - Default value: `8080`
   - Required When: (`form_support_type`=`static` AND `use_ssl_for_login`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `use_cookie_attributes` (Boolean) Whether to attach a cookie attribute policy to allow predefined or custom attributes to be included in the forms login cookie. If you do not use a cookie attribute policy, the configuration use the properties of the forms login policy. By default, does not attach a cookie attribute policy.
   - CLI Alias: `use-cookie-attribute`
   - Default value: `false`
@@ -123,6 +134,7 @@ resource "datapower_forms_login_policy" "test" {
   - CLI Alias: `use-ssl`
   - Default value: `true`
   - Required When: `form_support_type`=`static`
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `username_field` (String) Specify the attribute value of the username field. The default value is <tt>j_username</tt> .

@@ -94,17 +94,17 @@ func (r *JWSSignatureResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("RS256"),
 			},
 			"key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Private key.", "key", "crypto_key").AddRequiredWhen(models.JWSSignatureKeyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Private key.", "key", "crypto_key").AddRequiredWhen(models.JWSSignatureKeyCondVal.String()).AddNotValidWhen(models.JWSSignatureKeyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.JWSSignatureKeyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.JWSSignatureKeyCondVal, models.JWSSignatureKeyIgnoreVal, false),
 				},
 			},
 			"sskey": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").AddRequiredWhen(models.JWSSignatureSSKeyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").AddRequiredWhen(models.JWSSignatureSSKeyCondVal.String()).AddNotValidWhen(models.JWSSignatureSSKeyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.JWSSignatureSSKeyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.JWSSignatureSSKeyCondVal, models.JWSSignatureSSKeyIgnoreVal, false),
 				},
 			},
 			"protected_header": schema.ListNestedAttribute{

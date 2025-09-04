@@ -38,6 +38,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &SSLSNIServerProfileResource{}
@@ -95,19 +96,21 @@ func (r *SSLSNIServerProfileResource) Schema(ctx context.Context, req resource.S
 			},
 			"ssl_options": models.GetDmSSLOptionsResourceSchema("Specify the options to apply to the TLS connection that override settings in the TLS server profiles. These options have negative impact on the performance.", "ssl-options", "", false),
 			"max_ssl_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds for an established TLS session. After the duration is reached, the TLS connection is closed. Enter a value in the range 1 - 691200. The default value is 3600.", "max-duration", "").AddIntegerRange(1, 691200).AddDefaultValue("3600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds for an established TLS session. After the duration is reached, the TLS connection is closed. Enter a value in the range 1 - 691200. The default value is 3600.", "max-duration", "").AddIntegerRange(1, 691200).AddDefaultValue("3600").AddNotValidWhen(models.SSLSNIServerProfileMaxSSLDurationIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 691200),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLSNIServerProfileMaxSSLDurationIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(3600),
 			},
 			"number_of_renegotiation_allowed": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).AddNotValidWhen(models.SSLSNIServerProfileNumberOfRenegotiationAllowedIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 512),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLSNIServerProfileNumberOfRenegotiationAllowedIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

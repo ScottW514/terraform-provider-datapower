@@ -264,7 +264,6 @@ attributes:
   - activity
   - header
   - payload
-  required: true
   default: activity
   description: Specify the content to log on success. When set to payload data, you
     must enable message buffering to capture all request and response data.
@@ -281,7 +280,6 @@ attributes:
   - activity
   - header
   - payload
-  required: true
   default: payload
   description: Specify the content to log on error. When set to payload data, you
     must enable message buffering to capture all request and response data.

@@ -35,9 +35,11 @@ resource "datapower_aaa_jwt_generator" "test" {
 - `audience` (List of String) The audience, "aud", claim identifies the recipients that the JWT is intended for. The maximum length of the Audience claim is 256 characters.
   - CLI Alias: `aud`
   - Required When: `additional_claims`=`aud`
+  - Not Valid When: attribute is not conditionally required
 - `custom_claims` (String) The GatewayScript or XSLT file is processed to specify the custom claim. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> or <tt>store:</tt> directory.
   - CLI Alias: `custom-claims`
   - Required When: `additional_claims`=`custom`
+  - Not Valid When: attribute is not conditionally required
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `duration` (Number) The validity period identifies the expiration time, "exp" claim. Enter a value in the range 1 - 31622400. The default value is 3600.
   - CLI Alias: `duration`
@@ -48,19 +50,23 @@ resource "datapower_aaa_jwt_generator" "test" {
   - Choices: `A128CBC-HS256`, `A192CBC-HS384`, `A256CBC-HS512`, `A128GCM`, `A192GCM`, `A256GCM`
   - Default value: `A128CBC-HS256`
   - Required When: `gen_method`=`encrypt`
+  - Not Valid When: attribute is not conditionally required
 - `encrypt_algorithm` (String) Various key management algorithms can be used to encrypt the JWT, such as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default value is RSA1_5.
   - CLI Alias: `enc-alg`
   - Choices: `RSA1_5`, `RSA-OAEP`, `RSA-OAEP-256`, `A128KW`, `A192KW`, `A256KW`, `dir`
   - Default value: `RSA1_5`
   - Required When: `gen_method`=`encrypt`
+  - Not Valid When: attribute is not conditionally required
 - `encrypt_certificate` (String) The certificate alias can be used to encrypt the JWT. You can get the certificate alias by configuring the Crypto Certificate.
   - CLI Alias: `enc-cert`
   - Reference to: `datapower_crypto_certificate:id`
   - Required When: (`gen_method`=`encrypt` AND `encrypt_algorithm`=`RSA1_5`|`RSA-OAEP`|`RSA-OAEP-256`)
+  - Not Valid When: attribute is not conditionally required
 - `encrypt_sskey` (String) The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
   - CLI Alias: `enc-sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: (`gen_method`=`encrypt` AND `encrypt_algorithm`=`A128KW`|`A192KW`|`A256KW`|`dir`)
+  - Not Valid When: attribute is not conditionally required
 - `gen_method` (Attributes) The signing and encryption methods can be used to secure and generate a JWT.
   - CLI Alias: `generate-method` (see [below for nested schema](#nestedatt--gen_method))
 - `issuer` (String) The issuer claim, "iss", identifies the principal that issues the JWT. The maximum length is 256 characters. The default value is <tt>idg</tt> .
@@ -70,19 +76,23 @@ resource "datapower_aaa_jwt_generator" "test" {
   - CLI Alias: `nbf`
   - Range: `0`-`480`
   - Required When: `additional_claims`=`nbf`
+  - Not Valid When: attribute is not conditionally required
 - `sign_algorithm` (String) Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.
   - CLI Alias: `sign-alg`
   - Choices: `HS256`, `HS384`, `HS512`, `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, `PS512`
   - Default value: `RS256`
   - Required When: `gen_method`=`sign`
+  - Not Valid When: attribute is not conditionally required
 - `sign_key` (String) The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.
   - CLI Alias: `sign-key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: (`gen_method`=`sign` AND `sign_algorithm`=`RS256`|`RS384`|`RS512`|`PS256`|`PS384`|`PS512`|`ES256`|`ES384`|`ES512`)
+  - Not Valid When: attribute is not conditionally required
 - `sign_sskey` (String) The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
   - CLI Alias: `sign-sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: (`gen_method`=`sign` AND `sign_algorithm`=`HS256`|`HS384`|`HS512`)
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) A descriptive summary for the JWT Generator configuration.
   - CLI Alias: `summary`
 

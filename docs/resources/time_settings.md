@@ -28,48 +28,60 @@ resource "datapower_time_settings" "test" {
   - CLI Alias: `custom`
   - Default value: `STD`
   - Required When: `local_time_zone`=`Custom`
+  - Not Valid When: attribute is not conditionally required
 - `daylight_offset_hours` (Number) Specify the offset in hours when the custom time zone observes DST. Generally, the offset is 1 hour. The default value is 1.
   - CLI Alias: `daylight-offset`
   - Range: `0`-`12`
   - Default value: `1`
+  - Not Valid When: `local_time_zone`!=`Custom`
 - `daylight_start_day` (String) Specify the day of the week when DST starts for the custom time zone. The default value is Sunday.
   - CLI Alias: `daylight-start-day`
   - Choices: `Sunday`, `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`
   - Default value: `Sunday`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_start_month` (String) Specify the month when DST starts for the custom time zone. The default value is March.
   - CLI Alias: `daylight-start-month`
   - Choices: `January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`
   - Default value: `March`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_start_time_hours` (Number) Specify the hour when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 2.
   - CLI Alias: `daylight-start-hours`
   - Range: `0`-`23`
   - Default value: `2`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_start_time_minutes` (Number) Specify the minute when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 30.
   - CLI Alias: `daylight-start-minutes`
   - Range: `0`-`59`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_start_week` (Number) Specify the instance of the day in the month when DST starts for the custom time zone. If DST starts on the second Sunday in the month, enter 2.
   - CLI Alias: `daylight-start-week`
   - Range: `1`-`5`
   - Default value: `2`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_stop_day` (String) Specify the day of the week when DST ends for the custom time zone. The default value is Sunday.
   - CLI Alias: `daylight-stop-day`
   - Choices: `Sunday`, `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`
   - Default value: `Sunday`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_stop_month` (String) Specify the month when DST ends for the custom time zone. The default value is November.
   - CLI Alias: `daylight-stop-month`
   - Choices: `January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`
   - Default value: `November`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_stop_time_hours` (Number) Specify the hour when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 2.
   - CLI Alias: `daylight-stop-hours`
   - Range: `0`-`23`
   - Default value: `2`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_stop_time_minutes` (Number) Specify the minute when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 30.
   - CLI Alias: `daylight-stop-minutes`
   - Range: `0`-`59`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `daylight_stop_week` (Number) Specify the instance of the day in the month when DST ends for the custom time zone. If DST ends on the second Sunday in the month, enter 2.
   - CLI Alias: `daylight-stop-week`
   - Range: `1`-`5`
   - Default value: `1`
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
@@ -81,17 +93,21 @@ resource "datapower_time_settings" "test" {
 - `offset_hours` (Number) Specify the number of hours the custom time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 2.
   - CLI Alias: `offset-hours`
   - Range: `0`-`12`
+  - Not Valid When: `local_time_zone`!=`Custom`
 - `offset_minutes` (Number) Specify the number of minutes the time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 30.
   - CLI Alias: `offset-minutes`
   - Range: `0`-`59`
+  - Not Valid When: `local_time_zone`!=`Custom`
 - `tz_name_dst` (String) Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.
   - CLI Alias: `daylight-name`
   - Default value: `DST`
   - Required When: (`local_time_zone`=`Custom` AND `daylight_offset_hours`!=`0`)
+  - Not Valid When: (`local_time_zone`!=`Custom` OR `daylight_offset_hours`=`0`)
 - `utc_direction` (String) Specify the direction relative to UTC for the custom time zone. Asia is east. North America is west. The default value is East.
   - CLI Alias: `direction`
   - Choices: `East`, `West`
   - Default value: `West`
+  - Not Valid When: `local_time_zone`!=`Custom`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

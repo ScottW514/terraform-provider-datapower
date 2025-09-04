@@ -89,6 +89,7 @@ resource "datapower_ebms3_source_protocol_handler" "test" {
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Not Valid When: `ssl_server_config_type`!=`server`
 - `ssl_server_config_type` (String) Specify the type of TLS profile to secure client connections.
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
@@ -96,6 +97,7 @@ resource "datapower_ebms3_source_protocol_handler" "test" {
 - `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Not Valid When: `ssl_server_config_type`!=`sni`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

@@ -76,7 +76,7 @@ func GetDmSSLPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"ssl_client": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").AddRequiredWhen(DmSSLPolicySSLClientCondVal.String()).AddNotValidWhen(DmSSLPolicySSLClientIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -100,10 +100,10 @@ func GetDmSSLPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").AddRequiredWhen(DmSSLPolicySSLClientCondVal.String()).AddNotValidWhen(DmSSLPolicySSLClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSSLPolicySSLClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmSSLPolicySSLClientCondVal, DmSSLPolicySSLClientIgnoreVal, false),
 				},
 			},
 		},

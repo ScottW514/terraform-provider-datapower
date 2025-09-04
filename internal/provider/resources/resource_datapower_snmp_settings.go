@@ -36,6 +36,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &SNMPSettingsResource{}
@@ -128,16 +129,17 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default:             booldefault.StaticBool(true),
 			},
 			"trap_priority": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a minimum trap event priority. The priorities are hierarchical. The lowest is listed last. Set to the minimum that is required for your trap events.", "trap-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a minimum trap event priority. The priorities are hierarchical. The lowest is listed last. Set to the minimum that is required for your trap events.", "trap-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").AddNotValidWhen(models.SNMPSettingsTrapPriorityIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.SNMPSettingsTrapPriorityIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("warn"),
 			},
 			"trap_event_code": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The list of event codes generating traps. You can add event codes which will be triggering traps send to the configured trap targets.", "trap-code", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The list of event codes generating traps. You can add event codes which will be triggering traps send to the configured trap targets.", "trap-code", "").AddNotValidWhen(models.SNMPSettingsTrapEventCodeIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

@@ -165,12 +165,12 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(false),
 			},
 			"log_allowed_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for successful AAA operations. The default level is informational.", "log-allowed-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("info").AddRequiredWhen(models.AAAPolicyLogAllowedLevelCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for successful AAA operations. The default level is informational.", "log-allowed-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("info").AddRequiredWhen(models.AAAPolicyLogAllowedLevelCondVal.String()).AddNotValidWhen(models.AAAPolicyLogAllowedLevelIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
-					validators.ConditionalRequiredString(models.AAAPolicyLogAllowedLevelCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.AAAPolicyLogAllowedLevelCondVal, models.AAAPolicyLogAllowedLevelIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("info"),
 			},
@@ -181,12 +181,12 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(true),
 			},
 			"log_rejected_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for unsuccessful AAA operations. The default level is warning.", "log-rejected-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").AddRequiredWhen(models.AAAPolicyLogRejectedLevelCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for unsuccessful AAA operations. The default level is warning.", "log-rejected-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").AddRequiredWhen(models.AAAPolicyLogRejectedLevelCondVal.String()).AddNotValidWhen(models.AAAPolicyLogRejectedLevelIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
-					validators.ConditionalRequiredString(models.AAAPolicyLogRejectedLevelCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.AAAPolicyLogRejectedLevelCondVal, models.AAAPolicyLogRejectedLevelIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("warn"),
 			},
@@ -233,16 +233,16 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default:             booldefault.StaticBool(true),
 			},
 			"ws_sec_actor_role_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set the assumed <tt>S11:actor</tt> or <tt>S12:role</tt> identifier. The AAA policy acts as the assumed actor or role when it consumes <tt>Security</tt> headers. This setting takes effect only when the AAA policy attempts to process the incoming message before it makes an authorization decision. Postprocessing does not use this setting. Postprocessing uses its own setting in generating the message for the next SOAP node. The default value is an empty string. <table border=\"1\"><tr><td valign=\"left\"><tt>http://schemas.xmlsoap.org/soap/actor/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/none</tt></td><td>No one can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</tt></td><td>The ultimate receiver can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\">No value, which is an empty string</td><td>The empty string (without quotation marks) indicates that no \"actor/role\" identifier is configured. With a configured actor/role, the ultimate receiver is assumed for the message. No actor/role attribute is added during the generation of the <tt>Security</tt> header. More than one <tt>Security</tt> header cannot omit the actor/role identifier.</td></tr><tr><td valign=\"left\"><tt>USE_MESSAGE_BASE_URI</tt></td><td>The identifier is the base URL of the message. When the SOAP message is transported, the base URI is the request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">A string value</td><td>Any string to identify the actor or role of the <tt>Security</tt> header.</td></tr></table>", "actor-role-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Set the assumed <tt>S11:actor</tt> or <tt>S12:role</tt> identifier. The AAA policy acts as the assumed actor or role when it consumes <tt>Security</tt> headers. This setting takes effect only when the AAA policy attempts to process the incoming message before it makes an authorization decision. Postprocessing does not use this setting. Postprocessing uses its own setting in generating the message for the next SOAP node. The default value is an empty string. <table border=\"1\"><tr><td valign=\"left\"><tt>http://schemas.xmlsoap.org/soap/actor/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/none</tt></td><td>No one can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</tt></td><td>The ultimate receiver can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\">No value, which is an empty string</td><td>The empty string (without quotation marks) indicates that no \"actor/role\" identifier is configured. With a configured actor/role, the ultimate receiver is assumed for the message. No actor/role attribute is added during the generation of the <tt>Security</tt> header. More than one <tt>Security</tt> header cannot omit the actor/role identifier.</td></tr><tr><td valign=\"left\"><tt>USE_MESSAGE_BASE_URI</tt></td><td>The identifier is the base URL of the message. When the SOAP message is transported, the base URI is the request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">A string value</td><td>Any string to identify the actor or role of the <tt>Security</tt> header.</td></tr></table>", "actor-role-id", "").AddNotValidWhen(models.AAAPolicyWSSecActorRoleIDIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"au_sm_http_header": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify HTTP headers from CA Single Sign-On authentication responses. These headers are included as request or response headers based on the CA Single Sign-on header flow.", "au-sm-http-header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify HTTP headers from CA Single Sign-On authentication responses. These headers are included as request or response headers based on the CA Single Sign-on header flow.", "au-sm-http-header", "").AddNotValidWhen(models.AAAPolicyAUSMHTTPHeaderIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"az_sm_http_header": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify HTTP headers from CA Single Sign-On authorization responses. These headers are included as request or response headers based on the CA Single Sign-On header flow.", "az-sm-http-header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify HTTP headers from CA Single Sign-On authorization responses. These headers are included as request or response headers based on the CA Single Sign-On header flow.", "az-sm-http-header", "").AddNotValidWhen(models.AAAPolicyAZSMHTTPHeaderIgnoreVal.String()).String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -256,17 +256,17 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: stringdefault.StaticString("none"),
 			},
 			"external_aaa_template": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify another AAA policy to use as the template. When specified, this AAA policy overwrites the current AAA policy.", "external-aaa-template", "aaa_policy").AddRequiredWhen(models.AAAPolicyExternalAAATemplateCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify another AAA policy to use as the template. When specified, this AAA policy overwrites the current AAA policy.", "external-aaa-template", "aaa_policy").AddRequiredWhen(models.AAAPolicyExternalAAATemplateCondVal.String()).AddNotValidWhen(models.AAAPolicyExternalAAATemplateIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AAAPolicyExternalAAATemplateCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AAAPolicyExternalAAATemplateCondVal, models.AAAPolicyExternalAAATemplateIgnoreVal, false),
 				},
 			},
 			"dyn_config_custom_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>", "dyn-config-custom-url", "").AddRequiredWhen(models.AAAPolicyDynConfigCustomURLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>", "dyn-config-custom-url", "").AddRequiredWhen(models.AAAPolicyDynConfigCustomURLCondVal.String()).AddNotValidWhen(models.AAAPolicyDynConfigCustomURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AAAPolicyDynConfigCustomURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AAAPolicyDynConfigCustomURLCondVal, models.AAAPolicyDynConfigCustomURLIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

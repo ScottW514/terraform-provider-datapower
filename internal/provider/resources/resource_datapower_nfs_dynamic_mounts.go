@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &NFSDynamicMountsResource{}
@@ -90,11 +91,12 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(3),
 			},
 			"transport": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the transport protocol. The default transport protocol is TCP.", "transport", "").AddStringEnum("tcp", "udp").AddDefaultValue("tcp").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the transport protocol. The default transport protocol is TCP.", "transport", "").AddStringEnum("tcp", "udp").AddDefaultValue("tcp").AddNotValidWhen(models.NFSDynamicMountsTransportIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("tcp", "udp"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.NFSDynamicMountsTransportIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("tcp"),
 			},

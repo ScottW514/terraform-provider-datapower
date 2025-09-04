@@ -66,3 +66,5 @@ Required:
 Optional:
 
 - `data_source` (String) For custom items only, enter the name of the protocol header or the name of the variable (service, context, or system) that contains the data to be returned in the metadata XML nodeset. The provided value is the name of the element in the returned nodeset that contains the data.
+  - Required When: `meta_category`=`header`|`variable`
+  - Not Valid When: attribute is not conditionally required

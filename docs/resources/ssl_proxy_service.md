@@ -71,6 +71,7 @@ resource "datapower_ssl_proxy_service" "test" {
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: `ssl_config_type`=`proxy`
 - `ssl_config_type` (String) TLS type
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
@@ -78,9 +79,11 @@ resource "datapower_ssl_proxy_service" "test" {
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Not Valid When: `ssl_config_type`!=`server`
 - `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Not Valid When: `ssl_config_type`!=`sni`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

@@ -13,8 +13,6 @@ attributes:
   description: Specify the instance name of the specified object type. <ul><li>For
     all instances of an object class, do not specify an object name.</li><li>For a
     specific instance of an object class, specify its object name.</li></ul>
-  required_when:
-  - evaluation: logical-false
 - name: FollowReferences
   type: Bool
   default: false

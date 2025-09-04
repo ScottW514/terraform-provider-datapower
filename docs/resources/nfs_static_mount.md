@@ -61,6 +61,7 @@ resource "datapower_nfs_static_mount" "test" {
   - CLI Alias: `transport`
   - Choices: `tcp`, `udp`
   - Default value: `tcp`
+  - Not Valid When: `version`=`4`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `version` (Number) Specify the preferred NFS protocol version. Enter a value in the range 2 - 4. The default value is 3. <ul><li>If version 3 and the server only implements version 2, the client falls back to version 2.</li><li>If version 4, the remote export paths are different and prevents fallback.</li></ul>

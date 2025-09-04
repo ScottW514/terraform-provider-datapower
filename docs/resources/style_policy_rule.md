@@ -49,6 +49,7 @@ resource "datapower_style_policy_rule" "test" {
 - `non_xml_processing` (Boolean) Normally, processing is only performed on XML content. This option allows processing actions to be performed on Non-XML content as well.
   - CLI Alias: `non-xml-processing`
   - Default value: `false`
+  - Not Valid When: `unprocessed`=`true`
 - `output_format` (String) Select a compression algorithm to apply to all messages after any other processing occurs (a post-process step). All messages are compressed using the selected algorithm. The resulting archive contains only one file. This setting is independent of transport-level compression. The default is None.
   - CLI Alias: `output-filter`
   - Choices: `none`, `gzip`, `pkzip`
@@ -56,6 +57,7 @@ resource "datapower_style_policy_rule" "test" {
 - `unprocessed` (Boolean) Permit rule to pass-through data unprocessed
   - CLI Alias: `unprocessed`
   - Default value: `false`
+  - Not Valid When: `non_xml_processing`=`true`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

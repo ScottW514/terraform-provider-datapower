@@ -102,28 +102,28 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required:            true,
 			},
 			"sasl_mechanism": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.", "sasl-mechanism", "").AddStringEnum("plain", "scram-sha-256", "scram-sha-512").AddDefaultValue("plain").AddRequiredWhen(models.KafkaClusterSASLMechanismCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.", "sasl-mechanism", "").AddStringEnum("plain", "scram-sha-256", "scram-sha-512").AddDefaultValue("plain").AddRequiredWhen(models.KafkaClusterSASLMechanismCondVal.String()).AddNotValidWhen(models.KafkaClusterSASLMechanismIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("plain", "scram-sha-256", "scram-sha-512"),
-					validators.ConditionalRequiredString(models.KafkaClusterSASLMechanismCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.KafkaClusterSASLMechanismCondVal, models.KafkaClusterSASLMechanismIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("plain"),
 			},
 			"user_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").AddRequiredWhen(models.KafkaClusterUserNameCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").AddRequiredWhen(models.KafkaClusterUserNameCondVal.String()).AddNotValidWhen(models.KafkaClusterUserNameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
-					validators.ConditionalRequiredString(models.KafkaClusterUserNameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.KafkaClusterUserNameCondVal, models.KafkaClusterUserNameIgnoreVal, false),
 				},
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "password_alias").AddRequiredWhen(models.KafkaClusterPasswordAliasCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "password_alias").AddRequiredWhen(models.KafkaClusterPasswordAliasCondVal.String()).AddNotValidWhen(models.KafkaClusterPasswordAliasIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.KafkaClusterPasswordAliasCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.KafkaClusterPasswordAliasCondVal, models.KafkaClusterPasswordAliasIgnoreVal, false),
 				},
 			},
 			"autocommit": schema.BoolAttribute{
@@ -133,10 +133,10 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.KafkaClusterSSLClientCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.KafkaClusterSSLClientCondVal.String()).AddNotValidWhen(models.KafkaClusterSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.KafkaClusterSSLClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.KafkaClusterSSLClientCondVal, models.KafkaClusterSSLClientIgnoreVal, false),
 				},
 			},
 			"memory_threshold": schema.Int64Attribute{

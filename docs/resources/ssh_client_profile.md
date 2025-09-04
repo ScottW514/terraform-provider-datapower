@@ -38,26 +38,32 @@ resource "datapower_ssh_client_profile" "test" {
 - `ciphers` (List of String) Specify the SSH cipher suites to support.
   - CLI Alias: `ciphers`
   - Choices: `CHACHA20-POLY1305_AT_OPENSSH.COM`, `AES128-CTR`, `AES192-CTR`, `AES256-CTR`, `AES128-GCM_AT_OPENSSH.COM`, `AES256-GCM_AT_OPENSSH.COM`
+  - Not Valid When: `profile_usage`=`scc`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `kex_alg` (List of String) Specify the key exchange (KEX) algorithms to support.
   - CLI Alias: `kex-alg`
   - Choices: `DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256`, `ECDH-SHA2-NISTP256`, `ECDH-SHA2-NISTP384`, `ECDH-SHA2-NISTP521`, `CURVE25519-SHA256_AT_LIBSSH.ORG`
+  - Not Valid When: `profile_usage`=`scc`
 - `mac_alg` (List of String) Specify the message authentication codes (MAC) to support.
   - CLI Alias: `mac-alg`
   - Choices: `HMAC-SHA1`, `HMAC-SHA2-256`, `HMAC-SHA2-512`, `UMAC-64_AT_OPENSSH.COM`, `UMAC-128_AT_OPENSSH.COM`, `HMAC-SHA1-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-256-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-512-ETM_AT_OPENSSH.COM`, `UMAC-64-ETM_AT_OPENSSH.COM`, `UMAC-128-ETM_AT_OPENSSH.COM`
+  - Not Valid When: `profile_usage`=`scc`
 - `password_alias` (String) Password Alias
   - CLI Alias: `user-password-alias`
   - Reference to: `datapower_password_alias:id`
   - Required When: (`profile_usage`=`sftp` AND `ssh_user_authentication`=`password`)
+  - Not Valid When: ((`profile_usage`=`sftp` AND `ssh_user_authentication`!=`password`) OR `profile_usage`!=`sftp`)
 - `persistent_connection_timeout` (Number) Specify the idle duration in seconds for a persistent connection. When the connection remains idle for the specified duration, the connection is closed. Enter any value in the range 1 - 86000. The default value is 120.
   - CLI Alias: `persistent-connection-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
   - Required When: (`profile_usage`=`sftp` AND `persistent_connections`=`true`)
+  - Not Valid When: (`profile_usage`!=`sftp` OR `persistent_connections`!=`true`)
 - `persistent_connections` (Boolean) Specify whether to support persistent connections. By default, persistent connections are enabled. <ul><li>When enabled, new requests reuse the connection of a previous session without reauthentication.</li><li>When not enabled, new request must reauthenticate.</li></ul>
   - CLI Alias: `persistent-connections`
   - Default value: `true`
   - Required When: `profile_usage`=`sftp`
+  - Not Valid When: `profile_usage`!=`sftp`
 - `profile_usage` (String) Specify the usage of the profile. Only SFTP is supported.
   - CLI Alias: `profile-usage`
   - Choices: `sftp`, `scc`
@@ -68,10 +74,12 @@ resource "datapower_ssh_client_profile" "test" {
   - CLI Alias: `strict-host-key-checking`
   - Default value: `false`
   - Required When: `profile_usage`=`sftp`
+  - Not Valid When: `profile_usage`!=`sftp`
 - `user_private_key` (String) Specify the private key for public key authentication. User private keys must not be password protected.
   - CLI Alias: `user-private-key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: ((`profile_usage`=`sftp` AND `ssh_user_authentication`=`publickey`) OR `profile_usage`=`scc`)
+  - Not Valid When: ((`profile_usage`=`sftp` AND `ssh_user_authentication`!=`publickey`) OR `profile_usage`!=`sftp`)
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

@@ -35,10 +35,12 @@ resource "datapower_oauth_supported_client_group" "test" {
   - CLI Alias: `client`
   - Reference to: `datapower_oauth_supported_client:id`
   - Required When: (`customized`=`false` OR (`customized`=`true` AND `customized_type`=`custom`))
+  - Not Valid When: attribute is not conditionally required
 - `client_template` (String) <p>Specifies the OAuth client template that is used to derive the configuration parameters that are not specified in the stylesheet or GatewayScript file of the OAuth client.</p>
   - CLI Alias: `client-template`
   - Reference to: `datapower_oauth_supported_client:id`
   - Required When: (`customized`=`true` AND `customized_type`=`template`)
+  - Not Valid When: attribute is not conditionally required
 - `customized` (Boolean) Indicates whether the configuration is for a customized OAuth client group.
   - CLI Alias: `customized`
   - Default value: `false`
@@ -46,12 +48,14 @@ resource "datapower_oauth_supported_client_group" "test" {
   - CLI Alias: `customized-type`
   - Choices: `custom`, `template`
   - Default value: `custom`
+  - Not Valid When: `customized`=`false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `oauth_role` (Attributes) Identifies the roles of clients in the group. This property is mutually exclusive to the <b>Customized OAuth</b> property.
   - CLI Alias: `oauth-role` (see [below for nested schema](#nestedatt--oauth_role))
 - `template_process_url` (String) <p>Specifies the location of the stylesheet or GatewayScript file that defines the OAuth client. You can define parts of the configuration parameters in the stylesheet or GatewayScript file and then specify an OAuth client template to derive the remaining information. Note that the stylesheet or GatewayScript file must at least provide the "client-id" node. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>The stylesheet or GatewayScript file must follow the guidelines when it returns the information: <ul><li>The stylesheet or GatewayScript file must return the &lt;client-id> element.</li><li>If the &lt;customized> element value is set to "on", the &lt;customized-process-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;customized> element value is set to "on" in the client template, the &lt;customized-process-url> element cannot unset this value.</li><li>If the &lt;use-validation-url> element value is set to "on", the &lt;validation-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-scope-check> element value is set to "on", the &lt;scope-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-resource-owner> element value is set to "on", the &lt;resource-owner-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;role> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;client-type> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;az-grant> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;az-grant> element value is set to "+code+" or "+token+", the &lt;local-az-page-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;caching> element value is set to "custom", the &lt;additional-oauth-processing-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;refresh-token-allowed> is set to a non-zero value, the &lt;refresh-token-lifetime> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;check-client-credential> element value is set to "on", the &lt;client-authen-method> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method> element value is set to "secret", the &lt;client-secret> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method> element value is set to "ssl", the &lt;client-valcred> element value must be provided by either the stylesheet or GatewayScript file or the template.</li></ul></p>
   - CLI Alias: `template-process-url`
   - Required When: (`customized`=`true` AND `customized_type`=`template`)
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) Specifies a brief comment that describes the configuration.
   - CLI Alias: `summary`
 

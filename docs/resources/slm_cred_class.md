@@ -37,19 +37,23 @@ resource "datapower_slm_cred_class" "test" {
   - Choices: `per-extracted-value`, `exact-match`, `regexp-match`
   - Default value: `per-extracted-value`
   - Required When: `cred_type`!=`custom-stylesheet`
+  - Not Valid When: attribute is not conditionally required
 - `cred_type` (String) Specify the manner to obtain the credentials (user identity) for each transaction. The default value is mapped credentials from an AAA action.
   - CLI Alias: `type`
   - Choices: `aaa-mapped-credential`, `aaa-username`, `mq-application`, `client-ip`, `request-header`, `ip-from-header`, `custom-stylesheet`
   - Default value: `aaa-mapped-credential`
 - `cred_value` (List of String) Credential value
   - CLI Alias: `value`
+  - Not Valid When: (`cred_match_type`!=`exact-match`|`regexp-match` OR `cred_type`=`custom-stylesheet`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `header` (String) Request header
   - CLI Alias: `header`
   - Required When: `cred_type`=`ip-from-header`|`request-header`
+  - Not Valid When: attribute is not conditionally required
 - `stylesheet` (String) Custom stylesheet
   - CLI Alias: `stylesheet`
   - Required When: `cred_type`=`custom-stylesheet`
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

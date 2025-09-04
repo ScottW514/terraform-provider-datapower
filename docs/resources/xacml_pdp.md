@@ -39,6 +39,7 @@ resource "datapower_xacml_pdp" "test" {
   - CLI Alias: `combining-alg`
   - Choices: `first-applicable`, `deny-overrides`, `permit-overrides`, `only-one-applicable`
   - Required When: `equal_policies`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `dependent_policy` (List of String) Some of the XACML Policies/Policy-Sets are indirectly needed when the PDP evaluates a request. They are called Dependent Policy Files. Specify their URLs with this setting.
   - CLI Alias: `dependent-policy`
@@ -50,6 +51,7 @@ resource "datapower_xacml_pdp" "test" {
 - `general_policy` (String) The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.
   - CLI Alias: `general-policy`
   - Required When: `equal_policies`=`false`
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

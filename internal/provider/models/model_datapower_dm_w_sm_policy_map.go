@@ -88,7 +88,7 @@ func GetDmWSMPolicyMapDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 				Computed:            true,
 			},
 			"wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.", "", "").AddNotValidWhen(DmWSMPolicyMapWSDLComponentValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"match": DataSourceSchema.StringAttribute{
@@ -100,7 +100,7 @@ func GetDmWSMPolicyMapDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 				Computed:            true,
 			},
 			"subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.", "", "").AddRequiredWhen(DmWSMPolicyMapSubscriptionCondVal.String()).AddNotValidWhen(DmWSMPolicyMapSubscriptionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"wsdl_fragment_id": DataSourceSchema.StringAttribute{
@@ -124,7 +124,7 @@ func GetDmWSMPolicyMapResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("all"),
 			},
 			"wsdl_component_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.", "", "").AddNotValidWhen(DmWSMPolicyMapWSDLComponentValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"match": ResourceSchema.StringAttribute{
@@ -136,10 +136,10 @@ func GetDmWSMPolicyMapResourceSchema() ResourceSchema.NestedAttributeObject {
 				Required:            true,
 			},
 			"subscription": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.", "", "").AddRequiredWhen(DmWSMPolicyMapSubscriptionCondVal.String()).AddNotValidWhen(DmWSMPolicyMapSubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSMPolicyMapSubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSMPolicyMapSubscriptionCondVal, DmWSMPolicyMapSubscriptionIgnoreVal, false),
 				},
 			},
 			"wsdl_fragment_id": ResourceSchema.StringAttribute{

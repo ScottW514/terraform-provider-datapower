@@ -65,7 +65,7 @@ var CookieAttributePolicyIntervalCondVal = validators.Evaluation{
 	Attribute:   "cookie_attribute",
 	AttrType:    "DmCookieAttribute",
 	AttrDefault: "",
-	Value:       []string{"max-age", "expires"},
+	Value:       []string{"max_age", "expires"},
 }
 var CookieAttributePolicyCustomAttributeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",

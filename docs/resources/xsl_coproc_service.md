@@ -47,10 +47,12 @@ resource "datapower_xsl_coproc_service" "test" {
   - Range: `10`-`250`
   - Default value: `25`
   - Required When: `debug_mode`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `debug_mode` (String) - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
-- `debug_trigger` (Attributes List) - CLI Alias: `debug-trigger` (see [below for nested schema](#nestedatt--debug_trigger))
+- `debug_trigger` (Attributes List) - CLI Alias: `debug-trigger`
+  - Not Valid When: `debug_mode`!=`true` (see [below for nested schema](#nestedatt--debug_trigger))
 - `default_param_namespace` (String) - CLI Alias: `default-param-namespace`
   - Default value: `http://www.datapower.com/param/config`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
@@ -65,11 +67,13 @@ resource "datapower_xsl_coproc_service" "test" {
   - Default value: `normal`
 - `ssl_server` (String) - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Not Valid When: `ssl_server_config_type`!=`server`
 - `ssl_server_config_type` (String) - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
 - `ssl_sni_server` (String) - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Not Valid When: `ssl_server_config_type`!=`sni`
 - `style_policy_rule` (String) - CLI Alias: `stylesheet-rule`
   - Reference to: `datapower_style_policy_rule:id`
 - `url_rewrite_policy` (String) - CLI Alias: `urlrewrite-policy`

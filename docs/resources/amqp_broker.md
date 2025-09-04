@@ -51,6 +51,7 @@ resource "datapower_amqp_broker" "test" {
   - CLI Alias: `long-retry-interval`
   - Range: `1`-`86400`
   - Default value: `600`
+  - Not Valid When: `auto_retry`!=`true`
 - `maximum_frame_size` (Number) Specify the maximum frame size in bytes to allow. Frames Frames that are larger are rejected. When rejected, the connection is closed. Enter a value in the range 512 - 104857600. The default value is 104857600.
   - CLI Alias: `maximum-frame-size`
   - Range: `512`-`104857600`
@@ -59,6 +60,7 @@ resource "datapower_amqp_broker" "test" {
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
   - Required When: `authorization`=`plain`
+  - Not Valid When: `authorization`!=`plain`
 - `port` (Number) Port
   - CLI Alias: `port`
   - Range: `1`-`65535`
@@ -67,19 +69,23 @@ resource "datapower_amqp_broker" "test" {
   - CLI Alias: `reporting-interval`
   - Range: `1`-`86400`
   - Default value: `10`
+  - Not Valid When: `auto_retry`!=`true`
 - `retry_attempts` (Number) Specify the number of attempts for a failed connection to the remote AMQP server. After the number of attempts is reached, the long retry interval is used. Enter a value in the range 0 - 65535. The default value is 6. The special value of 0 disables the long interval, where the retry interval is used forever.
   - CLI Alias: `retry-attempts`
   - Default value: `6`
+  - Not Valid When: `auto_retry`!=`true`
 - `retry_interval` (Number) Specify the interval in seconds to wait before attempting to reestablish a failed connection. After the number of attempts is reached, attempts to reestablish a failed connection use the interval that is defined by the long retry interval. Enter a value in the range 1 - 65535. The default value is 10. <p>This setting does not affect attempts over an established connection.</p>
   - CLI Alias: `retry-interval`
   - Range: `1`-`86400`
   - Default value: `10`
+  - Not Valid When: `auto_retry`!=`true`
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
 - `user_name` (String) Username
   - CLI Alias: `user`
   - Required When: `authorization`=`plain`
+  - Not Valid When: `authorization`!=`plain`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `xml_manager` (String) Specify the XML manager to control access to the remote AMQP server. The XML manager obtains and manages documents.

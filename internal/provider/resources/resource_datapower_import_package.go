@@ -110,7 +110,7 @@ func (r *ImportPackageResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(true),
 			},
 			"destination_domain": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Destination domain", "destination-domain", "domain").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Destination domain", "destination-domain", "domain").AddNotValidWhen(models.ImportPackageDestinationDomainIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"deployment_policy": schema.StringAttribute{

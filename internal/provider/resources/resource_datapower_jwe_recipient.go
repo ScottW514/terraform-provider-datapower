@@ -94,17 +94,17 @@ func (r *JWERecipientResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("RSA1_5"),
 			},
 			"sskey": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").AddRequiredWhen(models.JWERecipientSSKeyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "crypto_sskey").AddRequiredWhen(models.JWERecipientSSKeyCondVal.String()).AddNotValidWhen(models.JWERecipientSSKeyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.JWERecipientSSKeyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.JWERecipientSSKeyCondVal, models.JWERecipientSSKeyIgnoreVal, false),
 				},
 			},
 			"certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Certificate.", "cert", "crypto_certificate").AddRequiredWhen(models.JWERecipientCertificateCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Certificate.", "cert", "crypto_certificate").AddRequiredWhen(models.JWERecipientCertificateCondVal.String()).AddNotValidWhen(models.JWERecipientCertificateIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.JWERecipientCertificateCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.JWERecipientCertificateCondVal, models.JWERecipientCertificateIgnoreVal, false),
 				},
 			},
 			"unprotected_header": schema.ListNestedAttribute{

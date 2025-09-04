@@ -126,12 +126,12 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("detect"),
 			},
 			"graphql_send_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.", "graphql-send-type", "").AddStringEnum("detect", "graphql", "json").AddDefaultValue("detect").AddRequiredWhen(models.AssemblyActionInvokeGraphQLSendTypeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.", "graphql-send-type", "").AddStringEnum("detect", "graphql", "json").AddDefaultValue("detect").AddRequiredWhen(models.AssemblyActionInvokeGraphQLSendTypeCondVal.String()).AddNotValidWhen(models.AssemblyActionInvokeGraphQLSendTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("detect", "graphql", "json"),
-					validators.ConditionalRequiredString(models.AssemblyActionInvokeGraphQLSendTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.AssemblyActionInvokeGraphQLSendTypeCondVal, models.AssemblyActionInvokeGraphQLSendTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("detect"),
 			},
@@ -151,16 +151,16 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("Protocol"),
 			},
 			"time_to_live": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds for documents in the cache. The default value is 900.", "ttl", "").AddDefaultValue("900").AddRequiredWhen(models.AssemblyActionInvokeTimeToLiveCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds for documents in the cache. The default value is 900.", "ttl", "").AddDefaultValue("900").AddRequiredWhen(models.AssemblyActionInvokeTimeToLiveCondVal.String()).AddNotValidWhen(models.AssemblyActionInvokeTimeToLiveIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(models.AssemblyActionInvokeTimeToLiveCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.AssemblyActionInvokeTimeToLiveCondVal, models.AssemblyActionInvokeTimeToLiveIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(900),
 			},
 			"cache_unsafe_response": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to cache responses to POST and PUT requests when the cache policy type is set to time to live. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to cache responses to POST and PUT requests when the cache policy type is set to time to live. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").AddNotValidWhen(models.AssemblyActionInvokeCacheUnsafeResponseIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -185,7 +185,7 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("HTTP/1.1"),
 			},
 			"http2_required": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether an HTTP/2 connection is required when connecting to the server. Only applicable when the HTTP version to the server is set to HTTP/2 and the connection uses TLS. The default value is off.", "http2-required", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether an HTTP/2 connection is required when connecting to the server. Only applicable when the HTTP version to the server is set to HTTP/2 and the connection uses TLS. The default value is off.", "http2-required", "").AddDefaultValue("false").AddNotValidWhen(models.AssemblyActionInvokeHTTP2RequiredIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

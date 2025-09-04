@@ -140,20 +140,20 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(5),
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddRequiredWhen(models.POPPollerSourceProtocolHandlerSSLClientConfigTypeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddRequiredWhen(models.POPPollerSourceProtocolHandlerSSLClientConfigTypeCondVal.String()).AddNotValidWhen(models.POPPollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
-					validators.ConditionalRequiredString(models.POPPollerSourceProtocolHandlerSSLClientConfigTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.POPPollerSourceProtocolHandlerSSLClientConfigTypeCondVal, models.POPPollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.POPPollerSourceProtocolHandlerSSLClientCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.POPPollerSourceProtocolHandlerSSLClientCondVal.String()).AddNotValidWhen(models.POPPollerSourceProtocolHandlerSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.POPPollerSourceProtocolHandlerSSLClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.POPPollerSourceProtocolHandlerSSLClientCondVal, models.POPPollerSourceProtocolHandlerSSLClientIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

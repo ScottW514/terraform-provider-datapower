@@ -93,11 +93,11 @@ func GetDmWSOperationReliableMessagingDataSourceSchema() DataSourceSchema.Nested
 				Computed:            true,
 			},
 			"reliable_messaging_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationReliableMessagingReliableMessagingWSDLComponentValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"reliable_messaging_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationReliableMessagingReliableMessagingSubscriptionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"reliable_messaging_fragment_id": DataSourceSchema.StringAttribute{
@@ -131,14 +131,14 @@ func GetDmWSOperationReliableMessagingResourceSchema() ResourceSchema.NestedAttr
 				Default: stringdefault.StaticString("all"),
 			},
 			"reliable_messaging_wsdl_component_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationReliableMessagingReliableMessagingWSDLComponentValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"reliable_messaging_subscription": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationReliableMessagingReliableMessagingSubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal, DmWSOperationReliableMessagingReliableMessagingSubscriptionIgnoreVal, false),
 				},
 			},
 			"reliable_messaging_fragment_id": ResourceSchema.StringAttribute{

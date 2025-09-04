@@ -105,14 +105,14 @@ func (r *WebB2BViewerResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server profile", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server profile", "ssl-server", "ssl_server_profile").AddNotValidWhen(models.WebB2BViewerSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.WebB2BViewerSSLSNIServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS SNI server profile", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.WebB2BViewerSSLSNIServerCondVal.String()).AddNotValidWhen(models.WebB2BViewerSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.WebB2BViewerSSLSNIServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.WebB2BViewerSSLSNIServerCondVal, models.WebB2BViewerSSLSNIServerIgnoreVal, false),
 				},
 			},
 			"local_address": schema.StringAttribute{

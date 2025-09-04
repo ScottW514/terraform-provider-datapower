@@ -32,12 +32,14 @@ resource "datapower_quota_enforcement_server" "test" {
 - `enable_ssl` (Boolean) Indicates whether TLS is used to secure connection among the peers of the peer group. By default, the TLS is enabled.
   - CLI Alias: `enable-ssl`
   - Default value: `true`
+  - Not Valid When: `enable_peer_group`=`false`
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
 - `ip_address` (String) <p>Indicates the IP address of the DataPower Gateway for other peers to connect to. The IP address can be the IP address on any interface of the DataPower Gateway and must be accessible by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::. This IP address uniquely identifies the DataPower Gateway.</p><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address.</p>
   - CLI Alias: `ip-address`
   - Required When: `enable_peer_group`=`true`
+  - Not Valid When: `enable_peer_group`=`false`
 - `monitor_port` (Number) Indicates the listening port for operational state monitoring for the quota enforcement server. The default port is 26379.
   - CLI Alias: `monitor-port`
   - Default value: `26379`
@@ -46,11 +48,13 @@ resource "datapower_quota_enforcement_server" "test" {
   - Reference to: `datapower_password_alias:id`
 - `peers` (List of String) <p>Specifies peers of the DataPower Gateway in the peer group. The DataPower Gateway connects to each peer in the order in which peers are added in the list. It is not necessary to specify all peers in the Peers list.</p><ul><li>When the DataPower Gateway connects to no peer in the list, this DataPower Gateway is the first active server and joins the peer group as the primary node.</li><li>When the DataPower Gateway connects to any peer in the list, it joins the peer group as a replica.</li></ul><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address. Aliasing can help when you move configurations among appliances.</p><p>Note: Do not specify the IP address or hostname of this DataPower Gateway.</p>
   - CLI Alias: `peer`
+  - Not Valid When: `enable_peer_group`=`false`
 - `priority` (Number) <p>Indicates the priority that is used to decide which replica is promoted to the primary node when failover occurs.</p><p>Enter a value in range 0 - 255. The default value is 100. The replica with the lowest priority number is promoted. A replica with the value of 0 can never be promoted.</p>
   - CLI Alias: `priority`
   - Range: `0`-`255`
   - Default value: `100`
   - Required When: `enable_peer_group`=`true`
+  - Not Valid When: `enable_peer_group`=`false`
 - `raid_volume` (String) <p>Specifies whether data storage is persistent or in-memory. <ul><li>For persistent storage, select the RAID volume that must be <tt>raid0</tt> .</li><li>For in-memory storage, do not select the RAID volume.</li></ul></p>
   - CLI Alias: `raid-volume`
   - Reference to: `datapower_raid_volume:id`
@@ -61,13 +65,16 @@ resource "datapower_quota_enforcement_server" "test" {
   - CLI Alias: `ssl-cert`
   - Reference to: `datapower_crypto_certificate:id`
   - Required When: (`enable_peer_group`=`true` AND `enable_ssl`=`true`)
+  - Not Valid When: (`enable_peer_group`=`false` OR `enable_ssl`=`false`)
 - `ssl_crypto_key` (String) Indicates the key alias for the DataPower Gateway to authenticate a peer of the DataPower Gateway during the TLS handshake.
   - CLI Alias: `ssl-key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: (`enable_peer_group`=`true` AND `enable_ssl`=`true`)
+  - Not Valid When: (`enable_peer_group`=`false` OR `enable_ssl`=`false`)
 - `strict_mode` (Boolean) Based on your requirements for quota enforcement, enable or disable strict mode. By default, the strict mode is enabled.
   - CLI Alias: `strict-mode`
   - Default value: `true`
+  - Not Valid When: `enable_peer_group`=`false`
 - `user_summary` (String) Specifies a brief descriptive summary for the configuration.
   - CLI Alias: `summary`
 

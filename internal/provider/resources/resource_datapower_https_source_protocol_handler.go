@@ -120,7 +120,7 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Default:             booldefault.StaticBool(true),
 			},
 			"max_persistent_connections_reuse": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times that a client can reuse a persistent connection. When this count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response, and the TCP connection is closed. The default value is 0, which means unlimited reuse.", "max-persistent-reuse", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times that a client can reuse a persistent connection. When this count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response, and the TCP connection is closed. The default value is 0, which means unlimited reuse.", "max-persistent-reuse", "").AddNotValidWhen(models.HTTPSSourceProtocolHandlerMaxPersistentConnectionsReuseIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"allow_compression": schema.BoolAttribute{
@@ -130,17 +130,17 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_web_socket_upgrade": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.", "websocket-upgrade", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.", "websocket-upgrade", "").AddDefaultValue("false").AddNotValidWhen(models.HTTPSSourceProtocolHandlerAllowWebSocketUpgradeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"web_socket_idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.", "websocket-idle-timeout", "").AddIntegerRange(0, 86400).AddRequiredWhen(models.HTTPSSourceProtocolHandlerWebSocketIdleTimeoutCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.", "websocket-idle-timeout", "").AddIntegerRange(0, 86400).AddRequiredWhen(models.HTTPSSourceProtocolHandlerWebSocketIdleTimeoutCondVal.String()).AddNotValidWhen(models.HTTPSSourceProtocolHandlerWebSocketIdleTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
-					validators.ConditionalRequiredInt64(models.HTTPSSourceProtocolHandlerWebSocketIdleTimeoutCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(models.HTTPSSourceProtocolHandlerWebSocketIdleTimeoutCondVal, models.HTTPSSourceProtocolHandlerWebSocketIdleTimeoutIgnoreVal, false),
 				},
 			},
 			"max_url_len": schema.Int64Attribute{
@@ -200,17 +200,17 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.", "ssl-server", "ssl_server_profile").AddRequiredWhen(models.HTTPSSourceProtocolHandlerSSLServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.", "ssl-server", "ssl_server_profile").AddRequiredWhen(models.HTTPSSourceProtocolHandlerSSLServerCondVal.String()).AddNotValidWhen(models.HTTPSSourceProtocolHandlerSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.HTTPSSourceProtocolHandlerSSLServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.HTTPSSourceProtocolHandlerSSLServerCondVal, models.HTTPSSourceProtocolHandlerSSLServerIgnoreVal, false),
 				},
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.HTTPSSourceProtocolHandlerSSLSNIServerCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(models.HTTPSSourceProtocolHandlerSSLSNIServerCondVal.String()).AddNotValidWhen(models.HTTPSSourceProtocolHandlerSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.HTTPSSourceProtocolHandlerSSLSNIServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.HTTPSSourceProtocolHandlerSSLSNIServerCondVal, models.HTTPSSourceProtocolHandlerSSLSNIServerIgnoreVal, false),
 				},
 			},
 			"http2_max_streams": schema.Int64Attribute{

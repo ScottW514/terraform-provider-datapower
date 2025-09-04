@@ -170,17 +170,17 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.XSLCoprocServiceDebugHistoryCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.XSLCoprocServiceDebugHistoryCondVal.String()).AddNotValidWhen(models.XSLCoprocServiceDebugHistoryIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 250),
-					validators.ConditionalRequiredInt64(models.XSLCoprocServiceDebugHistoryCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.XSLCoprocServiceDebugHistoryCondVal, models.XSLCoprocServiceDebugHistoryIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-trigger", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-trigger", "").AddNotValidWhen(models.XSLCoprocServiceDebugTriggerIgnoreVal.String()).String,
 				NestedObject:        models.GetDmMSDebugTriggerTypeResourceSchema(),
 				Optional:            true,
 			},
@@ -194,11 +194,11 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-server", "ssl_server_profile").AddNotValidWhen(models.XSLCoprocServiceSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_sni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-sni-server", "ssl_sni_server_profile").AddNotValidWhen(models.XSLCoprocServiceSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{

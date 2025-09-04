@@ -47,6 +47,7 @@ resource "datapower_import_package" "test" {
 - `destination_domain` (String) Destination domain
   - CLI Alias: `destination-domain`
   - Reference to: `datapower_domain:id`
+  - Not Valid When: attribute is not conditionally required
 - `import_format` (String) Specify the format of the import package. The default value is ZIP.
   - CLI Alias: `import-format`
   - Choices: `ZIP`, `XML`

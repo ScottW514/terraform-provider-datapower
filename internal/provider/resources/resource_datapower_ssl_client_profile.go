@@ -136,10 +136,10 @@ func (r *SSLClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(true),
 			},
 			"valcred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials", "valcred", "crypto_val_cred").AddRequiredWhen(models.SSLClientProfileValcredCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials", "valcred", "crypto_val_cred").AddRequiredWhen(models.SSLClientProfileValcredCondVal.String()).AddNotValidWhen(models.SSLClientProfileValcredIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SSLClientProfileValcredCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SSLClientProfileValcredCondVal, models.SSLClientProfileValcredIgnoreVal, false),
 				},
 			},
 			"caching": schema.BoolAttribute{
@@ -149,20 +149,22 @@ func (r *SSLClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(true),
 			},
 			"cache_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that TLS sessions remain in the session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.", "cache-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that TLS sessions remain in the session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.", "cache-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("300").AddNotValidWhen(models.SSLClientProfileCacheTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLClientProfileCacheTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(300),
 			},
 			"cache_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of entries of the session cache. Enter a value in the range 1 - 500000. The default value is 100.", "cache-size", "").AddIntegerRange(1, 500000).AddDefaultValue("100").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of entries of the session cache. Enter a value in the range 1 - 500000. The default value is 100.", "cache-size", "").AddIntegerRange(1, 500000).AddDefaultValue("100").AddNotValidWhen(models.SSLClientProfileCacheSizeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 500000),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLClientProfileCacheSizeIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(100),
 			},
@@ -185,16 +187,16 @@ func (r *SSLClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				})),
 			},
 			"use_custom_sni_hostname": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use a custom server name in the SNI extension in the TLS client <tt>hello</tt> message. By default, the hostname of the target is used in the SNI extension.", "use-custom-sni-hostname", "").AddDefaultValue("false").AddRequiredWhen(models.SSLClientProfileUseCustomSNIHostnameCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use a custom server name in the SNI extension in the TLS client <tt>hello</tt> message. By default, the hostname of the target is used in the SNI extension.", "use-custom-sni-hostname", "").AddDefaultValue("false").AddRequiredWhen(models.SSLClientProfileUseCustomSNIHostnameCondVal.String()).AddNotValidWhen(models.SSLClientProfileUseCustomSNIHostnameIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"custom_sni_hostname": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom SNI hostname", "custom-sni-hostname", "").AddRequiredWhen(models.SSLClientProfileCustomSNIHostnameCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom SNI hostname", "custom-sni-hostname", "").AddRequiredWhen(models.SSLClientProfileCustomSNIHostnameCondVal.String()).AddNotValidWhen(models.SSLClientProfileCustomSNIHostnameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SSLClientProfileCustomSNIHostnameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SSLClientProfileCustomSNIHostnameCondVal, models.SSLClientProfileCustomSNIHostnameIgnoreVal, false),
 				},
 			},
 			"validate_hostname": schema.BoolAttribute{
@@ -205,7 +207,7 @@ func (r *SSLClientProfileResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"hostname_validation_flags": models.GetDmSSLHostnameValidationFlagsResourceSchema("Specify the flags that fine tune the validation methods and settings during the handshake. The default behavior uses the subject DN only when the <tt>Subject Alternative Name</tt> (SAN) extension contains no DNS name.", "hostname-validation-flags", "", false),
 			"hostname_validation_fail_on_error": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to terminate the handshake when hostname validation fails or to ignore the failure, log an event, and continue with server certificate validation. The default behavior is to ignore the failure, log an event, and continue with any configured server certificate validation.", "hostname-validation-fail", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to terminate the handshake when hostname validation fails or to ignore the failure, log an event, and continue with server certificate validation. The default behavior is to ignore the failure, log an event, and continue with any configured server certificate validation.", "hostname-validation-fail", "").AddDefaultValue("false").AddNotValidWhen(models.SSLClientProfileHostnameValidationFailOnErrorIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

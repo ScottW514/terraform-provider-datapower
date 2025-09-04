@@ -92,13 +92,19 @@ Read-Only:
 - `ssl_server` (String) Specify the TLS server profile to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
+  - Required When: (`use_ssl`=`true` AND `ssl_server_config_type`=`server`)
+  - Not Valid When: attribute is not conditionally required
 - `ssl_server_config_type` (String) Specify the TLS profile type to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
+  - Required When: `use_ssl`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `ssl_sni_server` (String) Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
+  - Required When: (`use_ssl`=`true` AND `ssl_server_config_type`=`sni`)
+  - Not Valid When: attribute is not conditionally required
 - `use_ssl` (Boolean) Indicate whether to use the assigned TLS profile to control connections to this TCP port. When enabled, the service expects HTTPS requests on this port.
   - CLI Alias: `use-ssl`
   - Default value: `false`

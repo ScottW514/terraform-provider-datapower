@@ -81,22 +81,22 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 				Default:             booldefault.StaticBool(true),
 			},
 			"all_system_warning_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-system-warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").AddRequiredWhen(models.FileSystemUsageMonitorAllSystemWarningThresholdCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-system-warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").AddRequiredWhen(models.FileSystemUsageMonitorAllSystemWarningThresholdCondVal.String()).AddNotValidWhen(models.FileSystemUsageMonitorAllSystemWarningThresholdIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
-					validators.ConditionalRequiredInt64(models.FileSystemUsageMonitorAllSystemWarningThresholdCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.FileSystemUsageMonitorAllSystemWarningThresholdCondVal, models.FileSystemUsageMonitorAllSystemWarningThresholdIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(75),
 			},
 			"all_system_critical_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-system-critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").AddRequiredWhen(models.FileSystemUsageMonitorAllSystemCriticalThresholdCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-system-critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").AddRequiredWhen(models.FileSystemUsageMonitorAllSystemCriticalThresholdCondVal.String()).AddNotValidWhen(models.FileSystemUsageMonitorAllSystemCriticalThresholdIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
-					validators.ConditionalRequiredInt64(models.FileSystemUsageMonitorAllSystemCriticalThresholdCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(models.FileSystemUsageMonitorAllSystemCriticalThresholdCondVal, models.FileSystemUsageMonitorAllSystemCriticalThresholdIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(90),
 			},

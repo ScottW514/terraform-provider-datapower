@@ -100,7 +100,7 @@ func GetDmLBGroupAffinityDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"affinity_mode": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").AddDefaultValue("activeConditional").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").AddDefaultValue("activeConditional").AddNotValidWhen(DmLBGroupAffinityAffinityModeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"insertion_attributes": GetDmInsertionAttributesDataSourceSchema("Specifies the attributes to insert in the cookie in the response when active or active-conditional session affinity is required.", "i-cookie-attributes", ""),
@@ -148,11 +148,12 @@ func GetDmLBGroupAffinityResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"affinity_mode": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").AddDefaultValue("activeConditional").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").AddDefaultValue("activeConditional").AddNotValidWhen(DmLBGroupAffinityAffinityModeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("active", "activeConditional"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmLBGroupAffinityAffinityModeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("activeConditional"),
 			},

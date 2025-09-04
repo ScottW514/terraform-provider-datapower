@@ -56,6 +56,7 @@ resource "datapower_zos_nss_client" "test" {
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
   - Required When: `ssl_client_config_type`=`client`
+  - Not Valid When: attribute is not conditionally required
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and the NSS server.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`

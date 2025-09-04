@@ -3,12 +3,9 @@ model_only: true
 attributes:
 - name: ProxyPolicyEnable
   type: Bool
-  required: true
-  default: false
   description: Specify whether to enable a proxy to connect to API Manager.
 - name: RemoteAddress
   type: String
-  required: true
   description: Specify the hostname or IP address of the proxy to connect to the API
     Manager endpoint.
   example: localhost
@@ -25,7 +22,6 @@ attributes:
     - false
 - name: RemotePort
   type: Int64
-  required: true
   description: Specify the listening port on the proxy to connect to the API Manager
     endpoint.
   example: 8080

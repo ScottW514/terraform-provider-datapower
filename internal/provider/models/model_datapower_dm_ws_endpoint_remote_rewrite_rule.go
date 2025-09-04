@@ -161,11 +161,11 @@ func GetDmWSEndpointRemoteRewriteRuleDataSourceSchema() DataSourceSchema.NestedA
 				Computed:            true,
 			},
 			"remote_endpoint_hostname": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.", "remote-endpoint-hostname", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.", "remote-endpoint-hostname", "").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteEndpointHostnameCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteEndpointHostnameIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"remote_endpoint_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteEndpointPortIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"remote_endpoint_uri": DataSourceSchema.StringAttribute{
@@ -173,19 +173,19 @@ func GetDmWSEndpointRemoteRewriteRuleDataSourceSchema() DataSourceSchema.NestedA
 				Computed:            true,
 			},
 			"remote_mqqm": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.", "remote-mq-qm", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.", "remote-mq-qm", "").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteMQQMCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteMQQMIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"remote_mq_manager": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.", "remote-idg-mq-qm", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.", "remote-idg-mq-qm", "").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteMQManagerCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteMQManagerIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"remote_tibco_ems": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.", "remote-tibems-server", "tibco_ems_server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.", "remote-tibems-server", "tibco_ems_server").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteTibcoEMSCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteTibcoEMSIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"remote_web_sphere_jms": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.", "remote-wasjms-server", "web_sphere_jms_server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.", "remote-wasjms-server", "web_sphere_jms_server").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteWebSphereJMSCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteWebSphereJMSIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -211,14 +211,14 @@ func GetDmWSEndpointRemoteRewriteRuleResourceSchema() ResourceSchema.NestedAttri
 				Default: stringdefault.StaticString("default"),
 			},
 			"remote_endpoint_hostname": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.", "remote-endpoint-hostname", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.", "remote-endpoint-hostname", "").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteEndpointHostnameCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteEndpointHostnameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteEndpointHostnameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteEndpointHostnameCondVal, DmWSEndpointRemoteRewriteRuleRemoteEndpointHostnameIgnoreVal, false),
 				},
 			},
 			"remote_endpoint_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteEndpointPortIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"remote_endpoint_uri": ResourceSchema.StringAttribute{
@@ -226,31 +226,31 @@ func GetDmWSEndpointRemoteRewriteRuleResourceSchema() ResourceSchema.NestedAttri
 				Optional:            true,
 			},
 			"remote_mqqm": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.", "remote-mq-qm", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.", "remote-mq-qm", "").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteMQQMCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteMQQMIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteMQQMCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteMQQMCondVal, DmWSEndpointRemoteRewriteRuleRemoteMQQMIgnoreVal, false),
 				},
 			},
 			"remote_mq_manager": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.", "remote-idg-mq-qm", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.", "remote-idg-mq-qm", "").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteMQManagerCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteMQManagerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteMQManagerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteMQManagerCondVal, DmWSEndpointRemoteRewriteRuleRemoteMQManagerIgnoreVal, false),
 				},
 			},
 			"remote_tibco_ems": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.", "remote-tibems-server", "tibco_ems_server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.", "remote-tibems-server", "tibco_ems_server").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteTibcoEMSCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteTibcoEMSIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteTibcoEMSCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteTibcoEMSCondVal, DmWSEndpointRemoteRewriteRuleRemoteTibcoEMSIgnoreVal, false),
 				},
 			},
 			"remote_web_sphere_jms": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.", "remote-wasjms-server", "web_sphere_jms_server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.", "remote-wasjms-server", "web_sphere_jms_server").AddRequiredWhen(DmWSEndpointRemoteRewriteRuleRemoteWebSphereJMSCondVal.String()).AddNotValidWhen(DmWSEndpointRemoteRewriteRuleRemoteWebSphereJMSIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteWebSphereJMSCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSEndpointRemoteRewriteRuleRemoteWebSphereJMSCondVal, DmWSEndpointRemoteRewriteRuleRemoteWebSphereJMSIgnoreVal, false),
 				},
 			},
 		},

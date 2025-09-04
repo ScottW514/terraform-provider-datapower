@@ -89,11 +89,11 @@ func GetDmWSOperationConformancePolicyDataSourceSchema() DataSourceSchema.Nested
 				Computed:            true,
 			},
 			"conformance_policy_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationConformancePolicyConformancePolicyWSDLComponentValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"conformance_policy_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationConformancePolicyConformancePolicySubscriptionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"conformance_policy_fragment_id": DataSourceSchema.StringAttribute{
@@ -121,14 +121,14 @@ func GetDmWSOperationConformancePolicyResourceSchema() ResourceSchema.NestedAttr
 				Default: stringdefault.StaticString("all"),
 			},
 			"conformance_policy_wsdl_component_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationConformancePolicyConformancePolicyWSDLComponentValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"conformance_policy_subscription": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationConformancePolicyConformancePolicySubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal, DmWSOperationConformancePolicyConformancePolicySubscriptionIgnoreVal, false),
 				},
 			},
 			"conformance_policy_fragment_id": ResourceSchema.StringAttribute{

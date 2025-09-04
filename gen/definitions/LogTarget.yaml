@@ -454,23 +454,25 @@ attributes:
     of the remote port of the TLS proxy service.
   cli_alias: remote-port
   ignored_when:
-  - evaluation: logical-and
+  - evaluation: logical-or
     conditions:
-    - evaluation: property-value-in-list
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: Type
+        value:
+        - file
+      - evaluation: property-value-not-in-list
+        attribute: ArchiveMode
+        value:
+        - upload
+    - evaluation: property-value-not-in-list
       attribute: Type
       value:
+      - syslog
+      - syslog-tcp
+      - smtp
       - file
-    - evaluation: property-value-not-in-list
-      attribute: ArchiveMode
-      value:
-      - upload
-  - evaluation: property-value-not-in-list
-    attribute: Type
-    value:
-    - syslog
-    - syslog-tcp
-    - smtp
-    - file
 - name: RemoteLogin
   type: String
   description: Remote login

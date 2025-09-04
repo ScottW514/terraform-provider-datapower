@@ -45,6 +45,7 @@ resource "datapower_config_sequence" "test" {
   - CLI Alias: `output-location`
   - Default value: `logtemp:///`
   - Required When: `use_output_location`=`true`
+  - Not Valid When: `use_output_location`=`false`
 - `result_name_pattern` (String) Specify the PCRE pattern to name the result file. This pattern normally has a back-reference to the base input file name. For example, when input files are <tt>NNNNNN.input</tt> and the wanted result file name is <tt>NNNNNN.result</tt> , the pattern is <tt>"$1.result"</tt> .
   - CLI Alias: `result-name-pattern`
   - Default value: `$1.log`

@@ -46,6 +46,7 @@ resource "datapower_ssh_server_profile" "test" {
   - Choices: `HMAC-SHA1`, `HMAC-SHA2-256`, `HMAC-SHA2-512`, `UMAC-64_AT_OPENSSH.COM`, `UMAC-128_AT_OPENSSH.COM`, `HMAC-SHA1-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-256-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-512-ETM_AT_OPENSSH.COM`, `UMAC-64-ETM_AT_OPENSSH.COM`, `UMAC-128-ETM_AT_OPENSSH.COM`
 - `pre_auth_msg` (String) Specify the banner message to display to users before the login prompt. White space characters ( <tt>\n</tt> , <tt>\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.
   - CLI Alias: `preauth-msg`
+  - Not Valid When: `send_pre_auth_msg`=`false`
 - `send_pre_auth_msg` (Boolean) Specify whether to include a banner message during SSH preauthentication. The banner message contains the text to display to users before the login prompt.
   - CLI Alias: `send-preauth-msg`
   - Default value: `false`

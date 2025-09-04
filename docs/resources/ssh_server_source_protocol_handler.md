@@ -43,21 +43,27 @@ resource "datapower_ssh_server_source_protocol_handler" "test" {
 - `allow_backend_delete` (Boolean) In transparent mode, determines whether or not requests to delete files (SSH_FXP_REMOVE) to remote servers are allowed. Requires a remote FTP or SFTP server.
   - CLI Alias: `allow-backend-delete`
   - Default value: `false`
+  - Not Valid When: `filesystem_type`!=`transparent`
 - `allow_backend_listings` (Boolean) In transparent mode, determines whether or not SFTP directory listing (SSH_FXP_READDIR) requests to remote servers are allowed. Requires a remote FTP or SFTP server.
   - CLI Alias: `allow-backend-listings`
   - Default value: `true`
+  - Not Valid When: `filesystem_type`!=`transparent`
 - `allow_backend_mkdir` (Boolean) In transparent mode, determines whether or not requests to create directories (SSH_FXP_MKDIR) on remote servers are allowed. Requires a remote FTP or SFTP server.
   - CLI Alias: `allow-backend-mkdir`
   - Default value: `false`
+  - Not Valid When: `filesystem_type`!=`transparent`
 - `allow_backend_rename` (Boolean) In transparent mode, determines whether or not requests to rename files or directories (SSH_FXP_RENAME) on remote servers are allowed. Requires a remote FTP or SFTP server.
   - CLI Alias: `allow-backend-rename`
   - Default value: `false`
+  - Not Valid When: `filesystem_type`!=`transparent`
 - `allow_backend_rmdir` (Boolean) In transparent mode, determines whether or not requests to delete directories (SSH_FXP_RMDIR) from remote servers are allowed. Requires a remote FTP or SFTP server.
   - CLI Alias: `allow-backend-rmdir`
   - Default value: `false`
+  - Not Valid When: `filesystem_type`!=`transparent`
 - `allow_backend_stat` (Boolean) In transparent mode, determines whether or not SFTP directory listings requests to remote servers would query the remote server to obtain file attributes (SSH_FXP_STAT/SSH_FXP_LSTAT/SSH_FXP_FSTAT), or use default values. Querying the remote server may reduce performance, but is necessary for SFTP clients that do not follow the DataPower SFTP URL naming conventions. Requires a remote FTP or SFTP server.
   - CLI Alias: `allow-backend-stat`
   - Default value: `false`
+  - Not Valid When: `filesystem_type`!=`transparent`
 - `default_directory` (String) Default directory
   - CLI Alias: `default-directory`
   - Default value: `/`
@@ -84,12 +90,14 @@ resource "datapower_ssh_server_source_protocol_handler" "test" {
   - CLI Alias: `persistent-filesystem-timeout`
   - Range: `1`-`43200`
   - Default value: `600`
+  - Not Valid When: `filesystem_type`!=`virtual-persistent`
 - `ssh_user_authentication` (Attributes) Specifies the type(s) of SSH user authentication available for use by the client.
   - CLI Alias: `user-auth` (see [below for nested schema](#nestedatt--ssh_user_authentication))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `virtual_directories` (Attributes List) In virtual mode, create a directory in the virtual file system that is presented by this SFTP server. The SFTP client can use all of these directories to write file to be processed. The root directory (/) is always present and cannot be created.
-  - CLI Alias: `virtual-directory` (see [below for nested schema](#nestedatt--virtual_directories))
+  - CLI Alias: `virtual-directory`
+  - Not Valid When: `filesystem_type`!=`virtual-ephemeral`|`virtual-persistent` (see [below for nested schema](#nestedatt--virtual_directories))
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

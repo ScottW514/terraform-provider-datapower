@@ -42,12 +42,14 @@ resource "datapower_jws_signature" "test" {
   - CLI Alias: `key`
   - Reference to: `datapower_crypto_key:id`
   - Required When: `algorithm`=`RS256`|`RS384`|`RS512`|`PS256`|`PS384`|`PS512`|`ES256`|`ES384`|`ES512`
+  - Not Valid When: `algorithm`!=`RS256`|`RS384`|`RS512`|`PS256`|`PS384`|`PS512`|`ES256`|`ES384`|`ES512`
 - `protected_header` (Attributes List) Add a protected header to the JWS Sign action.
   - CLI Alias: `protected-header` (see [below for nested schema](#nestedatt--protected_header))
 - `sskey` (String) Shared secret key.
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: `algorithm`=`HS256`|`HS384`|`HS512`
+  - Not Valid When: `algorithm`!=`HS256`|`HS384`|`HS512`
 - `unprotected_header` (Attributes List) Add an unprotected header to the JWS Sign action.
   - CLI Alias: `unprotected-header` (see [below for nested schema](#nestedatt--unprotected_header))
 - `user_summary` (String) A descriptive summary for the configuration.

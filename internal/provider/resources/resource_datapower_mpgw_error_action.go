@@ -95,39 +95,40 @@ func (r *MPGWErrorActionResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("static"),
 			},
 			"remote_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the remote error page.", "remote-url", "").AddRequiredWhen(models.MPGWErrorActionRemoteURLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the remote error page.", "remote-url", "").AddRequiredWhen(models.MPGWErrorActionRemoteURLCondVal.String()).AddNotValidWhen(models.MPGWErrorActionRemoteURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.MPGWErrorActionRemoteURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.MPGWErrorActionRemoteURLCondVal, models.MPGWErrorActionRemoteURLIgnoreVal, false),
 				},
 			},
 			"local_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the local error page.", "local-url", "").AddRequiredWhen(models.MPGWErrorActionLocalURLCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the local error page.", "local-url", "").AddRequiredWhen(models.MPGWErrorActionLocalURLCondVal.String()).AddNotValidWhen(models.MPGWErrorActionLocalURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.MPGWErrorActionLocalURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.MPGWErrorActionLocalURLCondVal, models.MPGWErrorActionLocalURLIgnoreVal, false),
 				},
 			},
 			"error_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the custom error rule that the appliance runs to handle errors.", "rule", "style_policy_rule").AddRequiredWhen(models.MPGWErrorActionErrorRuleCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the custom error rule that the appliance runs to handle errors.", "rule", "style_policy_rule").AddRequiredWhen(models.MPGWErrorActionErrorRuleCondVal.String()).AddNotValidWhen(models.MPGWErrorActionErrorRuleIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.MPGWErrorActionErrorRuleCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.MPGWErrorActionErrorRuleCondVal, models.MPGWErrorActionErrorRuleIgnoreVal, false),
 				},
 			},
 			"status_code": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.", "status-code", "").AddIntegerRange(100, 999).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.", "status-code", "").AddIntegerRange(100, 999).AddNotValidWhen(models.MPGWErrorActionStatusCodeIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 999),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MPGWErrorActionStatusCodeIgnoreVal, false),
 				},
 			},
 			"reason_phrase": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.", "reason-phrase", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.", "reason-phrase", "").AddNotValidWhen(models.MPGWErrorActionReasonPhraseIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"header_injection": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name and the value for the HTTP header that the appliance injects.", "header-inject", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name and the value for the HTTP header that the appliance injects.", "header-inject", "").AddNotValidWhen(models.MPGWErrorActionHeaderInjectionIgnoreVal.String()).String,
 				NestedObject:        models.GetDmWebGWErrorRespHeaderInjectionResourceSchema(),
 				Optional:            true,
 			},

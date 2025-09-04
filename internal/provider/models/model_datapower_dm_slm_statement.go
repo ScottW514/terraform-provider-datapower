@@ -151,7 +151,7 @@ func GetDmSLMStatementDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 				Computed:            true,
 			},
 			"thresh_interval_length": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").AddNotValidWhen(DmSLMStatementThreshIntervalLengthIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"thresh_interval_type": DataSourceSchema.StringAttribute{
@@ -171,11 +171,11 @@ func GetDmSLMStatementDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 				Computed:            true,
 			},
 			"release_threshold_level": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the stop point of the high-low algorithm. The stop point is the low threshold. The start point is the high threshold that is defined as the threshold level property.", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the stop point of the high-low algorithm. The stop point is the low threshold. The start point is the high threshold that is defined as the threshold level property.", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").AddNotValidWhen(DmSLMStatementReleaseThresholdLevelIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"burst_limit": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").AddRequiredWhen(DmSLMStatementBurstLimitCondVal.String()).AddNotValidWhen(DmSLMStatementBurstLimitIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"reporting_aggregation_interval": DataSourceSchema.Int64Attribute{
@@ -226,7 +226,7 @@ func GetDmSLMStatementResourceSchema() ResourceSchema.NestedAttributeObject {
 				Required:            true,
 			},
 			"thresh_interval_length": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").AddNotValidWhen(DmSLMStatementThreshIntervalLengthIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"thresh_interval_type": ResourceSchema.StringAttribute{
@@ -266,19 +266,20 @@ func GetDmSLMStatementResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: int64default.StaticInt64(0),
 			},
 			"release_threshold_level": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the stop point of the high-low algorithm. The stop point is the low threshold. The start point is the high threshold that is defined as the threshold level property.", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the stop point of the high-low algorithm. The stop point is the low threshold. The start point is the high threshold that is defined as the threshold level property.", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").AddNotValidWhen(DmSLMStatementReleaseThresholdLevelIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 9007199254740991),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, DmSLMStatementReleaseThresholdLevelIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(0),
 			},
 			"burst_limit": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").AddRequiredWhen(DmSLMStatementBurstLimitCondVal.String()).AddNotValidWhen(DmSLMStatementBurstLimitIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(DmSLMStatementBurstLimitCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(DmSLMStatementBurstLimitCondVal, DmSLMStatementBurstLimitIgnoreVal, false),
 				},
 			},
 			"reporting_aggregation_interval": ResourceSchema.Int64Attribute{

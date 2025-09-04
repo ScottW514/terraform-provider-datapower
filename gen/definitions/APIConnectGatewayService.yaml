@@ -224,5 +224,3 @@ attributes:
   dm_type: DmAPICGSProxyPolicy
   description: API Manager proxy
   cli_alias: proxy
-  test_value: '{proxy_policy_enable = false, remote_address = "localhost", remote_port
-    = 8080}'

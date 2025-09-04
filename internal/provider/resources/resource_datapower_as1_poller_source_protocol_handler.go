@@ -143,20 +143,20 @@ func (r *AS1PollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(5),
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddRequiredWhen(models.AS1PollerSourceProtocolHandlerSSLClientConfigTypeCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddRequiredWhen(models.AS1PollerSourceProtocolHandlerSSLClientConfigTypeCondVal.String()).AddNotValidWhen(models.AS1PollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
-					validators.ConditionalRequiredString(models.AS1PollerSourceProtocolHandlerSSLClientConfigTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(models.AS1PollerSourceProtocolHandlerSSLClientConfigTypeCondVal, models.AS1PollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.AS1PollerSourceProtocolHandlerSSLClientCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").AddRequiredWhen(models.AS1PollerSourceProtocolHandlerSSLClientCondVal.String()).AddNotValidWhen(models.AS1PollerSourceProtocolHandlerSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AS1PollerSourceProtocolHandlerSSLClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AS1PollerSourceProtocolHandlerSSLClientCondVal, models.AS1PollerSourceProtocolHandlerSSLClientIgnoreVal, false),
 				},
 			},
 			"dependency_actions": actions.ActionsSchema,

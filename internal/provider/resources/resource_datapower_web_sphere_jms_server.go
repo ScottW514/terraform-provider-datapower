@@ -40,6 +40,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &WebSphereJMSServerResource{}
@@ -98,14 +99,15 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 				Required:            true,
 			},
 			"ssl_cipher": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IBM cipher specification when the TLS profile establishes a secure connection with the WebSphere JMS message provider. When you specify a TLS profile, the cipher suite that is associated with the profile is replaced by an IBM default cipher specification. The default value is <tt>SSL_RSA_WITH_NULL_MD5</tt> .", "ssl-cipher", "").AddStringEnum("SSL_RSA_WITH_NULL_MD5", "SSL_RSA_EXPORT_WITH_RC2_CBC_40_MD5", "SSL_RSA_EXPORT_WITH_RC4_40_MD5", "SSL_RSA_WITH_RC4_128_MD5", "SSL_RSA_WITH_NULL_SHA", "SSL_RSA_EXPORT1024_WITH_RC4_56_SHA", "SSL_RSA_WITH_RC4_128_SHA", "SSL_RSA_WITH_DES_CBC_SHA", "SSL_RSA_EXPORT1024_WITH_DES_CBC_SHA", "SSL_RSA_FIPS_WITH_DES_CBC_SHA", "SSL_RSA_WITH_3DES_EDE_CBC_SHA", "SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA", "TLS_RSA_WITH_DES_CBC_SHA", "TLS_RSA_WITH_3DES_EDE_CBC_SHA", "TLS_RSA_WITH_AES_128_CBC_SHA", "TLS_RSA_WITH_AES_256_CBC_SHA", "TLS_RSA_WITH_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_256_CBC_SHA256", "TLS_RSA_WITH_NULL_SHA256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IBM cipher specification when the TLS profile establishes a secure connection with the WebSphere JMS message provider. When you specify a TLS profile, the cipher suite that is associated with the profile is replaced by an IBM default cipher specification. The default value is <tt>SSL_RSA_WITH_NULL_MD5</tt> .", "ssl-cipher", "").AddStringEnum("SSL_RSA_WITH_NULL_MD5", "SSL_RSA_EXPORT_WITH_RC2_CBC_40_MD5", "SSL_RSA_EXPORT_WITH_RC4_40_MD5", "SSL_RSA_WITH_RC4_128_MD5", "SSL_RSA_WITH_NULL_SHA", "SSL_RSA_EXPORT1024_WITH_RC4_56_SHA", "SSL_RSA_WITH_RC4_128_SHA", "SSL_RSA_WITH_DES_CBC_SHA", "SSL_RSA_EXPORT1024_WITH_DES_CBC_SHA", "SSL_RSA_FIPS_WITH_DES_CBC_SHA", "SSL_RSA_WITH_3DES_EDE_CBC_SHA", "SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA", "TLS_RSA_WITH_DES_CBC_SHA", "TLS_RSA_WITH_3DES_EDE_CBC_SHA", "TLS_RSA_WITH_AES_128_CBC_SHA", "TLS_RSA_WITH_AES_256_CBC_SHA", "TLS_RSA_WITH_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_256_CBC_SHA256", "TLS_RSA_WITH_NULL_SHA256").AddNotValidWhen(models.WebSphereJMSServerSSLCipherIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("SSL_RSA_WITH_NULL_MD5", "SSL_RSA_EXPORT_WITH_RC2_CBC_40_MD5", "SSL_RSA_EXPORT_WITH_RC4_40_MD5", "SSL_RSA_WITH_RC4_128_MD5", "SSL_RSA_WITH_NULL_SHA", "SSL_RSA_EXPORT1024_WITH_RC4_56_SHA", "SSL_RSA_WITH_RC4_128_SHA", "SSL_RSA_WITH_DES_CBC_SHA", "SSL_RSA_EXPORT1024_WITH_DES_CBC_SHA", "SSL_RSA_FIPS_WITH_DES_CBC_SHA", "SSL_RSA_WITH_3DES_EDE_CBC_SHA", "SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA", "TLS_RSA_WITH_DES_CBC_SHA", "TLS_RSA_WITH_3DES_EDE_CBC_SHA", "TLS_RSA_WITH_AES_128_CBC_SHA", "TLS_RSA_WITH_AES_256_CBC_SHA", "TLS_RSA_WITH_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_256_CBC_SHA256", "TLS_RSA_WITH_NULL_SHA256"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.WebSphereJMSServerSSLCipherIgnoreVal, false),
 				},
 			},
 			"fips": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require the assignment of a FIPS-compliant cipher for the WebSphere JMS message provider. By default, a FIPS-compliant cipher is not required. When enabled, which prevents the use of non-FIPs compliance ciphers, requires the use of one of the following ciphers. <ul><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA256</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA256</tt></li></ul>", "ssl-fips", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require the assignment of a FIPS-compliant cipher for the WebSphere JMS message provider. By default, a FIPS-compliant cipher is not required. When enabled, which prevents the use of non-FIPs compliance ciphers, requires the use of one of the following ciphers. <ul><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA256</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA256</tt></li></ul>", "ssl-fips", "").AddDefaultValue("false").AddNotValidWhen(models.WebSphereJMSServerFIPSIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -207,7 +209,7 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddNotValidWhen(models.WebSphereJMSServerSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

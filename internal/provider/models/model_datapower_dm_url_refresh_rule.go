@@ -81,7 +81,7 @@ func GetDmURLRefreshRuleDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 				Computed:            true,
 			},
 			"url_refresh_interval": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Not used when the refresh rule type is no-cache, specifies the update frequency for stylesheets that fulfill the match criteria.", "interval", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Not used when the refresh rule type is no-cache, specifies the update frequency for stylesheets that fulfill the match criteria.", "interval", "").AddDefaultValue("0").AddRequiredWhen(DmURLRefreshRuleURLRefreshIntervalCondVal.String()).AddNotValidWhen(DmURLRefreshRuleURLRefreshIntervalIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -105,11 +105,11 @@ func GetDmURLRefreshRuleResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("default"),
 			},
 			"url_refresh_interval": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Not used when the refresh rule type is no-cache, specifies the update frequency for stylesheets that fulfill the match criteria.", "interval", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Not used when the refresh rule type is no-cache, specifies the update frequency for stylesheets that fulfill the match criteria.", "interval", "").AddDefaultValue("0").AddRequiredWhen(DmURLRefreshRuleURLRefreshIntervalCondVal.String()).AddNotValidWhen(DmURLRefreshRuleURLRefreshIntervalIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(DmURLRefreshRuleURLRefreshIntervalCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(DmURLRefreshRuleURLRefreshIntervalCondVal, DmURLRefreshRuleURLRefreshIntervalIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(0),
 			},

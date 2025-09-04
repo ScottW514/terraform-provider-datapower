@@ -56,7 +56,6 @@ attributes:
   - branch
   - tag
   - commit
-  required: true
   default: branch
   description: Specify the branch, commit hash, or tag for read and write GitOps operations
     against the repository. Use of branch is the default setting.

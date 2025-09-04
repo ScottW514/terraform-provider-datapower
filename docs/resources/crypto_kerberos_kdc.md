@@ -45,10 +45,12 @@ resource "datapower_crypto_kerberos_kdc" "test" {
   - CLI Alias: `max-cached-tickets`
   - Range: `1`-`65535`
   - Default value: `32`
+  - Not Valid When: `cache_tickets`=`false`
 - `min_cache_d_ticket_validity` (Number) Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.
   - CLI Alias: `min-cached-ticket-validity`
   - Range: `1`-`65535`
   - Default value: `60`
+  - Not Valid When: `cache_tickets`=`false`
 - `server_port` (Number) Specify the UDP or TCP listening port on the Kerberos KDC server. Use a value in the range 1 - 65535. The default value is 88.
   - CLI Alias: `port`
   - Range: `1`-`65535`
@@ -57,6 +59,7 @@ resource "datapower_crypto_kerberos_kdc" "test" {
   - CLI Alias: `udp-timeout`
   - Range: `1`-`60`
   - Default value: `5`
+  - Not Valid When: `use_tcp`=`true`
 - `use_tcp` (Boolean) Select to control whether to contact the Kerberos KDC server with UDP (the default, off) or TCP (on).
   - CLI Alias: `tcp`
   - Default value: `false`

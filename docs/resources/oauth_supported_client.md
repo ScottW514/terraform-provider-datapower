@@ -45,81 +45,100 @@ resource "datapower_oauth_supported_client" "test" {
   - Range: `1`-`63244800`
   - Default value: `3600`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr`)
+  - Not Valid When: attribute is not conditionally required
 - `additional_oauth_process_url` (String) <p>Specifies the location of the stylesheet or GatewayScript file to process after generating a code, after generating an access token, or after generating an access token but before sending it to the resource server. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>You can use custom additional OAuth processing in the following situations.</p><ul><li>An authorization form request allows custom processing to handle the consent form with the <tt>authorization_form</tt> operation. This operations allows custom handling of the consent form.</li><li>An authorization request after successfully generating a code for an authorization code grant with the <tt>authorization_request</tt> operation. Processing returns a node set. This information becomes part of the query string and is returned to the OAuth client during authorization code grant type.</li><li>An access request after successfully generating an access token with the <tt>access_request</tt> operation. Processing returns a node set. This information becomes part of the JSON object that contains the access token.</li><li>A resource request after successfully verifying an access token but before sending the request to the resource server with the <tt>resource_request</tt> operation.</li><li>A revoke request allows custom handling of a revocation request with the <tt>revoke_request</tt> operation. For example, this operation provides a way to persist the revocation information in a persistent store off the DataPower Gateway.</li><li>A check revocation request verifies whether an access request was revoked previously with the <tt>check_revocation_request</tt> operation. For example, this operation can be used to check against the persistent store off the DataPower Gateway to determine whether an access permission was revoked previously.</li><li>A pre-approval request allows the consent form to be by-passed in either an authorization code or implicit grant type with the <tt>preapproved_check</tt> operation. Depending on the result of this operation, the client's request is approved, denied, or the consent form to be presented.</li><li>A validation request allows custom handling of a validation request grant type with the <tt>validate_request</tt> operation. The response must be in a node set that can be converted into a JSON response, in responding to a validation request.</li><li>A miscinfo request allows the OAuth client to add miscellaneous information to the token with the <tt>miscinfo_request</tt> operation. The authorization server adds the response to the token and returns it to the OAuth client. The maximum number of characters in this information is 512.</li></ul>
   - CLI Alias: `additional-oauth-process-url`
   - Required When: (`customized`=`false` AND `caching`=`custom`)
+  - Not Valid When: `customized`=`true`
 - `au_code_life_time` (Number) <p>Sets the lifetime for an authorization code in seconds. Enter a value in the range 1 - 600. The default value is 300.</p><p>An authorization code is the intermediary result of a successful authorization. The client uses authorization codes to obtain the access token. Instead of sending tokens to a client, clients receives authorization codes on their redirection URI. Each supported redirection URI for the client is defined with the <b>Redirect URI</b> property.</p>
   - CLI Alias: `au-code-lifetime`
   - Range: `1`-`600`
   - Default value: `300`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`code`)
+  - Not Valid When: attribute is not conditionally required
 - `az_grant` (Attributes) Identifies the method to obtain the access token for authorization based on the grant type.
   - CLI Alias: `az-grant` (see [below for nested schema](#nestedatt--az_grant))
 - `caching` (String) Specifies the caching mechanism to be used.
   - CLI Alias: `caching`
   - Choices: `replay`, `system`, `custom`, `diststore`
   - Default value: `replay`
+  - Not Valid When: (`customized`=`true` OR (`oauth_role`!=`azsvr` AND `oauth_role`=`rssvr` AND `use_validation_url`=`true`))
 - `check_client_credential` (Boolean) Identifies whether to verify the client credentials when the DataPower Gateway protects the resource server by using access tokens.
   - CLI Alias: `check-client-credential`
   - Default value: `false`
+  - Not Valid When: (`customized`=`true` OR `oauth_role`!=`rssvr`)
 - `client_authen_method` (String) Identifies the method to authenticate this client.
   - CLI Alias: `client-authen-method`
   - Choices: `secret`, `ssl`, `jwt`
   - Default value: `secret`
   - Required When: (`customized`=`false` AND (`client_type`=`confidential` OR (`oauth_role`=`azsvr` AND `az_grant`=`client`)) AND ((`oauth_role`=`azsvr` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt`) OR (`oauth_role`=`rssvr` AND (`use_validation_url`=`true` OR `check_client_credential`=`true`))))
+  - Not Valid When: attribute is not conditionally required
 - `client_jwt_validator` (String) <p>Specify the JWT validator configuration to verify the client credentials. The JWT validator configuration must meet the following requirements.</p><ul><li>The "sub" claim must be the same as client ID.</li><li>Must check the "iss" claim.</li><li>Must check the "aud" claim.</li><li>Must be configured to verify a signed JWT.</li></ul>
   - CLI Alias: `client-jwt-validator`
   - Reference to: `datapower_aaa_jwt_validator:id`
   - Required When: (`customized`=`false` AND (`client_type`=`confidential` OR (`oauth_role`=`azsvr` AND `az_grant`=`client`)) AND `client_authen_method`=`jwt` AND ((`oauth_role`=`azsvr` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt`) OR (`oauth_role`=`rssvr` AND `oauth_role`!=`azsvr` AND `check_client_credential`=`true`)))
+  - Not Valid When: attribute is not conditionally required
 - `client_secret_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specifies the client secret for the OAuth client. The specification references the client secret as <tt>client_secret</tt> .
   - CLI Alias: `client-secret`
   - Required When: (`customized`=`false` AND (`client_type`=`confidential` OR (`oauth_role`=`azsvr` AND `az_grant`=`client`)) AND `client_authen_method`=`secret` AND ((`oauth_role`=`azsvr` AND `generate_client_secret`=`false` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt`|`saml20bearer`) OR (`oauth_role`=`rssvr` AND `oauth_role`!=`azsvr` AND (`check_client_credential`=`true` OR `use_validation_url`=`true`))))
+  - Not Valid When: attribute is not conditionally required
 - `client_secret_wo_version` (Number) Changes to this value trigger an update to `write_only` value.
 - `client_type` (String) Sets the type of client based on its ability to authenticate securely with authorization server endpoints. The client type is based on the definitions that the authorization server endpoints use for secure authentication and acceptable exposure of client credentials. If the client can securely authenticate, its classification is <tt>confidential</tt> .
   - CLI Alias: `client-type`
   - Choices: `confidential`, `public`
   - Default value: `confidential`
   - Required When: (`customized`=`true` OR (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`code`|`implicit`|`password`|`jwt`) OR (`customized`=`false` AND `oauth_role`=`rssvr` AND (`use_validation_url`=`true` OR `check_client_credential`=`true`)))
+  - Not Valid When: attribute is not conditionally required
 - `client_val_cred` (String) An TLS credential used to authenticate the OAuth client sent by remote TLS peer during the TLS handshake.
   - CLI Alias: `client-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
   - Required When: (`customized`=`false` AND (`client_type`=`confidential` OR (`oauth_role`=`azsvr` AND `az_grant`=`client`)) AND `client_authen_method`=`ssl` AND ((`oauth_role`=`azsvr` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt`) OR (`oauth_role`=`rssvr` AND `oauth_role`!=`azsvr` AND `check_client_credential`=`true`)))
+  - Not Valid When: attribute is not conditionally required
 - `custom_resource_owner` (Boolean) <p>Indicates whether to use a stylesheet or GatewayScript file to extract information about the resource owner. When extracting using custom processing, use the <b>Resource Owner Process</b> property to specify the location of the file. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>By default, the resource owner is the user name from the extracted identity. For custom handling, you must provide a stylesheet or GatewayScript file that overrides information about the resource owner.</p><ul><li>For AAA identity extraction, the extraction method can be basic authentication or forms-based login.</li><li>For custom handling, the stylesheet or GatewayScript file overrides data about the resource owner with information from authentication.</li></ul><p>You should use custom handling in the following situations: <ul><li>When presenting the authorization form to the resource owner</li><li>When issuing a code for an authorization code grant type</li><li>When issuing an access token</li></ul></p>
   - CLI Alias: `custom-resource-owner`
   - Default value: `false`
+  - Not Valid When: (`customized`=`true` OR `oauth_role`!=`azsvr`)
 - `custom_scope_check` (Boolean) <p>Indicates how to check the scope for authorization grants and access tokens.</p><ul><li>When checking the scope with custom processing, specify the location of the stylesheet or GatewayScript file with the <b>Scope Customized Process</b> property. The stylesheet or GatewayScript file must be in the local: or store: directory.</li><li>When checking the scope with a PCRE, specify the expression with the <b>Scope</b> property.</li></ul><p>You should use a custom scope check in the following situations. <ul><li>An authorization request where the OAuth client requests an authorization code.</li><li>An access request where the OAuth client requests an access token.</li><li>A resource request where the OAuth client requests a resource.</li></ul></p>
   - CLI Alias: `custom-scope-check`
   - Default value: `false`
+  - Not Valid When: (`customized`=`true` OR (`oauth_role`!=`azsvr` AND `use_validation_url`=`true`))
 - `customized` (Boolean) Indicates whether the configuration is for a customized OAuth client. The configuration of the customized OAuth client is defined in a stylesheet or GatewayScript file in the local: or store: directory.
   - CLI Alias: `customized`
   - Default value: `false`
 - `customized_process_url` (String) <p>Specifies the location of the stylesheet or GatewayScript file that defines the customized OAuth client. The stylesheet or GatewayScript file must be in the local: or store: directory</p><p>When creating a customized OAuth client, the stylesheets or GatewayScript files must define all implementation details based on the role of the client. For information about these stylesheets or GatewayScript files, see the topic in IBM Knowledge Center.</p><p>You should provide support for the following operations: <ul><li>verify-az-request: determine whether the initial OAuth request is supported or not.</li><li>issue-az-code: issue a temporary authorization code (for the authorization code grant).</li><li>verify-az-code: verify a temporary authorization.</li><li>issue-access-token: issue an access_token.</li><li>verify-access-token: verify an access_token.</li><li>verify-refresh-token: verify a refresh_token.</li><li>client-revoke-request: handle client revocation request.</li><li>owner-revoke-request: handle owner revocation request.</li></ul></p>
   - CLI Alias: `customized-process-url`
   - Required When: `customized`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `default_scope` (String) Specifies the default value of the scope if the client does not define any scope value in the request.
   - CLI Alias: `default-scope`
+  - Not Valid When: (`customized`=`true` OR `oauth_role`!=`azsvr`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `dp_state_life_time` (Number) <p>Sets the operational duration in seconds for the local authorization page. Enter a value in the range 1 - 600. The default value is 300.</p><p>If the user does not submit the request before the duration elapses, the authorization request from the OAuth client is rejected. The location of the stylesheet or GatewayScript file that defines the local authorization page and the error handling is set with the <b>Authorization Form</b> property.</p>
   - CLI Alias: `dp-state-lifetime`
   - Range: `1`-`600`
   - Default value: `300`
   - Required When: ((`customized`=`true` OR `oauth_role`=`azsvr`) AND `az_grant`=`code`|`implicit`)
+  - Not Valid When: attribute is not conditionally required
 - `generate_client_secret` (Boolean) <p>Indicates whether to generate the client secret for the OAuth client. The specification refers to the client secret as <tt>client_secret</tt> .</p><ul><li>If you generate the passphrase, the passphrase becomes the client secret.</li><li>If you do not generate the passphrase, you must explicitly define the client secret.</li></ul>
   - CLI Alias: `generate-client-secret`
   - Default value: `true`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND (`client_type`=`confidential` OR (`oauth_role`=`azsvr` AND `az_grant`=`client`)) AND `client_secret_wo`=`` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt` AND `client_authen_method`=`secret`)
+  - Not Valid When: attribute is not conditionally required
 - `jwt_grant_validator` (String) <p>Specify the JWT validator configuration to verify a JWT for JWT authorization grant. The JWT validator configuration must meet the following requirements.</p><ul><li>Must treat the "sub" claim as the resource owner.</li><li>Must check the "iss" claim.</li><li>Must check the "aud" claim. The "aud" claim can be a client ID or the redirect URI.</li><li>Must be configured to verify a signed JWT.</li></ul>
   - CLI Alias: `jwt-grant-validator`
   - Reference to: `datapower_aaa_jwt_validator:id`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`jwt`)
+  - Not Valid When: attribute is not conditionally required
 - `local_az_page_url` (String) <p>Specifies the location of the stylesheet or GatewayScript file that generates the authorization form for the resource owner and handles errors. The file must be in the local: or store: directory. You can use the <tt>OAuth-Generate-HTML.xsl</tt> stylesheet in the store: directory or copy this file to the local: directory and modify as needed.</p><p>The stylesheet or GatewayScript file must be on the DataPower Gateway in the local: or store: directory. The HTML authorization form remains operational for the duration defined with the <b>DataPower State Lifetime</b> property. If the user does not submit the request before the duration elapses, the authorization from the OAuth client is rejected.</p>
   - CLI Alias: `local-az-page-url`
   - Default value: `store:///OAuth-Generate-HTML.xsl`
   - Required When: ((`customized`=`true` OR `oauth_role`=`azsvr`) AND `az_grant`=`code`|`implicit`)
+  - Not Valid When: attribute is not conditionally required
 - `max_consent_life_time` (Number) <p>Maximum lifetime that the permission is valid before the application must gather consent again. Enter a value in the range 0 - 2529792000. The default value is 0, which disables this feature.</p>
   - CLI Alias: `max-consent-lifetime`
   - Range: `0`-`2529792000`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`code`|`password`|`jwt` AND `refresh_token_allowed`!=`0`)
+  - Not Valid When: attribute is not conditionally required
 - `oauth_features` (Attributes) Specify which features to enable.
   - CLI Alias: `oauth-features` (see [below for nested schema](#nestedatt--oauth_features))
 - `oauth_role` (Attributes) Identifies the role of the client when interacting with a request to access a protected resource.
@@ -128,37 +147,46 @@ resource "datapower_oauth_supported_client" "test" {
   - CLI Alias: `idtoken-generator`
   - Reference to: `datapower_aaa_jwt_generator:id`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`oidc` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt`)
+  - Not Valid When: attribute is not conditionally required
 - `redirect_uri` (List of String) <p>Defines redirection URIs that the OAuth client supports to exchange tokens. Specify each redirection URI as a PCRE.</p><p>Redirection URIs help to detect malicious clients and prevent phishing attacks. The authorization endpoint must have the registered redirection URIs before the authorization endpoint can validate the authorization request from the client. For mobile applications, the redirection URI can be an application URL; for example, <tt>mobiletrafficapp://</tt> that is defined with the <tt>^mobiletrafficapp:\/\/?</tt> PCRE.</p>
   - CLI Alias: `redirect-uri`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`implicit`|`code`)
+  - Not Valid When: (`customized`=`true` OR `oauth_role`!=`azsvr` OR (`customized`=`false` AND `az_grant`!=`code`|`implicit`))
 - `refresh_token_allowed` (Number) <p>Sets the maximum number of refresh tokens that can be generated for a specific permission set. A permission set is defined as a combination of the resource owner, application, and protected resources. For example, <tt>jack,mobileapp1,scope1</tt> and <tt>john,mobileapp1,scope1</tt> are different permission sets. When an application asks the resource owner for access to protected resources again, the application receives a new permission set with its own counter for refresh tokens.</p><p>Enter a value in the range 0 - 4096. The default value is 0. Remember that refresh tokens and access tokens are distributed in pairs.</p>
   - CLI Alias: `refresh-token-allowed`
   - Range: `0`-`4096`
   - Default value: `0`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`code`|`password`|`jwt`)
+  - Not Valid When: attribute is not conditionally required
 - `refresh_token_life_time` (Number) Sets the lifetime for the refresh token in seconds. Enter a value in the range 2 - 252979200. The default value is 5400. The lifetime for a refresh token must be longer than that for the corresponding access token.
   - CLI Alias: `refresh-token-lifetime`
   - Range: `2`-`252979200`
   - Default value: `5400`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`code`|`password`|`jwt` AND `refresh_token_allowed`!=`0`)
+  - Not Valid When: attribute is not conditionally required
 - `resource_owner_url` (String) Specifies the location of the stylesheet or GatewayScript file to extract information about the resource owner. The file must be in the local: or store: directory.
   - CLI Alias: `resource-owner-url`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `custom_resource_owner`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `rs_set_header` (Attributes) Identifies which HTTP headers to create and send to the remote resource server.
   - CLI Alias: `rs-set-header` (see [below for nested schema](#nestedatt--rs_set_header))
 - `scope` (String) Specifies the PCRE to check the scope. The minimum length of the expression is 1 character. The maximum length of the expression is 1023 characters.
   - CLI Alias: `scope`
   - Required When: (`customized`=`false` AND `custom_scope_check`=`false` AND (`oauth_role`=`azsvr` OR `use_validation_url`=`false`))
+  - Not Valid When: attribute is not conditionally required
 - `scope_url` (String) Specifies the location of the stylesheet or GatewayScript file for a custom scope check. The stylesheet or GatewayScript file must be in the local: or store: directory. The stylesheet or GatewayScript file validates and sets the scope to check.
   - CLI Alias: `scope-url`
   - Required When: (`customized`=`false` AND `custom_scope_check`=`true` AND (`oauth_role`=`azsvr` OR `use_validation_url`=`false`))
+  - Not Valid When: attribute is not conditionally required
 - `token_secret` (String) Assigns the shared secret key to protect tokens that use the OAuth protocol. The shared secret must be at least 32 bytes in length.
   - CLI Alias: `token-secret`
   - Reference to: `datapower_crypto_sskey:id`
   - Required When: ((`customized`=`false` AND (`oauth_role`=`azsvr` OR (`oauth_role`!=`azsrv` AND `use_validation_url`=`false`))) OR (`customized`=`true` AND `az_grant`=`code`|`implicit` AND (`oauth_role`=`azsvr` OR (`oauth_role`!=`azsvr` AND `use_validation_url`=`false`))))
+  - Not Valid When: attribute is not conditionally required
 - `use_validation_url` (Boolean) Uses a remote URL to validate the access token.
   - CLI Alias: `use-validation-url`
   - Default value: `false`
+  - Not Valid When: (`customized`=`true` OR `oauth_role`!=`rssvr`)
 - `user_summary` (String) Specifies a brief comment that describes the configuration.
   - CLI Alias: `summary`
 - `validation_features` (Attributes) Customize how to handle the validation grant type.
@@ -166,15 +194,18 @@ resource "datapower_oauth_supported_client" "test" {
 - `validation_url` (String) Specifies the validation url.
   - CLI Alias: `validation-url`
   - Required When: (`customized`=`false` AND `oauth_role`=`rssvr` AND `use_validation_url`=`true`)
+  - Not Valid When: attribute is not conditionally required
 - `validation_url_ssl_client` (String) Specifies the TLS Client Profile for the validation URL.
   - CLI Alias: `validation-url-ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
   - Required When: (`customized`=`false` AND `oauth_role`=`rssvr` AND `use_validation_url`=`true` AND `validation_url_ssl_client_type`=`client`)
+  - Not Valid When: attribute is not conditionally required
 - `validation_url_ssl_client_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `validation-url-ssl-client-type`
   - Choices: `client`
   - Default value: `client`
   - Required When: (`customized`=`false` AND `oauth_role`=`rssvr` AND `use_validation_url`=`true`)
+  - Not Valid When: attribute is not conditionally required
 
 <a id="nestedatt--az_grant"></a>
 ### Nested Schema for `az_grant`

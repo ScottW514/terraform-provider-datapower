@@ -100,10 +100,10 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 				Default: stringdefault.StaticString("all"),
 			},
 			"schema": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Schema", "schema", "api_schema").AddRequiredWhen(models.AssemblyActionValidateSchemaCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Schema", "schema", "api_schema").AddRequiredWhen(models.AssemblyActionValidateSchemaCondVal.String()).AddNotValidWhen(models.AssemblyActionValidateSchemaIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AssemblyActionValidateSchemaCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AssemblyActionValidateSchemaCondVal, models.AssemblyActionValidateSchemaIgnoreVal, false),
 				},
 			},
 			"input": schema.StringAttribute{
@@ -117,10 +117,10 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"definition": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to a schema in the API definition. Use the format <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined schema.", "definition", "").AddRequiredWhen(models.AssemblyActionValidateDefinitionCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to a schema in the API definition. Use the format <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined schema.", "definition", "").AddRequiredWhen(models.AssemblyActionValidateDefinitionCondVal.String()).AddNotValidWhen(models.AssemblyActionValidateDefinitionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.AssemblyActionValidateDefinitionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.AssemblyActionValidateDefinitionCondVal, models.AssemblyActionValidateDefinitionIgnoreVal, false),
 				},
 			},
 			"compile_settings": schema.StringAttribute{

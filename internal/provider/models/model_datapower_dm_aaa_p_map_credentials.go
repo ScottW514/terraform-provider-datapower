@@ -97,15 +97,15 @@ func GetDmAAAPMapCredentialsDataSourceSchema(description string, cliAlias string
 				Computed:            true,
 			},
 			"mc_custom_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").AddRequiredWhen(DmAAAPMapCredentialsMCCustomURLCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCCustomURLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"mc_map_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").AddRequiredWhen(DmAAAPMapCredentialsMCMapURLCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCMapURLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"mc_map_xpath": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").AddRequiredWhen(DmAAAPMapCredentialsMCMapXPathCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCMapXPathIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -131,24 +131,24 @@ func GetDmAAAPMapCredentialsResourceSchema(description string, cliAlias string, 
 				Default: stringdefault.StaticString("none"),
 			},
 			"mc_custom_url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").AddRequiredWhen(DmAAAPMapCredentialsMCCustomURLCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCCustomURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCCustomURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCCustomURLCondVal, DmAAAPMapCredentialsMCCustomURLIgnoreVal, false),
 				},
 			},
 			"mc_map_url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").AddRequiredWhen(DmAAAPMapCredentialsMCMapURLCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCMapURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCMapURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCMapURLCondVal, DmAAAPMapCredentialsMCMapURLIgnoreVal, false),
 				},
 			},
 			"mc_map_xpath": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").AddRequiredWhen(DmAAAPMapCredentialsMCMapXPathCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCMapXPathIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCMapXPathCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPMapCredentialsMCMapXPathCondVal, DmAAAPMapCredentialsMCMapXPathIgnoreVal, false),
 				},
 			},
 		},

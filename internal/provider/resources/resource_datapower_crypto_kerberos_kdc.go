@@ -39,6 +39,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &CryptoKerberosKDCResource{}
@@ -109,11 +110,12 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Default: int64default.StaticInt64(88),
 			},
 			"udp_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The number of seconds to wait for a UDP response from the KDC before declaring failure.", "udp-timeout", "").AddIntegerRange(1, 60).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The number of seconds to wait for a UDP response from the KDC before declaring failure.", "udp-timeout", "").AddIntegerRange(1, 60).AddDefaultValue("5").AddNotValidWhen(models.CryptoKerberosKDCUDPTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 60),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.CryptoKerberosKDCUDPTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(5),
 			},
@@ -124,20 +126,22 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Default:             booldefault.StaticBool(true),
 			},
 			"max_cache_d_tickets": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.", "max-cached-tickets", "").AddIntegerRange(1, 65535).AddDefaultValue("32").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.", "max-cached-tickets", "").AddIntegerRange(1, 65535).AddDefaultValue("32").AddNotValidWhen(models.CryptoKerberosKDCMaxCachedTicketsIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.CryptoKerberosKDCMaxCachedTicketsIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(32),
 			},
 			"min_cache_d_ticket_validity": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.", "min-cached-ticket-validity", "").AddIntegerRange(1, 65535).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.", "min-cached-ticket-validity", "").AddIntegerRange(1, 65535).AddDefaultValue("60").AddNotValidWhen(models.CryptoKerberosKDCMinCachedTicketValidityIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.CryptoKerberosKDCMinCachedTicketValidityIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(60),
 			},

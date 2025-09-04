@@ -89,11 +89,11 @@ func GetDmWSPolicyParametersDataSourceSchema() DataSourceSchema.NestedAttributeO
 				Computed:            true,
 			},
 			"policy_param_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSPolicyParametersPolicyParamWSDLComponentValueIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"policy_param_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSPolicyParametersPolicyParamSubscriptionCondVal.String()).AddNotValidWhen(DmWSPolicyParametersPolicyParamSubscriptionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"policy_param_fragment_id": DataSourceSchema.StringAttribute{
@@ -121,14 +121,14 @@ func GetDmWSPolicyParametersResourceSchema() ResourceSchema.NestedAttributeObjec
 				Default: stringdefault.StaticString("all"),
 			},
 			"policy_param_wsdl_component_value": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSPolicyParametersPolicyParamWSDLComponentValueIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"policy_param_subscription": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSPolicyParametersPolicyParamSubscriptionCondVal.String()).AddNotValidWhen(DmWSPolicyParametersPolicyParamSubscriptionIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmWSPolicyParametersPolicyParamSubscriptionCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmWSPolicyParametersPolicyParamSubscriptionCondVal, DmWSPolicyParametersPolicyParamSubscriptionIgnoreVal, false),
 				},
 			},
 			"policy_param_fragment_id": ResourceSchema.StringAttribute{

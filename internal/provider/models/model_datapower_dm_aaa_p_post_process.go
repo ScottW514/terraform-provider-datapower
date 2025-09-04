@@ -1927,7 +1927,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_custom_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the custom file for the postprocessing activity.", "custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the custom file for the postprocessing activity.", "custom-url", "").AddRequiredWhen(DmAAAPPostProcessPPCustomURLCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPCustomURLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_auth_assertion": DataSourceSchema.BoolAttribute{
@@ -1935,11 +1935,11 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_saml_server_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the value of the <tt>saml:Issuer</tt> of the generated SAML assertion or SAML SLO request. The default value is XS.</p><ul><li>If generating an SAML assertion, identifies the server that makes the assertion.</li><li>If sending an SLO request, identifies the issuer that sends the request.</li></ul>", "saml-server-name", "").AddDefaultValue("XS").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the value of the <tt>saml:Issuer</tt> of the generated SAML assertion or SAML SLO request. The default value is XS.</p><ul><li>If generating an SAML assertion, identifies the server that makes the assertion.</li><li>If sending an SLO request, identifies the issuer that sends the request.</li></ul>", "saml-server-name", "").AddDefaultValue("XS").AddNotValidWhen(DmAAAPPostProcessPPSAMLServerNameIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_name_qualifier": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the NameQualifier attribute of the NameIdentifier in the generated SAML assertion. Although the attribute is an optional attribute, some SAML implementations require that this attribute must be present.", "saml-name-qualifier", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the NameQualifier attribute of the NameIdentifier in the generated SAML assertion. Although the attribute is an optional attribute, some SAML implementations require that this attribute must be present.", "saml-name-qualifier", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLNameQualifierIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_ticket": DataSourceSchema.BoolAttribute{
@@ -1947,15 +1947,15 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_kerberos_client": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the client identity (cname of the Kerberos ticket) for the Kerberos client principal.", "kerberos-client-principal", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the client identity (cname of the Kerberos ticket) for the Kerberos client principal.", "kerberos-client-principal", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_client_password": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddNotValidWhen(DmAAAPPostProcessPPKerberosClientPasswordIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_server": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the server identity (sname of the Kerberos ticket) for the Kerberos server principal.", "kerberos-server", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the server identity (sname of the Kerberos ticket) for the Kerberos server principal.", "kerberos-server", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosServerCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosServerIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_trust": DataSourceSchema.BoolAttribute{
@@ -1963,19 +1963,19 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_timestamp": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a WS-Trust token time stamp for the security token response.", "ws-trust-add-timestamp", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a WS-Trust token time stamp for the security token response.", "ws-trust-add-timestamp", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPPostProcessPPTimestampIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_timestamp_expiry": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration for the WS-Trust SCT in seconds to issue a new security context or to renew a context instance with new instance. Enter a value in the range 0 - 31622400. The default value is 0, which uses the value of the <tt>var://system/AAA/defaultexpiry</tt> variable if defined. If you did not define this variable, the value is 14400. If this setting is to renew a security context or instance, the value 0 means to use the old duration for the renewed cycle.", "ws-trust-timestamp-expiry", "").AddIntegerRange(0, 31622400).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration for the WS-Trust SCT in seconds to issue a new security context or to renew a context instance with new instance. Enter a value in the range 0 - 31622400. The default value is 0, which uses the value of the <tt>var://system/AAA/defaultexpiry</tt> variable if defined. If you did not define this variable, the value is 14400. If this setting is to renew a security context or instance, the value 0 means to use the old duration for the renewed cycle.", "ws-trust-timestamp-expiry", "").AddIntegerRange(0, 31622400).AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPTimestampExpiryIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_allow_renewal": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether WS-Trust tokens can have their lifetime period reset without a new bootstrapping authentication event. If the WS-Trust request asks to renew the issued token, this setting is ignored.", "ws-trust-allow-renewal", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether WS-Trust tokens can have their lifetime period reset without a new bootstrapping authentication event. If the WS-Trust request asks to renew the issued token, this setting is ignored.", "ws-trust-allow-renewal", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPAllowRenewalIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_version": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol level of SAML messages. The version affects the identity extraction from the original message and the format of messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2", "1.1", "1").AddDefaultValue("2").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol level of SAML messages. The version affects the identity extraction from the original message and the format of messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2", "1.1", "1").AddDefaultValue("2").AddNotValidWhen(DmAAAPPostProcessPPSAMLVersionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_send_slo": DataSourceSchema.BoolAttribute{
@@ -1983,7 +1983,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_saml_slo_endpoint": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint URL for SAML 2.0 Single Logout (SLO) messages. This endpoint is the authority that authenticated the assertion subject.", "saml-slo-endpoint", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint URL for SAML 2.0 Single Logout (SLO) messages. This endpoint is the authority that authenticated the assertion subject.", "saml-slo-endpoint", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLSLOEndpointIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_username_token": DataSourceSchema.BoolAttribute{
@@ -1991,19 +1991,19 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_ws_username_token_password_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of password that the UsernameToken provides. By default, use the digest of the password as defined in the \"Web Services Security UsernameToken Profile 1.0\" specification.", "wssec-user-name-token-type", "").AddStringEnum("Text", "Digest").AddDefaultValue("Digest").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of password that the UsernameToken provides. By default, use the digest of the password as defined in the \"Web Services Security UsernameToken Profile 1.0\" specification.", "wssec-user-name-token-type", "").AddStringEnum("Text", "Digest").AddDefaultValue("Digest").AddNotValidWhen(DmAAAPPostProcessPPWSUsernameTokenPasswordTypeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_validity": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration of the SAML assertion in seconds. This value and the skew time are for fine control of the validity duration. The default value is 0.", "saml-validity", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration of the SAML assertion in seconds. This value and the skew time are for fine control of the validity duration. The default value is 0.", "saml-validity", "").AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPSAMLValidityIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_skew": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the acceptable skew interval in seconds. The IdP and SP system clocks can have a skew time. When the SAML assertion is generated, the expiration takes the skew time setting into account. <ul><li>When <tt>NotBefore</tt> has the value of <tt>(CurrentTime - SkewTime)</tt> .</li><li>When <tt>NotOnOrAfter</tt> has the value of <tt>(CurrentTime + Validity + SkewTime)</tt> .</li></ul>", "saml-skew", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the acceptable skew interval in seconds. The IdP and SP system clocks can have a skew time. When the SAML assertion is generated, the expiration takes the skew time setting into account. <ul><li>When <tt>NotBefore</tt> has the value of <tt>(CurrentTime - SkewTime)</tt> .</li><li>When <tt>NotOnOrAfter</tt> has the value of <tt>(CurrentTime + Validity + SkewTime)</tt> .</li></ul>", "saml-skew", "").AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPSAMLSkewIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_username_token_include_pwd": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Security UsernameToken must include the password. By default, the token must contain the password.", "wssec-user-name-token-contains-pwd", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Security UsernameToken must include the password. By default, the token must contain the password.", "wssec-user-name-token-contains-pwd", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPPostProcessPPWSUsernameTokenIncludePwdIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ltpa": DataSourceSchema.BoolAttribute{
@@ -2011,23 +2011,23 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_ltpa_version": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.", "lpta-version", "").AddStringEnum("LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7", "LTPADomino").AddDefaultValue("LTPA2").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.", "lpta-version", "").AddStringEnum("LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7", "LTPADomino").AddDefaultValue("LTPA2").AddNotValidWhen(DmAAAPPostProcessPPLTPAVersionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ltpa_expiry": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.", "lpta-expiry", "").AddIntegerRange(1, 628992000).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.", "lpta-expiry", "").AddIntegerRange(1, 628992000).AddDefaultValue("600").AddNotValidWhen(DmAAAPPostProcessPPLTPAExpiryIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ltpa_key_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").AddRequiredWhen(DmAAAPPostProcessPPLTPAKeyFileCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPLTPAKeyFileIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ltpa_key_file_password": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the LTPA key file password alias.", "lpta-key-file-password", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the LTPA key file password alias.", "lpta-key-file-password", "").AddNotValidWhen(DmAAAPPostProcessPPLTPAKeyFilePasswordIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ltpa_stash_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the file that contains the LTPA key file password.", "lpta-stash-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the file that contains the LTPA key file password.", "lpta-stash-file", "").AddNotValidWhen(DmAAAPPostProcessPPLTPAStashFileIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_spnego_token": DataSourceSchema.BoolAttribute{
@@ -2035,71 +2035,71 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_kerberos_bst_value_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the <tt>ValueType</tt> attribute of the WS-Security BinarySecurityToken. The Kerberos AP-REQ message contains the <tt>ValueType</tt> attribute. The default value is for WSS Kerberos Token Profile 1.1 (GSS).", "kerberos-value-type", "").AddStringEnum("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://www.docs.oasis-open.org/wss/2004/07/oasis-000000-wss-kerberos-token-profile-1.0#Kerberosv5_AP_REQ").AddDefaultValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the <tt>ValueType</tt> attribute of the WS-Security BinarySecurityToken. The Kerberos AP-REQ message contains the <tt>ValueType</tt> attribute. The default value is for WSS Kerberos Token Profile 1.1 (GSS).", "kerberos-value-type", "").AddStringEnum("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://www.docs.oasis-open.org/wss/2004/07/oasis-000000-wss-kerberos-token-profile-1.0#Kerberosv5_AP_REQ").AddDefaultValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ").AddRequiredWhen(DmAAAPPostProcessPPKerberosBstValueTypeCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosBstValueTypeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_use_ws_sec": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to insert the SAML assertion. By default, the assertion is inserted as a child element of the SOAP header. When enabled, the assertion is inserted in a WS-Security-compliant header as defined by the WS-Security SAML token profile.", "saml-in-wssec", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to insert the SAML assertion. By default, the assertion is inserted as a child element of the SOAP header. When enabled, the assertion is inserted in a WS-Security-compliant header as defined by the WS-Security SAML token profile.", "saml-in-wssec", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPSAMLUseWSSecIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_client_keytab": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Kerberos keytab that defines the keytab for the client. This keytab is required to authenticate the client to the KDC.", "kerberos-client-keytab", "crypto_kerberos_keytab").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Kerberos keytab that defines the keytab for the client. This keytab is required to authenticate the client to the KDC.", "kerberos-client-keytab", "crypto_kerberos_keytab").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientKeytabCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientKeytabIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_use_ws_sec": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the token can be wrapped by the WS-Security <tt>wsse:Security</tt> header. This setting for the LTPA token. By default, the token cannot be wrapped by this header. When enabled, generate a WS-Security header that contains the token.", "wssec-header-wrap-token", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the token can be wrapped by the WS-Security <tt>wsse:Security</tt> header. This setting for the LTPA token. By default, the token cannot be wrapped by this header. When enabled, generate a WS-Security header that contains the token.", "wssec-header-wrap-token", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPUseWSSecIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_actor_role_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier for the SOAP 1.1 actor or SOAP 1.2 role for processing a WS-Security Security header. The DataPower Gateway works as that actor or role in consuming the input and generating the output for the next SOAP endpoint. This setting is meaningful when a SOAP message is being used for WS-Security 1.0 or 1.1. <table border=\"1\"><tr><td valign=\"left\">http://schemas.xmlsoap.org/soap/actor/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/none</td><td>No one can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</td><td>The ultimate receiver of the message can process the Security header. This value is the default value if such setting is not configured.</td></tr><tr><td valign=\"left\">&lt;blank or empty string></td><td>The empty string \"\" (without quotation marks) indicates that no actor or role identifier is configured. If no actor or role setting is configured, the ultimate receiver is assumed during message processing, and no actor or role attribute is added during the generation of the Security header. <p>This value does not generate an attribute with an empty value, which is the behavior as defined by the USE_MESSAGE_BASE_URI constant string. There cannot be more than one Security header that omits the actor or role identifier.</p></td></tr><tr><td valign=\"left\">USE_MESSAGE_BASE_URI</td><td>The constant value indicates that the actor or role identifier is the base URL of the message. If the SOAP message is transported over HTTP, the base URI is the Request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">any other customized string</td><td>You can input any string to identify the actor or role of the Security header.</td></tr></table>", "wssec-actor-role-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier for the SOAP 1.1 actor or SOAP 1.2 role for processing a WS-Security Security header. The DataPower Gateway works as that actor or role in consuming the input and generating the output for the next SOAP endpoint. This setting is meaningful when a SOAP message is being used for WS-Security 1.0 or 1.1. <table border=\"1\"><tr><td valign=\"left\">http://schemas.xmlsoap.org/soap/actor/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/none</td><td>No one can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</td><td>The ultimate receiver of the message can process the Security header. This value is the default value if such setting is not configured.</td></tr><tr><td valign=\"left\">&lt;blank or empty string></td><td>The empty string \"\" (without quotation marks) indicates that no actor or role identifier is configured. If no actor or role setting is configured, the ultimate receiver is assumed during message processing, and no actor or role attribute is added during the generation of the Security header. <p>This value does not generate an attribute with an empty value, which is the behavior as defined by the USE_MESSAGE_BASE_URI constant string. There cannot be more than one Security header that omits the actor or role identifier.</p></td></tr><tr><td valign=\"left\">USE_MESSAGE_BASE_URI</td><td>The constant value indicates that the actor or role identifier is the base URL of the message. If the SOAP message is transported over HTTP, the base URI is the Request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">any other customized string</td><td>You can input any string to identify the actor or role of the Security header.</td></tr></table>", "wssec-actor-role-id", "").AddNotValidWhen(DmAAAPPostProcessPPActorRoleIDIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_derived_key_username_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a derived key from a password. By default, a derived key is not generated. When enabled, the process adds a WS-Security derived-key UsernameToken to the message and adds an HMAC signature with the derived-key. The username and password are taken from the output of the map credentials phase.", "wssec-use-derived-key", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a derived key from a password. By default, a derived key is not generated. When enabled, the process adds a WS-Security derived-key UsernameToken to the message and adds an HMAC signature with the derived-key. The username and password are taken from the output of the map credentials phase.", "wssec-use-derived-key", "").AddDefaultValue("false").AddRequiredWhen(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_derived_key_username_token_iterations": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of hashing cycles during the generation of a derived key from a password. The minimum value is 2. The default value is 1000.", "wssec-derived-key-hash-iter", "").AddIntegerRange(2, 65535).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of hashing cycles during the generation of a derived key from a password. The minimum value is 2. The default value is 1000.", "wssec-derived-key-hash-iter", "").AddIntegerRange(2, 65535).AddDefaultValue("1000").AddRequiredWhen(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_username_token_allow_replacement": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retain the original token, not generate a new one, if the message already contains a UsernameToken. By default, the original otken is retained. When enabled, the generated token replaces any existing ones.", "wssec-replace-existing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retain the original token, not generate a new one, if the message already contains a UsernameToken. By default, the original otken is retained. When enabled, the generated token replaces any existing ones.", "wssec-replace-existing", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSUsernameTokenAllowReplacementIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_hmac_signing_alg": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HMAC algorithm to sign the token. This property is available to request a WS-Security UsernameToken in postprocessing and WS-Security Derived-Key UsernameToken is added to the message with an HMAC signature. The default value is hmac-sha1.", "hmac-signing-algorithm", "").AddStringEnum("hmac-sha1", "hmac-sha224", "hmac-sha256", "hmac-sha384", "hmac-sha512", "hmac-ripemd160", "hmac-md5").AddDefaultValue("hmac-sha1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HMAC algorithm to sign the token. This property is available to request a WS-Security UsernameToken in postprocessing and WS-Security Derived-Key UsernameToken is added to the message with an HMAC signature. The default value is hmac-sha1.", "hmac-signing-algorithm", "").AddStringEnum("hmac-sha1", "hmac-sha224", "hmac-sha256", "hmac-sha384", "hmac-sha512", "hmac-ripemd160", "hmac-md5").AddDefaultValue("hmac-sha1").AddRequiredWhen(DmAAAPPostProcessPPHMACSigningAlgCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPHMACSigningAlgIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_signing_hash_alg": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm for the message digest for the generation of a digital signature. This algorithm is for only the UsernameToken postprocessing method. The default value is sha1.", "message-digest-algorithm", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm for the message digest for the generation of a digital signature. This algorithm is for only the UsernameToken postprocessing method. The default value is sha1.", "message-digest-algorithm", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").AddRequiredWhen(DmAAAPPostProcessPPSigningHashAlgCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPSigningHashAlgIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_trust_header": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the WS-Trust token as a SOAP header. By default, the token is put in the SOAP body. When enabled, return the token as a SOAP header by wrapping the <tt>wst:RequestedSecurityToken</tt> by a <tt>wst:IssuedToken</tt> .", "ws-trust-in-header", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the WS-Trust token as a SOAP header. By default, the token is put in the SOAP body. When enabled, return the token as a SOAP header by wrapping the <tt>wst:RequestedSecurityToken</tt> by a <tt>wst:IssuedToken</tt> .", "ws-trust-in-header", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSTrustHeaderIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_sc_key_source": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the source of the key. For WS-Trust postprocessing, the DataPower Gateway works as an on-box WS-Trust security token service that is backed by WS-SecureConversation. A symmetric shared secret key is needed to initialize the WS-SecureConversation SecurityContext. By default, a random key is generated.", "ws-trust-key-source", "").AddStringEnum("client-entropy", "in-kerberos", "in-encryptedkey", "static", "random").AddDefaultValue("random").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the source of the key. For WS-Trust postprocessing, the DataPower Gateway works as an on-box WS-Trust security token service that is backed by WS-SecureConversation. A symmetric shared secret key is needed to initialize the WS-SecureConversation SecurityContext. By default, a random key is generated.", "ws-trust-key-source", "").AddStringEnum("client-entropy", "in-kerberos", "in-encryptedkey", "static", "random").AddDefaultValue("random").AddNotValidWhen(DmAAAPPostProcessPPWSSCKeySourceIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_shared_secret_key": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret key as the WS-Trust key source.", "ws-trust-shared-key", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret key as the WS-Trust key source.", "ws-trust-shared-key", "crypto_sskey").AddNotValidWhen(DmAAAPPostProcessPPSharedSecretKeyIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_trust_renewal_wait": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration to allow the STS to keep an expired SecurityContext token in seconds. After a WS-Trust token expires, it can be removed from the STS and cannot be renewed. Therefore, the token must be renewed before expiry. Enter a value in the range of 0 - 2678400. The default value is 0. <p>The token is issued or renewed with a 1-hour wait time in the following situation.</p><ul><li>The WS-Trust request asks that the issued token can be renewed after expiration.</li><li>This setting has a value of 0.</li></ul>", "ws-trust-renewal-wait", "").AddIntegerRange(0, 2678400).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration to allow the STS to keep an expired SecurityContext token in seconds. After a WS-Trust token expires, it can be removed from the STS and cannot be renewed. Therefore, the token must be renewed before expiry. Enter a value in the range of 0 - 2678400. The default value is 0. <p>The token is issued or renewed with a 1-hour wait time in the following situation.</p><ul><li>The WS-Trust request asks that the issued token can be renewed after expiration.</li><li>This setting has a value of 0.</li></ul>", "ws-trust-renewal-wait", "").AddIntegerRange(0, 2678400).AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPWSTrustRenewalWaitIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_trust_new_instance": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the STS renewal request issues a new instance for WS-Trust renewal. By default, the STS renewal request renews the existing instance. When enabled, the STS renewal request creates a new instance.", "ws-trust-new-instance", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the STS renewal request issues a new instance for WS-Trust renewal. By default, the STS renewal request renews the existing instance. When enabled, the STS renewal request creates a new instance.", "ws-trust-new-instance", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSTrustNewInstanceIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_trust_new_key": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to update the context key for WS-Trust renewal.By default, the SCT renewal request uses the existing shared secret key. When enabled, the SCT renewal request does not use the existing shared secret key.", "ws-trust-new-key", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to update the context key for WS-Trust renewal.By default, the SCT renewal request uses the existing shared secret key. When enabled, the SCT renewal request does not use the existing shared secret key.", "ws-trust-new-key", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSTrustNewKeyIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ws_trust_never_expire": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Trust security context expires. By default, the security context expires. When enabled, the security context never expires.However, you can change the duration afterward with an explicit duration in seconds before expiry.", "ws-trust-never-expire", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Trust security context expires. By default, the security context expires. When enabled, the security context never expires.However, you can change the duration afterward with an explicit duration in seconds before expiry.", "ws-trust-never-expire", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSTrustNeverExpireIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"ppicrx_token": DataSourceSchema.BoolAttribute{
@@ -2107,7 +2107,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"ppicrx_user_realm": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the realm of a user for ICRX identity propagation. The ICRX realm is defined in the SAF configuration. Generally, this value is the equivalent of the prefix for a DN in a user registry.", "icrx-user-realm", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the realm of a user for ICRX identity propagation. The ICRX realm is defined in the SAF configuration. Generally, this value is the equivalent of the prefix for a DN in a user registry.", "icrx-user-realm", "").AddNotValidWhen(DmAAAPPostProcessPPICRXUserRealmIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_identity_provider": DataSourceSchema.BoolAttribute{
@@ -2115,68 +2115,68 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_saml_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SAML protocol to wrap up the SAML assertion. By default, the SAML assertion can be put to WS-Security wrap-up later.", "saml-protocol", "").AddStringEnum("assertion", "response").AddDefaultValue("assertion").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SAML protocol to wrap up the SAML assertion. By default, the SAML assertion can be put to WS-Security wrap-up later.", "saml-protocol", "").AddStringEnum("assertion", "response").AddDefaultValue("assertion").AddNotValidWhen(DmAAAPPostProcessPPSAMLProtocolIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_response_destination": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for a SAML response. This information can prevent malicious forwarding of requests to unintended recipients, which is a required protection by some protocol bindings. If it is present, the actual recipient must check that the URI reference identifies the location at which the message was received. If it does not check that the URI reference identifies the location, the request must be discarded. Some protocol bindings might require the use of this attribute.", "saml-response-destination", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for a SAML response. This information can prevent malicious forwarding of requests to unintended recipients, which is a required protection by some protocol bindings. If it is present, the actual recipient must check that the URI reference identifies the location at which the message was received. If it does not check that the URI reference identifies the location, the request must be discarded. Some protocol bindings might require the use of this attribute.", "saml-response-destination", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLResponseDestinationIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_result_wrapup": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the result. When the DataPower Gateway is configured for SOAP or WS-Security processing, different output methods can be used. By default, generates the results to an existing WS-Security message and replaces the same token in the requesting message.", "result-wrapup", "").AddStringEnum("wssec-replace", "wssec-new", "wssec-inject", "soap-body", "none").AddDefaultValue("wssec-replace").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the result. When the DataPower Gateway is configured for SOAP or WS-Security processing, different output methods can be used. By default, generates the results to an existing WS-Security message and replaces the same token in the requesting message.", "result-wrapup", "").AddStringEnum("wssec-replace", "wssec-new", "wssec-inject", "soap-body", "none").AddDefaultValue("wssec-replace").AddNotValidWhen(DmAAAPPostProcessPPResultWrapupIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_assertion_type": GetDmSAMLStatementTypeDataSourceSchema("Specify the supported SAML statement types. By default, supports both attributes and authentication statements.", "saml-assertion-type", ""),
 			"pp_saml_subject_confirm": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method that allows the destination system to confirm the subject of the SAML assertion. By default, the subject is bearer.", "saml-subject-confirm", "").AddStringEnum("bearer", "hok", "sv").AddDefaultValue("bearer").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method that allows the destination system to confirm the subject of the SAML assertion. By default, the subject is bearer.", "saml-subject-confirm", "").AddStringEnum("bearer", "hok", "sv").AddDefaultValue("bearer").AddNotValidWhen(DmAAAPPostProcessPPSAMLSubjectConfirmIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_name_id": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the SAML Subject element contains the name identifier. By default, the SAML subject contains the name identifier. When disabled, the SAML subject does not contain the name identifier. Use this value if the subject confirmation method is holder-of-key because the key represent the same entity as the subject.", "saml-nid", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the SAML Subject element contains the name identifier. By default, the SAML subject contains the name identifier. When disabled, the SAML subject does not contain the name identifier. Use this value if the subject confirmation method is holder-of-key because the key represent the same entity as the subject.", "saml-nid", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPPostProcessPPSAMLNameIDIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_name_id_format": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI reference that represents the classification of string-based identifier information. Any standard or arbitrary URI is allowed. If the value is an empty string, the DataPower Gateway attempts to determine the value from the AAA context. Some SAML protocols require a specified value, such as <tt>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</tt> or <tt>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</tt> .", "saml-nid-format", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI reference that represents the classification of string-based identifier information. Any standard or arbitrary URI is allowed. If the value is an empty string, the DataPower Gateway attempts to determine the value from the AAA context. Some SAML protocols require a specified value, such as <tt>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</tt> or <tt>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</tt> .", "saml-nid-format", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLNameIDFormatIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_recipient": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify a URI that identifies the entity or location that an attesting entity can present the assertion to. Any standard or arbitrary URI is allowed. If the value is an empty string, the optional attribute is not generated. This setting is applicable for only SAML 2.0.", "saml-recipient", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a URI that identifies the entity or location that an attesting entity can present the assertion to. Any standard or arbitrary URI is allowed. If the value is an empty string, the optional attribute is not generated. This setting is applicable for only SAML 2.0.", "saml-recipient", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLRecipientIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_audience": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify URI references that identify an intended audience. Enter any number of the audience URIs to process the generated SAML assertion. If the value is an empty string, the SAML audience is not restricted. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-audience", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify URI references that identify an intended audience. Enter any number of the audience URIs to process the generated SAML assertion. If the value is an empty string, the SAML audience is not restricted. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-audience", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLAudienceIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_omit_not_before": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("whether to omit the <tt>NotBefore</tt> attribute in the SAML assertion. When omitted, the assertion is considered valid even before the time it was issued. By default, the <tt>NotBefore</tt> attribute is not omitted. When enabled, the <tt>NotBefore</tt> attribute in the SAML assertion is omitted. This behavior might be required to respond to an <tt>AuthnRequest</tt> .", "saml-omit-notbefore", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("whether to omit the <tt>NotBefore</tt> attribute in the SAML assertion. When omitted, the assertion is considered valid even before the time it was issued. By default, the <tt>NotBefore</tt> attribute is not omitted. When enabled, the <tt>NotBefore</tt> attribute in the SAML assertion is omitted. This behavior might be required to respond to an <tt>AuthnRequest</tt> .", "saml-omit-notbefore", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPSAMLOmitNotBeforeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_one_time_use": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the destination system or relying party should cache the generated token. The generated token might contain the property for this characteristic, which is especially practical for SAML assertions. By default, the destination system can cache the generated token. When enabled, he destination system should not cache the generated token.", "one-time-use", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the destination system or relying party should cache the generated token. The generated token might contain the property for this characteristic, which is especially practical for SAML assertions. By default, the destination system can cache the generated token. When enabled, he destination system should not cache the generated token.", "one-time-use", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPOneTimeUseIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_proxy": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to allow SAML proxy restriction. The generated SAML assertion provides limitations that the asserting party imposes on relying parties that want to act as asserting parties.</p><ul><li>A relying party that acts as an asserting party can issue subsequent assertions that are based on the information in the original assertion.</li><li>The relying party cannot issue an assertion that violates these restrictions.</li></ul><p>By default, proxy restrictions are not allowd. When enabled, proxy restrictions are allows.</p>", "saml-proxy", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to allow SAML proxy restriction. The generated SAML assertion provides limitations that the asserting party imposes on relying parties that want to act as asserting parties.</p><ul><li>A relying party that acts as an asserting party can issue subsequent assertions that are based on the information in the original assertion.</li><li>The relying party cannot issue an assertion that violates these restrictions.</li></ul><p>By default, proxy restrictions are not allowd. When enabled, proxy restrictions are allows.</p>", "saml-proxy", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPSAMLProxyIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_proxy_audience": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the set of audiences (proxy) to whom the asserting party permits new assertions to be issued based on this assertion. If the value is an empty string, the audience for the <tt>ProxyRestriction</tt> is not issued with this SAML assertion. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-proxy-audience", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the set of audiences (proxy) to whom the asserting party permits new assertions to be issued based on this assertion. If the value is an empty string, the audience for the <tt>ProxyRestriction</tt> is not issued with this SAML assertion. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-proxy-audience", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLProxyAudienceIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_proxy_count": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of indirections that the asserting party permits between this assertion and an assertion that was issued. Enter a value in the range 0 - 65535. The default value is 0. A value of 0 indicates that a relying party must not issue an assertion to another relying party based on this assertion. If greater than zero, any assertion that is issued must itself contain a <tt>ProxyRestriction</tt> element with a <tt>Count</tt> value of at most one less than this value.", "saml-proxy-count", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of indirections that the asserting party permits between this assertion and an assertion that was issued. Enter a value in the range 0 - 65535. The default value is 0. A value of 0 indicates that a relying party must not issue an assertion to another relying party based on this assertion. If greater than zero, any assertion that is issued must itself contain a <tt>ProxyRestriction</tt> element with a <tt>Count</tt> value of at most one less than this value.", "saml-proxy-count", "").AddIntegerRange(0, 65535).AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPSAMLProxyCountIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_authz_action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the standard action that the subject can take on the resource. The SAML specification defines the list of action identifiers with corresponding namespace URIs. By default, all HTTP operations, where <tt>urn:oasis:names:tc:SAML:1.0:action:ghpp</tt> is the namespace URI.", "saml-authz-action", "").AddStringEnum("AllHTTP", "POST", "GET", "PUT", "HEAD", "General", "Read", "Write", "Execute", "Delete", "Control", "NegatedRead", "NegatedWrite", "NegatedExecute", "NegatedDelete", "NegatedControl").AddDefaultValue("AllHTTP").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the standard action that the subject can take on the resource. The SAML specification defines the list of action identifiers with corresponding namespace URIs. By default, all HTTP operations, where <tt>urn:oasis:names:tc:SAML:1.0:action:ghpp</tt> is the namespace URI.", "saml-authz-action", "").AddStringEnum("AllHTTP", "POST", "GET", "PUT", "HEAD", "General", "Read", "Write", "Execute", "Delete", "Control", "NegatedRead", "NegatedWrite", "NegatedExecute", "NegatedDelete", "NegatedControl").AddDefaultValue("AllHTTP").AddNotValidWhen(DmAAAPPostProcessPPSAMLAuthzActionIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_saml_attributes": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an existing SAML attributes. The SAML attributes define the information to put in the SAML assertion to generate the attribute statement. Each SAML attribute requires the name, format or namespace, and value. The value can be from a DataPower variable.", "saml-attributes", "saml_attributes").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an existing SAML attributes. The SAML attributes define the information to put in the SAML assertion to generate the attribute statement. Each SAML attribute requires the name, format or namespace, and value. The value can be from a DataPower variable.", "saml-attributes", "saml_attributes").AddRequiredWhen(DmAAAPPostProcessPPSAMLAttributesCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPSAMLAttributesIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ltpa_insert_cookie": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.", "ltpa-insert-cookie", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.", "ltpa-insert-cookie", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPPostProcessPPLTPAInsertCookieIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_tam_pac_propagate": DataSourceSchema.BoolAttribute{
@@ -2184,67 +2184,67 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_tam_header": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the HTTP header to store the token in. The default value is iv_creds, which is HTTP header that WebSEAL uses to write headers.", "tam-header", "").AddDefaultValue("iv-creds").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the HTTP header to store the token in. The default value is iv_creds, which is HTTP header that WebSEAL uses to write headers.", "tam-header", "").AddDefaultValue("iv-creds").AddRequiredWhen(DmAAAPPostProcessPPTAMHeaderCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPTAMHeaderIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_tam_header_size": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in bytes of HTTP headers. A value of 0 disables this function. If the value is nonzero, the PAC token is split across multiple headers of the specified length. The default value is 0.", "tam-header-size", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in bytes of HTTP headers. A value of 0 disables this function. If the value is nonzero, the PAC token is split across multiple headers of the specified length. The default value is 0.", "tam-header-size", "").AddDefaultValue("0").AddRequiredWhen(DmAAAPPostProcessPPTAMHeaderSizeCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPTAMHeaderSizeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_use_s4u2proxy": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use constrained delegation, namely S4U2Proxy, when a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token is generated. By default, does not use constrained delegation. When enabled, uses constrained delegation.", "kerberos-use-s4u2proxy", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use constrained delegation, namely S4U2Proxy, when a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token is generated. By default, does not use constrained delegation. When enabled, uses constrained delegation.", "kerberos-use-s4u2proxy", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPKerberosUseS4U2ProxyIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_cookie_attributes": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy to include standard or custom attributes in the cookie. The response message that contains a <tt>Set-Cookie</tt> header is updated with the attributes defined in this policy.", "cookie-attributes", "cookie_attribute_policy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy to include standard or custom attributes in the cookie. The response message that contains a <tt>Set-Cookie</tt> header is updated with the attributes defined in this policy.", "cookie-attributes", "cookie_attribute_policy").AddNotValidWhen(DmAAAPPostProcessPPCookieAttributesIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_use_s4u2self_and_s4u2proxy": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use protocol transition, namely S4U2Self, and then use constrained delegation, namely S4U2Proxy.</p><ul><li>Use S4U2Self to convert a non-Kerberos token to a Kerberos token to the DataPower Gateway itself.</li><li>Use S4U2Proxy to generate a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token.</li></ul><p>By default, does not use protocol transition and constrained delegation. When enabled, uses protocol transition and constrained delegation.</p>", "kerberos-use-s4u2self", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use protocol transition, namely S4U2Self, and then use constrained delegation, namely S4U2Proxy.</p><ul><li>Use S4U2Self to convert a non-Kerberos token to a Kerberos token to the DataPower Gateway itself.</li><li>Use S4U2Proxy to generate a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token.</li></ul><p>By default, does not use protocol transition and constrained delegation. When enabled, uses protocol transition and constrained delegation.</p>", "kerberos-use-s4u2self", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPKerberosUseS4U2SelfAndS4U2ProxyIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_client_source": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to get the principal name of the Kerberos client. By default, uses the output of credential mapping. The client principal is based on the authenticated identity, which is followed by the corresponding realm name. For example, if the authenticated user is <tt>alice</tt> , the client principal name can be <tt>HTTP/alice.datapower.com@DATAPOWER.COM</tt> . The client principal must be present in the KDC for S4U2Self to work.", "kerberos-client-source", "").AddStringEnum("mc-output", "custom-url", "ctx-var").AddDefaultValue("mc-output").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to get the principal name of the Kerberos client. By default, uses the output of credential mapping. The client principal is based on the authenticated identity, which is followed by the corresponding realm name. For example, if the authenticated user is <tt>alice</tt> , the client principal name can be <tt>HTTP/alice.datapower.com@DATAPOWER.COM</tt> . The client principal must be present in the KDC for S4U2Self to work.", "kerberos-client-source", "").AddStringEnum("mc-output", "custom-url", "ctx-var").AddDefaultValue("mc-output").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientSourceCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientSourceIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_self": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the principal name of the DataPower Gateway.", "kerberos-self-principal", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the principal name of the DataPower Gateway.", "kerberos-self-principal", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosSelfCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosSelfIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_self_keytab": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the Kerberos keytab that defines the keytab for the DataPower Gateway. This keytab is required to authenticate the DataPower Gateway to the KDC.", "kerberos-self-keytab", "crypto_kerberos_keytab").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the Kerberos keytab that defines the keytab for the DataPower Gateway. This keytab is required to authenticate the DataPower Gateway to the KDC.", "kerberos-self-keytab", "crypto_kerberos_keytab").AddRequiredWhen(DmAAAPPostProcessPPKerberosSelfKeytabCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosSelfKeytabIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_client_custom_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-client-principal</tt> element. This file gets the following input.</p><ul><li>The output of all the steps that are executed in this AAA action.</li><li>The incoming request message.</li></ul>", "kerberos-client-custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-client-principal</tt> element. This file gets the following input.</p><ul><li>The output of all the steps that are executed in this AAA action.</li><li>The incoming request message.</li></ul>", "kerberos-client-custom-url", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientCustomURLCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientCustomURLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_client_ctx_var": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos client principal. This context variable must be specified in the <tt>var://context/name</tt> format. For example, <tt>var://context/AAA/krb-client-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-client-ctx-var", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos client principal. This context variable must be specified in the <tt>var://context/name</tt> format. For example, <tt>var://context/AAA/krb-client-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-client-ctx-var", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientCtxVarCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientCtxVarIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_server_source": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to get the principal name of the Kerberos server. By default, the server principal name is the value that is specified by the Kerberos server principal property. Ensure that the server principal is in the correct format. For example, <tt>HTTP/was-backend.datapower.com@DATAPOWER.COM</tt> .", "kerberos-server-source", "").AddStringEnum("as-is-string", "custom-url", "ctx-var").AddDefaultValue("as-is-string").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to get the principal name of the Kerberos server. By default, the server principal name is the value that is specified by the Kerberos server principal property. Ensure that the server principal is in the correct format. For example, <tt>HTTP/was-backend.datapower.com@DATAPOWER.COM</tt> .", "kerberos-server-source", "").AddStringEnum("as-is-string", "custom-url", "ctx-var").AddDefaultValue("as-is-string").AddRequiredWhen(DmAAAPPostProcessPPKerberosServerSourceCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosServerSourceIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_server_custom_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-server-principal</tt> element.</p><p>When constrained delegation is not used, this file gets the following input.</p><ul><li>The output of all phases that this AAA action processes.</li><li>The incoming request message.</li></ul><p>When constrained delegation is used, this file gets the following input.</p><ul><li>The output of only the identity extraction phase.</li><li>The incoming request message.</li></ul>", "kerberos-server-custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-server-principal</tt> element.</p><p>When constrained delegation is not used, this file gets the following input.</p><ul><li>The output of all phases that this AAA action processes.</li><li>The incoming request message.</li></ul><p>When constrained delegation is used, this file gets the following input.</p><ul><li>The output of only the identity extraction phase.</li><li>The incoming request message.</li></ul>", "kerberos-server-custom-url", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosServerCustomURLCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosServerCustomURLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_kerberos_server_ctx_var": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos server principal. This context variable must be specified in the <tt>var://context/name format</tt> . For example, <tt>var:///context/AAA/krb-server-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-server-ctx-var", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos server principal. This context variable must be specified in the <tt>var://context/name format</tt> . For example, <tt>var:///context/AAA/krb-server-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-server-ctx-var", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosServerCtxVarCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosServerCtxVarIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ssl_client_config_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client type to secure connections.", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client type to secure connections.", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").AddNotValidWhen(DmAAAPPostProcessPPSSLClientConfigTypeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ssl_client_profile": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").AddNotValidWhen(DmAAAPPostProcessPPSSLClientProfileIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_ltpa_key_file_password_alias": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the the alias for password of the LTPA key file.", "ltpa-key-file-password-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the the alias for password of the LTPA key file.", "ltpa-key-file-password-alias", "password_alias").AddRequiredWhen(DmAAAPPostProcessPPLTPAKeyFilePasswordAliasCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPLTPAKeyFilePasswordAliasIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"pp_jwt": DataSourceSchema.BoolAttribute{
@@ -2252,7 +2252,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 				Computed:            true,
 			},
 			"pp_jwt_generator": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT generator.", "generate-jwt", "aaa_jwt_generator").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT generator.", "generate-jwt", "aaa_jwt_generator").AddRequiredWhen(DmAAAPPostProcessPPJWTGeneratorCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPJWTGeneratorIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -2275,10 +2275,10 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_custom_url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the custom file for the postprocessing activity.", "custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the custom file for the postprocessing activity.", "custom-url", "").AddRequiredWhen(DmAAAPPostProcessPPCustomURLCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPCustomURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPCustomURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPCustomURLCondVal, DmAAAPPostProcessPPCustomURLIgnoreVal, false),
 				},
 			},
 			"pp_saml_auth_assertion": ResourceSchema.BoolAttribute{
@@ -2288,13 +2288,13 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_saml_server_name": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the value of the <tt>saml:Issuer</tt> of the generated SAML assertion or SAML SLO request. The default value is XS.</p><ul><li>If generating an SAML assertion, identifies the server that makes the assertion.</li><li>If sending an SLO request, identifies the issuer that sends the request.</li></ul>", "saml-server-name", "").AddDefaultValue("XS").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the value of the <tt>saml:Issuer</tt> of the generated SAML assertion or SAML SLO request. The default value is XS.</p><ul><li>If generating an SAML assertion, identifies the server that makes the assertion.</li><li>If sending an SLO request, identifies the issuer that sends the request.</li></ul>", "saml-server-name", "").AddDefaultValue("XS").AddNotValidWhen(DmAAAPPostProcessPPSAMLServerNameIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             stringdefault.StaticString("XS"),
 			},
 			"pp_saml_name_qualifier": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the NameQualifier attribute of the NameIdentifier in the generated SAML assertion. Although the attribute is an optional attribute, some SAML implementations require that this attribute must be present.", "saml-name-qualifier", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the NameQualifier attribute of the NameIdentifier in the generated SAML assertion. Although the attribute is an optional attribute, some SAML implementations require that this attribute must be present.", "saml-name-qualifier", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLNameQualifierIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_kerberos_ticket": ResourceSchema.BoolAttribute{
@@ -2304,21 +2304,21 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_kerberos_client": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the client identity (cname of the Kerberos ticket) for the Kerberos client principal.", "kerberos-client-principal", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the client identity (cname of the Kerberos ticket) for the Kerberos client principal.", "kerberos-client-principal", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientCondVal, DmAAAPPostProcessPPKerberosClientIgnoreVal, false),
 				},
 			},
 			"pp_kerberos_client_password": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddNotValidWhen(DmAAAPPostProcessPPKerberosClientPasswordIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_kerberos_server": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the server identity (sname of the Kerberos ticket) for the Kerberos server principal.", "kerberos-server", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the server identity (sname of the Kerberos ticket) for the Kerberos server principal.", "kerberos-server", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosServerCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerCondVal, DmAAAPPostProcessPPKerberosServerIgnoreVal, false),
 				},
 			},
 			"pp_ws_trust": ResourceSchema.BoolAttribute{
@@ -2328,32 +2328,34 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_timestamp": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a WS-Trust token time stamp for the security token response.", "ws-trust-add-timestamp", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a WS-Trust token time stamp for the security token response.", "ws-trust-add-timestamp", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPPostProcessPPTimestampIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"pp_timestamp_expiry": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration for the WS-Trust SCT in seconds to issue a new security context or to renew a context instance with new instance. Enter a value in the range 0 - 31622400. The default value is 0, which uses the value of the <tt>var://system/AAA/defaultexpiry</tt> variable if defined. If you did not define this variable, the value is 14400. If this setting is to renew a security context or instance, the value 0 means to use the old duration for the renewed cycle.", "ws-trust-timestamp-expiry", "").AddIntegerRange(0, 31622400).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration for the WS-Trust SCT in seconds to issue a new security context or to renew a context instance with new instance. Enter a value in the range 0 - 31622400. The default value is 0, which uses the value of the <tt>var://system/AAA/defaultexpiry</tt> variable if defined. If you did not define this variable, the value is 14400. If this setting is to renew a security context or instance, the value 0 means to use the old duration for the renewed cycle.", "ws-trust-timestamp-expiry", "").AddIntegerRange(0, 31622400).AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPTimestampExpiryIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 31622400),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, DmAAAPPostProcessPPTimestampExpiryIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(0),
 			},
 			"pp_allow_renewal": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether WS-Trust tokens can have their lifetime period reset without a new bootstrapping authentication event. If the WS-Trust request asks to renew the issued token, this setting is ignored.", "ws-trust-allow-renewal", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether WS-Trust tokens can have their lifetime period reset without a new bootstrapping authentication event. If the WS-Trust request asks to renew the issued token, this setting is ignored.", "ws-trust-allow-renewal", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPAllowRenewalIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_saml_version": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol level of SAML messages. The version affects the identity extraction from the original message and the format of messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2", "1.1", "1").AddDefaultValue("2").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol level of SAML messages. The version affects the identity extraction from the original message and the format of messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2", "1.1", "1").AddDefaultValue("2").AddNotValidWhen(DmAAAPPostProcessPPSAMLVersionIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("2", "1.1", "1"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPSAMLVersionIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("2"),
 			},
@@ -2364,7 +2366,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_saml_slo_endpoint": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint URL for SAML 2.0 Single Logout (SLO) messages. This endpoint is the authority that authenticated the assertion subject.", "saml-slo-endpoint", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the endpoint URL for SAML 2.0 Single Logout (SLO) messages. This endpoint is the authority that authenticated the assertion subject.", "saml-slo-endpoint", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLSLOEndpointIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_ws_username_token": ResourceSchema.BoolAttribute{
@@ -2374,28 +2376,29 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_ws_username_token_password_type": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of password that the UsernameToken provides. By default, use the digest of the password as defined in the \"Web Services Security UsernameToken Profile 1.0\" specification.", "wssec-user-name-token-type", "").AddStringEnum("Text", "Digest").AddDefaultValue("Digest").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of password that the UsernameToken provides. By default, use the digest of the password as defined in the \"Web Services Security UsernameToken Profile 1.0\" specification.", "wssec-user-name-token-type", "").AddStringEnum("Text", "Digest").AddDefaultValue("Digest").AddNotValidWhen(DmAAAPPostProcessPPWSUsernameTokenPasswordTypeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("Text", "Digest"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPWSUsernameTokenPasswordTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("Digest"),
 			},
 			"pp_saml_validity": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration of the SAML assertion in seconds. This value and the skew time are for fine control of the validity duration. The default value is 0.", "saml-validity", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity duration of the SAML assertion in seconds. This value and the skew time are for fine control of the validity duration. The default value is 0.", "saml-validity", "").AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPSAMLValidityIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             int64default.StaticInt64(0),
 			},
 			"pp_saml_skew": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the acceptable skew interval in seconds. The IdP and SP system clocks can have a skew time. When the SAML assertion is generated, the expiration takes the skew time setting into account. <ul><li>When <tt>NotBefore</tt> has the value of <tt>(CurrentTime - SkewTime)</tt> .</li><li>When <tt>NotOnOrAfter</tt> has the value of <tt>(CurrentTime + Validity + SkewTime)</tt> .</li></ul>", "saml-skew", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the acceptable skew interval in seconds. The IdP and SP system clocks can have a skew time. When the SAML assertion is generated, the expiration takes the skew time setting into account. <ul><li>When <tt>NotBefore</tt> has the value of <tt>(CurrentTime - SkewTime)</tt> .</li><li>When <tt>NotOnOrAfter</tt> has the value of <tt>(CurrentTime + Validity + SkewTime)</tt> .</li></ul>", "saml-skew", "").AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPSAMLSkewIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             int64default.StaticInt64(0),
 			},
 			"pp_ws_username_token_include_pwd": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Security UsernameToken must include the password. By default, the token must contain the password.", "wssec-user-name-token-contains-pwd", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Security UsernameToken must include the password. By default, the token must contain the password.", "wssec-user-name-token-contains-pwd", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPPostProcessPPWSUsernameTokenIncludePwdIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
@@ -2407,36 +2410,38 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_ltpa_version": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.", "lpta-version", "").AddStringEnum("LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7", "LTPADomino").AddDefaultValue("LTPA2").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.", "lpta-version", "").AddStringEnum("LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7", "LTPADomino").AddDefaultValue("LTPA2").AddNotValidWhen(DmAAAPPostProcessPPLTPAVersionIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("LTPA", "LTPA1FIPS", "LTPA2", "LTPA2WAS7", "LTPADomino"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPLTPAVersionIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("LTPA2"),
 			},
 			"pp_ltpa_expiry": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.", "lpta-expiry", "").AddIntegerRange(1, 628992000).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.", "lpta-expiry", "").AddIntegerRange(1, 628992000).AddDefaultValue("600").AddNotValidWhen(DmAAAPPostProcessPPLTPAExpiryIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 628992000),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, DmAAAPPostProcessPPLTPAExpiryIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(600),
 			},
 			"pp_ltpa_key_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").AddRequiredWhen(DmAAAPPostProcessPPLTPAKeyFileCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPLTPAKeyFileIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPLTPAKeyFileCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPLTPAKeyFileCondVal, DmAAAPPostProcessPPLTPAKeyFileIgnoreVal, false),
 				},
 			},
 			"pp_ltpa_key_file_password": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the LTPA key file password alias.", "lpta-key-file-password", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the LTPA key file password alias.", "lpta-key-file-password", "").AddNotValidWhen(DmAAAPPostProcessPPLTPAKeyFilePasswordIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_ltpa_stash_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the file that contains the LTPA key file password.", "lpta-stash-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the file that contains the LTPA key file password.", "lpta-stash-file", "").AddNotValidWhen(DmAAAPPostProcessPPLTPAStashFileIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_kerberos_spnego_token": ResourceSchema.BoolAttribute{
@@ -2446,122 +2451,124 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_kerberos_bst_value_type": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the <tt>ValueType</tt> attribute of the WS-Security BinarySecurityToken. The Kerberos AP-REQ message contains the <tt>ValueType</tt> attribute. The default value is for WSS Kerberos Token Profile 1.1 (GSS).", "kerberos-value-type", "").AddStringEnum("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://www.docs.oasis-open.org/wss/2004/07/oasis-000000-wss-kerberos-token-profile-1.0#Kerberosv5_AP_REQ").AddDefaultValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the <tt>ValueType</tt> attribute of the WS-Security BinarySecurityToken. The Kerberos AP-REQ message contains the <tt>ValueType</tt> attribute. The default value is for WSS Kerberos Token Profile 1.1 (GSS).", "kerberos-value-type", "").AddStringEnum("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://www.docs.oasis-open.org/wss/2004/07/oasis-000000-wss-kerberos-token-profile-1.0#Kerberosv5_AP_REQ").AddDefaultValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ").AddRequiredWhen(DmAAAPPostProcessPPKerberosBstValueTypeCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosBstValueTypeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ1510", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ4120", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ", "http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ", "http://www.docs.oasis-open.org/wss/2004/07/oasis-000000-wss-kerberos-token-profile-1.0#Kerberosv5_AP_REQ"),
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosBstValueTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosBstValueTypeCondVal, DmAAAPPostProcessPPKerberosBstValueTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ"),
 			},
 			"pp_saml_use_ws_sec": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to insert the SAML assertion. By default, the assertion is inserted as a child element of the SOAP header. When enabled, the assertion is inserted in a WS-Security-compliant header as defined by the WS-Security SAML token profile.", "saml-in-wssec", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to insert the SAML assertion. By default, the assertion is inserted as a child element of the SOAP header. When enabled, the assertion is inserted in a WS-Security-compliant header as defined by the WS-Security SAML token profile.", "saml-in-wssec", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPSAMLUseWSSecIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_kerberos_client_keytab": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Kerberos keytab that defines the keytab for the client. This keytab is required to authenticate the client to the KDC.", "kerberos-client-keytab", "crypto_kerberos_keytab").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Kerberos keytab that defines the keytab for the client. This keytab is required to authenticate the client to the KDC.", "kerberos-client-keytab", "crypto_kerberos_keytab").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientKeytabCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientKeytabIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientKeytabCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientKeytabCondVal, DmAAAPPostProcessPPKerberosClientKeytabIgnoreVal, false),
 				},
 			},
 			"pp_use_ws_sec": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the token can be wrapped by the WS-Security <tt>wsse:Security</tt> header. This setting for the LTPA token. By default, the token cannot be wrapped by this header. When enabled, generate a WS-Security header that contains the token.", "wssec-header-wrap-token", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the token can be wrapped by the WS-Security <tt>wsse:Security</tt> header. This setting for the LTPA token. By default, the token cannot be wrapped by this header. When enabled, generate a WS-Security header that contains the token.", "wssec-header-wrap-token", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPUseWSSecIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_actor_role_id": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier for the SOAP 1.1 actor or SOAP 1.2 role for processing a WS-Security Security header. The DataPower Gateway works as that actor or role in consuming the input and generating the output for the next SOAP endpoint. This setting is meaningful when a SOAP message is being used for WS-Security 1.0 or 1.1. <table border=\"1\"><tr><td valign=\"left\">http://schemas.xmlsoap.org/soap/actor/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/none</td><td>No one can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</td><td>The ultimate receiver of the message can process the Security header. This value is the default value if such setting is not configured.</td></tr><tr><td valign=\"left\">&lt;blank or empty string></td><td>The empty string \"\" (without quotation marks) indicates that no actor or role identifier is configured. If no actor or role setting is configured, the ultimate receiver is assumed during message processing, and no actor or role attribute is added during the generation of the Security header. <p>This value does not generate an attribute with an empty value, which is the behavior as defined by the USE_MESSAGE_BASE_URI constant string. There cannot be more than one Security header that omits the actor or role identifier.</p></td></tr><tr><td valign=\"left\">USE_MESSAGE_BASE_URI</td><td>The constant value indicates that the actor or role identifier is the base URL of the message. If the SOAP message is transported over HTTP, the base URI is the Request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">any other customized string</td><td>You can input any string to identify the actor or role of the Security header.</td></tr></table>", "wssec-actor-role-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier for the SOAP 1.1 actor or SOAP 1.2 role for processing a WS-Security Security header. The DataPower Gateway works as that actor or role in consuming the input and generating the output for the next SOAP endpoint. This setting is meaningful when a SOAP message is being used for WS-Security 1.0 or 1.1. <table border=\"1\"><tr><td valign=\"left\">http://schemas.xmlsoap.org/soap/actor/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/none</td><td>No one can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/next</td><td>Each receiver, including the intermediary and ultimate receiver, can process the Security header.</td></tr><tr><td valign=\"left\">http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</td><td>The ultimate receiver of the message can process the Security header. This value is the default value if such setting is not configured.</td></tr><tr><td valign=\"left\">&lt;blank or empty string></td><td>The empty string \"\" (without quotation marks) indicates that no actor or role identifier is configured. If no actor or role setting is configured, the ultimate receiver is assumed during message processing, and no actor or role attribute is added during the generation of the Security header. <p>This value does not generate an attribute with an empty value, which is the behavior as defined by the USE_MESSAGE_BASE_URI constant string. There cannot be more than one Security header that omits the actor or role identifier.</p></td></tr><tr><td valign=\"left\">USE_MESSAGE_BASE_URI</td><td>The constant value indicates that the actor or role identifier is the base URL of the message. If the SOAP message is transported over HTTP, the base URI is the Request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">any other customized string</td><td>You can input any string to identify the actor or role of the Security header.</td></tr></table>", "wssec-actor-role-id", "").AddNotValidWhen(DmAAAPPostProcessPPActorRoleIDIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_ws_derived_key_username_token": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a derived key from a password. By default, a derived key is not generated. When enabled, the process adds a WS-Security derived-key UsernameToken to the message and adds an HMAC signature with the derived-key. The username and password are taken from the output of the map credentials phase.", "wssec-use-derived-key", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a derived key from a password. By default, a derived key is not generated. When enabled, the process adds a WS-Security derived-key UsernameToken to the message and adds an HMAC signature with the derived-key. The username and password are taken from the output of the map credentials phase.", "wssec-use-derived-key", "").AddDefaultValue("false").AddRequiredWhen(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_ws_derived_key_username_token_iterations": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of hashing cycles during the generation of a derived key from a password. The minimum value is 2. The default value is 1000.", "wssec-derived-key-hash-iter", "").AddIntegerRange(2, 65535).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of hashing cycles during the generation of a derived key from a password. The minimum value is 2. The default value is 1000.", "wssec-derived-key-hash-iter", "").AddIntegerRange(2, 65535).AddDefaultValue("1000").AddRequiredWhen(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(2, 65535),
-					validators.ConditionalRequiredInt64(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsCondVal, DmAAAPPostProcessPPWSDerivedKeyUsernameTokenIterationsIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(1000),
 			},
 			"pp_ws_username_token_allow_replacement": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retain the original token, not generate a new one, if the message already contains a UsernameToken. By default, the original otken is retained. When enabled, the generated token replaces any existing ones.", "wssec-replace-existing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retain the original token, not generate a new one, if the message already contains a UsernameToken. By default, the original otken is retained. When enabled, the generated token replaces any existing ones.", "wssec-replace-existing", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSUsernameTokenAllowReplacementIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_hmac_signing_alg": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HMAC algorithm to sign the token. This property is available to request a WS-Security UsernameToken in postprocessing and WS-Security Derived-Key UsernameToken is added to the message with an HMAC signature. The default value is hmac-sha1.", "hmac-signing-algorithm", "").AddStringEnum("hmac-sha1", "hmac-sha224", "hmac-sha256", "hmac-sha384", "hmac-sha512", "hmac-ripemd160", "hmac-md5").AddDefaultValue("hmac-sha1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HMAC algorithm to sign the token. This property is available to request a WS-Security UsernameToken in postprocessing and WS-Security Derived-Key UsernameToken is added to the message with an HMAC signature. The default value is hmac-sha1.", "hmac-signing-algorithm", "").AddStringEnum("hmac-sha1", "hmac-sha224", "hmac-sha256", "hmac-sha384", "hmac-sha512", "hmac-ripemd160", "hmac-md5").AddDefaultValue("hmac-sha1").AddRequiredWhen(DmAAAPPostProcessPPHMACSigningAlgCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPHMACSigningAlgIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("hmac-sha1", "hmac-sha224", "hmac-sha256", "hmac-sha384", "hmac-sha512", "hmac-ripemd160", "hmac-md5"),
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPHMACSigningAlgCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPHMACSigningAlgCondVal, DmAAAPPostProcessPPHMACSigningAlgIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("hmac-sha1"),
 			},
 			"pp_signing_hash_alg": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm for the message digest for the generation of a digital signature. This algorithm is for only the UsernameToken postprocessing method. The default value is sha1.", "message-digest-algorithm", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm for the message digest for the generation of a digital signature. This algorithm is for only the UsernameToken postprocessing method. The default value is sha1.", "message-digest-algorithm", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").AddRequiredWhen(DmAAAPPostProcessPPSigningHashAlgCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPSigningHashAlgIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5"),
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPSigningHashAlgCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPSigningHashAlgCondVal, DmAAAPPostProcessPPSigningHashAlgIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("sha1"),
 			},
 			"pp_ws_trust_header": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the WS-Trust token as a SOAP header. By default, the token is put in the SOAP body. When enabled, return the token as a SOAP header by wrapping the <tt>wst:RequestedSecurityToken</tt> by a <tt>wst:IssuedToken</tt> .", "ws-trust-in-header", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the WS-Trust token as a SOAP header. By default, the token is put in the SOAP body. When enabled, return the token as a SOAP header by wrapping the <tt>wst:RequestedSecurityToken</tt> by a <tt>wst:IssuedToken</tt> .", "ws-trust-in-header", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSTrustHeaderIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_ws_sc_key_source": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the source of the key. For WS-Trust postprocessing, the DataPower Gateway works as an on-box WS-Trust security token service that is backed by WS-SecureConversation. A symmetric shared secret key is needed to initialize the WS-SecureConversation SecurityContext. By default, a random key is generated.", "ws-trust-key-source", "").AddStringEnum("client-entropy", "in-kerberos", "in-encryptedkey", "static", "random").AddDefaultValue("random").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the source of the key. For WS-Trust postprocessing, the DataPower Gateway works as an on-box WS-Trust security token service that is backed by WS-SecureConversation. A symmetric shared secret key is needed to initialize the WS-SecureConversation SecurityContext. By default, a random key is generated.", "ws-trust-key-source", "").AddStringEnum("client-entropy", "in-kerberos", "in-encryptedkey", "static", "random").AddDefaultValue("random").AddNotValidWhen(DmAAAPPostProcessPPWSSCKeySourceIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client-entropy", "in-kerberos", "in-encryptedkey", "static", "random"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPWSSCKeySourceIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("random"),
 			},
 			"pp_shared_secret_key": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret key as the WS-Trust key source.", "ws-trust-shared-key", "crypto_sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret key as the WS-Trust key source.", "ws-trust-shared-key", "crypto_sskey").AddNotValidWhen(DmAAAPPostProcessPPSharedSecretKeyIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_ws_trust_renewal_wait": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration to allow the STS to keep an expired SecurityContext token in seconds. After a WS-Trust token expires, it can be removed from the STS and cannot be renewed. Therefore, the token must be renewed before expiry. Enter a value in the range of 0 - 2678400. The default value is 0. <p>The token is issued or renewed with a 1-hour wait time in the following situation.</p><ul><li>The WS-Trust request asks that the issued token can be renewed after expiration.</li><li>This setting has a value of 0.</li></ul>", "ws-trust-renewal-wait", "").AddIntegerRange(0, 2678400).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration to allow the STS to keep an expired SecurityContext token in seconds. After a WS-Trust token expires, it can be removed from the STS and cannot be renewed. Therefore, the token must be renewed before expiry. Enter a value in the range of 0 - 2678400. The default value is 0. <p>The token is issued or renewed with a 1-hour wait time in the following situation.</p><ul><li>The WS-Trust request asks that the issued token can be renewed after expiration.</li><li>This setting has a value of 0.</li></ul>", "ws-trust-renewal-wait", "").AddIntegerRange(0, 2678400).AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPWSTrustRenewalWaitIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 2678400),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, DmAAAPPostProcessPPWSTrustRenewalWaitIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(0),
 			},
 			"pp_ws_trust_new_instance": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the STS renewal request issues a new instance for WS-Trust renewal. By default, the STS renewal request renews the existing instance. When enabled, the STS renewal request creates a new instance.", "ws-trust-new-instance", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the STS renewal request issues a new instance for WS-Trust renewal. By default, the STS renewal request renews the existing instance. When enabled, the STS renewal request creates a new instance.", "ws-trust-new-instance", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSTrustNewInstanceIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_ws_trust_new_key": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to update the context key for WS-Trust renewal.By default, the SCT renewal request uses the existing shared secret key. When enabled, the SCT renewal request does not use the existing shared secret key.", "ws-trust-new-key", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to update the context key for WS-Trust renewal.By default, the SCT renewal request uses the existing shared secret key. When enabled, the SCT renewal request does not use the existing shared secret key.", "ws-trust-new-key", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSTrustNewKeyIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_ws_trust_never_expire": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Trust security context expires. By default, the security context expires. When enabled, the security context never expires.However, you can change the duration afterward with an explicit duration in seconds before expiry.", "ws-trust-never-expire", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the WS-Trust security context expires. By default, the security context expires. When enabled, the security context never expires.However, you can change the duration afterward with an explicit duration in seconds before expiry.", "ws-trust-never-expire", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPWSTrustNeverExpireIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
@@ -2573,7 +2580,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"ppicrx_user_realm": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the realm of a user for ICRX identity propagation. The ICRX realm is defined in the SAF configuration. Generally, this value is the equivalent of the prefix for a DN in a user registry.", "icrx-user-realm", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the realm of a user for ICRX identity propagation. The ICRX realm is defined in the SAF configuration. Generally, this value is the equivalent of the prefix for a DN in a user registry.", "icrx-user-realm", "").AddNotValidWhen(DmAAAPPostProcessPPICRXUserRealmIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_saml_identity_provider": ResourceSchema.BoolAttribute{
@@ -2583,104 +2590,109 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_saml_protocol": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SAML protocol to wrap up the SAML assertion. By default, the SAML assertion can be put to WS-Security wrap-up later.", "saml-protocol", "").AddStringEnum("assertion", "response").AddDefaultValue("assertion").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SAML protocol to wrap up the SAML assertion. By default, the SAML assertion can be put to WS-Security wrap-up later.", "saml-protocol", "").AddStringEnum("assertion", "response").AddDefaultValue("assertion").AddNotValidWhen(DmAAAPPostProcessPPSAMLProtocolIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("assertion", "response"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPSAMLProtocolIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("assertion"),
 			},
 			"pp_saml_response_destination": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for a SAML response. This information can prevent malicious forwarding of requests to unintended recipients, which is a required protection by some protocol bindings. If it is present, the actual recipient must check that the URI reference identifies the location at which the message was received. If it does not check that the URI reference identifies the location, the request must be discarded. Some protocol bindings might require the use of this attribute.", "saml-response-destination", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for a SAML response. This information can prevent malicious forwarding of requests to unintended recipients, which is a required protection by some protocol bindings. If it is present, the actual recipient must check that the URI reference identifies the location at which the message was received. If it does not check that the URI reference identifies the location, the request must be discarded. Some protocol bindings might require the use of this attribute.", "saml-response-destination", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLResponseDestinationIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_result_wrapup": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the result. When the DataPower Gateway is configured for SOAP or WS-Security processing, different output methods can be used. By default, generates the results to an existing WS-Security message and replaces the same token in the requesting message.", "result-wrapup", "").AddStringEnum("wssec-replace", "wssec-new", "wssec-inject", "soap-body", "none").AddDefaultValue("wssec-replace").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to generate the result. When the DataPower Gateway is configured for SOAP or WS-Security processing, different output methods can be used. By default, generates the results to an existing WS-Security message and replaces the same token in the requesting message.", "result-wrapup", "").AddStringEnum("wssec-replace", "wssec-new", "wssec-inject", "soap-body", "none").AddDefaultValue("wssec-replace").AddNotValidWhen(DmAAAPPostProcessPPResultWrapupIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("wssec-replace", "wssec-new", "wssec-inject", "soap-body", "none"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPResultWrapupIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("wssec-replace"),
 			},
 			"pp_saml_assertion_type": GetDmSAMLStatementTypeResourceSchema("Specify the supported SAML statement types. By default, supports both attributes and authentication statements.", "saml-assertion-type", "", false),
 			"pp_saml_subject_confirm": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method that allows the destination system to confirm the subject of the SAML assertion. By default, the subject is bearer.", "saml-subject-confirm", "").AddStringEnum("bearer", "hok", "sv").AddDefaultValue("bearer").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method that allows the destination system to confirm the subject of the SAML assertion. By default, the subject is bearer.", "saml-subject-confirm", "").AddStringEnum("bearer", "hok", "sv").AddDefaultValue("bearer").AddNotValidWhen(DmAAAPPostProcessPPSAMLSubjectConfirmIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("bearer", "hok", "sv"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPSAMLSubjectConfirmIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("bearer"),
 			},
 			"pp_saml_name_id": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the SAML Subject element contains the name identifier. By default, the SAML subject contains the name identifier. When disabled, the SAML subject does not contain the name identifier. Use this value if the subject confirmation method is holder-of-key because the key represent the same entity as the subject.", "saml-nid", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the SAML Subject element contains the name identifier. By default, the SAML subject contains the name identifier. When disabled, the SAML subject does not contain the name identifier. Use this value if the subject confirmation method is holder-of-key because the key represent the same entity as the subject.", "saml-nid", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPPostProcessPPSAMLNameIDIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"pp_saml_name_id_format": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI reference that represents the classification of string-based identifier information. Any standard or arbitrary URI is allowed. If the value is an empty string, the DataPower Gateway attempts to determine the value from the AAA context. Some SAML protocols require a specified value, such as <tt>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</tt> or <tt>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</tt> .", "saml-nid-format", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URI reference that represents the classification of string-based identifier information. Any standard or arbitrary URI is allowed. If the value is an empty string, the DataPower Gateway attempts to determine the value from the AAA context. Some SAML protocols require a specified value, such as <tt>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</tt> or <tt>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</tt> .", "saml-nid-format", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLNameIDFormatIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_saml_recipient": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify a URI that identifies the entity or location that an attesting entity can present the assertion to. Any standard or arbitrary URI is allowed. If the value is an empty string, the optional attribute is not generated. This setting is applicable for only SAML 2.0.", "saml-recipient", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a URI that identifies the entity or location that an attesting entity can present the assertion to. Any standard or arbitrary URI is allowed. If the value is an empty string, the optional attribute is not generated. This setting is applicable for only SAML 2.0.", "saml-recipient", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLRecipientIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_saml_audience": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify URI references that identify an intended audience. Enter any number of the audience URIs to process the generated SAML assertion. If the value is an empty string, the SAML audience is not restricted. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-audience", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify URI references that identify an intended audience. Enter any number of the audience URIs to process the generated SAML assertion. If the value is an empty string, the SAML audience is not restricted. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-audience", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLAudienceIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_saml_omit_not_before": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("whether to omit the <tt>NotBefore</tt> attribute in the SAML assertion. When omitted, the assertion is considered valid even before the time it was issued. By default, the <tt>NotBefore</tt> attribute is not omitted. When enabled, the <tt>NotBefore</tt> attribute in the SAML assertion is omitted. This behavior might be required to respond to an <tt>AuthnRequest</tt> .", "saml-omit-notbefore", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("whether to omit the <tt>NotBefore</tt> attribute in the SAML assertion. When omitted, the assertion is considered valid even before the time it was issued. By default, the <tt>NotBefore</tt> attribute is not omitted. When enabled, the <tt>NotBefore</tt> attribute in the SAML assertion is omitted. This behavior might be required to respond to an <tt>AuthnRequest</tt> .", "saml-omit-notbefore", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPSAMLOmitNotBeforeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_one_time_use": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the destination system or relying party should cache the generated token. The generated token might contain the property for this characteristic, which is especially practical for SAML assertions. By default, the destination system can cache the generated token. When enabled, he destination system should not cache the generated token.", "one-time-use", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the destination system or relying party should cache the generated token. The generated token might contain the property for this characteristic, which is especially practical for SAML assertions. By default, the destination system can cache the generated token. When enabled, he destination system should not cache the generated token.", "one-time-use", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPOneTimeUseIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_saml_proxy": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to allow SAML proxy restriction. The generated SAML assertion provides limitations that the asserting party imposes on relying parties that want to act as asserting parties.</p><ul><li>A relying party that acts as an asserting party can issue subsequent assertions that are based on the information in the original assertion.</li><li>The relying party cannot issue an assertion that violates these restrictions.</li></ul><p>By default, proxy restrictions are not allowd. When enabled, proxy restrictions are allows.</p>", "saml-proxy", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to allow SAML proxy restriction. The generated SAML assertion provides limitations that the asserting party imposes on relying parties that want to act as asserting parties.</p><ul><li>A relying party that acts as an asserting party can issue subsequent assertions that are based on the information in the original assertion.</li><li>The relying party cannot issue an assertion that violates these restrictions.</li></ul><p>By default, proxy restrictions are not allowd. When enabled, proxy restrictions are allows.</p>", "saml-proxy", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPSAMLProxyIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_saml_proxy_audience": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the set of audiences (proxy) to whom the asserting party permits new assertions to be issued based on this assertion. If the value is an empty string, the audience for the <tt>ProxyRestriction</tt> is not issued with this SAML assertion. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-proxy-audience", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the set of audiences (proxy) to whom the asserting party permits new assertions to be issued based on this assertion. If the value is an empty string, the audience for the <tt>ProxyRestriction</tt> is not issued with this SAML assertion. If there is more than one audience URI, use a + delimiter between URIs. In this case, you must convert any URI that contains the + characters to \\+.", "saml-proxy-audience", "").AddNotValidWhen(DmAAAPPostProcessPPSAMLProxyAudienceIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_saml_proxy_count": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of indirections that the asserting party permits between this assertion and an assertion that was issued. Enter a value in the range 0 - 65535. The default value is 0. A value of 0 indicates that a relying party must not issue an assertion to another relying party based on this assertion. If greater than zero, any assertion that is issued must itself contain a <tt>ProxyRestriction</tt> element with a <tt>Count</tt> value of at most one less than this value.", "saml-proxy-count", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of indirections that the asserting party permits between this assertion and an assertion that was issued. Enter a value in the range 0 - 65535. The default value is 0. A value of 0 indicates that a relying party must not issue an assertion to another relying party based on this assertion. If greater than zero, any assertion that is issued must itself contain a <tt>ProxyRestriction</tt> element with a <tt>Count</tt> value of at most one less than this value.", "saml-proxy-count", "").AddIntegerRange(0, 65535).AddDefaultValue("0").AddNotValidWhen(DmAAAPPostProcessPPSAMLProxyCountIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, DmAAAPPostProcessPPSAMLProxyCountIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(0),
 			},
 			"pp_saml_authz_action": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the standard action that the subject can take on the resource. The SAML specification defines the list of action identifiers with corresponding namespace URIs. By default, all HTTP operations, where <tt>urn:oasis:names:tc:SAML:1.0:action:ghpp</tt> is the namespace URI.", "saml-authz-action", "").AddStringEnum("AllHTTP", "POST", "GET", "PUT", "HEAD", "General", "Read", "Write", "Execute", "Delete", "Control", "NegatedRead", "NegatedWrite", "NegatedExecute", "NegatedDelete", "NegatedControl").AddDefaultValue("AllHTTP").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the standard action that the subject can take on the resource. The SAML specification defines the list of action identifiers with corresponding namespace URIs. By default, all HTTP operations, where <tt>urn:oasis:names:tc:SAML:1.0:action:ghpp</tt> is the namespace URI.", "saml-authz-action", "").AddStringEnum("AllHTTP", "POST", "GET", "PUT", "HEAD", "General", "Read", "Write", "Execute", "Delete", "Control", "NegatedRead", "NegatedWrite", "NegatedExecute", "NegatedDelete", "NegatedControl").AddDefaultValue("AllHTTP").AddNotValidWhen(DmAAAPPostProcessPPSAMLAuthzActionIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("AllHTTP", "POST", "GET", "PUT", "HEAD", "General", "Read", "Write", "Execute", "Delete", "Control", "NegatedRead", "NegatedWrite", "NegatedExecute", "NegatedDelete", "NegatedControl"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPSAMLAuthzActionIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("AllHTTP"),
 			},
 			"pp_saml_attributes": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an existing SAML attributes. The SAML attributes define the information to put in the SAML assertion to generate the attribute statement. Each SAML attribute requires the name, format or namespace, and value. The value can be from a DataPower variable.", "saml-attributes", "saml_attributes").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an existing SAML attributes. The SAML attributes define the information to put in the SAML assertion to generate the attribute statement. Each SAML attribute requires the name, format or namespace, and value. The value can be from a DataPower variable.", "saml-attributes", "saml_attributes").AddRequiredWhen(DmAAAPPostProcessPPSAMLAttributesCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPSAMLAttributesIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPSAMLAttributesCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPSAMLAttributesCondVal, DmAAAPPostProcessPPSAMLAttributesIgnoreVal, false),
 				},
 			},
 			"pp_ltpa_insert_cookie": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.", "ltpa-insert-cookie", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.", "ltpa-insert-cookie", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPPostProcessPPLTPAInsertCookieIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
@@ -2692,119 +2704,120 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_tam_header": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the HTTP header to store the token in. The default value is iv_creds, which is HTTP header that WebSEAL uses to write headers.", "tam-header", "").AddDefaultValue("iv-creds").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the HTTP header to store the token in. The default value is iv_creds, which is HTTP header that WebSEAL uses to write headers.", "tam-header", "").AddDefaultValue("iv-creds").AddRequiredWhen(DmAAAPPostProcessPPTAMHeaderCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPTAMHeaderIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPTAMHeaderCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPTAMHeaderCondVal, DmAAAPPostProcessPPTAMHeaderIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("iv-creds"),
 			},
 			"pp_tam_header_size": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in bytes of HTTP headers. A value of 0 disables this function. If the value is nonzero, the PAC token is split across multiple headers of the specified length. The default value is 0.", "tam-header-size", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in bytes of HTTP headers. A value of 0 disables this function. If the value is nonzero, the PAC token is split across multiple headers of the specified length. The default value is 0.", "tam-header-size", "").AddDefaultValue("0").AddRequiredWhen(DmAAAPPostProcessPPTAMHeaderSizeCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPTAMHeaderSizeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(DmAAAPPostProcessPPTAMHeaderSizeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredInt64(DmAAAPPostProcessPPTAMHeaderSizeCondVal, DmAAAPPostProcessPPTAMHeaderSizeIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(0),
 			},
 			"pp_kerberos_use_s4u2proxy": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use constrained delegation, namely S4U2Proxy, when a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token is generated. By default, does not use constrained delegation. When enabled, uses constrained delegation.", "kerberos-use-s4u2proxy", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use constrained delegation, namely S4U2Proxy, when a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token is generated. By default, does not use constrained delegation. When enabled, uses constrained delegation.", "kerberos-use-s4u2proxy", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPKerberosUseS4U2ProxyIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_cookie_attributes": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy to include standard or custom attributes in the cookie. The response message that contains a <tt>Set-Cookie</tt> header is updated with the attributes defined in this policy.", "cookie-attributes", "cookie_attribute_policy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy to include standard or custom attributes in the cookie. The response message that contains a <tt>Set-Cookie</tt> header is updated with the attributes defined in this policy.", "cookie-attributes", "cookie_attribute_policy").AddNotValidWhen(DmAAAPPostProcessPPCookieAttributesIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_kerberos_use_s4u2self_and_s4u2proxy": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use protocol transition, namely S4U2Self, and then use constrained delegation, namely S4U2Proxy.</p><ul><li>Use S4U2Self to convert a non-Kerberos token to a Kerberos token to the DataPower Gateway itself.</li><li>Use S4U2Proxy to generate a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token.</li></ul><p>By default, does not use protocol transition and constrained delegation. When enabled, uses protocol transition and constrained delegation.</p>", "kerberos-use-s4u2self", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use protocol transition, namely S4U2Self, and then use constrained delegation, namely S4U2Proxy.</p><ul><li>Use S4U2Self to convert a non-Kerberos token to a Kerberos token to the DataPower Gateway itself.</li><li>Use S4U2Proxy to generate a WS-Security Kerberos AP-REQ token or a Kerberos SPNEGO token.</li></ul><p>By default, does not use protocol transition and constrained delegation. When enabled, uses protocol transition and constrained delegation.</p>", "kerberos-use-s4u2self", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPPostProcessPPKerberosUseS4U2SelfAndS4U2ProxyIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_kerberos_client_source": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to get the principal name of the Kerberos client. By default, uses the output of credential mapping. The client principal is based on the authenticated identity, which is followed by the corresponding realm name. For example, if the authenticated user is <tt>alice</tt> , the client principal name can be <tt>HTTP/alice.datapower.com@DATAPOWER.COM</tt> . The client principal must be present in the KDC for S4U2Self to work.", "kerberos-client-source", "").AddStringEnum("mc-output", "custom-url", "ctx-var").AddDefaultValue("mc-output").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to get the principal name of the Kerberos client. By default, uses the output of credential mapping. The client principal is based on the authenticated identity, which is followed by the corresponding realm name. For example, if the authenticated user is <tt>alice</tt> , the client principal name can be <tt>HTTP/alice.datapower.com@DATAPOWER.COM</tt> . The client principal must be present in the KDC for S4U2Self to work.", "kerberos-client-source", "").AddStringEnum("mc-output", "custom-url", "ctx-var").AddDefaultValue("mc-output").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientSourceCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientSourceIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("mc-output", "custom-url", "ctx-var"),
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientSourceCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientSourceCondVal, DmAAAPPostProcessPPKerberosClientSourceIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("mc-output"),
 			},
 			"pp_kerberos_self": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the principal name of the DataPower Gateway.", "kerberos-self-principal", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the principal name of the DataPower Gateway.", "kerberos-self-principal", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosSelfCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosSelfIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosSelfCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosSelfCondVal, DmAAAPPostProcessPPKerberosSelfIgnoreVal, false),
 				},
 			},
 			"pp_kerberos_self_keytab": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the Kerberos keytab that defines the keytab for the DataPower Gateway. This keytab is required to authenticate the DataPower Gateway to the KDC.", "kerberos-self-keytab", "crypto_kerberos_keytab").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the Kerberos keytab that defines the keytab for the DataPower Gateway. This keytab is required to authenticate the DataPower Gateway to the KDC.", "kerberos-self-keytab", "crypto_kerberos_keytab").AddRequiredWhen(DmAAAPPostProcessPPKerberosSelfKeytabCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosSelfKeytabIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosSelfKeytabCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosSelfKeytabCondVal, DmAAAPPostProcessPPKerberosSelfKeytabIgnoreVal, false),
 				},
 			},
 			"pp_kerberos_client_custom_url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-client-principal</tt> element. This file gets the following input.</p><ul><li>The output of all the steps that are executed in this AAA action.</li><li>The incoming request message.</li></ul>", "kerberos-client-custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-client-principal</tt> element. This file gets the following input.</p><ul><li>The output of all the steps that are executed in this AAA action.</li><li>The incoming request message.</li></ul>", "kerberos-client-custom-url", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientCustomURLCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientCustomURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientCustomURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientCustomURLCondVal, DmAAAPPostProcessPPKerberosClientCustomURLIgnoreVal, false),
 				},
 			},
 			"pp_kerberos_client_ctx_var": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos client principal. This context variable must be specified in the <tt>var://context/name</tt> format. For example, <tt>var://context/AAA/krb-client-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-client-ctx-var", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos client principal. This context variable must be specified in the <tt>var://context/name</tt> format. For example, <tt>var://context/AAA/krb-client-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-client-ctx-var", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosClientCtxVarCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosClientCtxVarIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientCtxVarCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosClientCtxVarCondVal, DmAAAPPostProcessPPKerberosClientCtxVarIgnoreVal, false),
 				},
 			},
 			"pp_kerberos_server_source": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to get the principal name of the Kerberos server. By default, the server principal name is the value that is specified by the Kerberos server principal property. Ensure that the server principal is in the correct format. For example, <tt>HTTP/was-backend.datapower.com@DATAPOWER.COM</tt> .", "kerberos-server-source", "").AddStringEnum("as-is-string", "custom-url", "ctx-var").AddDefaultValue("as-is-string").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to get the principal name of the Kerberos server. By default, the server principal name is the value that is specified by the Kerberos server principal property. Ensure that the server principal is in the correct format. For example, <tt>HTTP/was-backend.datapower.com@DATAPOWER.COM</tt> .", "kerberos-server-source", "").AddStringEnum("as-is-string", "custom-url", "ctx-var").AddDefaultValue("as-is-string").AddRequiredWhen(DmAAAPPostProcessPPKerberosServerSourceCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosServerSourceIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("as-is-string", "custom-url", "ctx-var"),
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerSourceCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerSourceCondVal, DmAAAPPostProcessPPKerberosServerSourceIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("as-is-string"),
 			},
 			"pp_kerberos_server_custom_url": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-server-principal</tt> element.</p><p>When constrained delegation is not used, this file gets the following input.</p><ul><li>The output of all phases that this AAA action processes.</li><li>The incoming request message.</li></ul><p>When constrained delegation is used, this file gets the following input.</p><ul><li>The output of only the identity extraction phase.</li><li>The incoming request message.</li></ul>", "kerberos-server-custom-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-server-principal</tt> element.</p><p>When constrained delegation is not used, this file gets the following input.</p><ul><li>The output of all phases that this AAA action processes.</li><li>The incoming request message.</li></ul><p>When constrained delegation is used, this file gets the following input.</p><ul><li>The output of only the identity extraction phase.</li><li>The incoming request message.</li></ul>", "kerberos-server-custom-url", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosServerCustomURLCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosServerCustomURLIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerCustomURLCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerCustomURLCondVal, DmAAAPPostProcessPPKerberosServerCustomURLIgnoreVal, false),
 				},
 			},
 			"pp_kerberos_server_ctx_var": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos server principal. This context variable must be specified in the <tt>var://context/name format</tt> . For example, <tt>var:///context/AAA/krb-server-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-server-ctx-var", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the context variable. The value of this context variable is used as the Kerberos server principal. This context variable must be specified in the <tt>var://context/name format</tt> . For example, <tt>var:///context/AAA/krb-server-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.", "kerberos-server-ctx-var", "").AddRequiredWhen(DmAAAPPostProcessPPKerberosServerCtxVarCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPKerberosServerCtxVarIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerCtxVarCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPKerberosServerCtxVarCondVal, DmAAAPPostProcessPPKerberosServerCtxVarIgnoreVal, false),
 				},
 			},
 			"pp_ssl_client_config_type": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client type to secure connections.", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client type to secure connections.", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").AddNotValidWhen(DmAAAPPostProcessPPSSLClientConfigTypeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("proxy", "client"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmAAAPPostProcessPPSSLClientConfigTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("proxy"),
 			},
 			"pp_ssl_client_profile": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").AddNotValidWhen(DmAAAPPostProcessPPSSLClientProfileIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_ltpa_key_file_password_alias": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the the alias for password of the LTPA key file.", "ltpa-key-file-password-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the the alias for password of the LTPA key file.", "ltpa-key-file-password-alias", "password_alias").AddRequiredWhen(DmAAAPPostProcessPPLTPAKeyFilePasswordAliasCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPLTPAKeyFilePasswordAliasIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPLTPAKeyFilePasswordAliasCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPLTPAKeyFilePasswordAliasCondVal, DmAAAPPostProcessPPLTPAKeyFilePasswordAliasIgnoreVal, false),
 				},
 			},
 			"pp_jwt": ResourceSchema.BoolAttribute{
@@ -2814,10 +2827,10 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 				Default:             booldefault.StaticBool(false),
 			},
 			"pp_jwt_generator": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT generator.", "generate-jwt", "aaa_jwt_generator").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT generator.", "generate-jwt", "aaa_jwt_generator").AddRequiredWhen(DmAAAPPostProcessPPJWTGeneratorCondVal.String()).AddNotValidWhen(DmAAAPPostProcessPPJWTGeneratorIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAAAPPostProcessPPJWTGeneratorCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAAAPPostProcessPPJWTGeneratorCondVal, DmAAAPPostProcessPPJWTGeneratorIgnoreVal, false),
 				},
 			},
 		},

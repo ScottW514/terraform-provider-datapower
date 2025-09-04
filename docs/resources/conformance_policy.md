@@ -34,6 +34,7 @@ resource "datapower_conformance_policy" "test" {
 - `assert_bp10_conformance` (Boolean) Attach a Basic Profile 1.0 conformance assertion to messages that conform to BP 1.0, or remove a Basic Profile 1.0 conformance assertion to the messages that don't conform to BP 1.0.
   - CLI Alias: `assert-bp10-conformance`
   - Default value: `false`
+  - Not Valid When: `profiles`!=`bp10`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `fixup_stylesheets` (List of String) Stylesheets to invoke after conformance analysis. These stylesheets can manipulate the analysis results or repair instances of nonconformance.
   - CLI Alias: `fixup-stylesheets`
@@ -42,12 +43,14 @@ resource "datapower_conformance_policy" "test" {
 - `log_target` (String) Target URL to which conformance reports will be sent
   - CLI Alias: `report-target`
   - Required When: `report_level`!=`never`
+  - Not Valid When: attribute is not conditionally required
 - `profiles` (Attributes) Profiles against which to check conformance
   - CLI Alias: `profiles` (see [below for nested schema](#nestedatt--profiles))
 - `reject_include_summary` (Boolean) Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found.
   - CLI Alias: `reject-include-summary`
   - Default value: `false`
   - Required When: `reject_level`!=`never`
+  - Not Valid When: attribute is not conditionally required
 - `reject_level` (String) Select the degree of nonconformance to cause the message to be rejected.
   - CLI Alias: `reject-level`
   - Choices: `never`, `failure`, `warning`
@@ -59,6 +62,7 @@ resource "datapower_conformance_policy" "test" {
 - `response_log_target` (String) Target URL to which response conformance reports will be sent
   - CLI Alias: `response-report-target`
   - Required When: `response_report_level`!=`never`
+  - Not Valid When: `response_properties_enabled`=`false`
 - `response_properties_enabled` (Boolean) When placed inside a single conformance check action (as is typical in an XML gateway), a single set of logging and behavior parameters is sufficent. However, sometimes (as in the case of auto-generated WS-Proxy conformance checking), the same policy is used in checks in both the request and response directions. In this case, the conformance reports should likely be sent to different targets. This toggle allows for an alternate set of logging and rejection parameters to be specified for messages in the response direction.
   - CLI Alias: `response-properties-enabled`
   - Default value: `false`
@@ -66,16 +70,19 @@ resource "datapower_conformance_policy" "test" {
   - CLI Alias: `response-reject-include-summary`
   - Default value: `false`
   - Required When: (`response_reject_level`!=`never`)
+  - Not Valid When: `response_properties_enabled`=`false`
 - `response_reject_level` (String) Select the degree of nonconformance to cause a response message to be rejected.
   - CLI Alias: `response-reject-level`
   - Choices: `never`, `failure`, `warning`
   - Default value: `never`
   - Required When: `response_properties_enabled`!=`false`
+  - Not Valid When: `response_properties_enabled`=`false`
 - `response_report_level` (String) Select the degree of nonconformance in a response message to cause a conformance report to be recorded.
   - CLI Alias: `response-report-level`
   - Choices: `never`, `failure`, `warning`, `always`
   - Default value: `never`
   - Required When: `response_properties_enabled`!=`false`
+  - Not Valid When: `response_properties_enabled`=`false`
 - `result_is_conformance_report` (Boolean) The normal behavior of the conformance action is to deliver the original message, possibly modified by one or more stylesheets, to the next multistep stage. Setting this property will instead cause the analysis result to be used as the output. This is primarily intended for use within a loopback firewall, which will return the analysis results to the client.
   - CLI Alias: `result-is-conformance-report`
   - Default value: `false`

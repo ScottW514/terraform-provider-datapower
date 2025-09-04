@@ -51,6 +51,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   - CLI Alias: `concurrent-connections`
   - Range: `1`-`65535`
   - Default value: `1`
+  - Not Valid When: (`get_queue`=`` AND `subscribe_topic_string`!=``)
 - `content_type_header` (String) Header to extract Content-Type
   - CLI Alias: `content-type-header`
   - Choices: `None`, `MQRFH`, `MQRFH2`
@@ -58,6 +59,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
 - `content_type_xpath` (String) XPath expression to extract Content-Type from IBM MQ header
   - CLI Alias: `content-type-xpath`
   - Required When: `content_type_header`=`MQRFH`|`MQRFH2`
+  - Not Valid When: `content_type_header`=`None`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `exclude_headers` (Attributes) Specify the headers after MQMD to strip from the message. By default only the MQMD header is parsed.
   - CLI Alias: `exclude-headers` (see [below for nested schema](#nestedatt--exclude_headers))

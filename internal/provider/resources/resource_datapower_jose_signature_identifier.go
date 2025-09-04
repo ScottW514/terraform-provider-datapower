@@ -93,17 +93,17 @@ func (r *JOSESignatureIdentifierResource) Schema(ctx context.Context, req resour
 				},
 			},
 			"sskey": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the signature.", "sskey", "crypto_sskey").AddRequiredWhen(models.JOSESignatureIdentifierSSKeyCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the signature.", "sskey", "crypto_sskey").AddRequiredWhen(models.JOSESignatureIdentifierSSKeyCondVal.String()).AddNotValidWhen(models.JOSESignatureIdentifierSSKeyIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.JOSESignatureIdentifierSSKeyCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.JOSESignatureIdentifierSSKeyCondVal, models.JOSESignatureIdentifierSSKeyIgnoreVal, false),
 				},
 			},
 			"certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use the certificate to verify the signature.", "cert", "crypto_certificate").AddRequiredWhen(models.JOSESignatureIdentifierCertificateCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the certificate to verify the signature.", "cert", "crypto_certificate").AddRequiredWhen(models.JOSESignatureIdentifierCertificateCondVal.String()).AddNotValidWhen(models.JOSESignatureIdentifierCertificateIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.JOSESignatureIdentifierCertificateCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.JOSESignatureIdentifierCertificateCondVal, models.JOSESignatureIdentifierCertificateIgnoreVal, false),
 				},
 			},
 			"valid_algorithms": schema.ListAttribute{

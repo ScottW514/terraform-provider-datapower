@@ -38,49 +38,61 @@ resource "datapower_log_target" "test" {
   - CLI Alias: `active-timeout`
   - Range: `0`-`60`
   - Default value: `0`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `archive_mode` (String) Archive mode
   - CLI Alias: `archive-mode`
   - Choices: `rotate`, `upload`
   - Default value: `rotate`
   - Required When: `type`=`file`
+  - Not Valid When: attribute is not conditionally required
 - `backup` (String) Sets another Log Target object as a backup to receive redirected events in case of an error on the current file-based log target. This setting has no effect on network-based log targets. For network-based log targets, set a load balancer group as the remote host.
   - CLI Alias: `backup`
   - Reference to: `datapower_log_target:id`
+  - Not Valid When: `type`!=`file`
 - `connect_timeout` (Number) Specify the time to wait in seconds for a connection to the server to be established before generating an error. At this time, a log message is generated in the default log and connection retry attempts are made. Enter a value in the range 1 - 90. The default value is 60.
   - CLI Alias: `connect-timeout`
   - Range: `1`-`90`
   - Default value: `60`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `email_address` (String) Recipient email address
   - CLI Alias: `email-address`
   - Required When: (`type`=`smtp` OR (`type`=`file` AND `upload_method`=`smtp`))
+  - Not Valid When: attribute is not conditionally required
 - `event_buffer_size` (String) Specify the buffer size in number of event entries. The buffer stores log events before they are written to the target. A buffer of this size is allocated for each connection.
   - CLI Alias: `buffer-size`
   - Choices: `2048`, `16384`, `65536`, `131072`, `262144`, `524288`, `1048576`, `2097152`, `4194304`, `8388608`
   - Default value: `2048`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `feedback_detection` (Boolean) Specify whether to suppress events from the logging subsystem itself. A log target always suppresses its own events, but will record events from other log targets. Under certain circumstances with multiple log targets, these events could create a positive feedback loop that could cause resource contention. Enable to suppress all log events from the logging subsystem and prevent resource contention.
   - CLI Alias: `feedback-detection`
   - Default value: `false`
 - `fixed_format` (Boolean) Specify whether to make the format of logs unchanging. The log format fixed at version 6.0.1. New fields added to log formats are ignored.
   - CLI Alias: `fixed-format`
   - Default value: `false`
+  - Not Valid When: `format`=`json-icp`
 - `format` (String) Log format
   - CLI Alias: `format`
   - Choices: `text`, `raw`, `xml`, `json-icp`, `cbe`, `csv`, `audit`, `diag`
   - Default value: `xml`
+  - Not Valid When: `type`=`snmp`|`syslog`|`syslog-tcp`
 - `idle_timeout` (Number) Specify the time in seconds to wait before closing an established but inactive connection to the server. Enter a value in the range 1 - 600. The default value is 15. <p><b>Attention:</b> If multiple log targets have the following configuration, they might share connections. <ul><li>The same local address and port</li><li>The same remote address and port</li></ul> Because of potential connection-sharing, set the same idle timeout value for these log targets.</p>
   - CLI Alias: `idle-timeout`
   - Range: `1`-`600`
   - Default value: `15`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `local_address` (String) Local address
   - CLI Alias: `local-address`
   - Required When: `type`=`smtp`|`syslog-tcp`
+  - Not Valid When: `type`!=`syslog`|`soap`
 - `local_file` (String) Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt> or <tt>logstore:///filename.log</tt> .
   - CLI Alias: `local-file`
   - Required When: `type`=`file`
+  - Not Valid When: attribute is not conditionally required
 - `local_identifier` (String) Specify a descriptive string that identifies the log target to remote recipients. For syslog destinations, do not include spaces.
   - CLI Alias: `local-ident`
   - Required When: (`format`=`cbe` OR `type`=`syslog`|`smtp` OR (`type`=`file` AND `upload_method`=`smtp`))
+  - Not Valid When: `type`!=`syslog-tcp`
 - `log_event_code` (List of String) Specify specific events to allow in the log. Subscription filters allow only those log messages that contain the configured event codes. With this filter, it is possible to create a log target that collects only log messages for a specific set of event codes.
   - CLI Alias: `event-code`
 - `log_event_filter` (List of String) Specify specific events to suppress in the log. Suppression filters suppress those log messages that contain the configured event codes. With this filter, it is possible to create a log target that collects a wide range of log messages except for a specific set of event codes.
@@ -96,89 +108,112 @@ resource "datapower_log_target" "test" {
   - Choices: `second`, `microsecond`
   - Default value: `second`
   - Required When: `type`=`syslog-tcp`
+  - Not Valid When: attribute is not conditionally required
 - `log_triggers` (Attributes List) Specify event trigger points. Event triggers start actions only when triggered by a specified message ID or event code. With this filter, it is possible to create a log target that collects only the results of the specified trigger action. For example, to trigger the generation of an error report when a certain event occurs use the <b>save error-report</b> command.
   - CLI Alias: `trigger` (see [below for nested schema](#nestedatt--log_triggers))
 - `long_retry_interval` (Number) Specify the time to wait in seconds before attempting to reestablish a failed connection to the syslog server after the number of attempts is reached. Enter a value in the range 0 - 600. The default value is 20. <p><b>Note:</b> The long retry interval must be greater than the retry interval or it will take no effect.</p>
   - CLI Alias: `long-retry-interval`
   - Range: `1`-`600`
   - Default value: `20`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `max_connections` (Number) Specify the maximum number of concurrent connections that can be opened to the syslog-tcp server. Enter a value in the range 1 - 100. The default value is 1.
   - CLI Alias: `maximum-connections`
   - Range: `1`-`100`
   - Default value: `1`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `nf_sm_ount` (String) NFS static mount
   - CLI Alias: `nfs-static-mount`
   - Reference to: `datapower_nfs_static_mount:id`
   - Required When: `type`=`nfs`
+  - Not Valid When: attribute is not conditionally required
 - `nfs_file` (String) Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).
   - CLI Alias: `nfs-file`
   - Required When: `type`=`nfs`
+  - Not Valid When: attribute is not conditionally required
 - `priority` (String) Specify the priority to control the scheduling of logs. When system resources are in high demand, high priority operations are favored over lower priority operations.
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `rate_limit` (Number) Specify the maximum number of events to log per second. Enter a value in the range 1 - 1000. The default value is 100. <ul><li>Remote log targets might receive more than this number of events within a second, depending on network latency and buffering. syslog over TCP log targets are exclusive, because only a single TCP connection is made to the server.</li><li>In the case of syslog over TCP log targets, the rate limit is the maximum number of events transmitted over the connection within one second. A value of 0 disables rate-limiting by the logging target.</li></ul>
   - CLI Alias: `rate-limit`
   - Range: `0`-`1000`
   - Default value: `100`
+  - Not Valid When: `type`!=`nfs`|`smtp`|`soap`|`snmp`|`syslog`|`syslog-tcp`
 - `remote_address` (String) Specify the host name or IP address of the remote server. To establish a secure TLS connection to the server, set this value to the value of the remote host of a TLS proxy service. The local TLS proxy service then securely forwards the log entries to its configured remote server.
   - CLI Alias: `remote-address`
   - Required When: (`type`=`syslog`|`syslog-tcp`|`smtp` OR (`archive_mode`=`upload` AND `type`=`file`))
+  - Not Valid When: attribute is not conditionally required
 - `remote_directory` (String) Specify an existing writable directory on the remote server to upload files. <ul><li>To denote an absolute directory from the root directory, specify a single forward slash character (/) or equivalent encoded character (%2F) before the fully qualified path. <ul><li>For SCP or SFTP, enter / to resolve to //.</li><li>For FTP, enter %2F to resolve to /%2F.</li></ul></li><li>To denote a directory that is relative to the home directory of a user, do not specify a forward slash character or encoded character before the fully qualified file name.</li></ul>
   - CLI Alias: `remote-directory`
+  - Not Valid When: (`upload_method`!=`ftp`|`scp`|`sftp` OR `archive_mode`!=`upload` OR `type`!=`file`)
 - `remote_login` (String) Remote login
   - CLI Alias: `remote-login`
   - Required When: (`upload_method`=`ftp`|`scp`|`sftp` AND `archive_mode`=`upload` AND `type`=`file`)
+  - Not Valid When: attribute is not conditionally required
 - `remote_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.
   - Required When: (`upload_method`=`ftp` AND `archive_mode`=`upload` AND `type`=`file`)
+  - Not Valid When: (`upload_method`!=`ftp`|`scp`|`sftp` OR `archive_mode`!=`upload` OR `type`!=`file`)
 - `remote_password_wo_version` (Number) Changes to this value trigger an update to `write_only` value.
 - `remote_port` (Number) Specify the listening port on the remote server. If using a local TLS proxy service to establish a secure TLS connection, set this value to the value of the remote port of the TLS proxy service.
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
+  - Not Valid When: ((`type`=`file` AND `archive_mode`!=`upload`) OR `type`!=`syslog`|`syslog-tcp`|`smtp`|`file`)
 - `retry_attempts` (Number) Specify the number of attempts for a failed connection to the syslog server. After the number of attempts is reached, connection attempts use the value set for the long retry interval. When the long interval is disabled, the log target repeatedly attempts to reconnect to the syslog server with the value set for the retry interval. <p><b>Note:</b> 0 means that the long retry interval is never used and retries forever by using the retry interval.</p>
   - CLI Alias: `retry-attempts`
   - Range: `1`-`100`
   - Default value: `1`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `retry_interval` (Number) Specify the time to wait in seconds before attempting to reestablish a failed connection to the syslog server. Enter a value in the range 1 - 600. The default value is 1.
   - CLI Alias: `retry-interval`
   - Range: `1`-`600`
   - Default value: `1`
+  - Not Valid When: `type`!=`syslog-tcp`
 - `rotate` (Number) Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.
   - CLI Alias: `rotate`
   - Range: `1`-`100`
   - Default value: `3`
   - Required When: (`type`=`nfs` OR (`archive_mode`=`rotate` AND `type`=`file`))
+  - Not Valid When: attribute is not conditionally required
 - `sender_address` (String) Specify the email address of the sender. The value must match the email address of the crypto key when email messages are signed.
   - CLI Alias: `sender-address`
   - Required When: (`type`=`smtp` OR (`type`=`file` AND `upload_method`=`smtp`))
+  - Not Valid When: attribute is not conditionally required
 - `size` (Number) Specify the maximum size of file-based log targets. Enter a value in the range 100 - 50000. The default value is 500.
   - CLI Alias: `size`
   - Range: `100`-`50000`
   - Default value: `500`
   - Required When: `type`=`file`|`nfs`
+  - Not Valid When: attribute is not conditionally required
 - `smtp_domain` (String) Specify the fully-qualified domain name of the SMTP client. This information is part of the SMTP session initiation (HELO command).
   - CLI Alias: `smtp-domain`
   - Required When: (`type`=`smtp` OR (`type`=`file` AND `upload_method`=`smtp`))
+  - Not Valid When: `type`!=`smtp`
 - `soap_version` (String) SOAP version
   - CLI Alias: `soap-version`
   - Choices: `soap11`, `soap12`
   - Default value: `soap11`
+  - Not Valid When: `type`!=`soap`
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: `type`!=`soap`|`syslog-tcp`
 - `ssl_client_profile` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
+  - Not Valid When: (`type`!=`soap`|`syslog-tcp` OR `ssl_client_config_type`!=`client`)
 - `syslog_facility` (String) Specify the syslog log facility (per RFC 3164) to include in messages sent to the syslog log target.
   - CLI Alias: `facility`
   - Choices: `user`, `security`, `authpriv`, `local0`, `local1`, `local2`, `local3`, `local4`, `local5`, `local6`, `local7`
   - Default value: `user`
   - Required When: `type`=`syslog-tcp`|`syslog`
+  - Not Valid When: attribute is not conditionally required
 - `timestamp_format` (String) Specify the format of the timestamp for log entries. The default format is ISO UTC format.
   - CLI Alias: `timestamp`
   - Choices: `syslog`, `numeric`, `zulu`
   - Default value: `zulu`
+  - Not Valid When: `type`=`smtp`|`syslog`|`syslog-tcp`
 - `type` (String) Specify the type of the log target. The default value is file.
   - CLI Alias: `type`
   - Choices: `console`, `cache`, `syslog`, `syslog-tcp`, `smtp`, `file`, `soap`, `snmp`, `nfs`
@@ -188,12 +223,15 @@ resource "datapower_log_target" "test" {
   - Choices: `ftp`, `scp`, `sftp`, `smtp`
   - Default value: `ftp`
   - Required When: (`archive_mode`=`upload` AND `type`=`file`)
+  - Not Valid When: attribute is not conditionally required
 - `url` (String) Specify the HTTP URL to send log entries. Entries are sent with the POST method and uses the default user agent.
   - CLI Alias: `url`
   - Required When: `type`=`soap`
+  - Not Valid When: attribute is not conditionally required
 - `use_ansi_color` (Boolean) Specify whether to enable the use of ANSI color scheme. When enabled, ANSI X3.64 escape sequences color-code messages by log level.
   - CLI Alias: `ansi-color`
   - Default value: `false`
+  - Not Valid When: `type`!=`console`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

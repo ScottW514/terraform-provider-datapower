@@ -11,8 +11,6 @@ attributes:
   type: String
   description: Specify the regular expression to match against message text as trigger
     criteria.
-  required_when:
-  - evaluation: logical-false
 - name: OnlyOnce
   type: Bool
   default: true

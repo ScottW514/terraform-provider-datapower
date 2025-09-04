@@ -139,12 +139,12 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(false),
 			},
 			"default_rate_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default rate limit scheme for API requests without API keys for client identification. When not defined, requests without API keys are rejected.", "default-rate-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default rate limit scheme for API requests without API keys for client identification. When not defined, requests without API keys are rejected.", "default-rate-limit", "").AddNotValidWhen(models.APICollectionDefaultRateLimitIgnoreVal.String()).String,
 				NestedObject:        models.GetDmAPIRateLimitResourceSchema(),
 				Optional:            true,
 			},
 			"rate_limit_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default rate limit group for API requests without API keys for client identification. When not defined, requests without API keys are rejected.", "rate-limit-group", "rate_limit_definition_group").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default rate limit group for API requests without API keys for client identification. When not defined, requests without API keys are rejected.", "rate-limit-group", "rate_limit_definition_group").AddNotValidWhen(models.APICollectionRateLimitGroupIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"assembly_burst_limit": schema.ListNestedAttribute{

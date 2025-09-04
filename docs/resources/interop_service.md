@@ -30,6 +30,7 @@ resource "datapower_interop_service" "test" {
 - `acl` (String) Access control list
   - CLI Alias: `http-acl`
   - Reference to: `datapower_access_control_list:id`
+  - Not Valid When: `http_service`=`false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
@@ -40,15 +41,18 @@ resource "datapower_interop_service" "test" {
 - `https_acl` (String) Access control list
   - CLI Alias: `https-acl`
   - Reference to: `datapower_access_control_list:id`
+  - Not Valid When: `https_service`=`false`
 - `https_local_address` (String) Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.
   - CLI Alias: `https-ip-address`
   - Default value: `0.0.0.0`
   - Required When: `https_service`=`true`
+  - Not Valid When: `https_service`=`false`
 - `https_local_port` (Number) Local port
   - CLI Alias: `https-port`
   - Range: `1000`-`61000`
   - Default value: `9991`
   - Required When: `https_service`=`true`
+  - Not Valid When: `https_service`=`false`
 - `https_service` (Boolean) Enable over HTTPS
   - CLI Alias: `https-service`
   - Default value: `false`
@@ -56,24 +60,29 @@ resource "datapower_interop_service" "test" {
   - CLI Alias: `http-ip-address`
   - Default value: `0.0.0.0`
   - Required When: `http_service`=`true`
+  - Not Valid When: `http_service`=`false`
 - `local_port` (Number) Local port
   - CLI Alias: `http-port`
   - Range: `1000`-`61000`
   - Default value: `9990`
   - Required When: `http_service`=`true`
+  - Not Valid When: `http_service`=`false`
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
   - Required When: (`https_service`=`true` AND `ssl_server_config_type`=`server`)
+  - Not Valid When: attribute is not conditionally required
 - `ssl_server_config_type` (String) TLS server type
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
   - Required When: `https_service`=`true`
+  - Not Valid When: attribute is not conditionally required
 - `ssl_sni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_ssl_sni_server_profile:id`
   - Required When: (`https_service`=`true` AND `ssl_server_config_type`=`sni`)
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `xml_manager` (String) XML manager

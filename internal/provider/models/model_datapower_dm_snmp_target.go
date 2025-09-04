@@ -97,7 +97,7 @@ func GetDmSnmpTargetDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"community": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The SNMP community name included in SNMP Version 1 Traps and SNMP Version 2 Notifications. By default, a community name of public is used.", "", "").AddDefaultValue("public").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The SNMP community name included in SNMP Version 1 Traps and SNMP Version 2 Notifications. By default, a community name of public is used.", "", "").AddDefaultValue("public").AddNotValidWhen(DmSnmpTargetCommunityIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"trap_version": DataSourceSchema.StringAttribute{
@@ -105,11 +105,11 @@ func GetDmSnmpTargetDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"security_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The name of the local SNMPv3 user to use for Notifications to this recipient. Determines what authentication and privacy (encryption) protocols are used, and what keys.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name of the local SNMPv3 user to use for Notifications to this recipient. Determines what authentication and privacy (encryption) protocols are used, and what keys.", "", "").AddNotValidWhen(DmSnmpTargetSecurityNameIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"security_level": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The SNMPv3 security level at which Notifications are sent to the recipient. The default is Authentication, Privacy.", "", "").AddStringEnum("noAuthNoPriv", "authNoPriv", "authPriv").AddDefaultValue("authPriv").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The SNMPv3 security level at which Notifications are sent to the recipient. The default is Authentication, Privacy.", "", "").AddStringEnum("noAuthNoPriv", "authNoPriv", "authPriv").AddDefaultValue("authPriv").AddNotValidWhen(DmSnmpTargetSecurityLevelIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -130,11 +130,12 @@ func GetDmSnmpTargetResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default:             int64default.StaticInt64(162),
 			},
 			"community": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The SNMP community name included in SNMP Version 1 Traps and SNMP Version 2 Notifications. By default, a community name of public is used.", "", "").AddDefaultValue("public").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The SNMP community name included in SNMP Version 1 Traps and SNMP Version 2 Notifications. By default, a community name of public is used.", "", "").AddDefaultValue("public").AddNotValidWhen(DmSnmpTargetCommunityIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 255),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmSnmpTargetCommunityIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("public"),
 			},
@@ -148,18 +149,20 @@ func GetDmSnmpTargetResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("1"),
 			},
 			"security_name": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The name of the local SNMPv3 user to use for Notifications to this recipient. Determines what authentication and privacy (encryption) protocols are used, and what keys.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name of the local SNMPv3 user to use for Notifications to this recipient. Determines what authentication and privacy (encryption) protocols are used, and what keys.", "", "").AddNotValidWhen(DmSnmpTargetSecurityNameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 32),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmSnmpTargetSecurityNameIgnoreVal, false),
 				},
 			},
 			"security_level": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The SNMPv3 security level at which Notifications are sent to the recipient. The default is Authentication, Privacy.", "", "").AddStringEnum("noAuthNoPriv", "authNoPriv", "authPriv").AddDefaultValue("authPriv").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The SNMPv3 security level at which Notifications are sent to the recipient. The default is Authentication, Privacy.", "", "").AddStringEnum("noAuthNoPriv", "authNoPriv", "authPriv").AddDefaultValue("authPriv").AddNotValidWhen(DmSnmpTargetSecurityLevelIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("noAuthNoPriv", "authNoPriv", "authPriv"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, DmSnmpTargetSecurityLevelIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("authPriv"),
 			},

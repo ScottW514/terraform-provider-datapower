@@ -41,6 +41,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 var _ resource.Resource = &SSHServerSourceProtocolHandlerResource{}
@@ -114,37 +115,37 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 			},
 			"ssh_user_authentication": models.GetDmSSHUserAuthenticationMethodsResourceSchema("Specifies the type(s) of SSH user authentication available for use by the client.", "user-auth", "", false),
 			"allow_backend_listings": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not SFTP directory listing (SSH_FXP_READDIR) requests to remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-listings", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not SFTP directory listing (SSH_FXP_READDIR) requests to remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-listings", "").AddDefaultValue("true").AddNotValidWhen(models.SSHServerSourceProtocolHandlerAllowBackendListingsIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"allow_backend_delete": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to delete files (SSH_FXP_REMOVE) to remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-delete", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to delete files (SSH_FXP_REMOVE) to remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-delete", "").AddDefaultValue("false").AddNotValidWhen(models.SSHServerSourceProtocolHandlerAllowBackendDeleteIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_backend_stat": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not SFTP directory listings requests to remote servers would query the remote server to obtain file attributes (SSH_FXP_STAT/SSH_FXP_LSTAT/SSH_FXP_FSTAT), or use default values. Querying the remote server may reduce performance, but is necessary for SFTP clients that do not follow the DataPower SFTP URL naming conventions. Requires a remote FTP or SFTP server.", "allow-backend-stat", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not SFTP directory listings requests to remote servers would query the remote server to obtain file attributes (SSH_FXP_STAT/SSH_FXP_LSTAT/SSH_FXP_FSTAT), or use default values. Querying the remote server may reduce performance, but is necessary for SFTP clients that do not follow the DataPower SFTP URL naming conventions. Requires a remote FTP or SFTP server.", "allow-backend-stat", "").AddDefaultValue("false").AddNotValidWhen(models.SSHServerSourceProtocolHandlerAllowBackendStatIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_backend_mkdir": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to create directories (SSH_FXP_MKDIR) on remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-mkdir", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to create directories (SSH_FXP_MKDIR) on remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-mkdir", "").AddDefaultValue("false").AddNotValidWhen(models.SSHServerSourceProtocolHandlerAllowBackendMkdirIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_backend_rmdir": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to delete directories (SSH_FXP_RMDIR) from remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-rmdir", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to delete directories (SSH_FXP_RMDIR) from remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-rmdir", "").AddDefaultValue("false").AddNotValidWhen(models.SSHServerSourceProtocolHandlerAllowBackendRmdirIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_backend_rename": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to rename files or directories (SSH_FXP_RENAME) on remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-rename", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to rename files or directories (SSH_FXP_RENAME) on remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-rename", "").AddDefaultValue("false").AddNotValidWhen(models.SSHServerSourceProtocolHandlerAllowBackendRenameIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -181,16 +182,17 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(0),
 			},
 			"persistent_filesystem_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that a connection to a virtual persistent file system is retained after all SFTP control connections from user identities are disconnected. When the timeout expires, the virtual file system object is destroyed. Enter a value in the range 1- 43200. The default value is 600.", "persistent-filesystem-timeout", "").AddIntegerRange(1, 43200).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that a connection to a virtual persistent file system is retained after all SFTP control connections from user identities are disconnected. When the timeout expires, the virtual file system object is destroyed. Enter a value in the range 1- 43200. The default value is 600.", "persistent-filesystem-timeout", "").AddIntegerRange(1, 43200).AddDefaultValue("600").AddNotValidWhen(models.SSHServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 43200),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSHServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(600),
 			},
 			"virtual_directories": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("In virtual mode, create a directory in the virtual file system that is presented by this SFTP server. The SFTP client can use all of these directories to write file to be processed. The root directory (/) is always present and cannot be created.", "virtual-directory", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In virtual mode, create a directory in the virtual file system that is presented by this SFTP server. The SFTP client can use all of these directories to write file to be processed. The root directory (/) is always present and cannot be created.", "virtual-directory", "").AddNotValidWhen(models.SSHServerSourceProtocolHandlerVirtualDirectoriesIgnoreVal.String()).String,
 				NestedObject:        models.GetDmSFTPServerVirtualDirectoryResourceSchema(),
 				Optional:            true,
 			},

@@ -37,31 +37,38 @@ resource "datapower_slm_rsrc_class" "test" {
   - Choices: `per-extracted-value`, `exact-match`, `regexp-match`
   - Default value: `per-extracted-value`
   - Required When: `rsrc_type`!=`xpath-filter`|`request-message`|`response-message`|`soap-fault`|`custom-stylesheet`|`concurrent-connections`|`concurrent-transactions`|`uddi-subscription`|`wsrr-subscription`|`wsrr-saved-search-subscription`
+  - Not Valid When: attribute is not conditionally required
 - `rsrc_type` (String) Resource type
   - CLI Alias: `type`
   - Choices: `aaa-mapped-resource`, `front-url`, `destination-url`, `xpath-filter`, `request-message`, `response-message`, `soap-fault`, `errorcode`, `custom-stylesheet`, `concurrent-connections`, `concurrent-transactions`, `wsdl`, `wsdl-service`, `wsdl-port`, `wsdl-operation`, `request-mq-qname`, `reply-mq-qname`, `uddi-subscription`, `wsrr-subscription`, `wsrr-saved-search-subscription`
   - Default value: `aaa-mapped-resource`
 - `rsrc_value` (List of String) Resource value
   - CLI Alias: `value`
+  - Not Valid When: ((`rsrc_match_type`!=`exact-match` AND `rsrc_match_type`!=`regexp-match`) OR `rsrc_type`=`uddi-subscription`|`wsrr-subscription`|`wsrr-saved-search-subscription`|`request-message`|`response-message`|`soap-fault`|`xpath-filter`|`custom-stylesheet`|`concurrent-connections`|`concurrent-transactions`)
 - `stylesheet` (String) Custom stylesheet
   - CLI Alias: `stylesheet`
   - Required When: `rsrc_type`=`custom-stylesheet`
+  - Not Valid When: attribute is not conditionally required
 - `subscription` (String) UDDI subscription (deprecated)
   - CLI Alias: `subscription`
   - Required When: `rsrc_type`=`uddi-subscription`
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `wsrr_saved_search_subscription` (String) WSRR saved search subscription
   - CLI Alias: `wsrr-saved-search-subscription`
   - Reference to: `datapower_wsrr_saved_search_subscription:id`
   - Required When: `rsrc_type`=`wsrr-saved-search-subscription`
+  - Not Valid When: attribute is not conditionally required
 - `wsrr_subscription` (String) WSRR subscription
   - CLI Alias: `wsrr-subscription`
   - Reference to: `datapower_wsrr_subscription:id`
   - Required When: `rsrc_type`=`wsrr-subscription`
+  - Not Valid When: attribute is not conditionally required
 - `xpath_filter` (String) XPath filter
   - CLI Alias: `xpath-filter`
   - Required When: `rsrc_type`=`xpath-filter`
+  - Not Valid When: attribute is not conditionally required
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

@@ -79,12 +79,10 @@ resource "datapower_api_cors" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
 }
 resource "datapower_api_definition" "acc_test" {
-  id            = "AccTest_APIDefinition"
-  app_domain    = datapower_domain.acc_test.app_domain
-  base_path     = "/"
-  path          = [datapower_api_path.acc_test.id]
-  content       = "activity"
-  error_content = "payload"
+  id         = "AccTest_APIDefinition"
+  app_domain = datapower_domain.acc_test.app_domain
+  base_path  = "/"
+  path       = [datapower_api_path.acc_test.id]
 }
 resource "datapower_api_execute" "acc_test" {
   id         = "AccTest_APIExecute"

@@ -16,17 +16,16 @@ Each DataPower domain supports a single GitOps instance that operates in either 
 
 ```terraform
 resource "datapower_git_ops" "test" {
-  app_domain             = "acceptance_test"
-  connection_type        = "https"
-  mode                   = "read-write"
-  commit_identifier_type = "branch"
-  commit_identifier      = "main"
-  remote_location        = "https://github.com/ScottW514/terraform-provider-datapower"
-  username               = "gitusername"
-  password               = "AccTest_PasswordAlias"
-  tls_valcred            = "AccTest_CryptoValCred"
-  git_user               = "Git User"
-  git_email              = "git@user.domain"
+  app_domain        = "acceptance_test"
+  connection_type   = "https"
+  mode              = "read-write"
+  commit_identifier = "main"
+  remote_location   = "https://github.com/ScottW514/terraform-provider-datapower"
+  username          = "gitusername"
+  password          = "AccTest_PasswordAlias"
+  tls_valcred       = "AccTest_CryptoValCred"
+  git_user          = "Git User"
+  git_email         = "git@user.domain"
 }
 ```
 
@@ -47,6 +46,7 @@ resource "datapower_git_ops" "test" {
   - CLI Alias: `commit-id-type`
   - Choices: `branch`, `tag`, `commit`
   - Default value: `branch`
+  - Not Valid When: `mode`=`read-write`
 - `connection_type` (String) Specify the protocol to secure the connection. HTTPS is the default protocol.
   - CLI Alias: `type`
   - Choices: `https`, `ssh`
@@ -58,14 +58,17 @@ resource "datapower_git_ops" "test" {
 - `git_email` (String) Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt> .
   - CLI Alias: `email`
   - Required When: `mode`=`read-write`
+  - Not Valid When: `mode`=`read-only`
 - `git_user` (String) Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt> .
   - CLI Alias: `name`
   - Required When: `mode`=`read-write`
+  - Not Valid When: `mode`=`read-only`
 - `interval` (Number) Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.
   - CLI Alias: `interval`
   - Range: `0`-`1440`
   - Default value: `5`
   - Required When: `mode`=`read-only`
+  - Not Valid When: `mode`=`read-write`
 - `json_parse_settings` (String) JSON parse settings
   - CLI Alias: `json-settings`
   - Reference to: `datapower_json_settings:id`
@@ -77,24 +80,29 @@ resource "datapower_git_ops" "test" {
   - CLI Alias: `password`
   - Reference to: `datapower_password_alias:id`
   - Required When: `connection_type`=`https`
+  - Not Valid When: `connection_type`=`ssh`
 - `ssh_authorized_keys_file` (String) Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.
   - CLI Alias: `ssh-authorized-keyfile`
   - Required When: `connection_type`=`ssh`
+  - Not Valid When: `connection_type`=`https`
 - `ssh_client_profile` (String) SSH client profile
   - CLI Alias: `ssh-client-profile`
   - Reference to: `datapower_ssh_client_profile:id`
   - Required When: `connection_type`=`ssh`
+  - Not Valid When: `connection_type`=`https`
 - `template_policies` (Attributes List) Specify the list of template policy for GitOps processing. The policy processing is in the order of the read or write GitOps operation.
   - CLI Alias: `template-policy` (see [below for nested schema](#nestedatt--template_policies))
 - `tls_valcred` (String) HTTPS validation credentials
   - CLI Alias: `https-valcred`
   - Reference to: `datapower_crypto_val_cred:id`
   - Required When: `connection_type`=`https`
+  - Not Valid When: `connection_type`=`ssh`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `username` (String) Username
   - CLI Alias: `username`
   - Required When: `connection_type`=`https`
+  - Not Valid When: `connection_type`=`ssh`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

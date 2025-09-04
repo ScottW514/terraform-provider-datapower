@@ -27,10 +27,8 @@ import (
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -39,10 +37,6 @@ type DmLogObject struct {
 	Class            types.String `tfsdk:"class"`
 	Object           types.String `tfsdk:"object"`
 	FollowReferences types.Bool   `tfsdk:"follow_references"`
-}
-
-var DmLogObjectObjectCondVal = validators.Evaluation{
-	Evaluation: "logical-false",
 }
 
 var DmLogObjectObjectType = map[string]attr.Type{
@@ -85,9 +79,6 @@ func GetDmLogObjectResourceSchema() ResourceSchema.NestedAttributeObject {
 			"object": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>", "", "").String,
 				Optional:            true,
-				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmLogObjectObjectCondVal, validators.Evaluation{}, false),
-				},
 			},
 			"follow_references": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include log messages for objects that the specified object instance references. <ul><li>When enabled, include referenced objects.</li><li>When disabled, exclude referenced objects.</li></ul><p><b>Note:</b> Included objects are a static snapshot when you apply the object filter. If referenced objects are added after you apply the object filter, messages for these referenced objects are not logged.</p>", "", "").AddDefaultValue("false").String,

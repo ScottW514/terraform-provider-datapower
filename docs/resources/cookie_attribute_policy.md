@@ -36,19 +36,23 @@ resource "datapower_cookie_attribute_policy" "test" {
 - `custom_attribute` (String) The additional attributes to include in the cookie. Enter each attribute in name-value pair. When you enter multiple pairs, use a semicolon (;) to separate them. A name-value pair with an empty value (name-only portion) can also be specified here. You can use variables instead of name-value pair(s). Enter a context variable as var://variablename
   - CLI Alias: `custom-attribute`
   - Required When: `cookie_attribute`=`custom`
+  - Not Valid When: attribute is not conditionally required
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `domain` (String) Identifies domain to which a cookie belongs. A browser accepts cookies only when the current domain matches the value you enter here. The maximum length of the domain is 256 characters.
   - CLI Alias: `domain`
   - Required When: `cookie_attribute`=`domain`
+  - Not Valid When: attribute is not conditionally required
 - `interval` (Number) <p>Sets the cookie's maximum age and/or the cookie's expiration date as an interval of seconds, relative to the time the transaction occurred on the object. For example, if this value is set to 3600 and the transaction on this object occurred on Feb 10, 2014 12:00:00 GMT, then the maximum age of the cookie is 3600 seconds and the expiration date is Feb 10, 2014 13:00:00 GMT, depending on whether the Max-Age and the Expires attribute are included.</p><p>When the maximum age or the expiration date is reached, the cookie is deleted. Enter a value in the range 1 - 2678400. The default value is 3600. Note that the Max-Age attribute in this policy overrides Inactivity Timeout and Session Lifetime attributes in HTML Forms Login policy.</p>
   - CLI Alias: `interval`
   - Range: `1`-`2678400`
   - Default value: `3600`
-  - Required When: `cookie_attribute`=`max-age`|`expires`
+  - Required When: `cookie_attribute`=`max_age`|`expires`
+  - Not Valid When: attribute is not conditionally required
 - `path` (String) Identifies path attribute of a cookie. A browser accepts cookies only when the current path matches the value you enter there. If this policy object is attached to HTML Forms Login Policy, this property overrides Form POST Action URL property. The maximum length of the path is 256 characters.
   - CLI Alias: `path`
   - Default value: `/`
   - Required When: `cookie_attribute`=`path`
+  - Not Valid When: attribute is not conditionally required
 - `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 

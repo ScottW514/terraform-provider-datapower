@@ -88,11 +88,11 @@ func GetDmProxyPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"remote_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").AddRequiredWhen(DmProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmProxyPolicyRemoteAddressIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"remote_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").AddRequiredWhen(DmProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmProxyPolicyRemotePortIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -113,17 +113,17 @@ func GetDmProxyPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default:             booldefault.StaticBool(false),
 			},
 			"remote_address": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").AddRequiredWhen(DmProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmProxyPolicyRemoteAddressIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmProxyPolicyRemoteAddressCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmProxyPolicyRemoteAddressCondVal, DmProxyPolicyRemoteAddressIgnoreVal, false),
 				},
 			},
 			"remote_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").AddRequiredWhen(DmProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmProxyPolicyRemotePortIgnoreVal.String()).String,
 				Required:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(DmProxyPolicyRemotePortCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(DmProxyPolicyRemotePortCondVal, DmProxyPolicyRemotePortIgnoreVal, false),
 				},
 			},
 		},

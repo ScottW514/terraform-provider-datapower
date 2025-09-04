@@ -92,7 +92,7 @@ attributes:
   - evaluation: property-value-in-list
     attribute: CookieAttribute
     value:
-    - max-age
+    - max_age
     - expires
   ignored_when:
   - evaluation: logical-true

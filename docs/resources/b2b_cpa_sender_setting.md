@@ -68,11 +68,13 @@ resource "datapower_b2b_cpa_sender_setting" "test" {
 - `include_time_to_live` (Boolean) Specify whether to include the <tt>TimeToLive</tt> element in the outbound messages. This element indicates when the message expires. The receiving partner can accept the message only when it has not expired.
   - CLI Alias: `include-time-to-live`
   - Default value: `true`
+  - Not Valid When: `retry`!=`true`
 - `max_retries` (Number) Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.
   - CLI Alias: `max-retries`
   - Range: `1`-`30`
   - Default value: `3`
   - Required When: `retry`=`true`
+  - Not Valid When: `retry`=`false`
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
@@ -87,6 +89,7 @@ resource "datapower_b2b_cpa_sender_setting" "test" {
   - Range: `1`-`86400`
   - Default value: `1800`
   - Required When: `retry`=`true`
+  - Not Valid When: `retry`=`false`
 - `sign_digest_algorithm` (String) Signing digest algorithm
   - CLI Alias: `sign-digest-algorithm`
   - Choices: `sha1`, `sha256`, `sha512`, `ripemd160`, `sha224`, `sha384`, `md5`
@@ -113,10 +116,12 @@ resource "datapower_b2b_cpa_sender_setting" "test" {
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
   - Required When: (`ssl_client_config_type`=`client` AND `dest_endpoint_url` protocol=`ebms2s`)
+  - Not Valid When: attribute is not conditionally required
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
+  - Not Valid When: `dest_endpoint_url` protocol!=`ebms2s`
 - `sync_reply_mode` (String) Sync reply mode
   - CLI Alias: `syncreply-mode`
   - Choices: `mshSignalsOnly`, `none`

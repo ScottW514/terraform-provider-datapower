@@ -27,10 +27,8 @@ import (
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -41,10 +39,6 @@ type DmLogTrigger struct {
 	OnlyOnce       types.Bool   `tfsdk:"only_once"`
 	StopProcessing types.Bool   `tfsdk:"stop_processing"`
 	Command        types.String `tfsdk:"command"`
-}
-
-var DmLogTriggerExpressionCondVal = validators.Evaluation{
-	Evaluation: "logical-false",
 }
 
 var DmLogTriggerObjectType = map[string]attr.Type{
@@ -99,9 +93,6 @@ func GetDmLogTriggerResourceSchema() ResourceSchema.NestedAttributeObject {
 			"expression": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the regular expression to match against message text as trigger criteria.", "", "").String,
 				Optional:            true,
-				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmLogTriggerExpressionCondVal, validators.Evaluation{}, false),
-				},
 			},
 			"only_once": ResourceSchema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to run only the first time that trigger criteria is met.", "", "").AddDefaultValue("true").String,

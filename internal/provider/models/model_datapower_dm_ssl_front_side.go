@@ -142,15 +142,15 @@ func GetDmSSLFrontSideDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 				Computed:            true,
 			},
 			"ssl_server_config_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections between clients and the DataPower Gateway", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections between clients and the DataPower Gateway", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").AddRequiredWhen(DmSSLFrontSideSSLServerConfigTypeCondVal.String()).AddNotValidWhen(DmSSLFrontSideSSLServerConfigTypeIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"ssl_server": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections between clients and the DataPower Gateway", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections between clients and the DataPower Gateway", "ssl-server", "ssl_server_profile").AddRequiredWhen(DmSSLFrontSideSSLServerCondVal.String()).AddNotValidWhen(DmSSLFrontSideSSLServerIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"ssl_sni_server": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(DmSSLFrontSideSSLSNIServerCondVal.String()).AddNotValidWhen(DmSSLFrontSideSSLSNIServerIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -189,27 +189,27 @@ func GetDmSSLFrontSideResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("protocol"),
 			},
 			"ssl_server_config_type": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections between clients and the DataPower Gateway", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections between clients and the DataPower Gateway", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").AddRequiredWhen(DmSSLFrontSideSSLServerConfigTypeCondVal.String()).AddNotValidWhen(DmSSLFrontSideSSLServerConfigTypeIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
-					validators.ConditionalRequiredString(DmSSLFrontSideSSLServerConfigTypeCondVal, validators.Evaluation{}, true),
+					validators.ConditionalRequiredString(DmSSLFrontSideSSLServerConfigTypeCondVal, DmSSLFrontSideSSLServerConfigTypeIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections between clients and the DataPower Gateway", "ssl-server", "ssl_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections between clients and the DataPower Gateway", "ssl-server", "ssl_server_profile").AddRequiredWhen(DmSSLFrontSideSSLServerCondVal.String()).AddNotValidWhen(DmSSLFrontSideSSLServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSSLFrontSideSSLServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmSSLFrontSideSSLServerCondVal, DmSSLFrontSideSSLServerIgnoreVal, false),
 				},
 			},
 			"ssl_sni_server": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway", "ssl-sni-server", "ssl_sni_server_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway", "ssl-sni-server", "ssl_sni_server_profile").AddRequiredWhen(DmSSLFrontSideSSLSNIServerCondVal.String()).AddNotValidWhen(DmSSLFrontSideSSLSNIServerIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmSSLFrontSideSSLSNIServerCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmSSLFrontSideSSLSNIServerCondVal, DmSSLFrontSideSSLSNIServerIgnoreVal, false),
 				},
 			},
 		},

@@ -332,6 +332,12 @@ func Get{{$root.Name}}{{$dataResource}}Schema({{if not $root.ListItem}}descripti
                 {{- if .Default -}}
                     .AddDefaultValue({{quote .Default}})
                 {{- end -}}
+        		{{- if len .RequiredWhen -}}
+					.AddRequiredWhen({{$root.Name}}{{.Name}}CondVal.String())
+		        {{- end -}}
+        		{{- if len .IgnoredWhen -}}
+					.AddNotValidWhen({{$root.Name}}{{.Name}}IgnoreVal.String())
+		        {{- end -}}
                     .String,
                 {{- if or (len .Default) .Computed (eq $dataResource "DataSource")}}
                 Computed:            true,
@@ -369,8 +375,8 @@ func Get{{$root.Name}}{{$dataResource}}Schema({{if not $root.ListItem}}descripti
                     int64validator.Between({{.Minimum}}, {{.Maximum}}),
                             {{- end}}
                         {{- end}}
-                        {{- if and (len .RequiredWhen)}}
-                    validators.ConditionalRequired{{.Type}}({{$root.Name}}{{.Name}}CondVal, validators.Evaluation{}, {{if len .Default}}true{{else}}false{{end}}),
+                        {{- if or (len .RequiredWhen) (len .IgnoredWhen)}}
+                    validators.ConditionalRequired{{.Type}}({{if len .RequiredWhen}}{{$root.Name}}{{.Name}}CondVal{{else}}validators.Evaluation{}{{end}}, {{if len .IgnoredWhen}}{{$root.Name}}{{.Name}}IgnoreVal{{else}}validators.Evaluation{}{{end}}, {{if len .Default}}true{{else}}false{{end}}),
                         {{- end}}
                 },
                     {{- end}}

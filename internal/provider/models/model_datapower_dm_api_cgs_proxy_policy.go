@@ -26,7 +26,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -46,28 +45,28 @@ var DmAPICGSProxyPolicyRemoteAddressCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "proxy_policy_enable",
 	AttrType:    "Bool",
-	AttrDefault: "false",
+	AttrDefault: "",
 	Value:       []string{"true"},
 }
 var DmAPICGSProxyPolicyRemotePortCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "proxy_policy_enable",
 	AttrType:    "Bool",
-	AttrDefault: "false",
+	AttrDefault: "",
 	Value:       []string{"true"},
 }
 var DmAPICGSProxyPolicyRemoteAddressIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "proxy_policy_enable",
 	AttrType:    "Bool",
-	AttrDefault: "false",
+	AttrDefault: "",
 	Value:       []string{"false"},
 }
 var DmAPICGSProxyPolicyRemotePortIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "proxy_policy_enable",
 	AttrType:    "Bool",
-	AttrDefault: "false",
+	AttrDefault: "",
 	Value:       []string{"false"},
 }
 
@@ -77,7 +76,7 @@ var DmAPICGSProxyPolicyObjectType = map[string]attr.Type{
 	"remote_port":         types.Int64Type,
 }
 var DmAPICGSProxyPolicyObjectDefault = map[string]attr.Value{
-	"proxy_policy_enable": types.BoolValue(false),
+	"proxy_policy_enable": types.BoolNull(),
 	"remote_address":      types.StringNull(),
 	"remote_port":         types.Int64Null(),
 }
@@ -87,15 +86,15 @@ func GetDmAPICGSProxyPolicyDataSourceSchema(description string, cliAlias string,
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"proxy_policy_enable": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").String,
 				Computed:            true,
 			},
 			"remote_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").AddRequiredWhen(DmAPICGSProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmAPICGSProxyPolicyRemoteAddressIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"remote_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").AddRequiredWhen(DmAPICGSProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmAPICGSProxyPolicyRemotePortIgnoreVal.String()).String,
 				Computed:            true,
 			},
 		},
@@ -112,23 +111,21 @@ func GetDmAPICGSProxyPolicyResourceSchema(description string, cliAlias string, r
 			)),
 		Attributes: map[string]ResourceSchema.Attribute{
 			"proxy_policy_enable": ResourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").AddDefaultValue("false").String,
-				Computed:            true,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").String,
 				Optional:            true,
-				Default:             booldefault.StaticBool(false),
 			},
 			"remote_address": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").String,
-				Required:            true,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").AddRequiredWhen(DmAPICGSProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmAPICGSProxyPolicyRemoteAddressIgnoreVal.String()).String,
+				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(DmAPICGSProxyPolicyRemoteAddressCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(DmAPICGSProxyPolicyRemoteAddressCondVal, DmAPICGSProxyPolicyRemoteAddressIgnoreVal, false),
 				},
 			},
 			"remote_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").String,
-				Required:            true,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").AddRequiredWhen(DmAPICGSProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmAPICGSProxyPolicyRemotePortIgnoreVal.String()).String,
+				Optional:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(DmAPICGSProxyPolicyRemotePortCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredInt64(DmAPICGSProxyPolicyRemotePortCondVal, DmAPICGSProxyPolicyRemotePortIgnoreVal, false),
 				},
 			},
 		},
@@ -201,7 +198,7 @@ func (data *DmAPICGSProxyPolicy) UpdateFromBody(ctx context.Context, pathRoot st
 	}
 	if value := res.Get(pathRoot + `ProxyPolicyEnable`); value.Exists() && !data.ProxyPolicyEnable.IsNull() {
 		data.ProxyPolicyEnable = tfutils.BoolFromString(value.String())
-	} else if data.ProxyPolicyEnable.ValueBool() {
+	} else {
 		data.ProxyPolicyEnable = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `RemoteAddress`); value.Exists() && !data.RemoteAddress.IsNull() {

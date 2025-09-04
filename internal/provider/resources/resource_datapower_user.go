@@ -105,10 +105,10 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Default: stringdefault.StaticString("group-defined"),
 			},
 			"group_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user group for the user account. Each user group has an access profile to manage access rights. A user account inherits access rights from its user group.", "group", "user_group").AddRequiredWhen(models.UserGroupNameCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user group for the user account. Each user group has an access profile to manage access rights. A user account inherits access rights from its user group.", "group", "user_group").AddRequiredWhen(models.UserGroupNameCondVal.String()).AddNotValidWhen(models.UserGroupNameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.UserGroupNameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.UserGroupNameCondVal, models.UserGroupNameIgnoreVal, false),
 				},
 			},
 			"snmp_creds": schema.ListNestedAttribute{
@@ -117,7 +117,7 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Optional:            true,
 			},
 			"hashed_snmp_creds": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "snmp-cred-hashed", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "snmp-cred-hashed", "").AddNotValidWhen(models.UserHashedSnmpCredsIgnoreVal.String()).String,
 				NestedObject:        models.GetDmSnmpCredMaskedResourceSchema(),
 				Optional:            true,
 			},

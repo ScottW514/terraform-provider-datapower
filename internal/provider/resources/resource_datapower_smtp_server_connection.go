@@ -97,23 +97,24 @@ func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.
 			},
 			"options": models.GetDmSMTPOptionsResourceSchema("The SMTP options to enable for the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.", "options", "", false),
 			"auth": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("With the client authentication option, the method to authenticate the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.", "auth", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("With the client authentication option, the method to authenticate the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.", "auth", "").AddStringEnum("plain", "login").AddDefaultValue("plain").AddNotValidWhen(models.SMTPServerConnectionAuthIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("plain", "login"),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.SMTPServerConnectionAuthIgnoreVal, true),
 				},
 				Default: stringdefault.StaticString("plain"),
 			},
 			"account_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "username", "").AddRequiredWhen(models.SMTPServerConnectionAccountNameCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "username", "").AddRequiredWhen(models.SMTPServerConnectionAccountNameCondVal.String()).AddNotValidWhen(models.SMTPServerConnectionAccountNameIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SMTPServerConnectionAccountNameCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SMTPServerConnectionAccountNameCondVal, models.SMTPServerConnectionAccountNameIgnoreVal, false),
 				},
 			},
 			"account_password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "password-alias", "password_alias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "password-alias", "password_alias").AddNotValidWhen(models.SMTPServerConnectionAccountPasswordAliasIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"ssl_client_config_type": schema.StringAttribute{
@@ -126,7 +127,7 @@ func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").AddNotValidWhen(models.SMTPServerConnectionSSLClientIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

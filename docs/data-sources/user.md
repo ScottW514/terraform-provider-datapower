@@ -86,6 +86,8 @@ Read-Only:
 - `auth_secret_type` (String) Specify the format of the authentication key.
   - Choices: `password`, `key`
   - Default value: `password`
+  - Required When: `auth_protocol`!=`none`
+  - Not Valid When: attribute is not conditionally required
 - `engine_id` (String) Specify the SNMPv3 engine ID. The value of 0 represents the local engine ID. For any other engine ID, the value is a hex string that represents the 5 - 32 byte value.
 - `priv_protocol` (String) Specify the privacy protocol.
   - Choices: `none`, `des`, `aes`
@@ -93,3 +95,5 @@ Read-Only:
 - `priv_secret_type` (String) Specify the format of the privacy key. When the privacy protocol is AED or DES, whether the <tt>PrivKey</tt> is generated from a plaintext string or is an explicit key value.
   - Choices: `password`, `key`
   - Default value: `password`
+  - Required When: `priv_protocol`!=`none`
+  - Not Valid When: attribute is not conditionally required

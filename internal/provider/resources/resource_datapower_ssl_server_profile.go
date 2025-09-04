@@ -110,28 +110,28 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"require_client_auth": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require client authentication during the TLS handshake. When enabled, the handshake is aborted if the client certificate is not provided. Otherwise, the request does not fail when there is no client certificate.", "require-client-auth", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require client authentication during the TLS handshake. When enabled, the handshake is aborted if the client certificate is not provided. Otherwise, the request does not fail when there is no client certificate.", "require-client-auth", "").AddDefaultValue("true").AddNotValidWhen(models.SSLServerProfileRequireClientAuthIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"validate_client_cert": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validate client certificate", "validate-client-cert", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Validate client certificate", "validate-client-cert", "").AddDefaultValue("true").AddNotValidWhen(models.SSLServerProfileValidateClientCertIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"send_client_auth_ca_list": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Send client authentication CA list", "send-client-auth-ca-list", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Send client authentication CA list", "send-client-auth-ca-list", "").AddDefaultValue("true").AddNotValidWhen(models.SSLServerProfileSendClientAuthCAListIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"valcred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials", "valcred", "crypto_val_cred").AddRequiredWhen(models.SSLServerProfileValcredCondVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials", "valcred", "crypto_val_cred").AddRequiredWhen(models.SSLServerProfileValcredCondVal.String()).AddNotValidWhen(models.SSLServerProfileValcredIgnoreVal.String()).String,
 				Optional:            true,
 				Validators: []validator.String{
-					validators.ConditionalRequiredString(models.SSLServerProfileValcredCondVal, validators.Evaluation{}, false),
+					validators.ConditionalRequiredString(models.SSLServerProfileValcredCondVal, models.SSLServerProfileValcredIgnoreVal, false),
 				},
 			},
 			"caching": schema.BoolAttribute{
@@ -141,30 +141,33 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(true),
 			},
 			"cache_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of seconds that TLS sessions are allowed to remain in the TLS session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.", "cache-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of seconds that TLS sessions are allowed to remain in the TLS session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.", "cache-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("300").AddNotValidWhen(models.SSLServerProfileCacheTimeoutIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLServerProfileCacheTimeoutIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(300),
 			},
 			"cache_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of entries (multiplied by 1024) in the session cache. Enter a value in the range 1 - 500. The default value is 20.", "cache-size", "").AddIntegerRange(1, 500).AddDefaultValue("20").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of entries (multiplied by 1024) in the session cache. Enter a value in the range 1 - 500. The default value is 20.", "cache-size", "").AddIntegerRange(1, 500).AddDefaultValue("20").AddNotValidWhen(models.SSLServerProfileCacheSizeIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 500),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLServerProfileCacheSizeIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(20),
 			},
 			"ssl_options": models.GetDmSSLOptionsResourceSchema("Specify the options to apply to the TLS connection. These options have negative impact on the performance.", "ssl-options", "", false),
 			"max_ssl_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration of an established TLS session. The TLS connection terminates when the duration is reached. Enter a value in the range 1 - 11520. The default value is 60.", "max-duration", "").AddIntegerRange(1, 11520).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration of an established TLS session. The TLS connection terminates when the duration is reached. Enter a value in the range 1 - 11520. The default value is 60.", "max-duration", "").AddIntegerRange(1, 11520).AddDefaultValue("60").AddNotValidWhen(models.SSLServerProfileMaxSSLDurationIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 11520),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLServerProfileMaxSSLDurationIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(60),
 			},
@@ -175,16 +178,17 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"number_of_renegotiation_allowed": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of client initiated renegotiations to allow. Enter a value in the range 0 - 512. The default value is 0, which indicates TLS client initiated renegotiation is not allowed.", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of client initiated renegotiations to allow. Enter a value in the range 0 - 512. The default value is 0, which indicates TLS client initiated renegotiation is not allowed.", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).AddDefaultValue("0").AddNotValidWhen(models.SSLServerProfileNumberOfRenegotiationAllowedIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 512),
+					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLServerProfileNumberOfRenegotiationAllowedIgnoreVal, true),
 				},
 				Default: int64default.StaticInt64(0),
 			},
 			"prohibit_resume_on_reneg": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Prohibit session resumption on renegotiation", "prohibit-resume-on-reneg", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Prohibit session resumption on renegotiation", "prohibit-resume-on-reneg", "").AddDefaultValue("false").AddNotValidWhen(models.SSLServerProfileProhibitResumeOnRenegIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -196,7 +200,7 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_legacy_renegotiation": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow TLS renegotiation with TLS clients that do not support RFC 5746. By default, this support is disabled because renegotiation is vulnerable to man-in-the-middle attacks as documented in CVE-2009-3555. Renegotiation with TLS clients that support RFC 5746 is permitted regardless of the setting.", "allow-legacy-renegotiation", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow TLS renegotiation with TLS clients that do not support RFC 5746. By default, this support is disabled because renegotiation is vulnerable to man-in-the-middle attacks as documented in CVE-2009-3555. Renegotiation with TLS clients that support RFC 5746 is permitted regardless of the setting.", "allow-legacy-renegotiation", "").AddDefaultValue("false").AddNotValidWhen(models.SSLServerProfileAllowLegacyRenegotiationIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -218,7 +222,7 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"prioritize_cha_cha": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to move ChaCha20-Poly1305 cipher to the top of preference list sent to the client when this cipher is at the top of client cipher list When server cipher suite preferences is in effect, enabling this property temporarily moves the ChaCha20-Poly1305 cipher to the top of preference list when clients that present ChaCha20-Poly1305 cipher have this cipher at the top of their preference list. This setting allows the client to negotiate ChaCha20-Poly1305 cipher while other clients can use other ciphers.", "prioritize-chacha", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to move ChaCha20-Poly1305 cipher to the top of preference list sent to the client when this cipher is at the top of client cipher list When server cipher suite preferences is in effect, enabling this property temporarily moves the ChaCha20-Poly1305 cipher to the top of preference list when clients that present ChaCha20-Poly1305 cipher have this cipher at the top of their preference list. This setting allows the client to negotiate ChaCha20-Poly1305 cipher while other clients can use other ciphers.", "prioritize-chacha", "").AddDefaultValue("false").AddNotValidWhen(models.SSLServerProfilePrioritizeChaChaIgnoreVal.String()).String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
