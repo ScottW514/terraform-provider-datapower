@@ -1,0 +1,11 @@
+<User-Interface xmlns="http://www.datapower.com/schemas/user-interface/1.0">
+  <MarkupBanner type="system-banner" location="header" foreground-color="black" background-color="yellow">
+    LOCAL DEVELOPMENT CONTAINER
+  </MarkupBanner>
+  <MarkupBanner type="system-banner" location="footer" foreground-color="black" background-color="yellow">
+    NOT FOR PRODUCTION USE
+  </MarkupBanner>
+  <TextBanner type="system-banner">
+    LOCAL DEVELOPMENT CONTAINER - NOT FOR PRODUCTION USE
+  </TextBanner>
+</User-Interface>

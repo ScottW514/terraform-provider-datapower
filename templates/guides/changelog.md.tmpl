@@ -14,6 +14,7 @@ description: |-
 - Added default `document_cache_size` in `XMLManager`
 - Added `ignored_when` var definitions to models
 - Added `ignored_when` logic and attribute validators for conditionally ignoring attributes
+- Added devcontainer for development
 
 ## v0.10.0
 

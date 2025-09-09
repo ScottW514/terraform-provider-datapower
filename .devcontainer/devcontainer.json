@@ -1,0 +1,6 @@
+{
+  "name": "Datapower Terraform Provider Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "go-dev",
+  "workspaceFolder": "/workspaces/terraform-provider-datapower/",
+}

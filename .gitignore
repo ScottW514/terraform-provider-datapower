@@ -17,7 +17,8 @@ go.work.sum
 .vscode/
 
 _dev/
-.devcontainer/
+.devcontainer/.env
+.devcontainer/go/certs/
 .bin/
 sandbox/
 unconfined

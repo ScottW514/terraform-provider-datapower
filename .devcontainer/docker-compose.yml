@@ -1,0 +1,14 @@
+services:
+  datapower-dev:
+    hostname: datapower-dev
+    build: datapower
+    tty: true
+    ports:
+      - "5554:5554"
+      - "9090:9090"
+  go-dev:
+    build: go
+    env_file: .env
+    volumes:
+      - ..:/workspaces/terraform-provider-datapower:cached
+    command: sleep infinity
