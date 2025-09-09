@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## UNRELEASED
+## v0.11.0
 
 - Fixed case for `required_when` `values` in `ConformancePolicy`, `dmAAAPExtractIdentity`, `dmAAAPExtractResource` and `dmSMTPPolicy` definitions.
 - Corrected `do_s_valve` attribute to `dos_valve` in `AAAPolicy`
@@ -15,6 +15,8 @@ description: |-
 - Added `ignored_when` var definitions to models
 - Added `ignored_when` logic and attribute validators for conditionally ignoring attributes
 - Added devcontainer for development
+- Bump github.com/stretchr/testify from 1.11.0 to 1.11.1 (PR11)
+- Bump golang.org/x/crypto from 0.41.0 to 0.42.0 (PR12)
 
 ## v0.10.0
 
