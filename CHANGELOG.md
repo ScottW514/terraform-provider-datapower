@@ -1,6 +1,8 @@
-## UNRELEASED
+## v0.11.1
 
 - Added retrieve object by name option to datasources.
+- Bump actions/setup-go from 5.5.0 to 6.0.0 in the github-actions group (PR13)
+- Bump golang.org/x/tools from 0.36.0 to 0.37.0 (PR14)
 
 ## v0.11.0
 
