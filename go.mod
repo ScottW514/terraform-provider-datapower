@@ -13,7 +13,7 @@ require (
 	github.com/tidwall/gjson v1.18.0
 	github.com/tidwall/sjson v1.2.5
 	golang.org/x/crypto v0.42.0
-	golang.org/x/tools v0.36.0
+	golang.org/x/tools v0.37.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -81,10 +81,11 @@ require (
 	github.com/zclconf/go-cty v1.16.3 // indirect
 	go.abhg.dev/goldmark/frontmatter v0.2.0 // indirect
 	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df // indirect
-	golang.org/x/mod v0.27.0 // indirect
-	golang.org/x/net v0.43.0 // indirect
+	golang.org/x/mod v0.28.0 // indirect
+	golang.org/x/net v0.44.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/sys v0.36.0 // indirect
+	golang.org/x/telemetry v0.0.0-20250908211612-aef8a434d053 // indirect
 	golang.org/x/text v0.29.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250603155806-513f23925822 // indirect
