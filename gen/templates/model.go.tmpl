@@ -442,9 +442,6 @@ func (data {{.Name}}) GetPath() string {
         {{- if eq .Name "AppDomain"}}
     rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
         {{- end}}
-        {{- if eq .Name "Id"}}
-    rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
-        {{- end}}
     {{- end}}
     return rest_path
 }

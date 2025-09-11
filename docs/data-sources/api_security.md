@@ -14,6 +14,7 @@ The security API action enforces the security requirements that are defined for 
 
 ```terraform
 data "datapower_api_security" "test" {
+  id         = "AccTest_APISecurity"
   app_domain = "acceptance_test"
 }
 ```
@@ -23,11 +24,15 @@ data "datapower_api_security" "test" {
 
 ### Required
 
-- `app_domain` (String) The name of the application domain the object belongs to
+- `app_domain` (String) The name of the application domain the object belongs to.
+
+### Optional
+
+- `id` (String) The name of the object to retrieve.
 
 ### Read-Only
 
-- `result` (Attributes List) List of objects (see [below for nested schema](#nestedatt--result))
+- `result` (Attributes List) List of objects. If `id` was provided and it exists, it will be the only item in the list. (see [below for nested schema](#nestedatt--result))
 
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`

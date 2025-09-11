@@ -22,8 +22,6 @@ package models
 
 import (
 	"context"
-	"net/url"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -51,7 +49,6 @@ var UserGroupObjectType = map[string]attr.Type{
 
 func (data UserGroup) GetPath() string {
 	rest_path := "/mgmt/config/default/UserGroup"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	return rest_path
 }
 

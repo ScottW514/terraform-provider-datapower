@@ -1,3 +1,7 @@
+## UNRELEASED
+
+- Added retrieve object by name option to datasources.
+
 ## v0.11.0
 
 - Fixed case for `required_when` `values` in `ConformancePolicy`, `dmAAAPExtractIdentity`, `dmAAAPExtractResource` and `dmSMTPPolicy` definitions.

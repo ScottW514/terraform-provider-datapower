@@ -95,6 +95,7 @@ resource "datapower_aaa_jwt_generator" "test" {
 }`,
     Data: `
 data "datapower_aaa_jwt_generator" "test" {
+  id         = "AccTest_AAAJWTGenerator"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -114,6 +115,7 @@ resource "datapower_aaa_jwt_validator" "test" {
 }`,
     Data: `
 data "datapower_aaa_jwt_validator" "test" {
+  id         = "AccTest_AAAJWTValidator"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -133,6 +135,7 @@ resource "datapower_aaa_policy" "test" {
 }`,
     Data: `
 data "datapower_aaa_policy" "test" {
+  id         = "AccTest_AAAPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -155,6 +158,7 @@ resource "datapower_amqp_broker" "test" {
 }`,
     Data: `
 data "datapower_amqp_broker" "test" {
+  id         = "AccTest_AMQPBroker"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -179,6 +183,7 @@ resource "datapower_amqp_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_amqp_source_protocol_handler" "test" {
+  id         = "AccTest_AMQPSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -199,6 +204,7 @@ resource "datapower_api_application_type" "test" {
 }`,
     Data: `
 data "datapower_api_application_type" "test" {
+  id         = "AccTest_APIApplicationType"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -218,6 +224,7 @@ resource "datapower_api_auth_url_registry" "test" {
 }`,
     Data: `
 data "datapower_api_auth_url_registry" "test" {
+  id         = "AccTest_APIAuthURLRegistry"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -237,6 +244,7 @@ resource "datapower_api_cors" "test" {
 }`,
     Data: `
 data "datapower_api_cors" "test" {
+  id         = "AccTest_APICORS"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -255,6 +263,7 @@ resource "datapower_api_client_identification" "test" {
 }`,
     Data: `
 data "datapower_api_client_identification" "test" {
+  id         = "AccTest_APIClientIdentification"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -279,6 +288,7 @@ resource "datapower_api_collection" "test" {
 }`,
     Data: `
 data "datapower_api_collection" "test" {
+  id         = "AccTest_APICollection"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -320,6 +330,7 @@ resource "datapower_api_definition" "test" {
 }`,
     Data: `
 data "datapower_api_definition" "test" {
+  id         = "AccTest_APIDefinition"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -340,6 +351,7 @@ resource "datapower_api_execute" "test" {
 }`,
     Data: `
 data "datapower_api_execute" "test" {
+  id         = "AccTest_APIExecute"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -358,6 +370,7 @@ resource "datapower_api_final" "test" {
 }`,
     Data: `
 data "datapower_api_final" "test" {
+  id         = "AccTest_APIFinal"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -379,6 +392,7 @@ resource "datapower_api_gateway" "test" {
 }`,
     Data: `
 data "datapower_api_gateway" "test" {
+  id         = "AccTest_APIGateway"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -403,6 +417,7 @@ resource "datapower_api_ldap_registry" "test" {
 }`,
     Data: `
 data "datapower_api_ldap_registry" "test" {
+  id         = "AccTest_APILDAPRegistry"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -425,6 +440,7 @@ resource "datapower_api_operation" "test" {
 }`,
     Data: `
 data "datapower_api_operation" "test" {
+  id         = "AccTest_APIOperation"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -445,6 +461,7 @@ resource "datapower_api_path" "test" {
 }`,
     Data: `
 data "datapower_api_path" "test" {
+  id         = "AccTest_APIPath"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -466,6 +483,7 @@ resource "datapower_api_plan" "test" {
 }`,
     Data: `
 data "datapower_api_plan" "test" {
+  id         = "AccTest_APIPlan"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -486,6 +504,7 @@ resource "datapower_api_result" "test" {
 }`,
     Data: `
 data "datapower_api_result" "test" {
+  id         = "AccTest_APIResult"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -504,6 +523,7 @@ resource "datapower_api_routing" "test" {
 }`,
     Data: `
 data "datapower_api_routing" "test" {
+  id         = "AccTest_APIRouting"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -522,6 +542,7 @@ resource "datapower_api_rule" "test" {
 }`,
     Data: `
 data "datapower_api_rule" "test" {
+  id         = "AccTest_APIRule"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -541,6 +562,7 @@ resource "datapower_api_schema" "test" {
 }`,
     Data: `
 data "datapower_api_schema" "test" {
+  id         = "AccTest_APISchema"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -560,6 +582,7 @@ resource "datapower_api_security" "test" {
 }`,
     Data: `
 data "datapower_api_security" "test" {
+  id         = "AccTest_APISecurity"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -581,6 +604,7 @@ resource "datapower_api_security_api_key" "test" {
 }`,
     Data: `
 data "datapower_api_security_api_key" "test" {
+  id         = "AccTest_APISecurityAPIKey"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -603,6 +627,7 @@ resource "datapower_api_security_basic_auth" "test" {
 }`,
     Data: `
 data "datapower_api_security_basic_auth" "test" {
+  id         = "AccTest_APISecurityBasicAuth"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -622,6 +647,7 @@ resource "datapower_api_security_http_scheme" "test" {
 }`,
     Data: `
 data "datapower_api_security_http_scheme" "test" {
+  id         = "AccTest_APISecurityHTTPScheme"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -642,6 +668,7 @@ resource "datapower_api_security_oauth" "test" {
 }`,
     Data: `
 data "datapower_api_security_oauth" "test" {
+  id         = "AccTest_APISecurityOAuth"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -663,6 +690,7 @@ resource "datapower_api_security_oauth_req" "test" {
 }`,
     Data: `
 data "datapower_api_security_oauth_req" "test" {
+  id         = "AccTest_APISecurityOAuthReq"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -683,6 +711,7 @@ resource "datapower_api_security_requirement" "test" {
 }`,
     Data: `
 data "datapower_api_security_requirement" "test" {
+  id         = "AccTest_APISecurityRequirement"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -721,6 +750,7 @@ resource "datapower_as1_poller_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_as1_poller_source_protocol_handler" "test" {
+  id         = "AccTest_AS1PollerSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -752,6 +782,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_as2_proxy_source_protocol_handler" "test" {
+  id         = "AccTest_AS2ProxySourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -777,6 +808,7 @@ resource "datapower_as2_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_as2_source_protocol_handler" "test" {
+  id         = "AccTest_AS2SourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -799,6 +831,7 @@ resource "datapower_as3_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_as3_source_protocol_handler" "test" {
+  id         = "AccTest_AS3SourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -819,6 +852,7 @@ resource "datapower_access_control_list" "test" {
 }`,
     Data: `
 data "datapower_access_control_list" "test" {
+  id         = "AccTest_AccessControlList"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -837,6 +871,7 @@ resource "datapower_access_profile" "test" {
 }`,
     Data: `
 data "datapower_access_profile" "test" {
+  id         = "AccTest_AccessProfile"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -860,6 +895,7 @@ resource "datapower_analytics_endpoint" "test" {
 }`,
     Data: `
 data "datapower_analytics_endpoint" "test" {
+  id         = "AccTest_AnalyticsEndpoint"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -885,6 +921,7 @@ resource "datapower_app_security_policy" "test" {
 }`,
     Data: `
 data "datapower_app_security_policy" "test" {
+  id         = "AccTest_AppSecurityPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -906,6 +943,7 @@ resource "datapower_assembly" "test" {
 }`,
     Data: `
 data "datapower_assembly" "test" {
+  id         = "AccTest_Assembly"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -928,6 +966,7 @@ resource "datapower_assembly_action_client_security" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_client_security" "test" {
+  id         = "AccTest_AssemblyActionClientSecurity"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -950,6 +989,7 @@ resource "datapower_assembly_action_extract" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_extract" "test" {
+  id         = "AccTest_AssemblyActionExtract"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -970,6 +1010,7 @@ resource "datapower_assembly_action_function_call" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_function_call" "test" {
+  id         = "AccTest_AssemblyActionFunctionCall"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -990,6 +1031,7 @@ resource "datapower_assembly_action_gateway_script" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_gateway_script" "test" {
+  id         = "AccTest_AssemblyActionGatewayScript"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1010,6 +1052,7 @@ resource "datapower_assembly_action_graphql_cost_analysis" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_graphql_cost_analysis" "test" {
+  id         = "AccTest_AssemblyActionGraphQLCostAnalysis"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1029,6 +1072,7 @@ resource "datapower_assembly_action_graphql_execute" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_graphql_execute" "test" {
+  id         = "AccTest_AssemblyActionGraphQLExecute"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1047,6 +1091,7 @@ resource "datapower_assembly_action_graphql_introspect" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_graphql_introspect" "test" {
+  id         = "AccTest_AssemblyActionGraphQLIntrospect"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1065,6 +1110,7 @@ resource "datapower_assembly_action_html_page" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_html_page" "test" {
+  id         = "AccTest_AssemblyActionHtmlPage"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1087,6 +1133,7 @@ resource "datapower_assembly_action_invoke" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_invoke" "test" {
+  id         = "AccTest_AssemblyActionInvoke"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1111,6 +1158,7 @@ resource "datapower_assembly_action_jwt_generate" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_jwt_generate" "test" {
+  id         = "AccTest_AssemblyActionJWTGenerate"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1133,6 +1181,7 @@ resource "datapower_assembly_action_jwt_validate" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_jwt_validate" "test" {
+  id         = "AccTest_AssemblyActionJWTValidate"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1153,6 +1202,7 @@ resource "datapower_assembly_action_json2xml" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_json2xml" "test" {
+  id         = "AccTest_AssemblyActionJson2Xml"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1172,6 +1222,7 @@ resource "datapower_assembly_action_log" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_log" "test" {
+  id         = "AccTest_AssemblyActionLog"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1192,6 +1243,7 @@ resource "datapower_assembly_action_map" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_map" "test" {
+  id         = "AccTest_AssemblyActionMap"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1212,6 +1264,7 @@ resource "datapower_assembly_action_oauth" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_oauth" "test" {
+  id         = "AccTest_AssemblyActionOAuth"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1231,6 +1284,7 @@ resource "datapower_assembly_action_parse" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_parse" "test" {
+  id         = "AccTest_AssemblyActionParse"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1250,6 +1304,7 @@ resource "datapower_assembly_action_rate_limit" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_rate_limit" "test" {
+  id         = "AccTest_AssemblyActionRateLimit"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1269,6 +1324,7 @@ resource "datapower_assembly_action_rate_limit_info" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_rate_limit_info" "test" {
+  id         = "AccTest_AssemblyActionRateLimitInfo"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1288,6 +1344,7 @@ resource "datapower_assembly_action_redact" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_redact" "test" {
+  id         = "AccTest_AssemblyActionRedact"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1308,6 +1365,7 @@ resource "datapower_assembly_action_set_var" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_set_var" "test" {
+  id         = "AccTest_AssemblyActionSetVar"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1328,6 +1386,7 @@ resource "datapower_assembly_action_throw" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_throw" "test" {
+  id         = "AccTest_AssemblyActionThrow"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1352,6 +1411,7 @@ resource "datapower_assembly_action_user_security" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_user_security" "test" {
+  id         = "AccTest_AssemblyActionUserSecurity"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1376,6 +1436,7 @@ resource "datapower_assembly_action_validate" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_validate" "test" {
+  id         = "AccTest_AssemblyActionValidate"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1395,6 +1456,7 @@ resource "datapower_assembly_action_wsdl" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_wsdl" "test" {
+  id         = "AccTest_AssemblyActionWSDL"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1414,6 +1476,7 @@ resource "datapower_assembly_action_web_socket_upgrade" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_web_socket_upgrade" "test" {
+  id         = "AccTest_AssemblyActionWebSocketUpgrade"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1434,6 +1497,7 @@ resource "datapower_assembly_action_xslt" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_xslt" "test" {
+  id         = "AccTest_AssemblyActionXSLT"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1453,6 +1517,7 @@ resource "datapower_assembly_action_xml2json" "test" {
 }`,
     Data: `
 data "datapower_assembly_action_xml2json" "test" {
+  id         = "AccTest_AssemblyActionXml2Json"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1471,6 +1536,7 @@ resource "datapower_assembly_function" "test" {
 }`,
     Data: `
 data "datapower_assembly_function" "test" {
+  id         = "AccTest_AssemblyFunction"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1490,6 +1556,7 @@ resource "datapower_assembly_logic_operation_switch" "test" {
 }`,
     Data: `
 data "datapower_assembly_logic_operation_switch" "test" {
+  id         = "AccTest_AssemblyLogicOperationSwitch"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1510,6 +1577,7 @@ resource "datapower_assembly_logic_switch" "test" {
 }`,
     Data: `
 data "datapower_assembly_logic_switch" "test" {
+  id         = "AccTest_AssemblyLogicSwitch"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1540,6 +1608,7 @@ resource "datapower_b2b_cpa" "test" {
 }`,
     Data: `
 data "datapower_b2b_cpa" "test" {
+  id         = "AccTest_B2BCPA"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1563,6 +1632,7 @@ resource "datapower_b2b_cpa_collaboration" "test" {
 }`,
     Data: `
 data "datapower_b2b_cpa_collaboration" "test" {
+  id         = "AccTest_B2BCPACollaboration"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1585,6 +1655,7 @@ resource "datapower_b2b_cpa_receiver_setting" "test" {
 }`,
     Data: `
 data "datapower_b2b_cpa_receiver_setting" "test" {
+  id         = "AccTest_B2BCPAReceiverSetting"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1604,6 +1675,7 @@ resource "datapower_b2b_cpa_sender_setting" "test" {
 }`,
     Data: `
 data "datapower_b2b_cpa_sender_setting" "test" {
+  id         = "AccTest_B2BCPASenderSetting"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1627,6 +1699,7 @@ resource "datapower_b2b_gateway" "test" {
 }`,
     Data: `
 data "datapower_b2b_gateway" "test" {
+  id         = "AccTest_B2BGateway"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1664,6 +1737,7 @@ resource "datapower_b2b_profile" "test" {
 }`,
     Data: `
 data "datapower_b2b_profile" "test" {
+  id         = "AccTest_B2BProfile"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1685,6 +1759,7 @@ resource "datapower_b2b_profile_group" "test" {
 }`,
     Data: `
 data "datapower_b2b_profile_group" "test" {
+  id         = "AccTest_B2BProfileGroup"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1706,6 +1781,7 @@ resource "datapower_b2b_xpath_routing_policy" "test" {
 }`,
     Data: `
 data "datapower_b2b_xpath_routing_policy" "test" {
+  id         = "AccTest_B2BXPathRoutingPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1727,6 +1803,7 @@ resource "datapower_cors_policy" "test" {
 }`,
     Data: `
 data "datapower_cors_policy" "test" {
+  id         = "AccTest_CORSPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1747,6 +1824,7 @@ resource "datapower_cors_rule" "test" {
 }`,
     Data: `
 data "datapower_cors_rule" "test" {
+  id         = "AccTest_CORSRule"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1790,6 +1868,7 @@ resource "datapower_compile_options_policy" "test" {
 }`,
     Data: `
 data "datapower_compile_options_policy" "test" {
+  id         = "AccTest_CompileOptionsPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1808,6 +1887,7 @@ resource "datapower_compile_settings" "test" {
 }`,
     Data: `
 data "datapower_compile_settings" "test" {
+  id         = "AccTest_CompileSettings"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1826,6 +1906,7 @@ resource "datapower_config_deployment_policy" "test" {
 }`,
     Data: `
 data "datapower_config_deployment_policy" "test" {
+  id         = "AccTest_ConfigDeploymentPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1844,6 +1925,7 @@ resource "datapower_config_sequence" "test" {
 }`,
     Data: `
 data "datapower_config_sequence" "test" {
+  id         = "AccTest_ConfigSequence"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1862,6 +1944,7 @@ resource "datapower_conformance_policy" "test" {
 }`,
     Data: `
 data "datapower_conformance_policy" "test" {
+  id         = "AccTest_ConformancePolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1880,6 +1963,7 @@ resource "datapower_control_list" "test" {
 }`,
     Data: `
 data "datapower_control_list" "test" {
+  id         = "AccTest_ControlList"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1898,6 +1982,7 @@ resource "datapower_cookie_attribute_policy" "test" {
 }`,
     Data: `
 data "datapower_cookie_attribute_policy" "test" {
+  id         = "AccTest_CookieAttributePolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1920,6 +2005,7 @@ resource "datapower_count_monitor" "test" {
 }`,
     Data: `
 data "datapower_count_monitor" "test" {
+  id         = "AccTest_CountMonitor"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1943,6 +2029,7 @@ resource "datapower_crypto_certificate" "test" {
 }`,
     Data: `
 data "datapower_crypto_certificate" "test" {
+  id         = "AccTest_CryptoCertificate"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1963,6 +2050,7 @@ resource "datapower_crypto_fw_cred" "test" {
 }`,
     Data: `
 data "datapower_crypto_fw_cred" "test" {
+  id         = "AccTest_CryptoFWCred"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -1984,6 +2072,7 @@ resource "datapower_crypto_ident_cred" "test" {
 }`,
     Data: `
 data "datapower_crypto_ident_cred" "test" {
+  id         = "AccTest_CryptoIdentCred"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -2006,6 +2095,7 @@ resource "datapower_crypto_kerberos_kdc" "test" {
 }`,
     Data: `
 data "datapower_crypto_kerberos_kdc" "test" {
+  id         = "AccTest_CryptoKerberosKDC"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -2027,6 +2117,7 @@ resource "datapower_crypto_kerberos_keytab" "test" {
 }`,
     Data: `
 data "datapower_crypto_kerberos_keytab" "test" {
+  id         = "AccTest_CryptoKerberosKeytab"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -2048,6 +2139,7 @@ resource "datapower_crypto_key" "test" {
 }`,
     Data: `
 data "datapower_crypto_key" "test" {
+  id         = "AccTest_CryptoKey"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -2069,6 +2161,7 @@ resource "datapower_crypto_sskey" "test" {
 }`,
     Data: `
 data "datapower_crypto_sskey" "test" {
+  id         = "AccTest_CryptoSSKey"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -2088,6 +2181,7 @@ resource "datapower_crypto_val_cred" "test" {
 }`,
     Data: `
 data "datapower_crypto_val_cred" "test" {
+  id         = "AccTest_CryptoValCred"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -2117,6 +2211,7 @@ resource "datapower_deployment_policy_parameters_binding" "test" {
 }`,
     Data: `
 data "datapower_deployment_policy_parameters_binding" "test" {
+  id         = "AccTest_DeploymentPolicyParametersBinding"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4466,6 +4561,7 @@ resource "datapower_document_crypto_map" "test" {
 }`,
     Data: `
 data "datapower_document_crypto_map" "test" {
+  id         = "AccTest_DocumentCryptoMap"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4485,6 +4581,7 @@ resource "datapower_domain" "test" {
 }`,
     Data: `
 data "datapower_domain" "test" {
+  app_domain = "acceptance_test"
 }`,
     TestBed: `
 resource "datapower_domain" "acc_test" {
@@ -4528,6 +4625,7 @@ resource "datapower_duration_monitor" "test" {
 }`,
     Data: `
 data "datapower_duration_monitor" "test" {
+  id         = "AccTest_DurationMonitor"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4550,6 +4648,7 @@ resource "datapower_ebms2_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_ebms2_source_protocol_handler" "test" {
+  id         = "AccTest_EBMS2SourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4572,6 +4671,7 @@ resource "datapower_ebms3_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_ebms3_source_protocol_handler" "test" {
+  id         = "AccTest_EBMS3SourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4608,6 +4708,7 @@ resource "datapower_ftp_file_poller_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_ftp_file_poller_source_protocol_handler" "test" {
+  id         = "AccTest_FTPFilePollerSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4632,6 +4733,7 @@ resource "datapower_ftp_quote_commands" "test" {
 }`,
     Data: `
 data "datapower_ftp_quote_commands" "test" {
+  id         = "AccTest_FTPQuoteCommands"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4652,6 +4754,7 @@ resource "datapower_ftp_server_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_ftp_server_source_protocol_handler" "test" {
+  id         = "AccTest_FTPServerSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4685,6 +4788,7 @@ resource "datapower_filter_action" "test" {
 }`,
     Data: `
 data "datapower_filter_action" "test" {
+  id         = "AccTest_FilterAction"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4714,6 +4818,7 @@ resource "datapower_forms_login_policy" "test" {
 }`,
     Data: `
 data "datapower_forms_login_policy" "test" {
+  id         = "AccTest_FormsLoginPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4767,6 +4872,7 @@ resource "datapower_gateway_peering" "test" {
 }`,
     Data: `
 data "datapower_gateway_peering" "test" {
+  id         = "AccTest_GatewayPeering"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -4789,6 +4895,7 @@ resource "datapower_gateway_peering_group" "test" {
 }`,
     Data: `
 data "datapower_gateway_peering_group" "test" {
+  id         = "AccTest_GatewayPeeringGroup"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -4845,6 +4952,7 @@ resource "datapower_git_ops_template" "test" {
 }`,
     Data: `
 data "datapower_git_ops_template" "test" {
+  id         = "AccTest_GitOpsTemplate"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4874,6 +4982,7 @@ resource "datapower_graphql_schema_options" "test" {
 }`,
     Data: `
 data "datapower_graphql_schema_options" "test" {
+  id         = "AccTest_GraphQLSchemaOptions"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4893,6 +5002,7 @@ resource "datapower_http_input_conversion_map" "test" {
 }`,
     Data: `
 data "datapower_http_input_conversion_map" "test" {
+  id         = "_webappfw_sql-json"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4913,6 +5023,7 @@ resource "datapower_https_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_https_source_protocol_handler" "test" {
+  id         = "AccTest_HTTPSSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4935,6 +5046,7 @@ resource "datapower_http_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_http_source_protocol_handler" "test" {
+  id         = "AccTest_HTTPSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4955,6 +5067,7 @@ resource "datapower_http_user_agent" "test" {
 }`,
     Data: `
 data "datapower_http_user_agent" "test" {
+  id         = "AccTest_HTTPUserAgent"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -4973,6 +5086,7 @@ resource "datapower_host_alias" "test" {
 }`,
     Data: `
 data "datapower_host_alias" "test" {
+  id         = "AccTest_HostAlias"
 }`,
     TestBed: `
 resource "datapower_host_alias" "acc_test" {
@@ -4994,6 +5108,7 @@ resource "datapower_import_package" "test" {
 }`,
     Data: `
 data "datapower_import_package" "test" {
+  id         = "AccTest_ImportPackage"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5017,6 +5132,7 @@ resource "datapower_include_config" "test" {
 }`,
     Data: `
 data "datapower_include_config" "test" {
+  id         = "AccTest_IncludeConfig"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5049,6 +5165,7 @@ resource "datapower_jose_recipient_identifier" "test" {
 }`,
     Data: `
 data "datapower_jose_recipient_identifier" "test" {
+  id         = "AccTest_JOSERecipientIdentifier"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5073,6 +5190,7 @@ resource "datapower_jose_signature_identifier" "test" {
 }`,
     Data: `
 data "datapower_jose_signature_identifier" "test" {
+  id         = "AccTest_JOSESignatureIdentifier"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5094,6 +5212,7 @@ resource "datapower_json_settings" "test" {
 }`,
     Data: `
 data "datapower_json_settings" "test" {
+  id         = "AccTest_JSONSettings"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5113,6 +5232,7 @@ resource "datapower_jwe_header" "test" {
 }`,
     Data: `
 data "datapower_jwe_header" "test" {
+  id         = "AccTest_JWEHeader"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5134,6 +5254,7 @@ resource "datapower_jwe_recipient" "test" {
 }`,
     Data: `
 data "datapower_jwe_recipient" "test" {
+  id         = "AccTest_JWERecipient"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5156,6 +5277,7 @@ resource "datapower_jws_signature" "test" {
 }`,
     Data: `
 data "datapower_jws_signature" "test" {
+  id         = "AccTest_JWSSignature"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5178,6 +5300,7 @@ resource "datapower_kafka_cluster" "test" {
 }`,
     Data: `
 data "datapower_kafka_cluster" "test" {
+  id         = "AccTest_KafkaCluster"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -5200,6 +5323,7 @@ resource "datapower_kafka_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_kafka_source_protocol_handler" "test" {
+  id         = "AccTest_KafkaSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -5220,6 +5344,7 @@ resource "datapower_ldap_connection_pool" "test" {
 }`,
     Data: `
 data "datapower_ldap_connection_pool" "test" {
+  id         = "AccTest_LDAPConnectionPool"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5238,6 +5363,7 @@ resource "datapower_ldap_search_parameters" "test" {
 }`,
     Data: `
 data "datapower_ldap_search_parameters" "test" {
+  id         = "AccTest_LDAPSearchParameters"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5259,6 +5385,7 @@ resource "datapower_load_balancer_group" "test" {
 }`,
     Data: `
 data "datapower_load_balancer_group" "test" {
+  id         = "AccTest_LoadBalancerGroup"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5280,6 +5407,7 @@ resource "datapower_log_label" "test" {
 }`,
     Data: `
 data "datapower_log_label" "test" {
+  id         = "aaa"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5300,6 +5428,7 @@ resource "datapower_log_target" "test" {
 }`,
     Data: `
 data "datapower_log_target" "test" {
+  id         = "AccTest_LogTarget"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5322,6 +5451,7 @@ resource "datapower_luna" "test" {
 }`,
     Data: `
 data "datapower_luna" "test" {
+  id         = "AccTest_Luna"
 }`,
     ModelTestBed: `{
   id = "AccTest_Luna"
@@ -5342,6 +5472,7 @@ resource "datapower_luna_ha_group" "test" {
 }`,
     Data: `
 data "datapower_luna_ha_group" "test" {
+  id         = "AccTest_LunaHAGroup"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -5375,6 +5506,7 @@ resource "datapower_luna_partition" "test" {
 }`,
     Data: `
 data "datapower_luna_partition" "test" {
+  id         = "AccTest_LunaPartition"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -5398,6 +5530,7 @@ resource "datapower_mcf_custom_rule" "test" {
 }`,
     Data: `
 data "datapower_mcf_custom_rule" "test" {
+  id         = "AccTest_MCFCustomRule"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5420,6 +5553,7 @@ resource "datapower_mcf_http_header" "test" {
 }`,
     Data: `
 data "datapower_mcf_http_header" "test" {
+  id         = "AccTest_MCFHttpHeader"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5441,6 +5575,7 @@ resource "datapower_mcf_http_method" "test" {
 }`,
     Data: `
 data "datapower_mcf_http_method" "test" {
+  id         = "AccTest_MCFHttpMethod"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5461,6 +5596,7 @@ resource "datapower_mcf_http_url" "test" {
 }`,
     Data: `
 data "datapower_mcf_http_url" "test" {
+  id         = "AccTest_MCFHttpURL"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5482,6 +5618,7 @@ resource "datapower_mcf_xpath" "test" {
 }`,
     Data: `
 data "datapower_mcf_xpath" "test" {
+  id         = "AccTest_MCFXPath"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5504,6 +5641,7 @@ resource "datapower_mpgw_error_action" "test" {
 }`,
     Data: `
 data "datapower_mpgw_error_action" "test" {
+  id         = "AccTest_MPGWErrorAction"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5525,6 +5663,7 @@ resource "datapower_mpgw_error_handling_policy" "test" {
 }`,
     Data: `
 data "datapower_mpgw_error_handling_policy" "test" {
+  id         = "AccTest_MPGWErrorHandlingPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5547,6 +5686,7 @@ resource "datapower_mq_manager" "test" {
 }`,
     Data: `
 data "datapower_mq_manager" "test" {
+  id         = "AccTest_MQManager"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5569,6 +5709,7 @@ resource "datapower_mq_manager_group" "test" {
 }`,
     Data: `
 data "datapower_mq_manager_group" "test" {
+  id         = "AccTest_MQManagerGroup"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5590,6 +5731,7 @@ resource "datapower_mqv9_plus_mft_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_mqv9_plus_mft_source_protocol_handler" "test" {
+  id         = "AccTest_MQv9PlusMFTSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5612,6 +5754,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_mqv9_plus_source_protocol_handler" "test" {
+  id         = "AccTest_MQv9PlusSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5632,6 +5775,7 @@ resource "datapower_mtom_policy" "test" {
 }`,
     Data: `
 data "datapower_mtom_policy" "test" {
+  id         = "AccTest_MTOMPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5650,6 +5794,7 @@ resource "datapower_matching" "test" {
 }`,
     Data: `
 data "datapower_matching" "test" {
+  id         = "__default-accept-service-providers__"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5668,6 +5813,7 @@ resource "datapower_message_content_filters" "test" {
 }`,
     Data: `
 data "datapower_message_content_filters" "test" {
+  id         = "AccTest_MessageContentFilters"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5686,6 +5832,7 @@ resource "datapower_message_matching" "test" {
 }`,
     Data: `
 data "datapower_message_matching" "test" {
+  id         = "AccTest_MessageMatching"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5704,6 +5851,7 @@ resource "datapower_message_type" "test" {
 }`,
     Data: `
 data "datapower_message_type" "test" {
+  id         = "AccTest_MessageType"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5740,6 +5888,7 @@ resource "datapower_multi_protocol_gateway" "test" {
 }`,
     Data: `
 data "datapower_multi_protocol_gateway" "test" {
+  id         = "AccTest_MultiProtocolGateway"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5792,6 +5941,7 @@ resource "datapower_nfs_file_poller_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_nfs_file_poller_source_protocol_handler" "test" {
+  id         = "AccTest_NFSFilePollerSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5817,6 +5967,7 @@ resource "datapower_nfs_static_mount" "test" {
 }`,
     Data: `
 data "datapower_nfs_static_mount" "test" {
+  id         = "AccTest_NFSStaticMount"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5837,6 +5988,7 @@ resource "datapower_name_value_profile" "test" {
 }`,
     Data: `
 data "datapower_name_value_profile" "test" {
+  id         = "AccTest_NameValueProfile"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5858,6 +6010,7 @@ resource "datapower_oauth_provider_settings" "test" {
 }`,
     Data: `
 data "datapower_oauth_provider_settings" "test" {
+  id         = "AccTest_OAuthProviderSettings"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5886,6 +6039,7 @@ resource "datapower_oauth_supported_client" "test" {
 }`,
     Data: `
 data "datapower_oauth_supported_client" "test" {
+  id         = "AccTest_OAuthSupportedClient"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5913,6 +6067,7 @@ resource "datapower_oauth_supported_client_group" "test" {
 }`,
     Data: `
 data "datapower_oauth_supported_client_group" "test" {
+  id         = "AccTest_OAuthSupportedClientGroup"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5943,6 +6098,7 @@ resource "datapower_odr_connector_group" "test" {
 }`,
     Data: `
 data "datapower_odr_connector_group" "test" {
+  id         = "AccTest_ODRConnectorGroup"
 }`,
     TestBed: `
 resource "datapower_odr_connector_group" "acc_test" {
@@ -5962,6 +6118,7 @@ resource "datapower_open_telemetry" "test" {
 }`,
     Data: `
 data "datapower_open_telemetry" "test" {
+  id         = "AccTest_OpenTelemetry"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -5986,6 +6143,7 @@ resource "datapower_open_telemetry_exporter" "test" {
 }`,
     Data: `
 data "datapower_open_telemetry_exporter" "test" {
+  id         = "AccTest_OpenTelemetryExporter"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6010,6 +6168,7 @@ resource "datapower_open_telemetry_sampler" "test" {
 }`,
     Data: `
 data "datapower_open_telemetry_sampler" "test" {
+  id         = "AccTest_OpenTelemetrySampler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6032,6 +6191,7 @@ resource "datapower_operation_rate_limit" "test" {
 }`,
     Data: `
 data "datapower_operation_rate_limit" "test" {
+  id         = "AccTest_OperationRateLimit"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6059,6 +6219,7 @@ resource "datapower_pop_poller_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_pop_poller_source_protocol_handler" "test" {
+  id         = "AccTest_POPPollerSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6084,6 +6245,7 @@ resource "datapower_parse_settings" "test" {
 }`,
     Data: `
 data "datapower_parse_settings" "test" {
+  id         = "AccTest_ParseSettings"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6104,6 +6266,7 @@ resource "datapower_password_alias" "test" {
 }`,
     Data: `
 data "datapower_password_alias" "test" {
+  id         = "AccTest_PasswordAlias"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6126,6 +6289,7 @@ resource "datapower_peer_group" "test" {
 }`,
     Data: `
 data "datapower_peer_group" "test" {
+  id         = "AccTest_PeerGroup"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6149,6 +6313,7 @@ resource "datapower_policy_attachments" "test" {
 }`,
     Data: `
 data "datapower_policy_attachments" "test" {
+  id         = "AccTest_PolicyAttachments"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6170,6 +6335,7 @@ resource "datapower_policy_parameters" "test" {
 }`,
     Data: `
 data "datapower_policy_parameters" "test" {
+  id         = "AccTest_PolicyParameters"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6202,6 +6368,7 @@ resource "datapower_processing_metadata" "test" {
 }`,
     Data: `
 data "datapower_processing_metadata" "test" {
+  id         = "AccTest_ProcessingMetadata"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6288,6 +6455,7 @@ resource "datapower_rate_limit_definition" "test" {
 }`,
     Data: `
 data "datapower_rate_limit_definition" "test" {
+  id         = "AccTest_RateLimitDefinition"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6309,6 +6477,7 @@ resource "datapower_rate_limit_definition_group" "test" {
 }`,
     Data: `
 data "datapower_rate_limit_definition_group" "test" {
+  id         = "AccTest_RateLimitDefinitionGroup"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6328,6 +6497,7 @@ resource "datapower_saml_attributes" "test" {
 }`,
     Data: `
 data "datapower_saml_attributes" "test" {
+  id         = "AccTest_SAMLAttributes"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6353,6 +6523,7 @@ resource "datapower_sftp_file_poller_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_sftp_file_poller_source_protocol_handler" "test" {
+  id         = "AccTest_SFTPFilePollerSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6379,6 +6550,7 @@ resource "datapower_slm_action" "test" {
 }`,
     Data: `
 data "datapower_slm_action" "test" {
+  id         = "AccTest_SLMAction"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6399,6 +6571,7 @@ resource "datapower_slm_cred_class" "test" {
 }`,
     Data: `
 data "datapower_slm_cred_class" "test" {
+  id         = "AccTest_SLMCredClass"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6418,6 +6591,7 @@ resource "datapower_slm_policy" "test" {
 }`,
     Data: `
 data "datapower_slm_policy" "test" {
+  id         = "AccTest_SLMPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6437,6 +6611,7 @@ resource "datapower_slm_rsrc_class" "test" {
 }`,
     Data: `
 data "datapower_slm_rsrc_class" "test" {
+  id         = "AccTest_SLMRsrcClass"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6458,6 +6633,7 @@ resource "datapower_slm_schedule" "test" {
 }`,
     Data: `
 data "datapower_slm_schedule" "test" {
+  id         = "AccTest_SLMSchedule"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6480,6 +6656,7 @@ resource "datapower_smtp_server_connection" "test" {
 }`,
     Data: `
 data "datapower_smtp_server_connection" "test" {
+  id         = "AccTest_SMTPServerConnection"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6513,6 +6690,7 @@ resource "datapower_soap_header_disposition" "test" {
 }`,
     Data: `
 data "datapower_soap_header_disposition" "test" {
+  id         = "AccTest_SOAPHeaderDisposition"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6541,6 +6719,7 @@ resource "datapower_sql_data_source" "test" {
 }`,
     Data: `
 data "datapower_sql_data_source" "test" {
+  id         = "AccTest_SQLDataSource"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6571,6 +6750,7 @@ resource "datapower_ssh_client_profile" "test" {
 }`,
     Data: `
 data "datapower_ssh_client_profile" "test" {
+  id         = "AccTest_SSHClientProfile"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6618,6 +6798,7 @@ resource "datapower_ssh_server_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_ssh_server_source_protocol_handler" "test" {
+  id         = "AccTest_SSHServerSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6653,6 +6834,7 @@ resource "datapower_ssl_client_profile" "test" {
 }`,
     Data: `
 data "datapower_ssl_client_profile" "test" {
+  id         = "AccTest_SSLClientProfile"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6678,6 +6860,7 @@ resource "datapower_ssl_proxy_service" "test" {
 }`,
     Data: `
 data "datapower_ssl_proxy_service" "test" {
+  id         = "AccTest_SSLProxyService"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6702,6 +6885,7 @@ resource "datapower_ssl_sni_mapping" "test" {
 }`,
     Data: `
 data "datapower_ssl_sni_mapping" "test" {
+  id         = "AccTest_SSLSNIMapping"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6722,6 +6906,7 @@ resource "datapower_ssl_sni_server_profile" "test" {
 }`,
     Data: `
 data "datapower_ssl_sni_server_profile" "test" {
+  id         = "AccTest_SSLSNIServerProfile"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6743,6 +6928,7 @@ resource "datapower_ssl_server_profile" "test" {
 }`,
     Data: `
 data "datapower_ssl_server_profile" "test" {
+  id         = "AccTest_SSLServerProfile"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6765,6 +6951,7 @@ resource "datapower_schema_exception_map" "test" {
 }`,
     Data: `
 data "datapower_schema_exception_map" "test" {
+  id         = "AccTest_SchemaExceptionMap"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6802,6 +6989,7 @@ resource "datapower_social_login_policy" "test" {
 }`,
     Data: `
 data "datapower_social_login_policy" "test" {
+  id         = "AccTest_SocialLoginPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6829,6 +7017,7 @@ resource "datapower_stateless_tcp_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_stateless_tcp_source_protocol_handler" "test" {
+  id         = "AccTest_StatelessTCPSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6861,6 +7050,7 @@ resource "datapower_style_policy" "test" {
 }`,
     Data: `
 data "datapower_style_policy" "test" {
+  id         = "AccTest_StylePolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6885,6 +7075,7 @@ resource "datapower_style_policy_action" "test" {
 }`,
     Data: `
 data "datapower_style_policy_action" "test" {
+  id         = "__default-accept-service-providers-filter-action__"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6912,6 +7103,7 @@ resource "datapower_style_policy_rule" "test" {
 }`,
     Data: `
 data "datapower_style_policy_rule" "test" {
+  id         = "__default-accept-service-providers-request__"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -6948,6 +7140,7 @@ resource "datapower_tam" "test" {
 }`,
     Data: `
 data "datapower_tam" "test" {
+  id         = "AccTest_TAM"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -6974,6 +7167,7 @@ resource "datapower_tcp_proxy_service" "test" {
 }`,
     Data: `
 data "datapower_tcp_proxy_service" "test" {
+  id         = "AccTest_TCPProxyService"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7024,6 +7218,7 @@ resource "datapower_url_map" "test" {
 }`,
     Data: `
 data "datapower_url_map" "test" {
+  id         = "AccTest_URLMap"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7044,6 +7239,7 @@ resource "datapower_url_refresh_policy" "test" {
 }`,
     Data: `
 data "datapower_url_refresh_policy" "test" {
+  id         = "AccTest_URLRefreshPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7063,6 +7259,7 @@ resource "datapower_url_rewrite_policy" "test" {
 }`,
     Data: `
 data "datapower_url_rewrite_policy" "test" {
+  id         = "AccTest_URLRewritePolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7086,6 +7283,7 @@ resource "datapower_user" "test" {
 }`,
     Data: `
 data "datapower_user" "test" {
+  id         = "AccTest_User"
 }`,
     TestBed: `
 resource "datapower_user" "acc_test" {
@@ -7108,6 +7306,7 @@ resource "datapower_user_group" "test" {
 }`,
     Data: `
 data "datapower_user_group" "test" {
+  id         = "AccTest_UserGroup"
 }`,
     TestBed: `
 resource "datapower_user_group" "acc_test" {
@@ -7125,6 +7324,7 @@ resource "datapower_visibility_list" "test" {
 }`,
     Data: `
 data "datapower_visibility_list" "test" {
+  id         = "AccTest_VisibilityList"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7146,6 +7346,7 @@ resource "datapower_wcc_service" "test" {
 }`,
     Data: `
 data "datapower_wcc_service" "test" {
+  id         = "AccTest_WCCService"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7167,6 +7368,7 @@ resource "datapower_ws_endpoint_rewrite_policy" "test" {
 }`,
     Data: `
 data "datapower_ws_endpoint_rewrite_policy" "test" {
+  id         = "AccTest_WSEndpointRewritePolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7192,6 +7394,7 @@ resource "datapower_ws_gateway" "test" {
 }`,
     Data: `
 data "datapower_ws_gateway" "test" {
+  id         = "AccTest_WSGateway"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7219,6 +7422,7 @@ resource "datapower_wsrr_saved_search_subscription" "test" {
 }`,
     Data: `
 data "datapower_wsrr_saved_search_subscription" "test" {
+  id         = "AccTest_WSRRSavedSearchSubscription"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7240,6 +7444,7 @@ resource "datapower_wsrr_server" "test" {
 }`,
     Data: `
 data "datapower_wsrr_server" "test" {
+  id         = "AccTest_WSRRServer"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7263,6 +7468,7 @@ resource "datapower_wsrr_subscription" "test" {
 }`,
     Data: `
 data "datapower_wsrr_subscription" "test" {
+  id         = "AccTest_WSRRSubscription"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7285,6 +7491,7 @@ resource "datapower_ws_style_policy" "test" {
 }`,
     Data: `
 data "datapower_ws_style_policy" "test" {
+  id         = "AccTest_WSStylePolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7307,6 +7514,7 @@ resource "datapower_ws_style_policy_rule" "test" {
 }`,
     Data: `
 data "datapower_ws_style_policy_rule" "test" {
+  id         = "AccTest_WSStylePolicyRule"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7334,6 +7542,7 @@ resource "datapower_wxs_grid" "test" {
 }`,
     Data: `
 data "datapower_wxs_grid" "test" {
+  id         = "AccTest_WXSGrid"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7357,6 +7566,7 @@ resource "datapower_web_app_error_handling_policy" "test" {
 }`,
     Data: `
 data "datapower_web_app_error_handling_policy" "test" {
+  id         = "AccTest_WebAppErrorHandlingPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7383,6 +7593,7 @@ resource "datapower_web_app_fw" "test" {
 }`,
     Data: `
 data "datapower_web_app_fw" "test" {
+  id         = "AccTest_WebAppFW"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7409,6 +7620,7 @@ resource "datapower_web_app_request" "test" {
 }`,
     Data: `
 data "datapower_web_app_request" "test" {
+  id         = "AccTest_WebAppRequest"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7428,6 +7640,7 @@ resource "datapower_web_app_response" "test" {
 }`,
     Data: `
 data "datapower_web_app_response" "test" {
+  id         = "AccTest_WebAppResponse"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7448,6 +7661,7 @@ resource "datapower_web_app_session_policy" "test" {
 }`,
     Data: `
 data "datapower_web_app_session_policy" "test" {
+  id         = "AccTest_WebAppSessionPolicy"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7497,6 +7711,7 @@ resource "datapower_web_service_monitor" "test" {
 }`,
     Data: `
 data "datapower_web_service_monitor" "test" {
+  id         = "AccTest_WebServiceMonitor"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7535,6 +7750,7 @@ resource "datapower_web_sphere_jms_server" "test" {
 }`,
     Data: `
 data "datapower_web_sphere_jms_server" "test" {
+  id         = "AccTest_WebSphereJMSServer"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -7556,6 +7772,7 @@ resource "datapower_web_sphere_jms_source_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_web_sphere_jms_source_protocol_handler" "test" {
+  id         = "AccTest_WebSphereJMSSourceProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -7580,6 +7797,7 @@ resource "datapower_web_token_service" "test" {
 }`,
     Data: `
 data "datapower_web_token_service" "test" {
+  id         = "AccTest_WebTokenService"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7604,6 +7822,7 @@ resource "datapower_xacml_pdp" "test" {
 }`,
     Data: `
 data "datapower_xacml_pdp" "test" {
+  id         = "AccTest_XACMLPDP"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7627,6 +7846,7 @@ resource "datapower_xml_firewall_service" "test" {
 }`,
     Data: `
 data "datapower_xml_firewall_service" "test" {
+  id         = "AccTest_XMLFirewallService"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7649,6 +7869,7 @@ resource "datapower_xml_manager" "test" {
 }`,
     Data: `
 data "datapower_xml_manager" "test" {
+  id         = "AccTest_XMLManager"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7669,6 +7890,7 @@ resource "datapower_xpath_routing_map" "test" {
 }`,
     Data: `
 data "datapower_xpath_routing_map" "test" {
+  id         = "AccTest_XPathRoutingMap"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7691,6 +7913,7 @@ resource "datapower_xsl_coproc_service" "test" {
 }`,
     Data: `
 data "datapower_xsl_coproc_service" "test" {
+  id         = "AccTest_XSLCoprocService"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7718,6 +7941,7 @@ resource "datapower_xsl_proxy_service" "test" {
 }`,
     Data: `
 data "datapower_xsl_proxy_service" "test" {
+  id         = "AccTest_XSLProxyService"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7746,6 +7970,7 @@ resource "datapower_xtc_protocol_handler" "test" {
 }`,
     Data: `
 data "datapower_xtc_protocol_handler" "test" {
+  id         = "AccTest_XTCProtocolHandler"
   app_domain = "acceptance_test"
 }`,
     TestBed: `
@@ -7775,6 +8000,7 @@ resource "datapower_zos_nss_client" "test" {
 }`,
     Data: `
 data "datapower_zos_nss_client" "test" {
+  id         = "AccTest_ZosNSSClient"
   app_domain = "acceptance_test"
 }`,
     TestBed: `

@@ -23,6 +23,7 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -34,6 +35,7 @@ import (
 )
 
 type SLMRsrcClassList struct {
+	Id        types.String `tfsdk:"id"`
 	AppDomain types.String `tfsdk:"app_domain"`
 	Result    types.List   `tfsdk:"result"`
 }
@@ -59,12 +61,17 @@ func (d *SLMRsrcClassDataSource) Schema(ctx context.Context, req datasource.Sche
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>An SLM resource class identifies a set of resources to be subject to an SLM policy. A resource class consists of the following types and properties.</p><ul><li>A resource type that specifies the manner to identify resources.</li><li>A match type that determines the resources to apply the policy.</li><li>Depending on the resource and match type, properties that identify specific instances of resources.</li></ul>",
 		Attributes: map[string]schema.Attribute{
+
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The name of the object to retrieve.",
+				Optional:            true,
+			},
 			"app_domain": schema.StringAttribute{
-				MarkdownDescription: "The name of the application domain the object belongs to",
+				MarkdownDescription: "The name of the application domain the object belongs to.",
 				Required:            true,
 			},
 			"result": schema.ListNestedAttribute{
-				MarkdownDescription: "List of objects",
+				MarkdownDescription: "List of objects. If `id` was provided and it exists, it will be the only item in the list.",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -142,18 +149,30 @@ func (d *SLMRsrcClassDataSource) Read(ctx context.Context, req datasource.ReadRe
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.pData.Client.Get(o.GetPath())
+	path := o.GetPath()
+	if !data.Id.IsNull() {
+		path = path + "/" + data.Id.ValueString()
+	}
+
+	res, err := d.pData.Client.Get(path)
+	resFound := true
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
-		return
+		if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+			return
+		} else {
+			resFound = false
+		}
 	}
 	l := []models.SLMRsrcClass{}
-	if value := res.Get(`SLMRsrcClass`); value.Exists() {
-		for _, v := range value.Array() {
-			item := models.SLMRsrcClass{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+	if resFound {
+		if value := res.Get(`SLMRsrcClass`); value.Exists() {
+			for _, v := range value.Array() {
+				item := models.SLMRsrcClass{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 	}

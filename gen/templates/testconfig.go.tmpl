@@ -130,12 +130,12 @@ resource "datapower_{{toTfName .Name}}" "test" {
     {{- if not .ModelOnly}}
     Data: `
 data "datapower_{{toTfName .Name}}" "test" {
-        {{- if not .DefaultDomainOnly}}
-            {{- $modelName := .Name}}
-            {{- range  .Attributes}}
-                {{- if and (eq .Name "AppDomain") (ne $modelName "Domain")}}
+        {{- $modelName := .Name}}
+        {{- range  .Attributes}}
+            {{- if eq .Name "AppDomain"}}
   app_domain = "acceptance_test"
-                {{- end}}
+            {{- else if eq .Name "Id"}}
+  id         = {{if .TestExpectDs}}{{.TestExpectDs}}{{else if .TestValue}}{{.TestValue}}{{else}}{{quote .Example}}{{end}}
             {{- end}}
         {{- end}}
 }`,

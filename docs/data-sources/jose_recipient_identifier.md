@@ -14,6 +14,7 @@ JOSE Recipient Identifier object for the JSON Web Decrypt.
 
 ```terraform
 data "datapower_jose_recipient_identifier" "test" {
+  id         = "AccTest_JOSERecipientIdentifier"
   app_domain = "acceptance_test"
 }
 ```
@@ -23,11 +24,15 @@ data "datapower_jose_recipient_identifier" "test" {
 
 ### Required
 
-- `app_domain` (String) The name of the application domain the object belongs to
+- `app_domain` (String) The name of the application domain the object belongs to.
+
+### Optional
+
+- `id` (String) The name of the object to retrieve.
 
 ### Read-Only
 
-- `result` (Attributes List) List of objects (see [below for nested schema](#nestedatt--result))
+- `result` (Attributes List) List of objects. If `id` was provided and it exists, it will be the only item in the list. (see [below for nested schema](#nestedatt--result))
 
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`

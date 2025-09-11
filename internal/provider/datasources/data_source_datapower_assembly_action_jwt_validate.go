@@ -23,6 +23,7 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -34,6 +35,7 @@ import (
 )
 
 type AssemblyActionJWTValidateList struct {
+	Id        types.String `tfsdk:"id"`
 	AppDomain types.String `tfsdk:"app_domain"`
 	Result    types.List   `tfsdk:"result"`
 }
@@ -59,12 +61,17 @@ func (d *AssemblyActionJWTValidateDataSource) Schema(ctx context.Context, req da
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The JWT validate assembly action specifies credentials and methods to validate a JWT in the request. The following guidelines apply. <ul><li>All claims that are specified in the JWT validate assembly action are validated. If any specified claim fails, the JWT validation fails.</li><li>You can use a crypto object or a JWK to decrypt or verify the JWT. When both are specified, the crypto object is used.</li><li>If the original message is signed with a shared secret key, the crypto object that is specified must also be a shared secret key.</li><li>If the original message is signed with a private key, the crypto object that is specified must be a crypto certificate (public certificate).</li><li>If a JWK header parameter is included in the header of the JWT, the parameter must match the crypto object or JWK that is specified in the action. Otherwise, validation fails.</li></ul></p>",
 		Attributes: map[string]schema.Attribute{
+
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The name of the object to retrieve.",
+				Optional:            true,
+			},
 			"app_domain": schema.StringAttribute{
-				MarkdownDescription: "The name of the application domain the object belongs to",
+				MarkdownDescription: "The name of the application domain the object belongs to.",
 				Required:            true,
 			},
 			"result": schema.ListNestedAttribute{
-				MarkdownDescription: "List of objects",
+				MarkdownDescription: "List of objects. If `id` was provided and it exists, it will be the only item in the list.",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -153,18 +160,30 @@ func (d *AssemblyActionJWTValidateDataSource) Read(ctx context.Context, req data
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.pData.Client.Get(o.GetPath())
+	path := o.GetPath()
+	if !data.Id.IsNull() {
+		path = path + "/" + data.Id.ValueString()
+	}
+
+	res, err := d.pData.Client.Get(path)
+	resFound := true
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
-		return
+		if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+			return
+		} else {
+			resFound = false
+		}
 	}
 	l := []models.AssemblyActionJWTValidate{}
-	if value := res.Get(`AssemblyActionJWTValidate`); value.Exists() {
-		for _, v := range value.Array() {
-			item := models.AssemblyActionJWTValidate{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+	if resFound {
+		if value := res.Get(`AssemblyActionJWTValidate`); value.Exists() {
+			for _, v := range value.Array() {
+				item := models.AssemblyActionJWTValidate{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 	}

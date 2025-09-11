@@ -14,6 +14,7 @@ The function call assembly action specifies an assembly function that contains c
 
 ```terraform
 data "datapower_assembly_action_function_call" "test" {
+  id         = "AccTest_AssemblyActionFunctionCall"
   app_domain = "acceptance_test"
 }
 ```
@@ -23,11 +24,15 @@ data "datapower_assembly_action_function_call" "test" {
 
 ### Required
 
-- `app_domain` (String) The name of the application domain the object belongs to
+- `app_domain` (String) The name of the application domain the object belongs to.
+
+### Optional
+
+- `id` (String) The name of the object to retrieve.
 
 ### Read-Only
 
-- `result` (Attributes List) List of objects (see [below for nested schema](#nestedatt--result))
+- `result` (Attributes List) List of objects. If `id` was provided and it exists, it will be the only item in the list. (see [below for nested schema](#nestedatt--result))
 
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`

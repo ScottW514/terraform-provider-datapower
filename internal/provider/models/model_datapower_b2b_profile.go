@@ -1068,7 +1068,6 @@ var B2BProfileObjectType = map[string]attr.Type{
 
 func (data B2BProfile) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/B2BProfile"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }

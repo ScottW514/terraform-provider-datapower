@@ -397,7 +397,6 @@ var AnalyticsEndpointObjectType = map[string]attr.Type{
 
 func (data AnalyticsEndpoint) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/AnalyticsEndpoint"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }

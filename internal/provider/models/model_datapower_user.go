@@ -92,7 +92,6 @@ var UserObjectTypeWO = map[string]attr.Type{
 
 func (data User) GetPath() string {
 	rest_path := "/mgmt/config/default/User"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	return rest_path
 }
 

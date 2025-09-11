@@ -136,7 +136,6 @@ var MQv9PlusSourceProtocolHandlerObjectType = map[string]attr.Type{
 
 func (data MQv9PlusSourceProtocolHandler) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/MQv9PlusSourceProtocolHandler"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }

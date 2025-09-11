@@ -22,8 +22,6 @@ package models
 
 import (
 	"context"
-	"net/url"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -68,7 +66,6 @@ var ODRConnectorGroupObjectType = map[string]attr.Type{
 
 func (data ODRConnectorGroup) GetPath() string {
 	rest_path := "/mgmt/config/default/ODRConnectorGroup"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	return rest_path
 }
 

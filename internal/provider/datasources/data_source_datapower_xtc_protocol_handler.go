@@ -23,6 +23,7 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -34,6 +35,7 @@ import (
 )
 
 type XTCProtocolHandlerList struct {
+	Id        types.String `tfsdk:"id"`
 	AppDomain types.String `tfsdk:"app_domain"`
 	Result    types.List   `tfsdk:"result"`
 }
@@ -59,12 +61,17 @@ func (d *XTCProtocolHandlerDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The configuration for the stateful TCP protocol handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed. The source protocol also specifies the destination address and any single TCP connection will use the same TCP session on the backside for all of its transactions (one transaction per document). <p>Any gateway that employs one of these handlers must use a dynamic backend.</p>",
 		Attributes: map[string]schema.Attribute{
+
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The name of the object to retrieve.",
+				Optional:            true,
+			},
 			"app_domain": schema.StringAttribute{
-				MarkdownDescription: "The name of the application domain the object belongs to",
+				MarkdownDescription: "The name of the application domain the object belongs to.",
 				Required:            true,
 			},
 			"result": schema.ListNestedAttribute{
-				MarkdownDescription: "List of objects",
+				MarkdownDescription: "List of objects. If `id` was provided and it exists, it will be the only item in the list.",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -149,18 +156,30 @@ func (d *XTCProtocolHandlerDataSource) Read(ctx context.Context, req datasource.
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.pData.Client.Get(o.GetPath())
+	path := o.GetPath()
+	if !data.Id.IsNull() {
+		path = path + "/" + data.Id.ValueString()
+	}
+
+	res, err := d.pData.Client.Get(path)
+	resFound := true
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
-		return
+		if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+			return
+		} else {
+			resFound = false
+		}
 	}
 	l := []models.XTCProtocolHandler{}
-	if value := res.Get(`XTCProtocolHandler`); value.Exists() {
-		for _, v := range value.Array() {
-			item := models.XTCProtocolHandler{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+	if resFound {
+		if value := res.Get(`XTCProtocolHandler`); value.Exists() {
+			for _, v := range value.Array() {
+				item := models.XTCProtocolHandler{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 	}

@@ -68,7 +68,6 @@ var PolicyAttachmentsObjectType = map[string]attr.Type{
 
 func (data PolicyAttachments) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/PolicyAttachments"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }

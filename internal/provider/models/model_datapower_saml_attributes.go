@@ -51,7 +51,6 @@ var SAMLAttributesObjectType = map[string]attr.Type{
 
 func (data SAMLAttributes) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/SAMLAttributes"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }

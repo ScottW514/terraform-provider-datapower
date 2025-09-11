@@ -23,6 +23,7 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -99,12 +100,21 @@ func (d *ProbeDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		return
 	}
 
-	res, err := d.pData.Client.Get(data.GetPath())
+	path := data.GetPath()
+
+	res, err := d.pData.Client.Get(path)
+	resFound := true
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
-		return
+		if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+			return
+		} else {
+			resFound = false
+		}
 	}
-	data.FromBody(ctx, `Probe`, res)
+	if resFound {
+		data.FromBody(ctx, `Probe`, res)
+	}
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

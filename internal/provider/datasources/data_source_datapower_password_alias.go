@@ -23,6 +23,7 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -34,6 +35,7 @@ import (
 )
 
 type PasswordAliasWOList struct {
+	Id        types.String `tfsdk:"id"`
 	AppDomain types.String `tfsdk:"app_domain"`
 	Result    types.List   `tfsdk:"result"`
 }
@@ -59,12 +61,17 @@ func (d *PasswordAliasDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The password map alias provides the mapping of an alias to a plaintext password. The alias is a publicly known reference that is included in configuration files and exports. With an alias you keep the real password secret because the plaintext value for the password is stored in an encrypted file. The password for the alias cannot be viewed or accessed by anyone. Only the system can extract the password that it uses internally. <p>No aliased passwords are written to configuration files. The mapping is not part of a backup or export operation. The mapping is part of the secure backup-restore operations.</p>",
 		Attributes: map[string]schema.Attribute{
+
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The name of the object to retrieve.",
+				Optional:            true,
+			},
 			"app_domain": schema.StringAttribute{
-				MarkdownDescription: "The name of the application domain the object belongs to",
+				MarkdownDescription: "The name of the application domain the object belongs to.",
 				Required:            true,
 			},
 			"result": schema.ListNestedAttribute{
-				MarkdownDescription: "List of objects",
+				MarkdownDescription: "List of objects. If `id` was provided and it exists, it will be the only item in the list.",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -109,18 +116,30 @@ func (d *PasswordAliasDataSource) Read(ctx context.Context, req datasource.ReadR
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.pData.Client.Get(o.GetPath())
+	path := o.GetPath()
+	if !data.Id.IsNull() {
+		path = path + "/" + data.Id.ValueString()
+	}
+
+	res, err := d.pData.Client.Get(path)
+	resFound := true
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
-		return
+		if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+			return
+		} else {
+			resFound = false
+		}
 	}
 	l := []models.PasswordAliasWO{}
-	if value := res.Get(`PasswordAlias`); value.Exists() {
-		for _, v := range value.Array() {
-			item := models.PasswordAliasWO{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+	if resFound {
+		if value := res.Get(`PasswordAlias`); value.Exists() {
+			for _, v := range value.Array() {
+				item := models.PasswordAliasWO{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 	}

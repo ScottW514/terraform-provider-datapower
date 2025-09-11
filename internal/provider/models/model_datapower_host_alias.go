@@ -22,8 +22,6 @@ package models
 
 import (
 	"context"
-	"net/url"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -49,7 +47,6 @@ var HostAliasObjectType = map[string]attr.Type{
 
 func (data HostAlias) GetPath() string {
 	rest_path := "/mgmt/config/default/HostAlias"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	return rest_path
 }
 

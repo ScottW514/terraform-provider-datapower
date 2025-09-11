@@ -87,7 +87,6 @@ var AssemblyActionJWTGenerateObjectType = map[string]attr.Type{
 
 func (data AssemblyActionJWTGenerate) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/AssemblyActionJWTGenerate"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }

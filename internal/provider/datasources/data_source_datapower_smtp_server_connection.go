@@ -23,6 +23,7 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -34,6 +35,7 @@ import (
 )
 
 type SMTPServerConnectionList struct {
+	Id        types.String `tfsdk:"id"`
 	AppDomain types.String `tfsdk:"app_domain"`
 	Result    types.List   `tfsdk:"result"`
 }
@@ -59,12 +61,17 @@ func (d *SMTPServerConnectionDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The SMTP server connection defines the connection details for a Simple Mail Transport Protocol (SMTP) server. The DataPower Gateway uses the SMTP server connection for the following purposes</p><ul><li>B2B partners use this configuration to send an e-mail message to an AS1 or ESMTP destination.</li><li>B2B gateways use this configuration to request an AS1 MDN.</li></ul><p>For ease of configuration, the DataPower Gateway provides the <tt>default</tt> SMTP server connection configuration in each domain. By default, this configuration is empty and disabled.</p>",
 		Attributes: map[string]schema.Attribute{
+
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The name of the object to retrieve.",
+				Optional:            true,
+			},
 			"app_domain": schema.StringAttribute{
-				MarkdownDescription: "The name of the application domain the object belongs to",
+				MarkdownDescription: "The name of the application domain the object belongs to.",
 				Required:            true,
 			},
 			"result": schema.ListNestedAttribute{
-				MarkdownDescription: "List of objects",
+				MarkdownDescription: "List of objects. If `id` was provided and it exists, it will be the only item in the list.",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -138,18 +145,30 @@ func (d *SMTPServerConnectionDataSource) Read(ctx context.Context, req datasourc
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.pData.Client.Get(o.GetPath())
+	path := o.GetPath()
+	if !data.Id.IsNull() {
+		path = path + "/" + data.Id.ValueString()
+	}
+
+	res, err := d.pData.Client.Get(path)
+	resFound := true
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
-		return
+		if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+			return
+		} else {
+			resFound = false
+		}
 	}
 	l := []models.SMTPServerConnection{}
-	if value := res.Get(`SMTPServerConnection`); value.Exists() {
-		for _, v := range value.Array() {
-			item := models.SMTPServerConnection{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+	if resFound {
+		if value := res.Get(`SMTPServerConnection`); value.Exists() {
+			for _, v := range value.Array() {
+				item := models.SMTPServerConnection{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 	}

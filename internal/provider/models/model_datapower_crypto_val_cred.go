@@ -93,7 +93,6 @@ var CryptoValCredObjectType = map[string]attr.Type{
 
 func (data CryptoValCred) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/CryptoValCred"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }

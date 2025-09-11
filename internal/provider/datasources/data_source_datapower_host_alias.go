@@ -23,6 +23,7 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -34,7 +35,8 @@ import (
 )
 
 type HostAliasList struct {
-	Result types.List `tfsdk:"result"`
+	Id     types.String `tfsdk:"id"`
+	Result types.List   `tfsdk:"result"`
 }
 
 var (
@@ -58,8 +60,13 @@ func (d *HostAliasDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A host alias is a map between a local IP address to a local alias. The host alias is resolved like a static host entry. Host aliases provide a level of abstraction between concrete network addresses and configuration. You can use host aliases where you can define local IP addresses. Host aliases ease the export and migration of service among DataPower Gateway instances. The alias is exported, but the alias map is not. If the alias is defined on the destination system, the alias resolves to the IP address that is defined on the destination system.",
 		Attributes: map[string]schema.Attribute{
+
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The name of the object to retrieve.",
+				Optional:            true,
+			},
 			"result": schema.ListNestedAttribute{
-				MarkdownDescription: "List of objects",
+				MarkdownDescription: "List of objects. If `id` was provided and it exists, it will be the only item in the list.",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -102,18 +109,30 @@ func (d *HostAliasDataSource) Read(ctx context.Context, req datasource.ReadReque
 	}
 	o := models.HostAlias{}
 
-	res, err := d.pData.Client.Get(o.GetPath())
+	path := o.GetPath()
+	if !data.Id.IsNull() {
+		path = path + "/" + data.Id.ValueString()
+	}
+
+	res, err := d.pData.Client.Get(path)
+	resFound := true
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
-		return
+		if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+			return
+		} else {
+			resFound = false
+		}
 	}
 	l := []models.HostAlias{}
-	if value := res.Get(`HostAlias`); value.Exists() {
-		for _, v := range value.Array() {
-			item := models.HostAlias{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+	if resFound {
+		if value := res.Get(`HostAlias`); value.Exists() {
+			for _, v := range value.Array() {
+				item := models.HostAlias{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 	}
