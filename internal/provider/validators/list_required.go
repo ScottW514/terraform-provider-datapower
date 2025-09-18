@@ -42,16 +42,15 @@ func (v conditionalRequiredList) MarkdownDescription(ctx context.Context) string
 
 func (v conditionalRequiredList) ValidateList(ctx context.Context, req validator.ListRequest, resp *validator.ListResponse) {
 	matchesRequired := v.RequiredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path)
-	isNull := req.ConfigValue.IsNull() || (!req.ConfigValue.IsUnknown() && len(req.ConfigValue.Elements()) == 0)
-	if !isNull && matchesRequired {
+	if !req.ConfigValue.IsNull() && matchesRequired {
 		return
-	} else if isNull && !v.HasDefault && matchesRequired {
+	} else if req.ConfigValue.IsNull() && !v.HasDefault && matchesRequired {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",
 			fmt.Sprintf("Attribute '%s' is required when %s", req.Path, v.RequiredConditions.String()),
 		)
-	} else if !isNull && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
+	} else if !req.ConfigValue.IsNull() && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",
