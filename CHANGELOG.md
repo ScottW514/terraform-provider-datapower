@@ -1,4 +1,4 @@
-## UNRELEASED
+## v0.11.2
 
 - Fixed `variable` `default` `null` value handling in modules (workaround for [known](https://github.com/hashicorp/terraform/issues/21702) Terraform oddity)
 
