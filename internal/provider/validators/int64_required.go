@@ -42,15 +42,16 @@ func (v conditionalRequiredInt64) MarkdownDescription(ctx context.Context) strin
 
 func (v conditionalRequiredInt64) ValidateInt64(ctx context.Context, req validator.Int64Request, resp *validator.Int64Response) {
 	matchesRequired := v.RequiredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path)
-	if !req.ConfigValue.IsNull() && matchesRequired {
+	isNull := req.ConfigValue.IsNull() || (!req.ConfigValue.IsUnknown() && req.ConfigValue.ValueInt64() == 0)
+	if !isNull && matchesRequired {
 		return
-	} else if req.ConfigValue.IsNull() && !v.HasDefault && matchesRequired {
+	} else if isNull && !v.HasDefault && matchesRequired {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",
 			fmt.Sprintf("Attribute '%s' is required when %s", req.Path, v.RequiredConditions.String()),
 		)
-	} else if !req.ConfigValue.IsNull() && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
+	} else if !isNull && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",

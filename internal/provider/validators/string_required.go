@@ -42,15 +42,16 @@ func (v conditionalRequiredString) MarkdownDescription(ctx context.Context) stri
 
 func (v conditionalRequiredString) ValidateString(ctx context.Context, req validator.StringRequest, resp *validator.StringResponse) {
 	matchesRequired := v.RequiredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path)
-	if !req.ConfigValue.IsNull() && matchesRequired {
+	isNull := req.ConfigValue.IsNull() || (!req.ConfigValue.IsNull() && req.ConfigValue.ValueString() == "")
+	if !isNull && matchesRequired {
 		return
-	} else if req.ConfigValue.IsNull() && !v.HasDefault && matchesRequired {
+	} else if isNull && !v.HasDefault && matchesRequired {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",
 			fmt.Sprintf("Attribute '%s' is required when %s", req.Path, v.RequiredConditions.String()),
 		)
-	} else if !req.ConfigValue.IsNull() && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
+	} else if !isNull && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",

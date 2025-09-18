@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## UNRELEASED
+
+- Fixed `variable` `default` `null` value handling in modules (workaround for [known](https://github.com/hashicorp/terraform/issues/21702) Terraform oddity)
+
 ## v0.11.1
 
 - Added retrieve object by name option to datasources.
