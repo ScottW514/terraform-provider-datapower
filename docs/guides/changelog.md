@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## UNRELEASED
+## v0.11.3
 
 - Bump the terraform-plugin group with 3 updates (PR15)
 - Reverted `variable` `default` `null` value handling in modules
