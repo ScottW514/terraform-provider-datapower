@@ -799,7 +799,7 @@ attributes:
   enum:
   - client
   default: client
-  test_expect_ds: '"proxy"'
+  test_expect_ds: '"client"'
   description: TLS client type
   cli_alias: ssl-client-type
   ignored_when:
@@ -828,7 +828,7 @@ attributes:
   enum:
   - client
   default: client
-  test_expect_ds: '"proxy"'
+  test_expect_ds: '"client"'
   description: TLS client type
   cli_alias: mc-ssl-client-type
   ignored_when:

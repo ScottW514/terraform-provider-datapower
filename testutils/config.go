@@ -317,6 +317,13 @@ resource "datapower_api_connect_gateway_service" "test" {
 data "datapower_api_connect_gateway_service" "test" {
   app_domain = "acceptance_test"
 }`,
+    TestBed: `
+resource "datapower_api_connect_gateway_service" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+  local_address = "0.0.0.0"
+  local_port = 3000
+  gateway_peering = "default-gateway-peering"
+}`,
     ModelOnly:    false,
 }
 var APIDefinitionTestConfig = ModelTestConfig{
@@ -731,6 +738,10 @@ resource "datapower_api_security_token_manager" "test" {
     Data: `
 data "datapower_api_security_token_manager" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_api_security_token_manager" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
 }`,
     ModelOnly:    false,
 }
@@ -1596,6 +1607,9 @@ resource "datapower_audit_log" "test" {
     Data: `
 data "datapower_audit_log" "test" {
 }`,
+    TestBed: `
+resource "datapower_audit_log" "acc_test" {
+}`,
     ModelOnly:    false,
 }
 var B2BCPATestConfig = ModelTestConfig{
@@ -1724,6 +1738,12 @@ resource "datapower_b2b_persistence" "test" {
     Data: `
 data "datapower_b2b_persistence" "test" {
 }`,
+    TestBed: `
+resource "datapower_b2b_persistence" "acc_test" {
+  raid_volume = "raid0"
+  storage_size = 1024
+  ha_enabled = false
+}`,
     ModelOnly:    false,
 }
 var B2BProfileTestConfig = ModelTestConfig{
@@ -1843,6 +1863,9 @@ resource "datapower_crl_fetch" "test" {
     Data: `
 data "datapower_crl_fetch" "test" {
 }`,
+    TestBed: `
+resource "datapower_crl_fetch" "acc_test" {
+}`,
     ModelOnly:    false,
 }
 var CertMonitorTestConfig = ModelTestConfig{
@@ -1856,6 +1879,13 @@ resource "datapower_cert_monitor" "test" {
 }`,
     Data: `
 data "datapower_cert_monitor" "test" {
+}`,
+    TestBed: `
+resource "datapower_cert_monitor" "acc_test" {
+  polling_interval = 1
+  reminder_time = 30
+  log_level = "warn"
+  disable_expired_certs = false
 }`,
     ModelOnly:    false,
 }
@@ -2200,6 +2230,9 @@ resource "datapower_dns_name_service" "test" {
     Data: `
 data "datapower_dns_name_service" "test" {
 }`,
+    ModelTestBed: `{
+  load_balance_algorithm = "first-alive"
+}`,
     ModelOnly:    false,
 }
 var DeploymentPolicyParametersBindingTestConfig = ModelTestConfig{
@@ -2231,6 +2264,11 @@ resource "datapower_distributed_variable" "test" {
     Data: `
 data "datapower_distributed_variable" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_distributed_variable" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+  gateway_peering = "default-gateway-peering"
 }`,
     ModelOnly:    false,
 }
@@ -4599,6 +4637,10 @@ resource "datapower_domain_availability" "test" {
 data "datapower_domain_availability" "test" {
   app_domain = "acceptance_test"
 }`,
+    TestBed: `
+resource "datapower_domain_availability" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+}`,
     ModelOnly:    false,
 }
 var DomainSettingsTestConfig = ModelTestConfig{
@@ -4611,6 +4653,11 @@ resource "datapower_domain_settings" "test" {
     Data: `
 data "datapower_domain_settings" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_domain_settings" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+  password_treatment = "masked"
 }`,
     ModelOnly:    false,
 }
@@ -4690,6 +4737,9 @@ resource "datapower_error_report_settings" "test" {
 }`,
     Data: `
 data "datapower_error_report_settings" "test" {
+}`,
+    TestBed: `
+resource "datapower_error_report_settings" "acc_test" {
 }`,
     ModelOnly:    false,
 }
@@ -4776,6 +4826,11 @@ resource "datapower_file_system_usage_monitor" "test" {
     Data: `
 data "datapower_file_system_usage_monitor" "test" {
 }`,
+    TestBed: `
+resource "datapower_file_system_usage_monitor" "acc_test" {
+  polling_interval = 60
+  all_system = true
+}`,
     ModelOnly:    false,
 }
 var FilterActionTestConfig = ModelTestConfig{
@@ -4848,6 +4903,11 @@ resource "datapower_gws_remote_debug" "test" {
     Data: `
 data "datapower_gws_remote_debug" "test" {
 }`,
+    TestBed: `
+resource "datapower_gws_remote_debug" "acc_test" {
+  local_port = 9229
+  local_address = "0.0.0.0"
+}`,
     ModelOnly:    false,
 }
 var GWScriptSettingsTestConfig = ModelTestConfig{
@@ -4857,6 +4917,9 @@ resource "datapower_gw_script_settings" "test" {
 }`,
     Data: `
 data "datapower_gw_script_settings" "test" {
+}`,
+    TestBed: `
+resource "datapower_gw_script_settings" "acc_test" {
 }`,
     ModelOnly:    false,
 }
@@ -4920,6 +4983,14 @@ resource "datapower_gateway_peering_manager" "test" {
 data "datapower_gateway_peering_manager" "test" {
   app_domain = "acceptance_test"
 }`,
+    TestBed: `
+resource "datapower_gateway_peering_manager" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+  api_connect_gateway_service = "default-gateway-peering"
+  rate_limit = "default-gateway-peering"
+  subscription = "default-gateway-peering"
+  ratelimit_module = "default-gateway-peering"
+}`,
     ModelOnly:    false,
 }
 var GitOpsTestConfig = ModelTestConfig{
@@ -4940,6 +5011,19 @@ resource "datapower_git_ops" "test" {
     Data: `
 data "datapower_git_ops" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_git_ops" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+  connection_type = "https"
+  mode = "read-write"
+  commit_identifier = "main"
+  remote_location = "https://github.com/ScottW514/terraform-provider-datapower"
+  username = "gitusername"
+  password = "AccTest_PasswordAlias"
+  tls_valcred = "AccTest_CryptoValCred"
+  git_user = "Git User"
+  git_email = "git@user.domain"
 }`,
     ModelOnly:    false,
 }
@@ -4969,6 +5053,9 @@ resource "datapower_git_ops_variables" "test" {
 }`,
     Data: `
 data "datapower_git_ops_variables" "test" {
+}`,
+    TestBed: `
+resource "datapower_git_ops_variables" "acc_test" {
 }`,
     ModelOnly:    false,
 }
@@ -5150,6 +5237,9 @@ resource "datapower_interop_service" "test" {
 }`,
     Data: `
 data "datapower_interop_service" "test" {
+}`,
+    TestBed: `
+resource "datapower_interop_service" "acc_test" {
 }`,
     ModelOnly:    false,
 }
@@ -5490,6 +5580,8 @@ resource "datapower_luna_ha_settings" "test" {
 }`,
     Data: `
 data "datapower_luna_ha_settings" "test" {
+}`,
+    ModelTestBed: `{
 }`,
     ModelOnly:    false,
 }
@@ -5871,6 +5963,11 @@ resource "datapower_mgmt_interface" "test" {
     Data: `
 data "datapower_mgmt_interface" "test" {
 }`,
+    TestBed: `
+resource "datapower_mgmt_interface" "acc_test" {
+  local_port = 5550
+  local_address = "0.0.0.0"
+}`,
     ModelOnly:    false,
 }
 var MultiProtocolGatewayTestConfig = ModelTestConfig{
@@ -5912,6 +6009,9 @@ resource "datapower_nfs_client_settings" "test" {
     Data: `
 data "datapower_nfs_client_settings" "test" {
 }`,
+    TestBed: `
+resource "datapower_nfs_client_settings" "acc_test" {
+}`,
     ModelOnly:    false,
 }
 var NFSDynamicMountsTestConfig = ModelTestConfig{
@@ -5923,6 +6023,10 @@ resource "datapower_nfs_dynamic_mounts" "test" {
     Data: `
 data "datapower_nfs_dynamic_mounts" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_nfs_dynamic_mounts" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
 }`,
     ModelOnly:    false,
 }
@@ -6086,6 +6190,10 @@ resource "datapower_odr" "test" {
 }`,
     Data: `
 data "datapower_odr" "test" {
+}`,
+    TestBed: `
+resource "datapower_odr" "acc_test" {
+  odr_server_name = "dp_set"
 }`,
     ModelOnly:    false,
 }
@@ -6357,6 +6465,12 @@ resource "datapower_probe" "test" {
 data "datapower_probe" "test" {
   app_domain = "acceptance_test"
 }`,
+    TestBed: `
+resource "datapower_probe" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+  max_records = 1000
+  gateway_peering = "default-gateway-peering"
+}`,
     ModelOnly:    false,
 }
 var ProcessingMetadataTestConfig = ModelTestConfig{
@@ -6388,6 +6502,11 @@ resource "datapower_quota_enforcement_server" "test" {
     Data: `
 data "datapower_quota_enforcement_server" "test" {
 }`,
+    TestBed: `
+resource "datapower_quota_enforcement_server" "acc_test" {
+  server_port = 16379
+  monitor_port = 26379
+}`,
     ModelOnly:    false,
 }
 var RADIUSSettingsTestConfig = ModelTestConfig{
@@ -6397,6 +6516,9 @@ resource "datapower_radius_settings" "test" {
 }`,
     Data: `
 data "datapower_radius_settings" "test" {
+}`,
+    TestBed: `
+resource "datapower_radius_settings" "acc_test" {
 }`,
     ModelOnly:    false,
 }
@@ -6420,6 +6542,21 @@ resource "datapower_rbm_settings" "test" {
     Data: `
 data "datapower_rbm_settings" "test" {
 }`,
+    TestBed: `
+resource "datapower_rbm_settings" "acc_test" {
+  au_method = "local"
+  au_cache_allow = "absolute"
+  mc_method = "local"
+  min_password_length = 6
+  require_mixed_case = false
+  require_digit = false
+  require_non_alpha_numeric = false
+  disallow_username_substring = false
+  do_password_aging = false
+  do_password_history = false
+  cli_timeout = 0
+  max_failed_login = 0
+}`,
     ModelOnly:    false,
 }
 var RaidVolumeTestConfig = ModelTestConfig{
@@ -6429,6 +6566,9 @@ resource "datapower_raid_volume" "test" {
 }`,
     Data: `
 data "datapower_raid_volume" "test" {
+}`,
+    TestBed: `
+resource "datapower_raid_volume" "acc_test" {
 }`,
     ModelOnly:    false,
 }
@@ -6441,6 +6581,10 @@ resource "datapower_rate_limit_configuration" "test" {
     Data: `
 data "datapower_rate_limit_configuration" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_rate_limit_configuration" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
 }`,
     ModelOnly:    false,
 }
@@ -6679,6 +6823,12 @@ resource "datapower_snmp_settings" "test" {
     Data: `
 data "datapower_snmp_settings" "test" {
 }`,
+    TestBed: `
+resource "datapower_snmp_settings" "acc_test" {
+  local_port = 161
+  security_level = "authPriv"
+  access_level = "read-only"
+}`,
     ModelOnly:    false,
 }
 var SOAPHeaderDispositionTestConfig = ModelTestConfig{
@@ -6772,6 +6922,10 @@ resource "datapower_ssh_domain_client_profile" "test" {
 data "datapower_ssh_domain_client_profile" "test" {
   app_domain = "acceptance_test"
 }`,
+    TestBed: `
+resource "datapower_ssh_domain_client_profile" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+}`,
     ModelOnly:    false,
 }
 var SSHServerProfileTestConfig = ModelTestConfig{
@@ -6783,6 +6937,10 @@ resource "datapower_ssh_server_profile" "test" {
     Data: `
 data "datapower_ssh_server_profile" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_ssh_server_profile" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
 }`,
     ModelOnly:    false,
 }
@@ -6820,6 +6978,11 @@ resource "datapower_ssh_service" "test" {
 }`,
     Data: `
 data "datapower_ssh_service" "test" {
+}`,
+    TestBed: `
+resource "datapower_ssh_service" "acc_test" {
+  local_port = 22
+  local_address = "0.0.0.0"
 }`,
     ModelOnly:    false,
 }
@@ -6971,6 +7134,8 @@ resource "datapower_secure_backup_mode" "test" {
     Data: `
 data "datapower_secure_backup_mode" "test" {
 }`,
+    ModelTestBed: `{
+}`,
     ModelOnly:    false,
 }
 var SocialLoginPolicyTestConfig = ModelTestConfig{
@@ -7038,6 +7203,10 @@ resource "datapower_statistics" "test" {
     Data: `
 data "datapower_statistics" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_statistics" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
 }`,
     ModelOnly:    false,
 }
@@ -7124,6 +7293,9 @@ resource "datapower_system_settings" "test" {
     Data: `
 data "datapower_system_settings" "test" {
 }`,
+    TestBed: `
+resource "datapower_system_settings" "acc_test" {
+}`,
     ModelOnly:    false,
 }
 var TAMTestConfig = ModelTestConfig{
@@ -7195,6 +7367,15 @@ resource "datapower_throttler" "test" {
     Data: `
 data "datapower_throttler" "test" {
 }`,
+    TestBed: `
+resource "datapower_throttler" "acc_test" {
+  throttle_at = 0
+  terminate_at = 0
+  temp_fs_throttle_at = 0
+  temp_fs_terminate_at = 0
+  qname_warn_at = 10
+  timeout = 30
+}`,
     ModelOnly:    false,
 }
 var TimeSettingsTestConfig = ModelTestConfig{
@@ -7205,6 +7386,10 @@ resource "datapower_time_settings" "test" {
 }`,
     Data: `
 data "datapower_time_settings" "test" {
+}`,
+    TestBed: `
+resource "datapower_time_settings" "acc_test" {
+  local_time_zone = "EST5EDT"
 }`,
     ModelOnly:    false,
 }
@@ -7683,6 +7868,12 @@ resource "datapower_web_b2b_viewer" "test" {
     Data: `
 data "datapower_web_b2b_viewer" "test" {
 }`,
+    TestBed: `
+resource "datapower_web_b2b_viewer" "acc_test" {
+  local_port = 9091
+  idle_timeout = 600
+  local_address = "0.0.0.0"
+}`,
     ModelOnly:    false,
 }
 var WebGUITestConfig = ModelTestConfig{
@@ -7696,6 +7887,13 @@ resource "datapower_web_gui" "test" {
 }`,
     Data: `
 data "datapower_web_gui" "test" {
+}`,
+    TestBed: `
+resource "datapower_web_gui" "acc_test" {
+  local_port = 9090
+  save_config_overwrites = true
+  idle_timeout = 0
+  local_address = "0.0.0.0"
 }`,
     ModelOnly:    false,
 }
@@ -7736,6 +7934,13 @@ resource "datapower_web_services_agent" "test" {
     Data: `
 data "datapower_web_services_agent" "test" {
   app_domain = "acceptance_test"
+}`,
+    TestBed: `
+resource "datapower_web_services_agent" "acc_test" {
+  app_domain = datapower_domain.acc_test.app_domain
+  max_records = 3000
+  max_memory_kb = 64000
+  capture_mode = "faults"
 }`,
     ModelOnly:    false,
 }

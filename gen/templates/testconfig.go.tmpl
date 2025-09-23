@@ -140,13 +140,12 @@ data "datapower_{{toTfName .Name}}" "test" {
         {{- end}}
 }`,
     {{- end}}
-    {{- if not .UpdateOnly}}
         {{- if and (not .ModelOnly) (not .SkipTest)}}
     TestBed: `
 resource "datapower_{{toTfName .Name}}" "acc_test" {
         {{- else}}
     ModelTestBed: `{
-    {{- end}}
+        {{- end}}
         {{- $root := .}}
         {{- range  .Attributes}}
     	    {{- if eq .Name "AppDomain"}}
@@ -179,7 +178,6 @@ resource "datapower_{{toTfName .Name}}" "acc_test" {
 	        {{- end}}
         {{- end}}
 }`,
-    {{- end}}
     ModelOnly:    {{if .ModelOnly}}true{{else}}false{{end}},
     {{- if len .TestPrerequisites}}
     TestPre: `

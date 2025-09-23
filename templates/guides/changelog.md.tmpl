@@ -9,11 +9,17 @@ description: |-
 
 ## UNRELEASED
 
+- Bump the terraform-plugin group with 3 updates (PR15)
+- Reverted `variable` `default` `null` value handling in modules
+- Updates to test bed configuration
+
+## v0.11.2
+
 - Fixed `variable` `default` `null` value handling in modules (workaround for [known](https://github.com/hashicorp/terraform/issues/21702) Terraform oddity)
 
 ## v0.11.1
 
-- Added retrieve object by name option to datasources.
+- Added retrieve object by name option to datasources
 - Bump actions/setup-go from 5.5.0 to 6.0.0 in the github-actions group (PR13)
 - Bump golang.org/x/tools from 0.36.0 to 0.37.0 (PR14)
 
