@@ -50,7 +50,7 @@ func (v conditionalRequiredString) ValidateString(ctx context.Context, req valid
 			"Invalid Attribute Configuration",
 			fmt.Sprintf("Attribute '%s' is required when %s", req.Path, v.RequiredConditions.String()),
 		)
-	} else if !req.ConfigValue.IsNull() && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
+	} else if !(req.ConfigValue.IsNull() || req.ConfigValue.ValueString() == "") && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",

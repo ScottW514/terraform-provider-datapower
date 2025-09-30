@@ -1,3 +1,7 @@
+## v0.11.4
+
+- Updated string validation to treat empty strings as null when value not expected.
+
 ## v0.11.3
 
 - Bump the terraform-plugin group with 3 updates (PR15)
