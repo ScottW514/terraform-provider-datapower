@@ -1,3 +1,8 @@
+## UNRELEASED
+
+- Bump github.com/hashicorp/terraform-plugin-framework from 1.16.0 to 1.16.1 in the terraform-plugin group (PR16)
+- Added Terraform extensions to devcontainer
+
 ## v0.11.4
 
 - Updated string validation to treat empty strings as null when value not expected.
