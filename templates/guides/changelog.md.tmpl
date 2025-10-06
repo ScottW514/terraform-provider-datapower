@@ -13,6 +13,7 @@ description: |-
 - Added Terraform extensions to devcontainer
 - Added `import` capability to all resources and changed resource creation to update existing resource if it already exists (with warning)
 - Added warning when resource deletion fails due to conflict
+- Fixed error when updating an existing `datapower_user` resource with the existing password
 
 ## v0.11.4
 

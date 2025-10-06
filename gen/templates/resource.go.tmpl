@@ -250,7 +250,7 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 {{- else}}
 			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
 {{- end}}
-			if err != nil {
+			if err != nil{{if eq .Name "User"}} && !strings.Contains(err.Error(), "password matches the current password"){{end}} {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
 				return
 			}
@@ -336,7 +336,7 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 {{- else}}
 	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
 {{- end}}
-	if err != nil {
+	if err != nil{{if eq .Name "User"}} && !strings.Contains(err.Error(), "password matches the current password"){{end}} {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
