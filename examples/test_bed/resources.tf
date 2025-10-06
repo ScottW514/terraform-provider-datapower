@@ -651,8 +651,8 @@ resource "datapower_git_ops" "acc_test" {
   commit_identifier = "main"
   remote_location   = "https://github.com/ScottW514/terraform-provider-datapower"
   username          = "gitusername"
-  password          = datapower_password_alias.test_acc.id
-  tls_valcred       = datapower_crypto_val_cred.test_acc.id
+  password          = datapower_password_alias.acc_test.id
+  tls_valcred       = datapower_crypto_val_cred.acc_test.id
   git_user          = "Git User"
   git_email         = "git@user.domain"
 }

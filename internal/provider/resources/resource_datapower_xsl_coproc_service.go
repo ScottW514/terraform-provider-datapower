@@ -324,9 +324,13 @@ func (r *XSLCoprocServiceResource) Delete(ctx context.Context, req resource.Dele
 		return
 	}
 	_, err := r.pData.Client.Delete(data.GetPath() + "/" + data.Id.ValueString())
-	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 409") {
+			resp.Diagnostics.AddWarning("Resource Conflict", fmt.Sprintf("Resource is no longer tracked by Terraform, but may need to be manually deleted on DataPower host. Got error: %s", err))
+		} else if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete resource, got error: %s", err))
+			return
+		}
 	}
 
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
