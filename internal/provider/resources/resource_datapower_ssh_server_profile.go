@@ -43,6 +43,7 @@ import (
 )
 
 var _ resource.Resource = &SSHServerProfileResource{}
+var _ resource.ResourceWithImportState = &SSHServerProfileResource{}
 
 func NewSSHServerProfileResource() resource.Resource {
 	return &SSHServerProfileResource{}
@@ -176,10 +177,18 @@ func (r *SSHServerProfileResource) Create(ctx context.Context, req resource.Crea
 
 	body := data.ToBody(ctx, `SSHServerProfile`)
 	_, err := r.pData.Client.Put(data.GetPath(), body)
-
-	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 409") {
+			_, err := r.pData.Client.Put(data.GetPath(), body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
+				return
+			}
+			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create resource, got error: %s", err))
+			return
+		}
 	}
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
@@ -206,13 +215,7 @@ func (r *SSHServerProfileResource) Read(ctx context.Context, req resource.ReadRe
 		return
 	}
 
-	if data.IsNull() {
-		// Import
-		data.FromBody(ctx, `SSHServerProfile`, res)
-	} else {
-		// Update
-		data.UpdateFromBody(ctx, `SSHServerProfile`, res)
-	}
+	data.UpdateFromBody(ctx, `SSHServerProfile`, res)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -265,6 +268,32 @@ func (r *SSHServerProfileResource) Delete(ctx context.Context, req resource.Dele
 	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *SSHServerProfileResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
+	appDomain := req.ID
+	if !regexp.MustCompile("^[a-zA-Z0-9_-]+$").MatchString(appDomain) || len(appDomain) < 1 || len(appDomain) > 128 {
+		resp.Diagnostics.AddError("Invalid Application Domain", "Application domain must be 1-128 characters and match pattern ^[a-zA-Z0-9_-]+$")
+		return
+	}
+
+	var data models.SSHServerProfile
+	data.AppDomain = types.StringValue(appDomain)
+	res, err := r.pData.Client.Get(data.GetPath())
+	if err != nil {
+		if strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+		}
+		return
+	}
+
+	data.FromBody(ctx, `SSHServerProfile`, res)
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *SSHServerProfileResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {

@@ -11,6 +11,7 @@ description: |-
 
 - Bump github.com/hashicorp/terraform-plugin-framework from 1.16.0 to 1.16.1 in the terraform-plugin group (PR16)
 - Added Terraform extensions to devcontainer
+- Added `import` capability to all resources and changed resource creation to update existing resource if it already exists (with warning)
 
 ## v0.11.4
 

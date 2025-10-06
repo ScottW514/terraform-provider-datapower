@@ -207,6 +207,16 @@ func hasDomainAttribute(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
+// hasIdAttribute returns true if an "Id" attribute is present.
+func hasIdAttribute(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Name == "Id" {
+			return true
+		}
+	}
+	return false
+}
+
 // isList returns true if the attribute is a list without nested elements.
 func isList(attribute YamlConfigAttribute) bool {
 	return attribute.Type == "List" && attribute.ElementType != ""
@@ -252,6 +262,7 @@ var functions = template.FuncMap{
 	"getAttributeTfName":  getAttributeTfName,
 	"getAttributeType":    getAttributeType,
 	"hasDomainAttribute":  hasDomainAttribute,
+	"hasIdAttribute":      hasIdAttribute,
 	"isList":              isList,
 	"isObject":            isObject,
 	"isObjectList":        isObjectList,

@@ -32,6 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
@@ -39,6 +40,7 @@ import (
 )
 
 var _ resource.Resource = &ProcessingMetadataResource{}
+var _ resource.ResourceWithImportState = &ProcessingMetadataResource{}
 
 func NewProcessingMetadataResource() resource.Resource {
 	return &ProcessingMetadataResource{}
@@ -117,10 +119,18 @@ func (r *ProcessingMetadataResource) Create(ctx context.Context, req resource.Cr
 
 	body := data.ToBody(ctx, `ProcessingMetadata`)
 	_, err := r.pData.Client.Post(data.GetPath(), body)
-
-	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 409") {
+			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
+				return
+			}
+			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create resource, got error: %s", err))
+			return
+		}
 	}
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
@@ -147,13 +157,7 @@ func (r *ProcessingMetadataResource) Read(ctx context.Context, req resource.Read
 		return
 	}
 
-	if data.IsNull() {
-		// Import
-		data.FromBody(ctx, `ProcessingMetadata`, res)
-	} else {
-		// Update
-		data.UpdateFromBody(ctx, `ProcessingMetadata`, res)
-	}
+	data.UpdateFromBody(ctx, `ProcessingMetadata`, res)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -211,6 +215,45 @@ func (r *ProcessingMetadataResource) Delete(ctx context.Context, req resource.De
 	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *ProcessingMetadataResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
+	parts := strings.Split(req.ID, "/")
+	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
+		resp.Diagnostics.AddError("Invalid Import ID", "Expected format: <app_domain>/<id>. Got: "+req.ID)
+		return
+	}
+
+	appDomain := parts[0]
+	id := parts[1]
+
+	if !regexp.MustCompile("^[a-zA-Z0-9_-]+$").MatchString(id) || len(id) < 1 || len(id) > 128 {
+		resp.Diagnostics.AddError("Invalid ID", "ID must be 1-128 characters and match pattern ^[a-zA-Z0-9_-]+$")
+		return
+	}
+	if !regexp.MustCompile("^[a-zA-Z0-9_-]+$").MatchString(appDomain) || len(appDomain) < 1 || len(appDomain) > 128 {
+		resp.Diagnostics.AddError("Invalid Application Domain", "Application domain must be 1-128 characters and match pattern ^[a-zA-Z0-9_-]+$")
+		return
+	}
+
+	var data models.ProcessingMetadata
+	data.AppDomain = types.StringValue(appDomain)
+	data.Id = types.StringValue(id)
+	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	if err != nil {
+		if strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+		}
+		return
+	}
+
+	data.FromBody(ctx, `ProcessingMetadata`, res)
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *ProcessingMetadataResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {

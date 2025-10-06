@@ -23,6 +23,7 @@ package resources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -40,6 +41,7 @@ import (
 )
 
 var _ resource.Resource = &WebB2BViewerResource{}
+var _ resource.ResourceWithImportState = &WebB2BViewerResource{}
 
 func NewWebB2BViewerResource() resource.Resource {
 	return &WebB2BViewerResource{}
@@ -151,10 +153,18 @@ func (r *WebB2BViewerResource) Create(ctx context.Context, req resource.CreateRe
 
 	body := data.ToBody(ctx, `WebB2BViewer`)
 	_, err := r.pData.Client.Put(data.GetPath(), body)
-
-	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 409") {
+			_, err := r.pData.Client.Put(data.GetPath(), body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
+				return
+			}
+			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create resource, got error: %s", err))
+			return
+		}
 	}
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
@@ -181,13 +191,7 @@ func (r *WebB2BViewerResource) Read(ctx context.Context, req resource.ReadReques
 		return
 	}
 
-	if data.IsNull() {
-		// Import
-		data.FromBody(ctx, `WebB2BViewer`, res)
-	} else {
-		// Update
-		data.UpdateFromBody(ctx, `WebB2BViewer`, res)
-	}
+	data.UpdateFromBody(ctx, `WebB2BViewer`, res)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -240,6 +244,35 @@ func (r *WebB2BViewerResource) Delete(ctx context.Context, req resource.DeleteRe
 	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *WebB2BViewerResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
+	appDomain := req.ID
+	if appDomain != "default" {
+		resp.Diagnostics.AddError("Invalid Application Domain", "This resourece supported on the 'default' domain only.")
+		return
+	}
+	if !regexp.MustCompile("^[a-zA-Z0-9_-]+$").MatchString(appDomain) || len(appDomain) < 1 || len(appDomain) > 128 {
+		resp.Diagnostics.AddError("Invalid Application Domain", "Application domain must be 1-128 characters and match pattern ^[a-zA-Z0-9_-]+$")
+		return
+	}
+
+	var data models.WebB2BViewer
+	res, err := r.pData.Client.Get(data.GetPath())
+	if err != nil {
+		if strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+		}
+		return
+	}
+
+	data.FromBody(ctx, `WebB2BViewer`, res)
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *WebB2BViewerResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {

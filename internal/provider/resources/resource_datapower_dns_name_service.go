@@ -23,6 +23,7 @@ package resources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -39,6 +40,7 @@ import (
 )
 
 var _ resource.Resource = &DNSNameServiceResource{}
+var _ resource.ResourceWithImportState = &DNSNameServiceResource{}
 
 func NewDNSNameServiceResource() resource.Resource {
 	return &DNSNameServiceResource{}
@@ -151,10 +153,18 @@ func (r *DNSNameServiceResource) Create(ctx context.Context, req resource.Create
 
 	body := data.ToBody(ctx, `DNSNameService`)
 	_, err := r.pData.Client.Put(data.GetPath(), body)
-
-	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 409") {
+			_, err := r.pData.Client.Put(data.GetPath(), body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
+				return
+			}
+			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create resource, got error: %s", err))
+			return
+		}
 	}
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
@@ -181,13 +191,7 @@ func (r *DNSNameServiceResource) Read(ctx context.Context, req resource.ReadRequ
 		return
 	}
 
-	if data.IsNull() {
-		// Import
-		data.FromBody(ctx, `DNSNameService`, res)
-	} else {
-		// Update
-		data.UpdateFromBody(ctx, `DNSNameService`, res)
-	}
+	data.UpdateFromBody(ctx, `DNSNameService`, res)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -240,6 +244,35 @@ func (r *DNSNameServiceResource) Delete(ctx context.Context, req resource.Delete
 	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *DNSNameServiceResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
+	appDomain := req.ID
+	if appDomain != "default" {
+		resp.Diagnostics.AddError("Invalid Application Domain", "This resourece supported on the 'default' domain only.")
+		return
+	}
+	if !regexp.MustCompile("^[a-zA-Z0-9_-]+$").MatchString(appDomain) || len(appDomain) < 1 || len(appDomain) > 128 {
+		resp.Diagnostics.AddError("Invalid Application Domain", "Application domain must be 1-128 characters and match pattern ^[a-zA-Z0-9_-]+$")
+		return
+	}
+
+	var data models.DNSNameService
+	res, err := r.pData.Client.Get(data.GetPath())
+	if err != nil {
+		if strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+		}
+		return
+	}
+
+	data.FromBody(ctx, `DNSNameService`, res)
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *DNSNameServiceResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {

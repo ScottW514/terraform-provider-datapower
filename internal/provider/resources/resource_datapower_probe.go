@@ -34,6 +34,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
@@ -41,6 +42,7 @@ import (
 )
 
 var _ resource.Resource = &ProbeResource{}
+var _ resource.ResourceWithImportState = &ProbeResource{}
 
 func NewProbeResource() resource.Resource {
 	return &ProbeResource{}
@@ -131,10 +133,18 @@ func (r *ProbeResource) Create(ctx context.Context, req resource.CreateRequest, 
 
 	body := data.ToBody(ctx, `Probe`)
 	_, err := r.pData.Client.Put(data.GetPath(), body)
-
-	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 409") {
+			_, err := r.pData.Client.Put(data.GetPath(), body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
+				return
+			}
+			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create resource, got error: %s", err))
+			return
+		}
 	}
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
@@ -161,13 +171,7 @@ func (r *ProbeResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 
-	if data.IsNull() {
-		// Import
-		data.FromBody(ctx, `Probe`, res)
-	} else {
-		// Update
-		data.UpdateFromBody(ctx, `Probe`, res)
-	}
+	data.UpdateFromBody(ctx, `Probe`, res)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -220,6 +224,32 @@ func (r *ProbeResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *ProbeResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
+	appDomain := req.ID
+	if !regexp.MustCompile("^[a-zA-Z0-9_-]+$").MatchString(appDomain) || len(appDomain) < 1 || len(appDomain) > 128 {
+		resp.Diagnostics.AddError("Invalid Application Domain", "Application domain must be 1-128 characters and match pattern ^[a-zA-Z0-9_-]+$")
+		return
+	}
+
+	var data models.Probe
+	data.AppDomain = types.StringValue(appDomain)
+	res, err := r.pData.Client.Get(data.GetPath())
+	if err != nil {
+		if strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+		}
+		return
+	}
+
+	data.FromBody(ctx, `Probe`, res)
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *ProbeResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {

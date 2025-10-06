@@ -131,6 +131,7 @@ attributes:
   description: Password
   cli_alias: password
   test_value: '"AccTest_PasswordAlias"'
+  test_bed_value: 'datapower_password_alias.test_acc.id'
   required_when:
   - evaluation: property-value-in-list
     attribute: ConnectionType
@@ -165,6 +166,7 @@ attributes:
   description: HTTPS validation credentials
   cli_alias: https-valcred
   test_value: '"AccTest_CryptoValCred"'
+  test_bed_value: 'datapower_crypto_val_cred.test_acc.id'
   required_when:
   - evaluation: property-value-in-list
     attribute: ConnectionType

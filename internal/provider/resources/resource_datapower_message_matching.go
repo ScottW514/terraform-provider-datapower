@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
@@ -40,6 +41,7 @@ import (
 )
 
 var _ resource.Resource = &MessageMatchingResource{}
+var _ resource.ResourceWithImportState = &MessageMatchingResource{}
 
 func NewMessageMatchingResource() resource.Resource {
 	return &MessageMatchingResource{}
@@ -144,10 +146,18 @@ func (r *MessageMatchingResource) Create(ctx context.Context, req resource.Creat
 
 	body := data.ToBody(ctx, `MessageMatching`)
 	_, err := r.pData.Client.Post(data.GetPath(), body)
-
-	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 409") {
+			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
+			if err != nil {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
+				return
+			}
+			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create resource, got error: %s", err))
+			return
+		}
 	}
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
@@ -174,13 +184,7 @@ func (r *MessageMatchingResource) Read(ctx context.Context, req resource.ReadReq
 		return
 	}
 
-	if data.IsNull() {
-		// Import
-		data.FromBody(ctx, `MessageMatching`, res)
-	} else {
-		// Update
-		data.UpdateFromBody(ctx, `MessageMatching`, res)
-	}
+	data.UpdateFromBody(ctx, `MessageMatching`, res)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -238,6 +242,45 @@ func (r *MessageMatchingResource) Delete(ctx context.Context, req resource.Delet
 	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *MessageMatchingResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
+	parts := strings.Split(req.ID, "/")
+	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
+		resp.Diagnostics.AddError("Invalid Import ID", "Expected format: <app_domain>/<id>. Got: "+req.ID)
+		return
+	}
+
+	appDomain := parts[0]
+	id := parts[1]
+
+	if !regexp.MustCompile("^[a-zA-Z0-9_-]+$").MatchString(id) || len(id) < 1 || len(id) > 128 {
+		resp.Diagnostics.AddError("Invalid ID", "ID must be 1-128 characters and match pattern ^[a-zA-Z0-9_-]+$")
+		return
+	}
+	if !regexp.MustCompile("^[a-zA-Z0-9_-]+$").MatchString(appDomain) || len(appDomain) < 1 || len(appDomain) > 128 {
+		resp.Diagnostics.AddError("Invalid Application Domain", "Application domain must be 1-128 characters and match pattern ^[a-zA-Z0-9_-]+$")
+		return
+	}
+
+	var data models.MessageMatching
+	data.AppDomain = types.StringValue(appDomain)
+	data.Id = types.StringValue(id)
+	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	if err != nil {
+		if strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+		}
+		return
+	}
+
+	data.FromBody(ctx, `MessageMatching`, res)
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *MessageMatchingResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
