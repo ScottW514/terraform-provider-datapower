@@ -407,11 +407,23 @@ func (data *WebSphereJMSServer) UpdateFromBody(ctx context.Context, pathRoot str
 	}
 	if value := res.Get(pathRoot + `Endpoint`); value.Exists() && !data.Endpoint.IsNull() {
 		l := []DmWebSphereJMSEndpoint{}
-		for _, v := range value.Array() {
-			item := DmWebSphereJMSEndpoint{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWebSphereJMSEndpoint{}
+		data.Endpoint.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWebSphereJMSEndpoint{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

@@ -464,11 +464,23 @@ func (data *KafkaCluster) UpdateFromBody(ctx context.Context, pathRoot string, r
 	}
 	if value := res.Get(pathRoot + `Endpoint`); value.Exists() && !data.Endpoint.IsNull() {
 		l := []DmKafkaEndpoint{}
-		for _, v := range value.Array() {
-			item := DmKafkaEndpoint{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmKafkaEndpoint{}
+		data.Endpoint.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmKafkaEndpoint{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -526,11 +538,23 @@ func (data *KafkaCluster) UpdateFromBody(ctx context.Context, pathRoot string, r
 	}
 	if value := res.Get(pathRoot + `Property`); value.Exists() && !data.Property.IsNull() {
 		l := []DmKafkaProperty{}
-		for _, v := range value.Array() {
-			item := DmKafkaProperty{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmKafkaProperty{}
+		data.Property.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmKafkaProperty{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

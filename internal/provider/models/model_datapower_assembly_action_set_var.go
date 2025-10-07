@@ -178,11 +178,23 @@ func (data *AssemblyActionSetVar) UpdateFromBody(ctx context.Context, pathRoot s
 	}
 	if value := res.Get(pathRoot + `Variable`); value.Exists() && !data.Variable.IsNull() {
 		l := []DmAssemblyActionSetVar{}
-		for _, v := range value.Array() {
-			item := DmAssemblyActionSetVar{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAssemblyActionSetVar{}
+		data.Variable.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAssemblyActionSetVar{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

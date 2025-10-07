@@ -242,11 +242,23 @@ func (data *MessageMatching) UpdateFromBody(ctx context.Context, pathRoot string
 	}
 	if value := res.Get(pathRoot + `HTTPHeader`); value.Exists() && !data.HttpHeader.IsNull() {
 		l := []DmHTTPHeader{}
-		for _, v := range value.Array() {
-			item := DmHTTPHeader{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmHTTPHeader{}
+		data.HttpHeader.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmHTTPHeader{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -259,11 +271,23 @@ func (data *MessageMatching) UpdateFromBody(ctx context.Context, pathRoot string
 	}
 	if value := res.Get(pathRoot + `HTTPHeaderExclude`); value.Exists() && !data.HttpHeaderExclude.IsNull() {
 		l := []DmHTTPHeader{}
-		for _, v := range value.Array() {
-			item := DmHTTPHeader{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmHTTPHeader{}
+		data.HttpHeaderExclude.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmHTTPHeader{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

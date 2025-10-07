@@ -348,11 +348,23 @@ func (data *OpenTelemetryExporter) UpdateFromBody(ctx context.Context, pathRoot 
 	}
 	if value := res.Get(pathRoot + `Header`); value.Exists() && !data.Header.IsNull() {
 		l := []DmOpenTelemetryExporterHeader{}
-		for _, v := range value.Array() {
-			item := DmOpenTelemetryExporterHeader{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmOpenTelemetryExporterHeader{}
+		data.Header.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmOpenTelemetryExporterHeader{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -385,11 +397,23 @@ func (data *OpenTelemetryExporter) UpdateFromBody(ctx context.Context, pathRoot 
 	}
 	if value := res.Get(pathRoot + `ProxyPolicies`); value.Exists() && !data.ProxyPolicies.IsNull() {
 		l := []DmAPIProxyPolicy{}
-		for _, v := range value.Array() {
-			item := DmAPIProxyPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIProxyPolicy{}
+		data.ProxyPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIProxyPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

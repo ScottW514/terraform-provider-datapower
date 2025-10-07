@@ -143,11 +143,23 @@ func (data *GitOpsVariables) UpdateFromBody(ctx context.Context, pathRoot string
 	}
 	if value := res.Get(pathRoot + `Variables`); value.Exists() && !data.Variables.IsNull() {
 		l := []DmGitOpsVariableEntry{}
-		for _, v := range value.Array() {
-			item := DmGitOpsVariableEntry{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmGitOpsVariableEntry{}
+		data.Variables.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmGitOpsVariableEntry{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

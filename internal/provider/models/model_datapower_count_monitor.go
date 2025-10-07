@@ -235,11 +235,23 @@ func (data *CountMonitor) UpdateFromBody(ctx context.Context, pathRoot string, r
 	}
 	if value := res.Get(pathRoot + `Filter`); value.Exists() && !data.Filter.IsNull() {
 		l := []DmCountMonitorFilter{}
-		for _, v := range value.Array() {
-			item := DmCountMonitorFilter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmCountMonitorFilter{}
+		data.Filter.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmCountMonitorFilter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

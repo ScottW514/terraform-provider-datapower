@@ -987,11 +987,23 @@ func (data *AssemblyActionUserSecurity) UpdateFromBody(ctx context.Context, path
 	}
 	if value := res.Get(pathRoot + `AZTableDefaultEntry`); value.Exists() && !data.AzTableDefaultEntry.IsNull() {
 		l := []DmTableEntry{}
-		for _, v := range value.Array() {
-			item := DmTableEntry{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmTableEntry{}
+		data.AzTableDefaultEntry.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmTableEntry{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

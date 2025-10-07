@@ -771,11 +771,23 @@ func (data *AAAPolicy) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `NamespaceMapping`); value.Exists() && !data.NamespaceMapping.IsNull() {
 		l := []DmNamespaceMapping{}
-		for _, v := range value.Array() {
-			item := DmNamespaceMapping{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmNamespaceMapping{}
+		data.NamespaceMapping.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmNamespaceMapping{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -823,11 +835,23 @@ func (data *AAAPolicy) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `SAMLAttribute`); value.Exists() && !data.SamlAttribute.IsNull() {
 		l := []DmSAMLAttributeNameAndValue{}
-		for _, v := range value.Array() {
-			item := DmSAMLAttributeNameAndValue{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSAMLAttributeNameAndValue{}
+		data.SamlAttribute.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSAMLAttributeNameAndValue{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -840,11 +864,23 @@ func (data *AAAPolicy) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `LTPAAttributes`); value.Exists() && !data.LtpaAttributes.IsNull() {
 		l := []DmLTPAUserAttributeNameAndValue{}
-		for _, v := range value.Array() {
-			item := DmLTPAUserAttributeNameAndValue{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmLTPAUserAttributeNameAndValue{}
+		data.LtpaAttributes.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmLTPAUserAttributeNameAndValue{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -857,11 +893,23 @@ func (data *AAAPolicy) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `TransactionPriority`); value.Exists() && !data.TransactionPriority.IsNull() {
 		l := []DmAAATransactionPriority{}
-		for _, v := range value.Array() {
-			item := DmAAATransactionPriority{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAAATransactionPriority{}
+		data.TransactionPriority.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAAATransactionPriority{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

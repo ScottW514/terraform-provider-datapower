@@ -474,11 +474,23 @@ func (data *LoadBalancerGroup) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `LBGroupMembers`); value.Exists() && !data.LbGroupMembers.IsNull() {
 		l := []DmLBGroupMember{}
-		for _, v := range value.Array() {
-			item := DmLBGroupMember{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmLBGroupMember{}
+		data.LbGroupMembers.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmLBGroupMember{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

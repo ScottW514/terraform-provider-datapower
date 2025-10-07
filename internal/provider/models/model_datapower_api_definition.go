@@ -889,11 +889,23 @@ func (data *APIDefinition) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `Properties`); value.Exists() && !data.Properties.IsNull() {
 		l := []DmAPIProperty{}
-		for _, v := range value.Array() {
-			item := DmAPIProperty{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIProperty{}
+		data.Properties.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIProperty{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -906,11 +918,23 @@ func (data *APIDefinition) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `Schemas`); value.Exists() && !data.Schemas.IsNull() {
 		l := []DmAPIDataTypeDefinition{}
-		for _, v := range value.Array() {
-			item := DmAPIDataTypeDefinition{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIDataTypeDefinition{}
+		data.Schemas.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIDataTypeDefinition{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

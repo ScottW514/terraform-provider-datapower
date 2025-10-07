@@ -2025,11 +2025,23 @@ func (data *B2BProfile) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `Destinations`); value.Exists() && !data.Destinations.IsNull() {
 		l := []DmB2BDestination{}
-		for _, v := range value.Array() {
-			item := DmB2BDestination{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmB2BDestination{}
+		data.Destinations.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmB2BDestination{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2082,11 +2094,23 @@ func (data *B2BProfile) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `Contacts`); value.Exists() && !data.Contacts.IsNull() {
 		l := []DmB2BContact{}
-		for _, v := range value.Array() {
-			item := DmB2BContact{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmB2BContact{}
+		data.Contacts.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmB2BContact{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2214,11 +2238,23 @@ func (data *B2BProfile) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `EBMSProfileCPABindings`); value.Exists() && !data.EbmsProfileCpaBindings.IsNull() {
 		l := []DmProfileCPABinding{}
-		for _, v := range value.Array() {
-			item := DmProfileCPABinding{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmProfileCPABinding{}
+		data.EbmsProfileCpaBindings.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmProfileCPABinding{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2371,11 +2407,23 @@ func (data *B2BProfile) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `EBMSMessageProperties`); value.Exists() && !data.EbmsMessageProperties.IsNull() {
 		l := []DmB2BMessageProperties{}
-		for _, v := range value.Array() {
-			item := DmB2BMessageProperties{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmB2BMessageProperties{}
+		data.EbmsMessageProperties.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmB2BMessageProperties{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

@@ -2619,11 +2619,23 @@ func (data *StylePolicyAction) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `NamedInputs`); value.Exists() && !data.NamedInputs.IsNull() {
 		l := []DmNamedInOut{}
-		for _, v := range value.Array() {
-			item := DmNamedInOut{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmNamedInOut{}
+		data.NamedInputs.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmNamedInOut{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2636,11 +2648,23 @@ func (data *StylePolicyAction) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `NamedOutputs`); value.Exists() && !data.NamedOutputs.IsNull() {
 		l := []DmNamedInOut{}
-		for _, v := range value.Array() {
-			item := DmNamedInOut{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmNamedInOut{}
+		data.NamedOutputs.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmNamedInOut{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2728,11 +2752,23 @@ func (data *StylePolicyAction) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `StylesheetParameters`); value.Exists() && !data.StylesheetParameters.IsNull() {
 		l := []DmStylesheetParameter{}
-		for _, v := range value.Array() {
-			item := DmStylesheetParameter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmStylesheetParameter{}
+		data.StylesheetParameters.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmStylesheetParameter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2885,11 +2921,23 @@ func (data *StylePolicyAction) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `Condition`); value.Exists() && !data.Condition.IsNull() {
 		l := []DmCondition{}
-		for _, v := range value.Array() {
-			item := DmCondition{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmCondition{}
+		data.Condition.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmCondition{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

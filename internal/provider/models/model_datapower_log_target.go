@@ -1961,11 +1961,23 @@ func (data *LogTarget) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `LogEvents`); value.Exists() && !data.LogEvents.IsNull() {
 		l := []DmLogEvent{}
-		for _, v := range value.Array() {
-			item := DmLogEvent{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmLogEvent{}
+		data.LogEvents.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmLogEvent{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2153,11 +2165,23 @@ func (data *LogTarget) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `LogObjects`); value.Exists() && !data.LogObjects.IsNull() {
 		l := []DmLogObject{}
-		for _, v := range value.Array() {
-			item := DmLogObject{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmLogObject{}
+		data.LogObjects.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmLogObject{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2170,11 +2194,23 @@ func (data *LogTarget) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `LogIPFilter`); value.Exists() && !data.LogIpFilter.IsNull() {
 		l := []DmLogIPFilter{}
-		for _, v := range value.Array() {
-			item := DmLogIPFilter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmLogIPFilter{}
+		data.LogIpFilter.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmLogIPFilter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -2187,11 +2223,23 @@ func (data *LogTarget) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `LogTriggers`); value.Exists() && !data.LogTriggers.IsNull() {
 		l := []DmLogTrigger{}
-		for _, v := range value.Array() {
-			item := DmLogTrigger{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmLogTrigger{}
+		data.LogTriggers.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmLogTrigger{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

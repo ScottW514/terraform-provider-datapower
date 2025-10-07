@@ -228,11 +228,23 @@ func (data *JWERecipient) UpdateFromBody(ctx context.Context, pathRoot string, r
 	}
 	if value := res.Get(pathRoot + `UnprotectedHeader`); value.Exists() && !data.UnprotectedHeader.IsNull() {
 		l := []DmJOSEHeader{}
-		for _, v := range value.Array() {
-			item := DmJOSEHeader{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmJOSEHeader{}
+		data.UnprotectedHeader.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmJOSEHeader{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

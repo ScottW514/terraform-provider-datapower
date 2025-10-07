@@ -196,11 +196,23 @@ func (data *AssemblyActionExtract) UpdateFromBody(ctx context.Context, pathRoot 
 	}
 	if value := res.Get(pathRoot + `Extract`); value.Exists() && !data.Extract.IsNull() {
 		l := []DmAssemblyActionExtract{}
-		for _, v := range value.Array() {
-			item := DmAssemblyActionExtract{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAssemblyActionExtract{}
+		data.Extract.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAssemblyActionExtract{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

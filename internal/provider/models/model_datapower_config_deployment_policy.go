@@ -188,11 +188,23 @@ func (data *ConfigDeploymentPolicy) UpdateFromBody(ctx context.Context, pathRoot
 	}
 	if value := res.Get(pathRoot + `ModifiedConfig`); value.Exists() && !data.ModifiedConfig.IsNull() {
 		l := []DmConfigModifyType{}
-		for _, v := range value.Array() {
-			item := DmConfigModifyType{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmConfigModifyType{}
+		data.ModifiedConfig.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmConfigModifyType{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

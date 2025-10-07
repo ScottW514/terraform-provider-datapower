@@ -245,11 +245,23 @@ func (data *AssemblyActionGraphQLExecute) UpdateFromBody(ctx context.Context, pa
 	}
 	if value := res.Get(pathRoot + `TargetMapRule`); value.Exists() && !data.TargetMapRule.IsNull() {
 		l := []DmTargetMapRule{}
-		for _, v := range value.Array() {
-			item := DmTargetMapRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmTargetMapRule{}
+		data.TargetMapRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmTargetMapRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

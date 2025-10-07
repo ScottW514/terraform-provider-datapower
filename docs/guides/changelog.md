@@ -16,6 +16,7 @@ description: |-
 - Fixed error when updating an existing `datapower_user` resource with the existing password
 - Added reset to default values when deleting singleton resource
 - Updates to test bed configuration
+- Refactored `UpdateFromBody` method to better handle lists of objects
 
 ## v0.11.4
 

@@ -299,11 +299,23 @@ func (data *WSEndpointRewritePolicy) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `WSEndpointLocalRewriteRule`); value.Exists() && !data.WsEndpointLocalRewriteRule.IsNull() {
 		l := []DmWSEndpointLocalRewriteRule{}
-		for _, v := range value.Array() {
-			item := DmWSEndpointLocalRewriteRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSEndpointLocalRewriteRule{}
+		data.WsEndpointLocalRewriteRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSEndpointLocalRewriteRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -316,11 +328,23 @@ func (data *WSEndpointRewritePolicy) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `WSEndpointRemoteRewriteRule`); value.Exists() && !data.WsEndpointRemoteRewriteRule.IsNull() {
 		l := []DmWSEndpointRemoteRewriteRule{}
-		for _, v := range value.Array() {
-			item := DmWSEndpointRemoteRewriteRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSEndpointRemoteRewriteRule{}
+		data.WsEndpointRemoteRewriteRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSEndpointRemoteRewriteRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -333,11 +357,23 @@ func (data *WSEndpointRewritePolicy) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `WSEndpointPublishRewriteRule`); value.Exists() && !data.WsEndpointPublishRewriteRule.IsNull() {
 		l := []DmWSEndpointPublishRewriteRule{}
-		for _, v := range value.Array() {
-			item := DmWSEndpointPublishRewriteRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSEndpointPublishRewriteRule{}
+		data.WsEndpointPublishRewriteRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSEndpointPublishRewriteRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -350,11 +386,23 @@ func (data *WSEndpointRewritePolicy) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `WSEndpointSubscriptionLocalRule`); value.Exists() && !data.WsEndpointSubscriptionLocalRule.IsNull() {
 		l := []DmWSEndpointSubscriptionLocalRule{}
-		for _, v := range value.Array() {
-			item := DmWSEndpointSubscriptionLocalRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSEndpointSubscriptionLocalRule{}
+		data.WsEndpointSubscriptionLocalRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSEndpointSubscriptionLocalRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -367,11 +415,23 @@ func (data *WSEndpointRewritePolicy) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `WSEndpointSubscriptionRemoteRule`); value.Exists() && !data.WsEndpointSubscriptionRemoteRule.IsNull() {
 		l := []DmWSEndpointSubscriptionRemoteRule{}
-		for _, v := range value.Array() {
-			item := DmWSEndpointSubscriptionRemoteRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSEndpointSubscriptionRemoteRule{}
+		data.WsEndpointSubscriptionRemoteRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSEndpointSubscriptionRemoteRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -384,11 +444,23 @@ func (data *WSEndpointRewritePolicy) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `WSEndpointSubscriptionPublishRule`); value.Exists() && !data.WsEndpointSubscriptionPublishRule.IsNull() {
 		l := []DmWSEndpointSubscriptionPublishRule{}
-		for _, v := range value.Array() {
-			item := DmWSEndpointSubscriptionPublishRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSEndpointSubscriptionPublishRule{}
+		data.WsEndpointSubscriptionPublishRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSEndpointSubscriptionPublishRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

@@ -211,11 +211,23 @@ func (data *AssemblyFunction) UpdateFromBody(ctx context.Context, pathRoot strin
 	}
 	if value := res.Get(pathRoot + `Parameter`); value.Exists() && !data.Parameter.IsNull() {
 		l := []DmAssemblyFunctionParameter{}
-		for _, v := range value.Array() {
-			item := DmAssemblyFunctionParameter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAssemblyFunctionParameter{}
+		data.Parameter.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAssemblyFunctionParameter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

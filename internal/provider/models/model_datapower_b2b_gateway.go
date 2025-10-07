@@ -669,11 +669,23 @@ func (data *B2BGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `ASFrontProtocol`); value.Exists() && !data.AsFrontProtocol.IsNull() {
 		l := []DmASFrontProtocol{}
-		for _, v := range value.Array() {
-			item := DmASFrontProtocol{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmASFrontProtocol{}
+		data.AsFrontProtocol.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmASFrontProtocol{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -706,11 +718,23 @@ func (data *B2BGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `B2BProfiles`); value.Exists() && !data.B2bProfiles.IsNull() {
 		l := []DmB2BActiveProfile{}
-		for _, v := range value.Array() {
-			item := DmB2BActiveProfile{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmB2BActiveProfile{}
+		data.B2bProfiles.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmB2BActiveProfile{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -723,11 +747,23 @@ func (data *B2BGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `B2BGroups`); value.Exists() && !data.B2bGroups.IsNull() {
 		l := []DmB2BActiveGroup{}
-		for _, v := range value.Array() {
-			item := DmB2BActiveGroup{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmB2BActiveGroup{}
+		data.B2bGroups.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmB2BActiveGroup{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -830,11 +866,23 @@ func (data *B2BGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `CPAEntries`); value.Exists() && !data.CpaEntries.IsNull() {
 		l := []DmB2BCPAEntry{}
-		for _, v := range value.Array() {
-			item := DmB2BCPAEntry{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmB2BCPAEntry{}
+		data.CpaEntries.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmB2BCPAEntry{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

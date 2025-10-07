@@ -144,11 +144,23 @@ func (data *GitOpsTemplate) UpdateFromBody(ctx context.Context, pathRoot string,
 	}
 	if value := res.Get(pathRoot + `Templates`); value.Exists() && !data.Templates.IsNull() {
 		l := []DmGitOpsTemplateEntry{}
-		for _, v := range value.Array() {
-			item := DmGitOpsTemplateEntry{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmGitOpsTemplateEntry{}
+		data.Templates.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmGitOpsTemplateEntry{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

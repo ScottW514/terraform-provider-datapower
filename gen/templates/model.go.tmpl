@@ -722,13 +722,25 @@ func (data *{{.Name}}) UpdateFromBody(ctx context.Context, pathRoot string, res 
 		data.{{toGoName .TfName}} = tfutils.ParseStringListFromGJSON(value)
             {{- else}}
         l := []{{.ElementType}}{}
-        for _, v := range value.Array() {
-            item := {{.ElementType}}{}
-            item.FromBody(ctx, "", v)
-            if !item.IsNull() {
-                l = append(l, item)
-            }
-        }
+		e := []{{.ElementType}}{}
+		data.{{toGoName .TfName}}.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := {{.ElementType}}{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		}
         if len(l) > 0 {
             data.{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: {{.ElementType}}ObjectType}, l)
         } else {

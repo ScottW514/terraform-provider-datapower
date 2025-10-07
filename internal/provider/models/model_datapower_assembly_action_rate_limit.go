@@ -350,11 +350,23 @@ func (data *AssemblyActionRateLimit) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `RateLimit`); value.Exists() && !data.RateLimit.IsNull() {
 		l := []DmRateLimitInfo{}
-		for _, v := range value.Array() {
-			item := DmRateLimitInfo{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmRateLimitInfo{}
+		data.RateLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmRateLimitInfo{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -367,11 +379,23 @@ func (data *AssemblyActionRateLimit) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `CountLimit`); value.Exists() && !data.CountLimit.IsNull() {
 		l := []DmCountLimitInfo{}
-		for _, v := range value.Array() {
-			item := DmCountLimitInfo{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmCountLimitInfo{}
+		data.CountLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmCountLimitInfo{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -384,11 +408,23 @@ func (data *AssemblyActionRateLimit) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `RateLimitDefinition`); value.Exists() && !data.RateLimitDefinition.IsNull() {
 		l := []DmRateLimitInfoDomainNamed{}
-		for _, v := range value.Array() {
-			item := DmRateLimitInfoDomainNamed{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmRateLimitInfoDomainNamed{}
+		data.RateLimitDefinition.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmRateLimitInfoDomainNamed{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

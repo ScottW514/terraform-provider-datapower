@@ -334,11 +334,23 @@ func (data *B2BCPACollaboration) UpdateFromBody(ctx context.Context, pathRoot st
 	}
 	if value := res.Get(pathRoot + `Actions`); value.Exists() && !data.Actions.IsNull() {
 		l := []DmCPACollaborationAction{}
-		for _, v := range value.Array() {
-			item := DmCPACollaborationAction{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmCPACollaborationAction{}
+		data.Actions.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmCPACollaborationAction{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

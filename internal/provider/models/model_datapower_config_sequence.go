@@ -282,11 +282,23 @@ func (data *ConfigSequence) UpdateFromBody(ctx context.Context, pathRoot string,
 	}
 	if value := res.Get(pathRoot + `Locations`); value.Exists() && !data.Locations.IsNull() {
 		l := []DmConfigSequenceLocation{}
-		for _, v := range value.Array() {
-			item := DmConfigSequenceLocation{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmConfigSequenceLocation{}
+		data.Locations.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmConfigSequenceLocation{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

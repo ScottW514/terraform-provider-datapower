@@ -144,11 +144,23 @@ func (data *SSLSNIMapping) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `SNIMapping`); value.Exists() && !data.SniMapping.IsNull() {
 		l := []DmHostToSSLServerProfile{}
-		for _, v := range value.Array() {
-			item := DmHostToSSLServerProfile{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmHostToSSLServerProfile{}
+		data.SniMapping.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmHostToSSLServerProfile{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

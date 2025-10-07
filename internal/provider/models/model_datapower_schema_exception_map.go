@@ -157,11 +157,23 @@ func (data *SchemaExceptionMap) UpdateFromBody(ctx context.Context, pathRoot str
 	}
 	if value := res.Get(pathRoot + `SchemaExceptionRules`); value.Exists() && !data.SchemaExceptionRules.IsNull() {
 		l := []DmSchemaExceptionRule{}
-		for _, v := range value.Array() {
-			item := DmSchemaExceptionRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSchemaExceptionRule{}
+		data.SchemaExceptionRules.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSchemaExceptionRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

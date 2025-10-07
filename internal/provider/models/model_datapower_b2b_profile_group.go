@@ -144,11 +144,23 @@ func (data *B2BProfileGroup) UpdateFromBody(ctx context.Context, pathRoot string
 	}
 	if value := res.Get(pathRoot + `B2BProfiles`); value.Exists() && !data.B2bProfiles.IsNull() {
 		l := []DmB2BGroupedProfile{}
-		for _, v := range value.Array() {
-			item := DmB2BGroupedProfile{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmB2BGroupedProfile{}
+		data.B2bProfiles.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmB2BGroupedProfile{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

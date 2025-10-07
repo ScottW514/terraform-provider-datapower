@@ -228,11 +228,23 @@ func (data *ODRConnectorGroup) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `ODRGroupConnectors`); value.Exists() && !data.OdrGroupConnectors.IsNull() {
 		l := []DmODRConnector{}
-		for _, v := range value.Array() {
-			item := DmODRConnector{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmODRConnector{}
+		data.OdrGroupConnectors.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmODRConnector{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -255,11 +267,23 @@ func (data *ODRConnectorGroup) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `ODRConnGroupProperties`); value.Exists() && !data.OdrConnGroupProperties.IsNull() {
 		l := []DmODRConnProperty{}
-		for _, v := range value.Array() {
-			item := DmODRConnProperty{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmODRConnProperty{}
+		data.OdrConnGroupProperties.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmODRConnProperty{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

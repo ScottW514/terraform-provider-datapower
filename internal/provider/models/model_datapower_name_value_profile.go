@@ -291,11 +291,23 @@ func (data *NameValueProfile) UpdateFromBody(ctx context.Context, pathRoot strin
 	}
 	if value := res.Get(pathRoot + `ValidationList`); value.Exists() && !data.ValidationList.IsNull() {
 		l := []DmValidationType{}
-		for _, v := range value.Array() {
-			item := DmValidationType{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmValidationType{}
+		data.ValidationList.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmValidationType{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

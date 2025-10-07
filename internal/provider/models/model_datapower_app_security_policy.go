@@ -206,11 +206,23 @@ func (data *AppSecurityPolicy) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `RequestMaps`); value.Exists() && !data.RequestMaps.IsNull() {
 		l := []DmWebAppRequestPolicyMap{}
-		for _, v := range value.Array() {
-			item := DmWebAppRequestPolicyMap{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWebAppRequestPolicyMap{}
+		data.RequestMaps.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWebAppRequestPolicyMap{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -223,11 +235,23 @@ func (data *AppSecurityPolicy) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `ResponseMaps`); value.Exists() && !data.ResponseMaps.IsNull() {
 		l := []DmWebAppResponsePolicyMap{}
-		for _, v := range value.Array() {
-			item := DmWebAppResponsePolicyMap{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWebAppResponsePolicyMap{}
+		data.ResponseMaps.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWebAppResponsePolicyMap{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -240,11 +264,23 @@ func (data *AppSecurityPolicy) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `ErrorMaps`); value.Exists() && !data.ErrorMaps.IsNull() {
 		l := []DmPolicyMap{}
-		for _, v := range value.Array() {
-			item := DmPolicyMap{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmPolicyMap{}
+		data.ErrorMaps.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmPolicyMap{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

@@ -191,11 +191,23 @@ func (data *AssemblyLogicSwitch) UpdateFromBody(ctx context.Context, pathRoot st
 	}
 	if value := res.Get(pathRoot + `Case`); value.Exists() && !data.Case.IsNull() {
 		l := []DmAssemblyLogicExecute{}
-		for _, v := range value.Array() {
-			item := DmAssemblyLogicExecute{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAssemblyLogicExecute{}
+		data.Case.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAssemblyLogicExecute{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

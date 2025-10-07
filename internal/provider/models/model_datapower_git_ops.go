@@ -538,11 +538,23 @@ func (data *GitOps) UpdateFromBody(ctx context.Context, pathRoot string, res gjs
 	}
 	if value := res.Get(pathRoot + `TemplatePolicies`); value.Exists() && !data.TemplatePolicies.IsNull() {
 		l := []DmGitOpsTemplatePolicy{}
-		for _, v := range value.Array() {
-			item := DmGitOpsTemplatePolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmGitOpsTemplatePolicy{}
+		data.TemplatePolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmGitOpsTemplatePolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

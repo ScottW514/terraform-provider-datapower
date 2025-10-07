@@ -591,11 +591,23 @@ func (data *XMLManager) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `DocCachePolicy`); value.Exists() && !data.DocCachePolicy.IsNull() {
 		l := []DmDocCachePolicy{}
-		for _, v := range value.Array() {
-			item := DmDocCachePolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmDocCachePolicy{}
+		data.DocCachePolicy.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmDocCachePolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -608,11 +620,23 @@ func (data *XMLManager) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `SchemaValidation`); value.Exists() && !data.SchemaValidation.IsNull() {
 		l := []DmSchemaValidation{}
-		for _, v := range value.Array() {
-			item := DmSchemaValidation{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSchemaValidation{}
+		data.SchemaValidation.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSchemaValidation{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -625,11 +649,23 @@ func (data *XMLManager) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `ScheduledRule`); value.Exists() && !data.ScheduledRule.IsNull() {
 		l := []DmScheduledRule{}
-		for _, v := range value.Array() {
-			item := DmScheduledRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmScheduledRule{}
+		data.ScheduledRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmScheduledRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

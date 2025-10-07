@@ -185,11 +185,23 @@ func (data *ODR) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.
 	}
 	if value := res.Get(pathRoot + `ODRCustomProperties`); value.Exists() && !data.OdrCustomProperties.IsNull() {
 		l := []DmODRProperty{}
-		for _, v := range value.Array() {
-			item := DmODRProperty{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmODRProperty{}
+		data.OdrCustomProperties.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmODRProperty{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

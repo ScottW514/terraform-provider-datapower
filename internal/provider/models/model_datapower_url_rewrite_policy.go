@@ -144,11 +144,23 @@ func (data *URLRewritePolicy) UpdateFromBody(ctx context.Context, pathRoot strin
 	}
 	if value := res.Get(pathRoot + `URLRewriteRule`); value.Exists() && !data.UrlRewriteRule.IsNull() {
 		l := []DmURLRewriteRule{}
-		for _, v := range value.Array() {
-			item := DmURLRewriteRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmURLRewriteRule{}
+		data.UrlRewriteRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmURLRewriteRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

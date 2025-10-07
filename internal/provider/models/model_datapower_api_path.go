@@ -202,11 +202,23 @@ func (data *APIPath) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `Parameter`); value.Exists() && !data.Parameter.IsNull() {
 		l := []DmAPIParameter{}
-		for _, v := range value.Array() {
-			item := DmAPIParameter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIParameter{}
+		data.Parameter.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIParameter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

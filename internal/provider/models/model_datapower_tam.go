@@ -1035,11 +1035,23 @@ func (data *TAM) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.
 	}
 	if value := res.Get(pathRoot + `TAMFedDirs`); value.Exists() && !data.TamFedDirs.IsNull() {
 		l := []DmTAMFedDir{}
-		for _, v := range value.Array() {
-			item := DmTAMFedDir{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmTAMFedDir{}
+		data.TamFedDirs.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmTAMFedDir{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -1052,11 +1064,23 @@ func (data *TAM) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.
 	}
 	if value := res.Get(pathRoot + `TAMAZReplicas`); value.Exists() && !data.TamAzReplicas.IsNull() {
 		l := []DmTAMAZReplica{}
-		for _, v := range value.Array() {
-			item := DmTAMAZReplica{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmTAMAZReplica{}
+		data.TamAzReplicas.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmTAMAZReplica{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

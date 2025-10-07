@@ -909,11 +909,23 @@ func (data *SQLDataSource) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `SQLDataSourceConfigNVPairs`); value.Exists() && !data.SqlDataSourceConfigNvPairs.IsNull() {
 		l := []DmSQLDataSourceConfigNVPair{}
-		for _, v := range value.Array() {
-			item := DmSQLDataSourceConfigNVPair{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSQLDataSourceConfigNVPair{}
+		data.SqlDataSourceConfigNvPairs.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSQLDataSourceConfigNVPair{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

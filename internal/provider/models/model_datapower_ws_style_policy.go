@@ -180,11 +180,23 @@ func (data *WSStylePolicy) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `PolicyMaps`); value.Exists() && !data.PolicyMaps.IsNull() {
 		l := []DmWSMPolicyMap{}
-		for _, v := range value.Array() {
-			item := DmWSMPolicyMap{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSMPolicyMap{}
+		data.PolicyMaps.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSMPolicyMap{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

@@ -242,11 +242,23 @@ func (data *JOSESignatureIdentifier) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `HeaderParam`); value.Exists() && !data.HeaderParam.IsNull() {
 		l := []DmJOSEHeader{}
-		for _, v := range value.Array() {
-			item := DmJOSEHeader{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmJOSEHeader{}
+		data.HeaderParam.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmJOSEHeader{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

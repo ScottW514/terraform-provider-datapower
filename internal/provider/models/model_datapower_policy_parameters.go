@@ -144,11 +144,23 @@ func (data *PolicyParameters) UpdateFromBody(ctx context.Context, pathRoot strin
 	}
 	if value := res.Get(pathRoot + `PolicyParameter`); value.Exists() && !data.PolicyParameter.IsNull() {
 		l := []DmPolicyParameter{}
-		for _, v := range value.Array() {
-			item := DmPolicyParameter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmPolicyParameter{}
+		data.PolicyParameter.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmPolicyParameter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

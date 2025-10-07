@@ -144,11 +144,23 @@ func (data *FTPQuoteCommands) UpdateFromBody(ctx context.Context, pathRoot strin
 	}
 	if value := res.Get(pathRoot + `FTPQuotedCommands`); value.Exists() && !data.FtpQuotedCommands.IsNull() {
 		l := []DmFTPQuotedCommand{}
-		for _, v := range value.Array() {
-			item := DmFTPQuotedCommand{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmFTPQuotedCommand{}
+		data.FtpQuotedCommands.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmFTPQuotedCommand{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

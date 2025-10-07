@@ -233,11 +233,23 @@ func (data *PolicyAttachments) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `IgnoredPolicyAttachmentPoints`); value.Exists() && !data.IgnoredPolicyAttachmentPoints.IsNull() {
 		l := []DmPolicyAttachmentPoint{}
-		for _, v := range value.Array() {
-			item := DmPolicyAttachmentPoint{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmPolicyAttachmentPoint{}
+		data.IgnoredPolicyAttachmentPoints.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmPolicyAttachmentPoint{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -250,11 +262,23 @@ func (data *PolicyAttachments) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `ExternalPolicy`); value.Exists() && !data.ExternalPolicy.IsNull() {
 		l := []DmExternalAttachedPolicy{}
-		for _, v := range value.Array() {
-			item := DmExternalAttachedPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmExternalAttachedPolicy{}
+		data.ExternalPolicy.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmExternalAttachedPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

@@ -667,11 +667,23 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `RateLimit`); value.Exists() && !data.RateLimit.IsNull() {
 		l := []DmAPIRateLimit{}
-		for _, v := range value.Array() {
-			item := DmAPIRateLimit{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIRateLimit{}
+		data.RateLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIRateLimit{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -684,11 +696,23 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `BurstLimit`); value.Exists() && !data.BurstLimit.IsNull() {
 		l := []DmAPIBurstLimit{}
-		for _, v := range value.Array() {
-			item := DmAPIBurstLimit{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIBurstLimit{}
+		data.BurstLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIBurstLimit{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -711,11 +735,23 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `AssemblyBurstLimit`); value.Exists() && !data.AssemblyBurstLimit.IsNull() {
 		l := []DmAPIBurstLimit{}
-		for _, v := range value.Array() {
-			item := DmAPIBurstLimit{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIBurstLimit{}
+		data.AssemblyBurstLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIBurstLimit{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -728,11 +764,23 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `AssemblyBurstLimitDefinition`); value.Exists() && !data.AssemblyBurstLimitDefinition.IsNull() {
 		l := []DmDefinitionLink{}
-		for _, v := range value.Array() {
-			item := DmDefinitionLink{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmDefinitionLink{}
+		data.AssemblyBurstLimitDefinition.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmDefinitionLink{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -745,11 +793,23 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `AssemblyRateLimit`); value.Exists() && !data.AssemblyRateLimit.IsNull() {
 		l := []DmAPIRateLimit{}
-		for _, v := range value.Array() {
-			item := DmAPIRateLimit{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIRateLimit{}
+		data.AssemblyRateLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIRateLimit{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -762,11 +822,23 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `AssemblyRateLimitDefinition`); value.Exists() && !data.AssemblyRateLimitDefinition.IsNull() {
 		l := []DmDefinitionLink{}
-		for _, v := range value.Array() {
-			item := DmDefinitionLink{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmDefinitionLink{}
+		data.AssemblyRateLimitDefinition.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmDefinitionLink{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -779,11 +851,23 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `AssemblyCountLimit`); value.Exists() && !data.AssemblyCountLimit.IsNull() {
 		l := []DmAPICountLimit{}
-		for _, v := range value.Array() {
-			item := DmAPICountLimit{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPICountLimit{}
+		data.AssemblyCountLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPICountLimit{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -796,11 +880,23 @@ func (data *APIPlan) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `AssemblyCountLimitDefinition`); value.Exists() && !data.AssemblyCountLimitDefinition.IsNull() {
 		l := []DmDefinitionLink{}
-		for _, v := range value.Array() {
-			item := DmDefinitionLink{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmDefinitionLink{}
+		data.AssemblyCountLimitDefinition.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmDefinitionLink{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

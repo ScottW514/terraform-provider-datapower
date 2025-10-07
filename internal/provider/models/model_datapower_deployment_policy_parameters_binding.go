@@ -144,11 +144,23 @@ func (data *DeploymentPolicyParametersBinding) UpdateFromBody(ctx context.Contex
 	}
 	if value := res.Get(pathRoot + `DeploymentPolicyParameter`); value.Exists() && !data.DeploymentPolicyParameter.IsNull() {
 		l := []DmDeploymentPolicyParameter{}
-		for _, v := range value.Array() {
-			item := DmDeploymentPolicyParameter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmDeploymentPolicyParameter{}
+		data.DeploymentPolicyParameter.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmDeploymentPolicyParameter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

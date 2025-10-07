@@ -499,11 +499,23 @@ func (data *SSHServerSourceProtocolHandler) UpdateFromBody(ctx context.Context, 
 	}
 	if value := res.Get(pathRoot + `VirtualDirectories`); value.Exists() && !data.VirtualDirectories.IsNull() {
 		l := []DmSFTPServerVirtualDirectory{}
-		for _, v := range value.Array() {
-			item := DmSFTPServerVirtualDirectory{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSFTPServerVirtualDirectory{}
+		data.VirtualDirectories.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSFTPServerVirtualDirectory{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

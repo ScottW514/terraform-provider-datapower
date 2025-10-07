@@ -570,11 +570,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `ProxyPolicies`); value.Exists() && !data.ProxyPolicies.IsNull() {
 		l := []DmProxyPolicy{}
-		for _, v := range value.Array() {
-			item := DmProxyPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmProxyPolicy{}
+		data.ProxyPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmProxyPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -587,11 +599,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `SSLPolicies`); value.Exists() && !data.SslPolicies.IsNull() {
 		l := []DmSSLPolicy{}
-		for _, v := range value.Array() {
-			item := DmSSLPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSSLPolicy{}
+		data.SslPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSSLPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -604,11 +628,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `BasicAuthPolicies`); value.Exists() && !data.BasicAuthPolicies.IsNull() {
 		l := []DmBasicAuthPolicy{}
-		for _, v := range value.Array() {
-			item := DmBasicAuthPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmBasicAuthPolicy{}
+		data.BasicAuthPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmBasicAuthPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -621,11 +657,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `SoapActionPolicies`); value.Exists() && !data.SoapActionPolicies.IsNull() {
 		l := []DmSoapActionPolicy{}
-		for _, v := range value.Array() {
-			item := DmSoapActionPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSoapActionPolicy{}
+		data.SoapActionPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSoapActionPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -638,11 +686,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `PubkeyAuthPolicies`); value.Exists() && !data.PubkeyAuthPolicies.IsNull() {
 		l := []DmPubkeyAuthPolicy{}
-		for _, v := range value.Array() {
-			item := DmPubkeyAuthPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmPubkeyAuthPolicy{}
+		data.PubkeyAuthPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmPubkeyAuthPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -655,11 +715,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `AllowCompressionPolicies`); value.Exists() && !data.AllowCompressionPolicies.IsNull() {
 		l := []DmAllowCompressionPolicy{}
-		for _, v := range value.Array() {
-			item := DmAllowCompressionPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAllowCompressionPolicy{}
+		data.AllowCompressionPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAllowCompressionPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -672,11 +744,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `HeaderRetentionPolicies`); value.Exists() && !data.HeaderRetentionPolicies.IsNull() {
 		l := []DmHeaderRetentionPolicy{}
-		for _, v := range value.Array() {
-			item := DmHeaderRetentionPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmHeaderRetentionPolicy{}
+		data.HeaderRetentionPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmHeaderRetentionPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -689,11 +773,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `HTTPVersionPolicies`); value.Exists() && !data.HttpVersionPolicies.IsNull() {
 		l := []DmHTTPVersionPolicy{}
-		for _, v := range value.Array() {
-			item := DmHTTPVersionPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmHTTPVersionPolicy{}
+		data.HttpVersionPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmHTTPVersionPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -706,11 +802,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `AddHeaderPolicies`); value.Exists() && !data.AddHeaderPolicies.IsNull() {
 		l := []DmAddHeaderPolicy{}
-		for _, v := range value.Array() {
-			item := DmAddHeaderPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAddHeaderPolicy{}
+		data.AddHeaderPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAddHeaderPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -723,11 +831,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `UploadChunkedPolicies`); value.Exists() && !data.UploadChunkedPolicies.IsNull() {
 		l := []DmUploadChunkedPolicy{}
-		for _, v := range value.Array() {
-			item := DmUploadChunkedPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmUploadChunkedPolicy{}
+		data.UploadChunkedPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmUploadChunkedPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -740,11 +860,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `FTPPolicies`); value.Exists() && !data.FtpPolicies.IsNull() {
 		l := []DmFTPPolicy{}
-		for _, v := range value.Array() {
-			item := DmFTPPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmFTPPolicy{}
+		data.FtpPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmFTPPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -757,11 +889,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `SMTPPolicies`); value.Exists() && !data.SmtpPolicies.IsNull() {
 		l := []DmSMTPPolicy{}
-		for _, v := range value.Array() {
-			item := DmSMTPPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSMTPPolicy{}
+		data.SmtpPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSMTPPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -774,11 +918,23 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `SFTPPolicies`); value.Exists() && !data.SftpPolicies.IsNull() {
 		l := []DmSFTPPolicy{}
-		for _, v := range value.Array() {
-			item := DmSFTPPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSFTPPolicy{}
+		data.SftpPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSFTPPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

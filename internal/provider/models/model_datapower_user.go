@@ -353,11 +353,23 @@ func (data *User) UpdateFromBody(ctx context.Context, pathRoot string, res gjson
 	}
 	if value := res.Get(pathRoot + `SnmpCreds`); value.Exists() && !data.SnmpCreds.IsNull() {
 		l := []DmSnmpCred{}
-		for _, v := range value.Array() {
-			item := DmSnmpCred{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSnmpCred{}
+		data.SnmpCreds.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSnmpCred{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -370,11 +382,23 @@ func (data *User) UpdateFromBody(ctx context.Context, pathRoot string, res gjson
 	}
 	if value := res.Get(pathRoot + `HashedSnmpCreds`); value.Exists() && !data.HashedSnmpCreds.IsNull() {
 		l := []DmSnmpCredMasked{}
-		for _, v := range value.Array() {
-			item := DmSnmpCredMasked{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmSnmpCredMasked{}
+		data.HashedSnmpCreds.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmSnmpCredMasked{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

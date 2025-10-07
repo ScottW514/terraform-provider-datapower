@@ -590,11 +590,23 @@ func (data *RateLimitDefinition) UpdateFromBody(ctx context.Context, pathRoot st
 	}
 	if value := res.Get(pathRoot + `Parameters`); value.Exists() && !data.Parameters.IsNull() {
 		l := []DmRateLimitDefinitionNameValuePair{}
-		for _, v := range value.Array() {
-			item := DmRateLimitDefinitionNameValuePair{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmRateLimitDefinitionNameValuePair{}
+		data.Parameters.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmRateLimitDefinitionNameValuePair{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

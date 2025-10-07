@@ -678,11 +678,23 @@ func (data *WebAppFW) UpdateFromBody(ctx context.Context, pathRoot string, res g
 	}
 	if value := res.Get(pathRoot + `FrontSide`); value.Exists() && !data.FrontSide.IsNull() {
 		l := []DmFrontSide{}
-		for _, v := range value.Array() {
-			item := DmFrontSide{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmFrontSide{}
+		data.FrontSide.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmFrontSide{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -825,11 +837,23 @@ func (data *WebAppFW) UpdateFromBody(ctx context.Context, pathRoot string, res g
 	}
 	if value := res.Get(pathRoot + `DebugTrigger`); value.Exists() && !data.DebugTrigger.IsNull() {
 		l := []DmMSDebugTriggerType{}
-		for _, v := range value.Array() {
-			item := DmMSDebugTriggerType{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmMSDebugTriggerType{}
+		data.DebugTrigger.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmMSDebugTriggerType{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

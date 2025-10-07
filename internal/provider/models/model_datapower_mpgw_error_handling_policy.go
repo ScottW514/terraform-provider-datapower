@@ -144,11 +144,23 @@ func (data *MPGWErrorHandlingPolicy) UpdateFromBody(ctx context.Context, pathRoo
 	}
 	if value := res.Get(pathRoot + `PolicyMaps`); value.Exists() && !data.PolicyMaps.IsNull() {
 		l := []DmWebGWErrorPolicyMap{}
-		for _, v := range value.Array() {
-			item := DmWebGWErrorPolicyMap{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWebGWErrorPolicyMap{}
+		data.PolicyMaps.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWebGWErrorPolicyMap{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

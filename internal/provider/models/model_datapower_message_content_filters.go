@@ -166,11 +166,23 @@ func (data *MessageContentFilters) UpdateFromBody(ctx context.Context, pathRoot 
 	}
 	if value := res.Get(pathRoot + `Filters`); value.Exists() && !data.Filters.IsNull() {
 		l := []DmMCFilter{}
-		for _, v := range value.Array() {
-			item := DmMCFilter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmMCFilter{}
+		data.Filters.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmMCFilter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

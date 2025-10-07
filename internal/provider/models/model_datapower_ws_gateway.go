@@ -3287,11 +3287,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `WSDLCachePolicy`); value.Exists() && !data.WsdlCachePolicy.IsNull() {
 		l := []DmWSDLCachePolicy{}
-		for _, v := range value.Array() {
-			item := DmWSDLCachePolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSDLCachePolicy{}
+		data.WsdlCachePolicy.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSDLCachePolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3304,11 +3316,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `BaseWSDL`); value.Exists() && !data.BaseWsdl.IsNull() {
 		l := []DmWSBaseWSDL{}
-		for _, v := range value.Array() {
-			item := DmWSBaseWSDL{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSBaseWSDL{}
+		data.BaseWsdl.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSBaseWSDL{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3321,11 +3345,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `UserToggles`); value.Exists() && !data.UserToggles.IsNull() {
 		l := []DmWSUserToggles{}
-		for _, v := range value.Array() {
-			item := DmWSUserToggles{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSUserToggles{}
+		data.UserToggles.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSUserToggles{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3378,11 +3414,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `WSRRSubscriptions`); value.Exists() && !data.WsrrSubscriptions.IsNull() {
 		l := []DmWSRRWSDLSource{}
-		for _, v := range value.Array() {
-			item := DmWSRRWSDLSource{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSRRWSDLSource{}
+		data.WsrrSubscriptions.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSRRWSDLSource{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3395,11 +3443,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `WSRRSavedSearchSubscriptions`); value.Exists() && !data.WsrrSavedSearchSubscriptions.IsNull() {
 		l := []DmWSRRSavedSearchWSDLSource{}
-		for _, v := range value.Array() {
-			item := DmWSRRSavedSearchWSDLSource{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSRRSavedSearchWSDLSource{}
+		data.WsrrSavedSearchSubscriptions.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSRRSavedSearchWSDLSource{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3412,11 +3472,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `OperationPriority`); value.Exists() && !data.OperationPriority.IsNull() {
 		l := []DmWSOperationSchedulerPriority{}
-		for _, v := range value.Array() {
-			item := DmWSOperationSchedulerPriority{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSOperationSchedulerPriority{}
+		data.OperationPriority.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSOperationSchedulerPriority{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3429,11 +3501,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `OperationConformancePolicy`); value.Exists() && !data.OperationConformancePolicy.IsNull() {
 		l := []DmWSOperationConformancePolicy{}
-		for _, v := range value.Array() {
-			item := DmWSOperationConformancePolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSOperationConformancePolicy{}
+		data.OperationConformancePolicy.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSOperationConformancePolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3446,11 +3530,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `OperationPolicySubjectOptOut`); value.Exists() && !data.OperationPolicySubjectOptOut.IsNull() {
 		l := []DmWSOperationPolicySubjectOptOut{}
-		for _, v := range value.Array() {
-			item := DmWSOperationPolicySubjectOptOut{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSOperationPolicySubjectOptOut{}
+		data.OperationPolicySubjectOptOut.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSOperationPolicySubjectOptOut{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3463,11 +3559,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `PolicyParameter`); value.Exists() && !data.PolicyParameter.IsNull() {
 		l := []DmWSPolicyParameters{}
-		for _, v := range value.Array() {
-			item := DmWSPolicyParameters{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSPolicyParameters{}
+		data.PolicyParameter.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSPolicyParameters{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3480,11 +3588,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `ReliableMessaging`); value.Exists() && !data.ReliableMessaging.IsNull() {
 		l := []DmWSOperationReliableMessaging{}
-		for _, v := range value.Array() {
-			item := DmWSOperationReliableMessaging{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmWSOperationReliableMessaging{}
+		data.ReliableMessaging.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmWSOperationReliableMessaging{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3552,11 +3672,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `HeaderInjection`); value.Exists() && !data.HeaderInjection.IsNull() {
 		l := []DmHeaderInjection{}
-		for _, v := range value.Array() {
-			item := DmHeaderInjection{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmHeaderInjection{}
+		data.HeaderInjection.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmHeaderInjection{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3569,11 +3701,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `HeaderSuppression`); value.Exists() && !data.HeaderSuppression.IsNull() {
 		l := []DmHeaderSuppression{}
-		for _, v := range value.Array() {
-			item := DmHeaderSuppression{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmHeaderSuppression{}
+		data.HeaderSuppression.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmHeaderSuppression{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3586,11 +3730,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `StylesheetParameters`); value.Exists() && !data.StylesheetParameters.IsNull() {
 		l := []DmStylesheetParameter{}
-		for _, v := range value.Array() {
-			item := DmStylesheetParameter{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmStylesheetParameter{}
+		data.StylesheetParameters.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmStylesheetParameter{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -3763,11 +3919,23 @@ func (data *WSGateway) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `DebugTrigger`); value.Exists() && !data.DebugTrigger.IsNull() {
 		l := []DmMSDebugTriggerType{}
-		for _, v := range value.Array() {
-			item := DmMSDebugTriggerType{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmMSDebugTriggerType{}
+		data.DebugTrigger.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmMSDebugTriggerType{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

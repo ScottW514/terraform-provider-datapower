@@ -337,11 +337,23 @@ func (data *GatewayPeeringGroup) UpdateFromBody(ctx context.Context, pathRoot st
 	}
 	if value := res.Get(pathRoot + `PeerNodes`); value.Exists() && !data.PeerNodes.IsNull() {
 		l := []DmGatewayPeeringGroupPeerNode{}
-		for _, v := range value.Array() {
-			item := DmGatewayPeeringGroupPeerNode{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmGatewayPeeringGroupPeerNode{}
+		data.PeerNodes.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmGatewayPeeringGroupPeerNode{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -359,11 +371,23 @@ func (data *GatewayPeeringGroup) UpdateFromBody(ctx context.Context, pathRoot st
 	}
 	if value := res.Get(pathRoot + `ClusterNodes`); value.Exists() && !data.ClusterNodes.IsNull() {
 		l := []DmGatewayPeeringGroupClusterNode{}
-		for _, v := range value.Array() {
-			item := DmGatewayPeeringGroupClusterNode{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmGatewayPeeringGroupClusterNode{}
+		data.ClusterNodes.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmGatewayPeeringGroupClusterNode{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {

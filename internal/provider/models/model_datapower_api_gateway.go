@@ -618,11 +618,23 @@ func (data *APIGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `DocCachePolicy`); value.Exists() && !data.DocCachePolicy.IsNull() {
 		l := []DmDocCachePolicy{}
-		for _, v := range value.Array() {
-			item := DmDocCachePolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmDocCachePolicy{}
+		data.DocCachePolicy.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmDocCachePolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -635,11 +647,23 @@ func (data *APIGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `ScheduledRule`); value.Exists() && !data.ScheduledRule.IsNull() {
 		l := []DmScheduledRule{}
-		for _, v := range value.Array() {
-			item := DmScheduledRule{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmScheduledRule{}
+		data.ScheduledRule.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmScheduledRule{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -662,11 +686,23 @@ func (data *APIGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `AssemblyBurstLimit`); value.Exists() && !data.AssemblyBurstLimit.IsNull() {
 		l := []DmAPIBurstLimit{}
-		for _, v := range value.Array() {
-			item := DmAPIBurstLimit{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIBurstLimit{}
+		data.AssemblyBurstLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIBurstLimit{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -679,11 +715,23 @@ func (data *APIGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `AssemblyRateLimit`); value.Exists() && !data.AssemblyRateLimit.IsNull() {
 		l := []DmAPIRateLimit{}
-		for _, v := range value.Array() {
-			item := DmAPIRateLimit{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIRateLimit{}
+		data.AssemblyRateLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIRateLimit{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -696,11 +744,23 @@ func (data *APIGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `AssemblyCountLimit`); value.Exists() && !data.AssemblyCountLimit.IsNull() {
 		l := []DmAPICountLimit{}
-		for _, v := range value.Array() {
-			item := DmAPICountLimit{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPICountLimit{}
+		data.AssemblyCountLimit.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPICountLimit{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -718,11 +778,23 @@ func (data *APIGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `ProxyPolicies`); value.Exists() && !data.ProxyPolicies.IsNull() {
 		l := []DmAPIProxyPolicy{}
-		for _, v := range value.Array() {
-			item := DmAPIProxyPolicy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmAPIProxyPolicy{}
+		data.ProxyPolicies.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmAPIProxyPolicy{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
@@ -750,11 +822,23 @@ func (data *APIGateway) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `OpenTelemetryResourceAttribute`); value.Exists() && !data.OpenTelemetryResourceAttribute.IsNull() {
 		l := []DmOpenTelemetryResourceAttribute{}
-		for _, v := range value.Array() {
-			item := DmOpenTelemetryResourceAttribute{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
+		e := []DmOpenTelemetryResourceAttribute{}
+		data.OpenTelemetryResourceAttribute.ElementsAs(ctx, &e, false)
+		if len(value.Array()) == len(e) {
+			for i, v := range value.Array() {
+				item := e[i]
+				item.UpdateFromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
+			}
+		} else {
+			for _, v := range value.Array() {
+				item := DmOpenTelemetryResourceAttribute{}
+				item.FromBody(ctx, "", v)
+				if !item.IsNull() {
+					l = append(l, item)
+				}
 			}
 		}
 		if len(l) > 0 {
