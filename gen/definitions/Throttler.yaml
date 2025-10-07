@@ -6,7 +6,7 @@ description: Define throttle settings that monitor memory, temporary file space,
 cli_alias: throttle
 cmd_group: system
 rest_endpoint: /mgmt/config/default/Throttler/Throttler
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

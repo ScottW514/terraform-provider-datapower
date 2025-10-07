@@ -4,7 +4,7 @@ description: Configure web access to the B2B transaction viewer. If you do not a
 cli_alias: b2b-viewer-mgmt
 cmd_group: device-management
 rest_endpoint: /mgmt/config/default/WebB2BViewer/WebB2BViewer-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

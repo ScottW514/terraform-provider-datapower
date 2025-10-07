@@ -134,6 +134,20 @@ func (data MgmtInterface) IsNull() bool {
 	}
 	return true
 }
+func (data *MgmtInterface) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.LocalPort = types.Int64Value(5550)
+	data.UserAgent = types.StringNull()
+	data.Acl = types.StringValue("xml-mgmt")
+	data.SlmPeering = types.Int64Value(10)
+	data.Mode = &DmXMLMgmtModes{}
+	data.Mode.ToDefault()
+	data.SslConfigType = types.StringValue("server")
+	data.SslServer = types.StringNull()
+	data.SslSniServer = types.StringNull()
+	data.LocalAddress = types.StringValue("0.0.0.0")
+}
 
 func (data MgmtInterface) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

@@ -262,6 +262,25 @@ func (data GitOps) IsNull() bool {
 	}
 	return true
 }
+func (data *GitOps) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.ConnectionType = types.StringValue("https")
+	data.Mode = types.StringValue("read-write")
+	data.CommitIdentifierType = types.StringValue("branch")
+	data.CommitIdentifier = types.StringNull()
+	data.RemoteLocation = types.StringNull()
+	data.Interval = types.Int64Value(5)
+	data.SshClientProfile = types.StringNull()
+	data.Username = types.StringNull()
+	data.Password = types.StringNull()
+	data.SshAuthorizedKeysFile = types.StringNull()
+	data.TlsValcred = types.StringNull()
+	data.GitUser = types.StringNull()
+	data.GitEmail = types.StringNull()
+	data.JsonParseSettings = types.StringNull()
+	data.TemplatePolicies = types.ListNull(types.ObjectType{AttrTypes: DmGitOpsTemplatePolicyObjectType})
+}
 
 func (data GitOps) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

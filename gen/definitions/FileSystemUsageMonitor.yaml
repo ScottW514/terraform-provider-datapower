@@ -6,7 +6,7 @@ description: The file system usage monitor is a utility that checks file systems
 cli_alias: fs-usage-monitor
 cmd_group: system
 rest_endpoint: /mgmt/config/default/FileSystemUsageMonitor/FileSystemUsageMonitor
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

@@ -6,7 +6,7 @@ description: Configure parameters of dynamic NFS mounts for dpnfs URL calls. The
 cli_alias: nfs-dynamic-mounts
 cmd_group: file-management
 rest_endpoint: /mgmt/config/{domain}/NFSDynamicMounts/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

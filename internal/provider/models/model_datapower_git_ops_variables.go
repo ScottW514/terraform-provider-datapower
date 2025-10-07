@@ -63,6 +63,11 @@ func (data GitOpsVariables) IsNull() bool {
 	}
 	return true
 }
+func (data *GitOpsVariables) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.Variables = types.ListNull(types.ObjectType{AttrTypes: DmGitOpsVariableEntryObjectType})
+}
 
 func (data GitOpsVariables) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

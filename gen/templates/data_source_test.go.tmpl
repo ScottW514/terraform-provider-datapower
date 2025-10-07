@@ -47,9 +47,9 @@ func TestAccDataSource{{.Name}}(t *testing.T) {
 {{- $root := . }}
 {{- range .Attributes}}
 	{{- if and .Default (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")) (ne .Name "Id")}}
-		resource.TestCheckResourceAttr("data.datapower_{{toTfName $root.Name}}.test", "{{if not $root.UpdateOnly}}result.0.{{end}}{{.TfName}}", {{if .TestExpectDs}}{{.TestExpectDs}}{{else if .TestValue}}{{if ne .Type "String"}}{{quote .TestValue}}{{else}}{{.TestValue}}{{end}}{{else}}{{quote .Default}}{{end}}),
+		resource.TestCheckResourceAttr("data.datapower_{{toTfName $root.Name}}.test", "{{if not $root.Singleton}}result.0.{{end}}{{.TfName}}", {{if .TestExpectDs}}{{.TestExpectDs}}{{else if .TestValue}}{{if ne .Type "String"}}{{quote .TestValue}}{{else}}{{.TestValue}}{{end}}{{else}}{{quote .Default}}{{end}}),
 	{{- else if eq .Name "Id"}}
-		resource.TestCheckResourceAttr("data.datapower_{{toTfName $root.Name}}.test", "{{if not $root.UpdateOnly}}result.0.{{end}}id", {{if .TestExpectDs}}{{.TestExpectDs}}{{else if .TestValue}}{{.TestValue}}{{else}}{{quote .Example}}{{end}}),
+		resource.TestCheckResourceAttr("data.datapower_{{toTfName $root.Name}}.test", "{{if not $root.Singleton}}result.0.{{end}}id", {{if .TestExpectDs}}{{.TestExpectDs}}{{else if .TestValue}}{{.TestValue}}{{else}}{{quote .Example}}{{end}}),
 	{{- end}}
 {{- end}}
 		}...),

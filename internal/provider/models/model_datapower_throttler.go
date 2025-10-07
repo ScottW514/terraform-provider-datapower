@@ -122,6 +122,21 @@ func (data Throttler) IsNull() bool {
 	}
 	return true
 }
+func (data *Throttler) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.ThrottleAt = types.Int64Value(0)
+	data.TerminateAt = types.Int64Value(0)
+	data.TempFsThrottleAt = types.Int64Value(0)
+	data.TempFsTerminateAt = types.Int64Value(0)
+	data.QnameWarnAt = types.Int64Value(10)
+	data.Timeout = types.Int64Value(30)
+	data.Statistics = types.BoolValue(false)
+	data.LogLevel = types.StringValue("debug")
+	data.EnvironmentalLog = types.BoolValue(true)
+	data.BacklogSize = types.Int64Value(0)
+	data.BacklogTimeout = types.Int64Value(30)
+}
 
 func (data Throttler) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

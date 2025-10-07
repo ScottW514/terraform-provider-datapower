@@ -4,7 +4,7 @@ description: Use this page to establish SNMP connectivity to the device, and to 
 cli_alias: snmp
 cmd_group: snmp
 rest_endpoint: /mgmt/config/default/SNMPSettings/SNMP-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

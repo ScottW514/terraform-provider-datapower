@@ -113,6 +113,15 @@ func (data FileSystemUsageMonitor) IsNull() bool {
 	}
 	return true
 }
+func (data *FileSystemUsageMonitor) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.PollingInterval = types.Int64Value(60)
+	data.AllSystem = types.BoolValue(true)
+	data.AllSystemWarningThreshold = types.Int64Value(75)
+	data.AllSystemCriticalThreshold = types.Int64Value(90)
+	data.System = types.ListNull(types.ObjectType{AttrTypes: DmFileSystemUsageObjectType})
+}
 
 func (data FileSystemUsageMonitor) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

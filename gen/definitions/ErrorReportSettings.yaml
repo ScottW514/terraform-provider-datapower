@@ -19,7 +19,7 @@ description: <p>Failure notification is a serviceability tool. By default, failu
 cli_alias: failure-notification
 cmd_group: failure-notification
 rest_endpoint: /mgmt/config/default/ErrorReportSettings/Error-Report
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

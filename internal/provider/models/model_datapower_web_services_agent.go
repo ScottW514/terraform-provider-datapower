@@ -91,6 +91,15 @@ func (data WebServicesAgent) IsNull() bool {
 	}
 	return true
 }
+func (data *WebServicesAgent) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.MaxRecords = types.Int64Value(3000)
+	data.MaxMemoryKb = types.Int64Value(64000)
+	data.CaptureMode = types.StringValue("faults")
+	data.MediationMetrics = types.BoolValue(false)
+	data.MaxPayloadSizeKb = types.Int64Value(0)
+}
 
 func (data WebServicesAgent) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

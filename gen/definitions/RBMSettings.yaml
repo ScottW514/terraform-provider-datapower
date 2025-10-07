@@ -10,7 +10,7 @@ rest_endpoint: /mgmt/config/default/RBMSettings/RBM-Settings
 actions:
 - name: flush_cache
   body: '{"FlushRBMCache": 0}'
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

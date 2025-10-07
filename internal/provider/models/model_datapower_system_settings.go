@@ -158,6 +158,20 @@ func (data SystemSettings) IsNull() bool {
 	}
 	return true
 }
+func (data *SystemSettings) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.EntitlementNumber = types.StringNull()
+	data.Contact = types.StringNull()
+	data.SystemName = types.StringNull()
+	data.Location = types.StringNull()
+	data.CustomUiFile = types.StringNull()
+	data.AuditReserve = types.Int64Value(40)
+	data.DetectIntrusion = types.StringNull()
+	data.HardwareXmlAcceleration = types.BoolNull()
+	data.Locale = types.StringValue("en")
+	data.SystemLogFixedFormat = types.BoolValue(false)
+}
 
 func (data SystemSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {
@@ -329,7 +343,7 @@ func (data *SystemSettings) FromBody(ctx context.Context, pathRoot string, res g
 	if value := res.Get(pathRoot + `Locale`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Locale = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Locale = types.StringNull()
+		data.Locale = types.StringValue("en")
 	}
 	if value := res.Get(pathRoot + `SystemLogFixedFormat`); value.Exists() {
 		data.SystemLogFixedFormat = tfutils.BoolFromString(value.String())
@@ -439,7 +453,7 @@ func (data *SystemSettings) UpdateFromBody(ctx context.Context, pathRoot string,
 	}
 	if value := res.Get(pathRoot + `Locale`); value.Exists() && !data.Locale.IsNull() {
 		data.Locale = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.Locale.ValueString() != "en" {
 		data.Locale = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SystemLogFixedFormat`); value.Exists() && !data.SystemLogFixedFormat.IsNull() {
@@ -586,7 +600,7 @@ func (data *SystemSettings) UpdateUnknownFromBody(ctx context.Context, pathRoot 
 	if data.Locale.IsUnknown() {
 		if value := res.Get(pathRoot + `Locale`); value.Exists() && !data.Locale.IsNull() {
 			data.Locale = tfutils.ParseStringFromGJSON(value)
-		} else {
+		} else if data.Locale.ValueString() != "en" {
 			data.Locale = types.StringNull()
 		}
 	}

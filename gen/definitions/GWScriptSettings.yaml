@@ -6,7 +6,7 @@ description: You can configure the following GatewayScript settings. <ul><li>Whe
 cli_alias: gatewayscript-settings
 cmd_group: system
 rest_endpoint: /mgmt/config/default/GWScriptSettings/GatewayScript-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

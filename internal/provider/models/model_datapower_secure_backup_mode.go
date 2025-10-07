@@ -63,6 +63,11 @@ func (data SecureBackupMode) IsNull() bool {
 	}
 	return true
 }
+func (data *SecureBackupMode) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.Mode = types.StringValue("normal")
+}
 
 func (data SecureBackupMode) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

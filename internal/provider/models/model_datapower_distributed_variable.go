@@ -71,6 +71,11 @@ func (data DistributedVariable) IsNull() bool {
 	}
 	return true
 }
+func (data *DistributedVariable) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.GatewayPeering = types.StringNull()
+}
 
 func (data DistributedVariable) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

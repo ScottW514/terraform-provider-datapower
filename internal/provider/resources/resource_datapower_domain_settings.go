@@ -241,6 +241,13 @@ func (r *DomainSettingsResource) Delete(ctx context.Context, req resource.Delete
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	config := models.DomainSettings{}
+	data.ToDefault()
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `DomainSettings`, &config))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to restore singleton to default, got error: %s", err))
+		return
+	}
 
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
 	if resp.Diagnostics.HasError() {

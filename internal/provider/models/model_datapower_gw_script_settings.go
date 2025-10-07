@@ -78,6 +78,13 @@ func (data GWScriptSettings) IsNull() bool {
 	}
 	return true
 }
+func (data *GWScriptSettings) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.FrozenEnabled = types.BoolValue(true)
+	data.UntrustedCodeMitigated = types.BoolValue(true)
+	data.TerminateTime = types.Int64Null()
+}
 
 func (data GWScriptSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

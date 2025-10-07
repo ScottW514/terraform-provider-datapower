@@ -125,6 +125,20 @@ func (data NFSDynamicMounts) IsNull() bool {
 	}
 	return true
 }
+func (data *NFSDynamicMounts) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.Version = types.Int64Value(3)
+	data.Transport = types.StringValue("tcp")
+	data.MountType = types.StringValue("hard")
+	data.ReadOnly = types.BoolValue(false)
+	data.ReadSize = types.Int64Value(4096)
+	data.WriteSize = types.Int64Value(4096)
+	data.Timeout = types.Int64Value(7)
+	data.Retransmissions = types.Int64Value(3)
+	data.IdleUnmountSeconds = types.Int64Value(900)
+	data.MountTimeoutSeconds = types.Int64Value(30)
+}
 
 func (data NFSDynamicMounts) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

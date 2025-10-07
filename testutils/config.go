@@ -2389,11 +2389,9 @@ var DmAPIBurstLimitTestConfig = ModelTestConfig{
 var DmAPICGSProxyPolicyTestConfig = ModelTestConfig{
     Name:         "DmAPICGSProxyPolicy",
     Model: `{
-  remote_address = "localhost"
   remote_port = 8080
 }`,
     ModelTestBed: `{
-  remote_address = "localhost"
   remote_port = 8080
 }`,
     ModelOnly:    true,

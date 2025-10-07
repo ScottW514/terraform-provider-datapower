@@ -137,6 +137,10 @@ func (data DmB2BHAHost) IsNull() bool {
 	}
 	return true
 }
+func (data *DmB2BHAHost) ToDefault() {
+	data.Hostname = types.StringNull()
+	data.Port = types.Int64Value(1320)
+}
 
 func (data DmB2BHAHost) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

@@ -6,7 +6,7 @@ description: Modify the configuration of the XML management interface. This inte
 cli_alias: xml-mgmt
 cmd_group: device-management
 rest_endpoint: /mgmt/config/default/MgmtInterface/XMLMgmt-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

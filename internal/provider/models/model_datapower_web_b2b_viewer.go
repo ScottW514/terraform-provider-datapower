@@ -117,6 +117,18 @@ func (data WebB2BViewer) IsNull() bool {
 	}
 	return true
 }
+func (data *WebB2BViewer) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.LocalPort = types.Int64Value(9091)
+	data.UserAgent = types.StringNull()
+	data.IdleTimeout = types.Int64Value(600)
+	data.Acl = types.StringValue("web-b2b-viewer")
+	data.SslServerConfigType = types.StringValue("server")
+	data.SslServer = types.StringNull()
+	data.SslSniServer = types.StringNull()
+	data.LocalAddress = types.StringValue("0.0.0.0")
+}
 
 func (data WebB2BViewer) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

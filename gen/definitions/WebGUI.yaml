@@ -4,7 +4,7 @@ description: Modify the configuration of the web management service. <p>If you d
 cli_alias: web-mgmt
 cmd_group: device-management
 rest_endpoint: /mgmt/config/default/WebGUI/WebGUI-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

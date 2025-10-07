@@ -152,6 +152,11 @@ func (data DmAPICGSProxyPolicy) IsNull() bool {
 	}
 	return true
 }
+func (data *DmAPICGSProxyPolicy) ToDefault() {
+	data.ProxyPolicyEnable = types.BoolNull()
+	data.RemoteAddress = types.StringNull()
+	data.RemotePort = types.Int64Null()
+}
 
 func (data DmAPICGSProxyPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

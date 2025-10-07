@@ -5,7 +5,7 @@ description: Sets the backup operational mode. This mode controls whether a secu
 cli_alias: secure-mode
 cmd_group: device-management
 rest_endpoint: /mgmt/config/default/SecureBackupMode/SecureBackupModeInstance
-update_only: true
+singleton: true
 default_domain_only: true
 skip_test: true
 attributes:

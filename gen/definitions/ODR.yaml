@@ -7,7 +7,7 @@ description: <p>Specifies an on demand router (ODR). The ODR feature acts as a c
 cli_alias: odr
 cmd_group: network
 rest_endpoint: /mgmt/config/default/ODR/ODRInstance
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

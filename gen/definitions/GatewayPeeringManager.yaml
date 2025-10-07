@@ -7,7 +7,7 @@ description: <p>The gateway-peering manager defines the gateway-peering instance
 cli_alias: gateway-peering-manager
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/GatewayPeeringManager/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

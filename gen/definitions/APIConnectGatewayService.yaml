@@ -6,7 +6,7 @@ description: The API Connect gateway service defines the type of gateway service
 cli_alias: apic-gw-service
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/APIConnectGatewayService/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

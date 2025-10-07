@@ -73,6 +73,13 @@ func (data SSHService) IsNull() bool {
 	}
 	return true
 }
+func (data *SSHService) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.LocalPort = types.Int64Value(22)
+	data.Acl = types.StringValue("ssh")
+	data.ConnectionLimit = types.Int64Value(0)
+	data.LocalAddress = types.StringValue("0.0.0.0")
+}
 
 func (data SSHService) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

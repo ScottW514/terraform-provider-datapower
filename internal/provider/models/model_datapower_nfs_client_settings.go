@@ -63,6 +63,11 @@ func (data NFSClientSettings) IsNull() bool {
 	}
 	return true
 }
+func (data *NFSClientSettings) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.MountRefreshTime = types.Int64Value(10)
+}
 
 func (data NFSClientSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

@@ -9,7 +9,7 @@ description: Domain availability monitors each multiprotocol gateway and web ser
 cli_alias: domain-availability
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/DomainAvailability/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

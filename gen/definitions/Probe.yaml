@@ -4,7 +4,7 @@ description: The domain-specific configuration that define the settings for the 
 cli_alias: probe-settings
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/Probe/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

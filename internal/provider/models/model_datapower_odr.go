@@ -73,6 +73,13 @@ func (data ODR) IsNull() bool {
 	}
 	return true
 }
+func (data *ODR) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.OdrServerName = types.StringValue("dp_set")
+	data.OdrConnectorGroups = types.ListNull(types.StringType)
+	data.OdrCustomProperties = types.ListNull(types.ObjectType{AttrTypes: DmODRPropertyObjectType})
+}
 
 func (data ODR) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

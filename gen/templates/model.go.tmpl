@@ -24,7 +24,7 @@ package models
 import (
 	"context"
     "net/url"
-{{- if .UpdateOnly}}
+{{- if .Singleton}}
     "path"
 {{- end}}
 	"regexp"
@@ -421,10 +421,10 @@ func Get{{$root.Name}}{{$dataResource}}Schema({{if not $root.ListItem}}descripti
             {{- if eq $dataResource "Resource"}}
     {{$root.Name}}{{$dataResource}}Schema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
     if required {
-       {{$root.Name}}{{$dataResource}}Schema.Required = true
+        {{$root.Name}}{{$dataResource}}Schema.Required = true
     } else {
         {{$root.Name}}{{$dataResource}}Schema.Optional = true
-		{{$root.Name}}{{$dataResource}}Schema.Computed = true
+        {{$root.Name}}{{$dataResource}}Schema.Computed = true
     }
             {{- else}}
     {{$root.Name}}{{$dataResource}}Schema.MarkdownDescription = tfutils.NewAttributeDescription(description, cliAlias, referenceTo).String
@@ -500,12 +500,37 @@ func (data {{.Name}}WO) IsNull() bool {
 }
 {{- end}}
 
+{{- if or .Singleton .DefaultFunction}}
+func (data *{{.Name}}) ToDefault() {
+    {{- range .Attributes}}
+        {{- if and (not .Internal) (not .Computed) (not .WriteOnly) (ne .Name "AppDomain") (ne .Name "id")}}
+            {{- if or (eq .Type "String") (eq .Type "Int64")}}
+                {{- if .ResetValue}}
+    data.{{toGoName .TfName}} = types.{{.Type}}Value({{if eq .Type "String"}}{{quote .ResetValue}}{{else}}{{.ResetValue}}{{end}})
+                {{- else if .Default}}
+    data.{{toGoName .TfName}} = types.{{.Type}}Value({{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}})
+                {{- else}}
+    data.{{toGoName .TfName}} = types.{{.Type}}Null()
+                {{- end}}
+            {{- else if eq .Type "Bool"}}
+    data.{{toGoName .TfName}} = types.Bool{{if .Default}}Value({{.Default}}){{else}}Null(){{end}}
+            {{- else if isList .}}
+    data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if eq .ElementType "String"}}types.StringType{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} }{{- end}})
+            {{- else if isObject .}}
+    data.{{toGoName .TfName}} = &{{.DmType}}{}
+    data.{{toGoName .TfName}}.ToDefault()
+            {{- end}}
+        {{- end}}
+    {{- end}}
+}
+{{- end}}
+
 func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string{{if .WriteOnlyAttrs}}, config *{{.Name}}{{end}}) string {
     if pathRoot != "" {
         pathRoot = pathRoot + "."
     }
 	body := ""
-{{- if and .UpdateOnly (ne .Name "Domain")}}
+{{- if and .Singleton (ne .Name "Domain")}}
 		body, _ = sjson.Set(body, "{{.Name}}.name", path.Base("{{.RestEndpoint}}"))
 {{- else if eq .Name "Domain"}}
 		body, _ = sjson.Set(body, "{{.Name}}.name", data.AppDomain.ValueString())

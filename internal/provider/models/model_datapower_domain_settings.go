@@ -113,6 +113,11 @@ func (data DomainSettingsWO) IsNull() bool {
 	}
 	return true
 }
+func (data *DomainSettings) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.PasswordTreatment = types.StringValue("masked")
+}
 
 func (data DomainSettings) ToBody(ctx context.Context, pathRoot string, config *DomainSettings) string {
 	if pathRoot != "" {

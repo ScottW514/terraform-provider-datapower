@@ -7,7 +7,7 @@ description: '<p>The time zone for the system. The time zone affects the time th
 cli_alias: timezone
 cmd_group: system
 rest_endpoint: /mgmt/config/default/TimeSettings/Time
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

@@ -68,6 +68,12 @@ func (data GWSRemoteDebug) IsNull() bool {
 	}
 	return true
 }
+func (data *GWSRemoteDebug) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.LocalPort = types.Int64Value(9229)
+	data.LocalAddress = types.StringValue("0.0.0.0")
+}
 
 func (data GWSRemoteDebug) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

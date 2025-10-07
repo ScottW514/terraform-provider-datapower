@@ -1,5 +1,6 @@
 name: DmHostKeyAlgorithms
 model_only: true
+default_function: true
 attributes:
 - name: SSH-ED25519
   type: Bool

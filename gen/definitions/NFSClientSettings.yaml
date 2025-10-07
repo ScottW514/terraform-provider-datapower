@@ -4,7 +4,7 @@ description: Configure global NFS client parameters, which is the global configu
 cli_alias: nfs-client
 cmd_group: system
 rest_endpoint: /mgmt/config/default/NFSClientSettings/NFS-Client-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

@@ -4,7 +4,7 @@ description: The Web Services Management agent provides manageability for Web Se
 cli_alias: wsm-agent
 cmd_group: wsm-agent
 rest_endpoint: /mgmt/config/{domain}/WebServicesAgent/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

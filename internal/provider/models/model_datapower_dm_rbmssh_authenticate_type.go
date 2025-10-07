@@ -106,6 +106,10 @@ func (data DmRBMSSHAuthenticateType) IsNull() bool {
 	}
 	return true
 }
+func (data *DmRBMSSHAuthenticateType) ToDefault() {
+	data.Certificate = types.BoolValue(false)
+	data.Password = types.BoolValue(false)
+}
 
 func (data DmRBMSSHAuthenticateType) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

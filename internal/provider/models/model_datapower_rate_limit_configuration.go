@@ -66,6 +66,10 @@ func (data RateLimitConfiguration) IsNull() bool {
 	}
 	return true
 }
+func (data *RateLimitConfiguration) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.Parameters = types.ListNull(types.ObjectType{AttrTypes: DmRateLimitConfigurationNameValuePairObjectType})
+}
 
 func (data RateLimitConfiguration) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

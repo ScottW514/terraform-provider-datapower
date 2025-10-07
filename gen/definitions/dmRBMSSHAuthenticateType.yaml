@@ -1,5 +1,6 @@
 name: DmRBMSSHAuthenticateType
 model_only: true
+default_function: true
 attributes:
 - name: certificate
   type: Bool

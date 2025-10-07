@@ -3,7 +3,7 @@ description: The SSH domain client profile defines the cipher suites.
 cli_alias: sshdomainclientprofile
 cmd_group: crypto
 rest_endpoint: /mgmt/config/{domain}/SSHDomainClientProfile/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

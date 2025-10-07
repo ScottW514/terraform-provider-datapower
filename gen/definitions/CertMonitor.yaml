@@ -7,7 +7,7 @@ description: The certificate monitor is a task that checks the expiration date o
 cli_alias: cert-monitor
 cmd_group: system
 rest_endpoint: /mgmt/config/default/CertMonitor/Certificate Monitor
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

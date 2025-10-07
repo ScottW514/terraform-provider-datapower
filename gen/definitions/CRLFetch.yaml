@@ -3,7 +3,7 @@ description: CRL Retrieval (`default` domain only)
 cli_alias: crl
 cmd_group: crl
 rest_endpoint: /mgmt/config/default/CRLFetch/CRL-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

@@ -4,7 +4,7 @@ description: A rate limit configuration defines domain-scoped tuning parameters 
 cli_alias: rate-limit-config
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/RateLimitConfiguration/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

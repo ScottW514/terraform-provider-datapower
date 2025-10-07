@@ -3,7 +3,7 @@ description: Modify the configuration of the SSH server.
 cli_alias: ssh
 cmd_group: device-management
 rest_endpoint: /mgmt/config/default/SSHService/SSH Service
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

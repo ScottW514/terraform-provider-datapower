@@ -237,6 +237,12 @@ func (r *WebB2BViewerResource) Delete(ctx context.Context, req resource.DeleteRe
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	data.ToDefault()
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `WebB2BViewer`))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to restore singleton to default, got error: %s", err))
+		return
+	}
 
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
 	if resp.Diagnostics.HasError() {

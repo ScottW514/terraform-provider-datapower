@@ -245,6 +245,22 @@ func (data QuotaEnforcementServer) IsNull() bool {
 	}
 	return true
 }
+func (data *QuotaEnforcementServer) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.PasswordAlias = types.StringNull()
+	data.RaidVolume = types.StringNull()
+	data.ServerPort = types.Int64Value(16379)
+	data.MonitorPort = types.Int64Value(26379)
+	data.EnablePeerGroup = types.BoolValue(false)
+	data.EnableSsl = types.BoolValue(true)
+	data.SslCryptoKey = types.StringNull()
+	data.SslCryptoCertificate = types.StringNull()
+	data.IpAddress = types.StringNull()
+	data.Peers = types.ListNull(types.StringType)
+	data.Priority = types.Int64Value(100)
+	data.StrictMode = types.BoolValue(true)
+}
 
 func (data QuotaEnforcementServer) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

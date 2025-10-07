@@ -86,6 +86,14 @@ func (data GatewayPeeringManager) IsNull() bool {
 	}
 	return true
 }
+func (data *GatewayPeeringManager) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.ApiConnectGatewayService = types.StringNull()
+	data.RateLimit = types.StringNull()
+	data.Subscription = types.StringNull()
+	data.RatelimitModule = types.StringNull()
+}
 
 func (data GatewayPeeringManager) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

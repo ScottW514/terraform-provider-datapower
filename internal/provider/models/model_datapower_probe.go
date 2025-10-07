@@ -81,6 +81,13 @@ func (data Probe) IsNull() bool {
 	}
 	return true
 }
+func (data *Probe) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.MaxRecords = types.Int64Value(1000)
+	data.Expiration = types.Int64Value(3600)
+	data.GatewayPeering = types.StringNull()
+}
 
 func (data Probe) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

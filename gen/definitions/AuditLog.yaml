@@ -6,7 +6,7 @@ description: <p>The audit log settings control the configuration of the system a
 cli_alias: audit-log-settings
 cmd_group: system
 rest_endpoint: /mgmt/config/default/AuditLog/AuditLog-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

@@ -5,7 +5,7 @@ description: RADIUS settings define RADIUS servers. You can use RADIUS servers t
 cli_alias: radius
 cmd_group: radius
 rest_endpoint: /mgmt/config/default/RADIUSSettings/RADIUS-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 write_only_attrs: true
 attributes:

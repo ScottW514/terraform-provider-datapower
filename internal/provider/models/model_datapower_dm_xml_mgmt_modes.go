@@ -202,6 +202,16 @@ func (data DmXMLMgmtModes) IsNull() bool {
 	}
 	return true
 }
+func (data *DmXMLMgmtModes) ToDefault() {
+	data.Any = types.BoolValue(true)
+	data.Soma = types.BoolValue(true)
+	data.V2004 = types.BoolValue(true)
+	data.Amp = types.BoolValue(true)
+	data.Slm = types.BoolValue(true)
+	data.Wsm = types.BoolValue(false)
+	data.Wsdm = types.BoolValue(false)
+	data.WsrrSubscription = types.BoolValue(true)
+}
 
 func (data DmXMLMgmtModes) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

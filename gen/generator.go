@@ -93,12 +93,12 @@ var providerTemplates = []templateInfo{
 type YamlConfig struct {
 	Name              string                `yaml:"name"`
 	ModelOnly         bool                  `yaml:"model_only"`
+	DefaultFunction   bool                  `yaml:"default_function"`
 	ListItem          bool                  `yaml:"list_item"`
 	RestEndpoint      string                `yaml:"rest_endpoint"`
-	UpdateOnly        bool                  `yaml:"update_only"`
+	Singleton         bool                  `yaml:"singleton"`
 	WriteOnlyAttrs    bool                  `yaml:"write_only_attrs"`
 	DefaultDomainOnly bool                  `yaml:"default_domain_only"`
-	PutCreate         bool                  `yaml:"put_create"`
 	Description       string                `yaml:"description"`
 	Deprecated        string                `yaml:"deprecated"`
 	CliAlias          string                `yaml:"cli_alias"`
@@ -153,6 +153,7 @@ type YamlConfigAttribute struct {
 	StringMaxLength int64                `yaml:"string_max_length"`
 	Default         string               `yaml:"default"`
 	ListDefault     []string             `yaml:"list_default"`
+	ResetValue      string               `yaml:"reset_value"`
 	TestValue       string               `yaml:"test_value"`
 	TestBedValue    string               `yaml:"test_bed_value"`
 	TestExpectDs    string               `yaml:"test_expect_ds"`

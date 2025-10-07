@@ -8,7 +8,7 @@ description: <p>Configure a RAID volume for data storage.</p><ol><li>The access 
 cli_alias: raid-volume
 cmd_group: device-management
 rest_endpoint: /mgmt/config/default/RaidVolume/raid0
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: UserSummary

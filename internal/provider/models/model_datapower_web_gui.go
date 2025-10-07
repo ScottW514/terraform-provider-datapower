@@ -127,6 +127,20 @@ func (data WebGUI) IsNull() bool {
 	}
 	return true
 }
+func (data *WebGUI) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.LocalPort = types.Int64Value(9090)
+	data.UserAgent = types.StringNull()
+	data.SaveConfigOverwrites = types.BoolValue(true)
+	data.IdleTimeout = types.Int64Value(600)
+	data.Acl = types.StringValue("web-mgmt")
+	data.SslServerConfigType = types.StringValue("server")
+	data.SslServer = types.StringNull()
+	data.SslSniServer = types.StringNull()
+	data.EnableSts = types.BoolValue(true)
+	data.LocalAddress = types.StringValue("0.0.0.0")
+}
 
 func (data WebGUI) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

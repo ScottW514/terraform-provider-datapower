@@ -58,6 +58,10 @@ func (data CRLFetch) IsNull() bool {
 	}
 	return true
 }
+func (data *CRLFetch) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.CrlFetchConfig = types.ListNull(types.ObjectType{AttrTypes: DmCRLFetchConfigObjectType})
+}
 
 func (data CRLFetch) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

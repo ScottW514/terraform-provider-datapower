@@ -1,5 +1,6 @@
 name: DmAPICGSProxyPolicy
 model_only: true
+default_function: true
 attributes:
 - name: ProxyPolicyEnable
   type: Bool
@@ -9,7 +10,6 @@ attributes:
   description: Specify the hostname or IP address of the proxy to connect to the API
     Manager endpoint.
   example: localhost
-  test_value: '"localhost"'
   required_when:
   - evaluation: property-value-in-list
     attribute: ProxyPolicyEnable

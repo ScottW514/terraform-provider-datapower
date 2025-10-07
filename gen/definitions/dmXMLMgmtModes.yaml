@@ -1,5 +1,6 @@
 name: DmXMLMgmtModes
 model_only: true
+default_function: true
 attributes:
 - name: any
   type: Bool

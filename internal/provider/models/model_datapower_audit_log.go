@@ -68,6 +68,12 @@ func (data AuditLog) IsNull() bool {
 	}
 	return true
 }
+func (data *AuditLog) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.Size = types.Int64Value(1000)
+	data.Rotate = types.Int64Value(3)
+	data.AuditLevel = types.StringValue("standard")
+}
 
 func (data AuditLog) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

@@ -164,6 +164,28 @@ func (data SNMPSettings) IsNull() bool {
 	}
 	return true
 }
+func (data *SNMPSettings) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.LocalAddress = types.StringValue("0.0.0.0")
+	data.LocalPort = types.Int64Value(161)
+	data.Policies = types.ListNull(types.ObjectType{AttrTypes: DmSnmpPolicyObjectType})
+	data.PoliciesMq = types.ListNull(types.ObjectType{AttrTypes: DmSnmpPolicyMQObjectType})
+	data.Targets = types.ListNull(types.ObjectType{AttrTypes: DmSnmpTargetObjectType})
+	data.Users = types.ListNull(types.StringType)
+	data.Contexts = types.ListNull(types.ObjectType{AttrTypes: DmSnmpContextObjectType})
+	data.SecurityLevel = types.StringValue("authPriv")
+	data.AccessLevel = types.StringValue("read-only")
+	data.EnableDefaultTrapSubscriptions = types.BoolValue(true)
+	data.TrapPriority = types.StringValue("warn")
+	data.TrapEventCode = types.ListNull(types.StringType)
+	data.ConfigMib = types.StringValue("/drConfigMIB.txt")
+	data.ConfigMibMq = types.StringValue("/mqConfigMIB.txt")
+	data.StatusMib = types.StringValue("/drStatusMIB.txt")
+	data.StatusMibMq = types.StringValue("/mqStatusMIB.txt")
+	data.NotifMib = types.StringValue("/drNotificationMIB.txt")
+	data.NotifMibMq = types.StringValue("/mqNotificationMIB.txt")
+}
 
 func (data SNMPSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

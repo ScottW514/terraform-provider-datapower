@@ -68,6 +68,12 @@ func (data LunaHASettings) IsNull() bool {
 	}
 	return true
 }
+func (data *LunaHASettings) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.Mode = types.StringValue("activeBasic")
+	data.RecoveryCount = types.Int64Null()
+	data.Interval = types.Int64Value(60)
+}
 
 func (data LunaHASettings) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

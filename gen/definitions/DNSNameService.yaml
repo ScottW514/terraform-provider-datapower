@@ -4,7 +4,7 @@ description: Configure the DNS client with the DNS servers to contact to resolve
 cli_alias: dns
 cmd_group: network
 rest_endpoint: /mgmt/config/default/DNSNameService/Main-Name-Service
-update_only: true
+singleton: true
 default_domain_only: true
 skip_test: true
 attributes:

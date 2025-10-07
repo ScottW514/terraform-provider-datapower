@@ -494,6 +494,31 @@ func (data ErrorReportSettings) IsNull() bool {
 	}
 	return true
 }
+func (data *ErrorReportSettings) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.UploadReport = types.BoolValue(false)
+	data.UseSmtp = types.BoolValue(false)
+	data.InternalState = types.BoolValue(false)
+	data.FfdcPacketCapture = types.BoolValue(false)
+	data.FfdcEventLogCapture = types.BoolValue(false)
+	data.FfdcMemoryLeakCapture = types.BoolValue(false)
+	data.AlwaysOnStartup = types.BoolValue(true)
+	data.AlwaysOnShutdown = types.BoolValue(true)
+	data.Protocol = types.StringNull()
+	data.LocationIdentifier = types.StringNull()
+	data.SmtpServer = types.StringNull()
+	data.EmailAddress = types.StringNull()
+	data.EmailSenderAddress = types.StringNull()
+	data.FtpServer = types.StringNull()
+	data.FtpPath = types.StringNull()
+	data.FtpUserAgent = types.StringNull()
+	data.NfSmOunt = types.StringNull()
+	data.NfsPath = types.StringNull()
+	data.RaidVolume = types.StringNull()
+	data.RaidPath = types.StringNull()
+	data.ReportHistoryKept = types.Int64Value(5)
+}
 
 func (data ErrorReportSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

@@ -249,6 +249,23 @@ func (data InteropService) IsNull() bool {
 	}
 	return true
 }
+func (data *InteropService) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.XmlManager = types.StringNull()
+	data.AaaPolicy = types.StringNull()
+	data.HttpService = types.BoolValue(true)
+	data.LocalAddress = types.StringValue("0.0.0.0")
+	data.LocalPort = types.Int64Value(9990)
+	data.Acl = types.StringNull()
+	data.HttpsService = types.BoolValue(false)
+	data.HttpsLocalAddress = types.StringValue("0.0.0.0")
+	data.HttpsLocalPort = types.Int64Value(9991)
+	data.HttpsAcl = types.StringNull()
+	data.SslServerConfigType = types.StringValue("server")
+	data.SslServer = types.StringNull()
+	data.SslSniServer = types.StringNull()
+}
 
 func (data InteropService) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

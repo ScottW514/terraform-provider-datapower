@@ -128,6 +128,18 @@ func (data DNSNameService) IsNull() bool {
 	}
 	return true
 }
+func (data *DNSNameService) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.SearchDomains = types.ListNull(types.ObjectType{AttrTypes: DmSearchDomainObjectType})
+	data.NameServers = types.ListNull(types.ObjectType{AttrTypes: DmNameServerObjectType})
+	data.StaticHosts = types.ListNull(types.ObjectType{AttrTypes: DmStaticHostObjectType})
+	data.IpPreference = types.StringNull()
+	data.ForceIpPreference = types.BoolValue(false)
+	data.LoadBalanceAlgorithm = types.StringValue("first-alive")
+	data.MaxRetries = types.Int64Value(2)
+	data.Timeout = types.Int64Value(5)
+}
 
 func (data DNSNameService) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

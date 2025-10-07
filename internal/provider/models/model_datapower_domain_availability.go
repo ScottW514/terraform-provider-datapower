@@ -66,6 +66,10 @@ func (data DomainAvailability) IsNull() bool {
 	}
 	return true
 }
+func (data *DomainAvailability) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+}
 
 func (data DomainAvailability) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

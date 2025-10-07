@@ -8,7 +8,7 @@ description: <p>System settings provide the following purposes.</p><ul><li>Defin
 cli_alias: system
 cmd_group: system
 rest_endpoint: /mgmt/config/default/SystemSettings/System-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState
@@ -146,6 +146,7 @@ attributes:
   - pt_BR
   - zh_CN
   - zh_TW
+  default: en
   description: Specifies the locale for the operating language of the DataPower Gateway.
     The locale setting manages locale-specific conventions, such as date and time
     formats, and controls the language of log messages. The language must be enabled

@@ -153,6 +153,18 @@ func (data B2BPersistence) IsNull() bool {
 	}
 	return true
 }
+func (data *B2BPersistence) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.RaidVolume = types.StringNull()
+	data.StorageSize = types.Int64Value(1024)
+	data.HaEnabled = types.BoolValue(false)
+	data.HaOtherHosts = &DmB2BHAHost{}
+	data.HaOtherHosts.ToDefault()
+	data.HaLocalIp = types.StringNull()
+	data.HaLocalPort = types.Int64Value(1320)
+	data.HaVirtualIp = types.StringNull()
+}
 
 func (data B2BPersistence) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

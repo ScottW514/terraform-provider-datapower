@@ -263,6 +263,26 @@ func (data APIConnectGatewayService) IsNull() bool {
 	}
 	return true
 }
+func (data *APIConnectGatewayService) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.LocalAddress = types.StringValue("0.0.0.0")
+	data.LocalPort = types.Int64Value(3000)
+	data.SslServer = types.StringNull()
+	data.ApiGatewayAddress = types.StringValue("0.0.0.0")
+	data.ApiGatewayPort = types.Int64Value(9443)
+	data.GatewayPeering = types.StringNull()
+	data.GatewayPeeringManager = types.StringValue("default")
+	data.V5compatibilityMode = types.BoolValue(true)
+	data.UserDefinedPolicies = types.ListNull(types.StringType)
+	data.V5cSlmMode = types.StringValue("autounicast")
+	data.IpMulticast = types.StringNull()
+	data.IpUnicast = types.StringNull()
+	data.JwtValidationMode = types.StringValue("request")
+	data.JwtUrl = types.StringNull()
+	data.ProxyPolicy = &DmAPICGSProxyPolicy{}
+	data.ProxyPolicy.ToDefault()
+}
 
 func (data APIConnectGatewayService) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

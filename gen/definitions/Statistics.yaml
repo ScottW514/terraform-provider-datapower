@@ -4,7 +4,7 @@ description: Manages whether the system collects and presents statistics to help
 cli_alias: statistics
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/Statistics/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

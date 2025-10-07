@@ -41,6 +41,7 @@ func TestAccDataSourceSystemSettings(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_system_settings.test", "enabled", "true"),
 					resource.TestCheckResourceAttr("data.datapower_system_settings.test", "audit_reserve", "40"),
+					resource.TestCheckResourceAttr("data.datapower_system_settings.test", "locale", "en"),
 					resource.TestCheckResourceAttr("data.datapower_system_settings.test", "system_log_fixed_format", "false"),
 				}...),
 			},

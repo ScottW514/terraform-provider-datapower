@@ -66,6 +66,10 @@ func (data Statistics) IsNull() bool {
 	}
 	return true
 }
+func (data *Statistics) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.LoadInterval = types.Int64Value(1000)
+}
 
 func (data Statistics) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

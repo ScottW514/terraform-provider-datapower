@@ -7,7 +7,7 @@ description: <p>The API security token manager provides the storage configuratio
 cli_alias: api-security-token-manager
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/APISecurityTokenManager/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

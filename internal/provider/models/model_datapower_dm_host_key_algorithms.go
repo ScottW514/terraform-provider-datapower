@@ -170,6 +170,14 @@ func (data DmHostKeyAlgorithms) IsNull() bool {
 	}
 	return true
 }
+func (data *DmHostKeyAlgorithms) ToDefault() {
+	data.SshEd25519 = types.BoolValue(false)
+	data.EcdsaSha2Nistp256 = types.BoolValue(false)
+	data.EcdsaSha2Nistp384 = types.BoolValue(false)
+	data.EcdsaSha2Nistp521 = types.BoolValue(false)
+	data.RsaSha2512 = types.BoolValue(false)
+	data.RsaSha2256 = types.BoolValue(false)
+}
 
 func (data DmHostKeyAlgorithms) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

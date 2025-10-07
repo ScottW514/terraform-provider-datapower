@@ -406,6 +406,26 @@ func (data TimeSettings) IsNull() bool {
 	}
 	return true
 }
+func (data *TimeSettings) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.LocalTimeZone = types.StringValue("EST5EDT")
+	data.CustomTzName = types.StringValue("STD")
+	data.UtcDirection = types.StringValue("West")
+	data.OffsetHours = types.Int64Null()
+	data.OffsetMinutes = types.Int64Null()
+	data.DaylightOffsetHours = types.Int64Value(1)
+	data.TzNameDst = types.StringValue("DST")
+	data.DaylightStartMonth = types.StringValue("March")
+	data.DaylightStartWeek = types.Int64Value(2)
+	data.DaylightStartDay = types.StringValue("Sunday")
+	data.DaylightStartTimeHours = types.Int64Value(2)
+	data.DaylightStartTimeMinutes = types.Int64Null()
+	data.DaylightStopMonth = types.StringValue("November")
+	data.DaylightStopWeek = types.Int64Value(1)
+	data.DaylightStopDay = types.StringValue("Sunday")
+	data.DaylightStopTimeHours = types.Int64Value(2)
+	data.DaylightStopTimeMinutes = types.Int64Null()
+}
 
 func (data TimeSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

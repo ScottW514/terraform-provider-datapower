@@ -81,6 +81,13 @@ func (data SSHDomainClientProfile) IsNull() bool {
 	}
 	return true
 }
+func (data *SSHDomainClientProfile) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.Ciphers = types.ListNull(types.StringType)
+	data.KexAlg = types.ListNull(types.StringType)
+	data.MacAlg = types.ListNull(types.StringType)
+}
 
 func (data SSHDomainClientProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

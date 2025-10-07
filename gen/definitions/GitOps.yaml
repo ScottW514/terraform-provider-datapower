@@ -6,7 +6,7 @@ description: Each DataPower domain supports a single GitOps instance that operat
 cli_alias: gitops
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/GitOps/default
-update_only: true
+singleton: true
 attributes:
 - name: AppDomain
   tf_name: app_domain

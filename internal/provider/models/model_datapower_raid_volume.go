@@ -63,6 +63,11 @@ func (data RaidVolume) IsNull() bool {
 	}
 	return true
 }
+func (data *RaidVolume) ToDefault() {
+	data.UserSummary = types.StringNull()
+	data.ReadOnly = types.BoolValue(false)
+	data.Directory = types.StringNull()
+}
 
 func (data RaidVolume) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

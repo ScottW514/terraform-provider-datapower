@@ -2,23 +2,35 @@
 ---
 name: str() # Name of the type/resource/data source
 model_only: bool(required=False) # Generate only model
+default_function: bool(required=False) # This model is part of a singleton object and needs default function
 list_item: bool(required=False) # This model is a list item
 rest_endpoint: str() # REST endpoint path
-update_only: bool(required=False) # Set to true if this endpoint is update only
+singleton: bool(required=False) # Set to true if this endpoint is a singleton
+write_only_attrs: bool(required=False) # et to true if this is an object with write-only attributes
 default_domain_only: bool(required=False) # Set to true if this endpoint is valid only in the default domain
-put_create: bool(required=False) # Set to true if the PUT request is used for create
 description: str(required=False) # Define description
 deprecated: bool(required=False) # Set to true if deprecated
+cli_alias: str(require=False) # CLI Alias for the endpoint
 skip_test: bool(required=False) # Do not perform tests
 test_prerequisites: str(required=False) # HCL code that is included in the acceptance tests to define prerequisites
-update_computed: bool(required=False) # Set to true if model has attributes that need to be updated after a write
+actions: list(actions(), required=False) # List of dependency actions that are permitted on this resource
 ---
 actions: # Actions available for the model
   name: str() # Name of the action
   body: str(required=False) # Body of the API message to trigger action
 ---
+conditions: # Conditions that need to be met for required/ignored
+  evaluation: str(required=True): # Test to performed. One of the following: logical-true, logical-not, logical-and, logical-or, property-url-protocol-in-list, property-url-protocol-not-in-list, property-value-in-list, property-value-not-in-list, property-less-than
+  conditions: list(conditions()) # Conditions for logical tests. Ignored for other tests. Supports up to 4 levels of recursion.
+  # Remaining fields are ignored for logical tests
+  attribute: str(required=True) # Go name of attribute to test
+  attr_tf_name: str(required=False) # Tf name of attribute to test (overrides attribute field)
+  attr_path: str(required=False) # JSON path to the attribute, if not same as name
+  attr_default: str(required=False) # Default value for attribute
+  value: list(str(), required= True) # List of values to test against
+---
 attributes:
-  name: str() # Name of the attribute in the model
+  name: str(required=True) # Name of the attribute in the model
   path: str(required=False) # JSON path to the attribute. Defaults to name
   tf_name: str(required=False) # Terraform name for the attribute
   type: enum('String', 'Int64', 'Bool', 'List', required=False) # Type of the attribute
@@ -28,22 +40,28 @@ attributes:
   internal: bool(required=False) # Set to true if the attribute is internal (provider) use only
   required: bool(required=False) # Set to true if the attribute is mandatory
   computed: bool(required=False) # Set to true if the attribute is computed
-  write_only: bool(required=False) # Set to true if the attribute is write-only, meaning we cannot read the value
+  write_only: bool(required=False) # Set to true if the attribute is write-only
+  write_only_attrs: bool(required=False) # Set to true if the attribute is an object or list of objects with write-only attributes
   description: str(required=False) # Attribute description
   deprecated: bool(required=False) # Set to true if deprecated
   sensitive: bool(required=False) # Set to true if sensitive value
-  cli_alias: str(require=False) # CLI Alias for the endpoint
-  test_value: str(required=False) # Value used for acceptance test. Overrides example, list_example, default and list_default.
-  test_bed_value: str(required=False) # Value used for acceptance test bed build. Overrides example, list_example, default and list_default.
-  test_expect_ds: str(required=False) # Value to be expected when testing data source results
+  cli_alias: str(require=False) # CLI Alias for the attribute
   example: any(str(), int(), bool(), num(), required=False) # Example value for documentation, also used for acceptance test if test_value is not set
-  default: any(str(), int(), bool(), required=False) # Default value for the attribute, also used for acceptance test in test_value and example are not set
-  list_default: list(str(), required=False) # Default values for the string list attribute, also used for acceptance test in test_value and example are not set
+  list_example: list(str(), required=False) # Example values for the string list attribute, also used for acceptance test if test_value is not set
   enum: list(str(), required=False) # List of enum values, only relevant if type is "String"
   minimum: int(required=False) # Minimum value of an integer, only relevant if type is "Int64"
   maximum: int(required=False) # Maximum value of an integer, only relevant if type is "Int64"
   string_patterns: list(str(), required=False) # List of regular expressions that the string must match, only relevant if type is "String"
   string_min_length: int(required=False) # Minimum length of a string, only relevant if type is "String"
   string_max_length: int(required=False) # Maximum length of a string, only relevant if type is "String"
-  attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
-  file_upload: bool(required=False) # Set to true if this is a local file that should be uploaded
+  default: any(str(), int(), bool(), required=False) # Default value for the attribute, also used for acceptance test if test_value and example are not set
+  list_default: list(str(), required=False) # Default values for the string list attribute, also used for acceptance test if test_value and example are not set
+  reset_value: str(required=False) # Reset value for attribute when resetting a singleton to default
+  test_value: str(required=False) # Value used for acceptance test. Overrides example, list_example, default and list_default.
+  test_bed_value: str(required=False) # Value used for acceptance test bed build. Overrides example, list_example, default and list_default.
+  test_expect_ds: str(required=False) # Value to be expected when testing data source results
+  reference_to: str(required=False) # Types of resources this attribute references. Used only for documentation.
+  file_locations: list(str(), required=False) # List of valid file locations for file path (e.g. local, cert)
+  protocols: list(str(), required=False) # List of valid protocols for URL strings
+  required_when: list(conditions(), required=False) # Conditions when attribute is required
+  ignored_when: list(conditions(), required=False) # Conditions when attribute is invalid/ignored

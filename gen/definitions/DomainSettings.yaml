@@ -4,7 +4,7 @@ description: Domain settings provide properties to define domain-specific charac
 cli_alias: domain-settings
 cmd_group: configuration
 rest_endpoint: /mgmt/config/{domain}/DomainSettings/default
-update_only: true
+singleton: true
 write_only_attrs: true
 attributes:
 - name: AppDomain

@@ -238,14 +238,14 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 {{- end}}
 
 	body := data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}})
-{{- if or .PutCreate .UpdateOnly}}
+{{- if or (eq .Name "Domain") .Singleton}}
 	_, err := r.pData.Client.Put(data.GetPath(), body)
 {{- else}}
 	_, err := r.pData.Client.Post(data.GetPath(), body)
 {{- end}}
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
-{{- if or (eq .Name "Domain") .UpdateOnly}}
+{{- if or (eq .Name "Domain") .Singleton}}
 			_, err := r.pData.Client.Put(data.GetPath(), body)
 {{- else}}
 			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
@@ -262,7 +262,7 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 	}
 {{- if updateComputed .Attributes}}
 
-	{{- if or (eq .Name "Domain") .UpdateOnly}}
+	{{- if or (eq .Name "Domain") .Singleton}}
 	getRes, getErr := r.pData.Client.Get(data.GetPath())
 	{{- else}}
 	getRes, getErr := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString())
@@ -291,7 +291,7 @@ func (r *{{.Name}}Resource) Read(ctx context.Context, req resource.ReadRequest, 
 		return
 	}
 
-{{- if or (eq .Name "Domain") .UpdateOnly}}
+{{- if or (eq .Name "Domain") .Singleton}}
 	res, err := r.pData.Client.Get(data.GetPath())
 {{- else}}
 	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString())
@@ -331,7 +331,7 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 	}
 {{- end}}
 
-{{- if or (eq .Name "Domain") .UpdateOnly}}
+{{- if or (eq .Name "Domain") .Singleton}}
 	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
 {{- else}}
 	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
@@ -362,7 +362,7 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
-{{- if not .UpdateOnly}}
+{{- if not .Singleton}}
 	{{- if eq .Name "Domain"}}
 
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
@@ -382,7 +382,7 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 	}
 	{{- end}}
 
-	{{- if or (eq .Name "Domain") .UpdateOnly}}
+	{{- if eq .Name "Domain"}}
 	_, err := r.pData.Client.Delete(data.GetPath())
 	{{- else}}
 	_, err := r.pData.Client.Delete(data.GetPath()+"/"+data.Id.ValueString())
@@ -395,7 +395,16 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 			return
 		}
 	}
-
+{{- else}}
+	{{- if .WriteOnlyAttrs}}
+	config := models.{{.Name}}{}
+	{{- end}}
+	data.ToDefault()
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to restore singleton to default, got error: %s", err))
+		return
+	}
 {{- end}}
 
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
@@ -410,7 +419,7 @@ func (r *{{.Name}}Resource) ImportState(ctx context.Context, req resource.Import
 	r.pData.Mu.Lock()
 	defer r.pData.Mu.Unlock()
 
-{{- if or (eq .Name "Domain") .UpdateOnly}}
+{{- if or (eq .Name "Domain") .Singleton}}
 	appDomain := req.ID
 	{{- if .DefaultDomainOnly}}
 	if appDomain != "default" {
@@ -442,11 +451,11 @@ func (r *{{.Name}}Resource) ImportState(ctx context.Context, req resource.Import
 {{- if not .DefaultDomainOnly}}
 	data.AppDomain = types.StringValue(appDomain)
 {{- end}}
-{{- if and (ne .Name "Domain") (not .UpdateOnly)}}
+{{- if and (ne .Name "Domain") (not .Singleton)}}
 	data.Id = types.StringValue(id)
 {{- end}}
 
-{{- if or (eq .Name "Domain") .UpdateOnly}}
+{{- if or (eq .Name "Domain") .Singleton}}
 	res, err := r.pData.Client.Get(data.GetPath())
 {{- else}}
 	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString())

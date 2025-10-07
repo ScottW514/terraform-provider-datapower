@@ -3,7 +3,7 @@ description: Define the data storage for B2B transaction data.
 cli_alias: b2b-persistence
 cmd_group: system
 rest_endpoint: /mgmt/config/default/B2BPersistence/B2BPersistence
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

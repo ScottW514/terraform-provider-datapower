@@ -4,7 +4,7 @@ description: Configure and use the interoperability test service to test stylesh
 cli_alias: iop-mgmt
 cmd_group: device-management
 rest_endpoint: /mgmt/config/default/InteropService/IOP-Settings
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

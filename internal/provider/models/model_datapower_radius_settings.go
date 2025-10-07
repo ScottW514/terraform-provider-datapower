@@ -122,6 +122,14 @@ func (data RADIUSSettingsWO) IsNull() bool {
 	}
 	return true
 }
+func (data *RADIUSSettings) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.Id = types.StringNull()
+	data.Timeout = types.Int64Value(1000)
+	data.Retries = types.Int64Value(3)
+	data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO})
+}
 
 func (data RADIUSSettings) ToBody(ctx context.Context, pathRoot string, config *RADIUSSettings) string {
 	if pathRoot != "" {

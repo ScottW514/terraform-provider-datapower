@@ -27,7 +27,7 @@ description: '<p>On each DataPower Gateway, you configure the quota enforcement 
 cli_alias: quota-enforcement-server
 cmd_group: system
 rest_endpoint: /mgmt/config/default/QuotaEnforcementServer/QuotaEnforcementServer
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

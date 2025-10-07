@@ -81,6 +81,13 @@ func (data APISecurityTokenManager) IsNull() bool {
 	}
 	return true
 }
+func (data *APISecurityTokenManager) ToDefault() {
+	data.Enabled = types.BoolValue(false)
+	data.UserSummary = types.StringNull()
+	data.GatewayPeering = types.StringNull()
+	data.GatewayPeeringExternal = types.StringNull()
+	data.ExpiredTokenCleanupInterval = types.Int64Value(180)
+}
 
 func (data APISecurityTokenManager) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

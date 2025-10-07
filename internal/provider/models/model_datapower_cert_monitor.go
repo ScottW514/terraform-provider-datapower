@@ -78,6 +78,14 @@ func (data CertMonitor) IsNull() bool {
 	}
 	return true
 }
+func (data *CertMonitor) ToDefault() {
+	data.Enabled = types.BoolValue(true)
+	data.UserSummary = types.StringNull()
+	data.PollingInterval = types.Int64Value(1)
+	data.ReminderTime = types.Int64Value(30)
+	data.LogLevel = types.StringValue("warn")
+	data.DisableExpiredCerts = types.BoolValue(false)
+}
 
 func (data CertMonitor) ToBody(ctx context.Context, pathRoot string) string {
 	if pathRoot != "" {

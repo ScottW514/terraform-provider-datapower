@@ -3,7 +3,7 @@ description: GitOps variables (`default` domain only)
 cli_alias: gitops-variables
 cmd_group: system
 rest_endpoint: /mgmt/config/default/GitOpsVariables/gitops-variables
-update_only: true
+singleton: true
 default_domain_only: true
 attributes:
 - name: mAdminState

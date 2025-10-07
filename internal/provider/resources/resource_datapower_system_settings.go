@@ -34,6 +34,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
@@ -177,11 +178,13 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"locale": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the locale for the operating language of the DataPower Gateway. The locale setting manages locale-specific conventions, such as date and time formats, and controls the language of log messages. The language must be enabled before you can select it.", "locale", "").AddStringEnum("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the locale for the operating language of the DataPower Gateway. The locale setting manages locale-specific conventions, such as date and time formats, and controls the language of log messages. The language must be enabled before you can select it.", "locale", "").AddStringEnum("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW").AddDefaultValue("en").String,
 				Optional:            true,
+				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW"),
 				},
+				Default: stringdefault.StaticString("en"),
 			},
 			"system_log_fixed_format": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable fixed format in system logs. When enabled, the system logs are in the format that was used in version 6.0.1 and contain no serviceability improvements after this version that can help with monitoring or troubleshooting.", "system-log-fixed-format", "").AddDefaultValue("false").String,
@@ -314,6 +317,12 @@ func (r *SystemSettingsResource) Delete(ctx context.Context, req resource.Delete
 
 	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Delete, false)
 	if resp.Diagnostics.HasError() {
+		return
+	}
+	data.ToDefault()
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `SystemSettings`))
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to restore singleton to default, got error: %s", err))
 		return
 	}
 
