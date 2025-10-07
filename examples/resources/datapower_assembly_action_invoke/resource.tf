@@ -6,4 +6,6 @@ resource "datapower_assembly_action_invoke" "test" {
   method       = "Keep"
   backend_type = "detect"
   cache_type   = "Protocol"
+  error_types = {
+  }
 }

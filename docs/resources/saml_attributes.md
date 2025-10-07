@@ -18,6 +18,9 @@ Define a list of SAML attributes for the SAML Assertion generator.
 resource "datapower_saml_attributes" "test" {
   id         = "ResTestSAMLAttributes"
   app_domain = "acceptance_test"
+  saml_attribute = [{
+    source_type = "var"
+  }]
 }
 ```
 

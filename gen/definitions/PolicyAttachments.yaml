@@ -54,6 +54,7 @@ attributes:
 - name: IgnoredPolicyAttachmentPoints
   type: List
   element_type: DmPolicyAttachmentPoint
+  test_value: 'null'
   description: Disable all policies attached by policy references at a configured
     attachment point leaving other policy references intact.
   cli_alias: ignore-attachment-point

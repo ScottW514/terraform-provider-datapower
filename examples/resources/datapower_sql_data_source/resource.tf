@@ -8,8 +8,12 @@ resource "datapower_sql_data_source" "test" {
   data_source_id   = "datasource_id"
   data_source_host = "datasource.host"
   data_source_port = 1488
-  max_connection   = 10
-  connect_timeout  = 15
-  query_timeout    = 30
-  idle_timeout     = 180
+  sql_data_source_config_nv_pairs = [{
+    param_name  = "ResTestparam"
+    param_value = "param_value"
+  }]
+  max_connection  = 10
+  connect_timeout = 15
+  query_timeout   = 30
+  idle_timeout    = 180
 }

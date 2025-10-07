@@ -217,6 +217,7 @@ attributes:
 - name: TemplatePolicies
   type: List
   element_type: DmGitOpsTemplatePolicy
+  test_value: 'null'
   description: Specify the list of template policy for GitOps processing. The policy
     processing is in the order of the read or write GitOps operation.
   cli_alias: template-policy

@@ -5,6 +5,7 @@ attributes:
   type: Bool
   default: true
   required: true
+  test_value: false
   description: Public key
 - name: password
   type: Bool

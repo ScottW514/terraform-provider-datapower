@@ -6,6 +6,7 @@ attributes:
 - name: Number
   type: Int64
   maximum: 2147483647
+  example: 100
   required: true
   description: Specify the list position of this RADIUS server within the list of
     all RADIUS servers known to the client implementation. The lower the number, the
@@ -13,6 +14,7 @@ attributes:
 - name: Host
   type: String
   required: true
+  example: '10.10.10.10'
   description: Specify the IP address of the RADIUS server.
 - name: Port
   type: Int64
@@ -25,3 +27,4 @@ attributes:
   description: Specify the password login to the RADIUS server. You must confirm the
     password for accuracy.
   required: true
+  example: 'opensaysme'

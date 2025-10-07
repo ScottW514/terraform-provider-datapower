@@ -1,6 +1,8 @@
 
 resource "datapower_rbm_settings" "test" {
-  au_method                   = "local"
+  au_method = "local"
+  ssh_au_method = {
+  }
   au_cache_allow              = "absolute"
   mc_method                   = "local"
   min_password_length         = 6

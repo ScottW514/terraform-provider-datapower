@@ -15,8 +15,13 @@ description: |-
 
 ```terraform
 resource "datapower_aaa_jwt_validator" "test" {
-  id             = "ResTestAAAJWTValidator"
-  app_domain     = "acceptance_test"
+  id         = "ResTestAAAJWTValidator"
+  app_domain = "acceptance_test"
+  val_method = {
+  }
+  claims = [{
+    value = "value"
+  }]
   username_claim = "sub"
 }
 ```
@@ -132,6 +137,7 @@ Optional:
 - `name` (String) Specify the name of the JWT claim. A claim name is always a string.
 - `type` (String) Specify the data type of the JWT claim value. The type can be string, boolean, or number.
   - Choices: `string`, `bool`, `number`
+  - Default value: `string`
 
 
 <a id="nestedatt--dependency_actions"></a>

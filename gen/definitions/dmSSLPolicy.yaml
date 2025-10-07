@@ -17,6 +17,8 @@ attributes:
   type: String
   reference_to: SSLClientProfile
   description: Specify the TLS client profile to secure connections with targets
+  test_value: '"AccTest_SSLClientProfile"'
+  test_bed_value: 'datapower_ssl_client_profile.acc_test.id'
   required_when:
   - evaluation: property-value-in-list
     attribute: SSLClientConfigType

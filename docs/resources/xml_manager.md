@@ -19,6 +19,17 @@ An XML Manager manages the compilation and caching of stylesheets, the caching o
 resource "datapower_xml_manager" "test" {
   id         = "ResTestXMLManager"
   app_domain = "acceptance_test"
+  doc_cache_policy = [{
+    type     = "protocol"
+    priority = 128
+  }]
+  schema_validation = [{
+    matching        = "__default-accept-service-providers__"
+    validation_mode = "default"
+  }]
+  scheduled_rule = [{
+    rule = "__dp-policy-begin__"
+  }]
 }
 ```
 
@@ -165,12 +176,6 @@ Optional:
   - CLI Alias: `return-expired`
   - Default value: `false`
   - Not Valid When: `type`=`no-cache`
-- `ttl` (Number) Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.
-  - CLI Alias: `ttl`
-  - Range: `0`-`31708800`
-  - Default value: `900`
-  - Required When: `type`=`fixed`
-  - Not Valid When: `type`=`protocol`|`no-cache`
 - `type` (String) Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`
@@ -191,6 +196,7 @@ Required:
 Optional:
 
 - `interval` (Number) Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.
+  - Default value: `0`
 
 
 <a id="nestedatt--schema_validation"></a>

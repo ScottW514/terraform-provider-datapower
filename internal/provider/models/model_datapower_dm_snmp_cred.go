@@ -28,6 +28,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -211,6 +213,9 @@ func GetDmSnmpCredResourceSchema() ResourceSchema.NestedAttributeObject {
 							Value:       []string{""},
 						}, validators.Evaluation{}, false),
 				},
+				PlanModifiers: []planmodifier.Int64{
+					int64planmodifier.UseStateForUnknown(),
+				},
 			},
 			"priv_protocol": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the privacy protocol.", "", "").AddStringEnum("none", "des", "aes").AddDefaultValue("des").String,
@@ -251,6 +256,9 @@ func GetDmSnmpCredResourceSchema() ResourceSchema.NestedAttributeObject {
 							AttrDefault: "",
 							Value:       []string{""},
 						}, validators.Evaluation{}, false),
+				},
+				PlanModifiers: []planmodifier.Int64{
+					int64planmodifier.UseStateForUnknown(),
 				},
 			},
 		},

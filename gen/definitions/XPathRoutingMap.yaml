@@ -41,6 +41,7 @@ attributes:
 - name: NameSpaceMappings
   type: List
   element_type: DmNamespaceMapping
+  test_value: 'null'
   description: The prefix and URI for namespaces that might be encountered in requests.
   cli_alias: namespace-mapping
 - name: UserSummary

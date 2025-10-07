@@ -5,6 +5,7 @@ attributes:
 - name: Name
   type: String
   required: true
+  example: 'apiparameter'
   description: Specifies a name for your parameter. Parameter names are case sensitive.
 - name: Required
   type: Bool

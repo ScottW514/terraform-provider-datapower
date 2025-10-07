@@ -5,6 +5,7 @@ attributes:
 - name: Name
   type: String
   required: true
+  example: 'apiburstlimit'
   description: Indicates the name of the burst limit scheme.
 - name: Burst
   type: Int64

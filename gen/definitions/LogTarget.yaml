@@ -730,6 +730,7 @@ attributes:
 - name: LogIPFilter
   type: List
   element_type: DmLogIPFilter
+  test_value: 'null'
   description: Specify specific IP addresses to log events for. IP address filters
     allow only those log messages from specific IP addresses to be written to this
     log target.

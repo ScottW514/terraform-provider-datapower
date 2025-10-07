@@ -302,12 +302,14 @@ attributes:
   element_type: DmWSRRWSDLSource
   description: Load and proxy services obtained via these subscriptions.
   cli_alias: wsrr-subscription
+  test_value: 'null'
 - name: WSRRSavedSearchSubscriptions
   type: List
   element_type: DmWSRRSavedSearchWSDLSource
   description: The Web Service Proxy virtualizes Web service endpoints based on the
     WSDL files returned by the saved search.
   cli_alias: wsrr-saved-search-subscription
+  test_value: 'null'
 - name: OperationPriority
   type: List
   element_type: DmWSOperationSchedulerPriority
@@ -447,6 +449,7 @@ attributes:
   element_type: DmHeaderSuppression
   description: HTTP Header Suppression
   cli_alias: suppress
+  test_value: 'null'
 - name: StylesheetParameters
   type: List
   element_type: DmStylesheetParameter
@@ -923,6 +926,7 @@ attributes:
     one of these conditions, the transaction is captured in diagnostics mode and becomes
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
+  test_value: 'null'
   ignored_when:
   - evaluation: property-value-not-in-list
     attribute: DebugMode

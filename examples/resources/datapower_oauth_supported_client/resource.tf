@@ -7,7 +7,13 @@ resource "datapower_oauth_supported_client" "test" {
   generate_client_secret   = false
   client_secret_wo         = "secret"
   client_secret_wo_version = 1
-  redirect_uri             = ["^https://example.com/redirect$"]
-  scope                    = "*"
-  token_secret             = "AccTest_CryptoSSKey"
+  validation_features = {
+  }
+  redirect_uri = ["^https://example.com/redirect$"]
+  scope        = "*"
+  token_secret = "AccTest_CryptoSSKey"
+  rs_set_header = {
+  }
+  oauth_features = {
+  }
 }

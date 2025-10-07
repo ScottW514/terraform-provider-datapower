@@ -199,6 +199,9 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 							Value:       []string{""},
 						}, validators.Evaluation{}, false),
 				},
+				PlanModifiers: []planmodifier.Int64{
+					int64planmodifier.UseStateForUnknown(),
+				},
 			},
 	{{- end}}
 {{- end}}

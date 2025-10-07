@@ -18,6 +18,9 @@ An MTOM policy provides a mechanism for optimizing the transmission and wire for
 resource "datapower_mtom_policy" "test" {
   id         = "ResTestMTOMPolicy"
   app_domain = "acceptance_test"
+  rule = [{
+    xpath = "\"xpath\""
+  }]
 }
 ```
 

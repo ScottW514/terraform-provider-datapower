@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,7 +55,7 @@ var DmWSEndpointSubscriptionPublishRuleObjectDefault = map[string]attr.Value{
 	"subscription":                types.StringNull(),
 	"published_endpoint_protocol": types.StringValue("default"),
 	"published_endpoint_hostname": types.StringNull(),
-	"published_endpoint_port":     types.Int64Null(),
+	"published_endpoint_port":     types.Int64Value(0),
 	"published_endpoint_uri":      types.StringNull(),
 }
 
@@ -74,7 +75,7 @@ func GetDmWSEndpointSubscriptionPublishRuleDataSourceSchema() DataSourceSchema.N
 				Computed:            true,
 			},
 			"published_endpoint_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "published-endpoint-port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "published-endpoint-port", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
 			"published_endpoint_uri": DataSourceSchema.StringAttribute{
@@ -106,8 +107,10 @@ func GetDmWSEndpointSubscriptionPublishRuleResourceSchema() ResourceSchema.Neste
 				Optional:            true,
 			},
 			"published_endpoint_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "published-endpoint-port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "published-endpoint-port", "").AddDefaultValue("0").String,
+				Computed:            true,
 				Optional:            true,
+				Default:             int64default.StaticInt64(0),
 			},
 			"published_endpoint_uri": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value from the WSDL.", "published-endpoint-path", "").String,
@@ -183,7 +186,7 @@ func (data *DmWSEndpointSubscriptionPublishRule) FromBody(ctx context.Context, p
 	if value := res.Get(pathRoot + `PublishedEndpointPort`); value.Exists() {
 		data.PublishedEndpointPort = types.Int64Value(value.Int())
 	} else {
-		data.PublishedEndpointPort = types.Int64Null()
+		data.PublishedEndpointPort = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `PublishedEndpointURI`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PublishedEndpointUri = tfutils.ParseStringFromGJSON(value)
@@ -213,7 +216,7 @@ func (data *DmWSEndpointSubscriptionPublishRule) UpdateFromBody(ctx context.Cont
 	}
 	if value := res.Get(pathRoot + `PublishedEndpointPort`); value.Exists() && !data.PublishedEndpointPort.IsNull() {
 		data.PublishedEndpointPort = types.Int64Value(value.Int())
-	} else {
+	} else if data.PublishedEndpointPort.ValueInt64() != 0 {
 		data.PublishedEndpointPort = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `PublishedEndpointURI`); value.Exists() && !data.PublishedEndpointUri.IsNull() {

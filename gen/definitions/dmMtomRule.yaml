@@ -12,6 +12,7 @@ attributes:
     expression. After selecting the elements, click Done to return to the MTOM Rules
     Properties window.
   cli_alias: select
+  example: '"xpath"'
 - name: ContentType
   type: String
   description: The Content Type for the extracted element data. This option overrides

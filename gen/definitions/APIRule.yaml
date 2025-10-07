@@ -44,6 +44,7 @@ attributes:
   description: Specify the processing actions for the rule. With multiple actions,
     ensure that the actions are in the correct processing sequence.
   cli_alias: action
+  test_value: 'null'
   ignored_when:
   - evaluation: property-value-in-list
     attribute: DynamicActionsMode
@@ -51,6 +52,7 @@ attributes:
     - true
 - name: DynamicActions
   type: List
+  test_value: 'null'
   element_type: DmDynamicStylePolicyActionBaseReference
   description: Specify the dynamic actions for the rule. With multiple actions, ensure
     that the actions are in the correct processing sequence.

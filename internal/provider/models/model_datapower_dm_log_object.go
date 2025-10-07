@@ -27,6 +27,7 @@ import (
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
@@ -45,7 +46,7 @@ var DmLogObjectObjectType = map[string]attr.Type{
 	"follow_references": types.BoolType,
 }
 var DmLogObjectObjectDefault = map[string]attr.Value{
-	"class":             types.StringNull(),
+	"class":             types.StringValue("AAAPolicy"),
 	"object":            types.StringNull(),
 	"follow_references": types.BoolValue(false),
 }
@@ -54,7 +55,7 @@ func GetDmLogObjectDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmLogObjectDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"class": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").AddDefaultValue("AAAPolicy").String,
 				Computed:            true,
 			},
 			"object": DataSourceSchema.StringAttribute{
@@ -73,8 +74,10 @@ func GetDmLogObjectResourceSchema() ResourceSchema.NestedAttributeObject {
 	var DmLogObjectResourceSchema = ResourceSchema.NestedAttributeObject{
 		Attributes: map[string]ResourceSchema.Attribute{
 			"class": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").AddDefaultValue("AAAPolicy").String,
+				Computed:            true,
 				Optional:            true,
+				Default:             stringdefault.StaticString("AAAPolicy"),
 			},
 			"object": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>", "", "").String,
@@ -129,7 +132,7 @@ func (data *DmLogObject) FromBody(ctx context.Context, pathRoot string, res gjso
 	if value := res.Get(pathRoot + `Class`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Class = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Class = types.StringNull()
+		data.Class = types.StringValue("AAAPolicy")
 	}
 	if value := res.Get(pathRoot + `Object`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Object = tfutils.ParseStringFromGJSON(value)
@@ -149,7 +152,7 @@ func (data *DmLogObject) UpdateFromBody(ctx context.Context, pathRoot string, re
 	}
 	if value := res.Get(pathRoot + `Class`); value.Exists() && !data.Class.IsNull() {
 		data.Class = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.Class.ValueString() != "AAAPolicy" {
 		data.Class = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Object`); value.Exists() && !data.Object.IsNull() {

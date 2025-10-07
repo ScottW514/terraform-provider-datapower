@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -48,21 +49,21 @@ var DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal = validators
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "external_attach_wsdl_component_type",
 	AttrType:    "String",
-	AttrDefault: "",
+	AttrDefault: "service",
 	Value:       []string{"rest"},
 }
 var DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "external_attach_wsdl_component_type",
 	AttrType:    "String",
-	AttrDefault: "",
+	AttrDefault: "service",
 	Value:       []string{"rest"},
 }
 var DmExternalAttachedPolicyExternalAttachPolicyFragmentIDIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "external_attach_wsdl_component_type",
 	AttrType:    "String",
-	AttrDefault: "",
+	AttrDefault: "service",
 	Value:       []string{"rest"},
 }
 
@@ -75,7 +76,7 @@ var DmExternalAttachedPolicyObjectType = map[string]attr.Type{
 	"external_attach_message_content_filter_service_provider": types.StringType,
 }
 var DmExternalAttachedPolicyObjectDefault = map[string]attr.Value{
-	"external_attach_wsdl_component_type":                     types.StringNull(),
+	"external_attach_wsdl_component_type":                     types.StringValue("service"),
 	"external_attach_wsdl_component_value":                    types.StringNull(),
 	"external_attach_policy_url":                              types.StringNull(),
 	"external_attach_policy_fragment_id":                      types.StringNull(),
@@ -87,7 +88,7 @@ func GetDmExternalAttachedPolicyDataSourceSchema() DataSourceSchema.NestedAttrib
 	var DmExternalAttachedPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"external_attach_wsdl_component_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").AddDefaultValue("service").String,
 				Computed:            true,
 			},
 			"external_attach_wsdl_component_value": DataSourceSchema.StringAttribute{
@@ -118,11 +119,13 @@ func GetDmExternalAttachedPolicyResourceSchema() ResourceSchema.NestedAttributeO
 	var DmExternalAttachedPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 		Attributes: map[string]ResourceSchema.Attribute{
 			"external_attach_wsdl_component_type": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").AddDefaultValue("service").String,
+				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("service", "port", "fragmentid", "rest"),
 				},
+				Default: stringdefault.StaticString("service"),
 			},
 			"external_attach_wsdl_component_value": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a WSDL component formatted {ns}ncname", "", "").AddRequiredWhen(DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal.String()).AddNotValidWhen(DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal.String()).String,
@@ -208,7 +211,7 @@ func (data *DmExternalAttachedPolicy) FromBody(ctx context.Context, pathRoot str
 	if value := res.Get(pathRoot + `ExternalAttachWSDLComponentType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ExternalAttachWsdlComponentType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ExternalAttachWsdlComponentType = types.StringNull()
+		data.ExternalAttachWsdlComponentType = types.StringValue("service")
 	}
 	if value := res.Get(pathRoot + `ExternalAttachWSDLComponentValue`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ExternalAttachWsdlComponentValue = tfutils.ParseStringFromGJSON(value)
@@ -243,7 +246,7 @@ func (data *DmExternalAttachedPolicy) UpdateFromBody(ctx context.Context, pathRo
 	}
 	if value := res.Get(pathRoot + `ExternalAttachWSDLComponentType`); value.Exists() && !data.ExternalAttachWsdlComponentType.IsNull() {
 		data.ExternalAttachWsdlComponentType = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.ExternalAttachWsdlComponentType.ValueString() != "service" {
 		data.ExternalAttachWsdlComponentType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ExternalAttachWSDLComponentValue`); value.Exists() && !data.ExternalAttachWsdlComponentValue.IsNull() {

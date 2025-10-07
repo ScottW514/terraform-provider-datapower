@@ -24,26 +24,27 @@ attributes:
   description: Select the cache type. The cache type determines whether to cache documents
     and the mechanism to use to remove cached entries. The default value is Protocol-Based.
   cli_alias: type
-- name: TTL
-  type: Int64
-  minimum: 0
-  maximum: 31708800
-  default: 900
-  description: Sets the validity period in seconds for documents in the cache. TTL
-    applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 -
-    31708800. The default value is 900.
-  cli_alias: ttl
-  required_when:
-  - evaluation: property-value-in-list
-    attribute: Type
-    value:
-    - fixed
-  ignored_when:
-  - evaluation: property-value-in-list
-    attribute: Type
-    value:
-    - protocol
-    - no-cache
+# TODO: This needs to be fixed.  DataPower returns '0' when it is not used.
+# - name: TTL
+#   type: Int64
+#   minimum: 5
+#   maximum: 31708800
+#   default: 900
+#   description: Sets the validity period in seconds for documents in the cache. TTL
+#     applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 -
+#     31708800. The default value is 900.
+#   cli_alias: ttl
+#   required_when:
+#   - evaluation: property-value-in-list
+#     attribute: Type
+#     value:
+#     - fixed
+#   ignored_when:
+#   - evaluation: property-value-in-list
+#     attribute: Type
+#     value:
+#     - protocol
+#     - no-cache
 - name: Priority
   type: Int64
   minimum: 1

@@ -42,7 +42,6 @@ import (
 type DmDocCachePolicy struct {
 	Match                 types.String `tfsdk:"match"`
 	Type                  types.String `tfsdk:"type"`
-	Ttl                   types.Int64  `tfsdk:"ttl"`
 	Priority              types.Int64  `tfsdk:"priority"`
 	Xc10grid              types.String `tfsdk:"xc10grid"`
 	CacheBackendResponses types.Bool   `tfsdk:"cache_backend_responses"`
@@ -52,20 +51,6 @@ type DmDocCachePolicy struct {
 	CacheUnsafeResponse   types.Bool   `tfsdk:"cache_unsafe_response"`
 }
 
-var DmDocCachePolicyTTLCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "protocol",
-	Value:       []string{"fixed"},
-}
-var DmDocCachePolicyTTLIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "protocol",
-	Value:       []string{"protocol", "no-cache"},
-}
 var DmDocCachePolicyXC10GridIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -136,7 +121,6 @@ var DmDocCachePolicyCacheUnsafeResponseIgnoreVal = validators.Evaluation{
 var DmDocCachePolicyObjectType = map[string]attr.Type{
 	"match":                   types.StringType,
 	"type":                    types.StringType,
-	"ttl":                     types.Int64Type,
 	"priority":                types.Int64Type,
 	"xc10grid":                types.StringType,
 	"cache_backend_responses": types.BoolType,
@@ -148,7 +132,6 @@ var DmDocCachePolicyObjectType = map[string]attr.Type{
 var DmDocCachePolicyObjectDefault = map[string]attr.Value{
 	"match":                   types.StringNull(),
 	"type":                    types.StringValue("protocol"),
-	"ttl":                     types.Int64Value(900),
 	"priority":                types.Int64Value(128),
 	"xc10grid":                types.StringNull(),
 	"cache_backend_responses": types.BoolValue(false),
@@ -167,10 +150,6 @@ func GetDmDocCachePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 			},
 			"type": DataSourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.", "type", "").AddStringEnum("protocol", "no-cache", "fixed").AddDefaultValue("protocol").String,
-				Computed:            true,
-			},
-			"ttl": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("900").AddRequiredWhen(DmDocCachePolicyTTLCondVal.String()).AddNotValidWhen(DmDocCachePolicyTTLIgnoreVal.String()).String,
 				Computed:            true,
 			},
 			"priority": DataSourceSchema.Int64Attribute{
@@ -220,16 +199,6 @@ func GetDmDocCachePolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 					stringvalidator.OneOf("protocol", "no-cache", "fixed"),
 				},
 				Default: stringdefault.StaticString("protocol"),
-			},
-			"ttl": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(0, 31708800).AddDefaultValue("900").AddRequiredWhen(DmDocCachePolicyTTLCondVal.String()).AddNotValidWhen(DmDocCachePolicyTTLIgnoreVal.String()).String,
-				Computed:            true,
-				Optional:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(0, 31708800),
-					validators.ConditionalRequiredInt64(DmDocCachePolicyTTLCondVal, DmDocCachePolicyTTLIgnoreVal, true),
-				},
-				Default: int64default.StaticInt64(900),
 			},
 			"priority": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>", "priority", "").AddIntegerRange(1, 255).AddDefaultValue("128").String,
@@ -286,9 +255,6 @@ func (data DmDocCachePolicy) IsNull() bool {
 	if !data.Type.IsNull() {
 		return false
 	}
-	if !data.Ttl.IsNull() {
-		return false
-	}
 	if !data.Priority.IsNull() {
 		return false
 	}
@@ -324,9 +290,6 @@ func (data DmDocCachePolicy) ToBody(ctx context.Context, pathRoot string) string
 	}
 	if !data.Type.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Type`, data.Type.ValueString())
-	}
-	if !data.Ttl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TTL`, data.Ttl.ValueInt64())
 	}
 	if !data.Priority.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Priority`, data.Priority.ValueInt64())
@@ -365,11 +328,6 @@ func (data *DmDocCachePolicy) FromBody(ctx context.Context, pathRoot string, res
 		data.Type = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.Type = types.StringValue("protocol")
-	}
-	if value := res.Get(pathRoot + `TTL`); value.Exists() {
-		data.Ttl = types.Int64Value(value.Int())
-	} else {
-		data.Ttl = types.Int64Value(900)
 	}
 	if value := res.Get(pathRoot + `Priority`); value.Exists() {
 		data.Priority = types.Int64Value(value.Int())
@@ -421,11 +379,6 @@ func (data *DmDocCachePolicy) UpdateFromBody(ctx context.Context, pathRoot strin
 		data.Type = tfutils.ParseStringFromGJSON(value)
 	} else if data.Type.ValueString() != "protocol" {
 		data.Type = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `TTL`); value.Exists() && !data.Ttl.IsNull() {
-		data.Ttl = types.Int64Value(value.Int())
-	} else if data.Ttl.ValueInt64() != 900 {
-		data.Ttl = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `Priority`); value.Exists() && !data.Priority.IsNull() {
 		data.Priority = types.Int64Value(value.Int())

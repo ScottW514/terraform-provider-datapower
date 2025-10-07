@@ -150,12 +150,14 @@ attributes:
   description: The Gateway services endpoints based on the metadata returned by the
     saved search or named query.
   cli_alias: wsrr-saved-search-subscription
+  test_value: 'null'
 - name: WSRRSubscriptions
   type: List
   element_type: DmWSRRWSDLSource
   description: The Gateway services endpoints based on the metadata obtained using
     these subscriptions.
   cli_alias: wsrr-subscription
+  test_value: 'null'
 - name: PolicyAttachments
   type: String
   reference_to: PolicyAttachments
@@ -306,6 +308,7 @@ attributes:
   element_type: DmHeaderSuppression
   description: HTTP Header Suppression
   cli_alias: suppress
+  test_value: 'null'
 - name: StylesheetParameters
   type: List
   element_type: DmStylesheetParameter
@@ -776,6 +779,7 @@ attributes:
 - name: DebugTrigger
   type: List
   element_type: DmMSDebugTriggerType
+  test_value: 'null'
   description: The probe captures transactions that meet one or more of the conditions
     defined by the triggers. These triggers examine the direction or type of the message
     flow and examine the message for an XPath expression match. When a message meets

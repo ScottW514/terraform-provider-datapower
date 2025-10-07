@@ -18,6 +18,22 @@ Create or edit WS Endpoint Rewrite Policy
 resource "datapower_ws_endpoint_rewrite_policy" "test" {
   id         = "ResTestWSEndpointRewritePolicy"
   app_domain = "acceptance_test"
+  ws_endpoint_local_rewrite_rule = [{
+    local_endpoint_hostname = "0.0.0.0"
+  }]
+  ws_endpoint_remote_rewrite_rule = [{
+    remote_endpoint_hostname = "10.10.10.10"
+  }]
+  ws_endpoint_publish_rewrite_rule = [{
+  }]
+  ws_endpoint_subscription_local_rule = [{
+    local_endpoint_hostname = "0.0.0.0"
+  }]
+  ws_endpoint_subscription_remote_rule = [{
+    remote_endpoint_hostname = "10.10.10.10"
+  }]
+  ws_endpoint_subscription_publish_rule = [{
+  }]
 }
 ```
 
@@ -79,7 +95,8 @@ Optional:
   - Not Valid When: `use_front_protocol`!=`false`
 - `local_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
   - CLI Alias: `local-endpoint-port`
-  - Not Valid When: `use_front_protocol`!=`false`
+  - Default value: `0`
+  - Required When: `use_front_protocol`=`false`
 - `local_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.
   - CLI Alias: `local-endpoint-protocol`
   - Choices: `default`, `http`, `https`
@@ -106,6 +123,7 @@ Optional:
   - CLI Alias: `published-endpoint-hostname`
 - `published_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
   - CLI Alias: `published-endpoint-port`
+  - Default value: `0`
 - `published_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the publish endpoint. The protocol can be different from the one in the WSDL.
   - CLI Alias: `published-endpoint-protocol`
   - Choices: `default`, `http`, `https`
@@ -128,7 +146,8 @@ Optional:
   - Not Valid When: `remote_endpoint_protocol`=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
 - `remote_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
   - CLI Alias: `remote-endpoint-port`
-  - Not Valid When: `remote_endpoint_protocol`=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
+  - Default value: `0`
+  - Required When: `remote_endpoint_protocol`!=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
 - `remote_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the remote endpoint. The protocol can be different from the one in the WSDL.
   - CLI Alias: `remote-endpoint-protocol`
   - Choices: `default`, `http`, `https`, `dpmq`, `mq`, `idgmq`, `dptibems`, `tibems`, `dpwasjms`
@@ -173,7 +192,8 @@ Optional:
   - Not Valid When: `use_front_protocol`!=`false`
 - `local_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
   - CLI Alias: `local-endpoint-port`
-  - Not Valid When: `use_front_protocol`!=`false`
+  - Default value: `0`
+  - Required When: `use_front_protocol`=`false`
 - `local_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.
   - CLI Alias: `local-endpoint-protocol`
   - Choices: `default`, `http`, `https`
@@ -199,6 +219,7 @@ Optional:
   - CLI Alias: `published-endpoint-hostname`
 - `published_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
   - CLI Alias: `published-endpoint-port`
+  - Default value: `0`
 - `published_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the publish endpoint. The protocol can be different from the one in the WSDL.
   - CLI Alias: `published-endpoint-protocol`
   - Choices: `default`, `http`, `https`
@@ -220,7 +241,8 @@ Optional:
   - Not Valid When: `remote_endpoint_protocol`=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
 - `remote_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
   - CLI Alias: `remote-endpoint-port`
-  - Not Valid When: `remote_endpoint_protocol`=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
+  - Default value: `0`
+  - Required When: `remote_endpoint_protocol`!=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
 - `remote_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the remote endpoint. The protocol can be different from the one in the WSDL.
   - CLI Alias: `remote-endpoint-protocol`
   - Choices: `default`, `http`, `https`, `dpmq`, `mq`, `idgmq`, `dptibems`, `tibems`, `dpwasjms`

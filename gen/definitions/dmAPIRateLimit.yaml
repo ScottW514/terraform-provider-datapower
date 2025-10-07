@@ -5,6 +5,7 @@ attributes:
 - name: Name
   type: String
   required: true
+  example: 'apiratelimit'
   description: Indicates the name of the rate limit scheme.
 - name: Rate
   type: Int64

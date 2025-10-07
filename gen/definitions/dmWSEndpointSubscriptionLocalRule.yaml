@@ -40,8 +40,9 @@ attributes:
   description: Specify the URL portion of the rewritten web service binding that specifies
     the port. If 0, uses the value from the WSDL.
   cli_alias: local-endpoint-port
-  ignored_when:
-  - evaluation: property-value-not-in-list
+  default: 0
+  required_when:
+  - evaluation: property-value-in-list
     attribute: UseFrontProtocol
     value:
     - false

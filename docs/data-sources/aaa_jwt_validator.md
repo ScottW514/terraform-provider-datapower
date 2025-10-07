@@ -94,6 +94,7 @@ Read-Only:
 - `name` (String) Specify the name of the JWT claim. A claim name is always a string.
 - `type` (String) Specify the data type of the JWT claim value. The type can be string, boolean, or number.
   - Choices: `string`, `bool`, `number`
+  - Default value: `string`
 - `value` (String) Specify the value of the JWT claim.
 
 

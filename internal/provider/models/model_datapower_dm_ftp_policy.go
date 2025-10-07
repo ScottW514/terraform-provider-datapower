@@ -48,15 +48,15 @@ type DmFTPPolicy struct {
 	SizeCheck      types.String `tfsdk:"size_check"`
 }
 
-var DmFTPPolicyUseCCCIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
+var DmFTPPolicyUseCCCCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auth_tls",
 	AttrType:    "String",
 	AttrDefault: "auth-off",
 	Value:       []string{"auth-off"},
 }
-var DmFTPPolicyEncryptDataIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
+var DmFTPPolicyEncryptDataCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auth_tls",
 	AttrType:    "String",
 	AttrDefault: "auth-off",
@@ -102,11 +102,11 @@ func GetDmFTPPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"use_ccc": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").AddNotValidWhen(DmFTPPolicyUseCCCIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").AddRequiredWhen(DmFTPPolicyUseCCCCondVal.String()).String,
 				Computed:            true,
 			},
 			"encrypt_data": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").AddNotValidWhen(DmFTPPolicyEncryptDataIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").AddRequiredWhen(DmFTPPolicyEncryptDataCondVal.String()).String,
 				Computed:            true,
 			},
 			"data_type": DataSourceSchema.StringAttribute{
@@ -155,22 +155,22 @@ func GetDmFTPPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: stringdefault.StaticString("auth-off"),
 			},
 			"use_ccc": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").AddNotValidWhen(DmFTPPolicyUseCCCIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").AddRequiredWhen(DmFTPPolicyUseCCCCondVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ccc-off", "ccc-opt", "ccc-req"),
-					validators.ConditionalRequiredString(validators.Evaluation{}, DmFTPPolicyUseCCCIgnoreVal, true),
+					validators.ConditionalRequiredString(DmFTPPolicyUseCCCCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("ccc-off"),
 			},
 			"encrypt_data": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").AddNotValidWhen(DmFTPPolicyEncryptDataIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").AddRequiredWhen(DmFTPPolicyEncryptDataCondVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("enc-data-off", "enc-data-opt", "enc-data-req"),
-					validators.ConditionalRequiredString(validators.Evaluation{}, DmFTPPolicyEncryptDataIgnoreVal, true),
+					validators.ConditionalRequiredString(DmFTPPolicyEncryptDataCondVal, validators.Evaluation{}, true),
 				},
 				Default: stringdefault.StaticString("enc-data-off"),
 			},

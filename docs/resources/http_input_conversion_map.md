@@ -16,8 +16,9 @@ This defines the rules for handling HTTP to XML conversion of form values in an 
 
 ```terraform
 resource "datapower_http_input_conversion_map" "test" {
-  id         = "ResTestHTTPInputConversionMap"
-  app_domain = "acceptance_test"
+  id             = "ResTestHTTPInputConversionMap"
+  app_domain     = "acceptance_test"
+  input_encoding = null
 }
 ```
 

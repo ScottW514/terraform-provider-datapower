@@ -83,6 +83,7 @@ Read-Only:
 - `external_attach_policy_url` (String) Select a document containing policy to be attached
 - `external_attach_wsdl_component_type` (String) Select a type of Component
   - Choices: `service`, `port`, `fragmentid`, `rest`
+  - Default value: `service`
 - `external_attach_wsdl_component_value` (String) Enter the qname of a WSDL component formatted {ns}ncname
   - Required When: `external_attach_wsdl_component_type`!=`rest`
   - Not Valid When: `external_attach_wsdl_component_type`=`rest`

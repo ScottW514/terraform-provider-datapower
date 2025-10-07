@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -46,7 +47,7 @@ var DmHeaderInjectionObjectType = map[string]attr.Type{
 	"header_tag_value": types.StringType,
 }
 var DmHeaderInjectionObjectDefault = map[string]attr.Value{
-	"direction":        types.StringNull(),
+	"direction":        types.StringValue("front"),
 	"header_tag":       types.StringNull(),
 	"header_tag_value": types.StringNull(),
 }
@@ -55,7 +56,7 @@ func GetDmHeaderInjectionDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"direction": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").AddDefaultValue("front").String,
 				Computed:            true,
 			},
 			"header_tag": DataSourceSchema.StringAttribute{
@@ -74,11 +75,13 @@ func GetDmHeaderInjectionResourceSchema() ResourceSchema.NestedAttributeObject {
 	var DmHeaderInjectionResourceSchema = ResourceSchema.NestedAttributeObject{
 		Attributes: map[string]ResourceSchema.Attribute{
 			"direction": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").AddDefaultValue("front").String,
+				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("front", "back"),
 				},
+				Default: stringdefault.StaticString("front"),
 			},
 			"header_tag": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.", "", "").String,
@@ -131,7 +134,7 @@ func (data *DmHeaderInjection) FromBody(ctx context.Context, pathRoot string, re
 	if value := res.Get(pathRoot + `Direction`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Direction = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Direction = types.StringNull()
+		data.Direction = types.StringValue("front")
 	}
 	if value := res.Get(pathRoot + `HeaderTag`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.HeaderTag = tfutils.ParseStringFromGJSON(value)
@@ -151,7 +154,7 @@ func (data *DmHeaderInjection) UpdateFromBody(ctx context.Context, pathRoot stri
 	}
 	if value := res.Get(pathRoot + `Direction`); value.Exists() && !data.Direction.IsNull() {
 		data.Direction = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.Direction.ValueString() != "front" {
 		data.Direction = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `HeaderTag`); value.Exists() && !data.HeaderTag.IsNull() {

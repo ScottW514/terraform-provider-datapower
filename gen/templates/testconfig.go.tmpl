@@ -107,19 +107,21 @@ resource "datapower_{{toTfName .Name}}" "test" {
   app_domain = "acceptance_test"
                 {{- end}}
             {{- end}}
-    	{{- else if or .Required .TestValue}}
+    	{{- else}}
             {{- if .TestValue}}
   {{.TfName}} = {{.TestValue}}
 		    {{- else if or (isObject .) (isObjectList .)}}
   {{.TfName}} = ` + {{if isObjectList .}}{{.ElementType}}{{else}}{{.DmType}}{{end}}TestConfig.GetModel{{if isObjectList .}}List{{end}}Config() + `
             {{- else if and (len .ListDefault) (eq .Type "List")}}
   {{.TfName}} = [{{- range .ListDefault}}{{quote .}},{{- end}}]
-            {{- else if and (len .ListExample) (eq .Type "List")}}
+            {{- else if .Required}}
+                {{- if and (len .ListExample) (eq .Type "List")}}
   {{.TfName}} = [{{- range .ListExample}}{{quote .}},{{- end}}]
-            {{- else if len .Example}}
+                {{- else if len .Example}}
   {{.TfName}} = {{if eq .Type "String"}}{{quote .Example}}{{else}}{{.Example}}{{end}}
             {{- else if len .Default}}
   {{.TfName}} = {{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}}
+                {{- end}}
 		    {{- end}}
             {{- if .WriteOnly}}
   {{.TfName}}_version = 1
@@ -156,21 +158,23 @@ resource "datapower_{{toTfName .Name}}" "acc_test" {
                 {{- end}}
             {{- else if eq .Name "Id"}}
   id = "AccTest_{{$root.Name}}"
-    	    {{- else if or .Required .TestValue .TestBedValue}}
+    	    {{- else}}
                 {{- if .TestBedValue}}
   {{.TfName}} = {{.TestBedValue}}
                 {{- else if .TestValue}}
   {{.TfName}} = {{.TestValue}}
 		        {{- else if or (isObject .) (isObjectList .)}}
   {{.TfName}} = ` + {{if isObjectList .}}{{.ElementType}}{{else}}{{.DmType}}{{end}}TestConfig.GetModelTestBed{{if isObjectList .}}List{{end}}Config() + `
-                {{- else if and (len .ListDefault) (eq .Type "List")}}
+                {{- else if .Required}}
+                    {{- if and (len .ListDefault) (eq .Type "List")}}
   {{.TfName}} = [{{- range .ListDefault}}{{quote .}},{{- end}}]
-                {{- else if and (len .ListExample) (eq .Type "List")}}
+                    {{- else if and (len .ListExample) (eq .Type "List")}}
   {{.TfName}} = [{{- range .ListExample}}{{quote .}},{{- end}}]
-                {{- else if len .Example}}
+                    {{- else if len .Example}}
   {{.TfName}} = {{if eq .Type "String"}}{{quote .Example}}{{else}}{{.Example}}{{end}}
-                {{- else if len .Default}}
+                    {{- else if len .Default}}
   {{.TfName}} = {{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}}
+                    {{- end}}
 		        {{- end}}
                 {{- if .WriteOnly}}
   {{.TfName}}_version = 1

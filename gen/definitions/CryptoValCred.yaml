@@ -38,6 +38,8 @@ attributes:
 - name: Certificate
   type: List
   reference_to: CryptoCertificate
+  test_value: '["AccTest_CryptoCertificate"]'
+  test_bed_value: 'datapower_crypto_certificate.acc_test.id'
   element_type: String
   description: Specify the list of certificates for the validation credentials. Each
     certificate in the validation credentials is the certificate that a TLS peer might

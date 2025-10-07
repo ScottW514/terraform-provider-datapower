@@ -18,6 +18,9 @@ The list of instructions provided by customers to control how the SOAP headers a
 resource "datapower_soap_header_disposition" "test" {
   id         = "ResTestSOAPHeaderDisposition"
   app_domain = "acceptance_test"
+  refine = [{
+    action = "processed"
+  }]
 }
 ```
 

@@ -12,3 +12,4 @@ attributes:
   type: Int64
   description: Specify the interval between invocations in seconds. A value of 0 indicates
     a single invocation.
+  default: 0

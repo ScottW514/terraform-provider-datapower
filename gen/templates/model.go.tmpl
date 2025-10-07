@@ -411,6 +411,9 @@ func Get{{$root.Name}}{{$dataResource}}Schema({{if not $root.ListItem}}descripti
 							Value:       []string{""},
 						}, validators.Evaluation{}, false),
 				},
+				PlanModifiers: []planmodifier.Int64{
+					int64planmodifier.UseStateForUnknown(),
+				},
 			},
 	        {{- end}}
         {{- end}}

@@ -6,6 +6,7 @@
 - Added warning when resource deletion fails due to conflict
 - Fixed error when updating an existing `datapower_user` resource with the existing password
 - Added reset to default values when deleting singleton resource
+- Updates to test bed configuration
 
 ## v0.11.4
 

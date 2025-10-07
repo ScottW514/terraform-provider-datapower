@@ -5,6 +5,7 @@ attributes:
 - name: Name
   type: String
   required: true
+  example: 'crlfetch'
   description: Enter the name of the CRL retrieval policy.
 - name: FetchType
   type: String
@@ -12,13 +13,14 @@ attributes:
   - http
   - ldap
   required: true
+  example: 'http'
   description: Select the protocol to obtain the CRL from the authority.
 - name: IssuerValcred
   type: String
   reference_to: CryptoValCred
   required: true
-  test_value: '"AccTest_CryptoValCred"'
-  test_bed_value: datapower_crypto_valcred.acc_test.id
+  test_value: '"Default_CryptoValCred"'
+  test_bed_value: datapower_crypto_valcred.default.id
   description: The validation credentials to verify the authenticity of the CRL issuer
     and, therefor, the CRL. The certificate that the CRL issuer uses must be in the
     validation credentials for the CRL to be valid.
@@ -37,6 +39,7 @@ attributes:
   example: http://foo.com/crl
   description: A URL that specifies the location of the CRL.
   cli_alias: fetch-url
+  test_value: '"http://foo.com/crl"'
   required_when:
   - evaluation: property-value-in-list
     attribute: FetchType

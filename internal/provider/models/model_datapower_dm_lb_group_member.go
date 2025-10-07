@@ -62,9 +62,9 @@ var DmLBGroupMemberObjectType = map[string]attr.Type{
 var DmLBGroupMemberObjectDefault = map[string]attr.Value{
 	"server":          types.StringNull(),
 	"weight":          types.Int64Value(1),
-	"mapped_port":     types.Int64Null(),
+	"mapped_port":     types.Int64Value(0),
 	"activity":        types.StringNull(),
-	"health_port":     types.Int64Null(),
+	"health_port":     types.Int64Value(0),
 	"lb_member_state": types.StringValue("enabled"),
 }
 
@@ -80,7 +80,7 @@ func GetDmLBGroupMemberDataSourceSchema() DataSourceSchema.NestedAttributeObject
 				Computed:            true,
 			},
 			"mapped_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>", "", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
 			"activity": DataSourceSchema.StringAttribute{
@@ -88,7 +88,7 @@ func GetDmLBGroupMemberDataSourceSchema() DataSourceSchema.NestedAttributeObject
 				Computed:            true,
 			},
 			"health_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TCP Port number to test.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TCP Port number to test.", "", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
 			"lb_member_state": DataSourceSchema.StringAttribute{
@@ -116,16 +116,20 @@ func GetDmLBGroupMemberResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: int64default.StaticInt64(1),
 			},
 			"mapped_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>", "", "").AddDefaultValue("0").String,
+				Computed:            true,
 				Optional:            true,
+				Default:             int64default.StaticInt64(0),
 			},
 			"activity": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED.", "", "").AddNotValidWhen(DmLBGroupMemberActivityIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"health_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TCP Port number to test.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TCP Port number to test.", "", "").AddDefaultValue("0").String,
+				Computed:            true,
 				Optional:            true,
+				Default:             int64default.StaticInt64(0),
 			},
 			"lb_member_state": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable or Disable the Load Balancer Member. If the Administrative State is disabled, the member are not used in health or forwarding checks.", "admin-state", "").AddStringEnum("enabled", "disabled").AddDefaultValue("enabled").String,
@@ -207,7 +211,7 @@ func (data *DmLBGroupMember) FromBody(ctx context.Context, pathRoot string, res 
 	if value := res.Get(pathRoot + `MappedPort`); value.Exists() {
 		data.MappedPort = types.Int64Value(value.Int())
 	} else {
-		data.MappedPort = types.Int64Null()
+		data.MappedPort = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `Activity`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Activity = tfutils.ParseStringFromGJSON(value)
@@ -217,7 +221,7 @@ func (data *DmLBGroupMember) FromBody(ctx context.Context, pathRoot string, res 
 	if value := res.Get(pathRoot + `HealthPort`); value.Exists() {
 		data.HealthPort = types.Int64Value(value.Int())
 	} else {
-		data.HealthPort = types.Int64Null()
+		data.HealthPort = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `LBMemberState`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LbMemberState = tfutils.ParseStringFromGJSON(value)
@@ -242,7 +246,7 @@ func (data *DmLBGroupMember) UpdateFromBody(ctx context.Context, pathRoot string
 	}
 	if value := res.Get(pathRoot + `MappedPort`); value.Exists() && !data.MappedPort.IsNull() {
 		data.MappedPort = types.Int64Value(value.Int())
-	} else {
+	} else if data.MappedPort.ValueInt64() != 0 {
 		data.MappedPort = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `Activity`); value.Exists() && !data.Activity.IsNull() {
@@ -252,7 +256,7 @@ func (data *DmLBGroupMember) UpdateFromBody(ctx context.Context, pathRoot string
 	}
 	if value := res.Get(pathRoot + `HealthPort`); value.Exists() && !data.HealthPort.IsNull() {
 		data.HealthPort = types.Int64Value(value.Int())
-	} else {
+	} else if data.HealthPort.ValueInt64() != 0 {
 		data.HealthPort = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `LBMemberState`); value.Exists() && !data.LbMemberState.IsNull() {

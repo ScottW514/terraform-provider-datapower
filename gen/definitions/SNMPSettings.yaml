@@ -44,6 +44,7 @@ attributes:
   element_type: DmSnmpPolicyMQ
   description: SNMPv1/v2c Communities
   cli_alias: snmp-community
+  test_value: 'null'
 - name: Targets
   type: List
   element_type: DmSnmpTarget

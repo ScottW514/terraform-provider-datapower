@@ -5,6 +5,8 @@ attributes:
 - name: Class
   type: String
   reference_to: LogLabel
+  test_value: '"AccTest_LogLabel"'
+  test_bed_value: 'datapower_log_label.acc_test.id'
   description: Sets an event category.
 - name: Priority
   type: String

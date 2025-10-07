@@ -26,6 +26,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
@@ -43,7 +44,7 @@ var DmScheduledRuleObjectType = map[string]attr.Type{
 }
 var DmScheduledRuleObjectDefault = map[string]attr.Value{
 	"rule":     types.StringNull(),
-	"interval": types.Int64Null(),
+	"interval": types.Int64Value(0),
 }
 
 func GetDmScheduledRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject {
@@ -54,7 +55,7 @@ func GetDmScheduledRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject
 				Computed:            true,
 			},
 			"interval": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
 		},
@@ -69,8 +70,10 @@ func GetDmScheduledRuleResourceSchema() ResourceSchema.NestedAttributeObject {
 				Required:            true,
 			},
 			"interval": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").AddDefaultValue("0").String,
+				Computed:            true,
 				Optional:            true,
+				Default:             int64default.StaticInt64(0),
 			},
 		},
 	}
@@ -114,7 +117,7 @@ func (data *DmScheduledRule) FromBody(ctx context.Context, pathRoot string, res 
 	if value := res.Get(pathRoot + `Interval`); value.Exists() {
 		data.Interval = types.Int64Value(value.Int())
 	} else {
-		data.Interval = types.Int64Null()
+		data.Interval = types.Int64Value(0)
 	}
 }
 
@@ -129,7 +132,7 @@ func (data *DmScheduledRule) UpdateFromBody(ctx context.Context, pathRoot string
 	}
 	if value := res.Get(pathRoot + `Interval`); value.Exists() && !data.Interval.IsNull() {
 		data.Interval = types.Int64Value(value.Int())
-	} else {
+	} else if data.Interval.ValueInt64() != 0 {
 		data.Interval = types.Int64Null()
 	}
 }

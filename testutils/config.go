@@ -92,6 +92,8 @@ var AAAJWTGeneratorTestConfig = ModelTestConfig{
 resource "datapower_aaa_jwt_generator" "test" {
   id = "ResTestAAAJWTGenerator"
   app_domain = "acceptance_test"
+  additional_claims = ` + DmJWTClaimsTestConfig.GetModelConfig() + `
+  gen_method = ` + DmJWTGenMethodTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_aaa_jwt_generator" "test" {
@@ -102,6 +104,8 @@ data "datapower_aaa_jwt_generator" "test" {
 resource "datapower_aaa_jwt_generator" "acc_test" {
   id = "AccTest_AAAJWTGenerator"
   app_domain = datapower_domain.acc_test.app_domain
+  additional_claims = ` + DmJWTClaimsTestConfig.GetModelTestBedConfig() + `
+  gen_method = ` + DmJWTGenMethodTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -111,6 +115,8 @@ var AAAJWTValidatorTestConfig = ModelTestConfig{
 resource "datapower_aaa_jwt_validator" "test" {
   id = "ResTestAAAJWTValidator"
   app_domain = "acceptance_test"
+  val_method = ` + DmJWTValMethodTestConfig.GetModelConfig() + `
+  claims = ` + DmClaimTestConfig.GetModelListConfig() + `
   username_claim = "sub"
 }`,
     Data: `
@@ -122,6 +128,8 @@ data "datapower_aaa_jwt_validator" "test" {
 resource "datapower_aaa_jwt_validator" "acc_test" {
   id = "AccTest_AAAJWTValidator"
   app_domain = datapower_domain.acc_test.app_domain
+  val_method = ` + DmJWTValMethodTestConfig.GetModelTestBedConfig() + `
+  claims = ` + DmClaimTestConfig.GetModelTestBedListConfig() + `
   username_claim = "sub"
 }`,
     ModelOnly:    false,
@@ -132,6 +140,17 @@ var AAAPolicyTestConfig = ModelTestConfig{
 resource "datapower_aaa_policy" "test" {
   id = "ResTestAAAPolicy"
   app_domain = "acceptance_test"
+  namespace_mapping = null
+  extract_identity = ` + DmAAAPExtractIdentityTestConfig.GetModelConfig() + `
+  authenticate = ` + DmAAAPAuthenticateTestConfig.GetModelConfig() + `
+  map_credentials = ` + DmAAAPMapCredentialsTestConfig.GetModelConfig() + `
+  extract_resource = ` + DmAAAPExtractResourceTestConfig.GetModelConfig() + `
+  map_resource = ` + DmAAAPMapResourceTestConfig.GetModelConfig() + `
+  authorize = ` + DmAAAPAuthorizeTestConfig.GetModelConfig() + `
+  post_process = ` + DmAAAPPostProcessTestConfig.GetModelConfig() + `
+  saml_attribute = null
+  ltpa_attributes = ` + DmLTPAUserAttributeNameAndValueTestConfig.GetModelListConfig() + `
+  transaction_priority = ` + DmAAATransactionPriorityTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_aaa_policy" "test" {
@@ -142,6 +161,17 @@ data "datapower_aaa_policy" "test" {
 resource "datapower_aaa_policy" "acc_test" {
   id = "AccTest_AAAPolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  namespace_mapping = null
+  extract_identity = ` + DmAAAPExtractIdentityTestConfig.GetModelTestBedConfig() + `
+  authenticate = ` + DmAAAPAuthenticateTestConfig.GetModelTestBedConfig() + `
+  map_credentials = ` + DmAAAPMapCredentialsTestConfig.GetModelTestBedConfig() + `
+  extract_resource = ` + DmAAAPExtractResourceTestConfig.GetModelTestBedConfig() + `
+  map_resource = ` + DmAAAPMapResourceTestConfig.GetModelTestBedConfig() + `
+  authorize = ` + DmAAAPAuthorizeTestConfig.GetModelTestBedConfig() + `
+  post_process = ` + DmAAAPPostProcessTestConfig.GetModelTestBedConfig() + `
+  saml_attribute = null
+  ltpa_attributes = ` + DmLTPAUserAttributeNameAndValueTestConfig.GetModelTestBedListConfig() + `
+  transaction_priority = ` + DmAAATransactionPriorityTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -201,6 +231,7 @@ var APIApplicationTypeTestConfig = ModelTestConfig{
 resource "datapower_api_application_type" "test" {
   id = "ResTestAPIApplicationType"
   app_domain = "acceptance_test"
+  supported_oauth_types = ` + DmOAuthTypeTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_api_application_type" "test" {
@@ -211,6 +242,7 @@ data "datapower_api_application_type" "test" {
 resource "datapower_api_application_type" "acc_test" {
   id = "AccTest_APIApplicationType"
   app_domain = datapower_domain.acc_test.app_domain
+  supported_oauth_types = ` + DmOAuthTypeTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -282,9 +314,14 @@ resource "datapower_api_collection" "test" {
   org_id = "orgid"
   org_name = "orgname"
   routing_prefix = ` + DmRoutingPrefixTestConfig.GetModelListConfig() + `
+  default_rate_limit = ` + DmAPIRateLimitTestConfig.GetModelListConfig() + `
+  assembly_burst_limit = ` + DmAPIBurstLimitTestConfig.GetModelListConfig() + `
+  assembly_rate_limit = ` + DmAPIRateLimitTestConfig.GetModelListConfig() + `
+  assembly_count_limit = ` + DmAPICountLimitTestConfig.GetModelListConfig() + `
   api_processing_rule = "default-api-rule"
   api_error_rule = "default-api-error-rule"
   plan = ["AccTest_APIPlan"]
+  parse_settings_reference = ` + DmDynamicParseSettingsReferenceTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_api_collection" "test" {
@@ -298,9 +335,14 @@ resource "datapower_api_collection" "acc_test" {
   org_id = "orgid"
   org_name = "orgname"
   routing_prefix = ` + DmRoutingPrefixTestConfig.GetModelTestBedListConfig() + `
+  default_rate_limit = ` + DmAPIRateLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_burst_limit = ` + DmAPIBurstLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_rate_limit = ` + DmAPIRateLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_count_limit = ` + DmAPICountLimitTestConfig.GetModelTestBedListConfig() + `
   api_processing_rule = "default-api-rule"
   api_error_rule = "default-api-error-rule"
   plan = [datapower_api_plan.acc_test.id]
+  parse_settings_reference = ` + DmDynamicParseSettingsReferenceTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -312,6 +354,7 @@ resource "datapower_api_connect_gateway_service" "test" {
   local_address = "0.0.0.0"
   local_port = 3000
   gateway_peering = "default-gateway-peering"
+  proxy_policy = ` + DmAPICGSProxyPolicyTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_api_connect_gateway_service" "test" {
@@ -323,6 +366,7 @@ resource "datapower_api_connect_gateway_service" "acc_test" {
   local_address = "0.0.0.0"
   local_port = 3000
   gateway_peering = "default-gateway-peering"
+  proxy_policy = ` + DmAPICGSProxyPolicyTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -334,6 +378,9 @@ resource "datapower_api_definition" "test" {
   app_domain = "acceptance_test"
   base_path = "/"
   path = ["AccTest_APIPath"]
+  properties = ` + DmAPIPropertyTestConfig.GetModelListConfig() + `
+  schemas = ` + DmAPIDataTypeDefinitionTestConfig.GetModelListConfig() + `
+  allowed_api_protocols = ` + DmAPIProtocolsTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_api_definition" "test" {
@@ -346,6 +393,9 @@ resource "datapower_api_definition" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   base_path = "/"
   path = [datapower_api_path.acc_test.id]
+  properties = ` + DmAPIPropertyTestConfig.GetModelTestBedListConfig() + `
+  schemas = ` + DmAPIDataTypeDefinitionTestConfig.GetModelTestBedListConfig() + `
+  allowed_api_protocols = ` + DmAPIProtocolsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -394,8 +444,15 @@ resource "datapower_api_gateway" "test" {
   id = "ResTestAPIGateway"
   app_domain = "acceptance_test"
   front_protocol = ["AccTest_HTTPSourceProtocolHandler"]
+  doc_cache_policy = ` + DmDocCachePolicyTestConfig.GetModelListConfig() + `
+  scheduled_rule = ` + DmScheduledRuleTestConfig.GetModelListConfig() + `
+  assembly_burst_limit = ` + DmAPIBurstLimitTestConfig.GetModelListConfig() + `
+  assembly_rate_limit = ` + DmAPIRateLimitTestConfig.GetModelListConfig() + `
+  assembly_count_limit = ` + DmAPICountLimitTestConfig.GetModelListConfig() + `
+  proxy_policies = ` + DmAPIProxyPolicyTestConfig.GetModelListConfig() + `
   front_timeout = 120
   front_persistent_timeout = 180
+  open_telemetry_resource_attribute = ` + DmOpenTelemetryResourceAttributeTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_api_gateway" "test" {
@@ -407,8 +464,15 @@ resource "datapower_api_gateway" "acc_test" {
   id = "AccTest_APIGateway"
   app_domain = datapower_domain.acc_test.app_domain
   front_protocol = [datapower_http_source_protocol_handler.acc_test.id]
+  doc_cache_policy = ` + DmDocCachePolicyTestConfig.GetModelTestBedListConfig() + `
+  scheduled_rule = ` + DmScheduledRuleTestConfig.GetModelTestBedListConfig() + `
+  assembly_burst_limit = ` + DmAPIBurstLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_rate_limit = ` + DmAPIRateLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_count_limit = ` + DmAPICountLimitTestConfig.GetModelTestBedListConfig() + `
+  proxy_policies = ` + DmAPIProxyPolicyTestConfig.GetModelTestBedListConfig() + `
   front_timeout = 120
   front_persistent_timeout = 180
+  open_telemetry_resource_attribute = ` + DmOpenTelemetryResourceAttributeTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -444,6 +508,8 @@ resource "datapower_api_operation" "test" {
   id = "ResTestAPIOperation"
   app_domain = "acceptance_test"
   method = "GET"
+  response_schema = ` + DmAPIResponseSchemaTestConfig.GetModelListConfig() + `
+  parameter = ` + DmAPIParameterTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_api_operation" "test" {
@@ -455,6 +521,8 @@ resource "datapower_api_operation" "acc_test" {
   id = "AccTest_APIOperation"
   app_domain = datapower_domain.acc_test.app_domain
   method = "GET"
+  response_schema = ` + DmAPIResponseSchemaTestConfig.GetModelTestBedListConfig() + `
+  parameter = ` + DmAPIParameterTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -465,6 +533,7 @@ resource "datapower_api_path" "test" {
   id = "ResTestAPIPath"
   app_domain = "acceptance_test"
   path = "/"
+  parameter = ` + DmAPIParameterTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_api_path" "test" {
@@ -476,6 +545,7 @@ resource "datapower_api_path" "acc_test" {
   id = "AccTest_APIPath"
   app_domain = datapower_domain.acc_test.app_domain
   path = "/"
+  parameter = ` + DmAPIParameterTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -485,6 +555,14 @@ var APIPlanTestConfig = ModelTestConfig{
 resource "datapower_api_plan" "test" {
   id = "ResTestAPIPlan"
   app_domain = "acceptance_test"
+  rate_limit = ` + DmAPIRateLimitTestConfig.GetModelListConfig() + `
+  burst_limit = ` + DmAPIBurstLimitTestConfig.GetModelListConfig() + `
+  assembly_burst_limit = ` + DmAPIBurstLimitTestConfig.GetModelListConfig() + `
+  assembly_burst_limit_definition = ` + DmDefinitionLinkTestConfig.GetModelListConfig() + `
+  assembly_rate_limit = ` + DmAPIRateLimitTestConfig.GetModelListConfig() + `
+  assembly_rate_limit_definition = ` + DmDefinitionLinkTestConfig.GetModelListConfig() + `
+  assembly_count_limit = ` + DmAPICountLimitTestConfig.GetModelListConfig() + `
+  assembly_count_limit_definition = ` + DmDefinitionLinkTestConfig.GetModelListConfig() + `
   api = ["AccTest_APIDefinition"]
   rate_limit_scope = "per-application"
 }`,
@@ -497,6 +575,14 @@ data "datapower_api_plan" "test" {
 resource "datapower_api_plan" "acc_test" {
   id = "AccTest_APIPlan"
   app_domain = datapower_domain.acc_test.app_domain
+  rate_limit = ` + DmAPIRateLimitTestConfig.GetModelTestBedListConfig() + `
+  burst_limit = ` + DmAPIBurstLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_burst_limit = ` + DmAPIBurstLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_burst_limit_definition = ` + DmDefinitionLinkTestConfig.GetModelTestBedListConfig() + `
+  assembly_rate_limit = ` + DmAPIRateLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_rate_limit_definition = ` + DmDefinitionLinkTestConfig.GetModelTestBedListConfig() + `
+  assembly_count_limit = ` + DmAPICountLimitTestConfig.GetModelTestBedListConfig() + `
+  assembly_count_limit_definition = ` + DmDefinitionLinkTestConfig.GetModelTestBedListConfig() + `
   api = [datapower_api_definition.acc_test.id]
   rate_limit_scope = "per-application"
 }`,
@@ -546,6 +632,8 @@ var APIRuleTestConfig = ModelTestConfig{
 resource "datapower_api_rule" "test" {
   id = "ResTestAPIRule"
   app_domain = "acceptance_test"
+  actions = null
+  dynamic_actions = null
 }`,
     Data: `
 data "datapower_api_rule" "test" {
@@ -556,6 +644,8 @@ data "datapower_api_rule" "test" {
 resource "datapower_api_rule" "acc_test" {
   id = "AccTest_APIRule"
   app_domain = datapower_domain.acc_test.app_domain
+  actions = null
+  dynamic_actions = null
 }`,
     ModelOnly:    false,
 }
@@ -786,6 +876,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 80
+  allowed_features = ` + DmSourceAS2FeatureTypeTestConfig.GetModelConfig() + `
   remote_address = "10.10.10.10"
   remote_port = 8888
   remote_connection_timeout = 60
@@ -801,6 +892,7 @@ data "datapower_as2_proxy_source_protocol_handler" "test" {
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
   local_port = 80
+  allowed_features = ` + DmSourceAS2FeatureTypeTestConfig.GetModelTestBedConfig() + `
   remote_address = "10.10.10.10"
   remote_port = 8888
   remote_connection_timeout = 60
@@ -839,6 +931,7 @@ resource "datapower_as3_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 21
+  virtual_directories = ` + DmFTPServerVirtualDirectoryTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_as3_source_protocol_handler" "test" {
@@ -851,6 +944,7 @@ resource "datapower_as3_source_protocol_handler" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
   local_port = 21
+  virtual_directories = ` + DmFTPServerVirtualDirectoryTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -860,6 +954,7 @@ var AccessControlListTestConfig = ModelTestConfig{
 resource "datapower_access_control_list" "test" {
   id = "ResTestAccessControlList"
   app_domain = "acceptance_test"
+  access_control_entry = ` + DmACETestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_access_control_list" "test" {
@@ -870,6 +965,7 @@ data "datapower_access_control_list" "test" {
 resource "datapower_access_control_list" "acc_test" {
   id = "AccTest_AccessControlList"
   app_domain = datapower_domain.acc_test.app_domain
+  access_control_entry = ` + DmACETestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -929,6 +1025,7 @@ resource "datapower_app_security_policy" "test" {
   app_domain = "acceptance_test"
   request_maps = ` + DmWebAppRequestPolicyMapTestConfig.GetModelListConfig() + `
   response_maps = ` + DmWebAppResponsePolicyMapTestConfig.GetModelListConfig() + `
+  error_maps = ` + DmPolicyMapTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_app_security_policy" "test" {
@@ -941,6 +1038,7 @@ resource "datapower_app_security_policy" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   request_maps = ` + DmWebAppRequestPolicyMapTestConfig.GetModelTestBedListConfig() + `
   response_maps = ` + DmWebAppResponsePolicyMapTestConfig.GetModelTestBedListConfig() + `
+  error_maps = ` + DmPolicyMapTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -951,6 +1049,7 @@ resource "datapower_assembly" "test" {
   id = "ResTestAssembly"
   app_domain = "acceptance_test"
   rule = "default-empty-rule"
+  catch = ` + DmAssemblyCatchTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_assembly" "test" {
@@ -962,6 +1061,7 @@ resource "datapower_assembly" "acc_test" {
   id = "AccTest_Assembly"
   app_domain = datapower_domain.acc_test.app_domain
   rule = "default-empty-rule"
+  catch = ` + DmAssemblyCatchTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1018,6 +1118,7 @@ resource "datapower_assembly_action_function_call" "test" {
   id = "ResTestAssemblyActionFunctionCall"
   app_domain = "acceptance_test"
   function_call = "default-func-global"
+  parameter = ` + DmAssemblyActionFunctionCallParameterTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_assembly_action_function_call" "test" {
@@ -1029,6 +1130,7 @@ resource "datapower_assembly_action_function_call" "acc_test" {
   id = "AccTest_AssemblyActionFunctionCall"
   app_domain = datapower_domain.acc_test.app_domain
   function_call = "default-func-global"
+  parameter = ` + DmAssemblyActionFunctionCallParameterTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1080,6 +1182,7 @@ var AssemblyActionGraphQLExecuteTestConfig = ModelTestConfig{
 resource "datapower_assembly_action_graphql_execute" "test" {
   id = "ResTestAssemblyActionGraphQLExecute"
   app_domain = "acceptance_test"
+  target_map_rule = ` + DmTargetMapRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_assembly_action_graphql_execute" "test" {
@@ -1090,6 +1193,7 @@ data "datapower_assembly_action_graphql_execute" "test" {
 resource "datapower_assembly_action_graphql_execute" "acc_test" {
   id = "AccTest_AssemblyActionGraphQLExecute"
   app_domain = datapower_domain.acc_test.app_domain
+  target_map_rule = ` + DmTargetMapRuleTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1141,6 +1245,7 @@ resource "datapower_assembly_action_invoke" "test" {
   method = "Keep"
   backend_type = "detect"
   cache_type = "Protocol"
+  error_types = ` + DmInvokeErrorTypeTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_assembly_action_invoke" "test" {
@@ -1155,6 +1260,7 @@ resource "datapower_assembly_action_invoke" "acc_test" {
   method = "Keep"
   backend_type = "detect"
   cache_type = "Protocol"
+  error_types = ` + DmInvokeErrorTypeTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1251,6 +1357,7 @@ resource "datapower_assembly_action_map" "test" {
   id = "ResTestAssemblyActionMap"
   app_domain = "acceptance_test"
   location = "local:///file"
+  parse_settings_reference = ` + DmDynamicParseSettingsReferenceTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_assembly_action_map" "test" {
@@ -1262,6 +1369,7 @@ resource "datapower_assembly_action_map" "acc_test" {
   id = "AccTest_AssemblyActionMap"
   app_domain = datapower_domain.acc_test.app_domain
   location = "local:///file"
+  parse_settings_reference = ` + DmDynamicParseSettingsReferenceTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1272,6 +1380,7 @@ resource "datapower_assembly_action_oauth" "test" {
   id = "ResTestAssemblyActionOAuth"
   app_domain = "acceptance_test"
   oauth_provider_settings_reference = {"Default": "AccTest_OAuthProviderSettings"}
+  supported_oauth_components = ` + DmOAuthComponentsTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_assembly_action_oauth" "test" {
@@ -1283,6 +1392,7 @@ resource "datapower_assembly_action_oauth" "acc_test" {
   id = "AccTest_AssemblyActionOAuth"
   app_domain = datapower_domain.acc_test.app_domain
   oauth_provider_settings_reference = {"Default": datapower_oauth_provider_settings.acc_test.id}
+  supported_oauth_components = ` + DmOAuthComponentsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1292,6 +1402,7 @@ var AssemblyActionParseTestConfig = ModelTestConfig{
 resource "datapower_assembly_action_parse" "test" {
   id = "ResTestAssemblyActionParse"
   app_domain = "acceptance_test"
+  parse_settings_reference = ` + DmDynamicParseSettingsReferenceTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_assembly_action_parse" "test" {
@@ -1302,6 +1413,7 @@ data "datapower_assembly_action_parse" "test" {
 resource "datapower_assembly_action_parse" "acc_test" {
   id = "AccTest_AssemblyActionParse"
   app_domain = datapower_domain.acc_test.app_domain
+  parse_settings_reference = ` + DmDynamicParseSettingsReferenceTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1312,6 +1424,9 @@ resource "datapower_assembly_action_rate_limit" "test" {
   id = "ResTestAssemblyActionRateLimit"
   app_domain = "acceptance_test"
   source = "plan-default"
+  rate_limit = ` + DmRateLimitInfoTestConfig.GetModelListConfig() + `
+  count_limit = ` + DmCountLimitInfoTestConfig.GetModelListConfig() + `
+  rate_limit_definition = ` + DmRateLimitInfoDomainNamedTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_assembly_action_rate_limit" "test" {
@@ -1323,6 +1438,9 @@ resource "datapower_assembly_action_rate_limit" "acc_test" {
   id = "AccTest_AssemblyActionRateLimit"
   app_domain = datapower_domain.acc_test.app_domain
   source = "plan-default"
+  rate_limit = ` + DmRateLimitInfoTestConfig.GetModelTestBedListConfig() + `
+  count_limit = ` + DmCountLimitInfoTestConfig.GetModelTestBedListConfig() + `
+  rate_limit_definition = ` + DmRateLimitInfoDomainNamedTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1419,6 +1537,7 @@ resource "datapower_assembly_action_user_security" "test" {
   user_auth_method = "user-registry"
   user_registry = "AccTest_APIAuthURLRegistry"
   user_az_method = "authenticated"
+  az_table_default_entry = ` + DmTableEntryTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_assembly_action_user_security" "test" {
@@ -1434,6 +1553,7 @@ resource "datapower_assembly_action_user_security" "acc_test" {
   user_auth_method = "user-registry"
   user_registry = datapower_api_auth_url_registry.acc_test.id
   user_az_method = "authenticated"
+  az_table_default_entry = ` + DmTableEntryTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1544,6 +1664,7 @@ var AssemblyFunctionTestConfig = ModelTestConfig{
 resource "datapower_assembly_function" "test" {
   id = "ResTestAssemblyFunction"
   app_domain = "acceptance_test"
+  parameter = ` + DmAssemblyFunctionParameterTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_assembly_function" "test" {
@@ -1554,6 +1675,7 @@ data "datapower_assembly_function" "test" {
 resource "datapower_assembly_function" "acc_test" {
   id = "AccTest_AssemblyFunction"
   app_domain = datapower_domain.acc_test.app_domain
+  parameter = ` + DmAssemblyFunctionParameterTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1685,6 +1807,7 @@ var B2BCPASenderSettingTestConfig = ModelTestConfig{
 resource "datapower_b2b_cpa_sender_setting" "test" {
   id = "ResTestB2BCPASenderSetting"
   app_domain = "acceptance_test"
+  enabled_doc_type = ` + DmB2BEnabledDocTypeTestConfig.GetModelConfig() + `
   dest_endpoint_url = "ebms2://somehost/url"
 }`,
     Data: `
@@ -1696,6 +1819,7 @@ data "datapower_b2b_cpa_sender_setting" "test" {
 resource "datapower_b2b_cpa_sender_setting" "acc_test" {
   id = "AccTest_B2BCPASenderSetting"
   app_domain = datapower_domain.acc_test.app_domain
+  enabled_doc_type = ` + DmB2BEnabledDocTypeTestConfig.GetModelTestBedConfig() + `
   dest_endpoint_url = "ebms2://somehost/url"
 }`,
     ModelOnly:    false,
@@ -1706,10 +1830,14 @@ var B2BGatewayTestConfig = ModelTestConfig{
 resource "datapower_b2b_gateway" "test" {
   id = "ResTestB2BGateway"
   app_domain = "acceptance_test"
+  as_front_protocol = ` + DmASFrontProtocolTestConfig.GetModelListConfig() + `
   b2b_profiles = [{partner_profile="AccTest_B2BProfile"}]
+  b2b_groups = ` + DmB2BActiveGroupTestConfig.GetModelListConfig() + `
   document_routing_preprocessor = "store:///b2b-routing.xsl"
   archive_mode = "purgeonly"
+  archive_backup_documents = ` + DmB2BBackupMsgTypeTestConfig.GetModelConfig() + `
   xml_manager = "default"
+  cpa_entries = ` + DmB2BCPAEntryTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_b2b_gateway" "test" {
@@ -1720,10 +1848,14 @@ data "datapower_b2b_gateway" "test" {
 resource "datapower_b2b_gateway" "acc_test" {
   id = "AccTest_B2BGateway"
   app_domain = datapower_domain.acc_test.app_domain
+  as_front_protocol = ` + DmASFrontProtocolTestConfig.GetModelTestBedListConfig() + `
   b2b_profiles = [{partner_profile=datapower_b2b_profile.acc_test.id}]
+  b2b_groups = ` + DmB2BActiveGroupTestConfig.GetModelTestBedListConfig() + `
   document_routing_preprocessor = "store:///b2b-routing.xsl"
   archive_mode = "purgeonly"
+  archive_backup_documents = ` + DmB2BBackupMsgTypeTestConfig.GetModelTestBedConfig() + `
   xml_manager = "default"
+  cpa_entries = ` + DmB2BCPAEntryTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1734,6 +1866,7 @@ resource "datapower_b2b_persistence" "test" {
   raid_volume = "raid0"
   storage_size = 1024
   ha_enabled = false
+  ha_other_hosts = ` + DmB2BHAHostTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_b2b_persistence" "test" {
@@ -1743,6 +1876,7 @@ resource "datapower_b2b_persistence" "acc_test" {
   raid_volume = "raid0"
   storage_size = 1024
   ha_enabled = false
+  ha_other_hosts = ` + DmB2BHAHostTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1754,6 +1888,9 @@ resource "datapower_b2b_profile" "test" {
   app_domain = "acceptance_test"
   business_ids = ["businessid"]
   destinations = ` + DmB2BDestinationTestConfig.GetModelListConfig() + `
+  contacts = null
+  ebms_profile_cpa_bindings = ` + DmProfileCPABindingTestConfig.GetModelListConfig() + `
+  ebms_message_properties = ` + DmB2BMessagePropertiesTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_b2b_profile" "test" {
@@ -1766,6 +1903,9 @@ resource "datapower_b2b_profile" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   business_ids = ["businessid"]
   destinations = ` + DmB2BDestinationTestConfig.GetModelTestBedListConfig() + `
+  contacts = null
+  ebms_profile_cpa_bindings = ` + DmProfileCPABindingTestConfig.GetModelTestBedListConfig() + `
+  ebms_message_properties = ` + DmB2BMessagePropertiesTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1841,6 +1981,7 @@ resource "datapower_cors_rule" "test" {
   id = "ResTestCORSRule"
   app_domain = "acceptance_test"
   allow_origin = ["origin"]
+  expose_headers = ` + DmCORSRuleExposeHeadersTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_cors_rule" "test" {
@@ -1852,6 +1993,7 @@ resource "datapower_cors_rule" "acc_test" {
   id = "AccTest_CORSRule"
   app_domain = datapower_domain.acc_test.app_domain
   allow_origin = ["origin"]
+  expose_headers = ` + DmCORSRuleExposeHeadersTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1859,12 +2001,14 @@ var CRLFetchTestConfig = ModelTestConfig{
     Name:         "CRLFetch",
     Resource: `
 resource "datapower_crl_fetch" "test" {
+  crl_fetch_config = ` + DmCRLFetchConfigTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_crl_fetch" "test" {
 }`,
     TestBed: `
 resource "datapower_crl_fetch" "acc_test" {
+  crl_fetch_config = ` + DmCRLFetchConfigTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1933,6 +2077,7 @@ var ConfigDeploymentPolicyTestConfig = ModelTestConfig{
 resource "datapower_config_deployment_policy" "test" {
   id = "ResTestConfigDeploymentPolicy"
   app_domain = "acceptance_test"
+  modified_config = ` + DmConfigModifyTypeTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_config_deployment_policy" "test" {
@@ -1943,6 +2088,7 @@ data "datapower_config_deployment_policy" "test" {
 resource "datapower_config_deployment_policy" "acc_test" {
   id = "AccTest_ConfigDeploymentPolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  modified_config = ` + DmConfigModifyTypeTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1952,6 +2098,8 @@ var ConfigSequenceTestConfig = ModelTestConfig{
 resource "datapower_config_sequence" "test" {
   id = "ResTestConfigSequence"
   app_domain = "acceptance_test"
+  locations = ` + DmConfigSequenceLocationTestConfig.GetModelListConfig() + `
+  capabilities = ` + DmConfigSequenceCapabilitiesTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_config_sequence" "test" {
@@ -1962,6 +2110,8 @@ data "datapower_config_sequence" "test" {
 resource "datapower_config_sequence" "acc_test" {
   id = "AccTest_ConfigSequence"
   app_domain = datapower_domain.acc_test.app_domain
+  locations = ` + DmConfigSequenceLocationTestConfig.GetModelTestBedListConfig() + `
+  capabilities = ` + DmConfigSequenceCapabilitiesTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -1971,6 +2121,7 @@ var ConformancePolicyTestConfig = ModelTestConfig{
 resource "datapower_conformance_policy" "test" {
   id = "ResTestConformancePolicy"
   app_domain = "acceptance_test"
+  profiles = ` + DmConformanceProfilesTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_conformance_policy" "test" {
@@ -1981,6 +2132,7 @@ data "datapower_conformance_policy" "test" {
 resource "datapower_conformance_policy" "acc_test" {
   id = "AccTest_ConformancePolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  profiles = ` + DmConformanceProfilesTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -2009,6 +2161,7 @@ var CookieAttributePolicyTestConfig = ModelTestConfig{
 resource "datapower_cookie_attribute_policy" "test" {
   id = "ResTestCookieAttributePolicy"
   app_domain = "acceptance_test"
+  cookie_attribute = ` + DmCookieAttributeTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_cookie_attribute_policy" "test" {
@@ -2019,6 +2172,7 @@ data "datapower_cookie_attribute_policy" "test" {
 resource "datapower_cookie_attribute_policy" "acc_test" {
   id = "AccTest_CookieAttributePolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  cookie_attribute = ` + DmCookieAttributeTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -2030,6 +2184,7 @@ resource "datapower_count_monitor" "test" {
   app_domain = "acceptance_test"
   measure = "requests"
   source = "all"
+  filter = ` + DmCountMonitorFilterTestConfig.GetModelListConfig() + `
   max_source_s = 10000
   message_type = "AccTest_MessageType"
 }`,
@@ -2044,6 +2199,7 @@ resource "datapower_count_monitor" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   measure = "requests"
   source = "all"
+  filter = ` + DmCountMonitorFilterTestConfig.GetModelTestBedListConfig() + `
   max_source_s = 10000
   message_type = datapower_message_type.acc_test.id
 }`,
@@ -2144,6 +2300,7 @@ resource "datapower_crypto_kerberos_keytab" "test" {
   id = "ResTestCryptoKerberosKeytab"
   app_domain = "acceptance_test"
   filename = "cert:///kerberos-keytab"
+  gss_checksum_flags = ` + DmGssChecksumFlagsTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_crypto_kerberos_keytab" "test" {
@@ -2155,6 +2312,7 @@ resource "datapower_crypto_kerberos_keytab" "acc_test" {
   id = "AccTest_CryptoKerberosKeytab"
   app_domain = datapower_domain.acc_test.app_domain
   filename = datapower_file.kerberos-keytab.remote_path
+  gss_checksum_flags = ` + DmGssChecksumFlagsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -2208,6 +2366,7 @@ var CryptoValCredTestConfig = ModelTestConfig{
 resource "datapower_crypto_val_cred" "test" {
   id = "ResTestCryptoValCred"
   app_domain = "acceptance_test"
+  certificate = ["AccTest_CryptoCertificate"]
 }`,
     Data: `
 data "datapower_crypto_val_cred" "test" {
@@ -2218,6 +2377,7 @@ data "datapower_crypto_val_cred" "test" {
 resource "datapower_crypto_val_cred" "acc_test" {
   id = "AccTest_CryptoValCred"
   app_domain = datapower_domain.acc_test.app_domain
+  certificate = datapower_crypto_certificate.acc_test.id
 }`,
     ModelOnly:    false,
 }
@@ -2225,12 +2385,18 @@ var DNSNameServiceTestConfig = ModelTestConfig{
     Name:         "DNSNameService",
     Resource: `
 resource "datapower_dns_name_service" "test" {
+  search_domains = ` + DmSearchDomainTestConfig.GetModelListConfig() + `
+  name_servers = ` + DmNameServerTestConfig.GetModelListConfig() + `
+  static_hosts = ` + DmStaticHostTestConfig.GetModelListConfig() + `
   load_balance_algorithm = "first-alive"
 }`,
     Data: `
 data "datapower_dns_name_service" "test" {
 }`,
     ModelTestBed: `{
+  search_domains = ` + DmSearchDomainTestConfig.GetModelTestBedListConfig() + `
+  name_servers = ` + DmNameServerTestConfig.GetModelTestBedListConfig() + `
+  static_hosts = ` + DmStaticHostTestConfig.GetModelTestBedListConfig() + `
   load_balance_algorithm = "first-alive"
 }`,
     ModelOnly:    false,
@@ -2241,6 +2407,7 @@ var DeploymentPolicyParametersBindingTestConfig = ModelTestConfig{
 resource "datapower_deployment_policy_parameters_binding" "test" {
   id = "ResTestDeploymentPolicyParametersBinding"
   app_domain = "acceptance_test"
+  deployment_policy_parameter = ` + DmDeploymentPolicyParameterTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_deployment_policy_parameters_binding" "test" {
@@ -2251,6 +2418,7 @@ data "datapower_deployment_policy_parameters_binding" "test" {
 resource "datapower_deployment_policy_parameters_binding" "acc_test" {
   id = "AccTest_DeploymentPolicyParametersBinding"
   app_domain = datapower_domain.acc_test.app_domain
+  deployment_policy_parameter = ` + DmDeploymentPolicyParameterTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -2276,11 +2444,19 @@ var DmAAAPAuthenticateTestConfig = ModelTestConfig{
     Name:         "DmAAAPAuthenticate",
     Model: `{
   au_method = "ldap"
+  au_host = "10.1.10.1"
   au_cache_allow = "absolute"
+  au_ltpa_token_versions_bitmap = ` + DmLTPATokenVersionTestConfig.GetModelConfig() + `
+  au_sm_cookie_flow = ` + DmSMFlowTestConfig.GetModelConfig() + `
+  au_sm_header_flow = ` + DmSMFlowTestConfig.GetModelConfig() + `
 }`,
     ModelTestBed: `{
   au_method = "ldap"
+  au_host = "10.1.10.1"
   au_cache_allow = "absolute"
+  au_ltpa_token_versions_bitmap = ` + DmLTPATokenVersionTestConfig.GetModelTestBedConfig() + `
+  au_sm_cookie_flow = ` + DmSMFlowTestConfig.GetModelTestBedConfig() + `
+  au_sm_header_flow = ` + DmSMFlowTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    true,
 }
@@ -2289,10 +2465,14 @@ var DmAAAPAuthorizeTestConfig = ModelTestConfig{
     Model: `{
   az_method = "anyauthenticated"
   az_cache_allow = "absolute"
+  az_sm_cookie_flow = ` + DmSMFlowTestConfig.GetModelConfig() + `
+  az_sm_header_flow = ` + DmSMFlowTestConfig.GetModelConfig() + `
 }`,
     ModelTestBed: `{
   az_method = "anyauthenticated"
   az_cache_allow = "absolute"
+  az_sm_cookie_flow = ` + DmSMFlowTestConfig.GetModelTestBedConfig() + `
+  az_sm_header_flow = ` + DmSMFlowTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    true,
 }
@@ -2315,16 +2495,20 @@ var DmAAAPERBitmapTestConfig = ModelTestConfig{
 var DmAAAPExtractIdentityTestConfig = ModelTestConfig{
     Name:         "DmAAAPExtractIdentity",
     Model: `{
+  ei_bitmap = ` + DmAAAPEIBitmapTestConfig.GetModelConfig() + `
 }`,
     ModelTestBed: `{
+  ei_bitmap = ` + DmAAAPEIBitmapTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    true,
 }
 var DmAAAPExtractResourceTestConfig = ModelTestConfig{
     Name:         "DmAAAPExtractResource",
     Model: `{
+  er_bitmap = ` + DmAAAPERBitmapTestConfig.GetModelConfig() + `
 }`,
     ModelTestBed: `{
+  er_bitmap = ` + DmAAAPERBitmapTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    true,
 }
@@ -2351,8 +2535,10 @@ var DmAAAPMapResourceTestConfig = ModelTestConfig{
 var DmAAAPPostProcessTestConfig = ModelTestConfig{
     Name:         "DmAAAPPostProcess",
     Model: `{
+  pp_saml_assertion_type = ` + DmSAMLStatementTypeTestConfig.GetModelConfig() + `
 }`,
     ModelTestBed: `{
+  pp_saml_assertion_type = ` + DmSAMLStatementTypeTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    true,
 }
@@ -2371,17 +2557,23 @@ var DmAAATransactionPriorityTestConfig = ModelTestConfig{
 var DmACETestConfig = ModelTestConfig{
     Name:         "DmACE",
     Model: `{
+  access = "allow"
+  address = "10.0.0.0/8"
 }`,
     ModelTestBed: `{
+  access = "allow"
+  address = "10.0.0.0/8"
 }`,
     ModelOnly:    true,
 }
 var DmAPIBurstLimitTestConfig = ModelTestConfig{
     Name:         "DmAPIBurstLimit",
     Model: `{
+  name = "apiburstlimit"
   burst = 1000
 }`,
     ModelTestBed: `{
+  name = "apiburstlimit"
   burst = 1000
 }`,
     ModelOnly:    true,
@@ -2399,9 +2591,11 @@ var DmAPICGSProxyPolicyTestConfig = ModelTestConfig{
 var DmAPICountLimitTestConfig = ModelTestConfig{
     Name:         "DmAPICountLimit",
     Model: `{
+  name = "countlimit"
   count = 1000
 }`,
     ModelTestBed: `{
+  name = "countlimit"
   count = 1000
 }`,
     ModelOnly:    true,
@@ -2421,11 +2615,13 @@ var DmAPIDataTypeDefinitionTestConfig = ModelTestConfig{
 var DmAPIParameterTestConfig = ModelTestConfig{
     Name:         "DmAPIParameter",
     Model: `{
+  name = "apiparameter"
   required = false
   type = "string"
   where = "path"
 }`,
     ModelTestBed: `{
+  name = "apiparameter"
   required = false
   type = "string"
   where = "path"
@@ -2457,19 +2653,25 @@ var DmAPIProxyPolicyTestConfig = ModelTestConfig{
     Model: `{
   reg_exp = "*"
   skip = false
+  remote_address = "10.10.10.10"
+  remote_port = 8888
 }`,
     ModelTestBed: `{
   reg_exp = "*"
   skip = false
+  remote_address = "10.10.10.10"
+  remote_port = 8888
 }`,
     ModelOnly:    true,
 }
 var DmAPIRateLimitTestConfig = ModelTestConfig{
     Name:         "DmAPIRateLimit",
     Model: `{
+  name = "apiratelimit"
   rate = 1000
 }`,
     ModelTestBed: `{
+  name = "apiratelimit"
   rate = 1000
 }`,
     ModelOnly:    true,
@@ -2487,9 +2689,11 @@ var DmAPIResponseSchemaTestConfig = ModelTestConfig{
 var DmASFrontProtocolTestConfig = ModelTestConfig{
     Name:         "DmASFrontProtocol",
     Model: `{
+  front_protocol = "AccTest_HTTPSourceProtocolHandler"
   mdn_receiver = false
 }`,
     ModelTestBed: `{
+  front_protocol = datapower_http_source_protocol_handler.acc_test.id
   mdn_receiver = false
 }`,
     ModelOnly:    true,
@@ -2574,11 +2778,11 @@ var DmAssemblyCatchTestConfig = ModelTestConfig{
     Name:         "DmAssemblyCatch",
     Model: `{
   error = "errorname"
-  handler = "default-api-rule"
+  handler = "default-empty-rule"
 }`,
     ModelTestBed: `{
   error = "errorname"
-  handler = "default-api-rule"
+  handler = "default-empty-rule"
 }`,
     ModelOnly:    true,
 }
@@ -2671,11 +2875,13 @@ var DmB2BDestinationTestConfig = ModelTestConfig{
     Model: `{
   dest_name = "b2bdestinationname"
   dest_url = "https://localhost"
+  enabled_doc_type = ` + DmB2BEnabledDocTypeTestConfig.GetModelConfig() + `
   ssl_client = "AccTest_SSLClientProfile"
 }`,
     ModelTestBed: `{
   dest_name = "b2bdestinationname"
   dest_url = "https://localhost"
+  enabled_doc_type = ` + DmB2BEnabledDocTypeTestConfig.GetModelTestBedConfig() + `
   ssl_client = datapower_ssl_client_profile.acc_test.id
 }`,
     ModelOnly:    true,
@@ -2761,12 +2967,18 @@ var DmCPACollaborationActionTestConfig = ModelTestConfig{
 var DmCRLFetchConfigTestConfig = ModelTestConfig{
     Name:         "DmCRLFetchConfig",
     Model: `{
-  issuer_valcred = "AccTest_CryptoValCred"
+  name = "crlfetch"
+  fetch_type = "http"
+  issuer_valcred = "Default_CryptoValCred"
   refresh_interval = 240
+  url = "http://foo.com/crl"
 }`,
     ModelTestBed: `{
-  issuer_valcred = datapower_crypto_valcred.acc_test.id
+  name = "crlfetch"
+  fetch_type = "http"
+  issuer_valcred = datapower_crypto_valcred.default.id
   refresh_interval = 240
+  url = "http://foo.com/crl"
 }`,
     ModelOnly:    true,
 }
@@ -2797,10 +3009,12 @@ var DmConfigModifyTypeTestConfig = ModelTestConfig{
     Model: `{
   match = "10.10.1.1/domainA/services/xslproxy?Value=myhost"
   type = "change"
+  value = "somevalue"
 }`,
     ModelTestBed: `{
   match = "10.10.1.1/domainA/services/xslproxy?Value=myhost"
   type = "change"
+  value = "somevalue"
 }`,
     ModelOnly:    true,
 }
@@ -2995,10 +3209,12 @@ var DmExtensionFunctionTestConfig = ModelTestConfig{
 var DmExternalAttachedPolicyTestConfig = ModelTestConfig{
     Name:         "DmExternalAttachedPolicy",
     Model: `{
-  external_attach_policy_url = "some.url"
+  external_attach_wsdl_component_value = "wsdlvalue"
+  external_attach_policy_url = "http://some.url"
 }`,
     ModelTestBed: `{
-  external_attach_policy_url = "some.url"
+  external_attach_wsdl_component_value = "wsdlvalue"
+  external_attach_policy_url = "http://some.url"
 }`,
     ModelOnly:    true,
 }
@@ -3008,8 +3224,6 @@ var DmFTPPolicyTestConfig = ModelTestConfig{
   reg_exp = "*"
   passive = "pasv-req"
   auth_tls = "auth-off"
-  use_ccc = "ccc-off"
-  encrypt_data = "enc-data-off"
   data_type = "binary"
   slash_stou = "slash-stou-on"
 }`,
@@ -3017,8 +3231,6 @@ var DmFTPPolicyTestConfig = ModelTestConfig{
   reg_exp = "*"
   passive = "pasv-req"
   auth_tls = "auth-off"
-  use_ccc = "ccc-off"
-  encrypt_data = "enc-data-off"
   data_type = "binary"
   slash_stou = "slash-stou-on"
 }`,
@@ -3037,20 +3249,22 @@ var DmFTPQuotedCommandTestConfig = ModelTestConfig{
 var DmFTPServerVirtualDirectoryTestConfig = ModelTestConfig{
     Name:         "DmFTPServerVirtualDirectory",
     Model: `{
-  virtual_path = "virtualpath"
+  virtual_path = "/virtualpath"
 }`,
     ModelTestBed: `{
-  virtual_path = "virtualpath"
+  virtual_path = "/virtualpath"
 }`,
     ModelOnly:    true,
 }
 var DmFileSystemUsageTestConfig = ModelTestConfig{
     Name:         "DmFileSystemUsage",
     Model: `{
+  name = "system"
   warning_threshold = 75
   critical_threshold = 90
 }`,
     ModelTestBed: `{
+  name = "system"
   warning_threshold = 75
   critical_threshold = 90
 }`,
@@ -3110,9 +3324,17 @@ var DmGitOpsTemplateEntryTestConfig = ModelTestConfig{
     Name:         "DmGitOpsTemplateEntry",
     Model: `{
   template_type = "change"
+  class_name = "someclass"
+  name = "templatename"
+  field = "fieldname"
+  value = "templatevalue"
 }`,
     ModelTestBed: `{
   template_type = "change"
+  class_name = "someclass"
+  name = "templatename"
+  field = "fieldname"
+  value = "templatevalue"
 }`,
     ModelOnly:    true,
 }
@@ -3127,8 +3349,12 @@ var DmGitOpsTemplatePolicyTestConfig = ModelTestConfig{
 var DmGitOpsVariableEntryTestConfig = ModelTestConfig{
     Name:         "DmGitOpsVariableEntry",
     Model: `{
+  variable_name = "variablename"
+  variable_value = "variablevalue"
 }`,
     ModelTestBed: `{
+  variable_name = "variablename"
+  variable_value = "variablevalue"
 }`,
     ModelOnly:    true,
 }
@@ -3199,10 +3425,10 @@ var DmHTTPVersionPolicyTestConfig = ModelTestConfig{
 var DmHeaderInjectionTestConfig = ModelTestConfig{
     Name:         "DmHeaderInjection",
     Model: `{
-  header_tag_value = "Some Header Value"
+  header_tag_value = "SomeHeaderValue"
 }`,
     ModelTestBed: `{
-  header_tag_value = "Some Header Value"
+  header_tag_value = "SomeHeaderValue"
 }`,
     ModelOnly:    true,
 }
@@ -3218,9 +3444,11 @@ var DmHeaderRetentionPolicyTestConfig = ModelTestConfig{
     Name:         "DmHeaderRetentionPolicy",
     Model: `{
   reg_exp = "*"
+  header_retention = ` + DmHeaderRetentionBitmapTestConfig.GetModelConfig() + `
 }`,
     ModelTestBed: `{
   reg_exp = "*"
+  header_retention = ` + DmHeaderRetentionBitmapTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    true,
 }
@@ -3338,9 +3566,11 @@ var DmLBGroupAffinityTestConfig = ModelTestConfig{
     Name:         "DmLBGroupAffinity",
     Model: `{
   enable_sa = true
+  insertion_attributes = ` + DmInsertionAttributesTestConfig.GetModelConfig() + `
 }`,
     ModelTestBed: `{
   enable_sa = true
+  insertion_attributes = ` + DmInsertionAttributesTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    true,
 }
@@ -3397,8 +3627,10 @@ var DmLTPAUserAttributeNameAndValueTestConfig = ModelTestConfig{
 var DmLogEventTestConfig = ModelTestConfig{
     Name:         "DmLogEvent",
     Model: `{
+  class = "AccTest_LogLabel"
 }`,
     ModelTestBed: `{
+  class = datapower_log_label.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -3413,8 +3645,10 @@ var DmLogIPFilterTestConfig = ModelTestConfig{
 var DmLogObjectTestConfig = ModelTestConfig{
     Name:         "DmLogObject",
     Model: `{
+  class = "AAAPolicy"
 }`,
     ModelTestBed: `{
+  class = "AAAPolicy"
 }`,
     ModelOnly:    true,
 }
@@ -3431,10 +3665,14 @@ var DmMCFilterTestConfig = ModelTestConfig{
     Model: `{
   filter_name = "ResTestmc_filter"
   type = "http"
+  http_name = "headername"
+  http_value = "headervalue"
 }`,
     ModelTestBed: `{
   filter_name = "ResTestmc_filter"
   type = "http"
+  http_name = "headername"
+  http_value = "headervalue"
 }`,
     ModelOnly:    true,
 }
@@ -3458,11 +3696,11 @@ var DmMatchRuleTestConfig = ModelTestConfig{
     Name:         "DmMatchRule",
     Model: `{
   type = "url"
-  error_code = "*"
+  url = "*"
 }`,
     ModelTestBed: `{
   type = "url"
-  error_code = "*"
+  url = "*"
 }`,
     ModelOnly:    true,
 }
@@ -3489,8 +3727,10 @@ var DmMetadataFromTypeTestConfig = ModelTestConfig{
 var DmMtomRuleTestConfig = ModelTestConfig{
     Name:         "DmMtomRule",
     Model: `{
+  xpath = "\"xpath\""
 }`,
     ModelTestBed: `{
+  xpath = "\"xpath\""
 }`,
     ModelOnly:    true,
 }
@@ -3629,8 +3869,12 @@ var DmODRConnectorTestConfig = ModelTestConfig{
 var DmODRPropertyTestConfig = ModelTestConfig{
     Name:         "DmODRProperty",
     Model: `{
+  prop_name = "propname"
+  prop_value = "propvalue"
 }`,
     ModelTestBed: `{
+  prop_name = "propname"
+  prop_value = "propvalue"
 }`,
     ModelOnly:    true,
 }
@@ -3721,11 +3965,13 @@ var DmProxyPolicyTestConfig = ModelTestConfig{
     Model: `{
   reg_exp = "*"
   skip = false
+  remote_address = "remote.host"
   remote_port = 443
 }`,
     ModelTestBed: `{
   reg_exp = "*"
   skip = false
+  remote_address = "remote.host"
   remote_port = 443
 }`,
     ModelOnly:    true,
@@ -3753,9 +3999,15 @@ var DmRBMSSHAuthenticateTypeTestConfig = ModelTestConfig{
 var DmRadiusServerTestConfig = ModelTestConfig{
     Name:         "DmRadiusServer",
     Model: `{
+  number = 100
+  host = "10.10.10.10"
+  secret_wo = "opensaysme"
   secret_wo_version = 1
 }`,
     ModelTestBed: `{
+  number = 100
+  host = "10.10.10.10"
+  secret_wo = "opensaysme"
   secret_wo_version = 1
 }`,
     ModelOnly:    true,
@@ -3763,8 +4015,12 @@ var DmRadiusServerTestConfig = ModelTestConfig{
 var DmRateLimitConfigurationNameValuePairTestConfig = ModelTestConfig{
     Name:         "DmRateLimitConfigurationNameValuePair",
     Model: `{
+  name = "ratelimitname"
+  value = "ratelimitvalue"
 }`,
     ModelTestBed: `{
+  name = "ratelimitname"
+  value = "ratelimitvalue"
 }`,
     ModelOnly:    true,
 }
@@ -3861,11 +4117,13 @@ var DmSFTPServerVirtualDirectoryTestConfig = ModelTestConfig{
 var DmSLMStatementTestConfig = ModelTestConfig{
     Name:         "DmSLMStatement",
     Model: `{
+  slm_id = 514
   action = "notify"
   maximum_total_reporting_records = 5000
   maximum_resources_and_credentials_for_threshold = 5000
 }`,
     ModelTestBed: `{
+  slm_id = 514
   action = "notify"
   maximum_total_reporting_records = 5000
   maximum_resources_and_credentials_for_threshold = 5000
@@ -3892,9 +4150,11 @@ var DmSMTPPolicyTestConfig = ModelTestConfig{
     Name:         "DmSMTPPolicy",
     Model: `{
   reg_exp = "dpsmtp://*"
+  options = ` + DmSMTPOptionsTestConfig.GetModelConfig() + `
 }`,
     ModelTestBed: `{
   reg_exp = "dpsmtp://*"
+  options = ` + DmSMTPOptionsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    true,
 }
@@ -3935,11 +4195,11 @@ var DmSQLServerTestConfig = ModelTestConfig{
 var DmSSHUserAuthenticationMethodsTestConfig = ModelTestConfig{
     Name:         "DmSSHUserAuthenticationMethods",
     Model: `{
-  publickey = true
+  publickey = false
   password = true
 }`,
     ModelTestBed: `{
-  publickey = true
+  publickey = false
   password = true
 }`,
     ModelOnly:    true,
@@ -3984,9 +4244,11 @@ var DmSSLPolicyTestConfig = ModelTestConfig{
     Name:         "DmSSLPolicy",
     Model: `{
   reg_exp = "*"
+  ssl_client = "AccTest_SSLClientProfile"
 }`,
     ModelTestBed: `{
   reg_exp = "*"
+  ssl_client = datapower_ssl_client_profile.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -4063,9 +4325,11 @@ var DmSecurityTypeTestConfig = ModelTestConfig{
 var DmSnmpContextTestConfig = ModelTestConfig{
     Name:         "DmSnmpContext",
     Model: `{
+  context = "context"
   domain = "acc_test_domain"
 }`,
     ModelTestBed: `{
+  context = "context"
   domain = "acc_test_domain"
 }`,
     ModelOnly:    true,
@@ -4075,12 +4339,16 @@ var DmSnmpCredTestConfig = ModelTestConfig{
     Model: `{
   engine_id = "0DEADBEEF0"
   auth_protocol = "sha"
+  auth_secret_wo_version = 1
   priv_protocol = "des"
+  priv_secret_wo_version = 1
 }`,
     ModelTestBed: `{
   engine_id = "0DEADBEEF0"
   auth_protocol = "sha"
+  auth_secret_wo_version = 1
   priv_protocol = "des"
+  priv_secret_wo_version = 1
 }`,
     ModelOnly:    true,
 }
@@ -4101,26 +4369,36 @@ var DmSnmpCredMaskedTestConfig = ModelTestConfig{
 var DmSnmpPolicyTestConfig = ModelTestConfig{
     Name:         "DmSnmpPolicy",
     Model: `{
+  community = "private"
   domain = "acc_test_domain"
+  mode = "none"
 }`,
     ModelTestBed: `{
+  community = "private"
   domain = "acc_test_domain"
+  mode = "none"
 }`,
     ModelOnly:    true,
 }
 var DmSnmpPolicyMQTestConfig = ModelTestConfig{
     Name:         "DmSnmpPolicyMQ",
     Model: `{
+  community = "private"
+  mode = "none"
 }`,
     ModelTestBed: `{
+  community = "private"
+  mode = "none"
 }`,
     ModelOnly:    true,
 }
 var DmSnmpTargetTestConfig = ModelTestConfig{
     Name:         "DmSnmpTarget",
     Model: `{
+  host = "10.10.10.10"
 }`,
     ModelTestBed: `{
+  host = "10.10.10.10"
 }`,
     ModelOnly:    true,
 }
@@ -4267,10 +4545,12 @@ var DmURLRewriteRuleTestConfig = ModelTestConfig{
     Model: `{
   type = "header-rewrite"
   match_regexp = "Test"
+  input_replace_regexp = "Replace"
 }`,
     ModelTestBed: `{
   type = "header-rewrite"
   match_regexp = "Test"
+  input_replace_regexp = "Replace"
 }`,
     ModelOnly:    true,
 }
@@ -4297,9 +4577,13 @@ var DmValidationFeaturesTestConfig = ModelTestConfig{
 var DmValidationTypeTestConfig = ModelTestConfig{
     Name:         "DmValidationType",
     Model: `{
+  name = "validationname"
+  value = "somevalue"
   fixup = "error"
 }`,
     ModelTestBed: `{
+  name = "validationname"
+  value = "somevalue"
   fixup = "error"
 }`,
     ModelOnly:    true,
@@ -4307,8 +4591,12 @@ var DmValidationTypeTestConfig = ModelTestConfig{
 var DmWSBaseWSDLTestConfig = ModelTestConfig{
     Name:         "DmWSBaseWSDL",
     Model: `{
+  wsdl_source_location = "http:///searchservice.wsdl"
+  wsdl_name = "searchsvc"
 }`,
     ModelTestBed: `{
+  wsdl_source_location = "http:///searchservice.wsdl"
+  wsdl_name = "searchsvc"
 }`,
     ModelOnly:    true,
 }
@@ -4349,8 +4637,10 @@ var DmWSEndpointPublishRewriteRuleTestConfig = ModelTestConfig{
 var DmWSEndpointRemoteRewriteRuleTestConfig = ModelTestConfig{
     Name:         "DmWSEndpointRemoteRewriteRule",
     Model: `{
+  remote_endpoint_hostname = "10.10.10.10"
 }`,
     ModelTestBed: `{
+  remote_endpoint_hostname = "10.10.10.10"
 }`,
     ModelOnly:    true,
 }
@@ -4375,8 +4665,10 @@ var DmWSEndpointSubscriptionPublishRuleTestConfig = ModelTestConfig{
 var DmWSEndpointSubscriptionRemoteRuleTestConfig = ModelTestConfig{
     Name:         "DmWSEndpointSubscriptionRemoteRule",
     Model: `{
+  remote_endpoint_hostname = "10.10.10.10"
 }`,
     ModelTestBed: `{
+  remote_endpoint_hostname = "10.10.10.10"
 }`,
     ModelOnly:    true,
 }
@@ -4409,9 +4701,11 @@ var DmWSOperationConformancePolicyTestConfig = ModelTestConfig{
 var DmWSOperationPolicySubjectOptOutTestConfig = ModelTestConfig{
     Name:         "DmWSOperationPolicySubjectOptOut",
     Model: `{
+  ignored_subjects = ` + DmPolicySubjectBitmapTestConfig.GetModelConfig() + `
   policy_subject_opt_out_wsdl_component_type = "all"
 }`,
     ModelTestBed: `{
+  ignored_subjects = ` + DmPolicySubjectBitmapTestConfig.GetModelTestBedConfig() + `
   policy_subject_opt_out_wsdl_component_type = "all"
 }`,
     ModelOnly:    true,
@@ -4419,9 +4713,11 @@ var DmWSOperationPolicySubjectOptOutTestConfig = ModelTestConfig{
 var DmWSOperationReliableMessagingTestConfig = ModelTestConfig{
     Name:         "DmWSOperationReliableMessaging",
     Model: `{
+  options = ` + DmWSRMPolicyBitmapTestConfig.GetModelConfig() + `
   reliable_messaging_wsdl_component_type = "all"
 }`,
     ModelTestBed: `{
+  options = ` + DmWSRMPolicyBitmapTestConfig.GetModelTestBedConfig() + `
   reliable_messaging_wsdl_component_type = "all"
 }`,
     ModelOnly:    true,
@@ -4478,19 +4774,35 @@ var DmWSSLMOpsTestConfig = ModelTestConfig{
   operation = "all"
   target = "front"
   severity = "low"
+  action = "log"
 }`,
     ModelTestBed: `{
   operation = "all"
   target = "front"
   severity = "low"
+  action = "log"
 }`,
     ModelOnly:    true,
 }
 var DmWSUserTogglesTestConfig = ModelTestConfig{
     Name:         "DmWSUserToggles",
     Model: `{
+  wsdl_name = "\"*\""
+  service_name = "\"*\""
+  service_port_name = "\"*\""
+  port_type_name = "\"*\""
+  binding_name = "\"*\""
+  operation_name = "\"*\""
+  toggles = null
 }`,
     ModelTestBed: `{
+  wsdl_name = "\"*\""
+  service_name = "\"*\""
+  service_port_name = "\"*\""
+  port_type_name = "\"*\""
+  binding_name = "\"*\""
+  operation_name = "\"*\""
+  toggles = null
 }`,
     ModelOnly:    true,
 }
@@ -4594,6 +4906,7 @@ resource "datapower_document_crypto_map" "test" {
   app_domain = "acceptance_test"
   operation = "encrypt"
   xpath = ["*",]
+  name_space_mappings = null
 }`,
     Data: `
 data "datapower_document_crypto_map" "test" {
@@ -4606,6 +4919,7 @@ resource "datapower_document_crypto_map" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   operation = "encrypt"
   xpath = ["*",]
+  name_space_mappings = null
 }`,
     ModelOnly:    false,
 }
@@ -4614,6 +4928,9 @@ var DomainTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_domain" "test" {
   app_domain = "domain_resource_test"
+  neighbor_domain = ["default",]
+  file_map = ` + DmDomainFileMapTestConfig.GetModelConfig() + `
+  monitoring_map = ` + DmDomainMonitoringMapTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_domain" "test" {
@@ -4622,6 +4939,8 @@ data "datapower_domain" "test" {
     TestBed: `
 resource "datapower_domain" "acc_test" {
   app_domain = "acceptance_test"
+  file_map = ` + DmDomainFileMapTestConfig.GetModelTestBedConfig() + `
+  monitoring_map = ` + DmDomainMonitoringMapTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -4647,6 +4966,7 @@ var DomainSettingsTestConfig = ModelTestConfig{
 resource "datapower_domain_settings" "test" {
   app_domain = "acceptance_test"
   password_treatment = "masked"
+  passphrase_wo_version = 1
 }`,
     Data: `
 data "datapower_domain_settings" "test" {
@@ -4656,6 +4976,7 @@ data "datapower_domain_settings" "test" {
 resource "datapower_domain_settings" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   password_treatment = "masked"
+  passphrase_wo_version = 1
 }`,
     ModelOnly:    false,
 }
@@ -4666,6 +4987,7 @@ resource "datapower_duration_monitor" "test" {
   id = "ResTestDurationMonitor"
   app_domain = "acceptance_test"
   measure = "messages"
+  filter = ` + DmDurationMonitorFilterTestConfig.GetModelListConfig() + `
   message_type = "AccTest_MessageType"
 }`,
     Data: `
@@ -4678,6 +5000,7 @@ resource "datapower_duration_monitor" "acc_test" {
   id = "AccTest_DurationMonitor"
   app_domain = datapower_domain.acc_test.app_domain
   measure = "messages"
+  filter = ` + DmDurationMonitorFilterTestConfig.GetModelTestBedListConfig() + `
   message_type = datapower_message_type.acc_test.id
 }`,
     ModelOnly:    false,
@@ -4778,6 +5101,7 @@ var FTPQuoteCommandsTestConfig = ModelTestConfig{
 resource "datapower_ftp_quote_commands" "test" {
   id = "ResTestFTPQuoteCommands"
   app_domain = "acceptance_test"
+  ftp_quoted_commands = ` + DmFTPQuotedCommandTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_ftp_quote_commands" "test" {
@@ -4788,6 +5112,7 @@ data "datapower_ftp_quote_commands" "test" {
 resource "datapower_ftp_quote_commands" "acc_test" {
   id = "AccTest_FTPQuoteCommands"
   app_domain = datapower_domain.acc_test.app_domain
+  ftp_quoted_commands = ` + DmFTPQuotedCommandTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -4799,6 +5124,7 @@ resource "datapower_ftp_server_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 21
+  virtual_directories = ` + DmFTPServerVirtualDirectoryTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_ftp_server_source_protocol_handler" "test" {
@@ -4811,6 +5137,7 @@ resource "datapower_ftp_server_source_protocol_handler" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
   local_port = 21
+  virtual_directories = ` + DmFTPServerVirtualDirectoryTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -4820,6 +5147,7 @@ var FileSystemUsageMonitorTestConfig = ModelTestConfig{
 resource "datapower_file_system_usage_monitor" "test" {
   polling_interval = 60
   all_system = true
+  system = ` + DmFileSystemUsageTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_file_system_usage_monitor" "test" {
@@ -4828,6 +5156,7 @@ data "datapower_file_system_usage_monitor" "test" {
 resource "datapower_file_system_usage_monitor" "acc_test" {
   polling_interval = 60
   all_system = true
+  system = ` + DmFileSystemUsageTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -4952,6 +5281,8 @@ resource "datapower_gateway_peering_group" "test" {
   id = "ResTestGatewayPeeringGroup"
   app_domain = "acceptance_test"
   mode = "peer"
+  peer_nodes = ` + DmGatewayPeeringGroupPeerNodeTestConfig.GetModelListConfig() + `
+  cluster_nodes = ` + DmGatewayPeeringGroupClusterNodeTestConfig.GetModelListConfig() + `
   enable_ssl = false
 }`,
     Data: `
@@ -4963,6 +5294,8 @@ data "datapower_gateway_peering_group" "test" {
   id = "AccTest_GatewayPeeringGroup"
   app_domain = datapower_domain.acc_test.app_domain
   mode = "peer"
+  peer_nodes = ` + DmGatewayPeeringGroupPeerNodeTestConfig.GetModelTestBedListConfig() + `
+  cluster_nodes = ` + DmGatewayPeeringGroupClusterNodeTestConfig.GetModelTestBedListConfig() + `
   enable_ssl = false
 }`,
     ModelOnly:    false,
@@ -5005,6 +5338,7 @@ resource "datapower_git_ops" "test" {
   tls_valcred = "AccTest_CryptoValCred"
   git_user = "Git User"
   git_email = "git@user.domain"
+  template_policies = null
 }`,
     Data: `
 data "datapower_git_ops" "test" {
@@ -5022,6 +5356,7 @@ resource "datapower_git_ops" "acc_test" {
   tls_valcred = datapower_crypto_val_cred.acc_test.id
   git_user = "Git User"
   git_email = "git@user.domain"
+  template_policies = null
 }`,
     ModelOnly:    false,
 }
@@ -5031,6 +5366,7 @@ var GitOpsTemplateTestConfig = ModelTestConfig{
 resource "datapower_git_ops_template" "test" {
   id = "ResTestGitOpsTemplate"
   app_domain = "acceptance_test"
+  templates = ` + DmGitOpsTemplateEntryTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_git_ops_template" "test" {
@@ -5041,6 +5377,7 @@ data "datapower_git_ops_template" "test" {
 resource "datapower_git_ops_template" "acc_test" {
   id = "AccTest_GitOpsTemplate"
   app_domain = datapower_domain.acc_test.app_domain
+  templates = ` + DmGitOpsTemplateEntryTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5048,12 +5385,14 @@ var GitOpsVariablesTestConfig = ModelTestConfig{
     Name:         "GitOpsVariables",
     Resource: `
 resource "datapower_git_ops_variables" "test" {
+  variables = ` + DmGitOpsVariableEntryTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_git_ops_variables" "test" {
 }`,
     TestBed: `
 resource "datapower_git_ops_variables" "acc_test" {
+  variables = ` + DmGitOpsVariableEntryTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5084,6 +5423,7 @@ var HTTPInputConversionMapTestConfig = ModelTestConfig{
 resource "datapower_http_input_conversion_map" "test" {
   id = "ResTestHTTPInputConversionMap"
   app_domain = "acceptance_test"
+  input_encoding = null
 }`,
     Data: `
 data "datapower_http_input_conversion_map" "test" {
@@ -5094,6 +5434,7 @@ data "datapower_http_input_conversion_map" "test" {
 resource "datapower_http_input_conversion_map" "acc_test" {
   id = "AccTest_HTTPInputConversionMap"
   app_domain = datapower_domain.acc_test.app_domain
+  input_encoding = null
 }`,
     ModelOnly:    false,
 }
@@ -5103,6 +5444,7 @@ var HTTPSSourceProtocolHandlerTestConfig = ModelTestConfig{
 resource "datapower_https_source_protocol_handler" "test" {
   id = "ResTestHTTPSSourceProtocolHandler"
   app_domain = "acceptance_test"
+  allowed_features = ` + DmSourceHTTPFeatureTypeTestConfig.GetModelConfig() + `
   ssl_server_config_type = "server"
   ssl_server = "AccTest_SSLServerProfile"
 }`,
@@ -5115,6 +5457,7 @@ data "datapower_https_source_protocol_handler" "test" {
 resource "datapower_https_source_protocol_handler" "acc_test" {
   id = "AccTest_HTTPSSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
+  allowed_features = ` + DmSourceHTTPFeatureTypeTestConfig.GetModelTestBedConfig() + `
   ssl_server_config_type = "server"
   ssl_server = datapower_ssl_server_profile.acc_test.id
 }`,
@@ -5128,6 +5471,7 @@ resource "datapower_http_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 8088
+  allowed_features = ` + DmSourceHTTPFeatureTypeTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_http_source_protocol_handler" "test" {
@@ -5140,6 +5484,7 @@ resource "datapower_http_source_protocol_handler" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
   local_port = 8088
+  allowed_features = ` + DmSourceHTTPFeatureTypeTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5149,6 +5494,19 @@ var HTTPUserAgentTestConfig = ModelTestConfig{
 resource "datapower_http_user_agent" "test" {
   id = "ResTestHTTPUserAgent"
   app_domain = "acceptance_test"
+  proxy_policies = ` + DmProxyPolicyTestConfig.GetModelListConfig() + `
+  ssl_policies = ` + DmSSLPolicyTestConfig.GetModelListConfig() + `
+  basic_auth_policies = ` + DmBasicAuthPolicyTestConfig.GetModelListConfig() + `
+  soap_action_policies = ` + DmSoapActionPolicyTestConfig.GetModelListConfig() + `
+  pubkey_auth_policies = ` + DmPubkeyAuthPolicyTestConfig.GetModelListConfig() + `
+  allow_compression_policies = ` + DmAllowCompressionPolicyTestConfig.GetModelListConfig() + `
+  header_retention_policies = ` + DmHeaderRetentionPolicyTestConfig.GetModelListConfig() + `
+  http_version_policies = ` + DmHTTPVersionPolicyTestConfig.GetModelListConfig() + `
+  add_header_policies = ` + DmAddHeaderPolicyTestConfig.GetModelListConfig() + `
+  upload_chunked_policies = ` + DmUploadChunkedPolicyTestConfig.GetModelListConfig() + `
+  ftp_policies = ` + DmFTPPolicyTestConfig.GetModelListConfig() + `
+  smtp_policies = ` + DmSMTPPolicyTestConfig.GetModelListConfig() + `
+  sftp_policies = ` + DmSFTPPolicyTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_http_user_agent" "test" {
@@ -5159,6 +5517,19 @@ data "datapower_http_user_agent" "test" {
 resource "datapower_http_user_agent" "acc_test" {
   id = "AccTest_HTTPUserAgent"
   app_domain = datapower_domain.acc_test.app_domain
+  proxy_policies = ` + DmProxyPolicyTestConfig.GetModelTestBedListConfig() + `
+  ssl_policies = ` + DmSSLPolicyTestConfig.GetModelTestBedListConfig() + `
+  basic_auth_policies = ` + DmBasicAuthPolicyTestConfig.GetModelTestBedListConfig() + `
+  soap_action_policies = ` + DmSoapActionPolicyTestConfig.GetModelTestBedListConfig() + `
+  pubkey_auth_policies = ` + DmPubkeyAuthPolicyTestConfig.GetModelTestBedListConfig() + `
+  allow_compression_policies = ` + DmAllowCompressionPolicyTestConfig.GetModelTestBedListConfig() + `
+  header_retention_policies = ` + DmHeaderRetentionPolicyTestConfig.GetModelTestBedListConfig() + `
+  http_version_policies = ` + DmHTTPVersionPolicyTestConfig.GetModelTestBedListConfig() + `
+  add_header_policies = ` + DmAddHeaderPolicyTestConfig.GetModelTestBedListConfig() + `
+  upload_chunked_policies = ` + DmUploadChunkedPolicyTestConfig.GetModelTestBedListConfig() + `
+  ftp_policies = ` + DmFTPPolicyTestConfig.GetModelTestBedListConfig() + `
+  smtp_policies = ` + DmSMTPPolicyTestConfig.GetModelTestBedListConfig() + `
+  sftp_policies = ` + DmSFTPPolicyTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5316,6 +5687,8 @@ var JWEHeaderTestConfig = ModelTestConfig{
 resource "datapower_jwe_header" "test" {
   id = "ResTestJWEHeader"
   app_domain = "acceptance_test"
+  jwe_protected_header = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
+  jwe_shared_unprotected_header = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
   recipient = "AccTest_JWERecipient"
 }`,
     Data: `
@@ -5327,6 +5700,8 @@ data "datapower_jwe_header" "test" {
 resource "datapower_jwe_header" "acc_test" {
   id = "AccTest_JWEHeader"
   app_domain = datapower_domain.acc_test.app_domain
+  jwe_protected_header = ` + DmJOSEHeaderTestConfig.GetModelTestBedListConfig() + `
+  jwe_shared_unprotected_header = ` + DmJOSEHeaderTestConfig.GetModelTestBedListConfig() + `
   recipient = datapower_jwe_recipient.acc_test.id
 }`,
     ModelOnly:    false,
@@ -5338,7 +5713,8 @@ resource "datapower_jwe_recipient" "test" {
   id = "ResTestJWERecipient"
   app_domain = "acceptance_test"
   algorithm = "RSA1_5"
-  certificate = "TestAcc_CryptoCertificate"
+  certificate = "AccTest_CryptoCertificate"
+  unprotected_header = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_jwe_recipient" "test" {
@@ -5351,6 +5727,7 @@ resource "datapower_jwe_recipient" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   algorithm = "RSA1_5"
   certificate = datapower_crypto_certificate.acc_test.id
+  unprotected_header = ` + DmJOSEHeaderTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5362,6 +5739,8 @@ resource "datapower_jws_signature" "test" {
   app_domain = "acceptance_test"
   algorithm = "RS256"
   key = "AccTest_CryptoKey"
+  protected_header = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
+  unprotected_header = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_jws_signature" "test" {
@@ -5374,6 +5753,8 @@ resource "datapower_jws_signature" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   algorithm = "RS256"
   key = datapower_crypto_key.acc_test.id
+  protected_header = ` + DmJOSEHeaderTestConfig.GetModelTestBedListConfig() + `
+  unprotected_header = ` + DmJOSEHeaderTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5385,6 +5766,7 @@ resource "datapower_kafka_cluster" "test" {
   app_domain = "acceptance_test"
   protocol = "plaintext"
   endpoint = ` + DmKafkaEndpointTestConfig.GetModelListConfig() + `
+  property = ` + DmKafkaPropertyTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_kafka_cluster" "test" {
@@ -5396,6 +5778,7 @@ data "datapower_kafka_cluster" "test" {
   app_domain = datapower_domain.acc_test.app_domain
   protocol = "plaintext"
   endpoint = ` + DmKafkaEndpointTestConfig.GetModelTestBedListConfig() + `
+  property = ` + DmKafkaPropertyTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5470,6 +5853,9 @@ resource "datapower_load_balancer_group" "test" {
   algorithm = "round-robin"
   retrieve_info = false
   damp = 120
+  lb_group_members = ` + DmLBGroupMemberTestConfig.GetModelListConfig() + `
+  lb_group_checks = ` + DmLBGroupCheckTestConfig.GetModelConfig() + `
+  lb_group_affinity_conf = ` + DmLBGroupAffinityTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_load_balancer_group" "test" {
@@ -5483,6 +5869,9 @@ resource "datapower_load_balancer_group" "acc_test" {
   algorithm = "round-robin"
   retrieve_info = false
   damp = 120
+  lb_group_members = ` + DmLBGroupMemberTestConfig.GetModelTestBedListConfig() + `
+  lb_group_checks = ` + DmLBGroupCheckTestConfig.GetModelTestBedConfig() + `
+  lb_group_affinity_conf = ` + DmLBGroupAffinityTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5511,8 +5900,13 @@ var LogTargetTestConfig = ModelTestConfig{
 resource "datapower_log_target" "test" {
   id = "ResTest_LogTarget"
   app_domain = "acceptance_test"
+  log_events = ` + DmLogEventTestConfig.GetModelListConfig() + `
   type = "file"
   local_file = "logtemp:///AccTest_LogTarget.log"
+  remote_password_wo_version = 1
+  log_objects = ` + DmLogObjectTestConfig.GetModelListConfig() + `
+  log_ip_filter = null
+  log_triggers = ` + DmLogTriggerTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_log_target" "test" {
@@ -5523,8 +5917,13 @@ data "datapower_log_target" "test" {
 resource "datapower_log_target" "acc_test" {
   id = "AccTest_LogTarget"
   app_domain = datapower_domain.acc_test.app_domain
+  log_events = ` + DmLogEventTestConfig.GetModelTestBedListConfig() + `
   type = "file"
   local_file = "logtemp:///AccTest_LogTarget.log"
+  remote_password_wo_version = 1
+  log_objects = ` + DmLogObjectTestConfig.GetModelTestBedListConfig() + `
+  log_ip_filter = null
+  log_triggers = ` + DmLogTriggerTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5728,6 +6127,7 @@ resource "datapower_mpgw_error_action" "test" {
   app_domain = "acceptance_test"
   type = "static"
   local_url = "store:///schemas/XMLSchema.dtd"
+  header_injection = ` + DmWebGWErrorRespHeaderInjectionTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_mpgw_error_action" "test" {
@@ -5740,6 +6140,7 @@ resource "datapower_mpgw_error_action" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   type = "static"
   local_url = "store:///schemas/XMLSchema.dtd"
+  header_injection = ` + DmWebGWErrorRespHeaderInjectionTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5841,6 +6242,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
   queue_manager = "AccTest_MQManager"
   get_queue = "queue"
+  exclude_headers = ` + DmMQHeadersTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_mqv9_plus_source_protocol_handler" "test" {
@@ -5853,6 +6255,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   queue_manager = datapower_mq_manager.acc_test.id
   get_queue = "queue"
+  exclude_headers = ` + DmMQHeadersTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5862,6 +6265,7 @@ var MTOMPolicyTestConfig = ModelTestConfig{
 resource "datapower_mtom_policy" "test" {
   id = "ResTestMTOMPolicy"
   app_domain = "acceptance_test"
+  rule = ` + DmMtomRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_mtom_policy" "test" {
@@ -5872,6 +6276,7 @@ data "datapower_mtom_policy" "test" {
 resource "datapower_mtom_policy" "acc_test" {
   id = "AccTest_MTOMPolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  rule = ` + DmMtomRuleTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5881,6 +6286,7 @@ var MatchingTestConfig = ModelTestConfig{
 resource "datapower_matching" "test" {
   id = "ResTestMatching"
   app_domain = "acceptance_test"
+  match_rules = ` + DmMatchRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_matching" "test" {
@@ -5891,6 +6297,7 @@ data "datapower_matching" "test" {
 resource "datapower_matching" "acc_test" {
   id = "AccTest_Matching"
   app_domain = datapower_domain.acc_test.app_domain
+  match_rules = ` + DmMatchRuleTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5900,6 +6307,7 @@ var MessageContentFiltersTestConfig = ModelTestConfig{
 resource "datapower_message_content_filters" "test" {
   id = "ResTestMessageContentFilters"
   app_domain = "acceptance_test"
+  filters = ` + DmMCFilterTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_message_content_filters" "test" {
@@ -5910,6 +6318,7 @@ data "datapower_message_content_filters" "test" {
 resource "datapower_message_content_filters" "acc_test" {
   id = "AccTest_MessageContentFilters"
   app_domain = datapower_domain.acc_test.app_domain
+  filters = ` + DmMCFilterTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5919,6 +6328,8 @@ var MessageMatchingTestConfig = ModelTestConfig{
 resource "datapower_message_matching" "test" {
   id = "ResTestMessageMatching"
   app_domain = "acceptance_test"
+  http_header = ` + DmHTTPHeaderTestConfig.GetModelListConfig() + `
+  http_header_exclude = ` + DmHTTPHeaderTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_message_matching" "test" {
@@ -5929,6 +6340,8 @@ data "datapower_message_matching" "test" {
 resource "datapower_message_matching" "acc_test" {
   id = "AccTest_MessageMatching"
   app_domain = datapower_domain.acc_test.app_domain
+  http_header = ` + DmHTTPHeaderTestConfig.GetModelTestBedListConfig() + `
+  http_header_exclude = ` + DmHTTPHeaderTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -5956,6 +6369,7 @@ var MgmtInterfaceTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_mgmt_interface" "test" {
   local_port = 5550
+  mode = ` + DmXMLMgmtModesTestConfig.GetModelConfig() + `
   local_address = "0.0.0.0"
 }`,
     Data: `
@@ -5964,6 +6378,7 @@ data "datapower_mgmt_interface" "test" {
     TestBed: `
 resource "datapower_mgmt_interface" "acc_test" {
   local_port = 5550
+  mode = ` + DmXMLMgmtModesTestConfig.GetModelTestBedConfig() + `
   local_address = "0.0.0.0"
 }`,
     ModelOnly:    false,
@@ -5975,11 +6390,19 @@ resource "datapower_multi_protocol_gateway" "test" {
   id = "ResTestMultiProtocolGateway"
   app_domain = "acceptance_test"
   type = "static-backend"
+  wsrr_saved_search_subscriptions = null
+  wsrr_subscriptions = null
+  policy_parameter = ` + DmWSPolicyParametersTestConfig.GetModelListConfig() + `
   xml_manager = "default"
+  header_injection = ` + DmHeaderInjectionTestConfig.GetModelListConfig() + `
+  header_suppression = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelListConfig() + `
+  debug_trigger = null
   front_timeout = 120
   back_timeout = 120
   front_persistent_timeout = 180
   back_persistent_timeout = 180
+  in_order_mode = ` + DmGatewayInOrderModeTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_multi_protocol_gateway" "test" {
@@ -5991,11 +6414,19 @@ resource "datapower_multi_protocol_gateway" "acc_test" {
   id = "AccTest_MultiProtocolGateway"
   app_domain = datapower_domain.acc_test.app_domain
   type = "static-backend"
+  wsrr_saved_search_subscriptions = null
+  wsrr_subscriptions = null
+  policy_parameter = ` + DmWSPolicyParametersTestConfig.GetModelTestBedListConfig() + `
   xml_manager = "default"
+  header_injection = ` + DmHeaderInjectionTestConfig.GetModelTestBedListConfig() + `
+  header_suppression = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelTestBedListConfig() + `
+  debug_trigger = null
   front_timeout = 120
   back_timeout = 120
   front_persistent_timeout = 180
   back_persistent_timeout = 180
+  in_order_mode = ` + DmGatewayInOrderModeTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6086,6 +6517,7 @@ var NameValueProfileTestConfig = ModelTestConfig{
 resource "datapower_name_value_profile" "test" {
   id = "ResTestNameValueProfile"
   app_domain = "acceptance_test"
+  validation_list = ` + DmValidationTypeTestConfig.GetModelListConfig() + `
   default_fixup = "strip"
 }`,
     Data: `
@@ -6097,6 +6529,7 @@ data "datapower_name_value_profile" "test" {
 resource "datapower_name_value_profile" "acc_test" {
   id = "AccTest_NameValueProfile"
   app_domain = datapower_domain.acc_test.app_domain
+  validation_list = ` + DmValidationTypeTestConfig.GetModelTestBedListConfig() + `
   default_fixup = "strip"
 }`,
     ModelOnly:    false,
@@ -6108,7 +6541,14 @@ resource "datapower_oauth_provider_settings" "test" {
   id = "ResTestOAuthProviderSettings"
   app_domain = "acceptance_test"
   provider_type = "native"
+  supported_grant_types = ` + DmOAuthProviderGrantTypeTestConfig.GetModelConfig() + `
+  supported_client_types = ` + DmAllowedClientTypeTestConfig.GetModelConfig() + `
   api_c_token_secret = "AccTest_CryptoSSKey"
+  adv_scope_url_security = ` + DmSecurityTypeTestConfig.GetModelConfig() + `
+  api_c_oidc_hybrid_response_types = ` + DmOIDCHybridResponseTypeTestConfig.GetModelConfig() + `
+  metadata_from = ` + DmMetadataFromTypeTestConfig.GetModelConfig() + `
+  external_revocation_url_security = ` + DmSecurityTypeTestConfig.GetModelConfig() + `
+  third_party_introspect_url_security = ` + DmSecurityTypeTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_oauth_provider_settings" "test" {
@@ -6120,7 +6560,14 @@ resource "datapower_oauth_provider_settings" "acc_test" {
   id = "AccTest_OAuthProviderSettings"
   app_domain = datapower_domain.acc_test.app_domain
   provider_type = "native"
+  supported_grant_types = ` + DmOAuthProviderGrantTypeTestConfig.GetModelTestBedConfig() + `
+  supported_client_types = ` + DmAllowedClientTypeTestConfig.GetModelTestBedConfig() + `
   api_c_token_secret = datapower_crypto_sskey.acc_test.id
+  adv_scope_url_security = ` + DmSecurityTypeTestConfig.GetModelTestBedConfig() + `
+  api_c_oidc_hybrid_response_types = ` + DmOIDCHybridResponseTypeTestConfig.GetModelTestBedConfig() + `
+  metadata_from = ` + DmMetadataFromTypeTestConfig.GetModelTestBedConfig() + `
+  external_revocation_url_security = ` + DmSecurityTypeTestConfig.GetModelTestBedConfig() + `
+  third_party_introspect_url_security = ` + DmSecurityTypeTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6135,9 +6582,12 @@ resource "datapower_oauth_supported_client" "test" {
   generate_client_secret = false
   client_secret_wo = "secret"
   client_secret_wo_version = 1
+  validation_features = ` + DmValidationFeaturesTestConfig.GetModelConfig() + `
   redirect_uri = ["^https://example.com/redirect$"]
   scope = "*"
   token_secret = "AccTest_CryptoSSKey"
+  rs_set_header = ` + DmOAuthRSSetHeaderTestConfig.GetModelConfig() + `
+  oauth_features = ` + DmOAuthFeaturesTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_oauth_supported_client" "test" {
@@ -6153,9 +6603,12 @@ resource "datapower_oauth_supported_client" "acc_test" {
   generate_client_secret = false
   client_secret_wo = "secret"
   client_secret_wo_version = 1
+  validation_features = ` + DmValidationFeaturesTestConfig.GetModelTestBedConfig() + `
   redirect_uri = ["^https://example.com/redirect$"]
   scope = "*"
   token_secret = datapower_crypto_sskey.acc_test.id
+  rs_set_header = ` + DmOAuthRSSetHeaderTestConfig.GetModelTestBedConfig() + `
+  oauth_features = ` + DmOAuthFeaturesTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6165,6 +6618,7 @@ var OAuthSupportedClientGroupTestConfig = ModelTestConfig{
 resource "datapower_oauth_supported_client_group" "test" {
   id = "ResTestOAuthSupportedClientGroup"
   app_domain = "acceptance_test"
+  oauth_role = ` + DmOAuthRoleTestConfig.GetModelConfig() + `
   client = ["AccTest_OAuthSupportedClient"]
 }`,
     Data: `
@@ -6176,6 +6630,7 @@ data "datapower_oauth_supported_client_group" "test" {
 resource "datapower_oauth_supported_client_group" "acc_test" {
   id = "AccTest_OAuthSupportedClientGroup"
   app_domain = datapower_domain.acc_test.app_domain
+  oauth_role = ` + DmOAuthRoleTestConfig.GetModelTestBedConfig() + `
   client = [datapower_oauth_supported_client.acc_test.id]
 }`,
     ModelOnly:    false,
@@ -6185,6 +6640,7 @@ var ODRTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_odr" "test" {
   odr_server_name = "dp_set"
+  odr_custom_properties = ` + DmODRPropertyTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_odr" "test" {
@@ -6192,6 +6648,7 @@ data "datapower_odr" "test" {
     TestBed: `
 resource "datapower_odr" "acc_test" {
   odr_server_name = "dp_set"
+  odr_custom_properties = ` + DmODRPropertyTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6200,7 +6657,9 @@ var ODRConnectorGroupTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_odr_connector_group" "test" {
   id = "ResTestODRConnectorGroup"
+  odr_group_connectors = ` + DmODRConnectorTestConfig.GetModelListConfig() + `
   xml_manager = "default"
+  odr_conn_group_properties = ` + DmODRConnPropertyTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_odr_connector_group" "test" {
@@ -6209,7 +6668,9 @@ data "datapower_odr_connector_group" "test" {
     TestBed: `
 resource "datapower_odr_connector_group" "acc_test" {
   id = "AccTest_ODRConnectorGroup"
+  odr_group_connectors = ` + DmODRConnectorTestConfig.GetModelTestBedListConfig() + `
   xml_manager = "default"
+  odr_conn_group_properties = ` + DmODRConnPropertyTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6221,6 +6682,7 @@ resource "datapower_open_telemetry" "test" {
   app_domain = "acceptance_test"
   exporter = "AccTest_OpenTelemetryExporter"
   sampler = "AccTest_OpenTelemetrySampler"
+  resource_attribute = ` + DmOpenTelemetryResourceAttributeTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_open_telemetry" "test" {
@@ -6233,6 +6695,7 @@ resource "datapower_open_telemetry" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   exporter = datapower_open_telemetry_exporter.acc_test.id
   sampler = datapower_open_telemetry_sampler.acc_test.id
+  resource_attribute = ` + DmOpenTelemetryResourceAttributeTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6245,7 +6708,9 @@ resource "datapower_open_telemetry_exporter" "test" {
   type = "http"
   host_name = "localhost"
   port = 4318
+  header = ` + DmOpenTelemetryExporterHeaderTestConfig.GetModelListConfig() + `
   processor = "batch"
+  proxy_policies = ` + DmAPIProxyPolicyTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_open_telemetry_exporter" "test" {
@@ -6259,7 +6724,9 @@ resource "datapower_open_telemetry_exporter" "acc_test" {
   type = "http"
   host_name = "localhost"
   port = 4318
+  header = ` + DmOpenTelemetryExporterHeaderTestConfig.GetModelTestBedListConfig() + `
   processor = "batch"
+  proxy_policies = ` + DmAPIProxyPolicyTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6415,6 +6882,8 @@ resource "datapower_policy_attachments" "test" {
   app_domain = "acceptance_test"
   enforcement_mode = "enforce"
   policy_references = false
+  ignored_policy_attachment_points = null
+  external_policy = ` + DmExternalAttachedPolicyTestConfig.GetModelListConfig() + `
   sla_enforcement_mode = "allow-if-no-sla"
 }`,
     Data: `
@@ -6428,6 +6897,8 @@ resource "datapower_policy_attachments" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   enforcement_mode = "enforce"
   policy_references = false
+  ignored_policy_attachment_points = null
+  external_policy = ` + DmExternalAttachedPolicyTestConfig.GetModelTestBedListConfig() + `
   sla_enforcement_mode = "allow-if-no-sla"
 }`,
     ModelOnly:    false,
@@ -6438,6 +6909,7 @@ var PolicyParametersTestConfig = ModelTestConfig{
 resource "datapower_policy_parameters" "test" {
   id = "ResTestPolicyParameters"
   app_domain = "acceptance_test"
+  policy_parameter = ` + DmPolicyParameterTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_policy_parameters" "test" {
@@ -6448,6 +6920,7 @@ data "datapower_policy_parameters" "test" {
 resource "datapower_policy_parameters" "acc_test" {
   id = "AccTest_PolicyParameters"
   app_domain = datapower_domain.acc_test.app_domain
+  policy_parameter = ` + DmPolicyParameterTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6477,6 +6950,7 @@ var ProcessingMetadataTestConfig = ModelTestConfig{
 resource "datapower_processing_metadata" "test" {
   id = "ResTestProcessingMetadata"
   app_domain = "acceptance_test"
+  meta_item = ` + DmMetaItemTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_processing_metadata" "test" {
@@ -6487,6 +6961,7 @@ data "datapower_processing_metadata" "test" {
 resource "datapower_processing_metadata" "acc_test" {
   id = "AccTest_ProcessingMetadata"
   app_domain = datapower_domain.acc_test.app_domain
+  meta_item = ` + DmMetaItemTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6511,12 +6986,14 @@ var RADIUSSettingsTestConfig = ModelTestConfig{
     Name:         "RADIUSSettings",
     Resource: `
 resource "datapower_radius_settings" "test" {
+  aaa_servers = ` + DmRadiusServerTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_radius_settings" "test" {
 }`,
     TestBed: `
 resource "datapower_radius_settings" "acc_test" {
+  aaa_servers = ` + DmRadiusServerTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6525,6 +7002,7 @@ var RBMSettingsTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_rbm_settings" "test" {
   au_method = "local"
+  ssh_au_method = ` + DmRBMSSHAuthenticateTypeTestConfig.GetModelConfig() + `
   au_cache_allow = "absolute"
   mc_method = "local"
   min_password_length = 6
@@ -6543,6 +7021,7 @@ data "datapower_rbm_settings" "test" {
     TestBed: `
 resource "datapower_rbm_settings" "acc_test" {
   au_method = "local"
+  ssh_au_method = ` + DmRBMSSHAuthenticateTypeTestConfig.GetModelTestBedConfig() + `
   au_cache_allow = "absolute"
   mc_method = "local"
   min_password_length = 6
@@ -6575,6 +7054,7 @@ var RateLimitConfigurationTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_rate_limit_configuration" "test" {
   app_domain = "acceptance_test"
+  parameters = ` + DmRateLimitConfigurationNameValuePairTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_rate_limit_configuration" "test" {
@@ -6583,6 +7063,7 @@ data "datapower_rate_limit_configuration" "test" {
     TestBed: `
 resource "datapower_rate_limit_configuration" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
+  parameters = ` + DmRateLimitConfigurationNameValuePairTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6594,6 +7075,7 @@ resource "datapower_rate_limit_definition" "test" {
   app_domain = "acceptance_test"
   type = "rate"
   rate = 1000
+  parameters = ` + DmRateLimitDefinitionNameValuePairTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_rate_limit_definition" "test" {
@@ -6606,6 +7088,7 @@ resource "datapower_rate_limit_definition" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   type = "rate"
   rate = 1000
+  parameters = ` + DmRateLimitDefinitionNameValuePairTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6636,6 +7119,7 @@ var SAMLAttributesTestConfig = ModelTestConfig{
 resource "datapower_saml_attributes" "test" {
   id = "ResTestSAMLAttributes"
   app_domain = "acceptance_test"
+  saml_attribute = ` + DmSAMLAttributeTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_saml_attributes" "test" {
@@ -6646,6 +7130,7 @@ data "datapower_saml_attributes" "test" {
 resource "datapower_saml_attributes" "acc_test" {
   id = "AccTest_SAMLAttributes"
   app_domain = datapower_domain.acc_test.app_domain
+  saml_attribute = ` + DmSAMLAttributeTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6730,6 +7215,7 @@ var SLMPolicyTestConfig = ModelTestConfig{
 resource "datapower_slm_policy" "test" {
   id = "ResTestSLMPolicy"
   app_domain = "acceptance_test"
+  statement = ` + DmSLMStatementTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_slm_policy" "test" {
@@ -6740,6 +7226,7 @@ data "datapower_slm_policy" "test" {
 resource "datapower_slm_policy" "acc_test" {
   id = "AccTest_SLMPolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  statement = ` + DmSLMStatementTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6770,6 +7257,7 @@ var SLMScheduleTestConfig = ModelTestConfig{
 resource "datapower_slm_schedule" "test" {
   id = "ResTestSLMSchedule"
   app_domain = "acceptance_test"
+  days_of_week = ` + DmWeekdayBitmapTestConfig.GetModelConfig() + `
   start_time = "12:34:00"
   duration = 1440
 }`,
@@ -6782,6 +7270,7 @@ data "datapower_slm_schedule" "test" {
 resource "datapower_slm_schedule" "acc_test" {
   id = "AccTest_SLMSchedule"
   app_domain = datapower_domain.acc_test.app_domain
+  days_of_week = ` + DmWeekdayBitmapTestConfig.GetModelTestBedConfig() + `
   start_time = "12:34:00"
   duration = 1440
 }`,
@@ -6795,6 +7284,7 @@ resource "datapower_smtp_server_connection" "test" {
   app_domain = "acceptance_test"
   mail_server_host = "localhost"
   mail_server_port = 25
+  options = ` + DmSMTPOptionsTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_smtp_server_connection" "test" {
@@ -6807,6 +7297,7 @@ resource "datapower_smtp_server_connection" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   mail_server_host = "localhost"
   mail_server_port = 25
+  options = ` + DmSMTPOptionsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6815,6 +7306,10 @@ var SNMPSettingsTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_snmp_settings" "test" {
   local_port = 161
+  policies = ` + DmSnmpPolicyTestConfig.GetModelListConfig() + `
+  policies_mq = null
+  targets = ` + DmSnmpTargetTestConfig.GetModelListConfig() + `
+  contexts = ` + DmSnmpContextTestConfig.GetModelListConfig() + `
   security_level = "authPriv"
   access_level = "read-only"
 }`,
@@ -6824,6 +7319,10 @@ data "datapower_snmp_settings" "test" {
     TestBed: `
 resource "datapower_snmp_settings" "acc_test" {
   local_port = 161
+  policies = ` + DmSnmpPolicyTestConfig.GetModelTestBedListConfig() + `
+  policies_mq = null
+  targets = ` + DmSnmpTargetTestConfig.GetModelTestBedListConfig() + `
+  contexts = ` + DmSnmpContextTestConfig.GetModelTestBedListConfig() + `
   security_level = "authPriv"
   access_level = "read-only"
 }`,
@@ -6835,6 +7334,7 @@ var SOAPHeaderDispositionTestConfig = ModelTestConfig{
 resource "datapower_soap_header_disposition" "test" {
   id = "ResTestSOAPHeaderDisposition"
   app_domain = "acceptance_test"
+  refine = ` + DmSOAPHeaderDispositionItemTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_soap_header_disposition" "test" {
@@ -6845,6 +7345,7 @@ data "datapower_soap_header_disposition" "test" {
 resource "datapower_soap_header_disposition" "acc_test" {
   id = "AccTest_SOAPHeaderDisposition"
   app_domain = datapower_domain.acc_test.app_domain
+  refine = ` + DmSOAPHeaderDispositionItemTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6860,6 +7361,7 @@ resource "datapower_sql_data_source" "test" {
   data_source_id = "datasource_id"
   data_source_host = "datasource.host"
   data_source_port = 1488
+  sql_data_source_config_nv_pairs = ` + DmSQLDataSourceConfigNVPairTestConfig.GetModelListConfig() + `
   max_connection = 10
   connect_timeout = 15
   query_timeout = 30
@@ -6880,6 +7382,7 @@ resource "datapower_sql_data_source" "acc_test" {
   data_source_id = "datasource_id"
   data_source_host = "datasource.host"
   data_source_port = 1488
+  sql_data_source_config_nv_pairs = ` + DmSQLDataSourceConfigNVPairTestConfig.GetModelTestBedListConfig() + `
   max_connection = 10
   connect_timeout = 15
   query_timeout = 30
@@ -6895,6 +7398,8 @@ resource "datapower_ssh_client_profile" "test" {
   app_domain = "acceptance_test"
   user_name = "someuser"
   profile_usage = "sftp"
+  ssh_user_authentication = ` + DmSSHUserAuthenticationMethodsTestConfig.GetModelConfig() + `
+  password_alias = "AccTest_PasswordAlias"
 }`,
     Data: `
 data "datapower_ssh_client_profile" "test" {
@@ -6907,6 +7412,8 @@ resource "datapower_ssh_client_profile" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   user_name = "someuser"
   profile_usage = "sftp"
+  ssh_user_authentication = ` + DmSSHUserAuthenticationMethodsTestConfig.GetModelTestBedConfig() + `
+  password_alias = datapower_password_alias.acc_test.id
 }`,
     ModelOnly:    false,
 }
@@ -6915,6 +7422,9 @@ var SSHDomainClientProfileTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_ssh_domain_client_profile" "test" {
   app_domain = "acceptance_test"
+  ciphers = ["AES128-CTR","AES192-CTR","AES256-CTR","AES128-GCM_AT_OPENSSH.COM","AES256-GCM_AT_OPENSSH.COM",]
+  kex_alg = ["CURVE25519-SHA256_AT_LIBSSH.ORG","ECDH-SHA2-NISTP256","ECDH-SHA2-NISTP384","ECDH-SHA2-NISTP521","DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256",]
+  mac_alg = ["UMAC-64_AT_OPENSSH.COM","UMAC-128_AT_OPENSSH.COM","HMAC-SHA2-256","HMAC-SHA2-512","HMAC-SHA1",]
 }`,
     Data: `
 data "datapower_ssh_domain_client_profile" "test" {
@@ -6931,6 +7441,10 @@ var SSHServerProfileTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_ssh_server_profile" "test" {
   app_domain = "acceptance_test"
+  ciphers = ["AES128-CTR","AES192-CTR","AES256-CTR","AES128-GCM_AT_OPENSSH.COM","AES256-GCM_AT_OPENSSH.COM",]
+  kex_alg = ["CURVE25519-SHA256_AT_LIBSSH.ORG","ECDH-SHA2-NISTP256","ECDH-SHA2-NISTP384","ECDH-SHA2-NISTP521","DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256",]
+  mac_alg = ["UMAC-64-ETM_AT_OPENSSH.COM","UMAC-128-ETM_AT_OPENSSH.COM","HMAC-SHA2-256","HMAC-SHA2-512","HMAC-SHA1",]
+  host_key_alg = ` + DmHostKeyAlgorithmsTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_ssh_server_profile" "test" {
@@ -6939,6 +7453,7 @@ data "datapower_ssh_server_profile" "test" {
     TestBed: `
 resource "datapower_ssh_server_profile" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
+  host_key_alg = ` + DmHostKeyAlgorithmsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -6950,7 +7465,9 @@ resource "datapower_ssh_server_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 22
+  ssh_user_authentication = ` + DmSSHUserAuthenticationMethodsTestConfig.GetModelConfig() + `
   default_directory = "/"
+  virtual_directories = null
 }`,
     Data: `
 data "datapower_ssh_server_source_protocol_handler" "test" {
@@ -6963,7 +7480,9 @@ resource "datapower_ssh_server_source_protocol_handler" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
   local_port = 22
+  ssh_user_authentication = ` + DmSSHUserAuthenticationMethodsTestConfig.GetModelTestBedConfig() + `
   default_directory = "/"
+  virtual_directories = null
 }`,
     ModelOnly:    false,
 }
@@ -6990,8 +7509,13 @@ var SSLClientProfileTestConfig = ModelTestConfig{
 resource "datapower_ssl_client_profile" "test" {
   id = "ResTestSSLClientProfile"
   app_domain = "acceptance_test"
+  protocols = ` + DmSSLProtoVersionsBitmapTestConfig.GetModelConfig() + `
   ciphers = ["AES_256_GCM_SHA384","CHACHA20_POLY1305_SHA256","AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","ECDHE_ECDSA_WITH_AES_256_CBC_SHA","ECDHE_ECDSA_WITH_AES_128_CBC_SHA","ECDHE_RSA_WITH_AES_256_GCM_SHA384","ECDHE_RSA_WITH_AES_256_CBC_SHA384","ECDHE_RSA_WITH_AES_128_GCM_SHA256","ECDHE_RSA_WITH_AES_128_CBC_SHA256","ECDHE_RSA_WITH_AES_256_CBC_SHA","ECDHE_RSA_WITH_AES_128_CBC_SHA","DHE_RSA_WITH_AES_256_GCM_SHA384","DHE_RSA_WITH_AES_256_CBC_SHA256","DHE_RSA_WITH_AES_128_GCM_SHA256","DHE_RSA_WITH_AES_128_CBC_SHA256","DHE_RSA_WITH_AES_256_CBC_SHA","DHE_RSA_WITH_AES_128_CBC_SHA",]
   validate_server_cert = false
+  ssl_client_features = ` + DmSSLClientFeaturesTestConfig.GetModelConfig() + `
+  elliptic_curves = ["secp521r1","secp384r1","secp256k1","secp256r1",]
+  hostname_validation_flags = ` + DmSSLHostnameValidationFlagsTestConfig.GetModelConfig() + `
+  sig_algs = ["ecdsa_secp256r1_sha256","ecdsa_secp384r1_sha384","ecdsa_secp521r1_sha512","ed25519","ed448","rsa_pss_rsae_sha256","rsa_pss_rsae_sha384","rsa_pss_rsae_sha512","rsa_pss_pss_sha256","rsa_pss_pss_sha384","rsa_pss_pss_sha512","rsa_pkcs1_sha256","rsa_pkcs1_sha384","rsa_pkcs1_sha512","ecdsa_sha224","ecdsa_sha1","rsa_pkcs1_sha224","rsa_pkcs1_sha1","dsa_sha256","dsa_sha384","dsa_sha512",]
 }`,
     Data: `
 data "datapower_ssl_client_profile" "test" {
@@ -7002,8 +7526,11 @@ data "datapower_ssl_client_profile" "test" {
 resource "datapower_ssl_client_profile" "acc_test" {
   id = "AccTest_SSLClientProfile"
   app_domain = datapower_domain.acc_test.app_domain
+  protocols = ` + DmSSLProtoVersionsBitmapTestConfig.GetModelTestBedConfig() + `
   ciphers = ["AES_256_GCM_SHA384","CHACHA20_POLY1305_SHA256","AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","ECDHE_ECDSA_WITH_AES_256_CBC_SHA","ECDHE_ECDSA_WITH_AES_128_CBC_SHA","ECDHE_RSA_WITH_AES_256_GCM_SHA384","ECDHE_RSA_WITH_AES_256_CBC_SHA384","ECDHE_RSA_WITH_AES_128_GCM_SHA256","ECDHE_RSA_WITH_AES_128_CBC_SHA256","ECDHE_RSA_WITH_AES_256_CBC_SHA","ECDHE_RSA_WITH_AES_128_CBC_SHA","DHE_RSA_WITH_AES_256_GCM_SHA384","DHE_RSA_WITH_AES_256_CBC_SHA256","DHE_RSA_WITH_AES_128_GCM_SHA256","DHE_RSA_WITH_AES_128_CBC_SHA256","DHE_RSA_WITH_AES_256_CBC_SHA","DHE_RSA_WITH_AES_128_CBC_SHA",]
   validate_server_cert = false
+  ssl_client_features = ` + DmSSLClientFeaturesTestConfig.GetModelTestBedConfig() + `
+  hostname_validation_flags = ` + DmSSLHostnameValidationFlagsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7063,7 +7590,9 @@ var SSLSNIServerProfileTestConfig = ModelTestConfig{
 resource "datapower_ssl_sni_server_profile" "test" {
   id = "ResTestSSLSNIServerProfile"
   app_domain = "acceptance_test"
+  protocols = ` + DmSSLProtoVersionsBitmapTestConfig.GetModelConfig() + `
   sni_server_mapping = "AccTest_SSLSNIMapping"
+  ssl_options = ` + DmSSLOptionsTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_ssl_sni_server_profile" "test" {
@@ -7074,7 +7603,9 @@ data "datapower_ssl_sni_server_profile" "test" {
 resource "datapower_ssl_sni_server_profile" "acc_test" {
   id = "AccTest_SSLSNIServerProfile"
   app_domain = datapower_domain.acc_test.app_domain
+  protocols = ` + DmSSLProtoVersionsBitmapTestConfig.GetModelTestBedConfig() + `
   sni_server_mapping = datapower_ssl_sni_mapping.acc_test.id
+  ssl_options = ` + DmSSLOptionsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7084,8 +7615,10 @@ var SSLServerProfileTestConfig = ModelTestConfig{
 resource "datapower_ssl_server_profile" "test" {
   id = "ResTestSSLServerProfile"
   app_domain = "acceptance_test"
+  protocols = ` + DmSSLProtoVersionsBitmapTestConfig.GetModelConfig() + `
   ciphers = ["AES_256_GCM_SHA384","CHACHA20_POLY1305_SHA256","AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","ECDHE_ECDSA_WITH_AES_256_CBC_SHA","ECDHE_ECDSA_WITH_AES_128_CBC_SHA","ECDHE_RSA_WITH_AES_256_GCM_SHA384","ECDHE_RSA_WITH_AES_256_CBC_SHA384","ECDHE_RSA_WITH_AES_128_GCM_SHA256","ECDHE_RSA_WITH_AES_128_CBC_SHA256","ECDHE_RSA_WITH_AES_256_CBC_SHA","ECDHE_RSA_WITH_AES_128_CBC_SHA","DHE_RSA_WITH_AES_256_GCM_SHA384","DHE_RSA_WITH_AES_256_CBC_SHA256","DHE_RSA_WITH_AES_128_GCM_SHA256","DHE_RSA_WITH_AES_128_CBC_SHA256","DHE_RSA_WITH_AES_256_CBC_SHA","DHE_RSA_WITH_AES_128_CBC_SHA",]
   idcred = "AccTest_CryptoIdentCred"
+  ssl_options = ` + DmSSLOptionsTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_ssl_server_profile" "test" {
@@ -7096,8 +7629,10 @@ data "datapower_ssl_server_profile" "test" {
 resource "datapower_ssl_server_profile" "acc_test" {
   id = "AccTest_SSLServerProfile"
   app_domain = datapower_domain.acc_test.app_domain
+  protocols = ` + DmSSLProtoVersionsBitmapTestConfig.GetModelTestBedConfig() + `
   ciphers = ["AES_256_GCM_SHA384","CHACHA20_POLY1305_SHA256","AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","ECDHE_ECDSA_WITH_AES_256_CBC_SHA","ECDHE_ECDSA_WITH_AES_128_CBC_SHA","ECDHE_RSA_WITH_AES_256_GCM_SHA384","ECDHE_RSA_WITH_AES_256_CBC_SHA384","ECDHE_RSA_WITH_AES_128_GCM_SHA256","ECDHE_RSA_WITH_AES_128_CBC_SHA256","ECDHE_RSA_WITH_AES_256_CBC_SHA","ECDHE_RSA_WITH_AES_128_CBC_SHA","DHE_RSA_WITH_AES_256_GCM_SHA384","DHE_RSA_WITH_AES_256_CBC_SHA256","DHE_RSA_WITH_AES_128_GCM_SHA256","DHE_RSA_WITH_AES_128_CBC_SHA256","DHE_RSA_WITH_AES_256_CBC_SHA","DHE_RSA_WITH_AES_128_CBC_SHA",]
   idcred = datapower_crypto_ident_cred.acc_test.id
+  ssl_options = ` + DmSSLOptionsTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7214,6 +7749,7 @@ var StylePolicyTestConfig = ModelTestConfig{
 resource "datapower_style_policy" "test" {
   id = "ResTestStylePolicy"
   app_domain = "acceptance_test"
+  policy_maps = ` + DmPolicyMapTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_style_policy" "test" {
@@ -7224,6 +7760,7 @@ data "datapower_style_policy" "test" {
 resource "datapower_style_policy" "acc_test" {
   id = "AccTest_StylePolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  policy_maps = ` + DmPolicyMapTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7236,9 +7773,12 @@ resource "datapower_style_policy_action" "test" {
   type = "xform"
   input = "INPUT"
   transform = "tfile"
+  parse_settings_reference = ` + DmDynamicParseSettingsReferenceTestConfig.GetModelConfig() + `
   output = "OUTPUT"
   named_inputs = null
   named_outputs = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelListConfig() + `
+  condition = ` + DmConditionTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_style_policy_action" "test" {
@@ -7252,9 +7792,12 @@ resource "datapower_style_policy_action" "acc_test" {
   type = "xform"
   input = "INPUT"
   transform = "tfile"
+  parse_settings_reference = ` + DmDynamicParseSettingsReferenceTestConfig.GetModelTestBedConfig() + `
   output = "OUTPUT"
   named_inputs = null
   named_outputs = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelTestBedListConfig() + `
+  condition = ` + DmConditionTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7307,6 +7850,9 @@ resource "datapower_tam" "test" {
   ssl_key_stash_file = "cert:///ssl.stash"
   use_local_mode = false
   tam_use_basic_user = false
+  tam_fed_dirs = ` + DmTAMFedDirTestConfig.GetModelListConfig() + `
+  tam_az_replicas = ` + DmTAMAZReplicaTestConfig.GetModelListConfig() + `
+  tam_ras_trace = ` + DmTAMRASTraceTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_tam" "test" {
@@ -7321,6 +7867,9 @@ data "datapower_tam" "test" {
   ssl_key_stash_file = "cert:///ssl.stash"
   use_local_mode = false
   tam_use_basic_user = false
+  tam_fed_dirs = ` + DmTAMFedDirTestConfig.GetModelTestBedListConfig() + `
+  tam_az_replicas = ` + DmTAMAZReplicaTestConfig.GetModelTestBedListConfig() + `
+  tam_ras_trace = ` + DmTAMRASTraceTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7439,6 +7988,7 @@ var URLRewritePolicyTestConfig = ModelTestConfig{
 resource "datapower_url_rewrite_policy" "test" {
   id = "ResTestURLRewritePolicy"
   app_domain = "acceptance_test"
+  url_rewrite_rule = ` + DmURLRewriteRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_url_rewrite_policy" "test" {
@@ -7449,6 +7999,7 @@ data "datapower_url_rewrite_policy" "test" {
 resource "datapower_url_rewrite_policy" "acc_test" {
   id = "AccTest_URLRewritePolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  url_rewrite_rule = ` + DmURLRewriteRuleTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7548,6 +8099,12 @@ var WSEndpointRewritePolicyTestConfig = ModelTestConfig{
 resource "datapower_ws_endpoint_rewrite_policy" "test" {
   id = "ResTestWSEndpointRewritePolicy"
   app_domain = "acceptance_test"
+  ws_endpoint_local_rewrite_rule = ` + DmWSEndpointLocalRewriteRuleTestConfig.GetModelListConfig() + `
+  ws_endpoint_remote_rewrite_rule = ` + DmWSEndpointRemoteRewriteRuleTestConfig.GetModelListConfig() + `
+  ws_endpoint_publish_rewrite_rule = ` + DmWSEndpointPublishRewriteRuleTestConfig.GetModelListConfig() + `
+  ws_endpoint_subscription_local_rule = ` + DmWSEndpointSubscriptionLocalRuleTestConfig.GetModelListConfig() + `
+  ws_endpoint_subscription_remote_rule = ` + DmWSEndpointSubscriptionRemoteRuleTestConfig.GetModelListConfig() + `
+  ws_endpoint_subscription_publish_rule = ` + DmWSEndpointSubscriptionPublishRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_ws_endpoint_rewrite_policy" "test" {
@@ -7558,6 +8115,12 @@ data "datapower_ws_endpoint_rewrite_policy" "test" {
 resource "datapower_ws_endpoint_rewrite_policy" "acc_test" {
   id = "AccTest_WSEndpointRewritePolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  ws_endpoint_local_rewrite_rule = ` + DmWSEndpointLocalRewriteRuleTestConfig.GetModelTestBedListConfig() + `
+  ws_endpoint_remote_rewrite_rule = ` + DmWSEndpointRemoteRewriteRuleTestConfig.GetModelTestBedListConfig() + `
+  ws_endpoint_publish_rewrite_rule = ` + DmWSEndpointPublishRewriteRuleTestConfig.GetModelTestBedListConfig() + `
+  ws_endpoint_subscription_local_rule = ` + DmWSEndpointSubscriptionLocalRuleTestConfig.GetModelTestBedListConfig() + `
+  ws_endpoint_subscription_remote_rule = ` + DmWSEndpointSubscriptionRemoteRuleTestConfig.GetModelTestBedListConfig() + `
+  ws_endpoint_subscription_publish_rule = ` + DmWSEndpointSubscriptionPublishRuleTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7569,11 +8132,27 @@ resource "datapower_ws_gateway" "test" {
   app_domain = "acceptance_test"
   type = "static-from-wsdl"
   style_policy = "default"
+  remote_fetch_retry = ` + DmNetworkRetryTestConfig.GetModelConfig() + `
+  wsdl_cache_policy = ` + DmWSDLCachePolicyTestConfig.GetModelListConfig() + `
+  base_wsdl = ` + DmWSBaseWSDLTestConfig.GetModelListConfig() + `
+  user_toggles = ` + DmWSUserTogglesTestConfig.GetModelListConfig() + `
+  wsrr_subscriptions = null
+  wsrr_saved_search_subscriptions = null
+  operation_priority = ` + DmWSOperationSchedulerPriorityTestConfig.GetModelListConfig() + `
+  operation_conformance_policy = ` + DmWSOperationConformancePolicyTestConfig.GetModelListConfig() + `
+  operation_policy_subject_opt_out = ` + DmWSOperationPolicySubjectOptOutTestConfig.GetModelListConfig() + `
+  policy_parameter = ` + DmWSPolicyParametersTestConfig.GetModelListConfig() + `
+  reliable_messaging = ` + DmWSOperationReliableMessagingTestConfig.GetModelListConfig() + `
   xml_manager = "default"
+  header_injection = ` + DmHeaderInjectionTestConfig.GetModelListConfig() + `
+  header_suppression = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelListConfig() + `
+  debug_trigger = null
   front_timeout = 120
   back_timeout = 120
   front_persistent_timeout = 180
   back_persistent_timeout = 180
+  in_order_mode = ` + DmGatewayInOrderModeTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_ws_gateway" "test" {
@@ -7586,11 +8165,27 @@ resource "datapower_ws_gateway" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   type = "static-from-wsdl"
   style_policy = "default"
+  remote_fetch_retry = ` + DmNetworkRetryTestConfig.GetModelTestBedConfig() + `
+  wsdl_cache_policy = ` + DmWSDLCachePolicyTestConfig.GetModelTestBedListConfig() + `
+  base_wsdl = ` + DmWSBaseWSDLTestConfig.GetModelTestBedListConfig() + `
+  user_toggles = ` + DmWSUserTogglesTestConfig.GetModelTestBedListConfig() + `
+  wsrr_subscriptions = null
+  wsrr_saved_search_subscriptions = null
+  operation_priority = ` + DmWSOperationSchedulerPriorityTestConfig.GetModelTestBedListConfig() + `
+  operation_conformance_policy = ` + DmWSOperationConformancePolicyTestConfig.GetModelTestBedListConfig() + `
+  operation_policy_subject_opt_out = ` + DmWSOperationPolicySubjectOptOutTestConfig.GetModelTestBedListConfig() + `
+  policy_parameter = ` + DmWSPolicyParametersTestConfig.GetModelTestBedListConfig() + `
+  reliable_messaging = ` + DmWSOperationReliableMessagingTestConfig.GetModelTestBedListConfig() + `
   xml_manager = "default"
+  header_injection = ` + DmHeaderInjectionTestConfig.GetModelTestBedListConfig() + `
+  header_suppression = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelTestBedListConfig() + `
+  debug_trigger = null
   front_timeout = 120
   back_timeout = 120
   front_persistent_timeout = 180
   back_persistent_timeout = 180
+  in_order_mode = ` + DmGatewayInOrderModeTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7671,6 +8266,7 @@ var WSStylePolicyTestConfig = ModelTestConfig{
 resource "datapower_ws_style_policy" "test" {
   id = "ResTestWSStylePolicy"
   app_domain = "acceptance_test"
+  policy_maps = ` + DmWSMPolicyMapTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_ws_style_policy" "test" {
@@ -7681,6 +8277,7 @@ data "datapower_ws_style_policy" "test" {
 resource "datapower_ws_style_policy" "acc_test" {
   id = "AccTest_WSStylePolicy"
   app_domain = datapower_domain.acc_test.app_domain
+  policy_maps = ` + DmWSMPolicyMapTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7773,6 +8370,7 @@ resource "datapower_web_app_fw" "test" {
   back_timeout = 120
   front_persistent_timeout = 180
   back_persistent_timeout = 180
+  debug_trigger = null
 }`,
     Data: `
 data "datapower_web_app_fw" "test" {
@@ -7791,6 +8389,7 @@ resource "datapower_web_app_fw" "acc_test" {
   back_timeout = 120
   front_persistent_timeout = 180
   back_persistent_timeout = 180
+  debug_trigger = null
 }`,
     ModelOnly:    false,
 }
@@ -7800,6 +8399,11 @@ var WebAppRequestTestConfig = ModelTestConfig{
 resource "datapower_web_app_request" "test" {
   id = "ResTest_WebAppRequest"
   app_domain = "acceptance_test"
+  ok_methods = ` + DmHTTPRequestMethodsTestConfig.GetModelConfig() + `
+  ok_versions = ` + DmHTTPVersionMaskTestConfig.GetModelConfig() + `
+  content_types = ["application/www-url-encoded",]
+  multipart_form_data = ` + DmMultipartFormDataProfileTestConfig.GetModelConfig() + `
+  cookie_profile = ` + DmCookieProfileTestConfig.GetModelConfig() + `
 }`,
     Data: `
 data "datapower_web_app_request" "test" {
@@ -7810,6 +8414,10 @@ data "datapower_web_app_request" "test" {
 resource "datapower_web_app_request" "acc_test" {
   id = "AccTest_WebAppRequest"
   app_domain = datapower_domain.acc_test.app_domain
+  ok_methods = ` + DmHTTPRequestMethodsTestConfig.GetModelTestBedConfig() + `
+  ok_versions = ` + DmHTTPVersionMaskTestConfig.GetModelTestBedConfig() + `
+  multipart_form_data = ` + DmMultipartFormDataProfileTestConfig.GetModelTestBedConfig() + `
+  cookie_profile = ` + DmCookieProfileTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7820,6 +8428,9 @@ resource "datapower_web_app_response" "test" {
   id = "ResTest_WebAppResponse"
   app_domain = "acceptance_test"
   policy_type = "admission"
+  ok_codes = ` + DmHTTPResponseCodesTestConfig.GetModelConfig() + `
+  ok_versions = ` + DmHTTPVersionMaskTestConfig.GetModelConfig() + `
+  content_types = [".*",]
 }`,
     Data: `
 data "datapower_web_app_response" "test" {
@@ -7831,6 +8442,8 @@ resource "datapower_web_app_response" "acc_test" {
   id = "AccTest_WebAppResponse"
   app_domain = datapower_domain.acc_test.app_domain
   policy_type = "admission"
+  ok_codes = ` + DmHTTPResponseCodesTestConfig.GetModelTestBedConfig() + `
+  ok_versions = ` + DmHTTPVersionMaskTestConfig.GetModelTestBedConfig() + `
 }`,
     ModelOnly:    false,
 }
@@ -7902,6 +8515,7 @@ resource "datapower_web_service_monitor" "test" {
   id = "ResTestWebServiceMonitor"
   app_domain = "acceptance_test"
   wsdl_url = "wsdlurl"
+  operations = ` + DmWSSLMOpsTestConfig.GetModelListConfig() + `
   endpoint_url = "endpointurl"
   frontend_url = "frontendurl"
 }`,
@@ -7915,6 +8529,7 @@ resource "datapower_web_service_monitor" "acc_test" {
   id = "AccTest_WebServiceMonitor"
   app_domain = datapower_domain.acc_test.app_domain
   wsdl_url = "wsdlurl"
+  operations = ` + DmWSSLMOpsTestConfig.GetModelTestBedListConfig() + `
   endpoint_url = "endpointurl"
   frontend_url = "frontendurl"
 }`,
@@ -8045,6 +8660,11 @@ resource "datapower_xml_firewall_service" "test" {
   type = "dynamic-backend"
   xml_manager = "default"
   local_port = 7575
+  http_version = ` + DmHTTPClientServerVersionTestConfig.GetModelConfig() + `
+  header_injection = ` + DmHeaderInjectionTestConfig.GetModelListConfig() + `
+  header_suppression = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelListConfig() + `
+  debug_trigger = null
   local_address = "0.0.0.0"
 }`,
     Data: `
@@ -8059,6 +8679,11 @@ resource "datapower_xml_firewall_service" "acc_test" {
   type = "dynamic-backend"
   xml_manager = "default"
   local_port = 7575
+  http_version = ` + DmHTTPClientServerVersionTestConfig.GetModelTestBedConfig() + `
+  header_injection = ` + DmHeaderInjectionTestConfig.GetModelTestBedListConfig() + `
+  header_suppression = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelTestBedListConfig() + `
+  debug_trigger = null
   local_address = "0.0.0.0"
 }`,
     ModelOnly:    false,
@@ -8069,6 +8694,9 @@ var XMLManagerTestConfig = ModelTestConfig{
 resource "datapower_xml_manager" "test" {
   id = "ResTestXMLManager"
   app_domain = "acceptance_test"
+  doc_cache_policy = ` + DmDocCachePolicyTestConfig.GetModelListConfig() + `
+  schema_validation = ` + DmSchemaValidationTestConfig.GetModelListConfig() + `
+  scheduled_rule = ` + DmScheduledRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
 data "datapower_xml_manager" "test" {
@@ -8079,6 +8707,9 @@ data "datapower_xml_manager" "test" {
 resource "datapower_xml_manager" "acc_test" {
   id = "AccTest_XMLManager"
   app_domain = datapower_domain.acc_test.app_domain
+  doc_cache_policy = ` + DmDocCachePolicyTestConfig.GetModelTestBedListConfig() + `
+  schema_validation = ` + DmSchemaValidationTestConfig.GetModelTestBedListConfig() + `
+  scheduled_rule = ` + DmScheduledRuleTestConfig.GetModelTestBedListConfig() + `
   ldap_conn_pool = datapower_ldap_connection_pool.acc_test.id
 }`,
     ModelOnly:    false,
@@ -8090,6 +8721,7 @@ resource "datapower_xpath_routing_map" "test" {
   id = "ResTestXPathRoutingMap"
   app_domain = "acceptance_test"
   xpath_routing_rules = ` + DmXPathRoutingRuleTestConfig.GetModelListConfig() + `
+  name_space_mappings = null
 }`,
     Data: `
 data "datapower_xpath_routing_map" "test" {
@@ -8101,6 +8733,7 @@ resource "datapower_xpath_routing_map" "acc_test" {
   id = "AccTest_XPathRoutingMap"
   app_domain = datapower_domain.acc_test.app_domain
   xpath_routing_rules = ` + DmXPathRoutingRuleTestConfig.GetModelTestBedListConfig() + `
+  name_space_mappings = null
 }`,
     ModelOnly:    false,
 }
@@ -8112,6 +8745,7 @@ resource "datapower_xsl_coproc_service" "test" {
   app_domain = "acceptance_test"
   local_port = 8811
   xml_manager = "default"
+  debug_trigger = null
   local_address = "0.0.0.0"
 }`,
     Data: `
@@ -8125,6 +8759,7 @@ resource "datapower_xsl_coproc_service" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   local_port = 8811
   xml_manager = "default"
+  debug_trigger = null
   local_address = "0.0.0.0"
 }`,
     ModelOnly:    false,
@@ -8140,6 +8775,11 @@ resource "datapower_xsl_proxy_service" "test" {
   local_port = 8922
   remote_address = "10.10.10.10"
   remote_port = 9999
+  http_version = ` + DmHTTPClientServerVersionTestConfig.GetModelConfig() + `
+  header_injection = ` + DmHeaderInjectionTestConfig.GetModelListConfig() + `
+  header_suppression = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelListConfig() + `
+  debug_trigger = null
   local_address = "0.0.0.0"
 }`,
     Data: `
@@ -8156,6 +8796,11 @@ resource "datapower_xsl_proxy_service" "acc_test" {
   local_port = 8922
   remote_address = "10.10.10.10"
   remote_port = 9999
+  http_version = ` + DmHTTPClientServerVersionTestConfig.GetModelTestBedConfig() + `
+  header_injection = ` + DmHeaderInjectionTestConfig.GetModelTestBedListConfig() + `
+  header_suppression = null
+  stylesheet_parameters = ` + DmStylesheetParameterTestConfig.GetModelTestBedListConfig() + `
+  debug_trigger = null
   local_address = "0.0.0.0"
 }`,
     ModelOnly:    false,

@@ -24,6 +24,7 @@ attributes:
   cli_alias: weight
 - name: MappedPort
   type: Int64
+  default: 0
   description: <p>Specifies the port on the real server. If non-zero, the associated
     real server is contacted on this port. Normally the real server is contacted on
     the same port number as that of the virtual server and this should not be set
@@ -38,6 +39,7 @@ attributes:
 - name: HealthPort
   type: Int64
   description: Specifies the TCP Port number to test.
+  default: 0
 - name: LBMemberState
   type: String
   enum:

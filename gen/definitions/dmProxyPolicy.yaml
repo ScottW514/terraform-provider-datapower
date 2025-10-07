@@ -17,6 +17,7 @@ attributes:
   type: String
   description: Specify the hostname or IP address of the remote HTTP server.
   example: remote.host
+  test_value: '"remote.host"'
   required_when:
   - evaluation: property-value-in-list
     attribute: Skip
@@ -26,8 +27,8 @@ attributes:
   - evaluation: logical-true
 - name: RemotePort
   type: Int64
-  required: true
   example: 443
+  test_value: 443
   description: Specify the port on the remote HTTP server.
   required_when:
   - evaluation: property-value-in-list

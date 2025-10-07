@@ -61,3 +61,4 @@ attributes:
     the first match. If there is no match, the Encoding will be selected by the Default
     Encoding of this HTTP Input Conversion Map.
   cli_alias: rule
+  test_value: 'null'

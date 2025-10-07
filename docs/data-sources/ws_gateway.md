@@ -235,6 +235,7 @@ Read-Only:
 
 - `direction` (String) Select the direction of the message.
   - Choices: `front`, `back`
+  - Default value: `front`
 - `header_tag` (String) Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.
 - `header_tag_value` (String) Enter the value for the header tag.
 

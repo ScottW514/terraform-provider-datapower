@@ -110,6 +110,8 @@ attributes:
   reference_to: PasswordAlias
   description: Password Alias
   cli_alias: user-password-alias
+  test_value: '"AccTest_PasswordAlias"'
+  test_bed_value: 'datapower_password_alias.acc_test.id'
   required_when:
   - evaluation: logical-and
     conditions:

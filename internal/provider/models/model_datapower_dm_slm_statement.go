@@ -59,6 +59,13 @@ type DmSLMStatement struct {
 	MaximumResourcesAndCredentialsForThreshold types.Int64  `tfsdk:"maximum_resources_and_credentials_for_threshold"`
 }
 
+var DmSLMStatementThreshIntervalLengthCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "thresh_interval_type",
+	AttrType:    "String",
+	AttrDefault: "fixed",
+	Value:       []string{"concurrent"},
+}
 var DmSLMStatementBurstLimitCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "thresh_algorithm",
@@ -66,22 +73,12 @@ var DmSLMStatementBurstLimitCondVal = validators.Evaluation{
 	AttrDefault: "greater-than",
 	Value:       []string{"token-bucket"},
 }
-var DmSLMStatementThreshIntervalLengthIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "thresh_interval_type",
-	AttrType:    "String",
-	AttrDefault: "fixed",
-	Value:       []string{"concurrent"},
-}
 var DmSLMStatementReleaseThresholdLevelIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "thresh_algorithm",
 	AttrType:    "String",
 	AttrDefault: "greater-than",
 	Value:       []string{"high-low-thresholds"},
-}
-var DmSLMStatementBurstLimitIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
 }
 
 var DmSLMStatementObjectType = map[string]attr.Type{
@@ -110,14 +107,14 @@ var DmSLMStatementObjectDefault = map[string]attr.Value{
 	"rsrc_class":                      types.StringNull(),
 	"schedule":                        types.StringNull(),
 	"action":                          types.StringNull(),
-	"thresh_interval_length":          types.Int64Null(),
+	"thresh_interval_length":          types.Int64Value(0),
 	"thresh_interval_type":            types.StringValue("fixed"),
 	"thresh_algorithm":                types.StringValue("greater-than"),
 	"threshold_type":                  types.StringValue("count-all"),
 	"threshold_level":                 types.Int64Value(0),
 	"release_threshold_level":         types.Int64Value(0),
-	"burst_limit":                     types.Int64Null(),
-	"reporting_aggregation_interval":  types.Int64Null(),
+	"burst_limit":                     types.Int64Value(0),
+	"reporting_aggregation_interval":  types.Int64Value(0),
 	"maximum_total_reporting_records": types.Int64Value(5000),
 	"auto_generated_by_web_gui":       types.BoolValue(false),
 	"maximum_resources_and_credentials_for_threshold": types.Int64Value(5000),
@@ -151,7 +148,7 @@ func GetDmSLMStatementDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 				Computed:            true,
 			},
 			"thresh_interval_length": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").AddNotValidWhen(DmSLMStatementThreshIntervalLengthIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").AddIntegerRange(0, 65535).AddDefaultValue("0").AddRequiredWhen(DmSLMStatementThreshIntervalLengthCondVal.String()).String,
 				Computed:            true,
 			},
 			"thresh_interval_type": DataSourceSchema.StringAttribute{
@@ -175,11 +172,11 @@ func GetDmSLMStatementDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 				Computed:            true,
 			},
 			"burst_limit": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").AddRequiredWhen(DmSLMStatementBurstLimitCondVal.String()).AddNotValidWhen(DmSLMStatementBurstLimitIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").AddRequiredWhen(DmSLMStatementBurstLimitCondVal.String()).String,
 				Computed:            true,
 			},
 			"reporting_aggregation_interval": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base aggregation level in minutes for the reporting statistics. This property is independent of the threshold interval.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base aggregation level in minutes for the reporting statistics. This property is independent of the threshold interval.", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("0").String,
 				Computed:            true,
 			},
 			"maximum_total_reporting_records": DataSourceSchema.Int64Attribute{
@@ -226,8 +223,14 @@ func GetDmSLMStatementResourceSchema() ResourceSchema.NestedAttributeObject {
 				Required:            true,
 			},
 			"thresh_interval_length": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").AddNotValidWhen(DmSLMStatementThreshIntervalLengthIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").AddIntegerRange(0, 65535).AddDefaultValue("0").AddRequiredWhen(DmSLMStatementThreshIntervalLengthCondVal.String()).String,
+				Computed:            true,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(0, 65535),
+					validators.ConditionalRequiredInt64(DmSLMStatementThreshIntervalLengthCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(0),
 			},
 			"thresh_interval_type": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of intervals to measure. The default is a fixed interval.", "", "").AddStringEnum("fixed", "moving", "concurrent").AddDefaultValue("fixed").String,
@@ -276,15 +279,23 @@ func GetDmSLMStatementResourceSchema() ResourceSchema.NestedAttributeObject {
 				Default: int64default.StaticInt64(0),
 			},
 			"burst_limit": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").AddRequiredWhen(DmSLMStatementBurstLimitCondVal.String()).AddNotValidWhen(DmSLMStatementBurstLimitIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").AddRequiredWhen(DmSLMStatementBurstLimitCondVal.String()).String,
+				Computed:            true,
 				Optional:            true,
 				Validators: []validator.Int64{
-					validators.ConditionalRequiredInt64(DmSLMStatementBurstLimitCondVal, DmSLMStatementBurstLimitIgnoreVal, false),
+					int64validator.Between(0, 9007199254740991),
+					validators.ConditionalRequiredInt64(DmSLMStatementBurstLimitCondVal, validators.Evaluation{}, true),
 				},
+				Default: int64default.StaticInt64(0),
 			},
 			"reporting_aggregation_interval": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base aggregation level in minutes for the reporting statistics. This property is independent of the threshold interval.", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base aggregation level in minutes for the reporting statistics. This property is independent of the threshold interval.", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("0").String,
+				Computed:            true,
 				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(0, 4294967295),
+				},
+				Default: int64default.StaticInt64(0),
 			},
 			"maximum_total_reporting_records": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the total number of records for a reporting interval. A single reporting aggregation interval can contain multiple records. For example, one record per resource or credential. This property allows you to define a maximum memory-consumption threshold. The default value is 5000.", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
@@ -467,7 +478,7 @@ func (data *DmSLMStatement) FromBody(ctx context.Context, pathRoot string, res g
 	if value := res.Get(pathRoot + `ThreshIntervalLength`); value.Exists() {
 		data.ThreshIntervalLength = types.Int64Value(value.Int())
 	} else {
-		data.ThreshIntervalLength = types.Int64Null()
+		data.ThreshIntervalLength = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `ThreshIntervalType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ThreshIntervalType = tfutils.ParseStringFromGJSON(value)
@@ -497,12 +508,12 @@ func (data *DmSLMStatement) FromBody(ctx context.Context, pathRoot string, res g
 	if value := res.Get(pathRoot + `BurstLimit`); value.Exists() {
 		data.BurstLimit = types.Int64Value(value.Int())
 	} else {
-		data.BurstLimit = types.Int64Null()
+		data.BurstLimit = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `ReportingAggregationInterval`); value.Exists() {
 		data.ReportingAggregationInterval = types.Int64Value(value.Int())
 	} else {
-		data.ReportingAggregationInterval = types.Int64Null()
+		data.ReportingAggregationInterval = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `MaximumTotalReportingRecords`); value.Exists() {
 		data.MaximumTotalReportingRecords = types.Int64Value(value.Int())
@@ -557,7 +568,7 @@ func (data *DmSLMStatement) UpdateFromBody(ctx context.Context, pathRoot string,
 	}
 	if value := res.Get(pathRoot + `ThreshIntervalLength`); value.Exists() && !data.ThreshIntervalLength.IsNull() {
 		data.ThreshIntervalLength = types.Int64Value(value.Int())
-	} else {
+	} else if data.ThreshIntervalLength.ValueInt64() != 0 {
 		data.ThreshIntervalLength = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `ThreshIntervalType`); value.Exists() && !data.ThreshIntervalType.IsNull() {
@@ -587,12 +598,12 @@ func (data *DmSLMStatement) UpdateFromBody(ctx context.Context, pathRoot string,
 	}
 	if value := res.Get(pathRoot + `BurstLimit`); value.Exists() && !data.BurstLimit.IsNull() {
 		data.BurstLimit = types.Int64Value(value.Int())
-	} else {
+	} else if data.BurstLimit.ValueInt64() != 0 {
 		data.BurstLimit = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `ReportingAggregationInterval`); value.Exists() && !data.ReportingAggregationInterval.IsNull() {
 		data.ReportingAggregationInterval = types.Int64Value(value.Int())
-	} else {
+	} else if data.ReportingAggregationInterval.ValueInt64() != 0 {
 		data.ReportingAggregationInterval = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `MaximumTotalReportingRecords`); value.Exists() && !data.MaximumTotalReportingRecords.IsNull() {

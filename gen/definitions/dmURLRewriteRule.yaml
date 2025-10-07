@@ -49,6 +49,7 @@ attributes:
     so forth. To omit the second text subpattern only, specify $1$3.</li></ul>
   cli_alias: input-expression
   example: Replace
+  test_value: '"Replace"'
   required_when:
   - evaluation: property-value-in-list
     attribute: Type

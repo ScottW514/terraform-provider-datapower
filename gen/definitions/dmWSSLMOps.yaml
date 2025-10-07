@@ -37,6 +37,7 @@ attributes:
   cli_alias: severity
 - name: Threshold
   type: Int64
+  default: 0
   description: Specify the threshold value in TPS to trigger the action.
   cli_alias: threshold
 - name: Action
@@ -44,5 +45,6 @@ attributes:
   enum:
   - log
   - throttle
+  test_value: '"log"'
   description: Specify the action to take when the threshold is reached.
   cli_alias: action

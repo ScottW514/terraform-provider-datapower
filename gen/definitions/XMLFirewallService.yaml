@@ -749,6 +749,7 @@ attributes:
     service handling the message, may be suppressed from messages sent by the DataPower
     device back to the client.'
   cli_alias: suppress
+  test_value: 'null'
 - name: StylesheetParameters
   type: List
   element_type: DmStylesheetParameter
@@ -846,6 +847,7 @@ attributes:
     one of these conditions, the transaction is captured in diagnostics mode and becomes
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
+  test_value: 'null'
   ignored_when:
   - evaluation: property-value-not-in-list
     attribute: DebugMode

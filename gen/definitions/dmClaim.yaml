@@ -16,5 +16,6 @@ attributes:
   - string
   - bool
   - number
+  default: string
   description: Specify the data type of the JWT claim value. The type can be string,
     boolean, or number.

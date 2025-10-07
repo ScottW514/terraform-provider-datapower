@@ -17,11 +17,39 @@ An API gateway matches the API to process API requests and to route each request
 
 ```terraform
 resource "datapower_api_gateway" "test" {
-  id                       = "ResTestAPIGateway"
-  app_domain               = "acceptance_test"
-  front_protocol           = ["AccTest_HTTPSourceProtocolHandler"]
+  id             = "ResTestAPIGateway"
+  app_domain     = "acceptance_test"
+  front_protocol = ["AccTest_HTTPSourceProtocolHandler"]
+  doc_cache_policy = [{
+    type     = "protocol"
+    priority = 128
+  }]
+  scheduled_rule = [{
+    rule = "__dp-policy-begin__"
+  }]
+  assembly_burst_limit = [{
+    name  = "apiburstlimit"
+    burst = 1000
+  }]
+  assembly_rate_limit = [{
+    name = "apiratelimit"
+    rate = 1000
+  }]
+  assembly_count_limit = [{
+    name  = "countlimit"
+    count = 1000
+  }]
+  proxy_policies = [{
+    reg_exp        = "*"
+    skip           = false
+    remote_address = "10.10.10.10"
+    remote_port    = 8888
+  }]
   front_timeout            = 120
   front_persistent_timeout = 180
+  open_telemetry_resource_attribute = [{
+    value = "value"
+  }]
 }
 ```
 
@@ -267,12 +295,6 @@ Optional:
   - CLI Alias: `return-expired`
   - Default value: `false`
   - Not Valid When: `type`=`no-cache`
-- `ttl` (Number) Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.
-  - CLI Alias: `ttl`
-  - Range: `0`-`31708800`
-  - Default value: `900`
-  - Required When: `type`=`fixed`
-  - Not Valid When: `type`=`protocol`|`no-cache`
 - `type` (String) Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`
@@ -330,3 +352,4 @@ Required:
 Optional:
 
 - `interval` (Number) Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.
+  - Default value: `0`

@@ -90,3 +90,4 @@ Read-Only:
   - Choices: `front`, `rate`
 - `threshold` (Number) Specify the threshold value in TPS to trigger the action.
   - CLI Alias: `threshold`
+  - Default value: `0`

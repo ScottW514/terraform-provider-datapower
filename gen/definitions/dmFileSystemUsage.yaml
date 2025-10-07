@@ -14,6 +14,7 @@ attributes:
   - mqerr
   - mqtrace
   required: true
+  example: 'system'
   description: Specify the system file system to check.
   cli_alias: name
 - name: WarningThreshold

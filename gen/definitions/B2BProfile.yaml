@@ -250,6 +250,7 @@ attributes:
 - name: Contacts
   type: List
   element_type: DmB2BContact
+  test_value: 'null'
   description: Specify the contact information for partners. To define the contact
     information, you must provide information for at least one property.
   cli_alias: contact

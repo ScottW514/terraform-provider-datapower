@@ -10,10 +10,11 @@ attributes:
   - fragmentid
   - rest
   description: Select a type of Component
-  example: rest
+  default: service
 - name: ExternalAttachWSDLComponentValue
   type: String
   description: Enter the qname of a WSDL component formatted {ns}ncname
+  test_value: '"wsdlvalue"'
   required_when:
   - evaluation: property-value-not-in-list
     attribute: ExternalAttachWSDLComponentType
@@ -28,7 +29,7 @@ attributes:
   type: String
   required: true
   description: Select a document containing policy to be attached
-  example: some.url
+  example: 'http://some.url'
 - name: ExternalAttachPolicyFragmentID
   type: String
   description: Matches Fragment Identifier

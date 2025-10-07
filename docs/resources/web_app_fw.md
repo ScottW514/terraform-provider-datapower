@@ -27,6 +27,7 @@ resource "datapower_web_app_fw" "test" {
   back_timeout             = 120
   front_persistent_timeout = 180
   back_persistent_timeout  = 180
+  debug_trigger            = null
 }
 ```
 

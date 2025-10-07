@@ -18,6 +18,8 @@ Cookie attribute policy manages pre-defined and custom attributes of a cookie.
 resource "datapower_cookie_attribute_policy" "test" {
   id         = "ResTestCookieAttributePolicy"
   app_domain = "acceptance_test"
+  cookie_attribute = {
+  }
 }
 ```
 

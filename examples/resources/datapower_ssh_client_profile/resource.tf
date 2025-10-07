@@ -4,4 +4,9 @@ resource "datapower_ssh_client_profile" "test" {
   app_domain    = "acceptance_test"
   user_name     = "someuser"
   profile_usage = "sftp"
+  ssh_user_authentication = {
+    publickey = false
+    password  = true
+  }
+  password_alias = "AccTest_PasswordAlias"
 }

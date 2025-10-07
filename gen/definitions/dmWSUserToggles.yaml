@@ -5,36 +5,43 @@ attributes:
 - name: WSDLName
   type: String
   required: true
+  example: '"*"'
   description: WSDL file name or "*" to match all files. This is the local name of
     the WSDL file, as defined on the WSDL tab.
 - name: ServiceName
   type: String
+  example: '"*"'
   required: true
   description: Matches wsdl:service/@name using the format {serviceNamespace}/name.
     Enter "*" to match all bindings.
 - name: ServicePortName
   type: String
   required: true
+  example: '"*"'
   description: Matches wsdl:service/wsdl:port/@name using the format {serviceNamespace}/name.
     Enter "*" to match all ports.
 - name: PortTypeName
   type: String
   required: true
+  example: '"*"'
   description: Matches wsdl:portType/@name using the format {portTypeNamespace}name.
     Enter "*" to match all bindings.
 - name: BindingName
   type: String
   required: true
+  example: '"*"'
   description: Matches wsdl:binding/@name using the format {bindingNamespace}name.
     Enter "*" to match all bindings.
 - name: OperationName
   type: String
   required: true
+  example: '"*"'
   description: Matches wsdl:binding/operation/@name using the format {bindingNamespace}name
     or wsdl:service/wsdl:port when formatted {serviceNamespace}port-name/operation-name.
     Enter "*" to match all operations.
 - name: Toggles
   dm_type: DmWSDLUserPolicyToggles
+  test_value: 'null'
   description: Select the policy (availability and behavior) of the component made
     available by the Web Service Proxy. The established policy cascade (applies to
     all components that are contained by the current component).

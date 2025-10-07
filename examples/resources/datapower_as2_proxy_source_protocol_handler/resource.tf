@@ -1,9 +1,11 @@
 
 resource "datapower_as2_proxy_source_protocol_handler" "test" {
-  id                        = "ResTestAS2ProxySourceProtocolHandler"
-  app_domain                = "acceptance_test"
-  local_address             = "0.0.0.0"
-  local_port                = 80
+  id            = "ResTestAS2ProxySourceProtocolHandler"
+  app_domain    = "acceptance_test"
+  local_address = "0.0.0.0"
+  local_port    = 80
+  allowed_features = {
+  }
   remote_address            = "10.10.10.10"
   remote_port               = 8888
   remote_connection_timeout = 60

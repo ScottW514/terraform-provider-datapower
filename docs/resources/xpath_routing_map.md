@@ -23,6 +23,7 @@ resource "datapower_xpath_routing_map" "test" {
     port  = 8888
     ssl   = false
   }]
+  name_space_mappings = null
 }
 ```
 

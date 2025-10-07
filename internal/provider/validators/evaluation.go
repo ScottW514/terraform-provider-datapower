@@ -117,10 +117,10 @@ func (e *Evaluation) attrInValues(ctx context.Context, config *tfsdk.Config, dia
 	adjPath := attrPath
 	if e.AttrPath != "" {
 		for {
-			if e.AttrPath != "" && e.AttrPath[0:3] != "../" {
+			if e.AttrPath != "" && !e.parentPath() {
 				adjPath = adjPath.AtName(e.AttrPath)
 				break
-			} else if e.AttrPath[0:3] == "../" {
+			} else if e.parentPath() {
 				e.AttrPath = e.AttrPath[3:]
 				adjPath = adjPath.ParentPath()
 			} else {
@@ -287,4 +287,11 @@ func fmtSliceToString(s []string) string {
 		q = append(q, fmt.Sprintf("`%s`", strings.Trim(strconv.Quote(str), `"`)))
 	}
 	return strings.Join(q, `|`)
+}
+
+func (e *Evaluation) parentPath() bool {
+	if len(e.AttrPath) < 3 {
+		return false
+	}
+	return e.AttrPath[0:3] == "../"
 }

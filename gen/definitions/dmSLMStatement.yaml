@@ -5,6 +5,7 @@ attributes:
 - name: SLMId
   type: Int64
   required: true
+  example: 514
   description: Specify the unique integer that indicates the order in which to process
     the statement. The policy processes statements from least to greatest. Adding
     a statement that duplicates the value of a previous identifier replaces the previous
@@ -40,6 +41,9 @@ attributes:
     that exceed the threshold.
 - name: ThreshIntervalLength
   type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 0
   description: Specify the duration in seconds of each interval. Enter a value in
     the range 0 - 65535. The default value is 0, which allows all messages and never
     triggers the threshold to enforce the action. <p>This property is not relevant
@@ -48,8 +52,8 @@ attributes:
     case, if the interval type is set to fixed, but behaves as concurrent with an
     interval of 0 that allows all messages and never triggers the threshold to enforce
     the action.</p>
-  ignored_when:
-  - evaluation: property-value-in-list
+  required_when:
+  - evaluation: property-value-not-in-list
     attribute: ThreshIntervalType
     value:
     - concurrent
@@ -113,6 +117,9 @@ attributes:
     - high-low-thresholds
 - name: BurstLimit
   type: Int64
+  minimum: 0
+  maximum: 9007199254740991
+  default: 0
   description: Specify the maximum size of the committed burst. The default value
     is 0, which throttles all messages. <p>The committed burst defines how much traffic
     can be sent during a reporting interval. The burst size should be at least twice
@@ -123,10 +130,11 @@ attributes:
     attribute: ThreshAlgorithm
     value:
     - token-bucket
-  ignored_when:
-  - evaluation: logical-true
 - name: ReportingAggregationInterval
   type: Int64
+  minimum: 0
+  maximum: 4294967295
+  default: 0
   description: Specify the base aggregation level in minutes for the reporting statistics.
     This property is independent of the threshold interval.
 - name: MaximumTotalReportingRecords

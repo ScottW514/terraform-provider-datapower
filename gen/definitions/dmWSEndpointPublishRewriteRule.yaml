@@ -25,6 +25,7 @@ attributes:
   cli_alias: published-endpoint-hostname
 - name: PublishedEndpointPort
   type: Int64
+  default: 0
   description: Specify the URL portion of the rewritten web service binding that specifies
     the port. If 0, uses the value from the WSDL.
   cli_alias: published-endpoint-port

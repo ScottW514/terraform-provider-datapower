@@ -336,6 +336,7 @@ attributes:
 - name: DebugTrigger
   type: List
   element_type: DmMSDebugTriggerType
+  test_value: 'null'
   description: The probe captures transactions that meet one or more of the conditions
     defined by the triggers. These triggers examine the direction or type of the message
     flow and examine the message for an XPath expression match. When a message meets

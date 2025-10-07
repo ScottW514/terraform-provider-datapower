@@ -22,6 +22,7 @@ attributes:
   description: Specify the hostname or IP address of an HTTP server. With the remote
     port, this setting designates the HTTP proxy that services the URL set for the
     match pattern. When Skip is on, the remote host is not used.
+  test_value: '"10.10.10.10"'
   required_when:
   - evaluation: property-value-in-list
     attribute: Skip
@@ -37,6 +38,7 @@ attributes:
   description: Specify the port on the HTTP server. With the remote host, this setting
     designates the HTTP proxy that services the URL set for the match pattern. When
     Skip is on, the remote port is not used.
+  test_value: '8888'
   required_when:
   - evaluation: property-value-in-list
     attribute: Skip

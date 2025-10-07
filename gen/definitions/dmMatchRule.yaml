@@ -39,6 +39,7 @@ attributes:
 - name: Url
   type: String
   description: The URL match expression.
+  test_value: '"*"'
   required_when:
   - evaluation: property-value-in-list
     attribute: Type
@@ -50,7 +51,6 @@ attributes:
   - evaluation: logical-true
 - name: ErrorCode
   type: String
-  test_value: '"*"'
   description: The error code match expression.
   required_when:
   - evaluation: property-value-in-list

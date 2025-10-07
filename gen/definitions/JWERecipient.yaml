@@ -71,7 +71,7 @@ attributes:
 - name: Certificate
   type: String
   reference_to: CryptoCertificate
-  test_value: '"TestAcc_CryptoCertificate"'
+  test_value: '"AccTest_CryptoCertificate"'
   test_bed_value: datapower_crypto_certificate.acc_test.id
   description: Certificate.
   cli_alias: cert

@@ -33,14 +33,13 @@ attributes:
   - ccc-off
   - ccc-opt
   - ccc-req
-  required: true
   default: ccc-off
   description: Specify the cessation of FTP command channel encryption after user
     authentication. Encryption must be stopped for compatibility with NAT and other
     firewall applications. Although a security risk, no other option exists when NAT
     is in use.
-  ignored_when:
-  - evaluation: property-value-in-list
+  required_when:
+  - evaluation: property-value-not-in-list
     attribute: AuthTLS
     value:
     - auth-off
@@ -50,12 +49,11 @@ attributes:
   - enc-data-off
   - enc-data-opt
   - enc-data-req
-  required: true
   default: enc-data-off
   description: Specify the use of encryption of file transfers. Compatible with NAT
     in all settings.
-  ignored_when:
-  - evaluation: property-value-in-list
+  required_when:
+  - evaluation: property-value-not-in-list
     attribute: AuthTLS
     value:
     - auth-off

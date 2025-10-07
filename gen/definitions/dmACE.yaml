@@ -7,6 +7,7 @@ attributes:
   enum:
   - allow
   - deny
+  test_value: '"allow"'
   required: true
   description: Specify whether to allow or deny access. <ul><li>When allow, the range
     of address is granted access to the service.</li><li>When deny, the range of addresses
@@ -14,5 +15,6 @@ attributes:
 - name: Address
   type: String
   required: true
+  test_value: '"10.0.0.0/8"'
   description: Specify the contiguous range of IP addresses that are granted or denied
     access. Enter the value as an IP address and network mask.

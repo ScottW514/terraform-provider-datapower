@@ -5,7 +5,7 @@ attributes:
 - name: VirtualPath
   type: String
   required: true
-  example: virtualpath
+  example: '/virtualpath'
   description: Specify the directory in virtual file system where the FTP client can
     find this directory.
   string_patterns:

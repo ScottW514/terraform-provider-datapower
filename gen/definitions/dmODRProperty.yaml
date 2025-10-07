@@ -5,10 +5,12 @@ attributes:
 - name: PropName
   type: String
   required: true
+  example: 'propname'
   description: Enter the name of a property.
   cli_alias: odr-prop-name
 - name: PropValue
   type: String
   required: true
+  example: 'propvalue'
   description: Enter the value of a property.
   cli_alias: odr-prop-value

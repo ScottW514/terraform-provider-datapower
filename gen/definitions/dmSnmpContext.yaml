@@ -5,6 +5,7 @@ attributes:
 - name: Context
   type: String
   required: true
+  example: 'context'
   description: An SNMPv3 context that will allow access to an application domain.
   string_max_length: 32
   string_min_length: 1

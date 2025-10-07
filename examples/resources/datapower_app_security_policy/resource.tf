@@ -10,4 +10,8 @@ resource "datapower_app_security_policy" "test" {
     match = "__default-accept-service-providers__"
     rule  = "AccTest_WebAppResponse"
   }]
+  error_maps = [{
+    match = "__default-accept-service-providers__"
+    rule  = "__dp-policy-begin__"
+  }]
 }

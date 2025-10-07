@@ -59,6 +59,7 @@ attributes:
     , a referenced deployment policy variable configuration must map the <tt>newName</tt>
     variable to an explicit replacement value.
   cli_alias: value
+  test_value: '"somevalue"'
   required_when:
   - evaluation: property-value-in-list
     attribute: Type

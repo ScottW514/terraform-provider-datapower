@@ -64,6 +64,7 @@ attributes:
   element_type: DmNamespaceMapping
   description: Define XML namespace maps. Each map is a prefix with its URI.
   cli_alias: namespace-mapping
+  test_value: 'null'
 - name: ExtractIdentity
   dm_type: DmAAAPExtractIdentity
   description: Specify the methods to extract the identity of the service requester.
@@ -105,6 +106,7 @@ attributes:
   description: Specify SAML attributes. Each attribute consists of its namespace URI,
     local name, and expected value.
   cli_alias: saml-attribute
+  test_value: 'null'
 - name: LTPAAttributes
   type: List
   element_type: DmLTPAUserAttributeNameAndValue

@@ -5,12 +5,14 @@ attributes:
 - name: Name
   type: String
   required: true
+  example: 'validationname'
   description: The regular expression that the submitted names are matched against.
     If they match the value must also match against the corresponding value constraint
     to be passed through.
 - name: Value
   type: String
   required: true
+  example: 'somevalue'
   description: The regular expression (PCRE style) that is applied to a value input
     to see if it is an expected input
 - name: Fixup

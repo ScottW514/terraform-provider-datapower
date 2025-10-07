@@ -23,6 +23,10 @@ resource "datapower_kafka_cluster" "test" {
     host = "localhost"
     port = 8888
   }]
+  property = [{
+    name  = "name"
+    value = "value"
+  }]
 }
 ```
 

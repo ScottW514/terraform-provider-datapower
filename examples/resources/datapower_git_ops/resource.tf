@@ -10,4 +10,5 @@ resource "datapower_git_ops" "test" {
   tls_valcred       = "AccTest_CryptoValCred"
   git_user          = "Git User"
   git_email         = "git@user.domain"
+  template_policies = null
 }

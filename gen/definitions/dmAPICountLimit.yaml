@@ -5,6 +5,7 @@ attributes:
 - name: Name
   type: String
   required: true
+  example: 'countlimit'
   description: Indicates the name of the count limit scheme.
 - name: Count
   type: Int64

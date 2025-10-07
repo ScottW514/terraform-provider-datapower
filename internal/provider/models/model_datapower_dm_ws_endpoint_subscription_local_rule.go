@@ -28,6 +28,7 @@ import (
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -49,6 +50,13 @@ type DmWSEndpointSubscriptionLocalRule struct {
 	FrontsidePortSuffix   types.String `tfsdk:"frontside_port_suffix"`
 }
 
+var DmWSEndpointSubscriptionLocalRuleLocalEndpointPortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
 var DmWSEndpointSubscriptionLocalRuleFrontProtocolCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_front_protocol",
@@ -64,13 +72,6 @@ var DmWSEndpointSubscriptionLocalRuleLocalEndpointProtocolIgnoreVal = validators
 	Value:       []string{"false"},
 }
 var DmWSEndpointSubscriptionLocalRuleLocalEndpointHostnameIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "use_front_protocol",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var DmWSEndpointSubscriptionLocalRuleLocalEndpointPortIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "use_front_protocol",
 	AttrType:    "Bool",
@@ -96,7 +97,7 @@ var DmWSEndpointSubscriptionLocalRuleObjectDefault = map[string]attr.Value{
 	"subscription":            types.StringNull(),
 	"local_endpoint_protocol": types.StringValue("default"),
 	"local_endpoint_hostname": types.StringValue("0.0.0.0"),
-	"local_endpoint_port":     types.Int64Null(),
+	"local_endpoint_port":     types.Int64Value(0),
 	"local_endpoint_uri":      types.StringNull(),
 	"front_protocol":          types.StringNull(),
 	"use_front_protocol":      types.BoolValue(false),
@@ -120,7 +121,7 @@ func GetDmWSEndpointSubscriptionLocalRuleDataSourceSchema() DataSourceSchema.Nes
 				Computed:            true,
 			},
 			"local_endpoint_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").AddNotValidWhen(DmWSEndpointSubscriptionLocalRuleLocalEndpointPortIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").AddDefaultValue("0").AddRequiredWhen(DmWSEndpointSubscriptionLocalRuleLocalEndpointPortCondVal.String()).String,
 				Computed:            true,
 			},
 			"local_endpoint_uri": DataSourceSchema.StringAttribute{
@@ -171,8 +172,13 @@ func GetDmWSEndpointSubscriptionLocalRuleResourceSchema() ResourceSchema.NestedA
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_endpoint_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").AddNotValidWhen(DmWSEndpointSubscriptionLocalRuleLocalEndpointPortIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").AddDefaultValue("0").AddRequiredWhen(DmWSEndpointSubscriptionLocalRuleLocalEndpointPortCondVal.String()).String,
+				Computed:            true,
 				Optional:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(DmWSEndpointSubscriptionLocalRuleLocalEndpointPortCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(0),
 			},
 			"local_endpoint_uri": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value that is specified in the WSDL.", "local-endpoint-uri", "").String,
@@ -298,7 +304,7 @@ func (data *DmWSEndpointSubscriptionLocalRule) FromBody(ctx context.Context, pat
 	if value := res.Get(pathRoot + `LocalEndpointPort`); value.Exists() {
 		data.LocalEndpointPort = types.Int64Value(value.Int())
 	} else {
-		data.LocalEndpointPort = types.Int64Null()
+		data.LocalEndpointPort = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `LocalEndpointURI`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LocalEndpointUri = tfutils.ParseStringFromGJSON(value)
@@ -348,7 +354,7 @@ func (data *DmWSEndpointSubscriptionLocalRule) UpdateFromBody(ctx context.Contex
 	}
 	if value := res.Get(pathRoot + `LocalEndpointPort`); value.Exists() && !data.LocalEndpointPort.IsNull() {
 		data.LocalEndpointPort = types.Int64Value(value.Int())
-	} else {
+	} else if data.LocalEndpointPort.ValueInt64() != 0 {
 		data.LocalEndpointPort = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `LocalEndpointURI`); value.Exists() && !data.LocalEndpointUri.IsNull() {

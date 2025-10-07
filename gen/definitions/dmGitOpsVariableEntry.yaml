@@ -5,10 +5,12 @@ attributes:
 - name: VariableName
   type: String
   required: true
+  example: 'variablename'
   description: Variable name
   cli_alias: name
 - name: VariableValue
   type: String
   required: true
+  example: 'variablevalue'
   description: Variable value
   cli_alias: value

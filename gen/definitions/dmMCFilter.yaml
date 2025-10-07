@@ -21,6 +21,7 @@ attributes:
   type: String
   description: Enter the name of the HTTP header field. Available for HTTP header-based
     filters.
+  test_value: '"headername"'
   required_when:
   - evaluation: property-value-in-list
     attribute: Type
@@ -32,6 +33,7 @@ attributes:
   type: String
   description: Enter the explicit, literal string value for the HTTP header field.
     Wildcards are not supported. Available for HTTP header-based filters.
+  test_value: '"headervalue"'
   required_when:
   - evaluation: property-value-in-list
     attribute: Type

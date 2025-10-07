@@ -5,6 +5,7 @@ attributes:
 - name: Community
   type: String
   required: true
+  example: 'private'
   description: Enter the name of a specific SNMP community. All SNMP Version 1 or
     Version 2c managers identifying themselves as a member of this community will
     have the Mode permissions set here for the Associated Domains selected here and
@@ -16,6 +17,7 @@ attributes:
   - read-only
   - read-write
   required: true
+  example: 'none'
   description: Select the access privileges accorded to SNMP managers that belong
     to this community. Use none to disable SNMP access.
 - name: Host

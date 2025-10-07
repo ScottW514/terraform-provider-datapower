@@ -17,11 +17,21 @@ Create or edit an XML Firewall on local IP/port. This XML Firewall can communica
 
 ```terraform
 resource "datapower_xml_firewall_service" "test" {
-  id            = "ResTestXMLFirewallService"
-  app_domain    = "acceptance_test"
-  type          = "dynamic-backend"
-  xml_manager   = "default"
-  local_port    = 7575
+  id          = "ResTestXMLFirewallService"
+  app_domain  = "acceptance_test"
+  type        = "dynamic-backend"
+  xml_manager = "default"
+  local_port  = 7575
+  http_version = {
+  }
+  header_injection = [{
+    header_tag_value = "SomeHeaderValue"
+  }]
+  header_suppression = null
+  stylesheet_parameters = [{
+    parameter_value = "PARAMETER-VALUE"
+  }]
+  debug_trigger = null
   local_address = "0.0.0.0"
 }
 ```
@@ -353,6 +363,7 @@ Optional:
 
 - `direction` (String) Select the direction of the message.
   - Choices: `front`, `back`
+  - Default value: `front`
 - `header_tag` (String) Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.
 
 

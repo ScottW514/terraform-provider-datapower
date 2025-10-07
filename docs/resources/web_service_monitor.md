@@ -16,9 +16,15 @@ A service level monitor (SLM) for a web service watches web services traffic to 
 
 ```terraform
 resource "datapower_web_service_monitor" "test" {
-  id           = "ResTestWebServiceMonitor"
-  app_domain   = "acceptance_test"
-  wsdl_url     = "wsdlurl"
+  id         = "ResTestWebServiceMonitor"
+  app_domain = "acceptance_test"
+  wsdl_url   = "wsdlurl"
+  operations = [{
+    operation = "all"
+    target    = "front"
+    severity  = "low"
+    action    = "log"
+  }]
   endpoint_url = "endpointurl"
   frontend_url = "frontendurl"
 }
@@ -91,3 +97,4 @@ Optional:
   - Default value: `all`
 - `threshold` (Number) Specify the threshold value in TPS to trigger the action.
   - CLI Alias: `threshold`
+  - Default value: `0`

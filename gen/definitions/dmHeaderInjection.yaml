@@ -7,16 +7,16 @@ attributes:
   enum:
   - front
   - back
-  example: front
+  default: front
   description: Select the direction of the message.
 - name: HeaderTag
   type: String
   description: Enter the name of the header to inject. Even though the headers are
     not defined in the original request, the device provides the specified headers
     to the backend server.
-  example: HEADER-TAG
+  example: 'HEADER-TAG'
 - name: HeaderTagValue
   type: String
   required: true
   description: Enter the value for the header tag.
-  example: Some Header Value
+  example: 'SomeHeaderValue'

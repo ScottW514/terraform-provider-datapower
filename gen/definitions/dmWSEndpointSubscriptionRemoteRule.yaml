@@ -28,6 +28,7 @@ attributes:
     specifies the host name or IP address. If not specified, uses the value from the
     WSDL.
   cli_alias: remote-endpoint-hostname
+  test_value: '"10.10.10.10"'
   required_when:
   - evaluation: property-value-not-in-list
     attribute: RemoteEndpointProtocol
@@ -49,8 +50,9 @@ attributes:
   description: Specify the URL portion of the rewritten web service binding that specifies
     the port. If 0, uses the value from the WSDL.
   cli_alias: remote-endpoint-port
-  ignored_when:
-  - evaluation: property-value-in-list
+  default: 0
+  required_when:
+  - evaluation: property-value-not-in-list
     attribute: RemoteEndpointProtocol
     value:
     - dpmq

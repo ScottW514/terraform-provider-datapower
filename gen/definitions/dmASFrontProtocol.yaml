@@ -5,6 +5,8 @@ attributes:
 - name: FrontProtocol
   type: String
   required: true
+  test_value: '"AccTest_HTTPSourceProtocolHandler"'
+  test_bed_value: 'datapower_http_source_protocol_handler.acc_test.id'
   description: Specify the protocol handler.
   cli_alias: front-protocol
 - name: MDNReceiver

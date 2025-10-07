@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -48,7 +49,7 @@ var DmClaimObjectType = map[string]attr.Type{
 var DmClaimObjectDefault = map[string]attr.Value{
 	"name":  types.StringNull(),
 	"value": types.StringNull(),
-	"type":  types.StringNull(),
+	"type":  types.StringValue("string"),
 }
 
 func GetDmClaimDataSourceSchema() DataSourceSchema.NestedAttributeObject {
@@ -63,7 +64,7 @@ func GetDmClaimDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").AddDefaultValue("string").String,
 				Computed:            true,
 			},
 		},
@@ -82,11 +83,13 @@ func GetDmClaimResourceSchema() ResourceSchema.NestedAttributeObject {
 				Required:            true,
 			},
 			"type": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").AddDefaultValue("string").String,
+				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("string", "bool", "number"),
 				},
+				Default: stringdefault.StaticString("string"),
 			},
 		},
 	}
@@ -141,7 +144,7 @@ func (data *DmClaim) FromBody(ctx context.Context, pathRoot string, res gjson.Re
 	if value := res.Get(pathRoot + `Type`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Type = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.Type = types.StringNull()
+		data.Type = types.StringValue("string")
 	}
 }
 
@@ -161,7 +164,7 @@ func (data *DmClaim) UpdateFromBody(ctx context.Context, pathRoot string, res gj
 	}
 	if value := res.Get(pathRoot + `Type`); value.Exists() && !data.Type.IsNull() {
 		data.Type = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.Type.ValueString() != "string" {
 		data.Type = types.StringNull()
 	}
 }

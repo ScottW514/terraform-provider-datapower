@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -49,6 +50,13 @@ type DmWSEndpointSubscriptionRemoteRule struct {
 }
 
 var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointHostnameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dpmq", "idgmq", "dptibems", "dpwasjms"},
+}
+var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "remote_endpoint_protocol",
 	AttrType:    "String",
@@ -84,13 +92,6 @@ var DmWSEndpointSubscriptionRemoteRuleRemoteWebSphereJMSCondVal = validators.Eva
 	Value:       []string{"dpwasjms"},
 }
 var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointHostnameIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "remote_endpoint_protocol",
-	AttrType:    "String",
-	AttrDefault: "default",
-	Value:       []string{"dpmq", "idgmq", "dptibems", "dpwasjms"},
-}
-var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "remote_endpoint_protocol",
 	AttrType:    "String",
@@ -141,7 +142,7 @@ var DmWSEndpointSubscriptionRemoteRuleObjectDefault = map[string]attr.Value{
 	"subscription":             types.StringNull(),
 	"remote_endpoint_protocol": types.StringValue("default"),
 	"remote_endpoint_hostname": types.StringNull(),
-	"remote_endpoint_port":     types.Int64Null(),
+	"remote_endpoint_port":     types.Int64Value(0),
 	"remote_endpoint_uri":      types.StringNull(),
 	"remote_mqqm":              types.StringNull(),
 	"remote_mq_manager":        types.StringNull(),
@@ -165,7 +166,7 @@ func GetDmWSEndpointSubscriptionRemoteRuleDataSourceSchema() DataSourceSchema.Ne
 				Computed:            true,
 			},
 			"remote_endpoint_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").AddNotValidWhen(DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").AddDefaultValue("0").AddRequiredWhen(DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortCondVal.String()).String,
 				Computed:            true,
 			},
 			"remote_endpoint_uri": DataSourceSchema.StringAttribute{
@@ -216,8 +217,13 @@ func GetDmWSEndpointSubscriptionRemoteRuleResourceSchema() ResourceSchema.Nested
 				},
 			},
 			"remote_endpoint_port": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").AddNotValidWhen(DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "remote-endpoint-port", "").AddDefaultValue("0").AddRequiredWhen(DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortCondVal.String()).String,
+				Computed:            true,
 				Optional:            true,
+				Validators: []validator.Int64{
+					validators.ConditionalRequiredInt64(DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortCondVal, validators.Evaluation{}, true),
+				},
+				Default: int64default.StaticInt64(0),
 			},
 			"remote_endpoint_uri": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the remote path. If not specified, the value from the location attribute of the soap:address element in the WSDL is used. For the IBM MQ, TIBCO EMS, and WebSphere JMS protocols, the URI must specify a RequestQueue parameter. For most web services, the ReplyQueue parameter is required to receive the SOAP response.", "remote-endpoint-uri", "").String,
@@ -345,7 +351,7 @@ func (data *DmWSEndpointSubscriptionRemoteRule) FromBody(ctx context.Context, pa
 	if value := res.Get(pathRoot + `RemoteEndpointPort`); value.Exists() {
 		data.RemoteEndpointPort = types.Int64Value(value.Int())
 	} else {
-		data.RemoteEndpointPort = types.Int64Null()
+		data.RemoteEndpointPort = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `RemoteEndpointURI`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.RemoteEndpointUri = tfutils.ParseStringFromGJSON(value)
@@ -395,7 +401,7 @@ func (data *DmWSEndpointSubscriptionRemoteRule) UpdateFromBody(ctx context.Conte
 	}
 	if value := res.Get(pathRoot + `RemoteEndpointPort`); value.Exists() && !data.RemoteEndpointPort.IsNull() {
 		data.RemoteEndpointPort = types.Int64Value(value.Int())
-	} else {
+	} else if data.RemoteEndpointPort.ValueInt64() != 0 {
 		data.RemoteEndpointPort = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `RemoteEndpointURI`); value.Exists() && !data.RemoteEndpointUri.IsNull() {

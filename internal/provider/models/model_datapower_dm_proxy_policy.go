@@ -121,7 +121,7 @@ func GetDmProxyPolicyResourceSchema() ResourceSchema.NestedAttributeObject {
 			},
 			"remote_port": ResourceSchema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").AddRequiredWhen(DmProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmProxyPolicyRemotePortIgnoreVal.String()).String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					validators.ConditionalRequiredInt64(DmProxyPolicyRemotePortCondVal, DmProxyPolicyRemotePortIgnoreVal, false),
 				},

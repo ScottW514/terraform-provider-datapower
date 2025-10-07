@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,7 +55,7 @@ var DmWSSLMOpsObjectDefault = map[string]attr.Value{
 	"operation": types.StringValue("all"),
 	"target":    types.StringNull(),
 	"severity":  types.StringNull(),
-	"threshold": types.Int64Null(),
+	"threshold": types.Int64Value(0),
 	"action":    types.StringNull(),
 }
 
@@ -74,7 +75,7 @@ func GetDmWSSLMOpsDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 				Computed:            true,
 			},
 			"threshold": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").AddDefaultValue("0").String,
 				Computed:            true,
 			},
 			"action": DataSourceSchema.StringAttribute{
@@ -112,8 +113,10 @@ func GetDmWSSLMOpsResourceSchema() ResourceSchema.NestedAttributeObject {
 				},
 			},
 			"threshold": ResourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").AddDefaultValue("0").String,
+				Computed:            true,
 				Optional:            true,
+				Default:             int64default.StaticInt64(0),
 			},
 			"action": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to take when the threshold is reached.", "action", "").AddStringEnum("log", "throttle").String,
@@ -192,7 +195,7 @@ func (data *DmWSSLMOps) FromBody(ctx context.Context, pathRoot string, res gjson
 	if value := res.Get(pathRoot + `Threshold`); value.Exists() {
 		data.Threshold = types.Int64Value(value.Int())
 	} else {
-		data.Threshold = types.Int64Null()
+		data.Threshold = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `Action`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Action = tfutils.ParseStringFromGJSON(value)
@@ -222,7 +225,7 @@ func (data *DmWSSLMOps) UpdateFromBody(ctx context.Context, pathRoot string, res
 	}
 	if value := res.Get(pathRoot + `Threshold`); value.Exists() && !data.Threshold.IsNull() {
 		data.Threshold = types.Int64Value(value.Int())
-	} else {
+	} else if data.Threshold.ValueInt64() != 0 {
 		data.Threshold = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `Action`); value.Exists() && !data.Action.IsNull() {

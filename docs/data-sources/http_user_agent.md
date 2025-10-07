@@ -125,7 +125,7 @@ Read-Only:
 - `encrypt_data` (String) Specify the use of encryption of file transfers. Compatible with NAT in all settings.
   - Choices: `enc-data-off`, `enc-data-opt`, `enc-data-req`
   - Default value: `enc-data-off`
-  - Not Valid When: `auth_tls`=`auth-off`
+  - Required When: `auth_tls`!=`auth-off`
 - `passive` (String) Specify the use of FTP passive mode to control in which direction FTP data connections are made.
   - Choices: `pasv-off`, `pasv-opt`, `pasv-req`
   - Default value: `pasv-req`
@@ -141,7 +141,7 @@ Read-Only:
 - `use_ccc` (String) Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.
   - Choices: `ccc-off`, `ccc-opt`, `ccc-req`
   - Default value: `ccc-off`
-  - Not Valid When: `auth_tls`=`auth-off`
+  - Required When: `auth_tls`!=`auth-off`
 
 
 <a id="nestedatt--result--header_retention_policies"></a>

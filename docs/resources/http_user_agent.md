@@ -18,6 +18,67 @@ A user agent define how to retrieve resources from remote servers.
 resource "datapower_http_user_agent" "test" {
   id         = "ResTestHTTPUserAgent"
   app_domain = "acceptance_test"
+  proxy_policies = [{
+    reg_exp        = "*"
+    skip           = false
+    remote_address = "remote.host"
+    remote_port    = 443
+  }]
+  ssl_policies = [{
+    reg_exp    = "*"
+    ssl_client = "AccTest_SSLClientProfile"
+  }]
+  basic_auth_policies = [{
+    reg_exp   = "*"
+    user_name = "someuser"
+  }]
+  soap_action_policies = [{
+    reg_exp     = "*"
+    soap_action = "*"
+  }]
+  pubkey_auth_policies = [{
+    reg_exp    = "*"
+    crypto_key = "AccTest_CryptoKey"
+  }]
+  allow_compression_policies = [{
+    reg_exp           = "*"
+    allow_compression = false
+  }]
+  header_retention_policies = [{
+    reg_exp = "*"
+    header_retention = {
+    }
+  }]
+  http_version_policies = [{
+    reg_exp = "*"
+    version = "HTTP/1.1"
+  }]
+  add_header_policies = [{
+    reg_exp    = "*"
+    add_header = "HEADER"
+    add_value  = "VALUE"
+  }]
+  upload_chunked_policies = [{
+    reg_exp        = "*"
+    upload_chunked = false
+  }]
+  ftp_policies = [{
+    reg_exp    = "*"
+    passive    = "pasv-req"
+    auth_tls   = "auth-off"
+    data_type  = "binary"
+    slash_stou = "slash-stou-on"
+  }]
+  smtp_policies = [{
+    reg_exp = "dpsmtp://*"
+    options = {
+    }
+  }]
+  sftp_policies = [{
+    reg_exp              = "*"
+    ssh_client_profile   = "AccTest_SSHClientProfile"
+    use_unique_filenames = false
+  }]
 }
 ```
 
@@ -143,7 +204,7 @@ Optional:
 - `encrypt_data` (String) Specify the use of encryption of file transfers. Compatible with NAT in all settings.
   - Choices: `enc-data-off`, `enc-data-opt`, `enc-data-req`
   - Default value: `enc-data-off`
-  - Not Valid When: `auth_tls`=`auth-off`
+  - Required When: `auth_tls`!=`auth-off`
 - `passive` (String) Specify the use of FTP passive mode to control in which direction FTP data connections are made.
   - Choices: `pasv-off`, `pasv-opt`, `pasv-req`
   - Default value: `pasv-req`
@@ -158,7 +219,7 @@ Optional:
 - `use_ccc` (String) Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.
   - Choices: `ccc-off`, `ccc-opt`, `ccc-req`
   - Default value: `ccc-off`
-  - Not Valid When: `auth_tls`=`auth-off`
+  - Required When: `auth_tls`!=`auth-off`
 
 
 <a id="nestedatt--header_retention_policies"></a>
@@ -211,13 +272,13 @@ Optional:
 Required:
 
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
-- `remote_port` (Number) Specify the port on the remote HTTP server.
-  - Required When: `skip`=`false`
-  - Not Valid When: attribute is not conditionally required
 
 Optional:
 
 - `remote_address` (String) Specify the hostname or IP address of the remote HTTP server.
+  - Required When: `skip`=`false`
+  - Not Valid When: attribute is not conditionally required
+- `remote_port` (Number) Specify the port on the remote HTTP server.
   - Required When: `skip`=`false`
   - Not Valid When: attribute is not conditionally required
 - `skip` (Boolean) Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.

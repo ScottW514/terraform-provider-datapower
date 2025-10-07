@@ -16,10 +16,11 @@ A Document Crypto Map indicates which elements, of a complete schema, to encrypt
 
 ```terraform
 resource "datapower_document_crypto_map" "test" {
-  id         = "ResTestDocumentCryptoMap"
-  app_domain = "acceptance_test"
-  operation  = "encrypt"
-  xpath      = ["*", ]
+  id                  = "ResTestDocumentCryptoMap"
+  app_domain          = "acceptance_test"
+  operation           = "encrypt"
+  xpath               = ["*", ]
+  name_space_mappings = null
 }
 ```
 

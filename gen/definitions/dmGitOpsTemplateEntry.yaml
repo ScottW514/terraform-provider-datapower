@@ -16,17 +16,20 @@ attributes:
 - name: ClassName
   type: String
   required: true
+  example: 'someclass'
   description: Specify the the object class.
   cli_alias: class
 - name: Name
   type: String
   required: true
   description: ''
+  example: 'templatename'
   cli_alias: name
 - name: Field
   type: String
   required: true
   description: Specify the property name.
+  example: 'fieldname'
   cli_alias: field
 - name: Value
   type: String
@@ -35,6 +38,7 @@ attributes:
     named object instance.</li><li>When custom, specify the transform to insert a
     template value</li></ul>
   cli_alias: value
+  test_value: '"templatevalue"'
   required_when:
   - evaluation: property-value-not-in-list
     attribute: TemplateType

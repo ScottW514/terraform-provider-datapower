@@ -5,12 +5,14 @@ attributes:
 - name: WSDLSourceLocation
   type: String
   required: true
+  example: 'http:///searchservice.wsdl'
   description: Specify the exact location (URL) of the WSDL file. The WSDL file can
     be stored on the device or on a remote server. For example, an on-device location
     might be "local:///searchservice.wsdl".
 - name: WSDLName
   type: String
   required: true
+  example: 'searchsvc'
   description: Specify a mnemonic for this WSDL file. The mnemonic can be be the filename
     (for example "searchservice.wsdl") or an alias (for example "searchsvc").
 - name: PolicyAttachments

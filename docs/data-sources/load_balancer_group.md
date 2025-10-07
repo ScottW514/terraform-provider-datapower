@@ -224,11 +224,13 @@ Read-Only:
 - `activity` (String) DEPRECATED.
   - Not Valid When: attribute is not conditionally required
 - `health_port` (Number) Specifies the TCP Port number to test.
+  - Default value: `0`
 - `lb_member_state` (String) Enable or Disable the Load Balancer Member. If the Administrative State is disabled, the member are not used in health or forwarding checks.
   - CLI Alias: `admin-state`
   - Choices: `enabled`, `disabled`
   - Default value: `enabled`
 - `mapped_port` (Number) <p>Specifies the port on the real server. If non-zero, the associated real server is contacted on this port. Normally the real server is contacted on the same port number as that of the virtual server and this should not be set to a value other than zero. However, if you have services that run on different ports for different members of the group, you might need to define this value.</p><p>The DataPower Gateway checks this port when the health check type is IMS Connect.</p>
+  - Default value: `0`
 - `server` (String) Specifies the host name or IP address of the real server.
   - CLI Alias: `server`
 - `weight` (Number) <p>When balancing with Weighted Round Robin, the weight property indicates the relative priority of this server versus the other members of the group. The greater the weight indicates the higher the preference. Use an integer between 1 and 65000.</p><p>For example, assume three server pool members, A, B, and C, with assigned weights of 5, 3, and 2 respectively. As a result of this weighting, server A can expect to receive approximately 50% of client requests, server B can expect to receive approximately 30% of client requests, with server C receiving the remaining 20%.</p>

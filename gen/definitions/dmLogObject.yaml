@@ -4,7 +4,8 @@ list_item: true
 attributes:
 - name: Class
   type: String
-  example: AAA Policy
+  default: AAAPolicy
+  required: true
   description: Specify the object type, which is the object class. With this filter,
     the log target collects log messages for only the specified object classes or
     for only particular instances of the specified object class.

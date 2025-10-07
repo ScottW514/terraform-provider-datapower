@@ -11,5 +11,5 @@ attributes:
   type: String
   reference_to: APIRule
   required: true
-  test_value: '"default-api-rule"'
+  test_value: '"default-empty-rule"'
   description: Specifies the name of the error handler for the custom error.
