@@ -463,28 +463,24 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: stringdefault.StaticString("md5crypt"),
 			},
 			"ldap_ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.RBMSettingsLDAPSSLClientConfigTypeIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddRequiredWhen(models.RBMSettingsLDAPSSLClientConfigTypeCondVal.String()).String,
 				Optional:            true,
-				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
-					validators.ConditionalRequiredString(validators.Evaluation{}, models.RBMSettingsLDAPSSLClientConfigTypeIgnoreVal, true),
+					validators.ConditionalRequiredString(models.RBMSettingsLDAPSSLClientConfigTypeCondVal, validators.Evaluation{}, false),
 				},
-				Default: stringdefault.StaticString("client"),
 			},
 			"ldap_ssl_client_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "ssl_client_profile").AddNotValidWhen(models.RBMSettingsLDAPSSLClientProfileIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"mc_ldap_ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "mc-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.RBMSettingsMCLDAPSSLClientConfigTypeIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "mc-ssl-client-type", "").AddStringEnum("client").AddNotValidWhen(models.RBMSettingsMCLDAPSSLClientConfigTypeIgnoreVal.String()).String,
 				Optional:            true,
-				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
-					validators.ConditionalRequiredString(validators.Evaluation{}, models.RBMSettingsMCLDAPSSLClientConfigTypeIgnoreVal, true),
+					validators.ConditionalRequiredString(validators.Evaluation{}, models.RBMSettingsMCLDAPSSLClientConfigTypeIgnoreVal, false),
 				},
-				Default: stringdefault.StaticString("client"),
 			},
 			"mc_ldap_ssl_client_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "mc-ssl-client", "ssl_client_profile").AddNotValidWhen(models.RBMSettingsMCLDAPSSLClientProfileIgnoreVal.String()).String,

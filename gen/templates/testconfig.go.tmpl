@@ -142,7 +142,8 @@ data "datapower_{{toTfName .Name}}" "test" {
         {{- end}}
 }`,
     {{- end}}
-        {{- if and (not .ModelOnly) (not .SkipTest)}}
+    {{- if and (not .SkipTest) (not (and .DefaultDomainOnly .Singleton))}}   
+        {{- if not .ModelOnly}}
     TestBed: `
 resource "datapower_{{toTfName .Name}}" "acc_test" {
         {{- else}}
@@ -182,6 +183,7 @@ resource "datapower_{{toTfName .Name}}" "acc_test" {
 	        {{- end}}
         {{- end}}
 }`,
+    {{- end}}
     ModelOnly:    {{if .ModelOnly}}true{{else}}false{{end}},
     {{- if len .TestPrerequisites}}
     TestPre: `
@@ -189,5 +191,4 @@ resource "datapower_{{toTfName .Name}}" "acc_test" {
 `,
     {{- end}}
 }
-
 {{- end}}

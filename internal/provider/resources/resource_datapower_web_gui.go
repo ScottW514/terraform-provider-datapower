@@ -89,13 +89,13 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default:             booldefault.StaticBool(true),
 			},
 			"idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535. The default value is 600. A value of 0 disables the timer.", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535, in seconds. A value of 0 disables the timer.", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
-				Default: int64default.StaticInt64(600),
+				Default: int64default.StaticInt64(0),
 			},
 			"acl": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>web-mgmt</tt> access control list to define the client IP addresses to allow or deny.", "acl", "access_control_list").AddDefaultValue("web-mgmt").String,

@@ -798,12 +798,10 @@ attributes:
   type: String
   enum:
   - client
-  default: client
-  test_expect_ds: '"client"'
   description: TLS client type
   cli_alias: ssl-client-type
-  ignored_when:
-  - evaluation: property-value-not-in-list
+  required_when:
+  - evaluation: property-value-in-list
     attribute: AUMethod
     value:
     - ldap
@@ -827,8 +825,6 @@ attributes:
   type: String
   enum:
   - client
-  default: client
-  test_expect_ds: '"client"'
   description: TLS client type
   cli_alias: mc-ssl-client-type
   ignored_when:

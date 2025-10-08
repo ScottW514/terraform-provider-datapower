@@ -53,8 +53,6 @@ attributes:
   enum:
   - server
   - sni
-  default: server
-  test_expect_ds: '"server"'
   description: Custom TLS server type
   cli_alias: ssl-config-type
 - name: SSLServer

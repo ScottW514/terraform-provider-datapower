@@ -607,8 +607,6 @@ resource "datapower_assembly_logic_switch" "acc_test" {
     execute   = "default-api-rule"
   }]
 }
-resource "datapower_audit_log" "acc_test" {
-}
 resource "datapower_b2b_cpa" "acc_test" {
   id         = "AccTest_B2BCPA"
   app_domain = datapower_domain.acc_test.app_domain
@@ -660,13 +658,6 @@ resource "datapower_b2b_gateway" "acc_test" {
     external_partner = datapower_b2b_profile.acc_test.id
   }]
 }
-resource "datapower_b2b_persistence" "acc_test" {
-  raid_volume  = "raid0"
-  storage_size = 1024
-  ha_enabled   = false
-  ha_other_hosts = {
-  }
-}
 resource "datapower_b2b_profile" "acc_test" {
   id           = "AccTest_B2BProfile"
   app_domain   = datapower_domain.acc_test.app_domain
@@ -678,12 +669,8 @@ resource "datapower_b2b_profile" "acc_test" {
     }
     ssl_client = datapower_ssl_client_profile.acc_test.id
   }]
-  contacts = null
-  ebms_profile_cpa_bindings = [{
-    internal_partner = datapower_b2b_profile.acc_test.id
-    cpa              = datapower_b2b_cpa.acc_test.id
-    collaboration    = datapower_b2b_cpa_collaboration.acc_test.id
-  }]
+  contacts                  = null
+  ebms_profile_cpa_bindings = null
   ebms_message_properties = [{
     name  = "b2bmessagepropertyname"
     value = "value"
@@ -701,12 +688,6 @@ resource "datapower_b2b_xpath_routing_policy" "acc_test" {
   app_domain     = datapower_domain.acc_test.app_domain
   sender_xpath   = "senderpath"
   receiver_xpath = "senderpath"
-}
-resource "datapower_cert_monitor" "acc_test" {
-  polling_interval      = 1
-  reminder_time         = 30
-  log_level             = "warn"
-  disable_expired_certs = false
 }
 resource "datapower_compile_options_policy" "acc_test" {
   id         = "AccTest_CompileOptionsPolicy"
@@ -778,15 +759,6 @@ resource "datapower_count_monitor" "acc_test" {
   max_source_s = 10000
   message_type = datapower_message_type.acc_test.id
 }
-resource "datapower_crl_fetch" "acc_test" {
-  crl_fetch_config = [{
-    name             = "crlfetch"
-    fetch_type       = "http"
-    issuer_valcred   = datapower_crypto_valcred.default.id
-    refresh_interval = 240
-    url              = "http://foo.com/crl"
-  }]
-}
 resource "datapower_crypto_certificate" "acc_test" {
   id         = "AccTest_CryptoCertificate"
   app_domain = datapower_domain.acc_test.app_domain
@@ -830,7 +802,7 @@ resource "datapower_crypto_sskey" "acc_test" {
 resource "datapower_crypto_val_cred" "acc_test" {
   id          = "AccTest_CryptoValCred"
   app_domain  = datapower_domain.acc_test.app_domain
-  certificate = datapower_crypto_certificate.acc_test.id
+  certificate = [datapower_crypto_certificate.acc_test.id]
 }
 resource "datapower_deployment_policy_parameters_binding" "acc_test" {
   id         = "AccTest_DeploymentPolicyParametersBinding"
@@ -894,17 +866,6 @@ resource "datapower_ebms3_source_protocol_handler" "acc_test" {
   app_domain    = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
   local_port    = 80
-}
-resource "datapower_error_report_settings" "acc_test" {
-}
-resource "datapower_file_system_usage_monitor" "acc_test" {
-  polling_interval = 60
-  all_system       = true
-  system = [{
-    name               = "system"
-    warning_threshold  = 75
-    critical_threshold = 90
-  }]
 }
 resource "datapower_filter_action" "acc_test" {
   id         = "AccTest_FilterAction"
@@ -982,22 +943,10 @@ resource "datapower_git_ops_template" "acc_test" {
     value         = "templatevalue"
   }]
 }
-resource "datapower_git_ops_variables" "acc_test" {
-  variables = [{
-    variable_name  = "variablename"
-    variable_value = "variablevalue"
-  }]
-}
 resource "datapower_graphql_schema_options" "acc_test" {
   id         = "AccTest_GraphQLSchemaOptions"
   app_domain = datapower_domain.acc_test.app_domain
   api        = datapower_api_definition.acc_test.id
-}
-resource "datapower_gw_script_settings" "acc_test" {
-}
-resource "datapower_gws_remote_debug" "acc_test" {
-  local_port    = 9229
-  local_address = "0.0.0.0"
 }
 resource "datapower_host_alias" "acc_test" {
   id         = "AccTest_HostAlias"
@@ -1101,8 +1050,6 @@ resource "datapower_include_config" "acc_test" {
   id         = "AccTest_IncludeConfig"
   app_domain = datapower_domain.acc_test.app_domain
   url        = "http://localhost/config.zip"
-}
-resource "datapower_interop_service" "acc_test" {
 }
 resource "datapower_jose_recipient_identifier" "acc_test" {
   id         = "AccTest_JOSERecipientIdentifier"
@@ -1270,12 +1217,6 @@ resource "datapower_message_type" "acc_test" {
   id         = "AccTest_MessageType"
   app_domain = datapower_domain.acc_test.app_domain
 }
-resource "datapower_mgmt_interface" "acc_test" {
-  local_port = 5550
-  mode = {
-  }
-  local_address = "0.0.0.0"
-}
 resource "datapower_mpgw_error_action" "acc_test" {
   id         = "AccTest_MPGWErrorAction"
   app_domain = datapower_domain.acc_test.app_domain
@@ -1362,8 +1303,6 @@ resource "datapower_name_value_profile" "acc_test" {
   }]
   default_fixup = "strip"
 }
-resource "datapower_nfs_client_settings" "acc_test" {
-}
 resource "datapower_nfs_dynamic_mounts" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
 }
@@ -1426,13 +1365,6 @@ resource "datapower_oauth_supported_client_group" "acc_test" {
   oauth_role = {
   }
   client = [datapower_oauth_supported_client.acc_test.id]
-}
-resource "datapower_odr" "acc_test" {
-  odr_server_name = "dp_set"
-  odr_custom_properties = [{
-    prop_name  = "propname"
-    prop_value = "propvalue"
-  }]
 }
 resource "datapower_odr_connector_group" "acc_test" {
   id = "AccTest_ODRConnectorGroup"
@@ -1544,20 +1476,6 @@ resource "datapower_processing_metadata" "acc_test" {
     meta_name     = "ResTestmeta"
   }]
 }
-resource "datapower_quota_enforcement_server" "acc_test" {
-  server_port  = 16379
-  monitor_port = 26379
-}
-resource "datapower_radius_settings" "acc_test" {
-  aaa_servers = [{
-    number            = 100
-    host              = "10.10.10.10"
-    secret_wo         = "opensaysme"
-    secret_wo_version = 1
-  }]
-}
-resource "datapower_raid_volume" "acc_test" {
-}
 resource "datapower_rate_limit_configuration" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   parameters = [{
@@ -1579,22 +1497,6 @@ resource "datapower_rate_limit_definition_group" "acc_test" {
   id               = "AccTest_RateLimitDefinitionGroup"
   app_domain       = datapower_domain.acc_test.app_domain
   update_on_exceed = "all"
-}
-resource "datapower_rbm_settings" "acc_test" {
-  au_method = "local"
-  ssh_au_method = {
-  }
-  au_cache_allow              = "absolute"
-  mc_method                   = "local"
-  min_password_length         = 6
-  require_mixed_case          = false
-  require_digit               = false
-  require_non_alpha_numeric   = false
-  disallow_username_substring = false
-  do_password_aging           = false
-  do_password_history         = false
-  cli_timeout                 = 0
-  max_failed_login            = 0
 }
 resource "datapower_saml_attributes" "acc_test" {
   id         = "AccTest_SAMLAttributes"
@@ -1664,24 +1566,6 @@ resource "datapower_smtp_server_connection" "acc_test" {
   options = {
   }
 }
-resource "datapower_snmp_settings" "acc_test" {
-  local_port = 161
-  policies = [{
-    community = "private"
-    domain    = "acc_test_domain"
-    mode      = "none"
-  }]
-  policies_mq = null
-  targets = [{
-    host = "10.10.10.10"
-  }]
-  contexts = [{
-    context = "context"
-    domain  = "acc_test_domain"
-  }]
-  security_level = "authPriv"
-  access_level   = "read-only"
-}
 resource "datapower_soap_header_disposition" "acc_test" {
   id         = "AccTest_SOAPHeaderDisposition"
   app_domain = datapower_domain.acc_test.app_domain
@@ -1748,10 +1632,6 @@ resource "datapower_ssh_server_source_protocol_handler" "acc_test" {
   }
   default_directory   = "/"
   virtual_directories = null
-}
-resource "datapower_ssh_service" "acc_test" {
-  local_port    = 22
-  local_address = "0.0.0.0"
 }
 resource "datapower_ssl_client_profile" "acc_test" {
   id         = "AccTest_SSLClientProfile"
@@ -1860,8 +1740,6 @@ resource "datapower_style_policy_rule" "acc_test" {
   input_format  = "none"
   output_format = "none"
 }
-resource "datapower_system_settings" "acc_test" {
-}
 resource "datapower_tcp_proxy_service" "acc_test" {
   id             = "AccTest_TCPProxyService"
   app_domain     = datapower_domain.acc_test.app_domain
@@ -1869,17 +1747,6 @@ resource "datapower_tcp_proxy_service" "acc_test" {
   remote_address = "10.10.10.10"
   remote_port    = 9999
   local_address  = "0.0.0.0"
-}
-resource "datapower_throttler" "acc_test" {
-  throttle_at          = 0
-  terminate_at         = 0
-  temp_fs_throttle_at  = 0
-  temp_fs_terminate_at = 0
-  qname_warn_at        = 10
-  timeout              = 30
-}
-resource "datapower_time_settings" "acc_test" {
-  local_time_zone = "EST5EDT"
 }
 resource "datapower_url_map" "acc_test" {
   id         = "AccTest_URLMap"
@@ -1970,17 +1837,6 @@ resource "datapower_web_app_session_policy" "acc_test" {
   id            = "AccTest_WebAppSessionPolicy"
   app_domain    = datapower_domain.acc_test.app_domain
   start_matches = "__default-accept-service-providers__"
-}
-resource "datapower_web_b2b_viewer" "acc_test" {
-  local_port    = 9091
-  idle_timeout  = 600
-  local_address = "0.0.0.0"
-}
-resource "datapower_web_gui" "acc_test" {
-  local_port             = 9090
-  save_config_overwrites = true
-  idle_timeout           = 0
-  local_address          = "0.0.0.0"
 }
 resource "datapower_web_service_monitor" "acc_test" {
   id         = "AccTest_WebServiceMonitor"

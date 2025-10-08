@@ -170,8 +170,7 @@ resource "datapower_rbm_settings" "test" {
 - `ldap_ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
-  - Default value: `client`
-  - Not Valid When: `au_method`!=`ldap`
+  - Required When: `au_method`=`ldap`
 - `ldap_ssl_client_profile` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`
@@ -241,7 +240,6 @@ resource "datapower_rbm_settings" "test" {
 - `mc_ldap_ssl_client_config_type` (String) TLS client type
   - CLI Alias: `mc-ssl-client-type`
   - Choices: `client`
-  - Default value: `client`
   - Not Valid When: (`mc_ldap_search_for_group`!=`true` OR `mc_method`=`custom`)
 - `mc_ldap_ssl_client_profile` (String) TLS client profile
   - CLI Alias: `mc-ssl-client`

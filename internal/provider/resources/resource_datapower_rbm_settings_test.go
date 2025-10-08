@@ -66,8 +66,6 @@ func TestAccResourceRBMSettings(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_rbm_settings.test", "lockout_period", "1"),
 			resource.TestCheckResourceAttr("datapower_rbm_settings.test", "mc_force_dn_ldap_order", "false"),
 			resource.TestCheckResourceAttr("datapower_rbm_settings.test", "password_hash_algorithm", "md5crypt"),
-			resource.TestCheckResourceAttr("datapower_rbm_settings.test", "ldap_ssl_client_config_type", "client"),
-			resource.TestCheckResourceAttr("datapower_rbm_settings.test", "mc_ldap_ssl_client_config_type", "client"),
 		}...),
 	})
 

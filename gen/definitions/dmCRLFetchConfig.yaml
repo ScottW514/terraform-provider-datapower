@@ -19,8 +19,8 @@ attributes:
   type: String
   reference_to: CryptoValCred
   required: true
-  test_value: '"Default_CryptoValCred"'
-  test_bed_value: datapower_crypto_valcred.default.id
+  test_value: '"DefaultTest_CryptoValCred"'
+  test_bed_value: datapower_crypto_val_cred.default.id
   description: The validation credentials to verify the authenticity of the CRL issuer
     and, therefor, the CRL. The certificate that the CRL issuer uses must be in the
     validation credentials for the CRL to be valid.

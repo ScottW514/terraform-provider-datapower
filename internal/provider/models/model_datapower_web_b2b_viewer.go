@@ -51,14 +51,14 @@ var WebB2BViewerSSLSNIServerCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl_server_config_type",
 	AttrType:    "String",
-	AttrDefault: "server",
+	AttrDefault: "",
 	Value:       []string{"sni"},
 }
 var WebB2BViewerSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",
 	AttrType:    "String",
-	AttrDefault: "server",
+	AttrDefault: "",
 	Value:       []string{"server"},
 }
 var WebB2BViewerSSLSNIServerIgnoreVal = validators.Evaluation{
@@ -124,7 +124,7 @@ func (data *WebB2BViewer) ToDefault() {
 	data.UserAgent = types.StringNull()
 	data.IdleTimeout = types.Int64Value(600)
 	data.Acl = types.StringValue("web-b2b-viewer")
-	data.SslServerConfigType = types.StringValue("server")
+	data.SslServerConfigType = types.StringNull()
 	data.SslServer = types.StringNull()
 	data.SslSniServer = types.StringNull()
 	data.LocalAddress = types.StringValue("0.0.0.0")
@@ -207,7 +207,7 @@ func (data *WebB2BViewer) FromBody(ctx context.Context, pathRoot string, res gjs
 	if value := res.Get(pathRoot + `SSLServerConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslServerConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslServerConfigType = types.StringValue("server")
+		data.SslServerConfigType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslServer = tfutils.ParseStringFromGJSON(value)
@@ -262,7 +262,7 @@ func (data *WebB2BViewer) UpdateFromBody(ctx context.Context, pathRoot string, r
 	}
 	if value := res.Get(pathRoot + `SSLServerConfigType`); value.Exists() && !data.SslServerConfigType.IsNull() {
 		data.SslServerConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.SslServerConfigType.ValueString() != "server" {
+	} else {
 		data.SslServerConfigType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLServer`); value.Exists() && !data.SslServer.IsNull() {

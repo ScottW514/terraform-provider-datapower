@@ -39,10 +39,10 @@ resource "datapower_web_gui" "test" {
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `idle_timeout` (Number) Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535. The default value is 600. A value of 0 disables the timer.
+- `idle_timeout` (Number) Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535, in seconds. A value of 0 disables the timer.
   - CLI Alias: `idle-timeout`
   - Range: `0`-`65535`
-  - Default value: `600`
+  - Default value: `0`
 - `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`

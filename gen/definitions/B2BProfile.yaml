@@ -686,6 +686,7 @@ attributes:
     matched CPA entry. You must have the CPA entry in the ebXML settings of the associated
     B2B gateway before you add the entry to the CPA bindings list.
   cli_alias: profile-cpa-binding
+  test_value: 'null'
   ignored_when:
   - evaluation: logical-or
     conditions:

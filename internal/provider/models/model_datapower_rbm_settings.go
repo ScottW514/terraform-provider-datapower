@@ -309,6 +309,13 @@ var RBMSettingsNumOldPasswordsCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+var RBMSettingsLDAPSSLClientConfigTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "au_method",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"ldap"},
+}
 var RBMSettingsCAPubKeyFileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssh_au_method",
@@ -652,13 +659,6 @@ var RBMSettingsMCForceDNLDAPOrderIgnoreVal = validators.Evaluation{
 		},
 	},
 }
-var RBMSettingsLDAPSSLClientConfigTypeIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "au_method",
-	AttrType:    "String",
-	AttrDefault: "local",
-	Value:       []string{"ldap"},
-}
 var RBMSettingsLDAPSSLClientProfileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -673,7 +673,7 @@ var RBMSettingsLDAPSSLClientProfileIgnoreVal = validators.Evaluation{
 			Evaluation:  "property-value-not-in-list",
 			Attribute:   "ldap_ssl_client_config_type",
 			AttrType:    "String",
-			AttrDefault: "client",
+			AttrDefault: "",
 			Value:       []string{"client"},
 		},
 	},
@@ -718,7 +718,7 @@ var RBMSettingsMCLDAPSSLClientProfileIgnoreVal = validators.Evaluation{
 			Evaluation:  "property-value-not-in-list",
 			Attribute:   "mc_ldap_ssl_client_config_type",
 			AttrType:    "String",
-			AttrDefault: "client",
+			AttrDefault: "",
 			Value:       []string{"client"},
 		},
 	},
@@ -1056,9 +1056,9 @@ func (data *RBMSettings) ToDefault() {
 	data.LockoutPeriod = types.Int64Value(1)
 	data.McForceDnLdapOrder = types.BoolValue(false)
 	data.PasswordHashAlgorithm = types.StringValue("md5crypt")
-	data.LdapSslClientConfigType = types.StringValue("client")
+	data.LdapSslClientConfigType = types.StringNull()
 	data.LdapSslClientProfile = types.StringNull()
-	data.McLdapSslClientConfigType = types.StringValue("client")
+	data.McLdapSslClientConfigType = types.StringNull()
 	data.McLdapSslClientProfile = types.StringNull()
 }
 
@@ -1582,7 +1582,7 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 	if value := res.Get(pathRoot + `LDAPSSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LdapSslClientConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.LdapSslClientConfigType = types.StringValue("client")
+		data.LdapSslClientConfigType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LDAPSSLClientProfile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LdapSslClientProfile = tfutils.ParseStringFromGJSON(value)
@@ -1592,7 +1592,7 @@ func (data *RBMSettings) FromBody(ctx context.Context, pathRoot string, res gjso
 	if value := res.Get(pathRoot + `MCLDAPSSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.McLdapSslClientConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.McLdapSslClientConfigType = types.StringValue("client")
+		data.McLdapSslClientConfigType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCLDAPSSLClientProfile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.McLdapSslClientProfile = tfutils.ParseStringFromGJSON(value)
@@ -1907,7 +1907,7 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	}
 	if value := res.Get(pathRoot + `LDAPSSLClientConfigType`); value.Exists() && !data.LdapSslClientConfigType.IsNull() {
 		data.LdapSslClientConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.LdapSslClientConfigType.ValueString() != "client" {
+	} else {
 		data.LdapSslClientConfigType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LDAPSSLClientProfile`); value.Exists() && !data.LdapSslClientProfile.IsNull() {
@@ -1917,7 +1917,7 @@ func (data *RBMSettings) UpdateFromBody(ctx context.Context, pathRoot string, re
 	}
 	if value := res.Get(pathRoot + `MCLDAPSSLClientConfigType`); value.Exists() && !data.McLdapSslClientConfigType.IsNull() {
 		data.McLdapSslClientConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.McLdapSslClientConfigType.ValueString() != "client" {
+	} else {
 		data.McLdapSslClientConfigType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `MCLDAPSSLClientProfile`); value.Exists() && !data.McLdapSslClientProfile.IsNull() {

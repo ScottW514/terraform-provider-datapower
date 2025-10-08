@@ -133,7 +133,7 @@ func (data *WebGUI) ToDefault() {
 	data.LocalPort = types.Int64Value(9090)
 	data.UserAgent = types.StringNull()
 	data.SaveConfigOverwrites = types.BoolValue(true)
-	data.IdleTimeout = types.Int64Value(600)
+	data.IdleTimeout = types.Int64Value(0)
 	data.Acl = types.StringValue("web-mgmt")
 	data.SslServerConfigType = types.StringValue("server")
 	data.SslServer = types.StringNull()
@@ -220,7 +220,7 @@ func (data *WebGUI) FromBody(ctx context.Context, pathRoot string, res gjson.Res
 	if value := res.Get(pathRoot + `IdleTimeout`); value.Exists() {
 		data.IdleTimeout = types.Int64Value(value.Int())
 	} else {
-		data.IdleTimeout = types.Int64Value(600)
+		data.IdleTimeout = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `ACL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Acl = tfutils.ParseStringFromGJSON(value)
@@ -285,7 +285,7 @@ func (data *WebGUI) UpdateFromBody(ctx context.Context, pathRoot string, res gjs
 	}
 	if value := res.Get(pathRoot + `IdleTimeout`); value.Exists() && !data.IdleTimeout.IsNull() {
 		data.IdleTimeout = types.Int64Value(value.Int())
-	} else if data.IdleTimeout.ValueInt64() != 600 {
+	} else if data.IdleTimeout.ValueInt64() != 0 {
 		data.IdleTimeout = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `ACL`); value.Exists() && !data.Acl.IsNull() {

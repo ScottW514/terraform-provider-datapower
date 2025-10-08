@@ -26,12 +26,8 @@ resource "datapower_b2b_profile" "test" {
     }
     ssl_client = "AccTest_SSLClientProfile"
   }]
-  contacts = null
-  ebms_profile_cpa_bindings = [{
-    internal_partner = "AccTest_B2BProfile"
-    cpa              = "AccTest_B2BCPA"
-    collaboration    = "AccTest_B2BCPACollaboration"
-  }]
+  contacts                  = null
+  ebms_profile_cpa_bindings = null
   ebms_message_properties = [{
     name  = "b2bmessagepropertyname"
     value = "value"

@@ -47,11 +47,9 @@ attributes:
   minimum: 0
   maximum: 65535
   required: true
-  test_value: '0'
-  default: 600
+  default: 0
   description: Specify the time after which to invalidate idle sessions. When invalidated,
-    requires reauthentication. Enter a value in the range 0 - 65535. The default value
-    is 600. A value of 0 disables the timer.
+    requires reauthentication. Enter a value in the range 0 - 65535, in seconds. A value of 0 disables the timer.
   cli_alias: idle-timeout
 - name: ACL
   type: String

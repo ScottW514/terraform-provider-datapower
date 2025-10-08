@@ -43,7 +43,6 @@ func TestAccDataSourceWebB2BViewer(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_web_b2b_viewer.test", "local_port", "9091"),
 					resource.TestCheckResourceAttr("data.datapower_web_b2b_viewer.test", "idle_timeout", "600"),
 					resource.TestCheckResourceAttr("data.datapower_web_b2b_viewer.test", "acl", "web-b2b-viewer"),
-					resource.TestCheckResourceAttr("data.datapower_web_b2b_viewer.test", "ssl_server_config_type", "server"),
 					resource.TestCheckResourceAttr("data.datapower_web_b2b_viewer.test", "local_address", "0.0.0.0"),
 				}...),
 			},

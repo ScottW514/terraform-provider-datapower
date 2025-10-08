@@ -74,7 +74,7 @@ func (d *WebGUIDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: "Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535. The default value is 600. A value of 0 disables the timer.",
+				MarkdownDescription: "Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535, in seconds. A value of 0 disables the timer.",
 				Computed:            true,
 			},
 			"acl": schema.StringAttribute{
