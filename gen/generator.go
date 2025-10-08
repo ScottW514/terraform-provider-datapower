@@ -164,6 +164,22 @@ type YamlConfigAttribute struct {
 	IgnoredWhen     []YamlValidationTest `yaml:"ignored_when"`
 }
 
+// Dictionary function
+func dict(values ...interface{}) (map[string]interface{}, error) {
+	if len(values)%2 != 0 {
+		return nil, fmt.Errorf("dict requires an even number of arguments (key-value pairs)")
+	}
+	d := make(map[string]interface{}, len(values)/2)
+	for i := 0; i < len(values); i += 2 {
+		key, ok := values[i].(string)
+		if !ok {
+			return nil, fmt.Errorf("dict keys must be strings, got %T at position %d", values[i], i)
+		}
+		d[key] = values[i+1]
+	}
+	return d, nil
+}
+
 // getAttributeDefault returns attribute default value
 func getAttributeDefault(attributes []YamlConfigAttribute, name string) string {
 	for _, attr := range attributes {
@@ -259,6 +275,7 @@ func updateComputed(attributes []YamlConfigAttribute) bool {
 
 // Map of templating functions.
 var functions = template.FuncMap{
+	"dict":                dict,
 	"getAttributeDefault": getAttributeDefault,
 	"getAttributeTfName":  getAttributeTfName,
 	"getAttributeType":    getAttributeType,

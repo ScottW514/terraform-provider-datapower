@@ -55,20 +55,6 @@ type NFSFilePollerSourceProtocolHandler struct {
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var NFSFilePollerSourceProtocolHandlerResultNamePatternCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "generate_result_file",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
-var NFSFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "processing_seize_timeout",
-	AttrType:    "Int64",
-	AttrDefault: "0",
-	Value:       []string{"0"},
-}
 var NFSFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "delete_on_success",
@@ -76,6 +62,7 @@ var NFSFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var NFSFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "delete_on_error",
@@ -83,9 +70,27 @@ var NFSFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.E
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var NFSFilePollerSourceProtocolHandlerResultNamePatternCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "generate_result_file",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var NFSFilePollerSourceProtocolHandlerResultNamePatternIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var NFSFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "processing_seize_timeout",
+	AttrType:    "Int64",
+	AttrDefault: "0",
+	Value:       []string{"0"},
+}
+
 var NFSFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "processing_seize_timeout",

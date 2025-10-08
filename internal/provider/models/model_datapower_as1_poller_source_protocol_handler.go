@@ -58,6 +58,15 @@ var AS1PollerSourceProtocolHandlerSSLClientConfigTypeCondVal = validators.Evalua
 	AttrDefault: "none",
 	Value:       []string{"none"},
 }
+
+var AS1PollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "conn_security",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"none"},
+}
+
 var AS1PollerSourceProtocolHandlerSSLClientCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -77,13 +86,7 @@ var AS1PollerSourceProtocolHandlerSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
-var AS1PollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "conn_security",
-	AttrType:    "String",
-	AttrDefault: "none",
-	Value:       []string{"none"},
-}
+
 var AS1PollerSourceProtocolHandlerSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

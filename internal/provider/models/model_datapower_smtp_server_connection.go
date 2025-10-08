@@ -49,13 +49,6 @@ type SMTPServerConnection struct {
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var SMTPServerConnectionAccountNameCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "options",
-	AttrType:    "DmSMTPOptions",
-	AttrDefault: "",
-	Value:       []string{"auth"},
-}
 var SMTPServerConnectionAuthIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "options",
@@ -63,6 +56,15 @@ var SMTPServerConnectionAuthIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"auth"},
 }
+
+var SMTPServerConnectionAccountNameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "options",
+	AttrType:    "DmSMTPOptions",
+	AttrDefault: "",
+	Value:       []string{"auth"},
+}
+
 var SMTPServerConnectionAccountNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "options",
@@ -70,6 +72,7 @@ var SMTPServerConnectionAccountNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"auth"},
 }
+
 var SMTPServerConnectionAccountPasswordAliasIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "options",
@@ -77,6 +80,7 @@ var SMTPServerConnectionAccountPasswordAliasIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"auth"},
 }
+
 var SMTPServerConnectionSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_client_config_type",

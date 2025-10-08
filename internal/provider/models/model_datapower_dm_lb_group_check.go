@@ -65,84 +65,6 @@ type DmLBGroupCheck struct {
 	SslClient                       types.String `tfsdk:"ssl_client"`
 }
 
-var DmLBGroupCheckGatewayScriptCustomReqMethodCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ssl",
-			AttrType:    "String",
-			AttrDefault: "",
-			Value:       []string{"Standard"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "gateway_script_checks",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "gateway_script_req_method",
-			AttrType:    "String",
-			AttrDefault: "",
-			Value:       []string{"Custom"},
-		},
-	},
-}
-var DmLBGroupCheckGatewayScriptReqDocCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ssl",
-			AttrType:    "String",
-			AttrDefault: "",
-			Value:       []string{"Standard"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "gateway_script_checks",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "gateway_script_req_method",
-			AttrType:    "String",
-			AttrDefault: "",
-			Value:       []string{"POST", "PUT"},
-		},
-	},
-}
-var DmLBGroupCheckGatewayScriptRspHandlerCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "gateway_script_checks",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ssl",
-			AttrType:    "String",
-			AttrDefault: "",
-			Value:       []string{"Standard"},
-		},
-	},
-}
-var DmLBGroupCheckTCPConnectionTypeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ssl",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"TCPConnection"},
-}
 var DmLBGroupCheckURIIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl",
@@ -150,6 +72,7 @@ var DmLBGroupCheckURIIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
 }
+
 var DmLBGroupCheckPostIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -169,6 +92,7 @@ var DmLBGroupCheckPostIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var DmLBGroupCheckInputIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -195,6 +119,7 @@ var DmLBGroupCheckInputIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var DmLBGroupCheckXPathIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -214,6 +139,7 @@ var DmLBGroupCheckXPathIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var DmLBGroupCheckFilterIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -233,6 +159,7 @@ var DmLBGroupCheckFilterIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var DmLBGroupCheckEnforceTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl",
@@ -240,6 +167,7 @@ var DmLBGroupCheckEnforceTimeoutIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
 }
+
 var DmLBGroupCheckIndependentChecksIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl",
@@ -247,6 +175,7 @@ var DmLBGroupCheckIndependentChecksIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
 }
+
 var DmLBGroupCheckGatewayScriptChecksIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl",
@@ -254,6 +183,7 @@ var DmLBGroupCheckGatewayScriptChecksIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"LDAP", "IMSConnect", "TCPConnection"},
 }
+
 var DmLBGroupCheckGatewayScriptReqMethodIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -273,6 +203,34 @@ var DmLBGroupCheckGatewayScriptReqMethodIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var DmLBGroupCheckGatewayScriptCustomReqMethodCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"Standard"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_req_method",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"Custom"},
+		},
+	},
+}
+
 var DmLBGroupCheckGatewayScriptCustomReqMethodIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -299,6 +257,34 @@ var DmLBGroupCheckGatewayScriptCustomReqMethodIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var DmLBGroupCheckGatewayScriptReqDocCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"Standard"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_req_method",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"POST", "PUT"},
+		},
+	},
+}
+
 var DmLBGroupCheckGatewayScriptReqDocIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -325,6 +311,7 @@ var DmLBGroupCheckGatewayScriptReqDocIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var DmLBGroupCheckGatewayScriptReqContentTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -351,6 +338,7 @@ var DmLBGroupCheckGatewayScriptReqContentTypeIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var DmLBGroupCheckGatewayScriptRspHandlerMetadataIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -370,6 +358,27 @@ var DmLBGroupCheckGatewayScriptRspHandlerMetadataIgnoreVal = validators.Evaluati
 		},
 	},
 }
+
+var DmLBGroupCheckGatewayScriptRspHandlerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "gateway_script_checks",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"Standard"},
+		},
+	},
+}
+
 var DmLBGroupCheckGatewayScriptRspHandlerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -389,6 +398,15 @@ var DmLBGroupCheckGatewayScriptRspHandlerIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var DmLBGroupCheckTCPConnectionTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"TCPConnection"},
+}
+
 var DmLBGroupCheckTCPConnectionTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl",
@@ -396,6 +414,7 @@ var DmLBGroupCheckTCPConnectionTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"LDAP", "IMSConnect", "Standard"},
 }
+
 var DmLBGroupCheckSSLClientConfigTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl",
@@ -403,6 +422,7 @@ var DmLBGroupCheckSSLClientConfigTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"Standard"},
 }
+
 var DmLBGroupCheckSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{

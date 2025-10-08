@@ -44,13 +44,6 @@ type APIRule struct {
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var APIRuleDynamicActionsCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "dynamic_actions_mode",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
 var APIRuleActionsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "dynamic_actions_mode",
@@ -58,6 +51,15 @@ var APIRuleActionsIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var APIRuleDynamicActionsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "dynamic_actions_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var APIRuleDynamicActionsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "dynamic_actions_mode",

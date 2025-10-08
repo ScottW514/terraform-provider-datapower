@@ -59,6 +59,7 @@ var B2BCPAReceiverSettingDecryptIdCredCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var B2BCPAReceiverSettingVerifyValCredCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "signature_required",
@@ -66,6 +67,7 @@ var B2BCPAReceiverSettingVerifyValCredCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var B2BCPAReceiverSettingDefaultSignerCertCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "signature_required",

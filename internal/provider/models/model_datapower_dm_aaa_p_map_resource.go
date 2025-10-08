@@ -54,6 +54,11 @@ var DmAAAPMapResourceMRCustomURLCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"custom"},
 }
+
+var DmAAAPMapResourceMRCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmAAAPMapResourceMRMapURLCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mr_method",
@@ -61,6 +66,11 @@ var DmAAAPMapResourceMRMapURLCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"xmlfile"},
 }
+
+var DmAAAPMapResourceMRMapURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmAAAPMapResourceMRMapXPathCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mr_method",
@@ -68,6 +78,11 @@ var DmAAAPMapResourceMRMapXPathCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"xpath"},
 }
+
+var DmAAAPMapResourceMRMapXPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmAAAPMapResourceMRTAMMapCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mr_method",
@@ -75,6 +90,11 @@ var DmAAAPMapResourceMRTAMMapCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"tivoli"},
 }
+
+var DmAAAPMapResourceMRTAMMapIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmAAAPMapResourceMRTAMInstancePrefixCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mr_method",
@@ -82,27 +102,18 @@ var DmAAAPMapResourceMRTAMInstancePrefixCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"tivoli"},
 }
-var DmAAAPMapResourceMRCustomURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmAAAPMapResourceMRMapURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmAAAPMapResourceMRMapXPathIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmAAAPMapResourceMRTAMMapIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmAAAPMapResourceMRTAMInstancePrefixIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var DmAAAPMapResourceMRTAMWebSEALDynURLFileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-not",
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "mr_method",
@@ -110,6 +121,7 @@ var DmAAAPMapResourceMRTAMWebSEALDynURLFileIgnoreVal = validators.Evaluation{
 					AttrDefault: "none",
 					Value:       []string{"tivoli"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "mr_tam_map",

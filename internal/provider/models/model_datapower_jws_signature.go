@@ -53,13 +53,7 @@ var JWSSignatureKeyCondVal = validators.Evaluation{
 	AttrDefault: "RS256",
 	Value:       []string{"RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512"},
 }
-var JWSSignatureSSKeyCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "algorithm",
-	AttrType:    "String",
-	AttrDefault: "RS256",
-	Value:       []string{"HS256", "HS384", "HS512"},
-}
+
 var JWSSignatureKeyIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "algorithm",
@@ -67,6 +61,15 @@ var JWSSignatureKeyIgnoreVal = validators.Evaluation{
 	AttrDefault: "RS256",
 	Value:       []string{"RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512"},
 }
+
+var JWSSignatureSSKeyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "algorithm",
+	AttrType:    "String",
+	AttrDefault: "RS256",
+	Value:       []string{"HS256", "HS384", "HS512"},
+}
+
 var JWSSignatureSSKeyIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "algorithm",

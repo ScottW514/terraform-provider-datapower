@@ -47,13 +47,6 @@ type WebB2BViewer struct {
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var WebB2BViewerSSLSNIServerCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ssl_server_config_type",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"sni"},
-}
 var WebB2BViewerSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",
@@ -61,6 +54,15 @@ var WebB2BViewerSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"server"},
 }
+
+var WebB2BViewerSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"sni"},
+}
+
 var WebB2BViewerSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

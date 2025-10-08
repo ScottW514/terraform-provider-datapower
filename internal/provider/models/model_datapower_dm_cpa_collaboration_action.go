@@ -51,13 +51,7 @@ var DmCPACollaborationActionSenderSettingCondVal = validators.Evaluation{
 	AttrDefault: "cansend",
 	Value:       []string{"cansend"},
 }
-var DmCPACollaborationActionReceiverSettingCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "capability",
-	AttrType:    "String",
-	AttrDefault: "cansend",
-	Value:       []string{"canreceive"},
-}
+
 var DmCPACollaborationActionSenderSettingIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "capability",
@@ -65,6 +59,15 @@ var DmCPACollaborationActionSenderSettingIgnoreVal = validators.Evaluation{
 	AttrDefault: "cansend",
 	Value:       []string{"cansend"},
 }
+
+var DmCPACollaborationActionReceiverSettingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "capability",
+	AttrType:    "String",
+	AttrDefault: "cansend",
+	Value:       []string{"canreceive"},
+}
+
 var DmCPACollaborationActionReceiverSettingIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "capability",

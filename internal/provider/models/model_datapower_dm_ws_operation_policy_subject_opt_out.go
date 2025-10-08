@@ -44,13 +44,6 @@ type DmWSOperationPolicySubjectOptOut struct {
 	PolicySubjectOptOutFragmentId         types.String           `tfsdk:"policy_subject_opt_out_fragment_id"`
 }
 
-var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "policy_subject_opt_out_wsdl_component_type",
-	AttrType:    "String",
-	AttrDefault: "all",
-	Value:       []string{"subscription"},
-}
 var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutWSDLComponentValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "policy_subject_opt_out_wsdl_component_type",
@@ -58,6 +51,15 @@ var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutWSDLComponentValueIgnoreV
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+
+var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "policy_subject_opt_out_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+
 var DmWSOperationPolicySubjectOptOutPolicySubjectOptOutSubscriptionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

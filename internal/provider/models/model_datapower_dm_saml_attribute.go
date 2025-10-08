@@ -52,6 +52,7 @@ var DmSAMLAttributeNameCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"var"},
 }
+
 var DmSAMLAttributeXPathCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "source_type",
@@ -59,9 +60,11 @@ var DmSAMLAttributeXPathCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xpath"},
 }
+
 var DmSAMLAttributeXPathIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var DmSAMLAttributeValueDataIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "source_type",
@@ -69,6 +72,7 @@ var DmSAMLAttributeValueDataIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xpath"},
 }
+
 var DmSAMLAttributeSubValueDataIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "source_type",

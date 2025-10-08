@@ -128,6 +128,11 @@ var OAuthSupportedClientCustomizedProcessUrlCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var OAuthSupportedClientCustomizedProcessUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientOAuthRoleCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "customized",
@@ -135,6 +140,11 @@ var OAuthSupportedClientOAuthRoleCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var OAuthSupportedClientOAuthRoleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientAZGrantCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -154,6 +164,11 @@ var OAuthSupportedClientAZGrantCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientAZGrantIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -167,6 +182,7 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "customized",
@@ -174,6 +190,7 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "oauth_role",
@@ -181,6 +198,7 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"azsvr"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "az_grant",
@@ -193,6 +211,7 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "customized",
@@ -200,6 +219,7 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "oauth_role",
@@ -207,9 +227,11 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"rssvr"},
 				},
+
 				{
 					Evaluation: "logical-or",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "use_validation_url",
@@ -217,6 +239,7 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 							AttrDefault: "false",
 							Value:       []string{"true"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "check_client_credential",
@@ -230,6 +253,51 @@ var OAuthSupportedClientClientTypeCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientClientTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var OAuthSupportedClientCheckClientCredentialIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "oauth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"rssvr"},
+		},
+	},
+}
+
+var OAuthSupportedClientUseValidationUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "oauth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"rssvr"},
+		},
+	},
+}
+
 var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -243,6 +311,7 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "client_type",
@@ -250,9 +319,11 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 					AttrDefault: "confidential",
 					Value:       []string{"confidential"},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -260,6 +331,7 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -274,9 +346,11 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -284,6 +358,7 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -293,9 +368,11 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 						},
 					},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -303,9 +380,11 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"rssvr"},
 						},
+
 						{
 							Evaluation: "logical-or",
 							Conditions: []validators.Evaluation{
+
 								{
 									Evaluation:  "property-value-in-list",
 									Attribute:   "use_validation_url",
@@ -313,6 +392,7 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 									AttrDefault: "false",
 									Value:       []string{"true"},
 								},
+
 								{
 									Evaluation:  "property-value-in-list",
 									Attribute:   "check_client_credential",
@@ -328,6 +408,11 @@ var OAuthSupportedClientClientAuthenMethodCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientClientAuthenMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -341,6 +426,7 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "client_type",
@@ -348,9 +434,11 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 					AttrDefault: "confidential",
 					Value:       []string{"confidential"},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -358,6 +446,7 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -379,9 +468,11 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -389,6 +480,7 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -398,9 +490,11 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 						},
 					},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -408,6 +502,7 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"rssvr"},
 						},
+
 						{
 							Evaluation:  "property-value-not-in-list",
 							Attribute:   "oauth_role",
@@ -415,6 +510,7 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "check_client_credential",
@@ -428,6 +524,11 @@ var OAuthSupportedClientClientValCredCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientClientValCredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientGenerateClientSecretCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -448,6 +549,7 @@ var OAuthSupportedClientGenerateClientSecretCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "client_type",
@@ -455,9 +557,11 @@ var OAuthSupportedClientGenerateClientSecretCondVal = validators.Evaluation{
 					AttrDefault: "confidential",
 					Value:       []string{"confidential"},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -465,6 +569,7 @@ var OAuthSupportedClientGenerateClientSecretCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -499,6 +604,11 @@ var OAuthSupportedClientGenerateClientSecretCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientGenerateClientSecretIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -512,6 +622,7 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "client_type",
@@ -519,9 +630,11 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 					AttrDefault: "confidential",
 					Value:       []string{"confidential"},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -529,6 +642,7 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -550,9 +664,11 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -560,6 +676,7 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "generate_client_secret",
@@ -567,6 +684,7 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 							AttrDefault: "true",
 							Value:       []string{"false"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -576,9 +694,11 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 						},
 					},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -586,6 +706,7 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"rssvr"},
 						},
+
 						{
 							Evaluation:  "property-value-not-in-list",
 							Attribute:   "oauth_role",
@@ -593,9 +714,11 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation: "logical-or",
 							Conditions: []validators.Evaluation{
+
 								{
 									Evaluation:  "property-value-in-list",
 									Attribute:   "check_client_credential",
@@ -603,6 +726,7 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 									AttrDefault: "false",
 									Value:       []string{"true"},
 								},
+
 								{
 									Evaluation:  "property-value-in-list",
 									Attribute:   "use_validation_url",
@@ -618,6 +742,53 @@ var OAuthSupportedClientClientSecretCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientClientSecretIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var OAuthSupportedClientCachingIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "oauth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"azsvr"},
+				},
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "oauth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"rssvr"},
+				},
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "use_validation_url",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+			},
+		},
+	},
+}
+
 var OAuthSupportedClientValidationURLCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -644,6 +815,38 @@ var OAuthSupportedClientValidationURLCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientValidationURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var OAuthSupportedClientValidationFeaturesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "oauth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "az_grant",
+			AttrType:    "DmOAuthAZGrantType",
+			AttrDefault: "",
+			Value:       []string{"novalidate"},
+		},
+	},
+}
+
 var OAuthSupportedClientRedirectURICondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -670,6 +873,82 @@ var OAuthSupportedClientRedirectURICondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientRedirectURIIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "oauth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "customized",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "az_grant",
+					AttrType:    "DmOAuthAZGrantType",
+					AttrDefault: "",
+					Value:       []string{"code", "implicit"},
+				},
+			},
+		},
+	},
+}
+
+var OAuthSupportedClientCustomScopeCheckIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "oauth_role",
+					AttrType:    "DmOAuthRole",
+					AttrDefault: "",
+					Value:       []string{"azsvr"},
+				},
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "use_validation_url",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+			},
+		},
+	},
+}
+
 var OAuthSupportedClientScopeCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -690,6 +969,7 @@ var OAuthSupportedClientScopeCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "oauth_role",
@@ -697,6 +977,7 @@ var OAuthSupportedClientScopeCondVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"azsvr"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "use_validation_url",
@@ -708,6 +989,11 @@ var OAuthSupportedClientScopeCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientScopeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientScopeUrlCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -728,6 +1014,7 @@ var OAuthSupportedClientScopeUrlCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "oauth_role",
@@ -735,6 +1022,7 @@ var OAuthSupportedClientScopeUrlCondVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"azsvr"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "use_validation_url",
@@ -746,12 +1034,38 @@ var OAuthSupportedClientScopeUrlCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientScopeUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var OAuthSupportedClientDefaultScopeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "oauth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+	},
+}
+
 var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "customized",
@@ -759,9 +1073,11 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation: "logical-or",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -769,9 +1085,11 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation: "logical-and",
 							Conditions: []validators.Evaluation{
+
 								{
 									Evaluation:  "property-value-not-in-list",
 									Attribute:   "oauth_role",
@@ -779,6 +1097,7 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 									AttrDefault: "",
 									Value:       []string{"azsrv"},
 								},
+
 								{
 									Evaluation:  "property-value-in-list",
 									Attribute:   "use_validation_url",
@@ -795,6 +1114,7 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "customized",
@@ -802,6 +1122,7 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "az_grant",
@@ -809,9 +1130,11 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"code", "implicit"},
 				},
+
 				{
 					Evaluation: "logical-or",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -819,9 +1142,11 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation: "logical-and",
 							Conditions: []validators.Evaluation{
+
 								{
 									Evaluation:  "property-value-not-in-list",
 									Attribute:   "oauth_role",
@@ -829,6 +1154,7 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 									AttrDefault: "",
 									Value:       []string{"azsvr"},
 								},
+
 								{
 									Evaluation:  "property-value-in-list",
 									Attribute:   "use_validation_url",
@@ -844,12 +1170,18 @@ var OAuthSupportedClientTokenSecretCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientTokenSecretIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientLocalAZPageUrlCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "customized",
@@ -857,6 +1189,7 @@ var OAuthSupportedClientLocalAZPageUrlCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "oauth_role",
@@ -875,12 +1208,18 @@ var OAuthSupportedClientLocalAZPageUrlCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientLocalAZPageUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientDPStateLifeTimeCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "customized",
@@ -888,6 +1227,7 @@ var OAuthSupportedClientDPStateLifeTimeCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "oauth_role",
@@ -906,6 +1246,11 @@ var OAuthSupportedClientDPStateLifeTimeCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientDPStateLifeTimeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientAUCodeLifeTimeCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -932,6 +1277,11 @@ var OAuthSupportedClientAUCodeLifeTimeCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientAUCodeLifeTimeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientAccessTokenLifeTimeCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -951,6 +1301,11 @@ var OAuthSupportedClientAccessTokenLifeTimeCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientAccessTokenLifeTimeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientRefreshTokenAllowedCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -977,6 +1332,11 @@ var OAuthSupportedClientRefreshTokenAllowedCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientRefreshTokenAllowedIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientRefreshTokenLifeTimeCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1010,6 +1370,11 @@ var OAuthSupportedClientRefreshTokenLifeTimeCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientRefreshTokenLifeTimeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientMaxConsentLifeTimeCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1043,6 +1408,31 @@ var OAuthSupportedClientMaxConsentLifeTimeCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientMaxConsentLifeTimeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var OAuthSupportedClientCustomResourceOwnerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "oauth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"azsvr"},
+		},
+	},
+}
+
 var OAuthSupportedClientResourceOwnerUrlCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1069,6 +1459,11 @@ var OAuthSupportedClientResourceOwnerUrlCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientResourceOwnerUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientAdditionalOAuthProcessUrlCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1088,6 +1483,35 @@ var OAuthSupportedClientAdditionalOAuthProcessUrlCondVal = validators.Evaluation
 		},
 	},
 }
+
+var OAuthSupportedClientAdditionalOAuthProcessUrlIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "customized",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
+var OAuthSupportedClientRSSetHeaderIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "customized",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "oauth_role",
+			AttrType:    "DmOAuthRole",
+			AttrDefault: "",
+			Value:       []string{"rssvr"},
+		},
+	},
+}
+
 var OAuthSupportedClientValidationURLSSLClientTypeCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1114,6 +1538,11 @@ var OAuthSupportedClientValidationURLSSLClientTypeCondVal = validators.Evaluatio
 		},
 	},
 }
+
+var OAuthSupportedClientValidationURLSSLClientTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientValidationURLSSLClientCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1147,6 +1576,11 @@ var OAuthSupportedClientValidationURLSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientValidationURLSSLClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientJWTGrantValidatorCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1173,6 +1607,11 @@ var OAuthSupportedClientJWTGrantValidatorCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientJWTGrantValidatorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1186,6 +1625,7 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "client_type",
@@ -1193,9 +1633,11 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 					AttrDefault: "confidential",
 					Value:       []string{"confidential"},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -1203,6 +1645,7 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -1224,9 +1667,11 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-or",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -1234,6 +1679,7 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "az_grant",
@@ -1243,9 +1689,11 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 						},
 					},
 				},
+
 				{
 					Evaluation: "logical-and",
 					Conditions: []validators.Evaluation{
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "oauth_role",
@@ -1253,6 +1701,7 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"rssvr"},
 						},
+
 						{
 							Evaluation:  "property-value-not-in-list",
 							Attribute:   "oauth_role",
@@ -1260,6 +1709,7 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 							AttrDefault: "",
 							Value:       []string{"azsvr"},
 						},
+
 						{
 							Evaluation:  "property-value-in-list",
 							Attribute:   "check_client_credential",
@@ -1273,6 +1723,11 @@ var OAuthSupportedClientClientJWTValidatorCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientClientJWTValidatorIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientOIDCIDTokenGeneratorCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -1306,313 +1761,7 @@ var OAuthSupportedClientOIDCIDTokenGeneratorCondVal = validators.Evaluation{
 		},
 	},
 }
-var OAuthSupportedClientCustomizedProcessUrlIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientOAuthRoleIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientAZGrantIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientClientTypeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientCheckClientCredentialIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "oauth_role",
-			AttrType:    "DmOAuthRole",
-			AttrDefault: "",
-			Value:       []string{"rssvr"},
-		},
-	},
-}
-var OAuthSupportedClientUseValidationUrlIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "oauth_role",
-			AttrType:    "DmOAuthRole",
-			AttrDefault: "",
-			Value:       []string{"rssvr"},
-		},
-	},
-}
-var OAuthSupportedClientClientAuthenMethodIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientClientValCredIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientGenerateClientSecretIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientClientSecretIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientCachingIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-not-in-list",
-					Attribute:   "oauth_role",
-					AttrType:    "DmOAuthRole",
-					AttrDefault: "",
-					Value:       []string{"azsvr"},
-				},
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "oauth_role",
-					AttrType:    "DmOAuthRole",
-					AttrDefault: "",
-					Value:       []string{"rssvr"},
-				},
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "use_validation_url",
-					AttrType:    "Bool",
-					AttrDefault: "false",
-					Value:       []string{"true"},
-				},
-			},
-		},
-	},
-}
-var OAuthSupportedClientValidationURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientValidationFeaturesIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "oauth_role",
-			AttrType:    "DmOAuthRole",
-			AttrDefault: "",
-			Value:       []string{"azsvr"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "az_grant",
-			AttrType:    "DmOAuthAZGrantType",
-			AttrDefault: "",
-			Value:       []string{"novalidate"},
-		},
-	},
-}
-var OAuthSupportedClientRedirectURIIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "oauth_role",
-			AttrType:    "DmOAuthRole",
-			AttrDefault: "",
-			Value:       []string{"azsvr"},
-		},
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "customized",
-					AttrType:    "Bool",
-					AttrDefault: "false",
-					Value:       []string{"false"},
-				},
-				{
-					Evaluation:  "property-value-not-in-list",
-					Attribute:   "az_grant",
-					AttrType:    "DmOAuthAZGrantType",
-					AttrDefault: "",
-					Value:       []string{"code", "implicit"},
-				},
-			},
-		},
-	},
-}
-var OAuthSupportedClientCustomScopeCheckIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-not-in-list",
-					Attribute:   "oauth_role",
-					AttrType:    "DmOAuthRole",
-					AttrDefault: "",
-					Value:       []string{"azsvr"},
-				},
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "use_validation_url",
-					AttrType:    "Bool",
-					AttrDefault: "false",
-					Value:       []string{"true"},
-				},
-			},
-		},
-	},
-}
-var OAuthSupportedClientScopeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientScopeUrlIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientDefaultScopeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "oauth_role",
-			AttrType:    "DmOAuthRole",
-			AttrDefault: "",
-			Value:       []string{"azsvr"},
-		},
-	},
-}
-var OAuthSupportedClientTokenSecretIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientLocalAZPageUrlIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientDPStateLifeTimeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientAUCodeLifeTimeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientAccessTokenLifeTimeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientRefreshTokenAllowedIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientRefreshTokenLifeTimeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientMaxConsentLifeTimeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientCustomResourceOwnerIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "oauth_role",
-			AttrType:    "DmOAuthRole",
-			AttrDefault: "",
-			Value:       []string{"azsvr"},
-		},
-	},
-}
-var OAuthSupportedClientResourceOwnerUrlIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientAdditionalOAuthProcessUrlIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "customized",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var OAuthSupportedClientRSSetHeaderIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "customized",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "oauth_role",
-			AttrType:    "DmOAuthRole",
-			AttrDefault: "",
-			Value:       []string{"rssvr"},
-		},
-	},
-}
-var OAuthSupportedClientValidationURLSSLClientTypeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientValidationURLSSLClientIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientJWTGrantValidatorIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientClientJWTValidatorIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var OAuthSupportedClientOIDCIDTokenGeneratorIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

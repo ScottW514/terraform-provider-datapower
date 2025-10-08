@@ -62,6 +62,43 @@ var TimeSettingsCustomTZNameCondVal = validators.Evaluation{
 	AttrDefault: "EST5EDT",
 	Value:       []string{"Custom"},
 }
+
+var TimeSettingsCustomTZNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var TimeSettingsUTCDirectionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+
+var TimeSettingsOffsetHoursIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+
+var TimeSettingsOffsetMinutesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+
+var TimeSettingsDaylightOffsetHoursIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "local_time_zone",
+	AttrType:    "String",
+	AttrDefault: "EST5EDT",
+	Value:       []string{"Custom"},
+}
+
 var TimeSettingsTZNameDSTCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -81,37 +118,7 @@ var TimeSettingsTZNameDSTCondVal = validators.Evaluation{
 		},
 	},
 }
-var TimeSettingsCustomTZNameIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var TimeSettingsUTCDirectionIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "local_time_zone",
-	AttrType:    "String",
-	AttrDefault: "EST5EDT",
-	Value:       []string{"Custom"},
-}
-var TimeSettingsOffsetHoursIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "local_time_zone",
-	AttrType:    "String",
-	AttrDefault: "EST5EDT",
-	Value:       []string{"Custom"},
-}
-var TimeSettingsOffsetMinutesIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "local_time_zone",
-	AttrType:    "String",
-	AttrDefault: "EST5EDT",
-	Value:       []string{"Custom"},
-}
-var TimeSettingsDaylightOffsetHoursIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "local_time_zone",
-	AttrType:    "String",
-	AttrDefault: "EST5EDT",
-	Value:       []string{"Custom"},
-}
+
 var TimeSettingsTZNameDSTIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -131,6 +138,7 @@ var TimeSettingsTZNameDSTIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStartMonthIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -150,6 +158,7 @@ var TimeSettingsDaylightStartMonthIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStartWeekIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -169,6 +178,7 @@ var TimeSettingsDaylightStartWeekIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStartDayIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -188,6 +198,7 @@ var TimeSettingsDaylightStartDayIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStartTimeHoursIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -207,6 +218,7 @@ var TimeSettingsDaylightStartTimeHoursIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStartTimeMinutesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -226,6 +238,7 @@ var TimeSettingsDaylightStartTimeMinutesIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStopMonthIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -245,6 +258,7 @@ var TimeSettingsDaylightStopMonthIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStopWeekIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -264,6 +278,7 @@ var TimeSettingsDaylightStopWeekIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStopDayIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -283,6 +298,7 @@ var TimeSettingsDaylightStopDayIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStopTimeHoursIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -302,6 +318,7 @@ var TimeSettingsDaylightStopTimeHoursIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TimeSettingsDaylightStopTimeMinutesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{

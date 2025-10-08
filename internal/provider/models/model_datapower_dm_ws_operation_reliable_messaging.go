@@ -45,13 +45,6 @@ type DmWSOperationReliableMessaging struct {
 	ReliableMessagingFragmentId         types.String        `tfsdk:"reliable_messaging_fragment_id"`
 }
 
-var DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "reliable_messaging_wsdl_component_type",
-	AttrType:    "String",
-	AttrDefault: "all",
-	Value:       []string{"subscription"},
-}
 var DmWSOperationReliableMessagingReliableMessagingWSDLComponentValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "reliable_messaging_wsdl_component_type",
@@ -59,6 +52,15 @@ var DmWSOperationReliableMessagingReliableMessagingWSDLComponentValueIgnoreVal =
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+
+var DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "reliable_messaging_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+
 var DmWSOperationReliableMessagingReliableMessagingSubscriptionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

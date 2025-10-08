@@ -64,6 +64,7 @@ var GatewayPeeringLocalAddressCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "enable_peer_group",
@@ -71,6 +72,7 @@ var GatewayPeeringLocalAddressCondVal = validators.Evaluation{
 					AttrDefault: "true",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "peer_group",
@@ -82,13 +84,7 @@ var GatewayPeeringLocalAddressCondVal = validators.Evaluation{
 		},
 	},
 }
-var GatewayPeeringLocalDirectoryCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "persistence_location",
-	AttrType:    "String",
-	AttrDefault: "memory",
-	Value:       []string{"local"},
-}
+
 var GatewayPeeringPeerGroupIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "enable_peer_group",
@@ -96,6 +92,7 @@ var GatewayPeeringPeerGroupIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var GatewayPeeringEnableSSLIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "peer_group",
@@ -103,9 +100,19 @@ var GatewayPeeringEnableSSLIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{""},
 }
+
+var GatewayPeeringLocalDirectoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "persistence_location",
+	AttrType:    "String",
+	AttrDefault: "memory",
+	Value:       []string{"local"},
+}
+
 var GatewayPeeringLocalDirectoryIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var GatewayPeeringMaxMemoryIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "persistence_location",

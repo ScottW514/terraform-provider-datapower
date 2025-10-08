@@ -62,13 +62,7 @@ var AMQPBrokerUserNameCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"plain"},
 }
-var AMQPBrokerPasswordAliasCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "authorization",
-	AttrType:    "String",
-	AttrDefault: "none",
-	Value:       []string{"plain"},
-}
+
 var AMQPBrokerUserNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "authorization",
@@ -76,6 +70,15 @@ var AMQPBrokerUserNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"plain"},
 }
+
+var AMQPBrokerPasswordAliasCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "authorization",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"plain"},
+}
+
 var AMQPBrokerPasswordAliasIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "authorization",
@@ -83,6 +86,7 @@ var AMQPBrokerPasswordAliasIgnoreVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"plain"},
 }
+
 var AMQPBrokerRetryIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",
@@ -90,6 +94,7 @@ var AMQPBrokerRetryIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var AMQPBrokerRetryAttemptsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",
@@ -97,6 +102,7 @@ var AMQPBrokerRetryAttemptsIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var AMQPBrokerLongRetryIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",
@@ -104,6 +110,7 @@ var AMQPBrokerLongRetryIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var AMQPBrokerReportingIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",

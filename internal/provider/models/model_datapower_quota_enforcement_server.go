@@ -51,6 +51,14 @@ type QuotaEnforcementServer struct {
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var QuotaEnforcementServerEnableSSLIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_peer_group",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
 var QuotaEnforcementServerSSLCryptoKeyCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -70,46 +78,7 @@ var QuotaEnforcementServerSSLCryptoKeyCondVal = validators.Evaluation{
 		},
 	},
 }
-var QuotaEnforcementServerSSLCryptoCertificateCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_peer_group",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_ssl",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-	},
-}
-var QuotaEnforcementServerIPAddressCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "enable_peer_group",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var QuotaEnforcementServerPriorityCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "enable_peer_group",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var QuotaEnforcementServerEnableSSLIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "enable_peer_group",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
+
 var QuotaEnforcementServerSSLCryptoKeyIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -129,6 +98,27 @@ var QuotaEnforcementServerSSLCryptoKeyIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var QuotaEnforcementServerSSLCryptoCertificateCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_peer_group",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_ssl",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+
 var QuotaEnforcementServerSSLCryptoCertificateIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -148,6 +138,15 @@ var QuotaEnforcementServerSSLCryptoCertificateIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var QuotaEnforcementServerIPAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_peer_group",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var QuotaEnforcementServerIPAddressIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "enable_peer_group",
@@ -155,6 +154,7 @@ var QuotaEnforcementServerIPAddressIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var QuotaEnforcementServerPeersIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "enable_peer_group",
@@ -162,6 +162,15 @@ var QuotaEnforcementServerPeersIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var QuotaEnforcementServerPriorityCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_peer_group",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var QuotaEnforcementServerPriorityIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "enable_peer_group",
@@ -169,6 +178,7 @@ var QuotaEnforcementServerPriorityIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var QuotaEnforcementServerStrictModeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "enable_peer_group",

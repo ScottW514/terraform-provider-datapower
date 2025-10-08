@@ -55,16 +55,11 @@ var MgmtInterfaceSLMPeeringCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"slm"},
 }
-var MgmtInterfaceSSLSNIServerCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ssl_config_type",
-	AttrType:    "String",
-	AttrDefault: "server",
-	Value:       []string{"sni"},
-}
+
 var MgmtInterfaceSLMPeeringIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var MgmtInterfaceSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",
@@ -72,6 +67,15 @@ var MgmtInterfaceSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
+var MgmtInterfaceSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
+}
+
 var MgmtInterfaceSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

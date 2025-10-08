@@ -52,6 +52,11 @@ var JOSERecipientIdentifierKeyCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"key"},
 }
+
+var JOSERecipientIdentifierKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var JOSERecipientIdentifierSSKeyCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -59,9 +64,7 @@ var JOSERecipientIdentifierSSKeyCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"sskey"},
 }
-var JOSERecipientIdentifierKeyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var JOSERecipientIdentifierSSKeyIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

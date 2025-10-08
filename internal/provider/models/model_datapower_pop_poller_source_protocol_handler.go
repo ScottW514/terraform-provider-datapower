@@ -58,6 +58,15 @@ var POPPollerSourceProtocolHandlerSSLClientConfigTypeCondVal = validators.Evalua
 	AttrDefault: "none",
 	Value:       []string{"none"},
 }
+
+var POPPollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "conn_security",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"none"},
+}
+
 var POPPollerSourceProtocolHandlerSSLClientCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -77,13 +86,7 @@ var POPPollerSourceProtocolHandlerSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
-var POPPollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "conn_security",
-	AttrType:    "String",
-	AttrDefault: "none",
-	Value:       []string{"none"},
-}
+
 var POPPollerSourceProtocolHandlerSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

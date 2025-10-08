@@ -58,6 +58,7 @@ var AssemblyActionRateLimitBurstLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "plan-default",
 	Value:       []string{"plan-default", "domain-named", "group"},
 }
+
 var AssemblyActionRateLimitRateLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "source",
@@ -65,6 +66,7 @@ var AssemblyActionRateLimitRateLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "plan-default",
 	Value:       []string{"plan-default", "domain-named", "group"},
 }
+
 var AssemblyActionRateLimitCountLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "source",
@@ -72,6 +74,7 @@ var AssemblyActionRateLimitCountLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "plan-default",
 	Value:       []string{"plan-default", "domain-named", "group"},
 }
+
 var AssemblyActionRateLimitRateLimitDefinitionIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "source",
@@ -79,6 +82,7 @@ var AssemblyActionRateLimitRateLimitDefinitionIgnoreVal = validators.Evaluation{
 	AttrDefault: "plan-default",
 	Value:       []string{"domain-named"},
 }
+
 var AssemblyActionRateLimitRateLimitGroupIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "source",
@@ -86,6 +90,7 @@ var AssemblyActionRateLimitRateLimitGroupIgnoreVal = validators.Evaluation{
 	AttrDefault: "plan-default",
 	Value:       []string{"group"},
 }
+
 var AssemblyActionRateLimitGroupActionIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "source",

@@ -78,6 +78,7 @@ var WebSphereJMSServerSSLCipherIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WebSphereJMSServerFIPSIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -97,6 +98,7 @@ var WebSphereJMSServerFIPSIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WebSphereJMSServerSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl_client_config_type",

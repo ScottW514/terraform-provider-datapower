@@ -52,6 +52,7 @@ var DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal = validators
 	AttrDefault: "service",
 	Value:       []string{"rest"},
 }
+
 var DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "external_attach_wsdl_component_type",
@@ -59,6 +60,7 @@ var DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal = validato
 	AttrDefault: "service",
 	Value:       []string{"rest"},
 }
+
 var DmExternalAttachedPolicyExternalAttachPolicyFragmentIDIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "external_attach_wsdl_component_type",

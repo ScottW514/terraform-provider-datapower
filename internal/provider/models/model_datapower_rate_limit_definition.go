@@ -79,6 +79,7 @@ var RateLimitDefinitionIntervalIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var RateLimitDefinitionUnitIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -98,6 +99,7 @@ var RateLimitDefinitionUnitIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var RateLimitDefinitionHardLimitIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -117,6 +119,7 @@ var RateLimitDefinitionHardLimitIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var RateLimitDefinitionIsClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -124,6 +127,7 @@ var RateLimitDefinitionIsClientIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var RateLimitDefinitionUseApiNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -131,6 +135,7 @@ var RateLimitDefinitionUseApiNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var RateLimitDefinitionUseAppIdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -138,6 +143,7 @@ var RateLimitDefinitionUseAppIdIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var RateLimitDefinitionUseClientIdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -145,6 +151,7 @@ var RateLimitDefinitionUseClientIdIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var RateLimitDefinitionAutoReplenishIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -152,6 +159,7 @@ var RateLimitDefinitionAutoReplenishIgnoreVal = validators.Evaluation{
 	AttrDefault: "rate",
 	Value:       []string{"count"},
 }
+
 var RateLimitDefinitionDynamicValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -159,6 +167,7 @@ var RateLimitDefinitionDynamicValueIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var RateLimitDefinitionWeightIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -166,6 +175,7 @@ var RateLimitDefinitionWeightIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var RateLimitDefinitionEmulateBurstHeadersIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -173,6 +183,7 @@ var RateLimitDefinitionEmulateBurstHeadersIgnoreVal = validators.Evaluation{
 	AttrDefault: "rate",
 	Value:       []string{"rate"},
 }
+
 var RateLimitDefinitionUseIntervalOffsetIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",

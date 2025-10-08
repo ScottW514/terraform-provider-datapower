@@ -64,25 +64,6 @@ type SSLServerProfile struct {
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var SSLServerProfileValcredCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "request_client_auth",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "validate_client_cert",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-	},
-}
 var SSLServerProfileRequireClientAuthIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "request_client_auth",
@@ -90,6 +71,7 @@ var SSLServerProfileRequireClientAuthIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var SSLServerProfileValidateClientCertIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "request_client_auth",
@@ -97,6 +79,7 @@ var SSLServerProfileValidateClientCertIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var SSLServerProfileSendClientAuthCAListIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -116,9 +99,31 @@ var SSLServerProfileSendClientAuthCAListIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var SSLServerProfileValcredCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "request_client_auth",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "validate_client_cert",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+
 var SSLServerProfileValcredIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var SSLServerProfileCacheTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "caching",
@@ -126,6 +131,7 @@ var SSLServerProfileCacheTimeoutIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
 var SSLServerProfileCacheSizeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "caching",
@@ -133,6 +139,7 @@ var SSLServerProfileCacheSizeIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
 var SSLServerProfileMaxSSLDurationIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_options",
@@ -140,6 +147,7 @@ var SSLServerProfileMaxSSLDurationIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"max-duration"},
 }
+
 var SSLServerProfileNumberOfRenegotiationAllowedIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_options",
@@ -147,6 +155,7 @@ var SSLServerProfileNumberOfRenegotiationAllowedIgnoreVal = validators.Evaluatio
 	AttrDefault: "",
 	Value:       []string{"max-renegotiation"},
 }
+
 var SSLServerProfileProhibitResumeOnRenegIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -166,6 +175,7 @@ var SSLServerProfileProhibitResumeOnRenegIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var SSLServerProfileAllowLegacyRenegotiationIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -185,6 +195,7 @@ var SSLServerProfileAllowLegacyRenegotiationIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var SSLServerProfilePrioritizeChaChaIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "prefer_server_ciphers",

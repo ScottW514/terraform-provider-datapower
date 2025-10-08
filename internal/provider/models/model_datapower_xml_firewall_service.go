@@ -112,116 +112,6 @@ type XMLFirewallService struct {
 	DependencyActions                      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var XMLFirewallServiceDelayErrorsDurationCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "delay_errors",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "rewrite_errors",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-	},
-}
-var XMLFirewallServiceParserLimitsBytesScannedCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsElementDepthCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsAttributeCountCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsMaxNodeSizeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsMaxPrefixesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsMaxNamespacesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsMaxLocalNamesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsAttachmentByteCountCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsAttachmentPackageByteCountCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceParserLimitsExternalReferencesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "firewall_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var XMLFirewallServiceRemoteAddressCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "dynamic-backend",
-	Value:       []string{"static-backend"},
-}
-var XMLFirewallServiceRemotePortCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "dynamic-backend",
-	Value:       []string{"static-backend"},
-}
-var XMLFirewallServiceDebugHistoryCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "debug_mode",
-	AttrType:    "String",
-	AttrDefault: "off",
-	Value:       []string{"true"},
-}
 var XMLFirewallServiceRequestAttachmentsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "request_type",
@@ -229,6 +119,7 @@ var XMLFirewallServiceRequestAttachmentsIgnoreVal = validators.Evaluation{
 	AttrDefault: "soap",
 	Value:       []string{"unprocessed"},
 }
+
 var XMLFirewallServiceResponseAttachmentsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "response_type",
@@ -236,6 +127,7 @@ var XMLFirewallServiceResponseAttachmentsIgnoreVal = validators.Evaluation{
 	AttrDefault: "soap",
 	Value:       []string{"unprocessed"},
 }
+
 var XMLFirewallServiceRootPartNotFirstActionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -255,6 +147,7 @@ var XMLFirewallServiceRootPartNotFirstActionIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var XMLFirewallServiceDelayErrorsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "rewrite_errors",
@@ -262,9 +155,31 @@ var XMLFirewallServiceDelayErrorsIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
+var XMLFirewallServiceDelayErrorsDurationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "delay_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rewrite_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+
 var XMLFirewallServiceDelayErrorsDurationIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var XMLFirewallServiceSOAPSchemaURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -284,6 +199,7 @@ var XMLFirewallServiceSOAPSchemaURLIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var XMLFirewallServiceWSDLFileLocationIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "wsdl_response_policy",
@@ -291,36 +207,127 @@ var XMLFirewallServiceWSDLFileLocationIgnoreVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"serve"},
 }
+
+var XMLFirewallServiceParserLimitsBytesScannedCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsBytesScannedIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsElementDepthCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsElementDepthIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsAttributeCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsAttributeCountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsMaxNodeSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsMaxNodeSizeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsMaxPrefixesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsMaxPrefixesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsMaxNamespacesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsMaxNamespacesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsMaxLocalNamesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsMaxLocalNamesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsAttachmentByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsAttachmentByteCountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsAttachmentPackageByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsAttachmentPackageByteCountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceParserLimitsExternalReferencesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "firewall_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceParserLimitsExternalReferencesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var XMLFirewallServiceSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",
@@ -328,6 +335,7 @@ var XMLFirewallServiceSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
 var XMLFirewallServiceSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",
@@ -335,6 +343,7 @@ var XMLFirewallServiceSSLSNIServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"sni"},
 }
+
 var XMLFirewallServiceSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl_config_type",
@@ -342,15 +351,43 @@ var XMLFirewallServiceSSLClientIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"proxy"},
 }
+
+var XMLFirewallServiceRemoteAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "dynamic-backend",
+	Value:       []string{"static-backend"},
+}
+
 var XMLFirewallServiceRemoteAddressIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceRemotePortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "dynamic-backend",
+	Value:       []string{"static-backend"},
+}
+
 var XMLFirewallServiceRemotePortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XMLFirewallServiceDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
+
 var XMLFirewallServiceDebugHistoryIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var XMLFirewallServiceDebugTriggerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "debug_mode",

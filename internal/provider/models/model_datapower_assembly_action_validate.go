@@ -58,6 +58,11 @@ var AssemblyActionValidateSchemaCondVal = validators.Evaluation{
 	AttrDefault: "url",
 	Value:       []string{"url"},
 }
+
+var AssemblyActionValidateSchemaIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AssemblyActionValidateDefinitionCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "validate_against",
@@ -65,9 +70,7 @@ var AssemblyActionValidateDefinitionCondVal = validators.Evaluation{
 	AttrDefault: "url",
 	Value:       []string{"definition"},
 }
-var AssemblyActionValidateSchemaIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var AssemblyActionValidateDefinitionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

@@ -48,9 +48,11 @@ var DmAAAPExtractResourceERXPathCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xpath"},
 }
+
 var DmAAAPExtractResourceERXPathIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var DmAAAPExtractResourceERMetadataIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "er_bitmap",

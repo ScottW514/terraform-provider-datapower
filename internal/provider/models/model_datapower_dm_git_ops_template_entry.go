@@ -53,13 +53,7 @@ var DmGitOpsTemplateEntryValueCondVal = validators.Evaluation{
 	AttrDefault: "change",
 	Value:       []string{"delete"},
 }
-var DmGitOpsTemplateEntryValueInverseCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "template_type",
-	AttrType:    "String",
-	AttrDefault: "change",
-	Value:       []string{"custom"},
-}
+
 var DmGitOpsTemplateEntryValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "template_type",
@@ -67,6 +61,15 @@ var DmGitOpsTemplateEntryValueIgnoreVal = validators.Evaluation{
 	AttrDefault: "change",
 	Value:       []string{"delete"},
 }
+
+var DmGitOpsTemplateEntryValueInverseCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "template_type",
+	AttrType:    "String",
+	AttrDefault: "change",
+	Value:       []string{"custom"},
+}
+
 var DmGitOpsTemplateEntryValueInverseIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "template_type",
@@ -74,6 +77,7 @@ var DmGitOpsTemplateEntryValueInverseIgnoreVal = validators.Evaluation{
 	AttrDefault: "change",
 	Value:       []string{"custom"},
 }
+
 var DmGitOpsTemplateEntryValueValidateIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "template_type",

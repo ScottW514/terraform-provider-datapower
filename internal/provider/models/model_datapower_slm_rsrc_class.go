@@ -56,50 +56,18 @@ var SLMRsrcClassRsrcMatchTypeCondVal = validators.Evaluation{
 	AttrDefault: "aaa-mapped-resource",
 	Value:       []string{"xpath-filter", "request-message", "response-message", "soap-fault", "custom-stylesheet", "concurrent-connections", "concurrent-transactions", "uddi-subscription", "wsrr-subscription", "wsrr-saved-search-subscription"},
 }
-var SLMRsrcClassStylesheetCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "rsrc_type",
-	AttrType:    "String",
-	AttrDefault: "aaa-mapped-resource",
-	Value:       []string{"custom-stylesheet"},
-}
-var SLMRsrcClassXPathFilterCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "rsrc_type",
-	AttrType:    "String",
-	AttrDefault: "aaa-mapped-resource",
-	Value:       []string{"xpath-filter"},
-}
-var SLMRsrcClassSubscriptionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "rsrc_type",
-	AttrType:    "String",
-	AttrDefault: "aaa-mapped-resource",
-	Value:       []string{"uddi-subscription"},
-}
-var SLMRsrcClassWSRRSubscriptionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "rsrc_type",
-	AttrType:    "String",
-	AttrDefault: "aaa-mapped-resource",
-	Value:       []string{"wsrr-subscription"},
-}
-var SLMRsrcClassWSRRSavedSearchSubscriptionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "rsrc_type",
-	AttrType:    "String",
-	AttrDefault: "aaa-mapped-resource",
-	Value:       []string{"wsrr-saved-search-subscription"},
-}
+
 var SLMRsrcClassRsrcMatchTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var SLMRsrcClassRsrcValueIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "rsrc_match_type",
@@ -107,6 +75,7 @@ var SLMRsrcClassRsrcValueIgnoreVal = validators.Evaluation{
 					AttrDefault: "per-extracted-value",
 					Value:       []string{"exact-match"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "rsrc_match_type",
@@ -125,18 +94,63 @@ var SLMRsrcClassRsrcValueIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var SLMRsrcClassStylesheetCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"custom-stylesheet"},
+}
+
 var SLMRsrcClassStylesheetIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var SLMRsrcClassXPathFilterCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"xpath-filter"},
+}
+
 var SLMRsrcClassXPathFilterIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var SLMRsrcClassSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"uddi-subscription"},
+}
+
 var SLMRsrcClassSubscriptionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var SLMRsrcClassWSRRSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"wsrr-subscription"},
+}
+
 var SLMRsrcClassWSRRSubscriptionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var SLMRsrcClassWSRRSavedSearchSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "rsrc_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-resource",
+	Value:       []string{"wsrr-saved-search-subscription"},
+}
+
 var SLMRsrcClassWSRRSavedSearchSubscriptionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

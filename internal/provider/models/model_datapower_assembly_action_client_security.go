@@ -59,6 +59,11 @@ var AssemblyActionClientSecurityIdNameCondVal = validators.Evaluation{
 	AttrDefault: "header",
 	Value:       []string{"header", "cookie", "query", "form", "context-var"},
 }
+
+var AssemblyActionClientSecurityIdNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AssemblyActionClientSecuritySecretNameCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -78,23 +83,7 @@ var AssemblyActionClientSecuritySecretNameCondVal = validators.Evaluation{
 		},
 	},
 }
-var AssemblyActionClientSecurityHTTPTypeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "extract_credential_method",
-	AttrType:    "String",
-	AttrDefault: "header",
-	Value:       []string{"http"},
-}
-var AssemblyActionClientSecurityUserRegistryCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "authenticate_client_method",
-	AttrType:    "String",
-	AttrDefault: "native",
-	Value:       []string{"third-party"},
-}
-var AssemblyActionClientSecurityIdNameIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var AssemblyActionClientSecuritySecretNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -107,9 +96,27 @@ var AssemblyActionClientSecuritySecretNameIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var AssemblyActionClientSecurityHTTPTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "extract_credential_method",
+	AttrType:    "String",
+	AttrDefault: "header",
+	Value:       []string{"http"},
+}
+
 var AssemblyActionClientSecurityHTTPTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var AssemblyActionClientSecurityUserRegistryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "authenticate_client_method",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third-party"},
+}
+
 var AssemblyActionClientSecurityUserRegistryIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

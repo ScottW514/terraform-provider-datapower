@@ -58,6 +58,7 @@ var XTCProtocolHandlerSSLClientIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"proxy"},
 }
+
 var XTCProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",
@@ -65,6 +66,7 @@ var XTCProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
 var XTCProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",

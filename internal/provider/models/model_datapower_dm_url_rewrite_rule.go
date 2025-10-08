@@ -55,13 +55,7 @@ var DmURLRewriteRuleInputReplaceRegexpCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"header-rewrite"},
 }
-var DmURLRewriteRuleHeaderCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"header-rewrite"},
-}
+
 var DmURLRewriteRuleStyleReplaceRegexpIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -69,6 +63,7 @@ var DmURLRewriteRuleStyleReplaceRegexpIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"header-rewrite", "content-type"},
 }
+
 var DmURLRewriteRuleInputUnescapeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -76,6 +71,7 @@ var DmURLRewriteRuleInputUnescapeIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"header-rewrite", "content-type"},
 }
+
 var DmURLRewriteRuleStylesheetUnescapeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -83,6 +79,15 @@ var DmURLRewriteRuleStylesheetUnescapeIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"header-rewrite", "content-type"},
 }
+
+var DmURLRewriteRuleHeaderCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"header-rewrite"},
+}
+
 var DmURLRewriteRuleHeaderIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",

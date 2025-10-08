@@ -55,6 +55,11 @@ var DmSSLFrontSideSSLServerConfigTypeCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var DmSSLFrontSideSSLServerConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmSSLFrontSideSSLServerCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -74,6 +79,11 @@ var DmSSLFrontSideSSLServerCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var DmSSLFrontSideSSLServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmSSLFrontSideSSLSNIServerCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -93,12 +103,7 @@ var DmSSLFrontSideSSLSNIServerCondVal = validators.Evaluation{
 		},
 	},
 }
-var DmSSLFrontSideSSLServerConfigTypeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmSSLFrontSideSSLServerIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmSSLFrontSideSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

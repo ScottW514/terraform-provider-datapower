@@ -56,34 +56,7 @@ var GatewayPeeringGroupPeerNodesCondVal = validators.Evaluation{
 	AttrDefault: "peer",
 	Value:       []string{"peer"},
 }
-var GatewayPeeringGroupClusterPrimaryCountCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "mode",
-	AttrType:    "String",
-	AttrDefault: "peer",
-	Value:       []string{"cluster"},
-}
-var GatewayPeeringGroupClusterNodesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "mode",
-	AttrType:    "String",
-	AttrDefault: "peer",
-	Value:       []string{"cluster"},
-}
-var GatewayPeeringGroupClusterAutoConfigCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "mode",
-	AttrType:    "String",
-	AttrDefault: "peer",
-	Value:       []string{"cluster"},
-}
-var GatewayPeeringGroupIdcredCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "enable_ssl",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
+
 var GatewayPeeringGroupPeerNodesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "mode",
@@ -91,6 +64,15 @@ var GatewayPeeringGroupPeerNodesIgnoreVal = validators.Evaluation{
 	AttrDefault: "peer",
 	Value:       []string{"peer"},
 }
+
+var GatewayPeeringGroupClusterPrimaryCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "peer",
+	Value:       []string{"cluster"},
+}
+
 var GatewayPeeringGroupClusterPrimaryCountIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "mode",
@@ -98,6 +80,15 @@ var GatewayPeeringGroupClusterPrimaryCountIgnoreVal = validators.Evaluation{
 	AttrDefault: "peer",
 	Value:       []string{"cluster"},
 }
+
+var GatewayPeeringGroupClusterNodesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "peer",
+	Value:       []string{"cluster"},
+}
+
 var GatewayPeeringGroupClusterNodesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "mode",
@@ -105,6 +96,15 @@ var GatewayPeeringGroupClusterNodesIgnoreVal = validators.Evaluation{
 	AttrDefault: "peer",
 	Value:       []string{"cluster"},
 }
+
+var GatewayPeeringGroupClusterAutoConfigCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "peer",
+	Value:       []string{"cluster"},
+}
+
 var GatewayPeeringGroupClusterAutoConfigIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "mode",
@@ -112,6 +112,15 @@ var GatewayPeeringGroupClusterAutoConfigIgnoreVal = validators.Evaluation{
 	AttrDefault: "peer",
 	Value:       []string{"cluster"},
 }
+
+var GatewayPeeringGroupIdcredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "enable_ssl",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var GatewayPeeringGroupIdcredIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "enable_ssl",
@@ -119,6 +128,7 @@ var GatewayPeeringGroupIdcredIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
 var GatewayPeeringGroupValcredIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "enable_ssl",

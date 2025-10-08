@@ -44,13 +44,6 @@ type DmWSOperationConformancePolicy struct {
 	ConformancePolicyFragmentId         types.String `tfsdk:"conformance_policy_fragment_id"`
 }
 
-var DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "conformance_policy_wsdl_component_type",
-	AttrType:    "String",
-	AttrDefault: "all",
-	Value:       []string{"subscription"},
-}
 var DmWSOperationConformancePolicyConformancePolicyWSDLComponentValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "conformance_policy_wsdl_component_type",
@@ -58,6 +51,15 @@ var DmWSOperationConformancePolicyConformancePolicyWSDLComponentValueIgnoreVal =
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+
+var DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "conformance_policy_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+
 var DmWSOperationConformancePolicyConformancePolicySubscriptionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

@@ -50,6 +50,7 @@ var DmURLRefreshRuleURLRefreshIntervalCondVal = validators.Evaluation{
 	AttrDefault: "default",
 	Value:       []string{"default", "no-flush", "protocol-specified"},
 }
+
 var DmURLRefreshRuleURLRefreshIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "url_refresh_policy",

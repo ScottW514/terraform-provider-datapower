@@ -55,6 +55,7 @@ var DmFTPPolicyUseCCCCondVal = validators.Evaluation{
 	AttrDefault: "auth-off",
 	Value:       []string{"auth-off"},
 }
+
 var DmFTPPolicyEncryptDataCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auth_tls",

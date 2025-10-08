@@ -50,20 +50,6 @@ type DmWSEndpointSubscriptionLocalRule struct {
 	FrontsidePortSuffix   types.String `tfsdk:"frontside_port_suffix"`
 }
 
-var DmWSEndpointSubscriptionLocalRuleLocalEndpointPortCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_front_protocol",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var DmWSEndpointSubscriptionLocalRuleFrontProtocolCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_front_protocol",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
 var DmWSEndpointSubscriptionLocalRuleLocalEndpointProtocolIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "use_front_protocol",
@@ -71,6 +57,7 @@ var DmWSEndpointSubscriptionLocalRuleLocalEndpointProtocolIgnoreVal = validators
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var DmWSEndpointSubscriptionLocalRuleLocalEndpointHostnameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "use_front_protocol",
@@ -78,6 +65,23 @@ var DmWSEndpointSubscriptionLocalRuleLocalEndpointHostnameIgnoreVal = validators
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmWSEndpointSubscriptionLocalRuleLocalEndpointPortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
+var DmWSEndpointSubscriptionLocalRuleFrontProtocolCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmWSEndpointSubscriptionLocalRuleFrontProtocolIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

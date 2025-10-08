@@ -54,34 +54,6 @@ type Domain struct {
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var DomainImportURLCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "config_mode",
-	AttrType:    "String",
-	AttrDefault: "local",
-	Value:       []string{"import"},
-}
-var DomainImportFormatCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "config_mode",
-	AttrType:    "String",
-	AttrDefault: "local",
-	Value:       []string{"import"},
-}
-var DomainLocalIPRewriteCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "config_mode",
-	AttrType:    "String",
-	AttrDefault: "local",
-	Value:       []string{"import"},
-}
-var DomainConfigPermissionsProfileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "config_permissions_mode",
-	AttrType:    "String",
-	AttrDefault: "scope-domain",
-	Value:       []string{"global-profile"},
-}
 var DomainConfigDirIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "config_mode",
@@ -89,15 +61,35 @@ var DomainConfigDirIgnoreVal = validators.Evaluation{
 	AttrDefault: "local",
 	Value:       []string{"local"},
 }
+
 var DomainDomainUserIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var DomainImportURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"import"},
+}
+
 var DomainImportURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var DomainImportFormatCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"import"},
+}
+
 var DomainImportFormatIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var DomainDeploymentPolicyIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "config_mode",
@@ -105,6 +97,7 @@ var DomainDeploymentPolicyIgnoreVal = validators.Evaluation{
 	AttrDefault: "local",
 	Value:       []string{"import"},
 }
+
 var DomainDeploymentPolicyParametersIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "config_mode",
@@ -112,9 +105,27 @@ var DomainDeploymentPolicyParametersIgnoreVal = validators.Evaluation{
 	AttrDefault: "local",
 	Value:       []string{"import"},
 }
+
+var DomainLocalIPRewriteCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "config_mode",
+	AttrType:    "String",
+	AttrDefault: "local",
+	Value:       []string{"import"},
+}
+
 var DomainLocalIPRewriteIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var DomainConfigPermissionsProfileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "config_permissions_mode",
+	AttrType:    "String",
+	AttrDefault: "scope-domain",
+	Value:       []string{"global-profile"},
+}
+
 var DomainConfigPermissionsProfileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "config_permissions_mode",

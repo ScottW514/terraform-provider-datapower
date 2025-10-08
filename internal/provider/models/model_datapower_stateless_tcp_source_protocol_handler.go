@@ -55,6 +55,7 @@ var StatelessTCPSourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
 var StatelessTCPSourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",

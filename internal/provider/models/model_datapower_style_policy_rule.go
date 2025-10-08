@@ -54,6 +54,7 @@ var StylePolicyRuleNonXMLProcessingIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var StylePolicyRuleUnprocessedIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "non_xml_processing",

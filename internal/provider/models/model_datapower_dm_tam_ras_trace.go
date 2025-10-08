@@ -62,62 +62,7 @@ var DmTAMRASTraceTAMTraceFileCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
-var DmTAMRASTraceTAMTraceSizeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "tam_trace_enable",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var DmTAMRASTraceTAMTraceTypeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "tam_trace_enable",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var DmTAMRASTraceTAMTraceComponentsCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "tam_trace_enable",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var DmTAMRASTraceLDAPTraceFileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ldap_trace_enable",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var DmTAMRASTraceLDAPTraceSizeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ldap_trace_enable",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var DmTAMRASTraceLDAPTraceLevelCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ldap_trace_enable",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var DmTAMRASTraceGSKitTraceFileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gs_kit_trace_enable",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var DmTAMRASTraceGSKitTraceFlushCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gs_kit_trace_enable",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
+
 var DmTAMRASTraceTAMTraceFileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "tam_trace_enable",
@@ -125,6 +70,15 @@ var DmTAMRASTraceTAMTraceFileIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmTAMRASTraceTAMTraceSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmTAMRASTraceTAMTraceSizeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "tam_trace_enable",
@@ -132,6 +86,15 @@ var DmTAMRASTraceTAMTraceSizeIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmTAMRASTraceTAMTraceTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmTAMRASTraceTAMTraceTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "tam_trace_enable",
@@ -139,6 +102,15 @@ var DmTAMRASTraceTAMTraceTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmTAMRASTraceTAMTraceComponentsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmTAMRASTraceTAMTraceComponentsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "tam_trace_enable",
@@ -146,6 +118,15 @@ var DmTAMRASTraceTAMTraceComponentsIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmTAMRASTraceLDAPTraceFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmTAMRASTraceLDAPTraceFileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ldap_trace_enable",
@@ -153,6 +134,15 @@ var DmTAMRASTraceLDAPTraceFileIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmTAMRASTraceLDAPTraceSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmTAMRASTraceLDAPTraceSizeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ldap_trace_enable",
@@ -160,6 +150,15 @@ var DmTAMRASTraceLDAPTraceSizeIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmTAMRASTraceLDAPTraceLevelCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmTAMRASTraceLDAPTraceLevelIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ldap_trace_enable",
@@ -167,6 +166,15 @@ var DmTAMRASTraceLDAPTraceLevelIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmTAMRASTraceGSKitTraceFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gs_kit_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmTAMRASTraceGSKitTraceFileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "gs_kit_trace_enable",
@@ -174,6 +182,15 @@ var DmTAMRASTraceGSKitTraceFileIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmTAMRASTraceGSKitTraceFlushCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gs_kit_trace_enable",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmTAMRASTraceGSKitTraceFlushIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "gs_kit_trace_enable",

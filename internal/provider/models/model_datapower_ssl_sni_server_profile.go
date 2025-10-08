@@ -54,6 +54,7 @@ var SSLSNIServerProfileMaxSSLDurationIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"max-duration"},
 }
+
 var SSLSNIServerProfileNumberOfRenegotiationAllowedIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_options",

@@ -72,6 +72,15 @@ var B2BCPASenderSettingMaxRetriesCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var B2BCPASenderSettingMaxRetriesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
 var B2BCPASenderSettingRetryIntervalCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "retry",
@@ -79,6 +88,23 @@ var B2BCPASenderSettingRetryIntervalCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var B2BCPASenderSettingRetryIntervalIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
+var B2BCPASenderSettingIncludeTimeToLiveIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "retry",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var B2BCPASenderSettingEncryptCertCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "encryption_required",
@@ -86,6 +112,7 @@ var B2BCPASenderSettingEncryptCertCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var B2BCPASenderSettingEncryptAlgorithmCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "encryption_required",
@@ -93,6 +120,7 @@ var B2BCPASenderSettingEncryptAlgorithmCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var B2BCPASenderSettingSignIdCredCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "signature_required",
@@ -100,6 +128,7 @@ var B2BCPASenderSettingSignIdCredCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var B2BCPASenderSettingSignatureAlgorithmCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "signature_required",
@@ -107,6 +136,7 @@ var B2BCPASenderSettingSignatureAlgorithmCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var B2BCPASenderSettingSignDigestAlgorithmCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "signature_required",
@@ -114,6 +144,7 @@ var B2BCPASenderSettingSignDigestAlgorithmCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var B2BCPASenderSettingSignatureC14NAlgorithmCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "signature_required",
@@ -121,6 +152,15 @@ var B2BCPASenderSettingSignatureC14NAlgorithmCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var B2BCPASenderSettingSSLClientConfigTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-url-protocol-not-in-list",
+	Attribute:   "dest_endpoint_url",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"ebms2s"},
+}
+
 var B2BCPASenderSettingSSLClientCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -140,34 +180,7 @@ var B2BCPASenderSettingSSLClientCondVal = validators.Evaluation{
 		},
 	},
 }
-var B2BCPASenderSettingMaxRetriesIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "retry",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var B2BCPASenderSettingRetryIntervalIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "retry",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var B2BCPASenderSettingIncludeTimeToLiveIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "retry",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var B2BCPASenderSettingSSLClientConfigTypeIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-url-protocol-not-in-list",
-	Attribute:   "dest_endpoint_url",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"ebms2s"},
-}
+
 var B2BCPASenderSettingSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

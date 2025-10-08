@@ -44,13 +44,6 @@ type DmWSPolicyParameters struct {
 	PolicyParamFragmentId         types.String `tfsdk:"policy_param_fragment_id"`
 }
 
-var DmWSPolicyParametersPolicyParamSubscriptionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "policy_param_wsdl_component_type",
-	AttrType:    "String",
-	AttrDefault: "all",
-	Value:       []string{"subscription"},
-}
 var DmWSPolicyParametersPolicyParamWSDLComponentValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "policy_param_wsdl_component_type",
@@ -58,6 +51,15 @@ var DmWSPolicyParametersPolicyParamWSDLComponentValueIgnoreVal = validators.Eval
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+
+var DmWSPolicyParametersPolicyParamSubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "policy_param_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+
 var DmWSPolicyParametersPolicyParamSubscriptionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

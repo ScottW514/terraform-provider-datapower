@@ -60,6 +60,7 @@ var SocialLoginPolicyJWTValidatorCondVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var SocialLoginPolicyJWTValidatorIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

@@ -76,6 +76,14 @@ type WebAppFW struct {
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var WebAppFWDelayErrorsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "rewrite_errors",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var WebAppFWDelayErrorsDurationCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -95,6 +103,11 @@ var WebAppFWDelayErrorsDurationCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var WebAppFWDelayErrorsDurationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var WebAppFWDebugHistoryCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "debug_mode",
@@ -102,19 +115,11 @@ var WebAppFWDebugHistoryCondVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
-var WebAppFWDelayErrorsIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "rewrite_errors",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
-var WebAppFWDelayErrorsDurationIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var WebAppFWDebugHistoryIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var WebAppFWDebugTriggerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "debug_mode",
@@ -122,6 +127,7 @@ var WebAppFWDebugTriggerIgnoreVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
+
 var WebAppFWSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",
@@ -129,6 +135,7 @@ var WebAppFWSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
 var WebAppFWSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",
@@ -136,6 +143,7 @@ var WebAppFWSSLSNIServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"sni"},
 }
+
 var WebAppFWSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl_config_type",

@@ -57,62 +57,6 @@ type GitOps struct {
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var GitOpsIntervalCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "mode",
-	AttrType:    "String",
-	AttrDefault: "read-write",
-	Value:       []string{"read-only"},
-}
-var GitOpsSSHClientProfileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "connection_type",
-	AttrType:    "String",
-	AttrDefault: "https",
-	Value:       []string{"ssh"},
-}
-var GitOpsUsernameCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "connection_type",
-	AttrType:    "String",
-	AttrDefault: "https",
-	Value:       []string{"https"},
-}
-var GitOpsPasswordCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "connection_type",
-	AttrType:    "String",
-	AttrDefault: "https",
-	Value:       []string{"https"},
-}
-var GitOpsSSHAuthorizedKeysFileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "connection_type",
-	AttrType:    "String",
-	AttrDefault: "https",
-	Value:       []string{"ssh"},
-}
-var GitOpsTLSValcredCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "connection_type",
-	AttrType:    "String",
-	AttrDefault: "https",
-	Value:       []string{"https"},
-}
-var GitOpsGitUserCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "mode",
-	AttrType:    "String",
-	AttrDefault: "read-write",
-	Value:       []string{"read-write"},
-}
-var GitOpsGitEmailCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "mode",
-	AttrType:    "String",
-	AttrDefault: "read-write",
-	Value:       []string{"read-write"},
-}
 var GitOpsCommitIdentifierTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mode",
@@ -120,6 +64,15 @@ var GitOpsCommitIdentifierTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "read-write",
 	Value:       []string{"read-write"},
 }
+
+var GitOpsIntervalCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-only"},
+}
+
 var GitOpsIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mode",
@@ -127,6 +80,15 @@ var GitOpsIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "read-write",
 	Value:       []string{"read-write"},
 }
+
+var GitOpsSSHClientProfileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"ssh"},
+}
+
 var GitOpsSSHClientProfileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "connection_type",
@@ -134,6 +96,15 @@ var GitOpsSSHClientProfileIgnoreVal = validators.Evaluation{
 	AttrDefault: "https",
 	Value:       []string{"https"},
 }
+
+var GitOpsUsernameCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"https"},
+}
+
 var GitOpsUsernameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "connection_type",
@@ -141,6 +112,15 @@ var GitOpsUsernameIgnoreVal = validators.Evaluation{
 	AttrDefault: "https",
 	Value:       []string{"ssh"},
 }
+
+var GitOpsPasswordCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"https"},
+}
+
 var GitOpsPasswordIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "connection_type",
@@ -148,6 +128,15 @@ var GitOpsPasswordIgnoreVal = validators.Evaluation{
 	AttrDefault: "https",
 	Value:       []string{"ssh"},
 }
+
+var GitOpsSSHAuthorizedKeysFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"ssh"},
+}
+
 var GitOpsSSHAuthorizedKeysFileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "connection_type",
@@ -155,6 +144,15 @@ var GitOpsSSHAuthorizedKeysFileIgnoreVal = validators.Evaluation{
 	AttrDefault: "https",
 	Value:       []string{"https"},
 }
+
+var GitOpsTLSValcredCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "connection_type",
+	AttrType:    "String",
+	AttrDefault: "https",
+	Value:       []string{"https"},
+}
+
 var GitOpsTLSValcredIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "connection_type",
@@ -162,6 +160,15 @@ var GitOpsTLSValcredIgnoreVal = validators.Evaluation{
 	AttrDefault: "https",
 	Value:       []string{"ssh"},
 }
+
+var GitOpsGitUserCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-write"},
+}
+
 var GitOpsGitUserIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mode",
@@ -169,6 +176,15 @@ var GitOpsGitUserIgnoreVal = validators.Evaluation{
 	AttrDefault: "read-write",
 	Value:       []string{"read-only"},
 }
+
+var GitOpsGitEmailCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "mode",
+	AttrType:    "String",
+	AttrDefault: "read-write",
+	Value:       []string{"read-write"},
+}
+
 var GitOpsGitEmailIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mode",

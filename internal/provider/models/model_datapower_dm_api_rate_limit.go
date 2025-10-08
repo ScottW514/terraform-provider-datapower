@@ -61,6 +61,7 @@ var DmAPIRateLimitIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitUnitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -68,6 +69,7 @@ var DmAPIRateLimitUnitIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitHardLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -75,6 +77,7 @@ var DmAPIRateLimitHardLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitCacheOnlyIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -82,6 +85,7 @@ var DmAPIRateLimitCacheOnlyIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitIsClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -89,6 +93,7 @@ var DmAPIRateLimitIsClientIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitUseApiNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -96,6 +101,7 @@ var DmAPIRateLimitUseApiNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitUseAppIdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -103,6 +109,7 @@ var DmAPIRateLimitUseAppIdIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitUseClientIdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -110,6 +117,7 @@ var DmAPIRateLimitUseClientIdIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitDynamicValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",
@@ -117,6 +125,7 @@ var DmAPIRateLimitDynamicValueIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIRateLimitWeightIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "rate",

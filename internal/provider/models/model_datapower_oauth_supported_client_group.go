@@ -47,6 +47,14 @@ type OAuthSupportedClientGroup struct {
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var OAuthSupportedClientGroupCustomizedTypeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "customized",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
 var OAuthSupportedClientGroupOAuthRoleCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "customized",
@@ -54,6 +62,11 @@ var OAuthSupportedClientGroupOAuthRoleCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var OAuthSupportedClientGroupOAuthRoleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientGroupClientCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -67,6 +80,7 @@ var OAuthSupportedClientGroupClientCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "customized",
@@ -74,6 +88,7 @@ var OAuthSupportedClientGroupClientCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "customized_type",
@@ -85,6 +100,11 @@ var OAuthSupportedClientGroupClientCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientGroupClientIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientGroupTemplateProcessUrlCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -104,6 +124,11 @@ var OAuthSupportedClientGroupTemplateProcessUrlCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthSupportedClientGroupTemplateProcessUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthSupportedClientGroupClientTemplateCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -123,22 +148,7 @@ var OAuthSupportedClientGroupClientTemplateCondVal = validators.Evaluation{
 		},
 	},
 }
-var OAuthSupportedClientGroupCustomizedTypeIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "customized",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var OAuthSupportedClientGroupOAuthRoleIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientGroupClientIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthSupportedClientGroupTemplateProcessUrlIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var OAuthSupportedClientGroupClientTemplateIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

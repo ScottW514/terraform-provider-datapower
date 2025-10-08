@@ -50,6 +50,11 @@ var DmB2BHAHostHostnameCondVal = validators.Evaluation{
 	AttrPath:    "../",
 	Value:       []string{"true"},
 }
+
+var DmB2BHAHostHostnameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmB2BHAHostPortCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ha_enabled",
@@ -58,9 +63,7 @@ var DmB2BHAHostPortCondVal = validators.Evaluation{
 	AttrPath:    "../",
 	Value:       []string{"true"},
 }
-var DmB2BHAHostHostnameIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmB2BHAHostPortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

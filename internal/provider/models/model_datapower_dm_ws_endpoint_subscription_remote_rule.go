@@ -56,41 +56,7 @@ var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointHostnameCondVal = validators
 	AttrDefault: "default",
 	Value:       []string{"dpmq", "idgmq", "dptibems", "dpwasjms"},
 }
-var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "remote_endpoint_protocol",
-	AttrType:    "String",
-	AttrDefault: "default",
-	Value:       []string{"dpmq", "idgmq", "dptibems", "dpwasjms"},
-}
-var DmWSEndpointSubscriptionRemoteRuleRemoteMQQMCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "remote_endpoint_protocol",
-	AttrType:    "String",
-	AttrDefault: "default",
-	Value:       []string{"dpmq"},
-}
-var DmWSEndpointSubscriptionRemoteRuleRemoteMQManagerCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "remote_endpoint_protocol",
-	AttrType:    "String",
-	AttrDefault: "default",
-	Value:       []string{"idgmq"},
-}
-var DmWSEndpointSubscriptionRemoteRuleRemoteTibcoEMSCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "remote_endpoint_protocol",
-	AttrType:    "String",
-	AttrDefault: "default",
-	Value:       []string{"dptibems"},
-}
-var DmWSEndpointSubscriptionRemoteRuleRemoteWebSphereJMSCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "remote_endpoint_protocol",
-	AttrType:    "String",
-	AttrDefault: "default",
-	Value:       []string{"dpwasjms"},
-}
+
 var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointHostnameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "remote_endpoint_protocol",
@@ -98,6 +64,23 @@ var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointHostnameIgnoreVal = validato
 	AttrDefault: "default",
 	Value:       []string{"dpmq", "idgmq", "dptibems", "dpwasjms"},
 }
+
+var DmWSEndpointSubscriptionRemoteRuleRemoteEndpointPortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dpmq", "idgmq", "dptibems", "dpwasjms"},
+}
+
+var DmWSEndpointSubscriptionRemoteRuleRemoteMQQMCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dpmq"},
+}
+
 var DmWSEndpointSubscriptionRemoteRuleRemoteMQQMIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "remote_endpoint_protocol",
@@ -105,6 +88,15 @@ var DmWSEndpointSubscriptionRemoteRuleRemoteMQQMIgnoreVal = validators.Evaluatio
 	AttrDefault: "default",
 	Value:       []string{"dpmq"},
 }
+
+var DmWSEndpointSubscriptionRemoteRuleRemoteMQManagerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"idgmq"},
+}
+
 var DmWSEndpointSubscriptionRemoteRuleRemoteMQManagerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "remote_endpoint_protocol",
@@ -112,6 +104,15 @@ var DmWSEndpointSubscriptionRemoteRuleRemoteMQManagerIgnoreVal = validators.Eval
 	AttrDefault: "default",
 	Value:       []string{"idgmq"},
 }
+
+var DmWSEndpointSubscriptionRemoteRuleRemoteTibcoEMSCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dptibems"},
+}
+
 var DmWSEndpointSubscriptionRemoteRuleRemoteTibcoEMSIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "remote_endpoint_protocol",
@@ -119,6 +120,15 @@ var DmWSEndpointSubscriptionRemoteRuleRemoteTibcoEMSIgnoreVal = validators.Evalu
 	AttrDefault: "default",
 	Value:       []string{"dptibems"},
 }
+
+var DmWSEndpointSubscriptionRemoteRuleRemoteWebSphereJMSCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "remote_endpoint_protocol",
+	AttrType:    "String",
+	AttrDefault: "default",
+	Value:       []string{"dpwasjms"},
+}
+
 var DmWSEndpointSubscriptionRemoteRuleRemoteWebSphereJMSIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "remote_endpoint_protocol",

@@ -44,13 +44,6 @@ type DmWSOperationSchedulerPriority struct {
 	SchedulerPriorityFragmentId         types.String `tfsdk:"scheduler_priority_fragment_id"`
 }
 
-var DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "scheduler_priority_wsdl_component_type",
-	AttrType:    "String",
-	AttrDefault: "all",
-	Value:       []string{"subscription"},
-}
 var DmWSOperationSchedulerPrioritySchedulerPriorityWSDLComponentValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "scheduler_priority_wsdl_component_type",
@@ -58,6 +51,15 @@ var DmWSOperationSchedulerPrioritySchedulerPriorityWSDLComponentValueIgnoreVal =
 	AttrDefault: "all",
 	Value:       []string{"subscription"},
 }
+
+var DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "scheduler_priority_wsdl_component_type",
+	AttrType:    "String",
+	AttrDefault: "all",
+	Value:       []string{"subscription"},
+}
+
 var DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

@@ -71,6 +71,7 @@ var APIPlanRateLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIPlanBurstLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_rate_limit_group",
@@ -78,6 +79,7 @@ var APIPlanBurstLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIPlanRateLimitGroupIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_rate_limit_group",
@@ -85,6 +87,7 @@ var APIPlanRateLimitGroupIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var APIPlanAssemblyBurstLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_limit_definitions",
@@ -92,6 +95,7 @@ var APIPlanAssemblyBurstLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIPlanAssemblyBurstLimitDefinitionIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_limit_definitions",
@@ -99,6 +103,7 @@ var APIPlanAssemblyBurstLimitDefinitionIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var APIPlanAssemblyRateLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_limit_definitions",
@@ -106,6 +111,7 @@ var APIPlanAssemblyRateLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIPlanAssemblyRateLimitDefinitionIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_limit_definitions",
@@ -113,6 +119,7 @@ var APIPlanAssemblyRateLimitDefinitionIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var APIPlanAssemblyCountLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_limit_definitions",
@@ -120,6 +127,7 @@ var APIPlanAssemblyCountLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIPlanAssemblyCountLimitDefinitionIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_limit_definitions",

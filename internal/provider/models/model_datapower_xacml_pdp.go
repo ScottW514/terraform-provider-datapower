@@ -54,6 +54,11 @@ var XACMLPDPGeneralPolicyCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var XACMLPDPGeneralPolicyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var XACMLPDPCombiningAlgCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "equal_policies",
@@ -61,9 +66,7 @@ var XACMLPDPCombiningAlgCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
-var XACMLPDPGeneralPolicyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var XACMLPDPCombiningAlgIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

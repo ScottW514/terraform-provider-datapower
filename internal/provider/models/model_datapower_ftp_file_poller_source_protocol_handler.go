@@ -55,20 +55,6 @@ type FTPFilePollerSourceProtocolHandler struct {
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var FTPFilePollerSourceProtocolHandlerResultNamePatternCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "generate_result_file",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
-var FTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "processing_seize_timeout",
-	AttrType:    "Int64",
-	AttrDefault: "0",
-	Value:       []string{"0"},
-}
 var FTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "delete_on_success",
@@ -76,6 +62,7 @@ var FTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var FTPFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "delete_on_error",
@@ -83,9 +70,27 @@ var FTPFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.E
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var FTPFilePollerSourceProtocolHandlerResultNamePatternCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "generate_result_file",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var FTPFilePollerSourceProtocolHandlerResultNamePatternIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var FTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "processing_seize_timeout",
+	AttrType:    "Int64",
+	AttrDefault: "0",
+	Value:       []string{"0"},
+}
+
 var FTPFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "processing_seize_timeout",

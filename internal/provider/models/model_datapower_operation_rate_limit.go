@@ -52,6 +52,7 @@ var OperationRateLimitRateLimitCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var OperationRateLimitRateLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_rate_limit_group",
@@ -59,6 +60,7 @@ var OperationRateLimitRateLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var OperationRateLimitRateLimitGroupIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_rate_limit_group",

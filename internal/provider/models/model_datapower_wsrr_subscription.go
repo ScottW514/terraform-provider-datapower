@@ -57,6 +57,7 @@ var WSRRSubscriptionNamespaceCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"service-version"},
 }
+
 var WSRRSubscriptionRefreshIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "method",
@@ -64,6 +65,7 @@ var WSRRSubscriptionRefreshIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "poll",
 	Value:       []string{"poll"},
 }
+
 var WSRRSubscriptionObjectVersionIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_version",

@@ -58,6 +58,7 @@ var DmDocCachePolicyXC10GridIgnoreVal = validators.Evaluation{
 	AttrDefault: "protocol",
 	Value:       []string{"no-cache"},
 }
+
 var DmDocCachePolicyCacheBackendResponsesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -65,6 +66,7 @@ var DmDocCachePolicyCacheBackendResponsesIgnoreVal = validators.Evaluation{
 	AttrDefault: "protocol",
 	Value:       []string{"no-cache"},
 }
+
 var DmDocCachePolicyHTTPCacheValidationIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -72,6 +74,7 @@ var DmDocCachePolicyHTTPCacheValidationIgnoreVal = validators.Evaluation{
 	AttrDefault: "protocol",
 	Value:       []string{"no-cache"},
 }
+
 var DmDocCachePolicyReturnExpiredIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -79,6 +82,7 @@ var DmDocCachePolicyReturnExpiredIgnoreVal = validators.Evaluation{
 	AttrDefault: "protocol",
 	Value:       []string{"no-cache"},
 }
+
 var DmDocCachePolicyRESTInvalidationIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -98,6 +102,7 @@ var DmDocCachePolicyRESTInvalidationIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var DmDocCachePolicyCacheUnsafeResponseIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{

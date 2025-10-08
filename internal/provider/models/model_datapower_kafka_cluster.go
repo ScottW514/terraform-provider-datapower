@@ -72,63 +72,7 @@ var KafkaClusterSASLMechanismCondVal = validators.Evaluation{
 		},
 	},
 }
-var KafkaClusterUserNameCondVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "plaintext",
-			Value:       []string{"sasl_plaintext"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "plaintext",
-			Value:       []string{"sasl_ssl"},
-		},
-	},
-}
-var KafkaClusterPasswordAliasCondVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "plaintext",
-			Value:       []string{"sasl_plaintext"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "plaintext",
-			Value:       []string{"sasl_ssl"},
-		},
-	},
-}
-var KafkaClusterSSLClientCondVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "plaintext",
-			Value:       []string{"ssl"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "plaintext",
-			Value:       []string{"sasl_ssl"},
-		},
-	},
-}
+
 var KafkaClusterSASLMechanismIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -148,6 +92,27 @@ var KafkaClusterSASLMechanismIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var KafkaClusterUserNameCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_ssl"},
+		},
+	},
+}
+
 var KafkaClusterUserNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -167,6 +132,27 @@ var KafkaClusterUserNameIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var KafkaClusterPasswordAliasCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_plaintext"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_ssl"},
+		},
+	},
+}
+
 var KafkaClusterPasswordAliasIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -186,6 +172,27 @@ var KafkaClusterPasswordAliasIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var KafkaClusterSSLClientCondVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"ssl"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "plaintext",
+			Value:       []string{"sasl_ssl"},
+		},
+	},
+}
+
 var KafkaClusterSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{

@@ -63,6 +63,11 @@ var DmCRLFetchConfigURLCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
+var DmCRLFetchConfigURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmCRLFetchConfigRemoteAddressCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "fetch_type",
@@ -70,6 +75,11 @@ var DmCRLFetchConfigRemoteAddressCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"ldap"},
 }
+
+var DmCRLFetchConfigRemoteAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmCRLFetchConfigRemotePortCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "fetch_type",
@@ -77,6 +87,11 @@ var DmCRLFetchConfigRemotePortCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"ldap"},
 }
+
+var DmCRLFetchConfigRemotePortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmCRLFetchConfigDNCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "fetch_type",
@@ -84,18 +99,11 @@ var DmCRLFetchConfigDNCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"ldap"},
 }
-var DmCRLFetchConfigURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmCRLFetchConfigRemoteAddressIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmCRLFetchConfigRemotePortIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmCRLFetchConfigDNIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var DmCRLFetchConfigBindDNIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "fetch_type",
@@ -103,6 +111,7 @@ var DmCRLFetchConfigBindDNIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
 var DmCRLFetchConfigBindPassAliasIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "fetch_type",
@@ -110,6 +119,7 @@ var DmCRLFetchConfigBindPassAliasIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
 var DmCRLFetchConfigLDAPVersionIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "fetch_type",
@@ -117,6 +127,7 @@ var DmCRLFetchConfigLDAPVersionIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
 var DmCRLFetchConfigLDAPReadTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "fetch_type",
@@ -124,6 +135,7 @@ var DmCRLFetchConfigLDAPReadTimeoutIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
 var DmCRLFetchConfigSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_client_config_type",

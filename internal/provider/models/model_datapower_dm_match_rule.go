@@ -55,6 +55,11 @@ var DmMatchRuleHttpTagCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
+var DmMatchRuleHttpTagIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMatchRuleHttpValueCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -62,6 +67,11 @@ var DmMatchRuleHttpValueCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
+var DmMatchRuleHttpValueIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMatchRuleUrlCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -69,6 +79,11 @@ var DmMatchRuleUrlCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"url", "fullyqualifiedurl", "host"},
 }
+
+var DmMatchRuleUrlIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMatchRuleErrorCodeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -76,6 +91,11 @@ var DmMatchRuleErrorCodeCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"errorcode"},
 }
+
+var DmMatchRuleErrorCodeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMatchRuleXPATHExpressionCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -83,6 +103,11 @@ var DmMatchRuleXPATHExpressionCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xpath"},
 }
+
+var DmMatchRuleXPATHExpressionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMatchRuleMethodCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -90,6 +115,11 @@ var DmMatchRuleMethodCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"method"},
 }
+
+var DmMatchRuleMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMatchRuleCustomMethodCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "method",
@@ -97,24 +127,7 @@ var DmMatchRuleCustomMethodCondVal = validators.Evaluation{
 	AttrDefault: "default",
 	Value:       []string{"custom"},
 }
-var DmMatchRuleHttpTagIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmMatchRuleHttpValueIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmMatchRuleUrlIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmMatchRuleErrorCodeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmMatchRuleXPATHExpressionIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmMatchRuleMethodIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmMatchRuleCustomMethodIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

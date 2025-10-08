@@ -60,6 +60,46 @@ type ErrorReportSettings struct {
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var ErrorReportSettingsUploadReportIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_smtp",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
+var ErrorReportSettingsUseSmtpIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "upload_report",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
+var ErrorReportSettingsFFDCPacketCaptureIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "upload_report",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
+var ErrorReportSettingsFFDCEventLogCaptureIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "upload_report",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
+var ErrorReportSettingsFFDCMemoryLeakCaptureIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "upload_report",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
 var ErrorReportSettingsProtocolCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "upload_report",
@@ -67,6 +107,15 @@ var ErrorReportSettingsProtocolCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var ErrorReportSettingsProtocolIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "upload_report",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
 var ErrorReportSettingsLocationIdentifierCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_smtp",
@@ -74,6 +123,11 @@ var ErrorReportSettingsLocationIdentifierCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var ErrorReportSettingsLocationIdentifierIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var ErrorReportSettingsSmtpServerCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -87,6 +141,7 @@ var ErrorReportSettingsSmtpServerCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "upload_report",
@@ -94,6 +149,7 @@ var ErrorReportSettingsSmtpServerCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "protocol",
@@ -105,6 +161,11 @@ var ErrorReportSettingsSmtpServerCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var ErrorReportSettingsSmtpServerIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var ErrorReportSettingsEmailAddressCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -118,6 +179,7 @@ var ErrorReportSettingsEmailAddressCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "upload_report",
@@ -125,6 +187,7 @@ var ErrorReportSettingsEmailAddressCondVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "protocol",
@@ -136,6 +199,67 @@ var ErrorReportSettingsEmailAddressCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var ErrorReportSettingsEmailAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var ErrorReportSettingsEmailSenderAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "use_smtp",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "upload_report",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+			},
+		},
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "use_smtp",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"false"},
+				},
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "upload_report",
+					AttrType:    "Bool",
+					AttrDefault: "false",
+					Value:       []string{"true"},
+				},
+
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "protocol",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"smtp"},
+				},
+			},
+		},
+	},
+}
+
 var ErrorReportSettingsFTPServerCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -155,167 +279,11 @@ var ErrorReportSettingsFTPServerCondVal = validators.Evaluation{
 		},
 	},
 }
-var ErrorReportSettingsFTPUserAgentCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "upload_report",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "",
-			Value:       []string{"ftp"},
-		},
-	},
-}
-var ErrorReportSettingsNFSMountCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "upload_report",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "",
-			Value:       []string{"nfs"},
-		},
-	},
-}
-var ErrorReportSettingsRaidVolumeCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "upload_report",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "protocol",
-			AttrType:    "String",
-			AttrDefault: "",
-			Value:       []string{"raid"},
-		},
-	},
-}
-var ErrorReportSettingsUploadReportIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_smtp",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var ErrorReportSettingsUseSmtpIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "upload_report",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var ErrorReportSettingsFFDCPacketCaptureIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "upload_report",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var ErrorReportSettingsFFDCEventLogCaptureIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "upload_report",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var ErrorReportSettingsFFDCMemoryLeakCaptureIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "upload_report",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var ErrorReportSettingsProtocolIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "upload_report",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var ErrorReportSettingsLocationIdentifierIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var ErrorReportSettingsSmtpServerIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var ErrorReportSettingsEmailAddressIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var ErrorReportSettingsEmailSenderAddressIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "use_smtp",
-					AttrType:    "Bool",
-					AttrDefault: "false",
-					Value:       []string{"false"},
-				},
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "upload_report",
-					AttrType:    "Bool",
-					AttrDefault: "false",
-					Value:       []string{"false"},
-				},
-			},
-		},
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "use_smtp",
-					AttrType:    "Bool",
-					AttrDefault: "false",
-					Value:       []string{"false"},
-				},
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "upload_report",
-					AttrType:    "Bool",
-					AttrDefault: "false",
-					Value:       []string{"true"},
-				},
-				{
-					Evaluation:  "property-value-not-in-list",
-					Attribute:   "protocol",
-					AttrType:    "String",
-					AttrDefault: "",
-					Value:       []string{"smtp"},
-				},
-			},
-		},
-	},
-}
+
 var ErrorReportSettingsFTPServerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var ErrorReportSettingsFTPPathIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -335,12 +303,55 @@ var ErrorReportSettingsFTPPathIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var ErrorReportSettingsFTPUserAgentCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "upload_report",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"ftp"},
+		},
+	},
+}
+
 var ErrorReportSettingsFTPUserAgentIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var ErrorReportSettingsNFSMountCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "upload_report",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"nfs"},
+		},
+	},
+}
+
 var ErrorReportSettingsNFSMountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var ErrorReportSettingsNFSPathIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -360,9 +371,31 @@ var ErrorReportSettingsNFSPathIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var ErrorReportSettingsRaidVolumeCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "upload_report",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "protocol",
+			AttrType:    "String",
+			AttrDefault: "",
+			Value:       []string{"raid"},
+		},
+	},
+}
+
 var ErrorReportSettingsRaidVolumeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var ErrorReportSettingsRaidPathIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -382,6 +415,7 @@ var ErrorReportSettingsRaidPathIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var ErrorReportSettingsReportHistoryKeptIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "upload_report",

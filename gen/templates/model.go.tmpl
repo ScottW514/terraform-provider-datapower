@@ -88,172 +88,53 @@ type {{.Name}}WO struct {
 {{$root := .}}
 {{- range .Attributes}}
     {{- if and (len .RequiredWhen)}}
-var {{$root.Name}}{{.Name}}CondVal = validators.Evaluation{
-        {{- range .RequiredWhen}}
+        {{block "renderEvaluation" (dict "Evaluations" .RequiredWhen "VarName" (print $root.Name .Name "CondVal") "Root" $root)}}
+var {{.VarName}} = validators.Evaluation{
+    {{- range .Evaluations}}
     Evaluation: "{{.Evaluation}}",
-            {{- if len .Conditions}}
+        {{- if len .Conditions}}
     Conditions: []validators.Evaluation{
-                {{- range .Conditions}}
-        {
-            Evaluation: "{{.Evaluation}}",
-                    {{- if len .Conditions}}
-            Conditions: []validators.Evaluation{
-                        {{- range .Conditions}}
-                {
-                    Evaluation: "{{.Evaluation}}",
-                            {{- if len .Conditions}}
-                    Conditions: []validators.Evaluation{
-                                {{- range .Conditions}}
-                        {
-                            Evaluation: "{{.Evaluation}}",
-                                    {{- if len .Conditions}}
-                            Conditions: []validators.Evaluation{
-                                        {{- range .Conditions}}
-                                {
-                                    Evaluation: "{{.Evaluation}}",
-                                    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-                                    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-                                    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                                            {{- if .AttrPath}}
-                                    AttrPath: {{quote .AttrPath}},
-                                            {{- end}}
-                                    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-                                },
-                                        {{- end}}
-                            },
-                                    {{- else if not (strContains .Evaluation "logical")}}
-                            Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-                            AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-                            AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                                        {{- if .AttrPath}}
-                            AttrPath: {{quote .AttrPath}},
-                                        {{- end}}
-                            Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-                                    {{- end}}
-                        },
-                                {{- end}}
-                    },
-                            {{- else if not (strContains .Evaluation "logical")}}
-                    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-                    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-                    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                                {{- if .AttrPath}}
-                    AttrPath: {{quote .AttrPath}},
-                                {{- end}}
-                    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-                            {{- end}}
-                },
-                        {{- end}}
-            },
-                    {{- else if not (strContains .Evaluation "logical")}}
-            Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-            AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-            AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                        {{- if .AttrPath}}
-            AttrPath: {{quote .AttrPath}},
-                        {{- end}}
-            Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-                    {{- end}}
-        },
-                {{- end}}
-    },
-            {{- else if not (strContains .Evaluation "logical")}}
-    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                {{- if .AttrPath}}
-    AttrPath: {{quote .AttrPath}},
-                {{- end}}
-    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-            {{- end}}
+        {{- range .Conditions}}
+        {{- template "renderCondition" (dict "Evaluation" . "Root" $.Root)}}
         {{- end}}
+    },
+        {{- else if not (strContains .Evaluation "logical")}}
+    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $.Root.Attributes .Attribute}}{{end}}",
+    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $.Root.Attributes .Attribute}}{{end}}",
+    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $.Root.Attributes .Attribute)}}{{end}},
+            {{- if .AttrPath}}
+    AttrPath: {{quote .AttrPath}},
+            {{- end}}
+    Value: []string{ {{range .Value}}{{quote .}}, {{end}} },
+        {{- end}}
+    {{- end}}
 }
+        {{end}}
+    {{- end}}
+    {{- if and (len .IgnoredWhen)}}
+        {{template "renderEvaluation" (dict "Evaluations" .IgnoredWhen "VarName" (print $root.Name .Name "IgnoreVal") "Root" $root)}}
     {{- end}}
 {{- end}}
 
-{{- range .Attributes}}
-    {{- if and (len .IgnoredWhen)}}
-var {{$root.Name}}{{.Name}}IgnoreVal = validators.Evaluation{
-        {{- range .IgnoredWhen}}
-    Evaluation: "{{.Evaluation}}",
-            {{- if len .Conditions}}
+{{define "renderCondition"}}
+{
+    Evaluation: "{{.Evaluation.Evaluation}}",
+    {{- if len .Evaluation.Conditions}}
     Conditions: []validators.Evaluation{
-                {{- range .Conditions}}
-        {
-            Evaluation: "{{.Evaluation}}",
-                    {{- if len .Conditions}}
-            Conditions: []validators.Evaluation{
-                        {{- range .Conditions}}
-                {
-                    Evaluation: "{{.Evaluation}}",
-                            {{- if len .Conditions}}
-                    Conditions: []validators.Evaluation{
-                                {{- range .Conditions}}
-                        {
-                            Evaluation: "{{.Evaluation}}",
-                                    {{- if len .Conditions}}
-                            Conditions: []validators.Evaluation{
-                                        {{- range .Conditions}}
-                                {
-                                    Evaluation: "{{.Evaluation}}",
-                                    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-                                    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-                                    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                                            {{- if .AttrPath}}
-                                    AttrPath: {{quote .AttrPath}},
-                                            {{- end}}
-                                    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-                                },
-                                        {{- end}}
-                            },
-                                    {{- else if not (strContains .Evaluation "logical")}}
-                            Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-                            AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-                            AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                                        {{- if .AttrPath}}
-                            AttrPath: {{quote .AttrPath}},
-                                        {{- end}}
-                            Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-                                    {{- end}}
-                        },
-                                {{- end}}
-                    },
-                            {{- else if not (strContains .Evaluation "logical")}}
-                    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-                    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-                    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                                {{- if .AttrPath}}
-                    AttrPath: {{quote .AttrPath}},
-                                {{- end}}
-                    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-                            {{- end}}
-                },
-                        {{- end}}
-            },
-                    {{- else if not (strContains .Evaluation "logical")}}
-            Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-            AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-            AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                        {{- if .AttrPath}}
-            AttrPath: {{quote .AttrPath}},
-                        {{- end}}
-            Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-                    {{- end}}
-        },
-                {{- end}}
-    },
-            {{- else if not (strContains .Evaluation "logical")}}
-    Attribute: "{{if .AttrTfName}}{{.AttrTfName}}{{else}}{{getAttributeTfName $root.Attributes .Attribute}}{{end}}",
-    AttrType: "{{if .AttrType}}{{.AttrType}}{{else}}{{getAttributeType $root.Attributes .Attribute}}{{end}}",
-    AttrDefault: {{if .AttrDefault}}{{quote .AttrDefault}}{{else}}{{quote (getAttributeDefault $root.Attributes .Attribute)}}{{end}},
-                {{- if .AttrPath}}
-    AttrPath: {{quote .AttrPath}},
-                {{- end}}
-    Value : []string{ {{range .Value}}{{quote .}}, {{end}} },
-            {{- end}}
+        {{- range .Evaluation.Conditions}}
+        {{template "renderCondition" (dict "Evaluation" . "Root" $.Root)}}
         {{- end}}
-}
+    },
+    {{- else if not (strContains .Evaluation.Evaluation "logical")}}
+    Attribute: "{{if .Evaluation.AttrTfName}}{{.Evaluation.AttrTfName}}{{else}}{{getAttributeTfName $.Root.Attributes .Evaluation.Attribute}}{{end}}",
+    AttrType: "{{if .Evaluation.AttrType}}{{.Evaluation.AttrType}}{{else}}{{getAttributeType $.Root.Attributes .Evaluation.Attribute}}{{end}}",
+    AttrDefault: {{if .Evaluation.AttrDefault}}{{quote .Evaluation.AttrDefault}}{{else}}{{quote (getAttributeDefault $.Root.Attributes .Evaluation.Attribute)}}{{end}},
+        {{- if .Evaluation.AttrPath}}
+    AttrPath: {{quote .Evaluation.AttrPath}},
+        {{- end}}
+    Value: []string{ {{range .Evaluation.Value}}{{quote .}}, {{end}} },
     {{- end}}
+},
 {{- end}}
 
 var {{.Name}}ObjectType = map[string]attr.Type{

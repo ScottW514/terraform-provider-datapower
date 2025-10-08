@@ -60,6 +60,7 @@ var APIOperationConsumeIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIOperationSecurityIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "remove_security",

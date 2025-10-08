@@ -60,6 +60,11 @@ var WebAppResponseXMLRuleCondVal = validators.Evaluation{
 	AttrDefault: "nothing",
 	Value:       []string{"xml", "soap"},
 }
+
+var WebAppResponseXMLRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var WebAppResponseNonXMLRuleCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "non_xml_policy",
@@ -67,9 +72,7 @@ var WebAppResponseNonXMLRuleCondVal = validators.Evaluation{
 	AttrDefault: "nothing",
 	Value:       []string{"side", "binary"},
 }
-var WebAppResponseXMLRuleIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var WebAppResponseNonXMLRuleIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

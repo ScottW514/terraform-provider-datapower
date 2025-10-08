@@ -46,13 +46,6 @@ type DmValidationType struct {
 	XssPatternsFile types.String `tfsdk:"xss_patterns_file"`
 }
 
-var DmValidationTypeXSSPatternsFileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "xss",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
 var DmValidationTypeMapValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "fixup",
@@ -60,6 +53,15 @@ var DmValidationTypeMapValueIgnoreVal = validators.Evaluation{
 	AttrDefault: "error",
 	Value:       []string{"set"},
 }
+
+var DmValidationTypeXSSPatternsFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "xss",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmValidationTypeXSSPatternsFileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "xss",

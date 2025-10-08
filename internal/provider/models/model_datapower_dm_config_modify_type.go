@@ -50,6 +50,11 @@ var DmConfigModifyTypePropertyCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"add"},
 }
+
+var DmConfigModifyTypePropertyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmConfigModifyTypeValueCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -57,9 +62,7 @@ var DmConfigModifyTypeValueCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"add", "change"},
 }
-var DmConfigModifyTypePropertyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmConfigModifyTypeValueIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

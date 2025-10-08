@@ -69,6 +69,14 @@ type AS2ProxySourceProtocolHandler struct {
 	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var AS2ProxySourceProtocolHandlerMaxPersistentConnectionsReuseIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "persistent_connections",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+
 var AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "enable_visibility_event",
@@ -76,6 +84,23 @@ var AS2ProxySourceProtocolHandlerVisibilityEventEndpointCondVal = validators.Eva
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
+var AS2ProxySourceProtocolHandlerVisibilityEventEndpointIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "enable_visibility_event",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
+var AS2ProxySourceProtocolHandlerEnableHmacAuthenticationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "enable_visibility_event",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -95,27 +120,7 @@ var AS2ProxySourceProtocolHandlerHmacPassphraseAliasCondVal = validators.Evaluat
 		},
 	},
 }
-var AS2ProxySourceProtocolHandlerMaxPersistentConnectionsReuseIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "persistent_connections",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"false"},
-}
-var AS2ProxySourceProtocolHandlerVisibilityEventEndpointIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "enable_visibility_event",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
-var AS2ProxySourceProtocolHandlerEnableHmacAuthenticationIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "enable_visibility_event",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
+
 var AS2ProxySourceProtocolHandlerHmacPassphraseAliasIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -135,6 +140,7 @@ var AS2ProxySourceProtocolHandlerHmacPassphraseAliasIgnoreVal = validators.Evalu
 		},
 	},
 }
+
 var AS2ProxySourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",
@@ -142,6 +148,7 @@ var AS2ProxySourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
 var AS2ProxySourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",
@@ -149,6 +156,7 @@ var AS2ProxySourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"sni"},
 }
+
 var AS2ProxySourceProtocolHandlerSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_client_config_type",

@@ -65,6 +65,7 @@ var EBMS3SourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
 var EBMS3SourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",

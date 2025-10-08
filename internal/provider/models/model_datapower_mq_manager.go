@@ -85,6 +85,7 @@ var MQManagerCSPUserIdCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{""},
 }
+
 var MQManagerCSPPasswordAliasCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "csp_user_id",
@@ -92,6 +93,7 @@ var MQManagerCSPPasswordAliasCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{""},
 }
+
 var MQManagerAutomaticBackoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "units_of_work",
@@ -99,6 +101,7 @@ var MQManagerAutomaticBackoutIgnoreVal = validators.Evaluation{
 	AttrDefault: "0",
 	Value:       []string{"1"},
 }
+
 var MQManagerBackoutThresholdIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -118,6 +121,7 @@ var MQManagerBackoutThresholdIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var MQManagerBackoutQueueNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -137,6 +141,7 @@ var MQManagerBackoutQueueNameIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var MQManagerPermitInsecureServersIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl_key",
@@ -144,6 +149,7 @@ var MQManagerPermitInsecureServersIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{""},
 }
+
 var MQManagerRetryIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",
@@ -151,6 +157,7 @@ var MQManagerRetryIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var MQManagerRetryAttemptsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",
@@ -158,6 +165,7 @@ var MQManagerRetryAttemptsIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var MQManagerLongRetryIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",
@@ -165,6 +173,7 @@ var MQManagerLongRetryIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var MQManagerReportingIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",

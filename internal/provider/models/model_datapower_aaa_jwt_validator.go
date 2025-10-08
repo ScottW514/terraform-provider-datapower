@@ -69,6 +69,11 @@ var AAAJWTValidatorCustomizedScriptCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"customized"},
 }
+
+var AAAJWTValidatorCustomizedScriptIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorDecryptCredentialTypeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "val_method",
@@ -76,6 +81,11 @@ var AAAJWTValidatorDecryptCredentialTypeCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"decrypt"},
 }
+
+var AAAJWTValidatorDecryptCredentialTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorDecryptKeyCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -95,6 +105,11 @@ var AAAJWTValidatorDecryptKeyCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorDecryptKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorDecryptSSecretCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -114,6 +129,11 @@ var AAAJWTValidatorDecryptSSecretCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorDecryptSSecretIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorDecryptJWKCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -133,6 +153,11 @@ var AAAJWTValidatorDecryptJWKCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorDecryptJWKIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorDecryptFetchCredURLCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -152,12 +177,45 @@ var AAAJWTValidatorDecryptFetchCredURLCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorDecryptFetchCredURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var AAAJWTValidatorDecryptFetchCredSSLProfileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-not",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "val_method",
+					AttrType:    "DmJWTValMethod",
+					AttrDefault: "",
+					Value:       []string{"decrypt"},
+				},
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "decrypt_credential_type",
+					AttrType:    "String",
+					AttrDefault: "",
+					Value:       []string{"jwk-remote"},
+				},
+			},
+		},
+	},
+}
+
 var AAAJWTValidatorValidateCustomCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "val_method",
@@ -165,6 +223,7 @@ var AAAJWTValidatorValidateCustomCondVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"verify"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "verify_credential_type",
@@ -177,6 +236,7 @@ var AAAJWTValidatorValidateCustomCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "val_method",
@@ -184,6 +244,7 @@ var AAAJWTValidatorValidateCustomCondVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"decrypt"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "decrypt_credential_type",
@@ -195,6 +256,11 @@ var AAAJWTValidatorValidateCustomCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorValidateCustomIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorVerifyCredentialTypeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "val_method",
@@ -202,6 +268,11 @@ var AAAJWTValidatorVerifyCredentialTypeCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"verify"},
 }
+
+var AAAJWTValidatorVerifyCredentialTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorVerifyCertificateCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -221,6 +292,11 @@ var AAAJWTValidatorVerifyCertificateCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorVerifyCertificateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorVerifyCertificateAgainstValCredCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -240,6 +316,11 @@ var AAAJWTValidatorVerifyCertificateAgainstValCredCondVal = validators.Evaluatio
 		},
 	},
 }
+
+var AAAJWTValidatorVerifyCertificateAgainstValCredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorVerifyValCredCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -266,6 +347,11 @@ var AAAJWTValidatorVerifyValCredCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorVerifyValCredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorVerifySSecretCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -285,6 +371,11 @@ var AAAJWTValidatorVerifySSecretCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorVerifySSecretIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorVerifyJWKCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -304,6 +395,11 @@ var AAAJWTValidatorVerifyJWKCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTValidatorVerifyJWKIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTValidatorVerifyFetchCredURLCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -323,78 +419,18 @@ var AAAJWTValidatorVerifyFetchCredURLCondVal = validators.Evaluation{
 		},
 	},
 }
-var AAAJWTValidatorCustomizedScriptIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorDecryptCredentialTypeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorDecryptKeyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorDecryptSSecretIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorDecryptJWKIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorDecryptFetchCredURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorDecryptFetchCredSSLProfileIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-not",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "val_method",
-					AttrType:    "DmJWTValMethod",
-					AttrDefault: "",
-					Value:       []string{"decrypt"},
-				},
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "decrypt_credential_type",
-					AttrType:    "String",
-					AttrDefault: "",
-					Value:       []string{"jwk-remote"},
-				},
-			},
-		},
-	},
-}
-var AAAJWTValidatorValidateCustomIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorVerifyCredentialTypeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorVerifyCertificateIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorVerifyCertificateAgainstValCredIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorVerifyValCredIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorVerifySSecretIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTValidatorVerifyJWKIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var AAAJWTValidatorVerifyFetchCredURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var AAAJWTValidatorVerifyFetchCredSSLProfileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-not",
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "val_method",
@@ -402,6 +438,7 @@ var AAAJWTValidatorVerifyFetchCredSSLProfileIgnoreVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"verify"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "verify_credential_type",

@@ -59,6 +59,11 @@ var WXSGridEncryptSSKeyCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var WXSGridEncryptSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var WXSGridEncryptAlgCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "encrypt",
@@ -66,6 +71,11 @@ var WXSGridEncryptAlgCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var WXSGridEncryptAlgIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var WXSGridKeyObfuscationAlgCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "key_obfuscation",
@@ -73,12 +83,7 @@ var WXSGridKeyObfuscationAlgCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
-var WXSGridEncryptSSKeyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var WXSGridEncryptAlgIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var WXSGridKeyObfuscationAlgIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

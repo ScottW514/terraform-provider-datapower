@@ -56,34 +56,7 @@ var B2BCPACollaborationInternalRoleCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
 }
-var B2BCPACollaborationExternalRoleCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "service",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
-}
-var B2BCPACollaborationSenderMshSettingCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "service",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
-}
-var B2BCPACollaborationReceiverMshSettingCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "service",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
-}
-var B2BCPACollaborationActionsCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "service",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
-}
+
 var B2BCPACollaborationInternalRoleIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "service",
@@ -91,6 +64,15 @@ var B2BCPACollaborationInternalRoleIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
 }
+
+var B2BCPACollaborationExternalRoleCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
+}
+
 var B2BCPACollaborationExternalRoleIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "service",
@@ -98,6 +80,7 @@ var B2BCPACollaborationExternalRoleIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
 }
+
 var B2BCPACollaborationServiceTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "service",
@@ -105,11 +88,37 @@ var B2BCPACollaborationServiceTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
 }
+
+var B2BCPACollaborationSenderMshSettingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
+}
+
 var B2BCPACollaborationSenderMshSettingIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var B2BCPACollaborationReceiverMshSettingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
+}
+
 var B2BCPACollaborationReceiverMshSettingIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
+}
+
+var B2BCPACollaborationActionsCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "service",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"urn:oasis:names:tc:ebxml-msg:service"},
 }
 
 var B2BCPACollaborationObjectType = map[string]attr.Type{

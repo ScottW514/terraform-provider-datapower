@@ -53,23 +53,11 @@ var SLMCredClassCredMatchTypeCondVal = validators.Evaluation{
 	AttrDefault: "aaa-mapped-credential",
 	Value:       []string{"custom-stylesheet"},
 }
-var SLMCredClassStylesheetCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "cred_type",
-	AttrType:    "String",
-	AttrDefault: "aaa-mapped-credential",
-	Value:       []string{"custom-stylesheet"},
-}
-var SLMCredClassHeaderCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "cred_type",
-	AttrType:    "String",
-	AttrDefault: "aaa-mapped-credential",
-	Value:       []string{"ip-from-header", "request-header"},
-}
+
 var SLMCredClassCredMatchTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var SLMCredClassCredValueIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -89,9 +77,27 @@ var SLMCredClassCredValueIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var SLMCredClassStylesheetCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cred_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-credential",
+	Value:       []string{"custom-stylesheet"},
+}
+
 var SLMCredClassStylesheetIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var SLMCredClassHeaderCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cred_type",
+	AttrType:    "String",
+	AttrDefault: "aaa-mapped-credential",
+	Value:       []string{"ip-from-header", "request-header"},
+}
+
 var SLMCredClassHeaderIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

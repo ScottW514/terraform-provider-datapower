@@ -63,6 +63,7 @@ var LoadBalancerGroupWLMRetrievalIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var LoadBalancerGroupWebSphereCellConfigIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -82,6 +83,7 @@ var LoadBalancerGroupWebSphereCellConfigIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var LoadBalancerGroupWLMGroupIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "retrieve_info",
@@ -89,6 +91,7 @@ var LoadBalancerGroupWLMGroupIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var LoadBalancerGroupWLMTransportIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -108,6 +111,7 @@ var LoadBalancerGroupWLMTransportIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var LoadBalancerGroupApplicationRoutingIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -127,6 +131,7 @@ var LoadBalancerGroupApplicationRoutingIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var LoadBalancerGroupMonitoredCookiesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{

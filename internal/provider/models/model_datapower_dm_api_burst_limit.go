@@ -60,6 +60,7 @@ var DmAPIBurstLimitIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIBurstLimitUnitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "burst",
@@ -67,6 +68,7 @@ var DmAPIBurstLimitUnitIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIBurstLimitCacheOnlyIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "burst",
@@ -74,6 +76,7 @@ var DmAPIBurstLimitCacheOnlyIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIBurstLimitIsClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "burst",
@@ -81,6 +84,7 @@ var DmAPIBurstLimitIsClientIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIBurstLimitUseApiNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "burst",
@@ -88,6 +92,7 @@ var DmAPIBurstLimitUseApiNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIBurstLimitUseAppIdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "burst",
@@ -95,6 +100,7 @@ var DmAPIBurstLimitUseAppIdIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIBurstLimitUseClientIdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "burst",
@@ -102,6 +108,7 @@ var DmAPIBurstLimitUseClientIdIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIBurstLimitDynamicValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "burst",
@@ -109,6 +116,7 @@ var DmAPIBurstLimitDynamicValueIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"0"},
 }
+
 var DmAPIBurstLimitWeightIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "burst",

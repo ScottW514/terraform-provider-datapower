@@ -104,41 +104,7 @@ var TAMADUseADCondVal = validators.Evaluation{
 		},
 	},
 }
-var TAMADConfigurationFileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ad_use_ad",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var TAMPollIntervalCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_local_mode",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var TAMListenModeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_local_mode",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var TAMLDAPSSLKeyFileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ldap_use_ssl",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var TAMUserPrincipalAttributeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "tam_use_basic_user",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
+
 var TAMADUseADIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -172,6 +138,15 @@ var TAMADUseADIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var TAMADConfigurationFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ad_use_ad",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var TAMADConfigurationFileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -212,6 +187,15 @@ var TAMADConfigurationFileIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var TAMPollIntervalCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_local_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var TAMPollIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_local_mode",
@@ -219,6 +203,15 @@ var TAMPollIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var TAMListenModeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_local_mode",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var TAMListenModeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_local_mode",
@@ -226,6 +219,7 @@ var TAMListenModeIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var TAMListenPortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -245,6 +239,7 @@ var TAMListenPortIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TAMLDAPSSLPortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -264,9 +259,19 @@ var TAMLDAPSSLPortIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var TAMLDAPSSLKeyFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ldap_use_ssl",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var TAMLDAPSSLKeyFileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var TAMLDAPSSLKeyFilePasswordAliasIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ldap_use_ssl",
@@ -274,6 +279,7 @@ var TAMLDAPSSLKeyFilePasswordAliasIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var TAMLDAPSSLKeyFileLabelIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ldap_use_ssl",
@@ -281,6 +287,7 @@ var TAMLDAPSSLKeyFileLabelIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -294,6 +301,7 @@ var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "tam_version",
@@ -301,6 +309,7 @@ var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"default"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "tam_version",
@@ -308,6 +317,7 @@ var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"v70"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "tam_version",
@@ -315,6 +325,7 @@ var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"v801"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "tam_version",
@@ -322,6 +333,7 @@ var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"v901"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "tam_version",
@@ -329,6 +341,7 @@ var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"v903"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "tam_version",
@@ -340,6 +353,15 @@ var TAMTAMChooseNISTIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var TAMUserPrincipalAttributeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "tam_use_basic_user",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var TAMUserPrincipalAttributeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "tam_use_basic_user",
@@ -347,6 +369,7 @@ var TAMUserPrincipalAttributeIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var TAMUserNoDuplicatesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "tam_use_basic_user",
@@ -354,6 +377,7 @@ var TAMUserNoDuplicatesIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var TAMUserSearchSuffixesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "tam_use_basic_user",
@@ -361,6 +385,7 @@ var TAMUserSearchSuffixesIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var TAMUserSuffixOptimiserIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -380,6 +405,7 @@ var TAMUserSuffixOptimiserIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TAMTAMFedDirsIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -420,6 +446,7 @@ var TAMTAMFedDirsIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var TAMRetryIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",
@@ -427,6 +454,7 @@ var TAMRetryIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var TAMRetryAttemptsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",
@@ -434,6 +462,7 @@ var TAMRetryAttemptsIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var TAMLongRetryIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auto_retry",

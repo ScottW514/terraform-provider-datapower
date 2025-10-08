@@ -56,20 +56,6 @@ type SFTPFilePollerSourceProtocolHandler struct {
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var SFTPFilePollerSourceProtocolHandlerResultNamePatternCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "generate_result_file",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
-var SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "processing_seize_timeout",
-	AttrType:    "Int64",
-	AttrDefault: "0",
-	Value:       []string{"0"},
-}
 var SFTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "delete_on_success",
@@ -77,6 +63,7 @@ var SFTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validator
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var SFTPFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "delete_on_error",
@@ -84,9 +71,27 @@ var SFTPFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal = validators.
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var SFTPFilePollerSourceProtocolHandlerResultNamePatternCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "generate_result_file",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var SFTPFilePollerSourceProtocolHandlerResultNamePatternIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "processing_seize_timeout",
+	AttrType:    "Int64",
+	AttrDefault: "0",
+	Value:       []string{"0"},
+}
+
 var SFTPFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "processing_seize_timeout",

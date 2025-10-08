@@ -56,6 +56,7 @@ var CryptoKerberosKDCUDPTimeoutIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var CryptoKerberosKDCMaxCachedTicketsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "cache_tickets",
@@ -63,6 +64,7 @@ var CryptoKerberosKDCMaxCachedTicketsIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
 var CryptoKerberosKDCMinCachedTicketValidityIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "cache_tickets",

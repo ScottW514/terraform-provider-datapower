@@ -51,6 +51,7 @@ var IncludeConfigInterfaceDetectionCondVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var IncludeConfigInterfaceDetectionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

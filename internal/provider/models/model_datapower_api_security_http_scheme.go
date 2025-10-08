@@ -46,6 +46,14 @@ type APISecurityHTTPScheme struct {
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var APISecurityHTTPSchemeBearerFormatIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "scheme",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"bearer"},
+}
+
 var APISecurityHTTPSchemeBearerValidationMethodCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "scheme",
@@ -53,6 +61,11 @@ var APISecurityHTTPSchemeBearerValidationMethodCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"bearer"},
 }
+
+var APISecurityHTTPSchemeBearerValidationMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var APISecurityHTTPSchemeBearerValidationEndpointCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -72,19 +85,11 @@ var APISecurityHTTPSchemeBearerValidationEndpointCondVal = validators.Evaluation
 		},
 	},
 }
-var APISecurityHTTPSchemeBearerFormatIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "scheme",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"bearer"},
-}
-var APISecurityHTTPSchemeBearerValidationMethodIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var APISecurityHTTPSchemeBearerValidationEndpointIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var APISecurityHTTPSchemeBearerValidationTLSProfileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{

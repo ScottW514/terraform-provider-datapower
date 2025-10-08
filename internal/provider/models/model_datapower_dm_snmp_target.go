@@ -53,6 +53,7 @@ var DmSnmpTargetCommunityIgnoreVal = validators.Evaluation{
 	AttrDefault: "1",
 	Value:       []string{"1", "2c"},
 }
+
 var DmSnmpTargetSecurityNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "trap_version",
@@ -60,6 +61,7 @@ var DmSnmpTargetSecurityNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "1",
 	Value:       []string{"3"},
 }
+
 var DmSnmpTargetSecurityLevelIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "trap_version",

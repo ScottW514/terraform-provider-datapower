@@ -51,13 +51,7 @@ var FileSystemUsageMonitorAllSystemWarningThresholdCondVal = validators.Evaluati
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
-var FileSystemUsageMonitorAllSystemCriticalThresholdCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "all_system",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
+
 var FileSystemUsageMonitorAllSystemWarningThresholdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "all_system",
@@ -65,6 +59,15 @@ var FileSystemUsageMonitorAllSystemWarningThresholdIgnoreVal = validators.Evalua
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
+var FileSystemUsageMonitorAllSystemCriticalThresholdCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "all_system",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var FileSystemUsageMonitorAllSystemCriticalThresholdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "all_system",

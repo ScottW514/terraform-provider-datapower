@@ -50,13 +50,6 @@ type NameValueProfile struct {
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var NameValueProfileNoMatchXSSPatternsFileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "default_xss",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
 var NameValueProfileDefaultMapValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "default_fixup",
@@ -64,6 +57,15 @@ var NameValueProfileDefaultMapValueIgnoreVal = validators.Evaluation{
 	AttrDefault: "strip",
 	Value:       []string{"set"},
 }
+
+var NameValueProfileNoMatchXSSPatternsFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "default_xss",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var NameValueProfileNoMatchXSSPatternsFileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "default_xss",

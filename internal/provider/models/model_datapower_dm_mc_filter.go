@@ -51,6 +51,11 @@ var DmMCFilterHttpNameCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
+var DmMCFilterHttpNameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMCFilterHttpValueCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -58,6 +63,11 @@ var DmMCFilterHttpValueCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"http"},
 }
+
+var DmMCFilterHttpValueIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMCFilterXPathExpressionCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -65,6 +75,11 @@ var DmMCFilterXPathExpressionCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xpath"},
 }
+
+var DmMCFilterXPathExpressionIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmMCFilterXPathValueCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -72,15 +87,7 @@ var DmMCFilterXPathValueCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xpath"},
 }
-var DmMCFilterHttpNameIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmMCFilterHttpValueIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmMCFilterXPathExpressionIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmMCFilterXPathValueIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

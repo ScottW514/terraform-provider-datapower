@@ -49,13 +49,6 @@ type WebGUI struct {
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var WebGUISSLSNIServerCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ssl_server_config_type",
-	AttrType:    "String",
-	AttrDefault: "server",
-	Value:       []string{"sni"},
-}
 var WebGUISSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",
@@ -63,6 +56,15 @@ var WebGUISSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
+var WebGUISSLSNIServerCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ssl_server_config_type",
+	AttrType:    "String",
+	AttrDefault: "server",
+	Value:       []string{"sni"},
+}
+
 var WebGUISSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

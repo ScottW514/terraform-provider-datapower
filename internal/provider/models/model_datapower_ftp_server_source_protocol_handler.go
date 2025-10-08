@@ -79,58 +79,6 @@ type FTPServerSourceProtocolHandler struct {
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_alternate_pasv_addr",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var FTPServerSourceProtocolHandlerSSLServerConfigTypeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "require_tls",
-	AttrType:    "String",
-	AttrDefault: "off",
-	Value:       []string{"explicit", "implicit"},
-}
-var FTPServerSourceProtocolHandlerSSLServerCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "require_tls",
-			AttrType:    "String",
-			AttrDefault: "off",
-			Value:       []string{"explicit", "implicit"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ssl_server_config_type",
-			AttrType:    "String",
-			AttrDefault: "server",
-			Value:       []string{"server"},
-		},
-	},
-}
-var FTPServerSourceProtocolHandlerSSLSNIServerCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "require_tls",
-			AttrType:    "String",
-			AttrDefault: "off",
-			Value:       []string{"explicit", "implicit"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ssl_server_config_type",
-			AttrType:    "String",
-			AttrDefault: "server",
-			Value:       []string{"sni"},
-		},
-	},
-}
 var FTPServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -138,6 +86,7 @@ var FTPServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal = validat
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"virtual-persistent"},
 }
+
 var FTPServerSourceProtocolHandlerVirtualDirectoriesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -145,6 +94,7 @@ var FTPServerSourceProtocolHandlerVirtualDirectoriesIgnoreVal = validators.Evalu
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"virtual-ephemeral", "virtual-persistent"},
 }
+
 var FTPServerSourceProtocolHandlerUsePasvPortRangeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -152,6 +102,7 @@ var FTPServerSourceProtocolHandlerUsePasvPortRangeIgnoreVal = validators.Evaluat
 	AttrDefault: "allow",
 	Value:       []string{"disallow"},
 }
+
 var FTPServerSourceProtocolHandlerPasvMinPortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -171,6 +122,7 @@ var FTPServerSourceProtocolHandlerPasvMinPortIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var FTPServerSourceProtocolHandlerPasvMaxPortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -190,6 +142,7 @@ var FTPServerSourceProtocolHandlerPasvMaxPortIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var FTPServerSourceProtocolHandlerPasvIdleTimeOutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -197,6 +150,7 @@ var FTPServerSourceProtocolHandlerPasvIdleTimeOutIgnoreVal = validators.Evaluati
 	AttrDefault: "allow",
 	Value:       []string{"disallow"},
 }
+
 var FTPServerSourceProtocolHandlerDisablePASVIPCheckIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -204,6 +158,7 @@ var FTPServerSourceProtocolHandlerDisablePASVIPCheckIgnoreVal = validators.Evalu
 	AttrDefault: "allow",
 	Value:       []string{"disallow"},
 }
+
 var FTPServerSourceProtocolHandlerDisablePORTIPCheckIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -211,6 +166,7 @@ var FTPServerSourceProtocolHandlerDisablePORTIPCheckIgnoreVal = validators.Evalu
 	AttrDefault: "allow",
 	Value:       []string{"require"},
 }
+
 var FTPServerSourceProtocolHandlerUseAlternatePASVAddrIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -218,9 +174,19 @@ var FTPServerSourceProtocolHandlerUseAlternatePASVAddrIgnoreVal = validators.Eva
 	AttrDefault: "allow",
 	Value:       []string{"disallow"},
 }
+
+var FTPServerSourceProtocolHandlerAlternatePASVAddrCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_alternate_pasv_addr",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var FTPServerSourceProtocolHandlerAlternatePASVAddrIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var FTPServerSourceProtocolHandlerAllowLISTCmdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -228,6 +194,7 @@ var FTPServerSourceProtocolHandlerAllowLISTCmdIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"transparent"},
 }
+
 var FTPServerSourceProtocolHandlerAllowDELECmdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -235,6 +202,7 @@ var FTPServerSourceProtocolHandlerAllowDELECmdIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"transparent"},
 }
+
 var FTPServerSourceProtocolHandlerUniqueFilenamePrefixIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "allow_stou",
@@ -242,6 +210,7 @@ var FTPServerSourceProtocolHandlerUniqueFilenamePrefixIgnoreVal = validators.Eva
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var FTPServerSourceProtocolHandlerAllowRESTIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -249,6 +218,7 @@ var FTPServerSourceProtocolHandlerAllowRESTIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"virtual-persistent"},
 }
+
 var FTPServerSourceProtocolHandlerRestartTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -268,6 +238,7 @@ var FTPServerSourceProtocolHandlerRestartTimeoutIgnoreVal = validators.Evaluatio
 		},
 	},
 }
+
 var FTPServerSourceProtocolHandlerResponseTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -275,6 +246,7 @@ var FTPServerSourceProtocolHandlerResponseTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"virtual-ephemeral", "virtual-persistent"},
 }
+
 var FTPServerSourceProtocolHandlerResponseStorageIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -294,6 +266,7 @@ var FTPServerSourceProtocolHandlerResponseStorageIgnoreVal = validators.Evaluati
 		},
 	},
 }
+
 var FTPServerSourceProtocolHandlerTemporaryStorageSizeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -313,6 +286,7 @@ var FTPServerSourceProtocolHandlerTemporaryStorageSizeIgnoreVal = validators.Eva
 		},
 	},
 }
+
 var FTPServerSourceProtocolHandlerResponseNFSMountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -339,6 +313,7 @@ var FTPServerSourceProtocolHandlerResponseNFSMountIgnoreVal = validators.Evaluat
 		},
 	},
 }
+
 var FTPServerSourceProtocolHandlerResponseSuffixIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -358,6 +333,35 @@ var FTPServerSourceProtocolHandlerResponseSuffixIgnoreVal = validators.Evaluatio
 		},
 	},
 }
+
+var FTPServerSourceProtocolHandlerSSLServerConfigTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "require_tls",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"explicit", "implicit"},
+}
+
+var FTPServerSourceProtocolHandlerSSLServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "require_tls",
+			AttrType:    "String",
+			AttrDefault: "off",
+			Value:       []string{"explicit", "implicit"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"server"},
+		},
+	},
+}
+
 var FTPServerSourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",
@@ -365,6 +369,27 @@ var FTPServerSourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
+var FTPServerSourceProtocolHandlerSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "require_tls",
+			AttrType:    "String",
+			AttrDefault: "off",
+			Value:       []string{"explicit", "implicit"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"sni"},
+		},
+	},
+}
+
 var FTPServerSourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",

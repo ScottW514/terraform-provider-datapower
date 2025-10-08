@@ -64,6 +64,7 @@ var SNMPSettingsTrapPriorityIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
 var SNMPSettingsTrapEventCodeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "enable_default_trap_subscriptions",

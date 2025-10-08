@@ -84,27 +84,6 @@ type XSLProxyService struct {
 	DependencyActions               []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var XSLProxyServiceRemoteAddressCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "static-backend",
-	Value:       []string{"static-backend"},
-}
-var XSLProxyServiceRemotePortCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "static-backend",
-	Value:       []string{"static-backend"},
-}
-var XSLProxyServiceDebugHistoryCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "debug_mode",
-	AttrType:    "String",
-	AttrDefault: "off",
-	Value:       []string{"true"},
-}
 var XSLProxyServiceSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",
@@ -112,6 +91,7 @@ var XSLProxyServiceSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
 var XSLProxyServiceSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_config_type",
@@ -119,6 +99,7 @@ var XSLProxyServiceSSLSNIServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"sni"},
 }
+
 var XSLProxyServiceSSLClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl_config_type",
@@ -126,15 +107,43 @@ var XSLProxyServiceSSLClientIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"proxy"},
 }
+
+var XSLProxyServiceRemoteAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static-backend",
+	Value:       []string{"static-backend"},
+}
+
 var XSLProxyServiceRemoteAddressIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XSLProxyServiceRemotePortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "static-backend",
+	Value:       []string{"static-backend"},
+}
+
 var XSLProxyServiceRemotePortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var XSLProxyServiceDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
+
 var XSLProxyServiceDebugHistoryIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var XSLProxyServiceDebugTriggerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "debug_mode",

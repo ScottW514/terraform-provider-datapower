@@ -80,6 +80,11 @@ var WebAppRequestXMLRuleCondVal = validators.Evaluation{
 	AttrDefault: "nothing",
 	Value:       []string{"xml", "soap"},
 }
+
+var WebAppRequestXMLRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var WebAppRequestNonXMLRuleCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "non_xml_policy",
@@ -87,6 +92,11 @@ var WebAppRequestNonXMLRuleCondVal = validators.Evaluation{
 	AttrDefault: "nothing",
 	Value:       []string{"side", "binary"},
 }
+
+var WebAppRequestNonXMLRuleIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var WebAppRequestQueryStringGNVCCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "query_string_policy",
@@ -94,26 +104,7 @@ var WebAppRequestQueryStringGNVCCondVal = validators.Evaluation{
 	AttrDefault: "allow",
 	Value:       []string{"require"},
 }
-var WebAppRequestCookieNameVectorCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "process_all_cookie",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"false"},
-}
-var WebAppRequestSQLInjectionPatternsFileCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "sql_injection",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WebAppRequestXMLRuleIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var WebAppRequestNonXMLRuleIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var WebAppRequestQueryStringGNVCIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "query_string_policy",
@@ -121,6 +112,15 @@ var WebAppRequestQueryStringGNVCIgnoreVal = validators.Evaluation{
 	AttrDefault: "allow",
 	Value:       []string{"allow"},
 }
+
+var WebAppRequestCookieNameVectorCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "process_all_cookie",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+
 var WebAppRequestCookieNameVectorIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "process_all_cookie",
@@ -128,6 +128,15 @@ var WebAppRequestCookieNameVectorIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
+var WebAppRequestSQLInjectionPatternsFileCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "sql_injection",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WebAppRequestSQLInjectionPatternsFileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "sql_injection",

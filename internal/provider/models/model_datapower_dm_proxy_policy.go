@@ -49,6 +49,11 @@ var DmProxyPolicyRemoteAddressCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmProxyPolicyRemoteAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmProxyPolicyRemotePortCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "skip",
@@ -56,9 +61,7 @@ var DmProxyPolicyRemotePortCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
-var DmProxyPolicyRemoteAddressIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmProxyPolicyRemotePortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

@@ -113,6 +113,14 @@ type OAuthProviderSettings struct {
 	DependencyActions                     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var OAuthProviderSettingsDefaultScopesIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third_party"},
+}
+
 var OAuthProviderSettingsSupportedClientTypesCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -120,6 +128,11 @@ var OAuthProviderSettingsSupportedClientTypesCondVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
+var OAuthProviderSettingsSupportedClientTypesIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthProviderSettingsAPICProviderBasePathCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -127,6 +140,11 @@ var OAuthProviderSettingsAPICProviderBasePathCondVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
+var OAuthProviderSettingsAPICProviderBasePathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthProviderSettingsAPICAuthorizeEndpointCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -134,6 +152,11 @@ var OAuthProviderSettingsAPICAuthorizeEndpointCondVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
+var OAuthProviderSettingsAPICAuthorizeEndpointIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthProviderSettingsAPICTokenEndpointCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -141,6 +164,19 @@ var OAuthProviderSettingsAPICTokenEndpointCondVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
+var OAuthProviderSettingsAPICTokenEndpointIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var OAuthProviderSettingsAPICEnableIntrospectionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+
 var OAuthProviderSettingsAPICIntrospectEndpointCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -160,6 +196,11 @@ var OAuthProviderSettingsAPICIntrospectEndpointCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthProviderSettingsAPICIntrospectEndpointIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthProviderSettingsAPICTokenSecretCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -167,6 +208,11 @@ var OAuthProviderSettingsAPICTokenSecretCondVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
+var OAuthProviderSettingsAPICTokenSecretIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthProviderSettingsAPICOneTimeUseAccesstokenCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -174,6 +220,11 @@ var OAuthProviderSettingsAPICOneTimeUseAccesstokenCondVal = validators.Evaluatio
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
+var OAuthProviderSettingsAPICOneTimeUseAccesstokenIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthProviderSettingsAPICAccessTokenTTLCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -181,6 +232,11 @@ var OAuthProviderSettingsAPICAccessTokenTTLCondVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
+var OAuthProviderSettingsAPICAccessTokenTTLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthProviderSettingsAPICAuthCodeTTLCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -200,6 +256,39 @@ var OAuthProviderSettingsAPICAuthCodeTTLCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthProviderSettingsAPICAuthCodeTTLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var OAuthProviderSettingsAPICEnableRefreshTokenIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"native"},
+}
+
+var OAuthProviderSettingsAPICOneTimeUseRefreshtokenIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "api_c_enable_refresh_token",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+
 var OAuthProviderSettingsAPICRefreshTokenLimitCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -226,6 +315,11 @@ var OAuthProviderSettingsAPICRefreshTokenLimitCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthProviderSettingsAPICRefreshTokenLimitIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var OAuthProviderSettingsAPICRefreshTokenTTLCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -245,327 +339,11 @@ var OAuthProviderSettingsAPICRefreshTokenTTLCondVal = validators.Evaluation{
 		},
 	},
 }
-var OAuthProviderSettingsAdvancedScopeURLCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "advanced_scope_url_override",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"false"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "adv_scope_validation_enabled",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-	},
-}
-var OAuthProviderSettingsMetadataURLCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "metadata_from",
-			AttrType:    "DmMetadataFromType",
-			AttrDefault: "",
-			Value:       []string{"external_url"},
-		},
-	},
-}
-var OAuthProviderSettingsExternalRevocationURLCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_token_management",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "token_manager_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"external"},
-		},
-	},
-}
-var OAuthProviderSettingsAPISecurityTokenManagerCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_token_management",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "token_manager_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-	},
-}
-var OAuthProviderSettingsEnableApplicationRevocationCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_token_management",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "token_manager_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-	},
-}
-var OAuthProviderSettingsApplicationRevocationEndpointCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_application_revocation",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_token_management",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "token_manager_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-	},
-}
-var OAuthProviderSettingsEnableOwnerRevocationCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_token_management",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "token_manager_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-	},
-}
-var OAuthProviderSettingsOwnerRevocationEndpointCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_owner_revocation",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "enable_token_management",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "token_manager_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-	},
-}
-var OAuthProviderSettingsTokenValidationReqCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "provider_type",
-	AttrType:    "String",
-	AttrDefault: "native",
-	Value:       []string{"third_party"},
-}
-var OAuthProviderSettingsThirdPartyIntrospectURLCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "provider_type",
-	AttrType:    "String",
-	AttrDefault: "native",
-	Value:       []string{"third_party"},
-}
-var OAuthProviderSettingsThirdPartyIntrospectCacheTypeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "provider_type",
-	AttrType:    "String",
-	AttrDefault: "native",
-	Value:       []string{"third_party"},
-}
-var OAuthProviderSettingsThirdPartyIntrospectCacheTimeToLiveCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"third_party"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "third_party_introspect_cache_type",
-			AttrType:    "String",
-			AttrDefault: "NoCache",
-			Value:       []string{"TimeToLive"},
-		},
-	},
-}
-var OAuthProviderSettingsDefaultScopesIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "provider_type",
-	AttrType:    "String",
-	AttrDefault: "native",
-	Value:       []string{"third_party"},
-}
-var OAuthProviderSettingsSupportedClientTypesIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICProviderBasePathIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICAuthorizeEndpointIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICTokenEndpointIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICEnableIntrospectionIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "provider_type",
-	AttrType:    "String",
-	AttrDefault: "native",
-	Value:       []string{"native"},
-}
-var OAuthProviderSettingsAPICIntrospectEndpointIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICTokenSecretIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICOneTimeUseAccesstokenIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICAccessTokenTTLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICAuthCodeTTLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var OAuthProviderSettingsAPICEnableRefreshTokenIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "provider_type",
-	AttrType:    "String",
-	AttrDefault: "native",
-	Value:       []string{"native"},
-}
-var OAuthProviderSettingsAPICOneTimeUseRefreshtokenIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "provider_type",
-			AttrType:    "String",
-			AttrDefault: "native",
-			Value:       []string{"native"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "api_c_enable_refresh_token",
-			AttrType:    "Bool",
-			AttrDefault: "false",
-			Value:       []string{"true"},
-		},
-	},
-}
-var OAuthProviderSettingsAPICRefreshTokenLimitIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var OAuthProviderSettingsAPICRefreshTokenTTLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var OAuthProviderSettingsAPICMaximumConsentTTLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -585,6 +363,7 @@ var OAuthProviderSettingsAPICMaximumConsentTTLIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var OAuthProviderSettingsAdvancedScopeURLOverrideIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "adv_scope_validation_enabled",
@@ -592,6 +371,27 @@ var OAuthProviderSettingsAdvancedScopeURLOverrideIgnoreVal = validators.Evaluati
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var OAuthProviderSettingsAdvancedScopeURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "advanced_scope_url_override",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"false"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "adv_scope_validation_enabled",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+	},
+}
+
 var OAuthProviderSettingsAdvancedScopeURLIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "adv_scope_validation_enabled",
@@ -599,6 +399,7 @@ var OAuthProviderSettingsAdvancedScopeURLIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var OAuthProviderSettingsAdvScopeTLSProfileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "adv_scope_validation_enabled",
@@ -606,6 +407,7 @@ var OAuthProviderSettingsAdvScopeTLSProfileIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var OAuthProviderSettingsAdvScopeURLSecurityEnabledIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "adv_scope_validation_enabled",
@@ -613,6 +415,7 @@ var OAuthProviderSettingsAdvScopeURLSecurityEnabledIgnoreVal = validators.Evalua
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var OAuthProviderSettingsAdvScopeURLSecurityIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -632,6 +435,7 @@ var OAuthProviderSettingsAdvScopeURLSecurityIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var OAuthProviderSettingsAdvScopeBasicAuthUserNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -658,6 +462,7 @@ var OAuthProviderSettingsAdvScopeBasicAuthUserNameIgnoreVal = validators.Evaluat
 		},
 	},
 }
+
 var OAuthProviderSettingsAdvScopeBasicAuthPasswordIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -684,6 +489,7 @@ var OAuthProviderSettingsAdvScopeBasicAuthPasswordIgnoreVal = validators.Evaluat
 		},
 	},
 }
+
 var OAuthProviderSettingsAdvScopeBasicAuthHeaderNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -710,6 +516,7 @@ var OAuthProviderSettingsAdvScopeBasicAuthHeaderNameIgnoreVal = validators.Evalu
 		},
 	},
 }
+
 var OAuthProviderSettingsAdvancedScopeCustomHeadersIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "adv_scope_validation_enabled",
@@ -717,6 +524,7 @@ var OAuthProviderSettingsAdvancedScopeCustomHeadersIgnoreVal = validators.Evalua
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var OAuthProviderSettingsAdvancedScopeCustomContextsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "adv_scope_validation_enabled",
@@ -724,6 +532,7 @@ var OAuthProviderSettingsAdvancedScopeCustomContextsIgnoreVal = validators.Evalu
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var OAuthProviderSettingsAPICEnableOIDCIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -737,6 +546,7 @@ var OAuthProviderSettingsAPICEnableOIDCIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "supported_grant_types",
@@ -744,6 +554,7 @@ var OAuthProviderSettingsAPICEnableOIDCIgnoreVal = validators.Evaluation{
 					AttrDefault: "",
 					Value:       []string{"access_code"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "supported_grant_types",
@@ -755,6 +566,7 @@ var OAuthProviderSettingsAPICEnableOIDCIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var OAuthProviderSettingsAPICOIDCHybridResponseTypesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -768,6 +580,7 @@ var OAuthProviderSettingsAPICOIDCHybridResponseTypesIgnoreVal = validators.Evalu
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "supported_grant_types",
@@ -775,6 +588,7 @@ var OAuthProviderSettingsAPICOIDCHybridResponseTypesIgnoreVal = validators.Evalu
 					AttrDefault: "",
 					Value:       []string{"access_code"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "supported_grant_types",
@@ -793,6 +607,7 @@ var OAuthProviderSettingsAPICOIDCHybridResponseTypesIgnoreVal = validators.Evalu
 		},
 	},
 }
+
 var OAuthProviderSettingsAPICSupportPKCEIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -812,6 +627,7 @@ var OAuthProviderSettingsAPICSupportPKCEIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var OAuthProviderSettingsAPICRequirePKCEIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -838,6 +654,7 @@ var OAuthProviderSettingsAPICRequirePKCEIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var OAuthProviderSettingsAPICSupportPKCEPlainIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -864,6 +681,7 @@ var OAuthProviderSettingsAPICSupportPKCEPlainIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var OAuthProviderSettingsAPICTokenTypeToGenerateIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "provider_type",
@@ -871,6 +689,7 @@ var OAuthProviderSettingsAPICTokenTypeToGenerateIgnoreVal = validators.Evaluatio
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
 var OAuthProviderSettingsMetadataFromIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "provider_type",
@@ -878,9 +697,31 @@ var OAuthProviderSettingsMetadataFromIgnoreVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
+var OAuthProviderSettingsMetadataURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "metadata_from",
+			AttrType:    "DmMetadataFromType",
+			AttrDefault: "",
+			Value:       []string{"external_url"},
+		},
+	},
+}
+
 var OAuthProviderSettingsMetadataURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var OAuthProviderSettingsMetadataSSLProfileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -900,6 +741,7 @@ var OAuthProviderSettingsMetadataSSLProfileIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var OAuthProviderSettingsMetadataHeaderForAccessTokenIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -919,6 +761,7 @@ var OAuthProviderSettingsMetadataHeaderForAccessTokenIgnoreVal = validators.Eval
 		},
 	},
 }
+
 var OAuthProviderSettingsMetadataHeaderForPayloadIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -938,9 +781,38 @@ var OAuthProviderSettingsMetadataHeaderForPayloadIgnoreVal = validators.Evaluati
 		},
 	},
 }
+
+var OAuthProviderSettingsExternalRevocationURLCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"external"},
+		},
+	},
+}
+
 var OAuthProviderSettingsExternalRevocationURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var OAuthProviderSettingsExternalRevocationSSLProfileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -967,6 +839,7 @@ var OAuthProviderSettingsExternalRevocationSSLProfileIgnoreVal = validators.Eval
 		},
 	},
 }
+
 var OAuthProviderSettingsExternalRevocationURLSecurityIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -993,6 +866,7 @@ var OAuthProviderSettingsExternalRevocationURLSecurityIgnoreVal = validators.Eva
 		},
 	},
 }
+
 var OAuthProviderSettingsExternalRevocationBasicAuthUserNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1026,6 +900,7 @@ var OAuthProviderSettingsExternalRevocationBasicAuthUserNameIgnoreVal = validato
 		},
 	},
 }
+
 var OAuthProviderSettingsExternalRevocationBasicAuthPasswordIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1059,6 +934,7 @@ var OAuthProviderSettingsExternalRevocationBasicAuthPasswordIgnoreVal = validato
 		},
 	},
 }
+
 var OAuthProviderSettingsExternalRevocationBasicAuthHeaderNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1092,6 +968,7 @@ var OAuthProviderSettingsExternalRevocationBasicAuthHeaderNameIgnoreVal = valida
 		},
 	},
 }
+
 var OAuthProviderSettingsExternalRevocationCustomHeaderFormatIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1118,6 +995,7 @@ var OAuthProviderSettingsExternalRevocationCustomHeaderFormatIgnoreVal = validat
 		},
 	},
 }
+
 var OAuthProviderSettingsExternalRevocationCacheTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1144,6 +1022,7 @@ var OAuthProviderSettingsExternalRevocationCacheTypeIgnoreVal = validators.Evalu
 		},
 	},
 }
+
 var OAuthProviderSettingsExternalRevocationCacheTimeToLiveIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1177,6 +1056,7 @@ var OAuthProviderSettingsExternalRevocationCacheTimeToLiveIgnoreVal = validators
 		},
 	},
 }
+
 var OAuthProviderSettingsExternalRevocationFailOnErrorIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1203,6 +1083,7 @@ var OAuthProviderSettingsExternalRevocationFailOnErrorIgnoreVal = validators.Eva
 		},
 	},
 }
+
 var OAuthProviderSettingsEnableTokenManagementIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -1210,6 +1091,7 @@ var OAuthProviderSettingsEnableTokenManagementIgnoreVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"third_party"},
 }
+
 var OAuthProviderSettingsTokenManagerTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1229,24 +1111,188 @@ var OAuthProviderSettingsTokenManagerTypeIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var OAuthProviderSettingsAPISecurityTokenManagerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+
 var OAuthProviderSettingsAPISecurityTokenManagerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var OAuthProviderSettingsEnableApplicationRevocationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+
 var OAuthProviderSettingsEnableApplicationRevocationIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var OAuthProviderSettingsApplicationRevocationEndpointCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_application_revocation",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+
 var OAuthProviderSettingsApplicationRevocationEndpointIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var OAuthProviderSettingsEnableOwnerRevocationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+
 var OAuthProviderSettingsEnableOwnerRevocationIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var OAuthProviderSettingsOwnerRevocationEndpointCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_owner_revocation",
+			AttrType:    "Bool",
+			AttrDefault: "false",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "enable_token_management",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "token_manager_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"native"},
+		},
+	},
+}
+
 var OAuthProviderSettingsOwnerRevocationEndpointIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var OAuthProviderSettingsTokenValidationReqCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third_party"},
+}
+
 var OAuthProviderSettingsTokenValidationReqIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var OAuthProviderSettingsThirdPartyAZURLIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "provider_type",
@@ -1254,6 +1300,7 @@ var OAuthProviderSettingsThirdPartyAZURLIgnoreVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"third_party"},
 }
+
 var OAuthProviderSettingsThirdPartyTokenURLIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "provider_type",
@@ -1261,15 +1308,55 @@ var OAuthProviderSettingsThirdPartyTokenURLIgnoreVal = validators.Evaluation{
 	AttrDefault: "native",
 	Value:       []string{"third_party"},
 }
+
+var OAuthProviderSettingsThirdPartyIntrospectURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third_party"},
+}
+
 var OAuthProviderSettingsThirdPartyIntrospectURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var OAuthProviderSettingsThirdPartyIntrospectCacheTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "provider_type",
+	AttrType:    "String",
+	AttrDefault: "native",
+	Value:       []string{"third_party"},
+}
+
 var OAuthProviderSettingsThirdPartyIntrospectCacheTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var OAuthProviderSettingsThirdPartyIntrospectCacheTimeToLiveCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "provider_type",
+			AttrType:    "String",
+			AttrDefault: "native",
+			Value:       []string{"third_party"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "third_party_introspect_cache_type",
+			AttrType:    "String",
+			AttrDefault: "NoCache",
+			Value:       []string{"TimeToLive"},
+		},
+	},
+}
+
 var OAuthProviderSettingsThirdPartyIntrospectCacheTimeToLiveIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var OAuthProviderSettingsThirdPartyAuthorizationHeaderPassThruIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -1277,6 +1364,7 @@ var OAuthProviderSettingsThirdPartyAuthorizationHeaderPassThruIgnoreVal = valida
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
 var OAuthProviderSettingsThirdPartyIntrospectURLSecurityIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",
@@ -1284,6 +1372,7 @@ var OAuthProviderSettingsThirdPartyIntrospectURLSecurityIgnoreVal = validators.E
 	AttrDefault: "native",
 	Value:       []string{"native"},
 }
+
 var OAuthProviderSettingsThirdPartyIntrospectBasicAuthUserNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1303,6 +1392,7 @@ var OAuthProviderSettingsThirdPartyIntrospectBasicAuthUserNameIgnoreVal = valida
 		},
 	},
 }
+
 var OAuthProviderSettingsThirdPartyIntrospectBasicAuthPasswordIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1322,6 +1412,7 @@ var OAuthProviderSettingsThirdPartyIntrospectBasicAuthPasswordIgnoreVal = valida
 		},
 	},
 }
+
 var OAuthProviderSettingsThirdPartyBasicAuthHeaderNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1341,6 +1432,7 @@ var OAuthProviderSettingsThirdPartyBasicAuthHeaderNameIgnoreVal = validators.Eva
 		},
 	},
 }
+
 var OAuthProviderSettingsThirdPartyCustomHeaderNameFormatIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "provider_type",
@@ -1348,6 +1440,7 @@ var OAuthProviderSettingsThirdPartyCustomHeaderNameFormatIgnoreVal = validators.
 	AttrDefault: "native",
 	Value:       []string{"third_party"},
 }
+
 var OAuthProviderSettingsThirdPartyIntrospectSSLProfileIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "provider_type",

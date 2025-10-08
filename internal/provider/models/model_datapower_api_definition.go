@@ -89,13 +89,7 @@ var APIDefinitionGraphQLSchemaCondVal = validators.Evaluation{
 	AttrDefault: "standard",
 	Value:       []string{"graphql"},
 }
-var APIDefinitionAPIMutualTLSSourceCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "require_api_mutual_tls",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
+
 var APIDefinitionGraphQLSchemaIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -103,6 +97,7 @@ var APIDefinitionGraphQLSchemaIgnoreVal = validators.Evaluation{
 	AttrDefault: "standard",
 	Value:       []string{"graphql"},
 }
+
 var APIDefinitionWsdlAdvertisedSchemaLocationIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -110,6 +105,7 @@ var APIDefinitionWsdlAdvertisedSchemaLocationIgnoreVal = validators.Evaluation{
 	AttrDefault: "standard",
 	Value:       []string{"wsdl"},
 }
+
 var APIDefinitionWsdlValidationSchemaIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -117,6 +113,15 @@ var APIDefinitionWsdlValidationSchemaIgnoreVal = validators.Evaluation{
 	AttrDefault: "standard",
 	Value:       []string{"wsdl"},
 }
+
+var APIDefinitionAPIMutualTLSSourceCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "require_api_mutual_tls",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var APIDefinitionAPIMutualTLSSourceIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "require_api_mutual_tls",
@@ -124,6 +129,7 @@ var APIDefinitionAPIMutualTLSSourceIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIDefinitionAPIMutualTLSHeaderNameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -143,6 +149,7 @@ var APIDefinitionAPIMutualTLSHeaderNameIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var APIDefinitionContentIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "activity_log_toggle",
@@ -150,6 +157,7 @@ var APIDefinitionContentIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIDefinitionErrorContentIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "activity_log_toggle",
@@ -157,6 +165,7 @@ var APIDefinitionErrorContentIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APIDefinitionForceHttp500ForSoap11IgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",

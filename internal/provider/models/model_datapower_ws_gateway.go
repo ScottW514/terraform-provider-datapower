@@ -178,159 +178,6 @@ type WSGateway struct {
 	DependencyActions                        []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var WSGatewayRequestAttachmentsFlowControlCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "request_attachments",
-			AttrType:    "String",
-			AttrDefault: "strip",
-			Value:       []string{"unprocessed"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "request_type",
-			AttrType:    "String",
-			AttrDefault: "soap",
-			Value:       []string{"unprocessed"},
-		},
-	},
-}
-var WSGatewayResponseAttachmentsFlowControlCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "response_attachments",
-			AttrType:    "String",
-			AttrDefault: "strip",
-			Value:       []string{"unprocessed"},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "response_type",
-			AttrType:    "String",
-			AttrDefault: "soap",
-			Value:       []string{"unprocessed"},
-		},
-	},
-}
-var WSGatewayParserLimitsElementDepthCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayParserLimitsAttributeCountCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayParserLimitsMaxNodeSizeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayParserLimitsExternalReferencesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayParserLimitsMaxPrefixesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayParserLimitsMaxNamespacesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayParserLimitsMaxLocalNamesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayParserLimitsAttachmentByteCountCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayParserLimitsAttachmentPackageByteCountCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "gateway_parser_limits",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var WSGatewayDebugHistoryCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "debug_mode",
-	AttrType:    "String",
-	AttrDefault: "off",
-	Value:       []string{"true"},
-}
-var WSGatewayWSAHTTPAsyncResponseCodeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "ws_a_mode",
-	AttrType:    "String",
-	AttrDefault: "sync2sync",
-	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
-}
-var WSGatewayWSABackProtocolCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ws_a_gen_style",
-			AttrType:    "String",
-			AttrDefault: "sync",
-			Value:       []string{"async"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ws_a_mode",
-			AttrType:    "String",
-			AttrDefault: "sync2sync",
-			Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
-		},
-	},
-}
-var WSGatewayDelayErrorsDurationCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "delay_errors",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "rewrite_errors",
-			AttrType:    "Bool",
-			AttrDefault: "true",
-			Value:       []string{"true"},
-		},
-	},
-}
 var WSGatewaySSLServerConfigTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "auto_create_source_s",
@@ -338,6 +185,7 @@ var WSGatewaySSLServerConfigTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var WSGatewaySSLServerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -357,6 +205,7 @@ var WSGatewaySSLServerIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewaySSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -376,6 +225,7 @@ var WSGatewaySSLSNIServerIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSMAgentMonitorPCMIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "w_sm_agent_monitor",
@@ -383,6 +233,7 @@ var WSGatewayWSMAgentMonitorPCMIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
 var WSGatewaySSLClientIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl_client_config_type",
@@ -390,6 +241,7 @@ var WSGatewaySSLClientIgnoreVal = validators.Evaluation{
 	AttrDefault: "client",
 	Value:       []string{"proxy"},
 }
+
 var WSGatewayBackendUrlIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -397,6 +249,7 @@ var WSGatewayBackendUrlIgnoreVal = validators.Evaluation{
 	AttrDefault: "static-from-wsdl",
 	Value:       []string{"static-backend"},
 }
+
 var WSGatewayRequestAttachmentsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "request_type",
@@ -404,6 +257,7 @@ var WSGatewayRequestAttachmentsIgnoreVal = validators.Evaluation{
 	AttrDefault: "soap",
 	Value:       []string{"unprocessed"},
 }
+
 var WSGatewayResponseAttachmentsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "response_type",
@@ -411,12 +265,55 @@ var WSGatewayResponseAttachmentsIgnoreVal = validators.Evaluation{
 	AttrDefault: "soap",
 	Value:       []string{"unprocessed"},
 }
+
+var WSGatewayRequestAttachmentsFlowControlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "request_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"unprocessed"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "request_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"unprocessed"},
+		},
+	},
+}
+
 var WSGatewayRequestAttachmentsFlowControlIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayResponseAttachmentsFlowControlCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "response_attachments",
+			AttrType:    "String",
+			AttrDefault: "strip",
+			Value:       []string{"unprocessed"},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "response_type",
+			AttrType:    "String",
+			AttrDefault: "soap",
+			Value:       []string{"unprocessed"},
+		},
+	},
+}
+
 var WSGatewayResponseAttachmentsFlowControlIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var WSGatewayRootPartNotFirstActionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -436,36 +333,127 @@ var WSGatewayRootPartNotFirstActionIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var WSGatewayParserLimitsElementDepthCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsElementDepthIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayParserLimitsAttributeCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsAttributeCountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayParserLimitsMaxNodeSizeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsMaxNodeSizeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayParserLimitsExternalReferencesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsExternalReferencesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayParserLimitsMaxPrefixesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsMaxPrefixesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayParserLimitsMaxNamespacesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsMaxNamespacesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayParserLimitsMaxLocalNamesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsMaxLocalNamesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayParserLimitsAttachmentByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsAttachmentByteCountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayParserLimitsAttachmentPackageByteCountCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "gateway_parser_limits",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var WSGatewayParserLimitsAttachmentPackageByteCountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var WSGatewayDebugHistoryCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "debug_mode",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"true"},
+}
+
 var WSGatewayDebugHistoryIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var WSGatewayDebugTriggerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "debug_mode",
@@ -473,6 +461,7 @@ var WSGatewayDebugTriggerIgnoreVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
+
 var WSGatewayFlowControlIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -492,6 +481,7 @@ var WSGatewayFlowControlIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewaySOAPSchemaURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -511,6 +501,7 @@ var WSGatewaySOAPSchemaURLIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSARequireAAAIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -530,6 +521,7 @@ var WSGatewayWSARequireAAAIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSARewriteReplyToIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -537,6 +529,7 @@ var WSGatewayWSARewriteReplyToIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "wsa2wsa"},
 }
+
 var WSGatewayWSARewriteFaultToIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -544,6 +537,7 @@ var WSGatewayWSARewriteFaultToIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "wsa2wsa"},
 }
+
 var WSGatewayWSARewriteToIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -551,6 +545,7 @@ var WSGatewayWSARewriteToIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "wsa2wsa"},
 }
+
 var WSGatewayWSAStripIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -558,6 +553,7 @@ var WSGatewayWSAStripIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "sync2wsa"},
 }
+
 var WSGatewayWSADefaultReplyToIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -577,6 +573,7 @@ var WSGatewayWSADefaultReplyToIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSADefaultFaultToIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -584,6 +581,7 @@ var WSGatewayWSADefaultFaultToIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "wsa2wsa"},
 }
+
 var WSGatewayWSAForceIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -591,6 +589,7 @@ var WSGatewayWSAForceIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "wsa2wsa"},
 }
+
 var WSGatewayWSAGenStyleIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -598,6 +597,15 @@ var WSGatewayWSAGenStyleIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"sync2wsa", "wsa2wsa"},
 }
+
+var WSGatewayWSAHTTPAsyncResponseCodeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "ws_a_mode",
+	AttrType:    "String",
+	AttrDefault: "sync2sync",
+	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+}
+
 var WSGatewayWSAHTTPAsyncResponseCodeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -605,6 +613,27 @@ var WSGatewayWSAHTTPAsyncResponseCodeIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
 }
+
+var WSGatewayWSABackProtocolCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ws_a_gen_style",
+			AttrType:    "String",
+			AttrDefault: "sync",
+			Value:       []string{"async"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ws_a_mode",
+			AttrType:    "String",
+			AttrDefault: "sync2sync",
+			Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
+		},
+	},
+}
+
 var WSGatewayWSABackProtocolIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_a_mode",
@@ -612,6 +641,7 @@ var WSGatewayWSABackProtocolIgnoreVal = validators.Evaluation{
 	AttrDefault: "sync2sync",
 	Value:       []string{"wsa2sync", "wsa2wsa", "sync2wsa"},
 }
+
 var WSGatewayWSATimeoutIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -631,6 +661,7 @@ var WSGatewayWSATimeoutIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSequenceExpirationIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_rm_enabled",
@@ -638,6 +669,7 @@ var WSGatewayWSRMSequenceExpirationIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var WSGatewayWSRMAAAPolicyIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_rm_enabled",
@@ -645,6 +677,7 @@ var WSGatewayWSRMAAAPolicyIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var WSGatewayWSRMDestinationAcceptCreateSequenceIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_rm_enabled",
@@ -652,6 +685,7 @@ var WSGatewayWSRMDestinationAcceptCreateSequenceIgnoreVal = validators.Evaluatio
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var WSGatewayWSRMDestinationMaximumSequencesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -671,6 +705,7 @@ var WSGatewayWSRMDestinationMaximumSequencesIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMDestinationInOrderIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -684,6 +719,7 @@ var WSGatewayWSRMDestinationInOrderIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_destination_accept_create_sequence",
@@ -691,6 +727,7 @@ var WSGatewayWSRMDestinationInOrderIgnoreVal = validators.Evaluation{
 					AttrDefault: "true",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_source_make_offer",
@@ -702,6 +739,7 @@ var WSGatewayWSRMDestinationInOrderIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMDestinationMaximumInOrderQueueLengthIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -721,6 +759,7 @@ var WSGatewayWSRMDestinationMaximumInOrderQueueLengthIgnoreVal = validators.Eval
 		},
 	},
 }
+
 var WSGatewayWSRMDestinationAcceptOffersIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -740,6 +779,7 @@ var WSGatewayWSRMDestinationAcceptOffersIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMFrontForceIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -759,6 +799,7 @@ var WSGatewayWSRMFrontForceIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMBackForceIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -772,6 +813,7 @@ var WSGatewayWSRMBackForceIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_destination_accept_create_sequence",
@@ -779,6 +821,7 @@ var WSGatewayWSRMBackForceIgnoreVal = validators.Evaluation{
 					AttrDefault: "true",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_source_make_offer",
@@ -790,6 +833,7 @@ var WSGatewayWSRMBackForceIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMBackCreateSequenceIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ws_rm_enabled",
@@ -797,6 +841,7 @@ var WSGatewayWSRMBackCreateSequenceIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var WSGatewayWSRMFrontCreateSequenceIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -816,6 +861,7 @@ var WSGatewayWSRMFrontCreateSequenceIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSourceMakeOfferIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -835,6 +881,7 @@ var WSGatewayWSRMSourceMakeOfferIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMUsesSequenceSSLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -848,6 +895,7 @@ var WSGatewayWSRMUsesSequenceSSLIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -855,6 +903,7 @@ var WSGatewayWSRMUsesSequenceSSLIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -862,6 +911,7 @@ var WSGatewayWSRMUsesSequenceSSLIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -873,6 +923,7 @@ var WSGatewayWSRMUsesSequenceSSLIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMFrontAcksToIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -886,6 +937,7 @@ var WSGatewayWSRMFrontAcksToIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -893,6 +945,7 @@ var WSGatewayWSRMFrontAcksToIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -904,6 +957,7 @@ var WSGatewayWSRMFrontAcksToIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMBackAcksToIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -917,6 +971,7 @@ var WSGatewayWSRMBackAcksToIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -924,6 +979,7 @@ var WSGatewayWSRMBackAcksToIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -935,6 +991,7 @@ var WSGatewayWSRMBackAcksToIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSourceMaximumSequencesIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -948,6 +1005,7 @@ var WSGatewayWSRMSourceMaximumSequencesIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -955,6 +1013,7 @@ var WSGatewayWSRMSourceMaximumSequencesIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-not-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -962,6 +1021,7 @@ var WSGatewayWSRMSourceMaximumSequencesIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"true"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -973,6 +1033,7 @@ var WSGatewayWSRMSourceMaximumSequencesIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSourceRetransmissionIntervalIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -986,6 +1047,7 @@ var WSGatewayWSRMSourceRetransmissionIntervalIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -993,6 +1055,7 @@ var WSGatewayWSRMSourceRetransmissionIntervalIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -1000,6 +1063,7 @@ var WSGatewayWSRMSourceRetransmissionIntervalIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -1011,6 +1075,7 @@ var WSGatewayWSRMSourceRetransmissionIntervalIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSourceExponentialBackoffIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1024,6 +1089,7 @@ var WSGatewayWSRMSourceExponentialBackoffIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -1031,6 +1097,7 @@ var WSGatewayWSRMSourceExponentialBackoffIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -1038,6 +1105,7 @@ var WSGatewayWSRMSourceExponentialBackoffIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -1049,6 +1117,7 @@ var WSGatewayWSRMSourceExponentialBackoffIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSourceMaximumRetransmissionsIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1062,6 +1131,7 @@ var WSGatewayWSRMSourceMaximumRetransmissionsIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -1069,6 +1139,7 @@ var WSGatewayWSRMSourceMaximumRetransmissionsIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -1076,6 +1147,7 @@ var WSGatewayWSRMSourceMaximumRetransmissionsIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -1087,6 +1159,7 @@ var WSGatewayWSRMSourceMaximumRetransmissionsIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSourceMaximumQueueLengthIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1100,6 +1173,7 @@ var WSGatewayWSRMSourceMaximumQueueLengthIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -1107,6 +1181,7 @@ var WSGatewayWSRMSourceMaximumQueueLengthIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -1114,6 +1189,7 @@ var WSGatewayWSRMSourceMaximumQueueLengthIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -1125,6 +1201,7 @@ var WSGatewayWSRMSourceMaximumQueueLengthIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSourceRequestAckCountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1138,6 +1215,7 @@ var WSGatewayWSRMSourceRequestAckCountIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -1145,6 +1223,7 @@ var WSGatewayWSRMSourceRequestAckCountIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -1152,6 +1231,7 @@ var WSGatewayWSRMSourceRequestAckCountIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -1163,6 +1243,7 @@ var WSGatewayWSRMSourceRequestAckCountIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayWSRMSourceInactivityCloseIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -1176,6 +1257,7 @@ var WSGatewayWSRMSourceInactivityCloseIgnoreVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_destination_accept_offers",
@@ -1183,6 +1265,7 @@ var WSGatewayWSRMSourceInactivityCloseIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_front_create_sequence",
@@ -1190,6 +1273,7 @@ var WSGatewayWSRMSourceInactivityCloseIgnoreVal = validators.Evaluation{
 					AttrDefault: "false",
 					Value:       []string{"false"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ws_rm_back_create_sequence",
@@ -1201,6 +1285,7 @@ var WSGatewayWSRMSourceInactivityCloseIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var WSGatewayDelayErrorsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "rewrite_errors",
@@ -1208,6 +1293,27 @@ var WSGatewayDelayErrorsIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
+var WSGatewayDelayErrorsDurationCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "delay_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "rewrite_errors",
+			AttrType:    "Bool",
+			AttrDefault: "true",
+			Value:       []string{"true"},
+		},
+	},
+}
+
 var WSGatewayDelayErrorsDurationIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

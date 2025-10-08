@@ -21,6 +21,7 @@ package main
 import (
 	"log"
 	"os"
+	"path/filepath"
 	"sort"
 
 	"github.com/scottw514/terraform-provider-datapower/testutils"

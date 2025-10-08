@@ -49,6 +49,7 @@ var DmLTPAUserAttributeNameAndValueLTPAUserAttributeStaticValueIgnoreVal = valid
 	AttrDefault: "",
 	Value:       []string{"static"},
 }
+
 var DmLTPAUserAttributeNameAndValueLTPAUserAttributeXPathValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ltpa_user_attribute_type",

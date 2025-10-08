@@ -80,58 +80,6 @@ type AS3SourceProtocolHandler struct {
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
-var AS3SourceProtocolHandlerAlternatePASVAddrCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_alternate_pasv_addr",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
-var AS3SourceProtocolHandlerSSLServerConfigTypeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "require_tls",
-	AttrType:    "String",
-	AttrDefault: "off",
-	Value:       []string{"explicit", "implicit"},
-}
-var AS3SourceProtocolHandlerSSLServerCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "require_tls",
-			AttrType:    "String",
-			AttrDefault: "off",
-			Value:       []string{"explicit", "implicit"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ssl_server_config_type",
-			AttrType:    "String",
-			AttrDefault: "server",
-			Value:       []string{"server"},
-		},
-	},
-}
-var AS3SourceProtocolHandlerSSLSNIServerCondVal = validators.Evaluation{
-	Evaluation: "logical-and",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "require_tls",
-			AttrType:    "String",
-			AttrDefault: "off",
-			Value:       []string{"explicit", "implicit"},
-		},
-		{
-			Evaluation:  "property-value-in-list",
-			Attribute:   "ssl_server_config_type",
-			AttrType:    "String",
-			AttrDefault: "server",
-			Value:       []string{"sni"},
-		},
-	},
-}
 var AS3SourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -139,6 +87,7 @@ var AS3SourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal = validators.Ev
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"virtual-persistent"},
 }
+
 var AS3SourceProtocolHandlerVirtualDirectoriesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -146,6 +95,7 @@ var AS3SourceProtocolHandlerVirtualDirectoriesIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"virtual-ephemeral", "virtual-persistent"},
 }
+
 var AS3SourceProtocolHandlerUsePasvPortRangeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -153,6 +103,7 @@ var AS3SourceProtocolHandlerUsePasvPortRangeIgnoreVal = validators.Evaluation{
 	AttrDefault: "allow",
 	Value:       []string{"disallow"},
 }
+
 var AS3SourceProtocolHandlerPasvMinPortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -172,6 +123,7 @@ var AS3SourceProtocolHandlerPasvMinPortIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var AS3SourceProtocolHandlerPasvMaxPortIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -191,6 +143,7 @@ var AS3SourceProtocolHandlerPasvMaxPortIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var AS3SourceProtocolHandlerPasvIdleTimeOutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -198,6 +151,7 @@ var AS3SourceProtocolHandlerPasvIdleTimeOutIgnoreVal = validators.Evaluation{
 	AttrDefault: "allow",
 	Value:       []string{"disallow"},
 }
+
 var AS3SourceProtocolHandlerDisablePASVIPCheckIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -205,6 +159,7 @@ var AS3SourceProtocolHandlerDisablePASVIPCheckIgnoreVal = validators.Evaluation{
 	AttrDefault: "allow",
 	Value:       []string{"disallow"},
 }
+
 var AS3SourceProtocolHandlerDisablePORTIPCheckIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -212,6 +167,7 @@ var AS3SourceProtocolHandlerDisablePORTIPCheckIgnoreVal = validators.Evaluation{
 	AttrDefault: "allow",
 	Value:       []string{"require"},
 }
+
 var AS3SourceProtocolHandlerUseAlternatePASVAddrIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "passive",
@@ -219,9 +175,19 @@ var AS3SourceProtocolHandlerUseAlternatePASVAddrIgnoreVal = validators.Evaluatio
 	AttrDefault: "allow",
 	Value:       []string{"disallow"},
 }
+
+var AS3SourceProtocolHandlerAlternatePASVAddrCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_alternate_pasv_addr",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var AS3SourceProtocolHandlerAlternatePASVAddrIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var AS3SourceProtocolHandlerAllowLISTCmdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -229,6 +195,7 @@ var AS3SourceProtocolHandlerAllowLISTCmdIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"transparent"},
 }
+
 var AS3SourceProtocolHandlerAllowDELECmdIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -236,6 +203,7 @@ var AS3SourceProtocolHandlerAllowDELECmdIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"transparent"},
 }
+
 var AS3SourceProtocolHandlerUniqueFilenamePrefixIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "allow_stou",
@@ -243,6 +211,7 @@ var AS3SourceProtocolHandlerUniqueFilenamePrefixIgnoreVal = validators.Evaluatio
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var AS3SourceProtocolHandlerAllowRESTIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -250,6 +219,7 @@ var AS3SourceProtocolHandlerAllowRESTIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"virtual-persistent"},
 }
+
 var AS3SourceProtocolHandlerRestartTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -269,6 +239,7 @@ var AS3SourceProtocolHandlerRestartTimeoutIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var AS3SourceProtocolHandlerResponseTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -276,6 +247,7 @@ var AS3SourceProtocolHandlerResponseTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "virtual-ephemeral",
 	Value:       []string{"virtual-ephemeral", "virtual-persistent"},
 }
+
 var AS3SourceProtocolHandlerResponseStorageIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -295,6 +267,7 @@ var AS3SourceProtocolHandlerResponseStorageIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var AS3SourceProtocolHandlerTemporaryStorageSizeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -314,6 +287,7 @@ var AS3SourceProtocolHandlerTemporaryStorageSizeIgnoreVal = validators.Evaluatio
 		},
 	},
 }
+
 var AS3SourceProtocolHandlerResponseNFSMountIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -340,6 +314,7 @@ var AS3SourceProtocolHandlerResponseNFSMountIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var AS3SourceProtocolHandlerResponseSuffixIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -359,6 +334,7 @@ var AS3SourceProtocolHandlerResponseSuffixIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var AS3SourceProtocolHandlerResponseURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -378,6 +354,35 @@ var AS3SourceProtocolHandlerResponseURLIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var AS3SourceProtocolHandlerSSLServerConfigTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "require_tls",
+	AttrType:    "String",
+	AttrDefault: "off",
+	Value:       []string{"explicit", "implicit"},
+}
+
+var AS3SourceProtocolHandlerSSLServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "require_tls",
+			AttrType:    "String",
+			AttrDefault: "off",
+			Value:       []string{"explicit", "implicit"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"server"},
+		},
+	},
+}
+
 var AS3SourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",
@@ -385,6 +390,27 @@ var AS3SourceProtocolHandlerSSLServerIgnoreVal = validators.Evaluation{
 	AttrDefault: "server",
 	Value:       []string{"server"},
 }
+
+var AS3SourceProtocolHandlerSSLSNIServerCondVal = validators.Evaluation{
+	Evaluation: "logical-and",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "require_tls",
+			AttrType:    "String",
+			AttrDefault: "off",
+			Value:       []string{"explicit", "implicit"},
+		},
+		{
+			Evaluation:  "property-value-in-list",
+			Attribute:   "ssl_server_config_type",
+			AttrType:    "String",
+			AttrDefault: "server",
+			Value:       []string{"sni"},
+		},
+	},
+}
+
 var AS3SourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "ssl_server_config_type",

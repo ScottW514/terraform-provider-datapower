@@ -53,6 +53,11 @@ var CookieAttributePolicyDomainCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"domain"},
 }
+
+var CookieAttributePolicyDomainIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var CookieAttributePolicyPathCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "cookie_attribute",
@@ -60,6 +65,11 @@ var CookieAttributePolicyPathCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"path"},
 }
+
+var CookieAttributePolicyPathIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var CookieAttributePolicyIntervalCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "cookie_attribute",
@@ -67,6 +77,11 @@ var CookieAttributePolicyIntervalCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"max_age", "expires"},
 }
+
+var CookieAttributePolicyIntervalIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var CookieAttributePolicyCustomAttributeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "cookie_attribute",
@@ -74,15 +89,7 @@ var CookieAttributePolicyCustomAttributeCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"custom"},
 }
-var CookieAttributePolicyDomainIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var CookieAttributePolicyPathIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var CookieAttributePolicyIntervalIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var CookieAttributePolicyCustomAttributeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

@@ -43,13 +43,6 @@ type DmAssemblyActionSetVar struct {
 	Value  types.String `tfsdk:"value"`
 }
 
-var DmAssemblyActionSetVarValueCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "action",
-	AttrType:    "String",
-	AttrDefault: "set",
-	Value:       []string{"clear"},
-}
 var DmAssemblyActionSetVarTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "action",
@@ -57,6 +50,15 @@ var DmAssemblyActionSetVarTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "set",
 	Value:       []string{"clear"},
 }
+
+var DmAssemblyActionSetVarValueCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "action",
+	AttrType:    "String",
+	AttrDefault: "set",
+	Value:       []string{"clear"},
+}
+
 var DmAssemblyActionSetVarValueIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "action",

@@ -55,6 +55,11 @@ var MPGWErrorActionRemoteURLCondVal = validators.Evaluation{
 	AttrDefault: "static",
 	Value:       []string{"redirect", "proxy"},
 }
+
+var MPGWErrorActionRemoteURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var MPGWErrorActionLocalURLCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -62,6 +67,11 @@ var MPGWErrorActionLocalURLCondVal = validators.Evaluation{
 	AttrDefault: "static",
 	Value:       []string{"static"},
 }
+
+var MPGWErrorActionLocalURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var MPGWErrorActionErrorRuleCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -69,15 +79,11 @@ var MPGWErrorActionErrorRuleCondVal = validators.Evaluation{
 	AttrDefault: "static",
 	Value:       []string{"error-rule"},
 }
-var MPGWErrorActionRemoteURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var MPGWErrorActionLocalURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var MPGWErrorActionErrorRuleIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var MPGWErrorActionStatusCodeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -85,6 +91,7 @@ var MPGWErrorActionStatusCodeIgnoreVal = validators.Evaluation{
 	AttrDefault: "static",
 	Value:       []string{"proxy", "static"},
 }
+
 var MPGWErrorActionReasonPhraseIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -92,6 +99,7 @@ var MPGWErrorActionReasonPhraseIgnoreVal = validators.Evaluation{
 	AttrDefault: "static",
 	Value:       []string{"proxy", "static"},
 }
+
 var MPGWErrorActionHeaderInjectionIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",

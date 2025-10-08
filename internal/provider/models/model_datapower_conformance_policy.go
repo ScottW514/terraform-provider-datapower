@@ -55,6 +55,14 @@ type ConformancePolicy struct {
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var ConformancePolicyAssertBP10ConformanceIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "profiles",
+	AttrType:    "DmConformanceProfiles",
+	AttrDefault: "",
+	Value:       []string{"bp10"},
+}
+
 var ConformancePolicyLogTargetCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "report_level",
@@ -62,6 +70,11 @@ var ConformancePolicyLogTargetCondVal = validators.Evaluation{
 	AttrDefault: "never",
 	Value:       []string{"never"},
 }
+
+var ConformancePolicyLogTargetIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var ConformancePolicyRejectIncludeSummaryCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "reject_level",
@@ -69,6 +82,11 @@ var ConformancePolicyRejectIncludeSummaryCondVal = validators.Evaluation{
 	AttrDefault: "never",
 	Value:       []string{"never"},
 }
+
+var ConformancePolicyRejectIncludeSummaryIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var ConformancePolicyResponseReportLevelCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "response_properties_enabled",
@@ -76,6 +94,15 @@ var ConformancePolicyResponseReportLevelCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var ConformancePolicyResponseReportLevelIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "response_properties_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
 var ConformancePolicyResponseLogTargetCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "response_report_level",
@@ -83,6 +110,15 @@ var ConformancePolicyResponseLogTargetCondVal = validators.Evaluation{
 	AttrDefault: "never",
 	Value:       []string{"never"},
 }
+
+var ConformancePolicyResponseLogTargetIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "response_properties_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
 var ConformancePolicyResponseRejectLevelCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "response_properties_enabled",
@@ -90,6 +126,15 @@ var ConformancePolicyResponseRejectLevelCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var ConformancePolicyResponseRejectLevelIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "response_properties_enabled",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
 var ConformancePolicyResponseRejectIncludeSummaryCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -102,40 +147,7 @@ var ConformancePolicyResponseRejectIncludeSummaryCondVal = validators.Evaluation
 		},
 	},
 }
-var ConformancePolicyAssertBP10ConformanceIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "profiles",
-	AttrType:    "DmConformanceProfiles",
-	AttrDefault: "",
-	Value:       []string{"bp10"},
-}
-var ConformancePolicyLogTargetIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var ConformancePolicyRejectIncludeSummaryIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var ConformancePolicyResponseReportLevelIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "response_properties_enabled",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var ConformancePolicyResponseLogTargetIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "response_properties_enabled",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var ConformancePolicyResponseRejectLevelIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "response_properties_enabled",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
+
 var ConformancePolicyResponseRejectIncludeSummaryIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "response_properties_enabled",

@@ -59,12 +59,22 @@ var SSHClientProfileSSHUserAuthenticationCondVal = validators.Evaluation{
 	AttrDefault: "sftp",
 	Value:       []string{"sftp"},
 }
+
+var SSHClientProfileSSHUserAuthenticationIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "profile_usage",
+	AttrType:    "String",
+	AttrDefault: "sftp",
+	Value:       []string{"sftp"},
+}
+
 var SSHClientProfileUserPrivateKeyCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "profile_usage",
@@ -72,6 +82,7 @@ var SSHClientProfileUserPrivateKeyCondVal = validators.Evaluation{
 					AttrDefault: "sftp",
 					Value:       []string{"sftp"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "ssh_user_authentication",
@@ -90,6 +101,41 @@ var SSHClientProfileUserPrivateKeyCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var SSHClientProfileUserPrivateKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "profile_usage",
+					AttrType:    "String",
+					AttrDefault: "sftp",
+					Value:       []string{"sftp"},
+				},
+
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ssh_user_authentication",
+					AttrType:    "DmSSHUserAuthenticationMethods",
+					AttrDefault: "publickey+password",
+					Value:       []string{"publickey"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "profile_usage",
+			AttrType:    "String",
+			AttrDefault: "sftp",
+			Value:       []string{"sftp"},
+		},
+	},
+}
+
 var SSHClientProfilePasswordAliasCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -109,6 +155,41 @@ var SSHClientProfilePasswordAliasCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var SSHClientProfilePasswordAliasIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "profile_usage",
+					AttrType:    "String",
+					AttrDefault: "sftp",
+					Value:       []string{"sftp"},
+				},
+
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "ssh_user_authentication",
+					AttrType:    "DmSSHUserAuthenticationMethods",
+					AttrDefault: "publickey+password",
+					Value:       []string{"password"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "profile_usage",
+			AttrType:    "String",
+			AttrDefault: "sftp",
+			Value:       []string{"sftp"},
+		},
+	},
+}
+
 var SSHClientProfilePersistentConnectionsCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "profile_usage",
@@ -116,6 +197,15 @@ var SSHClientProfilePersistentConnectionsCondVal = validators.Evaluation{
 	AttrDefault: "sftp",
 	Value:       []string{"sftp"},
 }
+
+var SSHClientProfilePersistentConnectionsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "profile_usage",
+	AttrType:    "String",
+	AttrDefault: "sftp",
+	Value:       []string{"sftp"},
+}
+
 var SSHClientProfilePersistentConnectionTimeoutCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -135,89 +225,7 @@ var SSHClientProfilePersistentConnectionTimeoutCondVal = validators.Evaluation{
 		},
 	},
 }
-var SSHClientProfileStrictHostKeyCheckingCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "profile_usage",
-	AttrType:    "String",
-	AttrDefault: "sftp",
-	Value:       []string{"sftp"},
-}
-var SSHClientProfileSSHUserAuthenticationIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "profile_usage",
-	AttrType:    "String",
-	AttrDefault: "sftp",
-	Value:       []string{"sftp"},
-}
-var SSHClientProfileUserPrivateKeyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "profile_usage",
-					AttrType:    "String",
-					AttrDefault: "sftp",
-					Value:       []string{"sftp"},
-				},
-				{
-					Evaluation:  "property-value-not-in-list",
-					Attribute:   "ssh_user_authentication",
-					AttrType:    "DmSSHUserAuthenticationMethods",
-					AttrDefault: "publickey+password",
-					Value:       []string{"publickey"},
-				},
-			},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "profile_usage",
-			AttrType:    "String",
-			AttrDefault: "sftp",
-			Value:       []string{"sftp"},
-		},
-	},
-}
-var SSHClientProfilePasswordAliasIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "profile_usage",
-					AttrType:    "String",
-					AttrDefault: "sftp",
-					Value:       []string{"sftp"},
-				},
-				{
-					Evaluation:  "property-value-not-in-list",
-					Attribute:   "ssh_user_authentication",
-					AttrType:    "DmSSHUserAuthenticationMethods",
-					AttrDefault: "publickey+password",
-					Value:       []string{"password"},
-				},
-			},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "profile_usage",
-			AttrType:    "String",
-			AttrDefault: "sftp",
-			Value:       []string{"sftp"},
-		},
-	},
-}
-var SSHClientProfilePersistentConnectionsIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "profile_usage",
-	AttrType:    "String",
-	AttrDefault: "sftp",
-	Value:       []string{"sftp"},
-}
+
 var SSHClientProfilePersistentConnectionTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -237,6 +245,15 @@ var SSHClientProfilePersistentConnectionTimeoutIgnoreVal = validators.Evaluation
 		},
 	},
 }
+
+var SSHClientProfileStrictHostKeyCheckingCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "profile_usage",
+	AttrType:    "String",
+	AttrDefault: "sftp",
+	Value:       []string{"sftp"},
+}
+
 var SSHClientProfileStrictHostKeyCheckingIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "profile_usage",
@@ -244,6 +261,7 @@ var SSHClientProfileStrictHostKeyCheckingIgnoreVal = validators.Evaluation{
 	AttrDefault: "sftp",
 	Value:       []string{"sftp"},
 }
+
 var SSHClientProfileCiphersIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "profile_usage",
@@ -251,6 +269,7 @@ var SSHClientProfileCiphersIgnoreVal = validators.Evaluation{
 	AttrDefault: "sftp",
 	Value:       []string{"scc"},
 }
+
 var SSHClientProfileKEXAlgIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "profile_usage",
@@ -258,6 +277,7 @@ var SSHClientProfileKEXAlgIgnoreVal = validators.Evaluation{
 	AttrDefault: "sftp",
 	Value:       []string{"scc"},
 }
+
 var SSHClientProfileMACAlgIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "profile_usage",

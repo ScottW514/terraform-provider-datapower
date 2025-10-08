@@ -53,6 +53,11 @@ var JOSESignatureIdentifierSSKeyCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"sskey"},
 }
+
+var JOSESignatureIdentifierSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var JOSESignatureIdentifierCertificateCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -60,9 +65,7 @@ var JOSESignatureIdentifierCertificateCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"certificate"},
 }
-var JOSESignatureIdentifierSSKeyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var JOSESignatureIdentifierCertificateIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

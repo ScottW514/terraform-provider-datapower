@@ -67,6 +67,27 @@ var SSLClientProfileValcredCondVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
+
+var SSLClientProfileValcredIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var SSLClientProfileCacheTimeoutIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "caching",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+
+var SSLClientProfileCacheSizeIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "caching",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"false"},
+}
+
 var SSLClientProfileUseCustomSNIHostnameCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "ssl_client_features",
@@ -74,6 +95,11 @@ var SSLClientProfileUseCustomSNIHostnameCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"use-sni"},
 }
+
+var SSLClientProfileUseCustomSNIHostnameIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var SSLClientProfileCustomSNIHostnameCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -93,29 +119,11 @@ var SSLClientProfileCustomSNIHostnameCondVal = validators.Evaluation{
 		},
 	},
 }
-var SSLClientProfileValcredIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var SSLClientProfileCacheTimeoutIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "caching",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"false"},
-}
-var SSLClientProfileCacheSizeIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "caching",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"false"},
-}
-var SSLClientProfileUseCustomSNIHostnameIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var SSLClientProfileCustomSNIHostnameIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var SSLClientProfileHostnameValidationFlagsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "validate_hostname",
@@ -123,6 +131,7 @@ var SSLClientProfileHostnameValidationFlagsIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var SSLClientProfileHostnameValidationFailOnErrorIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "validate_hostname",

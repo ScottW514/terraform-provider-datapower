@@ -62,6 +62,11 @@ var AAAJWTGeneratorAudienceCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"aud"},
 }
+
+var AAAJWTGeneratorAudienceIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorNotBeforeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "additional_claims",
@@ -69,6 +74,11 @@ var AAAJWTGeneratorNotBeforeCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"nbf"},
 }
+
+var AAAJWTGeneratorNotBeforeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorCustomClaimsCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "additional_claims",
@@ -76,6 +86,11 @@ var AAAJWTGeneratorCustomClaimsCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"custom"},
 }
+
+var AAAJWTGeneratorCustomClaimsIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorSignAlgorithmCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "gen_method",
@@ -83,6 +98,11 @@ var AAAJWTGeneratorSignAlgorithmCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"sign"},
 }
+
+var AAAJWTGeneratorSignAlgorithmIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorSignKeyCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -102,6 +122,11 @@ var AAAJWTGeneratorSignKeyCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTGeneratorSignKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorSignSSKeyCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -121,6 +146,11 @@ var AAAJWTGeneratorSignSSKeyCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTGeneratorSignSSKeyIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorEncAlgorithmCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "gen_method",
@@ -128,6 +158,11 @@ var AAAJWTGeneratorEncAlgorithmCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"encrypt"},
 }
+
+var AAAJWTGeneratorEncAlgorithmIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorEncryptAlgorithmCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "gen_method",
@@ -135,6 +170,11 @@ var AAAJWTGeneratorEncryptAlgorithmCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"encrypt"},
 }
+
+var AAAJWTGeneratorEncryptAlgorithmIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorEncryptCertificateCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -154,6 +194,11 @@ var AAAJWTGeneratorEncryptCertificateCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var AAAJWTGeneratorEncryptCertificateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAJWTGeneratorEncryptSSKeyCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -173,33 +218,7 @@ var AAAJWTGeneratorEncryptSSKeyCondVal = validators.Evaluation{
 		},
 	},
 }
-var AAAJWTGeneratorAudienceIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTGeneratorNotBeforeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTGeneratorCustomClaimsIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTGeneratorSignAlgorithmIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTGeneratorSignKeyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTGeneratorSignSSKeyIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTGeneratorEncAlgorithmIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTGeneratorEncryptAlgorithmIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var AAAJWTGeneratorEncryptCertificateIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var AAAJWTGeneratorEncryptSSKeyIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

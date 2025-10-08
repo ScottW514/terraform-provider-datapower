@@ -65,6 +65,7 @@ var SSHServerSourceProtocolHandlerAllowBackendListingsIgnoreVal = validators.Eva
 	AttrDefault: "transparent",
 	Value:       []string{"transparent"},
 }
+
 var SSHServerSourceProtocolHandlerAllowBackendDeleteIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -72,6 +73,7 @@ var SSHServerSourceProtocolHandlerAllowBackendDeleteIgnoreVal = validators.Evalu
 	AttrDefault: "transparent",
 	Value:       []string{"transparent"},
 }
+
 var SSHServerSourceProtocolHandlerAllowBackendStatIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -79,6 +81,7 @@ var SSHServerSourceProtocolHandlerAllowBackendStatIgnoreVal = validators.Evaluat
 	AttrDefault: "transparent",
 	Value:       []string{"transparent"},
 }
+
 var SSHServerSourceProtocolHandlerAllowBackendMkdirIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -86,6 +89,7 @@ var SSHServerSourceProtocolHandlerAllowBackendMkdirIgnoreVal = validators.Evalua
 	AttrDefault: "transparent",
 	Value:       []string{"transparent"},
 }
+
 var SSHServerSourceProtocolHandlerAllowBackendRmdirIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -93,6 +97,7 @@ var SSHServerSourceProtocolHandlerAllowBackendRmdirIgnoreVal = validators.Evalua
 	AttrDefault: "transparent",
 	Value:       []string{"transparent"},
 }
+
 var SSHServerSourceProtocolHandlerAllowBackendRenameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -100,6 +105,7 @@ var SSHServerSourceProtocolHandlerAllowBackendRenameIgnoreVal = validators.Evalu
 	AttrDefault: "transparent",
 	Value:       []string{"transparent"},
 }
+
 var SSHServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",
@@ -107,6 +113,7 @@ var SSHServerSourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal = validat
 	AttrDefault: "transparent",
 	Value:       []string{"virtual-persistent"},
 }
+
 var SSHServerSourceProtocolHandlerVirtualDirectoriesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "filesystem_type",

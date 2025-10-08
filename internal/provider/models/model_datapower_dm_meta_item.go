@@ -48,6 +48,7 @@ var DmMetaItemDataSourceCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"header", "variable"},
 }
+
 var DmMetaItemDataSourceIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

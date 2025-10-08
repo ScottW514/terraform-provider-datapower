@@ -52,6 +52,11 @@ var WebAppErrorHandlingPolicyURLCondVal = validators.Evaluation{
 	AttrDefault: "standard",
 	Value:       []string{"redirect", "proxy"},
 }
+
+var WebAppErrorHandlingPolicyURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var WebAppErrorHandlingPolicyErrorStylePolicyRuleCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -59,9 +64,7 @@ var WebAppErrorHandlingPolicyErrorStylePolicyRuleCondVal = validators.Evaluation
 	AttrDefault: "standard",
 	Value:       []string{"error-rule"},
 }
-var WebAppErrorHandlingPolicyURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var WebAppErrorHandlingPolicyErrorStylePolicyRuleIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

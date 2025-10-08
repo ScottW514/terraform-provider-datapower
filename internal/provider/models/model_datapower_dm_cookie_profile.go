@@ -66,6 +66,7 @@ var DmCookieProfileKeyIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var DmCookieProfileIPinWatermarkIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -73,6 +74,7 @@ var DmCookieProfileIPinWatermarkIgnoreVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"sign", "encrypt"},
 }
+
 var DmCookieProfileUseSharedSecretObjectIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",

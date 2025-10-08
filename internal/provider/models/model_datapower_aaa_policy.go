@@ -84,6 +84,11 @@ var AAAPolicyLogAllowedLevelCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
+var AAAPolicyLogAllowedLevelIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var AAAPolicyLogRejectedLevelCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "log_rejected",
@@ -91,26 +96,11 @@ var AAAPolicyLogRejectedLevelCondVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"true"},
 }
-var AAAPolicyExternalAAATemplateCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "dyn_config",
-	AttrType:    "String",
-	AttrDefault: "none",
-	Value:       []string{"external-aaa"},
-}
-var AAAPolicyDynConfigCustomURLCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "dyn_config",
-	AttrType:    "String",
-	AttrDefault: "none",
-	Value:       []string{"current-aaa", "external-aaa"},
-}
-var AAAPolicyLogAllowedLevelIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var AAAPolicyLogRejectedLevelIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var AAAPolicyWSSecActorRoleIDIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "enforce_soap_actor",
@@ -118,6 +108,7 @@ var AAAPolicyWSSecActorRoleIDIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
 var AAAPolicyAUSMHTTPHeaderIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "au_sm_header_flow",
@@ -126,6 +117,7 @@ var AAAPolicyAUSMHTTPHeaderIgnoreVal = validators.Evaluation{
 	AttrPath:    "../authenticate",
 	Value:       []string{"frontend", "backend"},
 }
+
 var AAAPolicyAZSMHTTPHeaderIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "az_sm_header_flow",
@@ -134,9 +126,27 @@ var AAAPolicyAZSMHTTPHeaderIgnoreVal = validators.Evaluation{
 	AttrPath:    "../authenticate",
 	Value:       []string{"frontend", "backend"},
 }
+
+var AAAPolicyExternalAAATemplateCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "dyn_config",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"external-aaa"},
+}
+
 var AAAPolicyExternalAAATemplateIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var AAAPolicyDynConfigCustomURLCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "dyn_config",
+	AttrType:    "String",
+	AttrDefault: "none",
+	Value:       []string{"current-aaa", "external-aaa"},
+}
+
 var AAAPolicyDynConfigCustomURLIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

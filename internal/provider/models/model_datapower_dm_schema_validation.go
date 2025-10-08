@@ -50,20 +50,7 @@ var DmSchemaValidationSchemaURLCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"schema", "schema-rewrite"},
 }
-var DmSchemaValidationURLRewritePolicyCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "validation_mode",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"attribute-rewrite", "schema-rewrite"},
-}
-var DmSchemaValidationDynamicSchemaCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "validation_mode",
-	AttrType:    "String",
-	AttrDefault: "",
-	Value:       []string{"dynamic-schema"},
-}
+
 var DmSchemaValidationSchemaURLIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "validation_mode",
@@ -71,6 +58,15 @@ var DmSchemaValidationSchemaURLIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"attribute-rewrite", "dynamic-schema", "default"},
 }
+
+var DmSchemaValidationURLRewritePolicyCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validation_mode",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"attribute-rewrite", "schema-rewrite"},
+}
+
 var DmSchemaValidationURLRewritePolicyIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "validation_mode",
@@ -78,6 +74,15 @@ var DmSchemaValidationURLRewritePolicyIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"schema", "dynamic-schema", "default"},
 }
+
+var DmSchemaValidationDynamicSchemaCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "validation_mode",
+	AttrType:    "String",
+	AttrDefault: "",
+	Value:       []string{"dynamic-schema"},
+}
+
 var DmSchemaValidationDynamicSchemaIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "validation_mode",

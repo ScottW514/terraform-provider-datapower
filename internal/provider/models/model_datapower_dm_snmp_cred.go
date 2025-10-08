@@ -65,6 +65,11 @@ var DmSnmpCredAuthSecretTypeCondVal = validators.Evaluation{
 	AttrDefault: "sha",
 	Value:       []string{"none"},
 }
+
+var DmSnmpCredAuthSecretTypeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmSnmpCredAuthSecretCondVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "auth_protocol",
@@ -72,23 +77,7 @@ var DmSnmpCredAuthSecretCondVal = validators.Evaluation{
 	AttrDefault: "sha",
 	Value:       []string{"none"},
 }
-var DmSnmpCredPrivSecretTypeCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "priv_protocol",
-	AttrType:    "String",
-	AttrDefault: "des",
-	Value:       []string{"none"},
-}
-var DmSnmpCredPrivSecretCondVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "priv_protocol",
-	AttrType:    "String",
-	AttrDefault: "des",
-	Value:       []string{"none"},
-}
-var DmSnmpCredAuthSecretTypeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmSnmpCredAuthSecretIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "auth_protocol",
@@ -96,9 +85,27 @@ var DmSnmpCredAuthSecretIgnoreVal = validators.Evaluation{
 	AttrDefault: "sha",
 	Value:       []string{"none"},
 }
+
+var DmSnmpCredPrivSecretTypeCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "priv_protocol",
+	AttrType:    "String",
+	AttrDefault: "des",
+	Value:       []string{"none"},
+}
+
 var DmSnmpCredPrivSecretTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
+var DmSnmpCredPrivSecretCondVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "priv_protocol",
+	AttrType:    "String",
+	AttrDefault: "des",
+	Value:       []string{"none"},
+}
+
 var DmSnmpCredPrivSecretIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "priv_protocol",

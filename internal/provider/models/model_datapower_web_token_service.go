@@ -56,6 +56,14 @@ type WebTokenService struct {
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var WebTokenServiceDelayErrorsIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "rewrite_errors",
+	AttrType:    "Bool",
+	AttrDefault: "true",
+	Value:       []string{"true"},
+}
+
 var WebTokenServiceDelayErrorsDurationCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -75,6 +83,11 @@ var WebTokenServiceDelayErrorsDurationCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var WebTokenServiceDelayErrorsDurationIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var WebTokenServiceDebugHistoryCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "debug_mode",
@@ -82,16 +95,7 @@ var WebTokenServiceDebugHistoryCondVal = validators.Evaluation{
 	AttrDefault: "off",
 	Value:       []string{"true"},
 }
-var WebTokenServiceDelayErrorsIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "rewrite_errors",
-	AttrType:    "Bool",
-	AttrDefault: "true",
-	Value:       []string{"true"},
-}
-var WebTokenServiceDelayErrorsDurationIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var WebTokenServiceDebugHistoryIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

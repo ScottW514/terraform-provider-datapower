@@ -58,6 +58,7 @@ var ConfigSequenceOutputLocationCondVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var ConfigSequenceOutputLocationIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_output_location",

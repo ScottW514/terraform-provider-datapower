@@ -49,6 +49,7 @@ var DmSSLPolicySSLClientCondVal = validators.Evaluation{
 	AttrDefault: "client",
 	Value:       []string{"client"},
 }
+
 var DmSSLPolicySSLClientIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

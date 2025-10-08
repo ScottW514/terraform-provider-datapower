@@ -58,6 +58,7 @@ var APISchemaXMLValidationModeIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xml"},
 }
+
 var APISchemaXMLSchemaURLIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "xml_type",
@@ -65,6 +66,7 @@ var APISchemaXMLSchemaURLIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"xml"},
 }
+
 var APISchemaWSDLSchemaURLIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "xml_type",
@@ -72,6 +74,7 @@ var APISchemaWSDLSchemaURLIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"wsdl"},
 }
+
 var APISchemaWSDLPortQNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "xml_type",
@@ -79,6 +82,7 @@ var APISchemaWSDLPortQNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"wsdl"},
 }
+
 var APISchemaWSDLOperationNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "xml_type",
@@ -86,6 +90,7 @@ var APISchemaWSDLOperationNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"wsdl"},
 }
+
 var APISchemaWSDLMessageDirectionOrNameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "xml_type",
@@ -93,6 +98,7 @@ var APISchemaWSDLMessageDirectionOrNameIgnoreVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{"wsdl"},
 }
+
 var APISchemaWSDLAttachmentPartIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "xml_type",

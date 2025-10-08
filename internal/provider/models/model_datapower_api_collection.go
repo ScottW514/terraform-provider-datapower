@@ -71,6 +71,7 @@ var APICollectionDefaultRateLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "false",
 	Value:       []string{"true"},
 }
+
 var APICollectionRateLimitGroupIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_rate_limit_group",

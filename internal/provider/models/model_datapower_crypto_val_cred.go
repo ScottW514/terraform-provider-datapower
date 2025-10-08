@@ -55,6 +55,7 @@ var CryptoValCredRequireCRLIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
 var CryptoValCredCRLDPHandlingIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "use_crl",
@@ -62,6 +63,7 @@ var CryptoValCredCRLDPHandlingIgnoreVal = validators.Evaluation{
 	AttrDefault: "true",
 	Value:       []string{"false"},
 }
+
 var CryptoValCredInitialPolicySetIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "cert_validation_mode",
@@ -69,6 +71,7 @@ var CryptoValCredInitialPolicySetIgnoreVal = validators.Evaluation{
 	AttrDefault: "legacy",
 	Value:       []string{"pkix"},
 }
+
 var CryptoValCredExplicitPolicyIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "cert_validation_mode",

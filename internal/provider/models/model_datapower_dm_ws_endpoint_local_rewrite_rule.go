@@ -50,20 +50,6 @@ type DmWSEndpointLocalRewriteRule struct {
 	FrontsidePortSuffix    types.String `tfsdk:"frontside_port_suffix"`
 }
 
-var DmWSEndpointLocalRewriteRuleLocalEndpointPortCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_front_protocol",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"false"},
-}
-var DmWSEndpointLocalRewriteRuleFrontProtocolCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "use_front_protocol",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
 var DmWSEndpointLocalRewriteRuleLocalEndpointProtocolIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "use_front_protocol",
@@ -71,6 +57,7 @@ var DmWSEndpointLocalRewriteRuleLocalEndpointProtocolIgnoreVal = validators.Eval
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
 var DmWSEndpointLocalRewriteRuleLocalEndpointHostnameIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "use_front_protocol",
@@ -78,6 +65,23 @@ var DmWSEndpointLocalRewriteRuleLocalEndpointHostnameIgnoreVal = validators.Eval
 	AttrDefault: "false",
 	Value:       []string{"false"},
 }
+
+var DmWSEndpointLocalRewriteRuleLocalEndpointPortCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"false"},
+}
+
+var DmWSEndpointLocalRewriteRuleFrontProtocolCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "use_front_protocol",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var DmWSEndpointLocalRewriteRuleFrontProtocolIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

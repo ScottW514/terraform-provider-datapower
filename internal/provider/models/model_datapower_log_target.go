@@ -139,6 +139,54 @@ type LogTargetWO struct {
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
+var LogTargetBackupIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"file"},
+}
+
+var LogTargetPriorityIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"syslog-tcp"},
+}
+
+var LogTargetSoapVersionIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"soap"},
+}
+
+var LogTargetFormatIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"snmp", "syslog", "syslog-tcp"},
+}
+
+var LogTargetTimestampFormatIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"smtp", "syslog", "syslog-tcp"},
+}
+
+var LogTargetFixedFormatIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "format",
+	AttrType:    "String",
+	AttrDefault: "xml",
+	Value:       []string{"json-icp"},
+}
+
 var LogTargetLocalIdentifierCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -159,6 +207,7 @@ var LogTargetLocalIdentifierCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "type",
@@ -166,6 +215,7 @@ var LogTargetLocalIdentifierCondVal = validators.Evaluation{
 					AttrDefault: "file",
 					Value:       []string{"file"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "upload_method",
@@ -177,6 +227,15 @@ var LogTargetLocalIdentifierCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetLocalIdentifierIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"syslog-tcp"},
+}
+
 var LogTargetEmailAddressCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -190,6 +249,7 @@ var LogTargetEmailAddressCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "type",
@@ -197,6 +257,7 @@ var LogTargetEmailAddressCondVal = validators.Evaluation{
 					AttrDefault: "file",
 					Value:       []string{"file"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "upload_method",
@@ -208,6 +269,11 @@ var LogTargetEmailAddressCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetEmailAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetSenderAddressCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -221,6 +287,7 @@ var LogTargetSenderAddressCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "type",
@@ -228,6 +295,7 @@ var LogTargetSenderAddressCondVal = validators.Evaluation{
 					AttrDefault: "file",
 					Value:       []string{"file"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "upload_method",
@@ -239,6 +307,11 @@ var LogTargetSenderAddressCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetSenderAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetSMTPDomainCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -252,6 +325,7 @@ var LogTargetSMTPDomainCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "type",
@@ -259,6 +333,7 @@ var LogTargetSMTPDomainCondVal = validators.Evaluation{
 					AttrDefault: "file",
 					Value:       []string{"file"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "upload_method",
@@ -270,6 +345,15 @@ var LogTargetSMTPDomainCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetSMTPDomainIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"smtp"},
+}
+
 var LogTargetSizeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -277,6 +361,11 @@ var LogTargetSizeCondVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"file", "nfs"},
 }
+
+var LogTargetSizeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetURLCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -284,6 +373,11 @@ var LogTargetURLCondVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"soap"},
 }
+
+var LogTargetURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetNFSMountCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -291,6 +385,11 @@ var LogTargetNFSMountCondVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"nfs"},
 }
+
+var LogTargetNFSMountIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetLocalFileCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -298,6 +397,11 @@ var LogTargetLocalFileCondVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"file"},
 }
+
+var LogTargetLocalFileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetNFSFileCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -305,6 +409,11 @@ var LogTargetNFSFileCondVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"nfs"},
 }
+
+var LogTargetNFSFileIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetArchiveModeCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "type",
@@ -312,6 +421,11 @@ var LogTargetArchiveModeCondVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"file"},
 }
+
+var LogTargetArchiveModeIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetUploadMethodCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -331,6 +445,11 @@ var LogTargetUploadMethodCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetUploadMethodIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetRotateCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -344,6 +463,7 @@ var LogTargetRotateCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "archive_mode",
@@ -351,6 +471,7 @@ var LogTargetRotateCondVal = validators.Evaluation{
 					AttrDefault: "rotate",
 					Value:       []string{"rotate"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "type",
@@ -362,6 +483,19 @@ var LogTargetRotateCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetRotateIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var LogTargetUseANSIColorIgnoreVal = validators.Evaluation{
+	Evaluation:  "property-value-not-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"console"},
+}
+
 var LogTargetRemoteAddressCondVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -375,6 +509,7 @@ var LogTargetRemoteAddressCondVal = validators.Evaluation{
 		{
 			Evaluation: "logical-and",
 			Conditions: []validators.Evaluation{
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "archive_mode",
@@ -382,6 +517,7 @@ var LogTargetRemoteAddressCondVal = validators.Evaluation{
 					AttrDefault: "rotate",
 					Value:       []string{"upload"},
 				},
+
 				{
 					Evaluation:  "property-value-in-list",
 					Attribute:   "type",
@@ -393,6 +529,45 @@ var LogTargetRemoteAddressCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetRemoteAddressIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
+var LogTargetRemotePortIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-or",
+	Conditions: []validators.Evaluation{
+		{
+			Evaluation: "logical-and",
+			Conditions: []validators.Evaluation{
+
+				{
+					Evaluation:  "property-value-in-list",
+					Attribute:   "type",
+					AttrType:    "String",
+					AttrDefault: "file",
+					Value:       []string{"file"},
+				},
+
+				{
+					Evaluation:  "property-value-not-in-list",
+					Attribute:   "archive_mode",
+					AttrType:    "String",
+					AttrDefault: "rotate",
+					Value:       []string{"upload"},
+				},
+			},
+		},
+		{
+			Evaluation:  "property-value-not-in-list",
+			Attribute:   "type",
+			AttrType:    "String",
+			AttrDefault: "file",
+			Value:       []string{"syslog", "syslog-tcp", "smtp", "file"},
+		},
+	},
+}
+
 var LogTargetRemoteLoginCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -419,6 +594,11 @@ var LogTargetRemoteLoginCondVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetRemoteLoginIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var LogTargetRemotePasswordCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -445,157 +625,7 @@ var LogTargetRemotePasswordCondVal = validators.Evaluation{
 		},
 	},
 }
-var LogTargetLocalAddressCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"smtp", "syslog-tcp"},
-}
-var LogTargetSyslogFacilityCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"syslog-tcp", "syslog"},
-}
-var LogTargetLogPrecisionCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"syslog-tcp"},
-}
-var LogTargetBackupIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"file"},
-}
-var LogTargetPriorityIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"syslog-tcp"},
-}
-var LogTargetSoapVersionIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"soap"},
-}
-var LogTargetFormatIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"snmp", "syslog", "syslog-tcp"},
-}
-var LogTargetTimestampFormatIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"smtp", "syslog", "syslog-tcp"},
-}
-var LogTargetFixedFormatIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "format",
-	AttrType:    "String",
-	AttrDefault: "xml",
-	Value:       []string{"json-icp"},
-}
-var LogTargetLocalIdentifierIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"syslog-tcp"},
-}
-var LogTargetEmailAddressIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetSenderAddressIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetSMTPDomainIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"smtp"},
-}
-var LogTargetSizeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetNFSMountIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetLocalFileIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetNFSFileIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetArchiveModeIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetUploadMethodIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetRotateIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetUseANSIColorIgnoreVal = validators.Evaluation{
-	Evaluation:  "property-value-not-in-list",
-	Attribute:   "type",
-	AttrType:    "String",
-	AttrDefault: "file",
-	Value:       []string{"console"},
-}
-var LogTargetRemoteAddressIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var LogTargetRemotePortIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-or",
-	Conditions: []validators.Evaluation{
-		{
-			Evaluation: "logical-and",
-			Conditions: []validators.Evaluation{
-				{
-					Evaluation:  "property-value-in-list",
-					Attribute:   "type",
-					AttrType:    "String",
-					AttrDefault: "file",
-					Value:       []string{"file"},
-				},
-				{
-					Evaluation:  "property-value-not-in-list",
-					Attribute:   "archive_mode",
-					AttrType:    "String",
-					AttrDefault: "rotate",
-					Value:       []string{"upload"},
-				},
-			},
-		},
-		{
-			Evaluation:  "property-value-not-in-list",
-			Attribute:   "type",
-			AttrType:    "String",
-			AttrDefault: "file",
-			Value:       []string{"syslog", "syslog-tcp", "smtp", "file"},
-		},
-	},
-}
-var LogTargetRemoteLoginIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var LogTargetRemotePasswordIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -622,6 +652,7 @@ var LogTargetRemotePasswordIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var LogTargetRemoteDirectoryIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -648,6 +679,15 @@ var LogTargetRemoteDirectoryIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var LogTargetLocalAddressCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"smtp", "syslog-tcp"},
+}
+
 var LogTargetLocalAddressIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -655,9 +695,19 @@ var LogTargetLocalAddressIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"syslog", "soap"},
 }
+
+var LogTargetSyslogFacilityCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"syslog-tcp", "syslog"},
+}
+
 var LogTargetSyslogFacilityIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var LogTargetRateLimitIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -665,6 +715,7 @@ var LogTargetRateLimitIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"nfs", "smtp", "soap", "snmp", "syslog", "syslog-tcp"},
 }
+
 var LogTargetMaxConnectionsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -672,6 +723,7 @@ var LogTargetMaxConnectionsIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"syslog-tcp"},
 }
+
 var LogTargetConnectTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -679,6 +731,7 @@ var LogTargetConnectTimeoutIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"syslog-tcp"},
 }
+
 var LogTargetIdleTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -686,6 +739,7 @@ var LogTargetIdleTimeoutIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"syslog-tcp"},
 }
+
 var LogTargetActiveTimeoutIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -693,6 +747,7 @@ var LogTargetActiveTimeoutIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"syslog-tcp"},
 }
+
 var LogTargetSSLClientProfileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -712,6 +767,7 @@ var LogTargetSSLClientProfileIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
 var LogTargetSSLClientConfigTypeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -719,6 +775,7 @@ var LogTargetSSLClientConfigTypeIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"soap", "syslog-tcp"},
 }
+
 var LogTargetRetryIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -726,6 +783,7 @@ var LogTargetRetryIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"syslog-tcp"},
 }
+
 var LogTargetRetryAttemptsIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -733,6 +791,7 @@ var LogTargetRetryAttemptsIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"syslog-tcp"},
 }
+
 var LogTargetLongRetryIntervalIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",
@@ -740,9 +799,19 @@ var LogTargetLongRetryIntervalIgnoreVal = validators.Evaluation{
 	AttrDefault: "file",
 	Value:       []string{"syslog-tcp"},
 }
+
+var LogTargetLogPrecisionCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "type",
+	AttrType:    "String",
+	AttrDefault: "file",
+	Value:       []string{"syslog-tcp"},
+}
+
 var LogTargetLogPrecisionIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
+
 var LogTargetEventBufferSizeIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "type",

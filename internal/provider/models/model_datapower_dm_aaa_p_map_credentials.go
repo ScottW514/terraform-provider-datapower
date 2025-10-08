@@ -51,6 +51,11 @@ var DmAAAPMapCredentialsMCCustomURLCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"custom"},
 }
+
+var DmAAAPMapCredentialsMCCustomURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmAAAPMapCredentialsMCMapURLCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mc_method",
@@ -58,6 +63,11 @@ var DmAAAPMapCredentialsMCMapURLCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"xmlfile"},
 }
+
+var DmAAAPMapCredentialsMCMapURLIgnoreVal = validators.Evaluation{
+	Evaluation: "logical-true",
+}
+
 var DmAAAPMapCredentialsMCMapXPathCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "mc_method",
@@ -65,12 +75,7 @@ var DmAAAPMapCredentialsMCMapXPathCondVal = validators.Evaluation{
 	AttrDefault: "none",
 	Value:       []string{"xpath"},
 }
-var DmAAAPMapCredentialsMCCustomURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-var DmAAAPMapCredentialsMCMapURLIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
+
 var DmAAAPMapCredentialsMCMapXPathIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }

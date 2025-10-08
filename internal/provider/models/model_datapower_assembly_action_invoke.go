@@ -91,20 +91,7 @@ var AssemblyActionInvokeGraphQLSendTypeCondVal = validators.Evaluation{
 		},
 	},
 }
-var AssemblyActionInvokeTimeToLiveCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "cache_type",
-	AttrType:    "String",
-	AttrDefault: "Protocol",
-	Value:       []string{"TimeToLive"},
-}
-var AssemblyActionInvokeErrorTypesCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "stop_on_error",
-	AttrType:    "Bool",
-	AttrDefault: "false",
-	Value:       []string{"true"},
-}
+
 var AssemblyActionInvokeGraphQLSendTypeIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-or",
 	Conditions: []validators.Evaluation{
@@ -124,6 +111,15 @@ var AssemblyActionInvokeGraphQLSendTypeIgnoreVal = validators.Evaluation{
 		},
 	},
 }
+
+var AssemblyActionInvokeTimeToLiveCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "cache_type",
+	AttrType:    "String",
+	AttrDefault: "Protocol",
+	Value:       []string{"TimeToLive"},
+}
+
 var AssemblyActionInvokeTimeToLiveIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "cache_type",
@@ -131,6 +127,7 @@ var AssemblyActionInvokeTimeToLiveIgnoreVal = validators.Evaluation{
 	AttrDefault: "Protocol",
 	Value:       []string{"TimeToLive"},
 }
+
 var AssemblyActionInvokeCacheUnsafeResponseIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "cache_type",
@@ -138,6 +135,7 @@ var AssemblyActionInvokeCacheUnsafeResponseIgnoreVal = validators.Evaluation{
 	AttrDefault: "Protocol",
 	Value:       []string{"TimeToLive"},
 }
+
 var AssemblyActionInvokeHTTP2RequiredIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "http_version",
@@ -145,6 +143,15 @@ var AssemblyActionInvokeHTTP2RequiredIgnoreVal = validators.Evaluation{
 	AttrDefault: "HTTP/1.1",
 	Value:       []string{"HTTP/2"},
 }
+
+var AssemblyActionInvokeErrorTypesCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "stop_on_error",
+	AttrType:    "Bool",
+	AttrDefault: "false",
+	Value:       []string{"true"},
+}
+
 var AssemblyActionInvokeErrorTypesIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-not-in-list",
 	Attribute:   "stop_on_error",

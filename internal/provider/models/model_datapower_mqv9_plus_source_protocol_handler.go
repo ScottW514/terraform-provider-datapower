@@ -67,6 +67,7 @@ var MQv9PlusSourceProtocolHandlerGetQueueCondVal = validators.Evaluation{
 	AttrDefault: "",
 	Value:       []string{""},
 }
+
 var MQv9PlusSourceProtocolHandlerSubscribeTopicStringCondVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "get_queue",
@@ -74,13 +75,7 @@ var MQv9PlusSourceProtocolHandlerSubscribeTopicStringCondVal = validators.Evalua
 	AttrDefault: "",
 	Value:       []string{""},
 }
-var MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal = validators.Evaluation{
-	Evaluation:  "property-value-in-list",
-	Attribute:   "content_type_header",
-	AttrType:    "String",
-	AttrDefault: "None",
-	Value:       []string{"MQRFH", "MQRFH2"},
-}
+
 var MQv9PlusSourceProtocolHandlerConcurrentConnectionsIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -100,6 +95,15 @@ var MQv9PlusSourceProtocolHandlerConcurrentConnectionsIgnoreVal = validators.Eva
 		},
 	},
 }
+
+var MQv9PlusSourceProtocolHandlerContentTypeXPathCondVal = validators.Evaluation{
+	Evaluation:  "property-value-in-list",
+	Attribute:   "content_type_header",
+	AttrType:    "String",
+	AttrDefault: "None",
+	Value:       []string{"MQRFH", "MQRFH2"},
+}
+
 var MQv9PlusSourceProtocolHandlerContentTypeXPathIgnoreVal = validators.Evaluation{
 	Evaluation:  "property-value-in-list",
 	Attribute:   "content_type_header",
