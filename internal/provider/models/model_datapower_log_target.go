@@ -933,7 +933,6 @@ func (data LogTarget) GetPath() string {
 
 func (data LogTargetWO) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/LogTarget"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }

@@ -195,10 +195,10 @@ func (data *RADIUSSettings) FromBody(ctx context.Context, pathRoot string, res g
 		data.Retries = types.Int64Value(3)
 	}
 	if value := res.Get(pathRoot + `AAAServers`); value.Exists() {
-		l := []DmRadiusServerWO{}
+		l := []DmRadiusServer{}
 		if value := res.Get(`AAAServers`); value.Exists() {
 			for _, v := range value.Array() {
-				item := DmRadiusServerWO{}
+				item := DmRadiusServer{}
 				item.FromBody(ctx, "", v)
 				if !item.IsNull() {
 					l = append(l, item)
@@ -206,12 +206,12 @@ func (data *RADIUSSettings) FromBody(ctx context.Context, pathRoot string, res g
 			}
 		}
 		if len(l) > 0 {
-			data.AaaServers, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO}, l)
+			data.AaaServers, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmRadiusServerObjectType}, l)
 		} else {
-			data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO})
+			data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectType})
 		}
 	} else {
-		data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectTypeWO})
+		data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectType})
 	}
 }
 func (data *RADIUSSettingsWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {

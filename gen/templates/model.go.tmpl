@@ -53,36 +53,58 @@ import (
 {{- end}}
 )
 
-{{- $name := .Name}}
-type {{.Name}} struct {
-{{- range .Attributes}}
-    {{- if .Type}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-        {{- if .WriteOnly}}
-	{{toGoName .TfName}}Version types.Int64 `tfsdk:"{{.TfName}}_version"`
+{{define "renderAttribute"}}
+    {{- if .Attr.Type}}
+        {{toGoName .Attr.TfName}} types.{{.Attr.Type}} `tfsdk:"{{.Attr.TfName}}"`
+        {{- if .Attr.WriteOnly}}
+            {{toGoName .Attr.TfName}}Version types.Int64 `tfsdk:"{{.Attr.TfName}}_version"`
         {{- end}}
-    {{- else if .DmType}}
-	{{toGoName .TfName}} *{{.DmType}} `tfsdk:"{{.TfName}}"`
+    {{- else if .Attr.DmType}}
+        {{toGoName .Attr.TfName}} *{{.Attr.DmType}}{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}} `tfsdk:"{{.Attr.TfName}}"`
     {{- end}}
 {{- end}}
-{{- if not .ModelOnly}}
-	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
-{{- end}}
+
+type {{.Name}} struct {
+    {{- range .Attributes}}
+        {{- template "renderAttribute" (dict "Attr" . "IsWO" false)}}
+    {{- end}}
+    {{- if not .ModelOnly}}
+        DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+    {{- end}}
 }
 
 {{- if .WriteOnlyAttrs}}
 type {{.Name}}WO struct {
     {{- range .Attributes}}
-        {{- if and .Type (not .WriteOnly)}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-        {{- else if and .DmType (not .WriteOnly)}}
-	{{toGoName .TfName}} *{{.DmType}}{{if .WriteOnlyAttrs}}WO{{end}} `tfsdk:"{{.TfName}}"`
+        {{- if not .WriteOnly}}
+            {{- template "renderAttribute" (dict "Attr" . "IsWO" true)}}
         {{- end}}
     {{- end}}
     {{- if not .ModelOnly}}
-	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+        DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
     {{- end}}
 }
+{{- end}}
+
+{{define "renderCondition"}}
+{
+    Evaluation: "{{.Evaluation.Evaluation}}",
+    {{- if len .Evaluation.Conditions}}
+    Conditions: []validators.Evaluation{
+        {{- range .Evaluation.Conditions}}
+        {{template "renderCondition" (dict "Evaluation" . "Root" $.Root)}}
+        {{- end}}
+    },
+    {{- else if not (strContains .Evaluation.Evaluation "logical")}}
+    Attribute: "{{if .Evaluation.AttrTfName}}{{.Evaluation.AttrTfName}}{{else}}{{getAttributeTfName $.Root.Attributes .Evaluation.Attribute}}{{end}}",
+    AttrType: "{{if .Evaluation.AttrType}}{{.Evaluation.AttrType}}{{else}}{{getAttributeType $.Root.Attributes .Evaluation.Attribute}}{{end}}",
+    AttrDefault: {{if .Evaluation.AttrDefault}}{{quote .Evaluation.AttrDefault}}{{else}}{{quote (getAttributeDefault $.Root.Attributes .Evaluation.Attribute)}}{{end}},
+        {{- if .Evaluation.AttrPath}}
+    AttrPath: {{quote .Evaluation.AttrPath}},
+        {{- end}}
+    Value: []string{ {{range .Evaluation.Value}}{{quote .}}, {{end}} },
+    {{- end}}
+},
 {{- end}}
 
 {{$root := .}}
@@ -116,64 +138,39 @@ var {{.VarName}} = validators.Evaluation{
     {{- end}}
 {{- end}}
 
-{{define "renderCondition"}}
-{
-    Evaluation: "{{.Evaluation.Evaluation}}",
-    {{- if len .Evaluation.Conditions}}
-    Conditions: []validators.Evaluation{
-        {{- range .Evaluation.Conditions}}
-        {{template "renderCondition" (dict "Evaluation" . "Root" $.Root)}}
-        {{- end}}
-    },
-    {{- else if not (strContains .Evaluation.Evaluation "logical")}}
-    Attribute: "{{if .Evaluation.AttrTfName}}{{.Evaluation.AttrTfName}}{{else}}{{getAttributeTfName $.Root.Attributes .Evaluation.Attribute}}{{end}}",
-    AttrType: "{{if .Evaluation.AttrType}}{{.Evaluation.AttrType}}{{else}}{{getAttributeType $.Root.Attributes .Evaluation.Attribute}}{{end}}",
-    AttrDefault: {{if .Evaluation.AttrDefault}}{{quote .Evaluation.AttrDefault}}{{else}}{{quote (getAttributeDefault $.Root.Attributes .Evaluation.Attribute)}}{{end}},
-        {{- if .Evaluation.AttrPath}}
-    AttrPath: {{quote .Evaluation.AttrPath}},
-        {{- end}}
-    Value: []string{ {{range .Evaluation.Value}}{{quote .}}, {{end}} },
+{{define "renderTypeMapEntry"}}
+    {{- if or (eq .Attr.Type "String") (eq .Attr.Type "Int64") (eq .Attr.Type "Bool")}}
+    "{{.Attr.TfName}}": types.{{.Attr.Type}}Type,
+    {{- else if .IsObjectList}}
+    "{{.Attr.TfName}}": types.ListType{ElemType: types.ObjectType{ AttrTypes: {{.Attr.ElementType}}ObjectType{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}} } } ,
+    {{- else if eq .Attr.Type "List"}}
+    "{{.Attr.TfName}}": types.ListType{ElemType: types.{{.Attr.ElementType}}Type },
+    {{- else}}
+    "{{.Attr.TfName}}": types.ObjectType{ AttrTypes: {{.Attr.DmType}}ObjectType{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}} },
     {{- end}}
-},
+    {{- if and .Attr.WriteOnly (not .IsWO)}}
+        "{{.Attr.TfName}}_version": types.Int64Type,
+    {{- end}}
 {{- end}}
 
 var {{.Name}}ObjectType = map[string]attr.Type{
-{{- range .Attributes}}
-    {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
-    "{{.TfName}}": types.{{.Type}}Type,
-    {{- else if isObjectList .}}
-    "{{.TfName}}": types.ListType{ElemType: types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType } } ,
-    {{- else if eq .Type "List"}}
-    "{{.TfName}}": types.ListType{ElemType: types.{{.ElementType}}Type },
-    {{- else}}
-    "{{.TfName}}": types.ObjectType{ AttrTypes: {{.DmType}}ObjectType },
+    {{- range .Attributes}}
+        {{- template "renderTypeMapEntry" (dict "Attr" . "IsObjectList" (isObjectList .) "IsWO" false)}}
     {{- end}}
-    {{- if .WriteOnly}}
-	"{{.TfName}}_version": types.Int64Type,
+    {{- if not .ModelOnly}}
+        "dependency_actions": actions.ActionsListType,
     {{- end}}
-{{- end}}
-{{- if not .ModelOnly}}
-	"dependency_actions": actions.ActionsListType,
-{{- end}}
 }
 
 {{- if .WriteOnlyAttrs}}
 var {{.Name}}ObjectTypeWO = map[string]attr.Type{
     {{- range .Attributes}}
         {{- if not .WriteOnly}}
-            {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
-    "{{.TfName}}": types.{{.Type}}Type,
-            {{- else if isObjectList .}}
-    "{{.TfName}}": types.ListType{ElemType: types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} } } ,
-            {{- else if eq .Type "List"}}
-    "{{.TfName}}": types.ListType{ElemType: types.{{.ElementType}}Type },
-            {{- else}}
-    "{{.TfName}}": types.ObjectType{ AttrTypes: {{.DmType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} },
-            {{- end}}
+            {{- template "renderTypeMapEntry" (dict "Attr" . "IsObjectList" (isObjectList .) "IsWO" true)}}
         {{- end}}
     {{- end}}
     {{- if not .ModelOnly}}
-	"dependency_actions": actions.ActionsListType,
+        "dependency_actions": actions.ActionsListType,
     {{- end}}
 }
 {{- end}}
@@ -324,69 +321,56 @@ func Get{{$root.Name}}{{$dataResource}}Schema({{if not $root.ListItem}}descripti
     {{- end}}
 {{- end}}
 
-{{- if not .ModelOnly}}
-func (data {{.Name}}) GetPath() string {
-    rest_path := {{quote .RestEndpoint}}
-    {{- range .Attributes}}
+{{define "renderPathReplacements"}}
+    rest_path := {{quote .Root.RestEndpoint}}
+    {{- range .Root.Attributes}}
         {{- if eq .Name "AppDomain"}}
     rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
         {{- end}}
     {{- end}}
     return rest_path
+{{- end}}
+{{- if not .ModelOnly}}
+func (data {{.Name}}) GetPath() string {
+    {{- template "renderPathReplacements" (dict "Root" .)}}
 }
     {{- if .WriteOnlyAttrs}}
 
 func (data {{.Name}}WO) GetPath() string {
-    rest_path := {{quote .RestEndpoint}}
-    {{- range .Attributes}}
-        {{- if eq .Name "AppDomain"}}
-    rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
-        {{- end}}
-        {{- if eq .Name "Id"}}
-    rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
-        {{- end}}
-    {{- end}}
-    return rest_path
+    {{- template "renderPathReplacements" (dict "Root" .)}}
 }
     {{- end}}
 {{- end}}
 
-func (data {{.Name}}) IsNull() bool {
-{{- range .Attributes}}
-    {{- if .Type}}
-    if !data.{{toGoName .TfName}}.IsNull() {
+{{define "renderNullCheck"}}
+    {{- if .Attr.Type}}
+    if !data.{{toGoName .Attr.TfName}}.IsNull() {
         return false
     }
-    {{- else if .DmType}}
-    if data.{{toGoName .TfName}} != nil {
-        if !data.{{toGoName .TfName}}.IsNull() {
+    {{- else if .Attr.DmType}}
+    if data.{{toGoName .Attr.TfName}} != nil {
+        if !data.{{toGoName .Attr.TfName}}.IsNull() {
             return false
         }
     }
     {{- end}}
 {{- end}}
-	return true
+
+{{define "renderIsNullMethod"}}
+func (data {{.StructName}}) IsNull() bool {
+    {{- range .Attrs}}
+        {{- if or (not $.IsWO) (not .WriteOnly)}}
+            {{- template "renderNullCheck" (dict "Attr" .)}}
+        {{- end}}
+    {{- end}}
+    return true
 }
+{{- end}}
+
+{{- template "renderIsNullMethod" (dict "StructName" .Name "Attrs" .Attributes "IsWO" false)}}
 
 {{- if .WriteOnlyAttrs}}
-func (data {{.Name}}WO) IsNull() bool {
-    {{- range .Attributes}}
-        {{- if not .WriteOnly}}
-            {{- if .Type}}
-    if !data.{{toGoName .TfName}}.IsNull() {
-        return false
-    }
-            {{- else if .DmType}}
-    if data.{{toGoName .TfName}} != nil {
-        if !data.{{toGoName .TfName}}.IsNull() {
-            return false
-        }
-    }
-            {{- end}}
-        {{- end}}
-    {{- end}}
-	return true
-}
+    {{- template "renderIsNullMethod" (dict "StructName" (print .Name "WO") "Attrs" .Attributes "IsWO" true)}}
 {{- end}}
 
 {{- if or .Singleton .DefaultFunction}}
@@ -464,128 +448,78 @@ func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string{{if .WriteOnly
 	return body
 }
 
-func (data *{{.Name}}) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
-    if pathRoot != "" {
-        pathRoot = pathRoot + "."
-    }
-{{- range .Attributes}}
-    {{- if not .Internal}}
-        {{- if or (eq .Type "String") (eq .Type "Int64")}}
-            {{- if ne .Name "AppDomain"}}
-	if value := res.Get(pathRoot+{{.Path}}); value.Exists(){{if eq .Type "String"}} && tfutils.ParseStringFromGJSON(value).ValueString() != ""{{end}} {
-		data.{{toGoName .TfName}} = {{if eq .Type "String"}}tfutils.ParseStringFromGJSON(value){{else}}types.{{.Type}}Value(value.Int()){{end}}
-	} else {
-		        {{- if .Default}}
-		data.{{toGoName .TfName}} = types.{{.Type}}Value({{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}})
-		        {{- else}}
-		data.{{toGoName .TfName}} = types.{{.Type}}Null()
-		        {{- end}}
-	}
-            {{- end}}
-        {{- else if eq .Type "Bool"}}
-	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-		data.{{toGoName .TfName}} = tfutils.BoolFromString(value.String())
-	} else {
-		data.{{toGoName .TfName}} = types.BoolNull()
-	}
-        {{- else if isList .}}
-	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-            {{- if eq .ElementType "String"}}
-		data.{{toGoName .TfName}} = tfutils.ParseStringListFromGJSON(value)
+{{define "renderFromBodyAttribute"}}
+    {{- if not .Attr.Internal}}
+        {{- if or (eq .Attr.Type "String") (eq .Attr.Type "Int64")}}
+            {{- if ne .Attr.Name "AppDomain"}}
+        if value := res.Get(pathRoot+{{.Attr.Path}}); value.Exists(){{if eq .Attr.Type "String"}} && tfutils.ParseStringFromGJSON(value).ValueString() != ""{{end}} {
+            data.{{toGoName .Attr.TfName}} = {{if eq .Attr.Type "String"}}tfutils.ParseStringFromGJSON(value){{else}}types.{{.Attr.Type}}Value(value.Int()){{end}}
+        } else {
+            {{- if .Attr.Default}}
+            data.{{toGoName .Attr.TfName}} = types.{{.Attr.Type}}Value({{if eq .Attr.Type "String"}}{{quote .Attr.Default}}{{else}}{{.Attr.Default}}{{end}})
             {{- else}}
-        l := []{{.ElementType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
-        if value := res.Get(`{{.Name}}`); value.Exists() {
-            for _, v := range value.Array() {
-                item := {{.ElementType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
-                item.FromBody(ctx, "", v)
-                if !item.IsNull() {
-                    l = append(l, item)
+            data.{{toGoName .Attr.TfName}} = types.{{.Attr.Type}}Null()
+            {{- end}}
+        }
+            {{- end}}
+        {{- else if eq .Attr.Type "Bool"}}
+        if value := res.Get(pathRoot+{{.Attr.Path}}); value.Exists() {
+            data.{{toGoName .Attr.TfName}} = tfutils.BoolFromString(value.String())
+        } else {
+            data.{{toGoName .Attr.TfName}} = types.BoolNull()
+        }
+        {{- else if .IsList}}
+        if value := res.Get(pathRoot+{{.Attr.Path}}); value.Exists() {
+            {{- if eq .Attr.ElementType "String"}}
+            data.{{toGoName .Attr.TfName}} = tfutils.ParseStringListFromGJSON(value)
+            {{- else}}
+            l := []{{.Attr.ElementType}}{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}}{}
+            if value := res.Get(`{{.Attr.Name}}`); value.Exists() {
+                for _, v := range value.Array() {
+                    item := {{.Attr.ElementType}}{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}}{}
+                    item.FromBody(ctx, "", v)
+                    if !item.IsNull() {
+                        l = append(l, item)
+                    }
                 }
             }
-        }
-        if len(l) > 0 {
-            data.{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}}, l)
-        } else {
-            data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}})
-        }
+            if len(l) > 0 {
+                data.{{toGoName .Attr.TfName}}, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: {{.Attr.ElementType}}ObjectType{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}}}, l)
+            } else {
+                data.{{toGoName .Attr.TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.Attr.ElementType}}ObjectType{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}}})
+            }
             {{- end}}
-	} else {
-		data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if eq .ElementType "String"}}types.StringType{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} }{{- end}})
-	}
-        {{- else if isObject .}}
-	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-        data.{{toGoName .TfName}} = &{{.DmType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
-    	data.{{toGoName .TfName}}.FromBody(ctx, "", value)
-	} else {
-    	data.{{toGoName .TfName}} = nil
-	}
+        } else {
+            data.{{toGoName .Attr.TfName}} = types.{{.Attr.Type}}Null({{- if or (eq .Attr.ElementType "String") (eq .Attr.ElementType "Int64")}}types.{{.Attr.ElementType}}Type{{- else}}types.ObjectType{ AttrTypes: {{.Attr.ElementType}}ObjectType{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}} }{{- end}})
+        }
+        {{- else if .IsObject}}
+        if value := res.Get(pathRoot+{{.Attr.Path}}); value.Exists() {
+            data.{{toGoName .Attr.TfName}} = &{{.Attr.DmType}}{{if and .IsWO .Attr.WriteOnlyAttrs}}WO{{end}}{}
+            data.{{toGoName .Attr.TfName}}.FromBody(ctx, "", value)
+        } else {
+            data.{{toGoName .Attr.TfName}} = nil
+        }
         {{- end}}
     {{- end}}
 {{- end}}
-}
 
-{{- if .WriteOnlyAttrs}}
-func (data *{{.Name}}WO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
+{{define "renderFromBodyMethod"}}
+func (data *{{.StructName}}) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
     if pathRoot != "" {
         pathRoot = pathRoot + "."
     }
-    {{- range .Attributes}}
-        {{- if not .Internal}}
-            {{- if not .WriteOnly}}
-                {{- if or (eq .Type "String") (eq .Type "Int64")}}
-                    {{- if ne .Name "AppDomain"}}
-	if value := res.Get(pathRoot+{{.Path}}); value.Exists(){{if eq .Type "String"}} && tfutils.ParseStringFromGJSON(value).ValueString() != ""{{end}} {
-		data.{{toGoName .TfName}} = {{if eq .Type "String"}}tfutils.ParseStringFromGJSON(value){{else}}types.{{.Type}}Value(value.{{if eq .Type "Int64"}}Int{{else}}{{.Type}}{{end}}()){{end}}
-	} else {
-		                {{- if .Default}}
-		data.{{toGoName .TfName}} = types.{{.Type}}Value({{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}})
-		                {{- else}}
-		data.{{toGoName .TfName}} = types.{{.Type}}Null()
-		                {{- end}}
-	}
-                    {{- end}}
-                {{- else if eq .Type "Bool"}}
-	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-		data.{{toGoName .TfName}} = tfutils.BoolFromString(value.String())
-	} else {
-		data.{{toGoName .TfName}} = types.BoolNull()
-	}
-                {{- else if isList .}}
-	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-                    {{- if eq .ElementType "String"}}
-		data.{{toGoName .TfName}} = tfutils.ParseStringListFromGJSON(value)
-                    {{- else}}
-        l := []{{.ElementType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
-        if value := res.Get(`{{.Name}}`); value.Exists() {
-            for _, v := range value.Array() {
-                item := {{.ElementType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
-                item.FromBody(ctx, "", v)
-                if !item.IsNull() {
-                    l = append(l, item)
-                }
-            }
-        }
-        if len(l) > 0 {
-            data.{{toGoName .TfName}}, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}}, l)
-        } else {
-            data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}}})
-        }
-                    {{- end}}
-	} else {
-		data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}types.{{.ElementType}}Type{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType{{if .WriteOnlyAttrs}}WO{{end}} }{{- end}})
-	}
-                {{- else if isObject .}}
-	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-        data.{{toGoName .TfName}} = &{{.DmType}}{{if .WriteOnlyAttrs}}WO{{end}}{}
-    	data.{{toGoName .TfName}}.FromBody(ctx, "", value)
-	} else {
-    	data.{{toGoName .TfName}} = nil
-	}
-                {{- end}}
-            {{- end}}
+    {{- range .Attrs}}
+        {{- if or (not $.IsWO) (not .WriteOnly)}}
+            {{- template "renderFromBodyAttribute" (dict "Attr" . "IsList" (isList .) "IsObject" (isObject .) "IsWO" $.IsWO)}}
         {{- end}}
     {{- end}}
 }
+{{- end}}
+
+{{- template "renderFromBodyMethod" (dict "StructName" .Name "Attrs" .Attributes "IsWO" false)}}
+
+{{- if .WriteOnlyAttrs}}
+    {{- template "renderFromBodyMethod" (dict "StructName" (print .Name "WO") "Attrs" .Attributes "IsWO" true)}}
 {{- end}}
 
 func (data *{{.Name}}) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.Result) {

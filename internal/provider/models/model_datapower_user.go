@@ -22,8 +22,6 @@ package models
 
 import (
 	"context"
-	"net/url"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -99,7 +97,6 @@ func (data User) GetPath() string {
 
 func (data UserWO) GetPath() string {
 	rest_path := "/mgmt/config/default/User"
-	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	return rest_path
 }
 
@@ -222,10 +219,10 @@ func (data *User) FromBody(ctx context.Context, pathRoot string, res gjson.Resul
 		data.GroupName = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SnmpCreds`); value.Exists() {
-		l := []DmSnmpCredWO{}
+		l := []DmSnmpCred{}
 		if value := res.Get(`SnmpCreds`); value.Exists() {
 			for _, v := range value.Array() {
-				item := DmSnmpCredWO{}
+				item := DmSnmpCred{}
 				item.FromBody(ctx, "", v)
 				if !item.IsNull() {
 					l = append(l, item)
@@ -233,12 +230,12 @@ func (data *User) FromBody(ctx context.Context, pathRoot string, res gjson.Resul
 			}
 		}
 		if len(l) > 0 {
-			data.SnmpCreds, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO}, l)
+			data.SnmpCreds, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmSnmpCredObjectType}, l)
 		} else {
-			data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO})
+			data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectType})
 		}
 	} else {
-		data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectTypeWO})
+		data.SnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredObjectType})
 	}
 	if value := res.Get(pathRoot + `HashedSnmpCreds`); value.Exists() {
 		l := []DmSnmpCredMasked{}
