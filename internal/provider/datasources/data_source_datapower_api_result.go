@@ -61,7 +61,6 @@ func (d *APIResultDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The result API action prepares responses to the client based on the result from the execute API action.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

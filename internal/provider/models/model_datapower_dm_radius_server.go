@@ -74,15 +74,15 @@ func GetDmRadiusServerDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 	var DmRadiusServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"number": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list position of this RADIUS server within the list of all RADIUS servers known to the client implementation. The lower the number, the more preferred the server.", "", "").AddIntegerRange(0, 2147483647).String,
+				MarkdownDescription: "Specify the list position of this RADIUS server within the list of all RADIUS servers known to the client implementation. The lower the number, the more preferred the server.",
 				Computed:            true,
 			},
 			"host": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address of the RADIUS server.", "", "").String,
+				MarkdownDescription: "Specify the IP address of the RADIUS server.",
 				Computed:            true,
 			},
 			"port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the RADIUS server.", "", "").AddDefaultValue("1812").String,
+				MarkdownDescription: "Specify the listening port on the RADIUS server.",
 				Computed:            true,
 			},
 		},
@@ -151,6 +151,7 @@ func (data DmRadiusServer) IsNull() bool {
 	}
 	return true
 }
+
 func (data DmRadiusServerWO) IsNull() bool {
 	if !data.Number.IsNull() {
 		return false
@@ -213,6 +214,7 @@ func (data *DmRadiusServer) FromBody(ctx context.Context, pathRoot string, res g
 		data.SecretWo = types.StringNull()
 	}
 }
+
 func (data *DmRadiusServerWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."

@@ -66,15 +66,15 @@ func GetDmHTTPVersionPolicyDataSourceSchema() DataSourceSchema.NestedAttributeOb
 	var DmHTTPVersionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"version": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP version to use.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1", "HTTP/2").AddDefaultValue("HTTP/1.1").String,
+				MarkdownDescription: "Specify the HTTP version to use.",
 				Computed:            true,
 			},
 			"http2_required": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether HTTP/2 is required when the version is HTTP/2.", "", "").AddDefaultValue("false").AddNotValidWhen(DmHTTPVersionPolicyHTTP2RequiredIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether HTTP/2 is required when the version is HTTP/2.",
 				Computed:            true,
 			},
 		},

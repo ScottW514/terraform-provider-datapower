@@ -53,11 +53,11 @@ func GetDmSMFlowDataSourceSchema(description string, cliAlias string, referenceT
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"frontend": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Responses", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Responses",
 				Computed:            true,
 			},
 			"backend": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Requests", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Requests",
 				Computed:            true,
 			},
 		},

@@ -61,7 +61,6 @@ func (d *WebSphereJMSServerDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Define the connection details to the remote WebSphere JMS server environment. This configuration is responsible for JMS messaging by periodically monitoring and polling queues to ensure that sent messages are directed to the correct receive queue or are routed to another queue manager.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

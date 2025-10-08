@@ -65,27 +65,27 @@ func GetDmSourceAS2FeatureTypeDataSourceSchema(description string, cliAlias stri
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"http_1d0": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.0 requests", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Supports HTTP 1.0 requests",
 				Computed:            true,
 			},
 			"http_1d1": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Supports HTTP 1.1 requests", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Supports HTTP 1.1 requests",
 				Computed:            true,
 			},
 			"query_string": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a ? (query string)", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Allows requests when the URL contains a ? (query string)",
 				Computed:            true,
 			},
 			"fragment_identifiers": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("UAllows requests when the URL contains a # (fragment identifier)", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "UAllows requests when the URL contains a # (fragment identifier)",
 				Computed:            true,
 			},
 			"dot_dot": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains a .. (dotdot)", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Allows requests when the URL contains a .. (dotdot)",
 				Computed:            true,
 			},
 			"cmd_exe": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allows requests when the URL contains cmd.exe", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Allows requests when the URL contains cmd.exe",
 				Computed:            true,
 			},
 		},

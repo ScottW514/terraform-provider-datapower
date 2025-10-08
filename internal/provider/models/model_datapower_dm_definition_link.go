@@ -50,11 +50,11 @@ func GetDmDefinitionLinkDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmDefinitionLinkDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"short_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify a short name for the rate limit definition.", "name", "").String,
+				MarkdownDescription: "Specify a short name for the rate limit definition.",
 				Computed:            true,
 			},
 			"definition": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit definition.", "definition", "rate_limit_definition").String,
+				MarkdownDescription: "Specify the rate limit definition.",
 				Computed:            true,
 			},
 		},

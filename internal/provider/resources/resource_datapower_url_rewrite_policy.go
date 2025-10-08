@@ -83,8 +83,8 @@ func (r *URLRewritePolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"direction": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Restricts the URL Rewrite Policy to a specified direction. Direction is applied at the service object level and has no effect on policies used from multistep or elsewhere.", "direction", "").AddStringEnum("all", "request", "response").AddDefaultValue("all").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("all", "request", "response"),
 				},

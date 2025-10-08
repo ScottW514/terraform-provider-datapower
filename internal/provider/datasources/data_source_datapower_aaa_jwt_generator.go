@@ -61,7 +61,6 @@ func (d *AAAJWTGeneratorDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The JSON Web Token (JWT) Generator specifies the JWT content and the cryptographic methods, such as signing and encryption methods, used for generating a JWT during the AAA postprocessing phase.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -1087,6 +1087,7 @@ func (data LogTarget) IsNull() bool {
 	}
 	return true
 }
+
 func (data LogTargetWO) IsNull() bool {
 	if !data.Id.IsNull() {
 		return false
@@ -1716,6 +1717,7 @@ func (data *LogTarget) FromBody(ctx context.Context, pathRoot string, res gjson.
 		data.EventBufferSize = types.StringValue("2048")
 	}
 }
+
 func (data *LogTargetWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."

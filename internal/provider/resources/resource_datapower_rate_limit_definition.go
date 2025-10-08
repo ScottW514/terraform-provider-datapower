@@ -95,8 +95,8 @@ func (r *RateLimitDefinitionResource) Schema(ctx context.Context, req resource.S
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Limit type", "type", "").AddStringEnum("rate", "burst", "count").AddDefaultValue("rate").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("rate", "burst", "count"),
 				},
@@ -111,8 +111,8 @@ func (r *RateLimitDefinitionResource) Schema(ctx context.Context, req resource.S
 			},
 			"interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval for the rate limit. Enter a value that is greater than or equal to 1. The default value is 1.", "interval", "").AddIntegerRange(1, 65535).AddDefaultValue("1").AddNotValidWhen(models.RateLimitDefinitionIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.RateLimitDefinitionIntervalIgnoreVal, true),
@@ -121,8 +121,8 @@ func (r *RateLimitDefinitionResource) Schema(ctx context.Context, req resource.S
 			},
 			"unit": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time unit for the rate limit. The default value is minute. When type is burst, the unit can be second or minute.", "unit", "").AddStringEnum("second", "minute", "hour", "day", "week").AddDefaultValue("minute").AddNotValidWhen(models.RateLimitDefinitionUnitIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("second", "minute", "hour", "day", "week"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.RateLimitDefinitionUnitIgnoreVal, true),
@@ -131,38 +131,38 @@ func (r *RateLimitDefinitionResource) Schema(ctx context.Context, req resource.S
 			},
 			"hard_limit": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to reject requests when the specified rate limit is exceeded. By default, requests are rejected when the limit is exceeded. When disabled, requests are accepted but a warning is logged.", "hard-limit", "").AddDefaultValue("true").AddNotValidWhen(models.RateLimitDefinitionHardLimitIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"is_client": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to apply the rate limit to the client or to an internal component. By default, the rate limit is applied to the client. Client rate limits return a 429 error when exceeded. When disabled, rate limit information is not applied to the client. Non-client rate limits return a 503 error when exceeded.", "is-client", "").AddDefaultValue("true").AddNotValidWhen(models.RateLimitDefinitionIsClientIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"use_api_name": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the API name in the rate limit key. By default, the API name is not included. When enabled, the API name is included.", "use-api-name", "").AddDefaultValue("false").AddNotValidWhen(models.RateLimitDefinitionUseApiNameIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_app_id": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the application ID in the rate limit key. By default, the application ID is not included. When enabled, the application ID is included.", "use-app-id", "").AddDefaultValue("false").AddNotValidWhen(models.RateLimitDefinitionUseAppIdIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_client_id": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the client ID in the rate limit key. By default, the client ID is not included. When enabled, the client ID is included.", "use-client-id", "").AddDefaultValue("false").AddNotValidWhen(models.RateLimitDefinitionUseClientIdIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"auto_replenish": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the count limit is automatically replenished at the end of the transaction. By default, the count limit is automatically replenished. When disabled, the count limit is replenished only by applying a rate limit assembly action that contains the count limit with a replenish operation.", "auto-replenish", "").AddDefaultValue("true").AddNotValidWhen(models.RateLimitDefinitionAutoReplenishIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"dynamic_value": schema.StringAttribute{
@@ -171,38 +171,38 @@ func (r *RateLimitDefinitionResource) Schema(ctx context.Context, req resource.S
 			},
 			"weight": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify a JSONata expression to assign a weight value to the rate limit. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "weight", "").AddDefaultValue("1").AddNotValidWhen(models.RateLimitDefinitionWeightIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("1"),
 			},
 			"response_headers": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether response headers include rate limit information. By default, headers include rate limit information. When disabled, headers exclude rate limit information.", "response-headers", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"emulate_burst_headers": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return information about the rate limit in burst limit response headers instead of in rate limit response headers. By default, the information is in rate limit headers. When enabled, information is in burst limit headers.", "emulate-burst-headers", "").AddDefaultValue("false").AddNotValidWhen(models.RateLimitDefinitionEmulateBurstHeadersIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_interval_offset": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow limit intervals to start at different offsets. By default, intervals can start at different offsets. When disabled, intervals cannot start at different offsets.", "use-interval-offset", "").AddDefaultValue("true").AddNotValidWhen(models.RateLimitDefinitionUseIntervalOffsetIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"allow_cache_fallback": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the cache as a fallback when gateway-peering instances cannot be contacted. By default, the cache can enforce rate limits when the cache is disabled. When disabled, the cache cannot enforce rate limits.", "allow-cache-fallback", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"use_cache": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use a cache to store rate limit information. A cache might be faster when the number of API calls is low. A cache can cause degraded performance when the number of API calls is exceptionally high. By default, a cache cannot store information. When enabled, the cache can store information.", "use-cache", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"parameters": schema.ListNestedAttribute{

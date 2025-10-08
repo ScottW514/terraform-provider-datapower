@@ -121,14 +121,14 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"limit_returned_data": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to limit the data from a <b>SELECT</b> statement. By default, the response size is not limited.", "limit", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"limit_returned_data_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the limit in KB on returned data from a <b>SELECT</b> statement. The default value is 128.", "limit-size", "").AddIntegerRange(1, 65535).AddDefaultValue("128").AddNotValidWhen(models.SQLDataSourceLimitReturnedDataSizeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SQLDataSourceLimitReturnedDataSizeIgnoreVal, true),
@@ -142,8 +142,8 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"max_connection": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent SQL connections. Enter a value in the range 1 - 65535. The default value is 10.", "maximum-connections", "").AddIntegerRange(1, 65535).AddDefaultValue("10").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -151,8 +151,8 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"oracle_data_source_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Data source type - Oracle", "oracle-datasource-type", "").AddStringEnum("SID", "ServiceName").AddDefaultValue("SID").AddRequiredWhen(models.SQLDataSourceOracleDataSourceTypeCondVal.String()).AddNotValidWhen(models.SQLDataSourceOracleDataSourceTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("SID", "ServiceName"),
 					validators.ConditionalRequiredString(models.SQLDataSourceOracleDataSourceTypeCondVal, models.SQLDataSourceOracleDataSourceTypeIgnoreVal, true),
@@ -161,8 +161,8 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"connect_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to wait to establish a connection to the data server. Enter a value in the range 0 - 4294967295. The value of 0 disables the timeout. The default value is 15.</p><p>A new connection is the initial connection and each new connection from the connection pool. Reuse of a connection from the connection pool is not considered establishing a new connection.</p><p>The connection timeout must be less than the query timeout. With this configuration, the initial query has time to establish the connection to the data server.</p>", "connect-timeout", "").AddDefaultValue("15").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(15),
 			},
 			"query_timeout": schema.Int64Attribute{
@@ -171,20 +171,20 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"idle_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration that a connection from the connection pool can remain idle before the connection is released. Enter a value in the range 0 - 4294967295. The default value is 180. The value of 0 disables the timer.", "idle-timeout", "").AddDefaultValue("180").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(180),
 			},
 			"load_balancing": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable Db2 workload balancing and automatic client reroute for Db2 for z/OS. <p>When enabled, this feature set uses the z/OS Sysplex Distributor for real-time load distribution of SQL calls to the sysplex-aware Db2 instance.</p><p>When enabled, you must specify the sysplex DVIPA as the data source host.</p>", "load-balancing", "").AddDefaultValue("false").AddNotValidWhen(models.SQLDataSourceLoadBalancingIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"encryption_method_mssql": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.", "mssql-encryption-method", "").AddStringEnum("NoEncryption", "SSL", "RequestSSL", "LoginSSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodMSSQLCondVal.String()).AddNotValidWhen(models.SQLDataSourceEncryptionMethodMSSQLIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL", "RequestSSL", "LoginSSL"),
 					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodMSSQLCondVal, models.SQLDataSourceEncryptionMethodMSSQLIgnoreVal, true),
@@ -193,8 +193,8 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"encryption_method_oracle": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "oracle-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodOracleCondVal.String()).AddNotValidWhen(models.SQLDataSourceEncryptionMethodOracleIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL"),
 					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodOracleCondVal, models.SQLDataSourceEncryptionMethodOracleIgnoreVal, true),
@@ -203,8 +203,8 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"encryption_method_db2": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an IBM Db2 database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "db2-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").AddRequiredWhen(models.SQLDataSourceEncryptionMethodDB2CondVal.String()).AddNotValidWhen(models.SQLDataSourceEncryptionMethodDB2IgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("NoEncryption", "SSL"),
 					validators.ConditionalRequiredString(models.SQLDataSourceEncryptionMethodDB2CondVal, models.SQLDataSourceEncryptionMethodDB2IgnoreVal, true),
@@ -220,8 +220,8 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"validate_server_certificate": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Validate server certificate", "validate-server-certificate", "").AddStringEnum("Disabled", "Enabled").AddDefaultValue("Enabled").AddNotValidWhen(models.SQLDataSourceValidateServerCertificateIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("Disabled", "Enabled"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.SQLDataSourceValidateServerCertificateIgnoreVal, true),
@@ -234,8 +234,8 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"validate_host_name": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to validate the hostname against the hostname in the server certificate. Hostname validate uses the value of the data source host. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.", "validate-host-name", "").AddDefaultValue("true").AddNotValidWhen(models.SQLDataSourceValidateHostNameIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"keystore_ref": schema.StringAttribute{

@@ -94,8 +94,8 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 			},
 			"sync_reply_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Sync reply mode", "syncreply-mode", "").AddStringEnum("mshSignalsOnly", "none").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("mshSignalsOnly", "none"),
 				},
@@ -103,8 +103,8 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 			},
 			"ack_requested": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Expect acknowledgment requests", "ack-requested", "").AddStringEnum("never", "always", "perMessage").AddDefaultValue("perMessage").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always", "perMessage"),
 				},
@@ -112,8 +112,8 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 			},
 			"ack_signature_requested": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Expect signed acknowledgment requests", "ack-signature-requested", "").AddStringEnum("never", "always", "perMessage").AddDefaultValue("perMessage").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always", "perMessage"),
 				},
@@ -121,8 +121,8 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 			},
 			"allow_duplicate_message": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Allow duplicate messages", "allow-dup-msg", "").AddStringEnum("never", "always", "on-error").AddDefaultValue("never").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always", "on-error"),
 				},
@@ -137,8 +137,8 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 			},
 			"encryption_required": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Require encryption", "encrypt-required", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"decrypt_id_cred": schema.StringAttribute{
@@ -150,8 +150,8 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 			},
 			"signature_required": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Require signature", "sign-required", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"verify_val_cred": schema.StringAttribute{

@@ -91,8 +91,8 @@ func (r *APISecurityOAuthResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"oauth_flow": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the OAuth flow to enforce to protect the target. The value must be among the supported grant types that are defined by the referenced OAuth provider.", "oauth-flow", "").AddStringEnum("implicit", "password", "application", "accessCode").AddDefaultValue("implicit").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("implicit", "password", "application", "accessCode"),
 				},

@@ -56,15 +56,15 @@ func GetDmClaimDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmClaimDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the JWT claim. A claim name is always a string.", "", "").String,
+				MarkdownDescription: "Specify the name of the JWT claim. A claim name is always a string.",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the JWT claim.", "", "").String,
+				MarkdownDescription: "Specify the value of the JWT claim.",
 				Computed:            true,
 			},
 			"type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").AddDefaultValue("string").String,
+				MarkdownDescription: "Specify the data type of the JWT claim value. The type can be string, boolean, or number.",
 				Computed:            true,
 			},
 		},

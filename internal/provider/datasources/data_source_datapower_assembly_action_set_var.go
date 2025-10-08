@@ -61,7 +61,6 @@ func (d *AssemblyActionSetVarDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The set variable assembly action sets, adds, or deletes a variable in the API context in your assembly.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

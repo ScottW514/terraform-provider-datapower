@@ -61,7 +61,6 @@ func (d *SMTPServerConnectionDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The SMTP server connection defines the connection details for a Simple Mail Transport Protocol (SMTP) server. The DataPower Gateway uses the SMTP server connection for the following purposes</p><ul><li>B2B partners use this configuration to send an e-mail message to an AS1 or ESMTP destination.</li><li>B2B gateways use this configuration to request an AS1 MDN.</li></ul><p>For ease of configuration, the DataPower Gateway provides the <tt>default</tt> SMTP server connection configuration in each domain. By default, this configuration is empty and disabled.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

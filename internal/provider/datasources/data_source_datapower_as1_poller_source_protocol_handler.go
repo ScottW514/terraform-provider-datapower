@@ -61,7 +61,6 @@ func (d *AS1PollerSourceProtocolHandlerDataSource) Schema(ctx context.Context, r
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The AS1 handler is a Post Office Protocol (POP) handler. The handler manages the polling of a mailbox on a mail server. The mailbox receives mail messages from external partners. The handler retrieves and deletes mail messages on each polling cycle. Each mail message that the handler retrieves results in one transaction.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

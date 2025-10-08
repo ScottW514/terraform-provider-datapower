@@ -93,8 +93,6 @@ Read-Only:
 
 - `name` (String) Specify the name of the JWT claim. A claim name is always a string.
 - `type` (String) Specify the data type of the JWT claim value. The type can be string, boolean, or number.
-  - Choices: `string`, `bool`, `number`
-  - Default value: `string`
 - `value` (String) Specify the value of the JWT claim.
 
 
@@ -104,8 +102,5 @@ Read-Only:
 Read-Only:
 
 - `customized` (Boolean) Use the custom processing mechanism to validate the JWT
-  - Default value: `false`
 - `decrypt` (Boolean) Decrypt the encrypted JWT
-  - Default value: `false`
 - `verify` (Boolean) Verify the signed JWT
-  - Default value: `false`

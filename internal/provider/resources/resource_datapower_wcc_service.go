@@ -97,8 +97,8 @@ func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"update_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the method for retrieving WebSphere information. The method defines the responsiveness of the updates received by the DataPower Gateway. The method also affects the amount of system resource used for providing those updates. The default is poll.", "update-method", "").AddStringEnum("poll", "subscribe").AddDefaultValue("poll").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("poll", "subscribe"),
 				},
@@ -106,8 +106,8 @@ func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"time_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>If the update method is poll, the time interval specifies the amount of time in seconds between poll requests.</p><p>If the update method is subscribe, the time interval specifies the maximum duration of the request in seconds.</p><p>Use any value of 1 - 86400. The default is 10.</p>", "time-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -115,8 +115,8 @@ func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 				},

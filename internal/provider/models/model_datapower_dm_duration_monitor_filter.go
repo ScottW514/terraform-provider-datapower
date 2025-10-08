@@ -53,15 +53,15 @@ func GetDmDurationMonitorFilterDataSourceSchema() DataSourceSchema.NestedAttribu
 	var DmDurationMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the logs when the threshold action is taken.", "", "").String,
+				MarkdownDescription: "Enter the name of the threshold. This name appears in the logs when the threshold action is taken.",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the threshold value in milliseconds.", "", "").String,
+				MarkdownDescription: "Enter the threshold value in milliseconds.",
 				Computed:            true,
 			},
 			"action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.", "", "filter_action").String,
+				MarkdownDescription: "Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.",
 				Computed:            true,
 			},
 		},

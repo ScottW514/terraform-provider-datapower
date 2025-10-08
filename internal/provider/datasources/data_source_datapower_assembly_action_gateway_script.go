@@ -61,7 +61,6 @@ func (d *AssemblyActionGatewayScriptDataSource) Schema(ctx context.Context, req 
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The GatewayScript assembly action runs a GatewayScript file. This action is not supported in IBM Cloud. Any assembly that includes this action fails.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

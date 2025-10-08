@@ -61,7 +61,6 @@ func (d *AssemblyActionWebSocketUpgradeDataSource) Schema(ctx context.Context, r
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The WebSocket upgrade assembly action processes API requests and responses through a WebSocket connection.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

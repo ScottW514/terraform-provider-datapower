@@ -90,8 +90,8 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"priority": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Control the service scheduling priority. When system resources are in high demand, \"high\" priority services will be favored over lower priority services.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
 				},
@@ -117,8 +117,8 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time that is allowed for the front side connection and the server side connection. After the time is reached, the idle connections are terminated. Enter a value in the range 0 - 86400. The default value is 360. A value of 0 disables the idle timer.", "", "").AddIntegerRange(0, 86400).AddDefaultValue("360").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
 				},
@@ -126,8 +126,8 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"dependency_actions": actions.ActionsSchema,

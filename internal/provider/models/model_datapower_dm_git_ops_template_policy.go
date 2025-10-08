@@ -47,7 +47,7 @@ func GetDmGitOpsTemplatePolicyDataSourceSchema() DataSourceSchema.NestedAttribut
 	var DmGitOpsTemplatePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"remote_policy": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 		},

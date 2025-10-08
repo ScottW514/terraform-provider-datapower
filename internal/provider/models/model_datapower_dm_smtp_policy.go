@@ -74,24 +74,24 @@ func GetDmSMTPPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmSMTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").AddDefaultValue("dpsmtp://*").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"recipient": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the recipient (\"To:\")", "", "").String,
+				MarkdownDescription: "Specify the e-mail address of the recipient (\"To:\")",
 				Computed:            true,
 			},
 			"sender": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender (\"From:\")", "", "").String,
+				MarkdownDescription: "Specify the e-mail address of the sender (\"From:\")",
 				Computed:            true,
 			},
 			"subject": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the subject line of the e-mail.", "", "").String,
+				MarkdownDescription: "Specify the subject line of the e-mail.",
 				Computed:            true,
 			},
 			"options": GetDmSMTPOptionsDataSourceSchema("Specify the SMTP options to enable for the client.", "", ""),
 			"auth": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").AddNotValidWhen(DmSMTPPolicyAuthIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the method to authenticate the SMTP client.",
 				Computed:            true,
 			},
 		},

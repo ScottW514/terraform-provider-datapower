@@ -61,7 +61,6 @@ func (d *MQv9PlusMFTSourceProtocolHandlerDataSource) Schema(ctx context.Context,
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Configure the IBM MQ v9+ MFT handle to manage IBM MQ MFT protocol communications.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

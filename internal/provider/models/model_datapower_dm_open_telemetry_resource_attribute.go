@@ -50,11 +50,11 @@ func GetDmOpenTelemetryResourceAttributeDataSourceSchema() DataSourceSchema.Nest
 	var DmOpenTelemetryResourceAttributeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"key": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key", "", "").String,
+				MarkdownDescription: "Key",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+				MarkdownDescription: "Value",
 				Computed:            true,
 			},
 		},

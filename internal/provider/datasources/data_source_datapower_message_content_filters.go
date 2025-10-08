@@ -61,7 +61,6 @@ func (d *MessageContentFiltersDataSource) Schema(ctx context.Context, req dataso
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A Message Content Filters is a group of HTTP header-based and XPath-based filters. <ul><li>For HTTP header-based filters, the filter succeeds when the name and value of an HTTP header field match.</li><li>For XPath-based filters, the filter succeeds when a document matches the element structure and content of the XPath expression and value.</li></ul>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

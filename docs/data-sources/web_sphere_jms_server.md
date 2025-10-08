@@ -90,5 +90,3 @@ Read-Only:
 - `host` (String) Specify the host name or IP address of a bootstrap server.
 - `port` (Number) Specify the listening port number of a bootstrap server.
 - `transport` (String) Specify the predefined transport chain for the bootstrap server. This connection is used to exchange information between the DataPower Gateway and the bootstrap server. By default, uses the predefined <tt>BootstrapBasicMessaging</tt> transport chain.
-  - Choices: `TCP`, `SSL`, `HTTP`, `HTTPS`
-  - Default value: `TCP`

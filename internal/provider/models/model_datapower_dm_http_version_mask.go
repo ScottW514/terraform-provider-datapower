@@ -53,11 +53,11 @@ func GetDmHTTPVersionMaskDataSourceSchema(description string, cliAlias string, r
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"http_1d0": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.0", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "HTTP 1.0",
 				Computed:            true,
 			},
 			"http_1d1": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP 1.1", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "HTTP 1.1",
 				Computed:            true,
 			},
 		},

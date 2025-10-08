@@ -61,7 +61,6 @@ func (d *LunaPartitionDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The SafeNet Luna Network HSM appliance stores the RSA keys in independent partitions. The configuration of the Luna HSM partition specifies the partition that the system accesses in the Luna HSM.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

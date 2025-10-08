@@ -70,20 +70,19 @@ func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: {{quote .Description}},
 		Attributes: map[string]schema.Attribute{
+{{- $root := .}}
 {{- if not .Singleton}}
-	{{$root := .}}
-	{{- range  .Attributes}}
-		{{- if eq .Name "Id"}}
+	{{- if ne .Name "Domain"}}
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,
 			},
-		{{- else if eq .Name "AppDomain"}}
+	{{- end}}
+	{{- if not .DefaultDomainOnly}}
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain {{if eq $root.Name "Domain"}}to retrieve{{else}}the object belongs to{{end}}.",
 				Required:            true,
 			},
-		{{- end}}
 	{{- end}}
 			"result": schema.ListNestedAttribute{
 				MarkdownDescription: "List of objects. If `id` was provided and it exists, it will be the only item in the list.",
@@ -91,30 +90,8 @@ func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaR
 				NestedObject:        schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 {{- end}}
-{{- $updateOnly := .Singleton}}
 {{- range  .Attributes}}
-	{{- if and .Type (not .WriteOnly)}}
-						"{{.TfName}}": schema.{{if eq .Type "Object"}}SingleNested{{else if isList .}}List{{- if and (ne .ElementType "String") (ne .ElementType "Int64")}}Nested{{end}}{{else}}{{.Type}}{{end}}Attribute{
-							MarkdownDescription: {{quote .Description}},
-		{{- if isList .}}
-			{{- if or (eq .ElementType "String") (eq .ElementType "Int64") (eq .ElementType "Bool")}}
-							ElementType:         types.{{.ElementType}}Type,
-			{{- else}}
-							NestedObject:        models.Get{{.ElementType}}DataSourceSchema(),
-			{{- end}}
-		{{- end}}
-		{{- if and $updateOnly (eq .Name "AppDomain")}}
-							Required:            true,
-		{{- else }}
-							Computed:            true,
-		{{- end}}
-		{{- if and .Sensitive (eq .ElementType "String")}}
-							Sensitive:           true,
-		{{- end}}
-						},
-	{{- else if and .DmType (not .WriteOnly)}}
-						"{{.TfName}}": models.Get{{.DmType}}DataSourceSchema({{quote .Description}}, {{quote .CliAlias}}, {{quote (toTfName .ReferenceTo)}}),
-	{{- end}}
+    {{- template "renderSchemaAttribute" (dict "Attr" . "SchemaPrefix" "schema." "ValidatorPrefix" "" "DmTypeCallPrefix" "models." "DmTypeCallSuffix" "DataSourceSchema" "IsList" (isList .) "IsDataSource" true "IsResource" false "IncludeWriteOnly" false "Root" $root)}}
 {{- end}}
 						"dependency_actions": actions.ActionsSchema,
 					},

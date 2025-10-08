@@ -97,8 +97,8 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"duration": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in minutes to enforce the schedule. Enter any value of 1 - 1440. The default value is 1440.", "duration", "").AddIntegerRange(1, 1440).AddDefaultValue("1440").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 1440),
 				},
@@ -120,8 +120,8 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"time_zone": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time zone to enforce the schedule. The default is the device local time zone.", "timezone", "").AddStringEnum("LOCAL", "Pacific/Honolulu", "America/Anchorage", "America/Los_Angeles", "America/Denver", "America/Chicago", "America/New_York", "America/Halifax", "America/Sao_Paulo", "America/Noronha", "Atlantic/Azores", "Europe/London", "Europe/Paris", "Europe/Athens", "Asia/Riyadh", "Europe/Moscow", "Asia/Karachi", "Asia/Kolkata", "Asia/Dhaka", "Asia/Novosibirsk", "Asia/Shanghai", "Australia/Perth", "Asia/Tokyo", "Australia/Adelaide", "Australia/Sydney", "Asia/Vladivostok", "Pacific/Auckland").AddDefaultValue("LOCAL").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("LOCAL", "Pacific/Honolulu", "America/Anchorage", "America/Los_Angeles", "America/Denver", "America/Chicago", "America/New_York", "America/Halifax", "America/Sao_Paulo", "America/Noronha", "Atlantic/Azores", "Europe/London", "Europe/Paris", "Europe/Athens", "Asia/Riyadh", "Europe/Moscow", "Asia/Karachi", "Asia/Kolkata", "Asia/Dhaka", "Asia/Novosibirsk", "Asia/Shanghai", "Australia/Perth", "Asia/Tokyo", "Australia/Adelaide", "Australia/Sydney", "Asia/Vladivostok", "Pacific/Auckland"),
 				},

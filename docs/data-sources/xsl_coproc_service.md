@@ -92,5 +92,4 @@ Read-Only:
 - `out_url_match` (String) Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.
 - `rule_match` (String) Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.
 - `rule_type` (String) Select the rule direction or type that will trigger the probe.
-  - Choices: `all`, `response`, `request`, `call`, `error`, `scheduled`, `lbhealth`
 - `xpath` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.

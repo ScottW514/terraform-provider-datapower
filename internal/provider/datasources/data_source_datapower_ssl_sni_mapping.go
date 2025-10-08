@@ -61,7 +61,6 @@ func (d *SSLSNIMappingDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A TLS hostname map defines the SNI map for TLS server profiles.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

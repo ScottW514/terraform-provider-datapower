@@ -88,8 +88,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "type", "").AddStringEnum("static-backend", "loopback-proxy", "strict-proxy", "dynamic-backend").AddDefaultValue("static-backend").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("static-backend", "loopback-proxy", "strict-proxy", "dynamic-backend"),
 				},
@@ -97,8 +97,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "xml-manager", "xml_manager").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"url_rewrite_policy": schema.StringAttribute{
@@ -107,14 +107,14 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"style_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "stylesheet-policy", "style_policy").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"credential_charset": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le"),
 				},
@@ -122,8 +122,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"ssl_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
 				},
@@ -147,8 +147,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"priority": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Control the service scheduling priority. When system resources are in high demand, \"high\" priority services will be favored over lower priority services.", "priority", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
 				},
@@ -182,8 +182,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"http_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of seconds (within the range 1 through 86400, with a default of 120) that a firewall or proxy maintains an idle HTTP connection.", "http-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -191,8 +191,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"http_persist_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the maximum number of seconds (within the range 0 through 7200, with a default of 180) that a firewall or proxy maintains an idle TCP connection.", "persistent-timeout", "").AddIntegerRange(0, 7200).AddDefaultValue("180").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 7200),
 				},
@@ -200,62 +200,62 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"do_host_rewrite": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When enabled, the device will rewrite the Host: header to be the address of the back-end server. This is not what a strict proxy would do, and may not be appropriate for all topologies.", "host-rewriting", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"suppress_http_warnings": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Toggle to enable or disable the generation of Transformation Applied (Warning Code: 214) messages by the HTTP service.", "silence-warning", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"http_compression": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Toggle to enable or disable the GZIP compression function.", "compression", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"http_include_response_type_encoding": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Toggle to enable or disable including the character set encoding in the HTTP content-type header produced. For example, when sending a UTF-8 encoded XML document: If this property is disabled, 'content-type=text/xml' will be sent. If this property is enabled, 'content-type=text/xml; charset=UTF-8' will be sent.", "include-response-type-encoding", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"always_show_errors": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If set, HTTP responses may be generated with errors appended to partially generated documents. If not set error responses will only be sent to the browser if no other output has been created.", "always-show-errors", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"disallow_get": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If set, only methods with incoming data (such as POST) are allowed.", "disallow-get", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"disallow_empty_response": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If set, only responses with message bodies are allowed (that is, not 304 and so forth).", "disallow-empty-reply", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"http_persistent_connections": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Toggle to enable or disable HTTP persistent connections.", "persistent-connections", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"http_client_ip_label": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Retain the default value (X-Client-IP) or provide an other value (for example, X-Forwarded-For).", "client-address", "").AddDefaultValue("X-Client-IP").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("X-Client-IP"),
 			},
 			"http_log_cor_id_label": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.", "http-global-tranID-label", "").AddDefaultValue("X-Global-Transaction-ID").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("X-Global-Transaction-ID"),
 			},
 			"http_proxy_host": schema.StringAttribute{
@@ -264,8 +264,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"http_proxy_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number on the HTTP proxy server.", "httpproxy-port", "").AddIntegerRange(1, 65535).AddDefaultValue("800").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -274,8 +274,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			"http_version": models.GetDmHTTPClientServerVersionResourceSchema("HTTP Version", "version", "", false),
 			"do_chunked_upload": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use the radio buttons to enable (on) or disable (off) the ability to send Content-Type Chunked Encoded documents to the back end server. When the device employs the HTTP/1.1 protocol, the body of the document can be delimited by either Content-Length or chunked encodings. While all servers will understand how to interpret Content-Length, many applications will fail to understand Chunked encoding. For this reason, Content-Length is the standard method used. However doing so interferes with the ability of the device to fully stream. To stream full documents towards the back end server, this property should be turned on. However, the back end server must be RFC 2616 compatible, because this feature cannot be renegotiated at run time, unlike all other HTTP/1.1 features which can be negotiated down at runtime if necessary. This property can also be enabled by configuring a User Agent to enable it on a per-URL basis.", "chunked-uploads", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"header_injection": schema.ListNestedAttribute{
@@ -295,20 +295,20 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"default_param_namespace": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If a stylesheet parameter is defined without a namespace (or without explicitly specifying the null namespace), then this is the namespace into which the parameter will be assigned.", "default-param-namespace", "").AddDefaultValue("http://www.datapower.com/param/config").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("http://www.datapower.com/param/config"),
 			},
 			"query_param_namespace": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The namespace in which to put all parameters that are specified in the URL query string.", "query-param-namespace", "").AddDefaultValue("http://www.datapower.com/param/query").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("http://www.datapower.com/param/query"),
 			},
 			"force_policy_exec": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Some message patterns may include bodyless request and response messages. This is common with RESTful web services where messages may or may not include a body but still requires the processing policy to run. To enable this capability for services whose request and response type is XML (or marked as non-XML i.e. JSON), set this option to 'on'. By doing so, the processing policy rules will always be executed.</p>", "force-policy-exec", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"count_monitors": schema.ListAttribute{
@@ -323,8 +323,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"monitor_processing_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the way that the system behaves when more than one monitor is attached to a service.", "monitor-processing-policy", "").AddStringEnum("terminate-at-first-throttle", "terminate-at-first-match").AddDefaultValue("terminate-at-first-throttle").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("terminate-at-first-throttle", "terminate-at-first-match"),
 				},
@@ -332,8 +332,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"debug_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>", "debug-mode", "").AddStringEnum("on", "off", "unbounded").AddDefaultValue("off").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("on", "off", "unbounded"),
 				},
@@ -341,8 +341,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"debug_history": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.XSLProxyServiceDebugHistoryCondVal.String()).AddNotValidWhen(models.XSLProxyServiceDebugHistoryIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 250),
 					validators.ConditionalRequiredInt64(models.XSLProxyServiceDebugHistoryCondVal, models.XSLProxyServiceDebugHistoryIgnoreVal, true),
@@ -356,8 +356,8 @@ func (r *XSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"dependency_actions": actions.ActionsSchema,

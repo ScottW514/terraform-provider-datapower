@@ -60,8 +60,8 @@ func (r *CertMonitorResource) Schema(ctx context.Context, req resource.SchemaReq
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -70,8 +70,8 @@ func (r *CertMonitorResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"polling_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the frequency that the certificate monitor scans certificates for their expiration. The certificate monitor scans for expiry at each restart. If today is Monday and you set the frequency to three days and you restart on Wednesday, the next scan is three days later. Enter a value in the range 1 - 65535. The default value is 1.", "poll", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -79,8 +79,8 @@ func (r *CertMonitorResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"reminder_time": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the notification window before certificate expiration to start the logging of certificate expiration messages. For example, the value 21 specifies that all certificates to expire in three weeks or less generate a log message at the defined priority. Enter a value in the range 1 - 65535. The default value is 30.", "reminder", "").AddIntegerRange(1, 65535).AddDefaultValue("30").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -88,8 +88,8 @@ func (r *CertMonitorResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"log_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority to log messages about the impending expiration date of certificates. By default, messages are logged as warnings.", "log-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
 				},
@@ -97,8 +97,8 @@ func (r *CertMonitorResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"disable_expired_certs": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the behavior for expired certificates. By default, expired certificate objects are not disabled, which allows the use of expired certificates. When enabled, prevents the use of expired certificates either directly or through inheritance, which disables the use of any objects the reference expired certificates.", "disable-expired-certs", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

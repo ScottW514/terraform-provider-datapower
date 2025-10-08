@@ -51,11 +51,11 @@ func GetDmASFrontProtocolDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmASFrontProtocolDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"front_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol handler.", "front-protocol", "").String,
+				MarkdownDescription: "Specify the protocol handler.",
 				Computed:            true,
 			},
 			"mdn_receiver": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to set the handler as the default MDN receiver.", "mdn-receiver", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Specify whether to set the handler as the default MDN receiver.",
 				Computed:            true,
 			},
 		},

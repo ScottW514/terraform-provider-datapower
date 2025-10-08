@@ -50,11 +50,11 @@ func GetDmODRConnPropertyDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmODRConnPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"conn_group_prop_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The name for a connector group property.", "odr-conn-prop-name", "").String,
+				MarkdownDescription: "The name for a connector group property.",
 				Computed:            true,
 			},
 			"conn_group_prop_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The value for the connector group property.", "odr-conn-prop-value", "").String,
+				MarkdownDescription: "The value for the connector group property.",
 				Computed:            true,
 			},
 		},

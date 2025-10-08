@@ -65,27 +65,27 @@ func GetDmOAuthProviderGrantTypeDataSourceSchema(description string, cliAlias st
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"none": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"implicit": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Implicit", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Implicit",
 				Computed:            true,
 			},
 			"password": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - Password", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Resource owner - Password",
 				Computed:            true,
 			},
 			"jwt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Resource owner - JSON Web Token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Resource owner - JSON Web Token",
 				Computed:            true,
 			},
 			"application": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client credentials", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Client credentials",
 				Computed:            true,
 			},
 			"access_code": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authorization code", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Authorization code",
 				Computed:            true,
 			},
 		},

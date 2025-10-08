@@ -61,8 +61,8 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -71,8 +71,8 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the interface monitors. The default value is 5550.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("5550").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -84,14 +84,14 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"acl": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>xml-mgmt</tt> access control list to define the client IP addresses to allow or deny.", "acl", "access_control_list").AddDefaultValue("xml-mgmt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("xml-mgmt"),
 			},
 			"slm_peering": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("SLM update interval", "slm-peering", "").AddDefaultValue("10").AddRequiredWhen(models.MgmtInterfaceSLMPeeringCondVal.String()).AddNotValidWhen(models.MgmtInterfaceSLMPeeringIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					validators.ConditionalRequiredInt64(models.MgmtInterfaceSLMPeeringCondVal, models.MgmtInterfaceSLMPeeringIgnoreVal, true),
 				},
@@ -100,8 +100,8 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 			"mode": models.GetDmXMLMgmtModesResourceSchema("Specify which service endpoints to enable. For each enabled endpoint, the interface listens for requests from those services.", "mode", "", false),
 			"ssl_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
 				},
@@ -120,8 +120,8 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"dependency_actions": actions.ActionsSchema,

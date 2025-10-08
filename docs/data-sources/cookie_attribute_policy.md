@@ -76,16 +76,9 @@ Optional:
 Read-Only:
 
 - `custom` (Boolean) Custom attributes
-  - Default value: `false`
 - `domain` (Boolean) Domain
-  - Default value: `false`
 - `expires` (Boolean) Expires
-  - Default value: `false`
 - `httponly` (Boolean) HTTPOnly
-  - Default value: `false`
 - `max_age` (Boolean) Max-Age
-  - Default value: `false`
 - `path` (Boolean) Path
-  - Default value: `false`
 - `secure` (Boolean) Secure
-  - Default value: `false`

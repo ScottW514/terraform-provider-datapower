@@ -146,7 +146,6 @@ Read-Only:
 - `out_url_match` (String) Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.
 - `rule_match` (String) Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.
 - `rule_type` (String) Select the rule direction or type that will trigger the probe.
-  - Choices: `all`, `response`, `request`, `call`, `error`, `scheduled`, `lbhealth`
 - `xpath` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.
 
 
@@ -156,8 +155,6 @@ Read-Only:
 Read-Only:
 
 - `direction` (String) Select the direction of the message.
-  - Choices: `front`, `back`
-  - Default value: `front`
 - `header_tag` (String) Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.
 - `header_tag_value` (String) Enter the value for the header tag.
 
@@ -168,7 +165,6 @@ Read-Only:
 Read-Only:
 
 - `direction` (String) Select the direction of the message.
-  - Choices: `front`, `back`
 - `header_tag` (String) Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.
 
 
@@ -178,11 +174,7 @@ Read-Only:
 Read-Only:
 
 - `back` (String) Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.
-  - Choices: `HTTP/1.0`, `HTTP/1.1`
-  - Default value: `HTTP/1.1`
 - `front` (String) Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.
-  - Choices: `HTTP/1.0`, `HTTP/1.1`
-  - Default value: `HTTP/1.1`
 
 
 <a id="nestedatt--result--stylesheet_parameters"></a>

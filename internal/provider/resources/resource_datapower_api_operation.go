@@ -90,8 +90,8 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Method", "method", "").AddStringEnum("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE").AddDefaultValue("GET").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE"),
 				},
@@ -103,8 +103,8 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"remove_consume": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to remove the API-level consume declaration. By default, the API-level consume declaration is applied to the operation. When removed, the operation can always be performed regardless of the content type.", "remove-consume", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"consume": schema.ListAttribute{
@@ -144,8 +144,8 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"remove_security": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to remove the API-level security declaration that is defined for the API. By default, the API-level security declaration is applied to the operation. When removed, the operation can be performed without security check.", "remove-security", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"security": schema.ListAttribute{

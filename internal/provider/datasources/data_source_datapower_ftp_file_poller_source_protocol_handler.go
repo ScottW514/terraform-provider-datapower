@@ -61,7 +61,6 @@ func (d *FTPFilePollerSourceProtocolHandlerDataSource) Schema(ctx context.Contex
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An FTP poller handler has file-based input from a configured FTP directory. The directory must exist and have the appropriate permission to perform the designated operations. For these configured directories, ensure that the read, write, and delete permissions are available, as required.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

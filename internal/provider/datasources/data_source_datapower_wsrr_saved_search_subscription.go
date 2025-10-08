@@ -61,7 +61,6 @@ func (d *WSRRSavedSearchSubscriptionDataSource) Schema(ctx context.Context, req 
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The WSRR (WebSphere Service Registry and Repository) saved subscription is useful when you want to deploy services with an indirect reference to WSRR resources. The configuration references a WSRR server, a saved search and a saved search or named query on the server. <p>The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

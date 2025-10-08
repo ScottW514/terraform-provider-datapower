@@ -61,7 +61,6 @@ func (d *CookieAttributePolicyDataSource) Schema(ctx context.Context, req dataso
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Cookie attribute policy manages pre-defined and custom attributes of a cookie.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

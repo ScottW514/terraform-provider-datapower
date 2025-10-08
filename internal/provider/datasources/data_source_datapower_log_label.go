@@ -61,7 +61,6 @@ func (d *LogLabelDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Configuration of custom log categories.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -91,14 +91,14 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"login_form": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the login page on the application server. This page collects username and password information. The default value is <tt>/LoginPage.htm</tt> .", "login-url", "").AddDefaultValue("/LoginPage.htm").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/LoginPage.htm"),
 			},
 			"use_cookie_attributes": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Whether to attach a cookie attribute policy to allow predefined or custom attributes to be included in the forms login cookie. If you do not use a cookie attribute policy, the configuration use the properties of the forms login policy. By default, does not attach a cookie attribute policy.", "use-cookie-attribute", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"cookie_attributes": schema.StringAttribute{
@@ -110,20 +110,20 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"use_ssl_for_login": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use TLS for login transactions. By default, uses TLS.", "use-ssl", "").AddDefaultValue("true").AddRequiredWhen(models.FormsLoginPolicyUseSSLForLoginCondVal.String()).AddNotValidWhen(models.FormsLoginPolicyUseSSLForLoginIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"enable_migration": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether users need to reauthenticate if their session moves to another member in the standby group if the current member becomes unavailable. Whether another member is available depends on the standby control configuration. In a standby configuration, each member must use the same shared secret. By default, session migration is enabled.", "enable-migration", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ssl_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port to secure TLS redirection during the login transaction. The default value is 8080.", "ssl-port", "").AddIntegerRange(1, 65535).AddDefaultValue("8080").AddRequiredWhen(models.FormsLoginPolicySSLPortCondVal.String()).AddNotValidWhen(models.FormsLoginPolicySSLPortIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(models.FormsLoginPolicySSLPortCondVal, models.FormsLoginPolicySSLPortIgnoreVal, true),
@@ -136,26 +136,26 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"error_page": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the error page on the application server. This fragment is relative to the root directory. With the address of the service, the URL fragment forms the complete URL of the error page on the application server. The default value is <tt>/ErrorPage.htm</tt> .", "error-url", "").AddDefaultValue("/ErrorPage.htm").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/ErrorPage.htm"),
 			},
 			"logout_page": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the logout page on the application server. This fragment is relative to the root directory. With the address of the service, the URL fragment forms the complete URL of the logout page on the application server. An empty string disables logout. The default value is <tt>/LogoutPage.htm</tt> .", "logout-url", "").AddDefaultValue("/LogoutPage.htm").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/LogoutPage.htm"),
 			},
 			"default_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment on the application server to go to after a successful login. The field is only used when the user was not redirected to the login page. This fragment is relative to the root directory. The URL fragment with the address of the service forms the complete URL of the default page for the application. The default value is <tt>/</tt> .", "default-url", "").AddDefaultValue("/").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/"),
 			},
 			"forms_location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location to retrieve HTML pages. These pages can be on the DataPower Gateway or on an application server. The default value is from an application server.", "forms-location", "").AddStringEnum("backend", "appliance").AddDefaultValue("backend").AddRequiredWhen(models.FormsLoginPolicyFormsLocationCondVal.String()).AddNotValidWhen(models.FormsLoginPolicyFormsLocationIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("backend", "appliance"),
 					validators.ConditionalRequiredString(models.FormsLoginPolicyFormsLocationCondVal, models.FormsLoginPolicyFormsLocationIgnoreVal, true),
@@ -164,8 +164,8 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"local_login_form": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the login form on the DataPower Gateway. The default value is <tt>store:///LoginPage.htm</tt> .", "local-login-page", "").AddDefaultValue("store:///LoginPage.htm").AddRequiredWhen(models.FormsLoginPolicyLocalLoginFormCondVal.String()).AddNotValidWhen(models.FormsLoginPolicyLocalLoginFormIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.FormsLoginPolicyLocalLoginFormCondVal, models.FormsLoginPolicyLocalLoginFormIgnoreVal, true),
 				},
@@ -173,8 +173,8 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"local_error_page": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the error page on the DataPower Gateway. The default value is <tt>store:///ErrorPage.htm</tt> .", "local-error-page", "").AddDefaultValue("store:///ErrorPage.htm").AddRequiredWhen(models.FormsLoginPolicyLocalErrorPageCondVal.String()).AddNotValidWhen(models.FormsLoginPolicyLocalErrorPageIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.FormsLoginPolicyLocalErrorPageCondVal, models.FormsLoginPolicyLocalErrorPageIgnoreVal, true),
 				},
@@ -182,8 +182,8 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"local_logout_page": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the logout page on the DataPower Gateway. The default value is <tt>store:///LogoutPage.htm</tt> .", "local-logout-page", "").AddDefaultValue("store:///LogoutPage.htm").AddRequiredWhen(models.FormsLoginPolicyLocalLogoutPageCondVal.String()).AddNotValidWhen(models.FormsLoginPolicyLocalLogoutPageIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.FormsLoginPolicyLocalLogoutPageCondVal, models.FormsLoginPolicyLocalLogoutPageIgnoreVal, true),
 				},
@@ -191,32 +191,32 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"username_field": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute value of the username field. The default value is <tt>j_username</tt> .", "username-field", "").AddDefaultValue("j_username").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("j_username"),
 			},
 			"password_field": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute value of the password field. The default value is <tt>j_password</tt> .", "password-field", "").AddDefaultValue("j_password").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("j_password"),
 			},
 			"redirect_field": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute value for the hidden field that contains the target URL. If an unauthenticated user attempts to access a secured page, the application server displays the login page. The login form contains a hidden field to collect the URL of the secured page that the user attempted to access. After authentication, the application server displays the secured page. The default value is <tt>originalUrl</tt> .", "redirect-field", "").AddDefaultValue("originalUrl").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("originalUrl"),
 			},
 			"form_processing_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the processing URL fragment where the login form posts information. The default value is <tt>/j_security_check</tt> .", "post-action-url", "").AddDefaultValue("/j_security_check").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/j_security_check"),
 			},
 			"inactivity_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for an inactive session. The default value is 600. A value of 0 disables the timer.", "inactivity-timeout", "").AddDefaultValue("600").AddRequiredWhen(models.FormsLoginPolicyInactivityTimeoutCondVal.String()).AddNotValidWhen(models.FormsLoginPolicyInactivityTimeoutIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					validators.ConditionalRequiredInt64(models.FormsLoginPolicyInactivityTimeoutCondVal, models.FormsLoginPolicyInactivityTimeoutIgnoreVal, true),
 				},
@@ -224,8 +224,8 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"session_lifetime": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds before the user must reauthentication. The default value is 10800. The minimum value is 1. The special value of 0 sets the value to the default value of 10800.", "session-lifetime", "").AddDefaultValue("10800").AddRequiredWhen(models.FormsLoginPolicySessionLifetimeCondVal.String()).AddNotValidWhen(models.FormsLoginPolicySessionLifetimeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					validators.ConditionalRequiredInt64(models.FormsLoginPolicySessionLifetimeCondVal, models.FormsLoginPolicySessionLifetimeIgnoreVal, true),
 				},
@@ -233,8 +233,8 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"redirect_url_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to retrieve host information for URL redirects. By default, uses the variable value.", "redirect-url-type", "").AddStringEnum("urlin", "host").AddDefaultValue("urlin").AddRequiredWhen(models.FormsLoginPolicyRedirectURLTypeCondVal.String()).AddNotValidWhen(models.FormsLoginPolicyRedirectURLTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("urlin", "host"),
 					validators.ConditionalRequiredString(models.FormsLoginPolicyRedirectURLTypeCondVal, models.FormsLoginPolicyRedirectURLTypeIgnoreVal, true),
@@ -243,8 +243,8 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"form_support_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use static HTML pages or a custom file to generate the HTML pages. By default, uses static pages from an explicit location.", "support-type", "").AddStringEnum("static", "custom").AddDefaultValue("static").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("static", "custom"),
 				},
@@ -252,8 +252,8 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"form_support_script": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the custom file that generates the HTML pages. This stylesheet or GatewayScript file must generate the following pages. <ul><li>A login form request to generate a login form with the <tt>login</tt> operation.</li><li>A logout page request to generate a logout page with the <tt>logout</tt> operation.</li><li>An error page request to generate an error page with the <tt>error</tt> operation.</li></ul>", "script-location", "").AddDefaultValue("store:///Form-Generate-HTML.xsl").AddRequiredWhen(models.FormsLoginPolicyFormSupportScriptCondVal.String()).AddNotValidWhen(models.FormsLoginPolicyFormSupportScriptIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.FormsLoginPolicyFormSupportScriptCondVal, models.FormsLoginPolicyFormSupportScriptIgnoreVal, true),
 				},

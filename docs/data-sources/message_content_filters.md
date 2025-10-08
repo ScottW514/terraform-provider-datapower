@@ -73,16 +73,7 @@ Read-Only:
 
 - `filter_name` (String) Specify the name for the message content filter.
 - `http_name` (String) Enter the name of the HTTP header field. Available for HTTP header-based filters.
-  - Required When: `type`=`http`
-  - Not Valid When: attribute is not conditionally required
 - `http_value` (String) Enter the explicit, literal string value for the HTTP header field. Wildcards are not supported. Available for HTTP header-based filters.
-  - Required When: `type`=`http`
-  - Not Valid When: attribute is not conditionally required
 - `type` (String) Select the type of the message content filter.
-  - Choices: `http`, `xpath`
 - `xpath_expression` (String) Enter the XPath expression or use the builder to define the XPath expression that is used to evaluate the messages to obtain the XPath value. Available for XPath-based filters.
-  - Required When: `type`=`xpath`
-  - Not Valid When: attribute is not conditionally required
 - `xpath_value` (String) Enter the contents of the element for the XPath expression. Available for XPath-based filters.
-  - Required When: `type`=`xpath`
-  - Not Valid When: attribute is not conditionally required

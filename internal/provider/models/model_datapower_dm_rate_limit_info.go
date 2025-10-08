@@ -53,11 +53,11 @@ func GetDmRateLimitInfoDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmRateLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit.", "name", "").String,
+				MarkdownDescription: "Specify the name of the rate limit.",
 				Computed:            true,
 			},
 			"action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit.", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
+				MarkdownDescription: "Specify the action to apply to the rate limit.",
 				Computed:            true,
 			},
 		},

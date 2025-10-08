@@ -59,19 +59,19 @@ func GetDmAssemblyLogicOperationSwitchCaseDataSourceSchema() DataSourceSchema.Ne
 	var DmAssemblyLogicOperationSwitchCaseDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"execute": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API rule to run when the case is matched.", "", "").String,
+				MarkdownDescription: "Specify the API rule to run when the case is matched.",
 				Computed:            true,
 			},
 			"operation_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique operation ID to match.", "", "").String,
+				MarkdownDescription: "Specify the unique operation ID to match.",
 				Computed:            true,
 			},
 			"path": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the relative API path to match.", "", "").String,
+				MarkdownDescription: "Specify the relative API path to match.",
 				Computed:            true,
 			},
 			"method": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP method to match.", "", "").AddStringEnum("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS", "TRACE").AddDefaultValue("GET").String,
+				MarkdownDescription: "Specify the HTTP method to match.",
 				Computed:            true,
 			},
 		},

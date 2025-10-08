@@ -61,7 +61,6 @@ func (d *DeploymentPolicyParametersBindingDataSource) Schema(ctx context.Context
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Configuration to persist the values of the deployment policy variables.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

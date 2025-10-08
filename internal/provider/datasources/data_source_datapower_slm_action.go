@@ -61,7 +61,6 @@ func (d *SLMActionDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An SLM action defines the control procedure to trigger for transactions in excess of the threshold. As part of any control procedure, the monitor writes an event to the log for each transaction that exceeds a threshold.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

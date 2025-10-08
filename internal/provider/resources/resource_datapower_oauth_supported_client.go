@@ -93,8 +93,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"customized": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the configuration is for a customized OAuth client. The configuration of the customized OAuth client is defined in a stylesheet or GatewayScript file in the local: or store: directory.", "customized", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"customized_process_url": schema.StringAttribute{
@@ -108,8 +108,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			"az_grant":   models.GetDmOAuthAZGrantTypeResourceSchema("Identifies the method to obtain the access token for authorization based on the grant type.", "az-grant", "", false),
 			"client_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Sets the type of client based on its ability to authenticate securely with authorization server endpoints. The client type is based on the definitions that the authorization server endpoints use for secure authentication and acceptable exposure of client credentials. If the client can securely authenticate, its classification is <tt>confidential</tt> .", "client-type", "").AddStringEnum("confidential", "public").AddDefaultValue("confidential").AddRequiredWhen(models.OAuthSupportedClientClientTypeCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientClientTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("confidential", "public"),
 					validators.ConditionalRequiredString(models.OAuthSupportedClientClientTypeCondVal, models.OAuthSupportedClientClientTypeIgnoreVal, true),
@@ -118,20 +118,20 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"check_client_credential": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identifies whether to verify the client credentials when the DataPower Gateway protects the resource server by using access tokens.", "check-client-credential", "").AddDefaultValue("false").AddNotValidWhen(models.OAuthSupportedClientCheckClientCredentialIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_validation_url": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Uses a remote URL to validate the access token.", "use-validation-url", "").AddDefaultValue("false").AddNotValidWhen(models.OAuthSupportedClientUseValidationUrlIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"client_authen_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identifies the method to authenticate this client.", "client-authen-method", "").AddStringEnum("secret", "ssl", "jwt").AddDefaultValue("secret").AddRequiredWhen(models.OAuthSupportedClientClientAuthenMethodCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientClientAuthenMethodIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("secret", "ssl", "jwt"),
 					validators.ConditionalRequiredString(models.OAuthSupportedClientClientAuthenMethodCondVal, models.OAuthSupportedClientClientAuthenMethodIgnoreVal, true),
@@ -147,15 +147,14 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"generate_client_secret": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to generate the client secret for the OAuth client. The specification refers to the client secret as <tt>client_secret</tt> .</p><ul><li>If you generate the passphrase, the passphrase becomes the client secret.</li><li>If you do not generate the passphrase, you must explicitly define the client secret.</li></ul>", "generate-client-secret", "").AddDefaultValue("true").AddRequiredWhen(models.OAuthSupportedClientGenerateClientSecretCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientGenerateClientSecretIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"client_secret_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the client secret for the OAuth client. The specification references the client secret as <tt>client_secret</tt> .", "client-secret", "").AddRequiredWhen(models.OAuthSupportedClientClientSecretCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientClientSecretIgnoreVal.String()).String,
-				Optional:            true,
 				WriteOnly:           true,
-				Sensitive:           true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(4, 127),
 					validators.ConditionalRequiredString(models.OAuthSupportedClientClientSecretCondVal, models.OAuthSupportedClientClientSecretIgnoreVal, false),
@@ -180,8 +179,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"caching": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the caching mechanism to be used.", "caching", "").AddStringEnum("replay", "system", "custom", "diststore").AddDefaultValue("replay").AddNotValidWhen(models.OAuthSupportedClientCachingIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("replay", "system", "custom", "diststore"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.OAuthSupportedClientCachingIgnoreVal, true),
@@ -209,8 +208,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"custom_scope_check": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates how to check the scope for authorization grants and access tokens.</p><ul><li>When checking the scope with custom processing, specify the location of the stylesheet or GatewayScript file with the <b>Scope Customized Process</b> property. The stylesheet or GatewayScript file must be in the local: or store: directory.</li><li>When checking the scope with a PCRE, specify the expression with the <b>Scope</b> property.</li></ul><p>You should use a custom scope check in the following situations. <ul><li>An authorization request where the OAuth client requests an authorization code.</li><li>An access request where the OAuth client requests an access token.</li><li>A resource request where the OAuth client requests a resource.</li></ul></p>", "custom-scope-check", "").AddDefaultValue("false").AddNotValidWhen(models.OAuthSupportedClientCustomScopeCheckIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"scope": schema.StringAttribute{
@@ -245,8 +244,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"local_az_page_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the location of the stylesheet or GatewayScript file that generates the authorization form for the resource owner and handles errors. The file must be in the local: or store: directory. You can use the <tt>OAuth-Generate-HTML.xsl</tt> stylesheet in the store: directory or copy this file to the local: directory and modify as needed.</p><p>The stylesheet or GatewayScript file must be on the DataPower Gateway in the local: or store: directory. The HTML authorization form remains operational for the duration defined with the <b>DataPower State Lifetime</b> property. If the user does not submit the request before the duration elapses, the authorization from the OAuth client is rejected.</p>", "local-az-page-url", "").AddDefaultValue("store:///OAuth-Generate-HTML.xsl").AddRequiredWhen(models.OAuthSupportedClientLocalAZPageUrlCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientLocalAZPageUrlIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.OAuthSupportedClientLocalAZPageUrlCondVal, models.OAuthSupportedClientLocalAZPageUrlIgnoreVal, true),
 				},
@@ -254,8 +253,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"dp_state_life_time": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Sets the operational duration in seconds for the local authorization page. Enter a value in the range 1 - 600. The default value is 300.</p><p>If the user does not submit the request before the duration elapses, the authorization request from the OAuth client is rejected. The location of the stylesheet or GatewayScript file that defines the local authorization page and the error handling is set with the <b>Authorization Form</b> property.</p>", "dp-state-lifetime", "").AddIntegerRange(1, 600).AddDefaultValue("300").AddRequiredWhen(models.OAuthSupportedClientDPStateLifeTimeCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientDPStateLifeTimeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600),
 					validators.ConditionalRequiredInt64(models.OAuthSupportedClientDPStateLifeTimeCondVal, models.OAuthSupportedClientDPStateLifeTimeIgnoreVal, true),
@@ -264,8 +263,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"au_code_life_time": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Sets the lifetime for an authorization code in seconds. Enter a value in the range 1 - 600. The default value is 300.</p><p>An authorization code is the intermediary result of a successful authorization. The client uses authorization codes to obtain the access token. Instead of sending tokens to a client, clients receives authorization codes on their redirection URI. Each supported redirection URI for the client is defined with the <b>Redirect URI</b> property.</p>", "au-code-lifetime", "").AddIntegerRange(1, 600).AddDefaultValue("300").AddRequiredWhen(models.OAuthSupportedClientAUCodeLifeTimeCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientAUCodeLifeTimeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600),
 					validators.ConditionalRequiredInt64(models.OAuthSupportedClientAUCodeLifeTimeCondVal, models.OAuthSupportedClientAUCodeLifeTimeIgnoreVal, true),
@@ -274,8 +273,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"access_token_life_time": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Sets the lifetime for the access token in seconds. Enter a value in the range 1 - 63244800. The default value is 3600.", "access-token-lifetime", "").AddIntegerRange(1, 63244800).AddDefaultValue("3600").AddRequiredWhen(models.OAuthSupportedClientAccessTokenLifeTimeCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientAccessTokenLifeTimeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 63244800),
 					validators.ConditionalRequiredInt64(models.OAuthSupportedClientAccessTokenLifeTimeCondVal, models.OAuthSupportedClientAccessTokenLifeTimeIgnoreVal, true),
@@ -284,8 +283,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"refresh_token_allowed": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Sets the maximum number of refresh tokens that can be generated for a specific permission set. A permission set is defined as a combination of the resource owner, application, and protected resources. For example, <tt>jack,mobileapp1,scope1</tt> and <tt>john,mobileapp1,scope1</tt> are different permission sets. When an application asks the resource owner for access to protected resources again, the application receives a new permission set with its own counter for refresh tokens.</p><p>Enter a value in the range 0 - 4096. The default value is 0. Remember that refresh tokens and access tokens are distributed in pairs.</p>", "refresh-token-allowed", "").AddIntegerRange(0, 4096).AddDefaultValue("0").AddRequiredWhen(models.OAuthSupportedClientRefreshTokenAllowedCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientRefreshTokenAllowedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 4096),
 					validators.ConditionalRequiredInt64(models.OAuthSupportedClientRefreshTokenAllowedCondVal, models.OAuthSupportedClientRefreshTokenAllowedIgnoreVal, true),
@@ -294,8 +293,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"refresh_token_life_time": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Sets the lifetime for the refresh token in seconds. Enter a value in the range 2 - 252979200. The default value is 5400. The lifetime for a refresh token must be longer than that for the corresponding access token.", "refresh-token-lifetime", "").AddIntegerRange(2, 252979200).AddDefaultValue("5400").AddRequiredWhen(models.OAuthSupportedClientRefreshTokenLifeTimeCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientRefreshTokenLifeTimeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(2, 252979200),
 					validators.ConditionalRequiredInt64(models.OAuthSupportedClientRefreshTokenLifeTimeCondVal, models.OAuthSupportedClientRefreshTokenLifeTimeIgnoreVal, true),
@@ -312,8 +311,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"custom_resource_owner": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to use a stylesheet or GatewayScript file to extract information about the resource owner. When extracting using custom processing, use the <b>Resource Owner Process</b> property to specify the location of the file. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>By default, the resource owner is the user name from the extracted identity. For custom handling, you must provide a stylesheet or GatewayScript file that overrides information about the resource owner.</p><ul><li>For AAA identity extraction, the extraction method can be basic authentication or forms-based login.</li><li>For custom handling, the stylesheet or GatewayScript file overrides data about the resource owner with information from authentication.</li></ul><p>You should use custom handling in the following situations: <ul><li>When presenting the authorization form to the resource owner</li><li>When issuing a code for an authorization code grant type</li><li>When issuing an access token</li></ul></p>", "custom-resource-owner", "").AddDefaultValue("false").AddNotValidWhen(models.OAuthSupportedClientCustomResourceOwnerIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"resource_owner_url": schema.StringAttribute{
@@ -333,8 +332,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			"rs_set_header": models.GetDmOAuthRSSetHeaderResourceSchema("Identifies which HTTP headers to create and send to the remote resource server.", "rs-set-header", "", false),
 			"validation_url_ssl_client_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "validation-url-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddRequiredWhen(models.OAuthSupportedClientValidationURLSSLClientTypeCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientValidationURLSSLClientTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(models.OAuthSupportedClientValidationURLSSLClientTypeCondVal, models.OAuthSupportedClientValidationURLSSLClientTypeIgnoreVal, true),

@@ -75,8 +75,8 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -85,8 +85,8 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"connection_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol to secure the connection. HTTPS is the default protocol.", "type", "").AddStringEnum("https", "ssh").AddDefaultValue("https").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("https", "ssh"),
 				},
@@ -94,8 +94,8 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the operational mode of the Git repository. The default mode is read-only.", "mode", "").AddStringEnum("read-only", "read-write").AddDefaultValue("read-write").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("read-only", "read-write"),
 				},
@@ -103,8 +103,8 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"commit_identifier_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the branch, commit hash, or tag for read and write GitOps operations against the repository. Use of branch is the default setting.", "commit-id-type", "").AddStringEnum("branch", "tag", "commit").AddDefaultValue("branch").AddNotValidWhen(models.GitOpsCommitIdentifierTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("branch", "tag", "commit"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.GitOpsCommitIdentifierTypeIgnoreVal, true),
@@ -121,8 +121,8 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.", "interval", "").AddIntegerRange(0, 1440).AddDefaultValue("5").AddRequiredWhen(models.GitOpsIntervalCondVal.String()).AddNotValidWhen(models.GitOpsIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1440),
 					validators.ConditionalRequiredInt64(models.GitOpsIntervalCondVal, models.GitOpsIntervalIgnoreVal, true),

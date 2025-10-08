@@ -63,23 +63,23 @@ func GetDmWSSLMOpsDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmWSSLMOpsDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"operation": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the operation to monitor. The operation is defined in the WSDL file. The current implementation is to monitor all operations in the WSDL file.", "operation", "").AddStringEnum("all").AddDefaultValue("all").String,
+				MarkdownDescription: "Specify the name of the operation to monitor. The operation is defined in the WSDL file. The current implementation is to monitor all operations in the WSDL file.",
 				Computed:            true,
 			},
 			"target": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the target activity to monitor. Define the operation for each monitored activity.", "target", "").AddStringEnum("front", "rate").String,
+				MarkdownDescription: "Specify the target activity to monitor. Define the operation for each monitored activity.",
 				Computed:            true,
 			},
 			"severity": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action threshold with its value. For example, you can define low and high thresholds as transactions rates increase. If the low threshold is 100 transactions/second and that limit is reached, some action is taken. Then, if the high threshold is 300 transactions/second and that limit is reached, another action is taken.", "severity", "").AddStringEnum("low", "high").String,
+				MarkdownDescription: "Specify the action threshold with its value. For example, you can define low and high thresholds as transactions rates increase. If the low threshold is 100 transactions/second and that limit is reached, some action is taken. Then, if the high threshold is 300 transactions/second and that limit is reached, another action is taken.",
 				Computed:            true,
 			},
 			"threshold": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value in TPS to trigger the action.", "threshold", "").AddDefaultValue("0").String,
+				MarkdownDescription: "Specify the threshold value in TPS to trigger the action.",
 				Computed:            true,
 			},
 			"action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to take when the threshold is reached.", "action", "").AddStringEnum("log", "throttle").String,
+				MarkdownDescription: "Specify the action to take when the threshold is reached.",
 				Computed:            true,
 			},
 		},

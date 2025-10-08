@@ -101,29 +101,17 @@ Optional:
 Read-Only:
 
 - `ebms3_in_message` (Boolean) ebMS3 inbound message
-  - Default value: `true`
 - `ebms3_in_rcpt` (Boolean) ebMS3 inbound receipt
-  - Default value: `true`
 - `ebms3_out_message` (Boolean) ebMS3 outbound message
-  - Default value: `true`
 - `ebms3_out_rcpt` (Boolean) ebMS3 outbound receipt
-  - Default value: `true`
 - `ebms_in_ack` (Boolean) ebMS2 inbound ACK
-  - Default value: `true`
 - `ebms_in_message` (Boolean) ebMS2 inbound message
-  - Default value: `true`
 - `ebms_out_ack` (Boolean) ebMS2 outbound ACK
-  - Default value: `true`
 - `ebms_out_message` (Boolean) ebMS2 outbound message
-  - Default value: `true`
 - `in_mdn` (Boolean) AS inbound MDN
-  - Default value: `true`
 - `in_message` (Boolean) AS inbound message
-  - Default value: `true`
 - `out_mdn` (Boolean) AS outbound MDN
-  - Default value: `true`
 - `out_message` (Boolean) AS outbound message
-  - Default value: `true`
 
 
 <a id="nestedatt--result--as_front_protocol"></a>
@@ -132,10 +120,7 @@ Read-Only:
 Read-Only:
 
 - `front_protocol` (String) Specify the protocol handler.
-  - CLI Alias: `front-protocol`
 - `mdn_receiver` (Boolean) Specify whether to set the handler as the default MDN receiver.
-  - CLI Alias: `mdn-receiver`
-  - Default value: `false`
 
 
 <a id="nestedatt--result--b2b_groups"></a>
@@ -144,11 +129,7 @@ Read-Only:
 Read-Only:
 
 - `group_enabled` (Boolean) Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.
-  - CLI Alias: `enabled`
-  - Default value: `true`
 - `profile_group` (String) Specify the profile group.
-  - CLI Alias: `group`
-  - Reference to: `datapower_b2b_profile_group:id`
 
 
 <a id="nestedatt--result--b2b_profiles"></a>
@@ -157,14 +138,8 @@ Read-Only:
 Read-Only:
 
 - `partner_profile` (String) Specify the profile
-  - CLI Alias: `profile`
-  - Reference to: `datapower_b2b_profile:id`
 - `profile_dest` (String) Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.
-  - CLI Alias: `destination`
-  - Default value: `default`
 - `profile_enabled` (Boolean) Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.
-  - CLI Alias: `enabled`
-  - Default value: `true`
 
 
 <a id="nestedatt--result--cpa_entries"></a>
@@ -173,14 +148,6 @@ Read-Only:
 Read-Only:
 
 - `collaboration` (String) Specify the service to attach. A service is either a business collaboration service for exchanging business messages or an MSH signal service for exchanging MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping, and Pong. The value of an MSH signal service is <tt>urn:oasis:names:tc:ebxml-msg:service</tt> . Another value represents a business collaboration service.
-  - CLI Alias: `collaboration`
-  - Reference to: `datapower_b2b_cpa_collaboration:id`
 - `cpa` (String) Specify the CPA.
-  - CLI Alias: `cpa`
-  - Reference to: `datapower_b2b_cpa:id`
 - `external_partner` (String) Specify the external partner.
-  - CLI Alias: `external-partner`
-  - Reference to: `datapower_b2b_profile:id`
 - `internal_partner` (String) Specify the internal partner.
-  - CLI Alias: `internal-partner`
-  - Reference to: `datapower_b2b_profile:id`

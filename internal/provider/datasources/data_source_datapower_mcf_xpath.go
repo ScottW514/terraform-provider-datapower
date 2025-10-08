@@ -61,7 +61,6 @@ func (d *MCFXPathDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Filter based on specific data in the message. An XPath expression defines a data element to be matched in the request message.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

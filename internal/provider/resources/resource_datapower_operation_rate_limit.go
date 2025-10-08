@@ -92,8 +92,8 @@ func (r *OperationRateLimitResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"use_rate_limit_group": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use rate limit group", "use-rate-limit-group", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"rate_limit": schema.ListNestedAttribute{

@@ -53,11 +53,11 @@ func GetDmJWTGenMethodDataSourceSchema(description string, cliAlias string, refe
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"sign": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sign the JWT", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Sign the JWT",
 				Computed:            true,
 			},
 			"encrypt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encrypt the JWT", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Encrypt the JWT",
 				Computed:            true,
 			},
 		},

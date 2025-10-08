@@ -99,8 +99,8 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 			},
 			"conn_security": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "connection-security", "").AddStringEnum("none", "stls", "ssl").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "stls", "ssl"),
 				},
@@ -108,8 +108,8 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 			},
 			"auth_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The type of authentication to use. If authentication fails, no connection is made.", "auth-method", "").AddStringEnum("basic", "apop").AddDefaultValue("basic").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("basic", "apop"),
 				},
@@ -125,8 +125,8 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 			},
 			"delay_between_polls": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between polling sequences. A <em>polling sequence</em> is the time to retrieve the messages plus the time to complete their processing. Enter a value in the range 1 - 65535. The default value is 300. <p><b>Note:</b> Some mail servers restrict the number of times an account can establish a connection during a specific time period. Ensure that the configured interval complies with any restriction.</p>", "delay-time", "").AddIntegerRange(1, 65535).AddDefaultValue("300").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -134,8 +134,8 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 			},
 			"max_messages_per_poll": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of messages to retrieve in each polling cycle. Enter a value in the range 1 - 100. The default value is 5.", "max-messages-per-poll", "").AddIntegerRange(1, 100).AddDefaultValue("5").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 				},
@@ -143,8 +143,8 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddRequiredWhen(models.POPPollerSourceProtocolHandlerSSLClientConfigTypeCondVal.String()).AddNotValidWhen(models.POPPollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(models.POPPollerSourceProtocolHandlerSSLClientConfigTypeCondVal, models.POPPollerSourceProtocolHandlerSSLClientConfigTypeIgnoreVal, true),

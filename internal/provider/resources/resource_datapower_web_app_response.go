@@ -91,8 +91,8 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"policy_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the satisfaction policy for the profile. The default is Admission.", "policy-type", "").AddStringEnum("pre-requisite", "admission").AddDefaultValue("admission").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("pre-requisite", "admission"),
 				},
@@ -106,8 +106,8 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"max_body_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the response body.", "response-body-max", "").AddDefaultValue("128000000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(128000000),
 			},
 			"header_gnvc": schema.StringAttribute{
@@ -117,16 +117,16 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 			"content_types": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the response. If this list is empty, any content-type is acceptable. If the response does not have a content type that will be represented as an empty string for matching purposes. An empty list will match all content types.", "response-content-type", "").String,
 				ElementType:         types.StringType,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default: listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
 					types.StringValue(".*"),
 				})),
 			},
 			"xml_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles responses that contain an XML MIME type.", "response-xml-policy", "").AddStringEnum("nothing", "xml", "soap").AddDefaultValue("nothing").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("nothing", "xml", "soap"),
 				},
@@ -141,8 +141,8 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"non_xml_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles responses that do not contain an XML MIME type.", "response-nonxml-policy", "").AddStringEnum("nothing", "side", "binary").AddDefaultValue("nothing").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("nothing", "side", "binary"),
 				},

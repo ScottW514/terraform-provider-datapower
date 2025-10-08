@@ -61,8 +61,8 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -71,8 +71,8 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"throttle_at": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the throttle threshold as a percentage of available memory. At this threshold, the system rejects new connections for the timeout period to allow memory usage to recover. Enter a value in the range 0 - 100. The default value is 20.", "memory-throttle", "").AddIntegerRange(0, 100).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
 				},
@@ -80,8 +80,8 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"terminate_at": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the terminate threshold as a percentage of available memory. At this threshold, the system reboots. Enter a value in the range 0 - 100. The default value is 5.", "memory-terminate", "").AddIntegerRange(0, 100).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
 				},
@@ -89,8 +89,8 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"temp_fs_throttle_at": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the throttle threshold as a percentage of available temporary file space. At this threshold, the system rejects new connections for the timeout period to allow temporary file space usage to recover. Enter a value in the range 0 - 100. The default value is 0.", "temp-fs-throttle", "").AddIntegerRange(0, 100).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
 				},
@@ -98,8 +98,8 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"temp_fs_terminate_at": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the terminate threshold as a percentage of available temporary file space. At this threshold, the system reboots. Enter a value in the range 0 - 100. The default value is 0.", "temp-fs-terminate", "").AddIntegerRange(0, 100).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
 				},
@@ -107,8 +107,8 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"qname_warn_at": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the threshold as a percentage of available XML names and JSON keys before the system writes an alert to the logs. This threshold is when the number of available XML names or JSON keys in any pool is less than the threshold. Enter a value in the range 5 - 100. The default value is 10.</p><p>As this threshold is approached, the system attempts to free unused resources to prevent this threshold from being reached. If you receive this alert, schedule a reload as soon as possible to prevent an unscheduled restart. If the percentage for any resource pool is less than 5%, the system reboots.</p>", "qcode-warn", "").AddIntegerRange(5, 100).AddDefaultValue("10").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(5, 100),
 				},
@@ -116,20 +116,20 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to reject new connections after a throttle threshold is reached. The default value is 30.", "timeout", "").AddDefaultValue("30").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(30),
 			},
 			"statistics": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to collect throttle log messages. By default, logging is disabled.", "status-log", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"log_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the criticality level for throttle messages. By default, logging is at debug level.", "status-loglevel", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("debug").AddNotValidWhen(models.ThrottlerLogLevelIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.ThrottlerLogLevelIgnoreVal, true),
@@ -138,14 +138,14 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"environmental_log": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to collect messages about fans and power supplies and generate messages if a failure event occurs. By default, monitoring is enabled.", "sensors-log", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"backlog_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the size of the backlog queue where incoming requests are routed if a throttling threshold is reached. Enter a value in the range 0 - 500. The default value is 0, which indicates that no requests are routed to the backlog queue.", "backlog-size", "").AddIntegerRange(0, 500).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 500),
 				},
@@ -153,8 +153,8 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"backlog_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that a request remains in the backlog queue before it is rejected if a throttling threshold is reached. Specify a value that is less than the timeout value of your browser. The default value is 30.", "backlog-timeout", "").AddDefaultValue("30").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(30),
 			},
 			"dependency_actions": actions.ActionsSchema,

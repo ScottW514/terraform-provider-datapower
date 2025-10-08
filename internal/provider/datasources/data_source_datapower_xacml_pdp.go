@@ -61,7 +61,6 @@ func (d *XACMLPDPDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The XACML policies can be evaluated on a DataPower device, This on-box XACML Policy Decision Point (PDP) allows customers to define the necessary information so that it can evaluate the corresponding XACML policies against a XACML request for an XACML Policy Enforcement Point (PEP). The DataPower PEP is implemented with AAA action.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

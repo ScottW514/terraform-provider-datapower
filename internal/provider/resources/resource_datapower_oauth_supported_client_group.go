@@ -90,14 +90,14 @@ func (r *OAuthSupportedClientGroupResource) Schema(ctx context.Context, req reso
 			},
 			"customized": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the configuration is for a customized OAuth client group.", "customized", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"customized_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Sets the method to customize an OAuth client.", "customized-type", "").AddStringEnum("custom", "template").AddDefaultValue("custom").AddNotValidWhen(models.OAuthSupportedClientGroupCustomizedTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("custom", "template"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.OAuthSupportedClientGroupCustomizedTypeIgnoreVal, true),

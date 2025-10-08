@@ -53,11 +53,11 @@ func GetDmFTPServerVirtualDirectoryDataSourceSchema() DataSourceSchema.NestedAtt
 	var DmFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"virtual_path": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in virtual file system where the FTP client can find this directory.", "", "").String,
+				MarkdownDescription: "Specify the directory in virtual file system where the FTP client can find this directory.",
 				Computed:            true,
 			},
 			"response_directory": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system to store responses.", "", "").String,
+				MarkdownDescription: "Specify the directory in the virtual file system to store responses.",
 				Computed:            true,
 			},
 		},

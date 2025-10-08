@@ -61,7 +61,6 @@ func (d *MQManagerDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "In IBM MQ, distributed send and receive queues are managed by a component called a queue manager. The queue manager provides messaging services for communicating applications by periodically monitoring/polling queues, by ensuring that sent messages are directed to the correct receive queue, or that messages are routed to another queue manager. This queue manager object corresponds to a queue manager that is running on an IBM MQ server in your network. These properties enable communication between the DataPower Gateway and the queue manager on the remote IBM MQ server.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

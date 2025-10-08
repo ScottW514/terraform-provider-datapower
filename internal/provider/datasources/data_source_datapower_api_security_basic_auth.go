@@ -61,7 +61,6 @@ func (d *APISecurityBasicAuthDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An API basic authentication security definition selects a user registry to authenticate accesses to the API. When you use basic authentication, API users must provide a valid username and password in the requests to access API operations that require basic authentication. <b>Note:</b> You cannot apply more than one basic authentication security definition to an API.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -50,11 +50,11 @@ func GetDmKafkaPropertyDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmKafkaPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the property.", "", "").String,
+				MarkdownDescription: "Specify the name of the property.",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the property.", "", "").String,
+				MarkdownDescription: "Specify the value for the property.",
 				Computed:            true,
 			},
 		},

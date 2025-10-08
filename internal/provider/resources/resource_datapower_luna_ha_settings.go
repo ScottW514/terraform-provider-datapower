@@ -60,14 +60,14 @@ func (r *LunaHASettingsResource) Schema(ctx context.Context, req resource.Schema
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HA recovery mode. The default value is activeBasic.", "recovery-mode", "").AddStringEnum("activeBasic", "activeEnhanced").AddDefaultValue("activeBasic").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("activeBasic", "activeEnhanced"),
 				},
@@ -82,8 +82,8 @@ func (r *LunaHASettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between recovery attempts for failed members in the HA group. Enter a value in the range 60 - 1200. The default value is 60.", "recovery-interval", "").AddIntegerRange(60, 1200).AddDefaultValue("60").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(60, 1200),
 				},

@@ -51,11 +51,11 @@ func GetDmConfigSequenceLocationDataSourceSchema() DataSourceSchema.NestedAttrib
 	var DmConfigSequenceLocationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"directory": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.", "directory", "").AddDefaultValue("local:///").String,
+				MarkdownDescription: "Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.",
 				Computed:            true,
 			},
 			"access_profile_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the access policies to enforce. Each policy defines permissions to a specific resource group.", "access-profile", "access_profile").String,
+				MarkdownDescription: "Specify the access policies to enforce. Each policy defines permissions to a specific resource group.",
 				Computed:            true,
 			},
 		},

@@ -56,15 +56,15 @@ func GetDmOIDCHybridResponseTypeDataSourceSchema(description string, cliAlias st
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"code_id_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("code id_token", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "code id_token",
 				Computed:            true,
 			},
 			"code_access_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("code token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "code token",
 				Computed:            true,
 			},
 			"code_id_token_access_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("code id_token token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "code id_token token",
 				Computed:            true,
 			},
 		},

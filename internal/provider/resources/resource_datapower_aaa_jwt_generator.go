@@ -91,8 +91,8 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"issuer": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The issuer claim, \"iss\", identifies the principal that issues the JWT. The maximum length is 256 characters. The default value is <tt>idg</tt> .", "iss", "").AddDefaultValue("idg").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 256),
 				},
@@ -100,8 +100,8 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"duration": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The validity period identifies the expiration time, \"exp\" claim. Enter a value in the range 1 - 31622400. The default value is 3600.", "duration", "").AddIntegerRange(1, 31622400).AddDefaultValue("3600").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 31622400),
 				},
@@ -135,8 +135,8 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 			"gen_method": models.GetDmJWTGenMethodResourceSchema("The signing and encryption methods can be used to secure and generate a JWT.", "generate-method", "", false),
 			"sign_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.", "sign-alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").AddDefaultValue("RS256").AddRequiredWhen(models.AAAJWTGeneratorSignAlgorithmCondVal.String()).AddNotValidWhen(models.AAAJWTGeneratorSignAlgorithmIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512"),
 					validators.ConditionalRequiredString(models.AAAJWTGeneratorSignAlgorithmCondVal, models.AAAJWTGeneratorSignAlgorithmIgnoreVal, true),
@@ -159,8 +159,8 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"enc_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Various encryption algorithms can be used to encrypt the JWT, such as A128CBC-HS256, A192CBC-HS384, A256CBC-HS512, A128GCM, A192GCM, and A256GCM. The default value is A128CBC-HS256.", "enc", "").AddStringEnum("A128CBC-HS256", "A192CBC-HS384", "A256CBC-HS512", "A128GCM", "A192GCM", "A256GCM").AddDefaultValue("A128CBC-HS256").AddRequiredWhen(models.AAAJWTGeneratorEncAlgorithmCondVal.String()).AddNotValidWhen(models.AAAJWTGeneratorEncAlgorithmIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("A128CBC-HS256", "A192CBC-HS384", "A256CBC-HS512", "A128GCM", "A192GCM", "A256GCM"),
 					validators.ConditionalRequiredString(models.AAAJWTGeneratorEncAlgorithmCondVal, models.AAAJWTGeneratorEncAlgorithmIgnoreVal, true),
@@ -169,8 +169,8 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"encrypt_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Various key management algorithms can be used to encrypt the JWT, such as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default value is RSA1_5.", "enc-alg", "").AddStringEnum("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir").AddDefaultValue("RSA1_5").AddRequiredWhen(models.AAAJWTGeneratorEncryptAlgorithmCondVal.String()).AddNotValidWhen(models.AAAJWTGeneratorEncryptAlgorithmIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir"),
 					validators.ConditionalRequiredString(models.AAAJWTGeneratorEncryptAlgorithmCondVal, models.AAAJWTGeneratorEncryptAlgorithmIgnoreVal, true),

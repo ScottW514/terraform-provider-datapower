@@ -74,39 +74,39 @@ func GetDmHTTPRequestMethodsDataSourceSchema(description string, cliAlias string
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"post": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("POST method", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "POST method",
 				Computed:            true,
 			},
 			"get": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("GET method", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "GET method",
 				Computed:            true,
 			},
 			"put": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("PUT method", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "PUT method",
 				Computed:            true,
 			},
 			"patch": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("PATCH method", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "PATCH method",
 				Computed:            true,
 			},
 			"head": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HEAD method", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "HEAD method",
 				Computed:            true,
 			},
 			"options": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("OPTIONS method", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "OPTIONS method",
 				Computed:            true,
 			},
 			"trace": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TRACE method", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "TRACE method",
 				Computed:            true,
 			},
 			"delete": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("DELETE method", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "DELETE method",
 				Computed:            true,
 			},
 			"connect": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CONNECT method", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "CONNECT method",
 				Computed:            true,
 			},
 		},

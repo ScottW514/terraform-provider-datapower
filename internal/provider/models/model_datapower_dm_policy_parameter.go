@@ -50,11 +50,11 @@ func GetDmPolicyParameterDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmPolicyParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"parameter_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Policy key name formated {policy-domain-ns}name", "", "").String,
+				MarkdownDescription: "Policy key name formated {policy-domain-ns}name",
 				Computed:            true,
 			},
 			"parameter_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Value for corresponding policy parameter key.", "", "").String,
+				MarkdownDescription: "Value for corresponding policy parameter key.",
 				Computed:            true,
 			},
 		},

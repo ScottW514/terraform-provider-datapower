@@ -61,7 +61,6 @@ func (d *APISecurityHTTPSchemeDataSource) Schema(ctx context.Context, req dataso
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Configure and manage an HTTP bearer authentication security definition with the Bearer authentication security scheme in an API as defined in OpenAPI 3.0. Bearer authentication is an HTTP Authentication scheme and was originally part of RFC 6750: The OAuth 2.0 Authorization Framework: Bearer Token Usage.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

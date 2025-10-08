@@ -61,7 +61,6 @@ func (d *WCCServiceDataSource) Schema(ctx context.Context, req datasource.Schema
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Use the WebSphere Cell configuration to retrieve configuration information and runtime information from a Network Deployment or Virtual Enterprise product. Load balancer groups use this information to automate configuration and updates.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

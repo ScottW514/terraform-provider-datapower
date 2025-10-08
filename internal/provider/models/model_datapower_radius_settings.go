@@ -101,6 +101,7 @@ func (data RADIUSSettings) IsNull() bool {
 	}
 	return true
 }
+
 func (data RADIUSSettingsWO) IsNull() bool {
 	if !data.Enabled.IsNull() {
 		return false
@@ -214,6 +215,7 @@ func (data *RADIUSSettings) FromBody(ctx context.Context, pathRoot string, res g
 		data.AaaServers = types.ListNull(types.ObjectType{AttrTypes: DmRadiusServerObjectType})
 	}
 }
+
 func (data *RADIUSSettingsWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."

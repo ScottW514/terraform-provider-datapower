@@ -88,8 +88,8 @@ func (r *SLMRsrcClassResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"rsrc_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Resource type", "type", "").AddStringEnum("aaa-mapped-resource", "front-url", "destination-url", "xpath-filter", "request-message", "response-message", "soap-fault", "errorcode", "custom-stylesheet", "concurrent-connections", "concurrent-transactions", "wsdl", "wsdl-service", "wsdl-port", "wsdl-operation", "request-mq-qname", "reply-mq-qname", "uddi-subscription", "wsrr-subscription", "wsrr-saved-search-subscription").AddDefaultValue("aaa-mapped-resource").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("aaa-mapped-resource", "front-url", "destination-url", "xpath-filter", "request-message", "response-message", "soap-fault", "errorcode", "custom-stylesheet", "concurrent-connections", "concurrent-transactions", "wsdl", "wsdl-service", "wsdl-port", "wsdl-operation", "request-mq-qname", "reply-mq-qname", "uddi-subscription", "wsrr-subscription", "wsrr-saved-search-subscription"),
 				},
@@ -97,8 +97,8 @@ func (r *SLMRsrcClassResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"rsrc_match_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Match type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").AddRequiredWhen(models.SLMRsrcClassRsrcMatchTypeCondVal.String()).AddNotValidWhen(models.SLMRsrcClassRsrcMatchTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("per-extracted-value", "exact-match", "regexp-match"),
 					validators.ConditionalRequiredString(models.SLMRsrcClassRsrcMatchTypeCondVal, models.SLMRsrcClassRsrcMatchTypeIgnoreVal, true),

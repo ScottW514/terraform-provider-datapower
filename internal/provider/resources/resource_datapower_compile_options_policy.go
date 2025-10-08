@@ -90,8 +90,8 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"xslt_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the XSLT processor version.", "xslt-version", "").AddStringEnum("XSLT10", "XSLT10_IT23272", "XSLT20", "StylesheetSpecified").AddDefaultValue("XSLT10").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("XSLT10", "XSLT10_IT23272", "XSLT20", "StylesheetSpecified"),
 				},
@@ -99,8 +99,8 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"strict": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable strict XSLT error-checking; non-strict operation attempts to recover from certain errors such as use of undeclared variables, calling undeclared templates, and so forth.", "strict", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"profile": schema.StringAttribute{
@@ -125,8 +125,8 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"stack_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum number of bytes the stack is allowed to use while executing a stylesheet or other compiled content. This blocks infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The default is half a megabyte, or 524,288 bytes.", "stack-size", "").AddIntegerRange(10240, 104857600).AddDefaultValue("524288").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10240, 104857600),
 				},
@@ -142,8 +142,8 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"ws_i_validation": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default is Ignore.", "wsi-validate", "").AddStringEnum("ignore", "warn", "fail").AddDefaultValue("ignore").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ignore", "warn", "fail"),
 				},
@@ -151,8 +151,8 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"wsdl_validate_body": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the validation behavior for the soap:Body. The default is Strict.", "wsdl-validate-body", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("strict").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("strict", "lax", "skip"),
 				},
@@ -160,8 +160,8 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"wsdl_validate_headers": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the validation behavior for the soap:Header. The default is Lax.", "wsdl-validate-headers", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("lax").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("strict", "lax", "skip"),
 				},
@@ -169,8 +169,8 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"wsdl_validate_faults": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the validation behavior for the fault detail. The default is Strict.", "wsdl-validate-faults", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("strict").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("strict", "lax", "skip"),
 				},
@@ -178,8 +178,8 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"wsdl_wrapped_faults": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("For compatibility, require a rpc-style wrapper around fault details that are specified by type.", "wsdl-wrapped-faults", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_soap_enc_array": schema.StringAttribute{
@@ -196,14 +196,14 @@ func (r *CompileOptionsPolicyResource) Schema(ctx context.Context, req resource.
 			},
 			"wsdl_strict_soap_version": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When on, follow the version of the SOAP Binding in the WSDL, allowing only messages bound to SOAP 1.2 to appear in SOAP 1.2 envelopes and messages bound to SOAP 1.1 to appear in SOAP 1.1 envelopes. The default is off.", "wsdl-strict-soap-version", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"xacml_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Setting to \"on\" to make the XACML compiler to put more debugging information when evaluate a policy. Note that the XACML debugging messages are also controlled by the log event in the 'XACML' category. Use the \"debug\" log level to view the full XACML debugging messages.", "xacml-debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_xop_include": schema.StringAttribute{

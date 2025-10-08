@@ -61,7 +61,6 @@ func (d *URLMapDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Configure/Edit URL maps. URL Maps are used by Processing Actions and by XML Manager Compile Options Policies.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

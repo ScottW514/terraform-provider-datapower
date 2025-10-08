@@ -61,7 +61,6 @@ func (d *APICORSDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The CORS API action handles cross-origin resource sharing (CORS) requests that are required by the API.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -61,7 +61,6 @@ func (d *SSHServerSourceProtocolHandlerDataSource) Schema(ctx context.Context, r
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The SFTP server handler provides an SSH SFTP server that can be used to submit files for processing by the system. Each file that is written results in one transaction.</p><p>There can be multiple SFTP servers, but only one server can be configured to listen on the default SSH port 22 on a given interface. There can be multiple simultaneous connections from SFTP clients to the same SFTP server.</p><p><b>Note:</b> Changes in the configuration affect only new connections to this SFTP server. Existing connections continue to use their current configuration until they disconnect.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

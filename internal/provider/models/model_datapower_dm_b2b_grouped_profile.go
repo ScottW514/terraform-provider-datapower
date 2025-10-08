@@ -50,11 +50,11 @@ func GetDmB2BGroupedProfileDataSourceSchema() DataSourceSchema.NestedAttributeOb
 	var DmB2BGroupedProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"partner_profile": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the partner profile.", "profile", "b2b_profile").String,
+				MarkdownDescription: "Specify the partner profile.",
 				Computed:            true,
 			},
 			"profile_dest": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for this partner. Without this property, the first destination is used.", "destination", "").String,
+				MarkdownDescription: "Specify the destination for this partner. Without this property, the first destination is used.",
 				Computed:            true,
 			},
 		},

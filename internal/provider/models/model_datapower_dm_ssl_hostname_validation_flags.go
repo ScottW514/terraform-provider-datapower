@@ -62,23 +62,23 @@ func GetDmSSLHostnameValidationFlagsDataSourceSchema(description string, cliAlia
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"x509_check_flag_always_check_subject": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT",
 				Computed:            true,
 			},
 			"x509_check_flag_no_wildcards": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_WILDCARDS", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "X509_CHECK_FLAG_NO_WILDCARDS",
 				Computed:            true,
 			},
 			"x509_check_flag_no_partial_wildcards": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS",
 				Computed:            true,
 			},
 			"x509_check_flag_multi_label_wildcards": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS",
 				Computed:            true,
 			},
 			"x509_check_flag_single_label_subdomains": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS",
 				Computed:            true,
 			},
 		},

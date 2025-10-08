@@ -83,23 +83,23 @@ func GetDmWSPolicyParametersDataSourceSchema() DataSourceSchema.NestedAttributeO
 	var DmWSPolicyParametersDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"policy_param_parameters": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Reference to policy parameter object.", "", "policy_parameters").String,
+				MarkdownDescription: "Reference to policy parameter object.",
 				Computed:            true,
 			},
 			"policy_param_wsdl_component_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				MarkdownDescription: "Select a type of WSDL Component. The default is All.",
 				Computed:            true,
 			},
 			"policy_param_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSPolicyParametersPolicyParamWSDLComponentValueIgnoreVal.String()).String,
+				MarkdownDescription: "Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.",
 				Computed:            true,
 			},
 			"policy_param_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSPolicyParametersPolicyParamSubscriptionCondVal.String()).AddNotValidWhen(DmWSPolicyParametersPolicyParamSubscriptionIgnoreVal.String()).String,
+				MarkdownDescription: "Select a subscription.",
 				Computed:            true,
 			},
 			"policy_param_fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: "Matches Fragment Identifier",
 				Computed:            true,
 			},
 		},

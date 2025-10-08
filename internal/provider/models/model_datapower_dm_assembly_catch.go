@@ -50,11 +50,11 @@ func GetDmAssemblyCatchDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmAssemblyCatchDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"error": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of a custom error.", "", "").String,
+				MarkdownDescription: "Specifies the name of a custom error.",
 				Computed:            true,
 			},
 			"handler": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the error handler for the custom error.", "", "api_rule").String,
+				MarkdownDescription: "Specifies the name of the error handler for the custom error.",
 				Computed:            true,
 			},
 		},

@@ -92,14 +92,14 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the handler listens. The default value indicates that The handler listens on all IPv4 addresses.", "local-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("443").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -107,8 +107,8 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"http_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP version for client connections. The default value is HTTP/1.1. For the HTTP/2 protocol, requests and responses are always HTTP/2. When HTTP/2, this setting is ignored.", "http-client-version", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
 				},
@@ -117,8 +117,8 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			"allowed_features": models.GetDmSourceHTTPFeatureTypeResourceSchema("Allowed methods and versions", "allowed-features", "", false),
 			"persistent_connections": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to negotiate persistent connections with clients. The HTTP/2 protocol controls persistent connections and reuse. Therefore, this setting is ignored for the HTTP/2 protocol.", "persistent-connections", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"max_persistent_connections_reuse": schema.Int64Attribute{
@@ -127,14 +127,14 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"allow_compression": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to negotiate GZIP compression for client connections. When enabled and the <tt>Accept-Encoding</tt> HTTP header indicates that compressed documents can be processed, the service uses GZIP to compress HTTP transmissions. The <tt>Transfer-Encoding</tt> HTTP header indicates compression.", "compression", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_web_socket_upgrade": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.", "websocket-upgrade", "").AddDefaultValue("false").AddNotValidWhen(models.HTTPSSourceProtocolHandlerAllowWebSocketUpgradeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"web_socket_idle_timeout": schema.Int64Attribute{
@@ -147,8 +147,8 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"max_url_len": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the length in bytes of the longest incoming URL to accept. The length includes any query string or fragment identifier. Enter a value in the range 1 - 128000. The default value is 16384.", "max-url-len", "").AddIntegerRange(1, 128000).AddDefaultValue("16384").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 128000),
 				},
@@ -156,8 +156,8 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"max_total_hdr_len": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum aggregate length in bytes of HTTP headers to allow. Enter a value in the range 5 - 128000. The default value is 128000.", "max-total-header-len", "").AddIntegerRange(5, 128000).AddDefaultValue("128000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(5, 128000),
 				},
@@ -185,8 +185,8 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"credential_charset": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The contents of the <tt>Authorization</tt> header are transcoded to UTF-8. The default value represents ISO-8859-1 Latin 1.", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le"),
 				},
@@ -194,8 +194,8 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"ssl_server_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
 				},
@@ -217,8 +217,8 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"http2_max_streams": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent streams that the client can have outstanding at the same time. Enter a value in the range 1 - 500. The default value is 100. <p>The limit applies to the number of streams that the client allows the target to create. The greater the number of streams in use, the more resources the client uses. Resources include memory and the network connections to the destination.</p>", "http2-max-streams", "").AddIntegerRange(1, 500).AddDefaultValue("100").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 500),
 				},
@@ -226,8 +226,8 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"http2_max_frame_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the largest payload frame size that the client can send. Enter a value in the range 16384 - 16777215. The default value is 16384.", "http2-max-frame", "").AddIntegerRange(16384, 16777215).AddDefaultValue("16384").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(16384, 16777215),
 				},
@@ -235,20 +235,20 @@ func (r *HTTPSSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"http2_stream_header": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the HTTP/2 stream identifier header in the request or response. When enabled, the HTTP/2 stream identifier is included in the <tt>X-DP-http2-stream</tt> header. With this header, you can correlate the HTTP/2 stream. The default behavior is disabled.", "http2-stream-header", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"chunked_encoding": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable responses to use chunked transfer-encoding. By default, HTTP responses use <tt>Transfer-Encoding: chunked</tt> .", "chunked-encoding", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"header_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in milliseconds to allow for request headers processing. When the value is greater than 0, request header processing must complete before the duration elapses. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 30000.", "header-timeout", "").AddIntegerRange(0, 3600000).AddDefaultValue("30000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 3600000),
 				},

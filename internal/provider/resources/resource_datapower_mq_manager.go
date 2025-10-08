@@ -99,8 +99,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"ccsid": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the coded character set identifier (CCSID) to present to the remote queue manager during the connection. This setting has the same effect as setting the MQCCSID environment variable for an IBM MQ client. For more information, see the IBM MQ documentation. Unless necessary, retain the default value.", "ccsid", "").AddIntegerRange(0, 65535).AddDefaultValue("819").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -108,8 +108,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"channel_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the channel to use as an alternative to the default SYSTEM.DEF.SVRCONN.", "channel-name", "").AddDefaultValue("SYSTEM.DEF.SVRCONN").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 20),
 				},
@@ -134,8 +134,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"heartbeat": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the approximate time in seconds between heartbeat flows on a channel when waiting for a message on a queue. Enter a value in the range 0 - 999999. If 0, there in no heartbeat flows exchanged when waiting for a message on the channel. This property does not set the heartbeat on the channel. Instead, it is used to negotiate the heartbeat value with the channel. The greater of the two values is used.", "heartbeat", "").AddIntegerRange(0, 999999).AddDefaultValue("300").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 999999),
 				},
@@ -143,8 +143,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"maximum_message_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in bytes of allowed messages. Enter a value that is equal to or greater than the <tt>MaxMsgLength</tt> attribute of the channel and of the queue on the IBM MQ server. Messages that are greater than this size are rejected. Enter a value in the range 1024 - 104857600.", "maximum-message-size", "").AddIntegerRange(1024, 104857600).AddDefaultValue("1048576").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1024, 104857600),
 				},
@@ -152,8 +152,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"cache_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to retain (keep alive) a dynamic connection in the connection cache. Enter a value in the range 0 - 65535. The default value is 60. Enter 0 to disable the timer.</p><p>Use a value that is greater than the negotiated heartbeat interval but less than the keep alive interval.</p><ul><li>The negotiated heartbeat interval is between the client and the IBM MQ server. The channel heartbeat defines the starting value for the negotiation.</li><li>The keep alive (timeout) interval is on the IBM MQ server. The <tt>KAINT</tt> attribute on the IBM MQ server defines the timeout value for a channel. Not all channels have a defined, explicit keep alive interval on the IBM MQ server. Some queue managers use an automatic timeout setting when the <tt>KAINT</tt> attribute set to <tt>AUTO</tt> . In these cases, the keep alive interval is the negotiated heartbeat interval plus 60 seconds.</li></ul><p>When an inactive connection reaches this threshold, the dynamic connection is removed from the local cache. When the cache no longer contains dynamic connections, the client deletes the dynamic queue manager. Without a dynamic queue manager, there is no connection with the IBM MQ server.</p><p>The cache timeout value is the only way to configure a timeout value with the IBM MQ server. No other local configuration setting can time out an IBM MQ connection.</p>", "cache-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("60").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -161,8 +161,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"ffst_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("FFST file size", "ffst-size", "").AddIntegerRange(100, 50000).AddDefaultValue("500").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 50000),
 				},
@@ -170,8 +170,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"ffst_rotate": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Number of FFST file rotations", "ffst-rotate", "").AddIntegerRange(3, 5).AddDefaultValue("3").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(3, 5),
 				},
@@ -179,8 +179,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"units_of_work": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use units-of-work. <ul><li>When 0, the default value, get and put messages without provisions for rollback. Either the operation succeeds or not. Undeliverable messages are silently discarded, which leaves higher level protocols with the responsibility to detect and retransmit lost packets</li><li>When 1, use syncpoints. A syncpoint commits and rolls back each message, not the entire transaction. When specified, the local queue manager does not remove the message that it gets from a server queue until it completes its transaction by using that message (such as placing the message on a server queue for processing). If the transaction fails and the message is left available on the server queue, the local queue manager can attempt to get the message from the server queue and process it again.</li></ul>", "units-of-work", "").AddIntegerRange(0, 1).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1),
 				},
@@ -188,8 +188,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"automatic_backout": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable automatic routing of undeliverable messages, which is the automatic backout of poison messages. A poison message is any message that the receiving application does not know how to process.</p><p>Usually an application rolls back the get of this message, which leaves the message on the input queue. However, the backout count ( <tt>MQMD.Backoutcount</tt> ) is incremented. As the queue manager continues to re-get the message, the backout count continues to increase. When the backout count exceeds the backout threshold, the queue manager moves the message to the backout queue.</p><p>When disabled, the poison message remains on the get queue and continues to be reprocessed by the client until the server queue manager that manages the get queue removes it or the client reroutes the offending message. The message can be rerouted by a custom stylesheet in the request rule.</p>", "automatic-backout", "").AddDefaultValue("false").AddNotValidWhen(models.MQManagerAutomaticBackoutIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"backout_threshold": schema.Int64Attribute{
@@ -210,8 +210,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"total_connection_limit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the total number of open TCP connections to allow. Enter a value in the range 1 - 10000. The default value is 250.", "total-connection-limit", "").AddIntegerRange(1, 10000).AddDefaultValue("250").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 10000),
 				},
@@ -219,8 +219,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"initial_connections": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of TCP connections to open immediately with the IBM MQ server. Enter a value in the range 0 - 10000. The default value is 1.", "initial-connections", "").AddIntegerRange(0, 10000).AddDefaultValue("1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 10000),
 				},
@@ -228,8 +228,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"sharing_conversations": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of conversations to share a single TCP connection. Enter a value in the range 1 - 5000. The default value is 1.", "sharing-conversations", "").AddIntegerRange(1, 5000).AddDefaultValue("1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 5000),
 				},
@@ -241,14 +241,14 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"permit_insecure_servers": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When the configuration uses the TLS key repository, specify whether to permit connections to IBM MQ servers that do not support RFC 5746. Such servers are vulnerable to MITM attacks as documented in CVE-2009-3555. By default, insecure connections are rejected during the handshake.", "permit-insecure-servers", "").AddDefaultValue("false").AddNotValidWhen(models.MQManagerPermitInsecureServersIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ssl_cipher": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>When the configuration uses a TLS key repository, specify the TLS cipher suite. The cipher suite must match the ciphers that the remote queue manager uses.</p><p>Use this setting with the TLS key repository setting to enable TLS communication when the TLS artifacts were created with IBM Global Security Kit (GSKit).</p><p><b>Note:</b> To integrate with IBM MQ for z/OS, do not use these settings. Use a TLS client profile.</p>", "ssl-cipher", "").AddStringEnum("none", "NULL_MD5", "NULL_SHA", "RC4_MD5_EXPORT", "RC4_MD5_US", "RC4_SHA_US", "RC2_MD5_EXPORT", "DES_SHA_EXPORT", "RC4_56_SHA_EXPORT1024", "DES_SHA_EXPORT1024", "TRIPLE_DES_SHA_US", "TLS_RSA_WITH_AES_128_CBC_SHA", "TLS_RSA_WITH_AES_256_CBC_SHA", "AES_SHA_US", "TLS_RSA_WITH_NULL_SHA256", "TLS_RSA_WITH_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_256_CBC_SHA256", "ECDHE_ECDSA_AES_128_CBC_SHA256", "ECDHE_RSA_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_128_GCM_SHA256", "TLS_RSA_WITH_AES_256_GCM_SHA384", "ECDHE_ECDSA_AES_256_CBC_SHA384", "ECDHE_ECDSA_AES_128_GCM_SHA256", "ECDHE_ECDSA_AES_256_GCM_SHA384", "ECDHE_RSA_AES_256_CBC_SHA384", "ECDHE_RSA_AES_128_GCM_SHA256", "ECDHE_RSA_AES_256_GCM_SHA384", "TLS_AES_128_GCM_SHA256", "TLS_AES_256_GCM_SHA384", "TLS_CHACHA20_POLY1305_SHA256", "TLS_AES_128_CCM_SHA256", "TLS_AES_128_CCM_8_SHA256").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "NULL_MD5", "NULL_SHA", "RC4_MD5_EXPORT", "RC4_MD5_US", "RC4_SHA_US", "RC2_MD5_EXPORT", "DES_SHA_EXPORT", "RC4_56_SHA_EXPORT1024", "DES_SHA_EXPORT1024", "TRIPLE_DES_SHA_US", "TLS_RSA_WITH_AES_128_CBC_SHA", "TLS_RSA_WITH_AES_256_CBC_SHA", "AES_SHA_US", "TLS_RSA_WITH_NULL_SHA256", "TLS_RSA_WITH_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_256_CBC_SHA256", "ECDHE_ECDSA_AES_128_CBC_SHA256", "ECDHE_RSA_AES_128_CBC_SHA256", "TLS_RSA_WITH_AES_128_GCM_SHA256", "TLS_RSA_WITH_AES_256_GCM_SHA384", "ECDHE_ECDSA_AES_256_CBC_SHA384", "ECDHE_ECDSA_AES_128_GCM_SHA256", "ECDHE_ECDSA_AES_256_GCM_SHA384", "ECDHE_RSA_AES_256_CBC_SHA384", "ECDHE_RSA_AES_128_GCM_SHA256", "ECDHE_RSA_AES_256_GCM_SHA384", "TLS_AES_128_GCM_SHA256", "TLS_AES_256_GCM_SHA384", "TLS_CHACHA20_POLY1305_SHA256", "TLS_AES_128_CCM_SHA256", "TLS_AES_128_CCM_8_SHA256"),
 				},
@@ -263,20 +263,20 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"convert_input": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to convert input messages to a different CCSI (coded character set identifier) than the one in the incoming message. This conversion is done by the queue manager on the IBM MQ server.", "convert", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"auto_retry": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to reconnect to the server after a critical connection error. By default, automatically attempts to reconnect to the IBM MQ server. This setting does not affect established connections.", "auto-retry", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between failed connection attempts to the IBM MQ server. The default value is 10. This setting does not affect established connections.", "retry-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("10").AddNotValidWhen(models.MQManagerRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerRetryIntervalIgnoreVal, true),
@@ -285,8 +285,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"retry_attempts": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of failed connection attempts. After the number is reached, the long interval is used. The default value is 6. When 0, the long retry interval is not used. The retry interval is used forever.", "retry-attempts", "").AddIntegerRange(0, 65535).AddDefaultValue("6").AddNotValidWhen(models.MQManagerRetryAttemptsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerRetryAttemptsIgnoreVal, true),
@@ -295,8 +295,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"long_retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the long retry interval in seconds for failed connections. The long retry interval is used after the number of retry attempts is reached. The default value is 600. The long retry interval must be greater than the retry interval.", "long-retry-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("600").AddNotValidWhen(models.MQManagerLongRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerLongRetryIntervalIgnoreVal, true),
@@ -305,8 +305,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"reporting_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between error messages for failed connection attempts. This setting filters the generation of identical error messages to IBM MQ logging targets. The default value is 10.", "reporting-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("10").AddNotValidWhen(models.MQManagerReportingIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQManagerReportingIntervalIgnoreVal, true),
@@ -315,8 +315,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"alternate_user": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the ALTERNATE_USER_AUTHORITY flag. The valdue determines whether to use <tt>MQOD.AlternateUserId</tt> as the value of the username setting. <ul><li>When enabled, uses <tt>MQOD.AlternateUserId</tt> .</li><li>When disabled, uses <tt>MQMD.UserIdentifier</tt> .</li></ul>", "alternate-user", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"local_address": schema.StringAttribute{
@@ -328,8 +328,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XML manager", "xml-manager", "xml_manager").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"ssl_client": schema.StringAttribute{
@@ -338,8 +338,8 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"outbound_sni": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Outbound SNI settings.", "outbound-sni", "").AddStringEnum("Channel", "Hostname").AddDefaultValue("Channel").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("Channel", "Hostname"),
 				},
@@ -347,14 +347,14 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"ocsp_check_extensions": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Check OCSP extensions", "ocsp-check-extensions", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ocsp_authentication": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("OCSP authentication", "ocsp-authentication", "").AddStringEnum("REQUIRED", "OPTIONAL", "WARN").AddDefaultValue("REQUIRED").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("REQUIRED", "OPTIONAL", "WARN"),
 				},
@@ -362,14 +362,14 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"cdp_check_extensions": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Check CDP extensions", "cdp-check-extensions", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"client_revocation_checks": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Client revocation checking", "client-revocation-checks", "").AddStringEnum("REQUIRED", "OPTIONAL", "DISABLED").AddDefaultValue("REQUIRED").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("REQUIRED", "OPTIONAL", "DISABLED"),
 				},

@@ -73,9 +73,7 @@ Optional:
 Read-Only:
 
 - `match` (String) Select the Matching Rule that defines the matching criteria.
-  - Reference to: `datapower_matching:id`
 - `rule` (String) Select the Processing Rule to run.
-  - Reference to: `datapower_style_policy_rule:id`
 
 
 <a id="nestedatt--result--request_maps"></a>
@@ -84,9 +82,7 @@ Read-Only:
 Read-Only:
 
 - `match` (String) Select the Matching Rule that defines the matching criteria.
-  - Reference to: `datapower_matching:id`
 - `rule` (String) Select the Web Request Profile to run.
-  - Reference to: `datapower_web_app_request:id`
 
 
 <a id="nestedatt--result--response_maps"></a>
@@ -95,6 +91,4 @@ Read-Only:
 Read-Only:
 
 - `match` (String) Select the Matching Rule that defines the matching criteria.
-  - Reference to: `datapower_matching:id`
 - `rule` (String) Select the Web Response Profile to run.
-  - Reference to: `datapower_web_app_response:id`

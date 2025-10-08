@@ -90,27 +90,27 @@ func GetDmExternalAttachedPolicyDataSourceSchema() DataSourceSchema.NestedAttrib
 	var DmExternalAttachedPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"external_attach_wsdl_component_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").AddDefaultValue("service").String,
+				MarkdownDescription: "Select a type of Component",
 				Computed:            true,
 			},
 			"external_attach_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a WSDL component formatted {ns}ncname", "", "").AddRequiredWhen(DmExternalAttachedPolicyExternalAttachWSDLComponentValueCondVal.String()).AddNotValidWhen(DmExternalAttachedPolicyExternalAttachWSDLComponentValueIgnoreVal.String()).String,
+				MarkdownDescription: "Enter the qname of a WSDL component formatted {ns}ncname",
 				Computed:            true,
 			},
 			"external_attach_policy_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a document containing policy to be attached", "", "").String,
+				MarkdownDescription: "Select a document containing policy to be attached",
 				Computed:            true,
 			},
 			"external_attach_policy_fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").AddNotValidWhen(DmExternalAttachedPolicyExternalAttachPolicyFragmentIDIgnoreVal.String()).String,
+				MarkdownDescription: "Matches Fragment Identifier",
 				Computed:            true,
 			},
 			"external_attach_message_content_filter": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the message content filters object that specifies the service consumer", "", "message_content_filters").String,
+				MarkdownDescription: "Enter the name of the message content filters object that specifies the service consumer",
 				Computed:            true,
 			},
 			"external_attach_message_content_filter_service_provider": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the message content filters object that specifies the service provider", "", "message_content_filters").String,
+				MarkdownDescription: "Enter the name of the message content filters object that specifies the service provider",
 				Computed:            true,
 			},
 		},

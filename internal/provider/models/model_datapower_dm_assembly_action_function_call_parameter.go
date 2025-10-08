@@ -50,11 +50,11 @@ func GetDmAssemblyActionFunctionCallParameterDataSourceSchema() DataSourceSchema
 	var DmAssemblyActionFunctionCallParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
+				MarkdownDescription: "Specify the name of the parameter.",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.", "value", "").String,
+				MarkdownDescription: "Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.",
 				Computed:            true,
 			},
 		},

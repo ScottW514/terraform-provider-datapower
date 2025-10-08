@@ -61,7 +61,6 @@ func (d *SSLProxyServiceDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>Creates a TLS proxy service. This service can be used to wrap or unwrap a TCP stream in TLS.</p><p>This service requires TLS profiles to secure the connections.</p><ul><li>When the system is a client, use a TLS client profile to secure connections with targets.</li><li>When the system is a server, use a a TLS server profile to secure connections with clients. When the server supports Server Name Indication (SNI), use a TLS SNI server profile.</li><li>When the system is both client and server, use TLS client and server profiles to secure both connections.</li></ul>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -50,11 +50,11 @@ func GetDmOpenTelemetryExporterHeaderDataSourceSchema() DataSourceSchema.NestedA
 	var DmOpenTelemetryExporterHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"header_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+				MarkdownDescription: "Name",
 				Computed:            true,
 			},
 			"header_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+				MarkdownDescription: "Value",
 				Computed:            true,
 			},
 		},

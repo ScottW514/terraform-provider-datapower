@@ -52,11 +52,11 @@ func GetDmHeaderSuppressionDataSourceSchema() DataSourceSchema.NestedAttributeOb
 	var DmHeaderSuppressionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"direction": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
+				MarkdownDescription: "Select the direction of the message.",
 				Computed:            true,
 			},
 			"header_tag": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.", "", "").String,
+				MarkdownDescription: "Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.",
 				Computed:            true,
 			},
 		},

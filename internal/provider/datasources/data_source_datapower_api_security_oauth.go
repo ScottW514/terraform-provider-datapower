@@ -61,7 +61,6 @@ func (d *APISecurityOAuthDataSource) Schema(ctx context.Context, req datasource.
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An API OAuth security definition defines the applicable settings for an OAuth provider.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

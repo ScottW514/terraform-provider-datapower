@@ -62,23 +62,23 @@ func GetDmB2BContactDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmB2BContactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"family_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the family name of the person to contact. A family name is the surname borne by family members.", "family-name", "").String,
+				MarkdownDescription: "Specify the family name of the person to contact. A family name is the surname borne by family members.",
 				Computed:            true,
 			},
 			"given_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.", "given-name", "").String,
+				MarkdownDescription: "Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.",
 				Computed:            true,
 			},
 			"title": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the person to contact.", "title", "").String,
+				MarkdownDescription: "Specify the title of the person to contact.",
 				Computed:            true,
 			},
 			"phone": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the telephone number to contact the person.", "phone", "").String,
+				MarkdownDescription: "Specify the telephone number to contact the person.",
 				Computed:            true,
 			},
 			"email": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address to contact the person.", "email", "").String,
+				MarkdownDescription: "Specify the email address to contact the person.",
 				Computed:            true,
 			},
 		},

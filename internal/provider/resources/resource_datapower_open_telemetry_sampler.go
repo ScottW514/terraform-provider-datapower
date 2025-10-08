@@ -89,14 +89,14 @@ func (r *OpenTelemetrySamplerResource) Schema(ctx context.Context, req resource.
 			},
 			"parent_based": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Parent based", "parent-based", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Sampler type", "type", "").AddStringEnum("always-on", "always-off", "ratio").AddDefaultValue("always-on").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("always-on", "always-off", "ratio"),
 				},

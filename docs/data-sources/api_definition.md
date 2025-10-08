@@ -112,13 +112,9 @@ Optional:
 Read-Only:
 
 - `http` (Boolean) Protocol identifier for HTTP.
-  - Default value: `true`
 - `https` (Boolean) Protocol identifier for HTTPS.
-  - Default value: `true`
 - `ws` (Boolean) Protocol identifier for WebSocket. When allowed, the HTTP handler must be configured to allow WebSocket upgrade requests.
-  - Default value: `true`
 - `wss` (Boolean) Protocol identifier for WebSocket Secure. When allowed, the HTTPS handler must be configured to allow WebSocket upgrade requests.
-  - Default value: `true`
 
 
 <a id="nestedatt--result--properties"></a>
@@ -127,7 +123,6 @@ Read-Only:
 Read-Only:
 
 - `catalog` (String) Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.
-  - Default value: `*`
 - `property_name` (String) Specify the property name.
 - `value` (String) Specify the property value.
 
@@ -139,4 +134,3 @@ Read-Only:
 
 - `name` (String) Specify the name of the data type.
 - `schema` (String) Specify the API schema object.
-  - Reference to: `datapower_api_schema:id`

@@ -57,19 +57,19 @@ func GetDmExtensionFunctionDataSourceSchema() DataSourceSchema.NestedAttributeOb
 	var DmExtensionFunctionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"extension_function_namespace": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter namespace of the extension functions used in the custom stylesheets. For example, \"http://www.fredspace/extensions\".", "", "").String,
+				MarkdownDescription: "Enter namespace of the extension functions used in the custom stylesheets. For example, \"http://www.fredspace/extensions\".",
 				Computed:            true,
 			},
 			"extension_function": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the extension function within the namespace to map. For example, \"nodeset()\".", "", "").String,
+				MarkdownDescription: "Enter the extension function within the namespace to map. For example, \"nodeset()\".",
 				Computed:            true,
 			},
 			"local_function_namespace": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the local namespace if it is other than the DataPower default (shown in the box).", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
+				MarkdownDescription: "Enter the local namespace if it is other than the DataPower default (shown in the box).",
 				Computed:            true,
 			},
 			"local_function": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the local function to use in place of the extension function identified above. For example, \"node-set()\".", "", "").String,
+				MarkdownDescription: "Enter the local function to use in place of the extension function identified above. For example, \"node-set()\".",
 				Computed:            true,
 			},
 		},

@@ -56,15 +56,15 @@ func GetDmMetadataFromTypeDataSourceSchema(description string, cliAlias string, 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"none": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"authentication_url": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authentication URL", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Authentication URL",
 				Computed:            true,
 			},
 			"external_url": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("External metadata URL", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "External metadata URL",
 				Computed:            true,
 			},
 		},

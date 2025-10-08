@@ -92,15 +92,10 @@ Optional:
 Read-Only:
 
 - `x509_check_flag_always_check_subject` (Boolean) X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT
-  - Default value: `false`
 - `x509_check_flag_multi_label_wildcards` (Boolean) X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS
-  - Default value: `false`
 - `x509_check_flag_no_partial_wildcards` (Boolean) X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS
-  - Default value: `false`
 - `x509_check_flag_no_wildcards` (Boolean) X509_CHECK_FLAG_NO_WILDCARDS
-  - Default value: `false`
 - `x509_check_flag_single_label_subdomains` (Boolean) X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS
-  - Default value: `false`
 
 
 <a id="nestedatt--result--protocols"></a>
@@ -109,15 +104,10 @@ Read-Only:
 Read-Only:
 
 - `ssl_v3` (Boolean) Enable SSL version 3
-  - Default value: `false`
 - `tls_v1d0` (Boolean) Enable TLS version 1.0
-  - Default value: `false`
 - `tls_v1d1` (Boolean) Enable TLS version 1.1
-  - Default value: `true`
 - `tls_v1d2` (Boolean) Enable TLS version 1.2
-  - Default value: `true`
 - `tls_v1d3` (Boolean) Enable TLS version 1.3
-  - Default value: `true`
 
 
 <a id="nestedatt--result--ssl_client_features"></a>
@@ -126,8 +116,5 @@ Read-Only:
 Read-Only:
 
 - `compression` (Boolean) Enable compression
-  - Default value: `false`
 - `permit_insecure_servers` (Boolean) Permit connections without renegotiation
-  - Default value: `false`
 - `use_sni` (Boolean) Use SNI
-  - Default value: `false`

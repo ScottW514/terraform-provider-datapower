@@ -61,7 +61,6 @@ func (d *AssemblyActionOAuthDataSource) Schema(ctx context.Context, req datasour
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The OAuth assembly action processes the requested OAuth flow based on the defined OAuth provider settings.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

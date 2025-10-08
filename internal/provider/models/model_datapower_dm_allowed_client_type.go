@@ -53,11 +53,11 @@ func GetDmAllowedClientTypeDataSourceSchema(description string, cliAlias string,
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"confidential": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Confidential", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Confidential",
 				Computed:            true,
 			},
 			"public": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Public", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Public",
 				Computed:            true,
 			},
 		},

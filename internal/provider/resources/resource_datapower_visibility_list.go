@@ -83,8 +83,8 @@ func (r *VisibilityListResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("remove").AddDefaultValue("remove").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("remove"),
 				},

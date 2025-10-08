@@ -50,7 +50,7 @@ func GetDmSecurityTypeDataSourceSchema(description string, cliAlias string, refe
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"basic_auth": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Basic authentication header", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Basic authentication header",
 				Computed:            true,
 			},
 		},

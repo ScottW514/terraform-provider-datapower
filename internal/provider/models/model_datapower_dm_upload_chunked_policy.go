@@ -51,11 +51,11 @@ func GetDmUploadChunkedPolicyDataSourceSchema() DataSourceSchema.NestedAttribute
 	var DmUploadChunkedPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"upload_chunked": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.",
 				Computed:            true,
 			},
 		},

@@ -61,7 +61,6 @@ func (d *TAMDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>A DataPower Gateway can support multiple IBM Security Access Manager registry types: LDAP or Microsoft Active Directory. Support for the registry type is established for each Access Manager client that starts according to its configuration.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

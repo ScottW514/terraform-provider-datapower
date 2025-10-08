@@ -61,7 +61,6 @@ func (d *AS2SourceProtocolHandlerDataSource) Schema(ctx context.Context, req dat
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An AS2 handler receives HTTP requests and forwards them to the appropriate gateway. This handler conforms to RFC 2616.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

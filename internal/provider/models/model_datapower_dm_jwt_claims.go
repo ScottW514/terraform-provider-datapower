@@ -65,27 +65,27 @@ func GetDmJWTClaimsDataSourceSchema(description string, cliAlias string, referen
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"aud": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Audience", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Audience",
 				Computed:            true,
 			},
 			"nbf": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Not before", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Not before",
 				Computed:            true,
 			},
 			"iat": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Issued at", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Issued at",
 				Computed:            true,
 			},
 			"jti": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("JWT ID", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "JWT ID",
 				Computed:            true,
 			},
 			"nonce": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Nonce", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Nonce",
 				Computed:            true,
 			},
 			"custom": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Custom",
 				Computed:            true,
 			},
 		},

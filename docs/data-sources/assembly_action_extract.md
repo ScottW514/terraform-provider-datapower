@@ -75,6 +75,4 @@ Optional:
 Read-Only:
 
 - `capture` (String) Specify the path expression that identifies the field.
-  - CLI Alias: `capture`
 - `transform` (String) Specify the expression that defines how to transform the content.
-  - CLI Alias: `transform`

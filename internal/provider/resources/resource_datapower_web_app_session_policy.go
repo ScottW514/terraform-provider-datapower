@@ -89,14 +89,14 @@ func (r *WebAppSessionPolicyResource) Schema(ctx context.Context, req resource.S
 			},
 			"auto_renew": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If this property is enabled, the session lifetime is renewed on each use of the session. Otherwise the session lifetime is the total amount of time allowed before returning to the login sections.", "auto-renew", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The login cookie is only good for the amount of time specified by this property. It may be automatically renewed during activity depending on the value of the Auto Renew property.", "lifetime", "").AddIntegerRange(1, 864000).AddDefaultValue("3600").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 864000),
 				},
@@ -104,8 +104,8 @@ func (r *WebAppSessionPolicyResource) Schema(ctx context.Context, req resource.S
 			},
 			"address_agnostic_cookie": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Normally the session cookie contains the client IP address and this prevents them from using the session on any other host. Some proxy server environments may make this undesirable. Turning this property on will make the session cookie address independent.", "allow-cookie-sharing", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"start_matches": schema.StringAttribute{

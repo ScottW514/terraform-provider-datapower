@@ -50,11 +50,11 @@ func GetDmWSRRWSDLSourceDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmWSRRWSDLSourceDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"wsrr_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select WSRR subscription", "", "wsrr_subscription").String,
+				MarkdownDescription: "Select WSRR subscription",
 				Computed:            true,
 			},
 			"wsrr_attachment": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select WS-Policy attachment", "", "policy_attachments").String,
+				MarkdownDescription: "Select WS-Policy attachment",
 				Computed:            true,
 			},
 		},

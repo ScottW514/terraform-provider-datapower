@@ -72,8 +72,4 @@ Optional:
 Read-Only:
 
 - `client_type` (String) Client type
-  - Choices: `confidential`, `public`
-  - Default value: `confidential`
 - `grant_type` (String) Flow
-  - Choices: `implicit`, `password`, `application`, `accessCode`
-  - Default value: `implicit`

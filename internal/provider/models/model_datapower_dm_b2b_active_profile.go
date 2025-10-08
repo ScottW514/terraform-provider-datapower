@@ -55,15 +55,15 @@ func GetDmB2BActiveProfileDataSourceSchema() DataSourceSchema.NestedAttributeObj
 	var DmB2BActiveProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"partner_profile": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile", "profile", "b2b_profile").String,
+				MarkdownDescription: "Specify the profile",
 				Computed:            true,
 			},
 			"profile_enabled": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.", "enabled", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.",
 				Computed:            true,
 			},
 			"profile_dest": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.", "destination", "").AddDefaultValue("default").String,
+				MarkdownDescription: "Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.",
 				Computed:            true,
 			},
 		},

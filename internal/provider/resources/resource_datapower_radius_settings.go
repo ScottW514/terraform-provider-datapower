@@ -58,8 +58,8 @@ func (r *RADIUSSettingsResource) Schema(ctx context.Context, req resource.Schema
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -72,8 +72,8 @@ func (r *RADIUSSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the RADIUS retransmit interval in milliseconds. This timeout is the duration that the RADIUS client waits before an unacknowledged request is retransmitted. Enter a value in the range of 1 - 30000. The default value is 1000.", "timeout", "").AddIntegerRange(1, 30000).AddDefaultValue("1000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 30000),
 				},
@@ -81,8 +81,8 @@ func (r *RADIUSSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"retries": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times that the RADIUS client can retransmit an unacknowledged request to a server. Enter a value in the range 1 - 10. The default value is 3.", "retries", "").AddIntegerRange(1, 10).AddDefaultValue("3").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 10),
 				},

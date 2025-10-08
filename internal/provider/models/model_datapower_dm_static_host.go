@@ -53,15 +53,15 @@ func GetDmStaticHostDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmStaticHostDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"hostname": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname of the target host.", "", "").String,
+				MarkdownDescription: "Specify the hostname of the target host.",
 				Computed:            true,
 			},
 			"ip_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address for the target host.", "", "").String,
+				MarkdownDescription: "Specify the IP address for the target host.",
 				Computed:            true,
 			},
 			"user_summary": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify a brief, descriptive summary for the configuration.", "", "").String,
+				MarkdownDescription: "Specify a brief, descriptive summary for the configuration.",
 				Computed:            true,
 			},
 		},

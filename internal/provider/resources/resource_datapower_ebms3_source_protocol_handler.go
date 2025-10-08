@@ -91,14 +91,14 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.", "local-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 80.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("80").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -106,8 +106,8 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"http_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP version for client connection. The default value is HTTP/1.1.", "http-client-version", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
 				},
@@ -115,20 +115,20 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"persistent_connections": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable persistent connections with clients. By default, persistent connections are enabled.", "persistent-connections", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"allow_compression": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable GZIP compression with clients. By default, compression is not enabled.", "compression", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_url_len": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum URL length in bytes to accept from clients. Enter a value in the range 1 - 128000. The default value is 16384. The length includes any query string or fragment identifier.", "max-url-len", "").AddIntegerRange(1, 128000).AddDefaultValue("16384").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 128000),
 				},
@@ -136,8 +136,8 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"max_total_hdr_len": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum aggregate size of headers in bytes in client requests. Enter a value in the range 5 - 128000. The default value is 128000.", "max-total-header-len", "").AddIntegerRange(5, 128000).AddDefaultValue("128000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(5, 128000),
 				},
@@ -145,8 +145,8 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"max_hdr_count": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of headers to allow in client requests. The default value is 0, which means unlimited.", "max-header-count", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -154,8 +154,8 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"max_name_hdr_len": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum length to accept for any header name. A header is expressed as a name-value pair. The default value is 0, which means unlimited.", "max-header-name-len", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -163,8 +163,8 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"max_value_hdr_len": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum length to accept for any header value. A header is expressed as a name-value pair. The default value is 0, which means unlimited.", "max-header-value-len", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -172,8 +172,8 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"max_query_string_len": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum length of the query string. The query string is the portion of the URL after the <tt>?</tt> character. The default value is 0, which indicates no limit.", "max-querystring-len", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -189,8 +189,8 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"credential_charset": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the character encoding of the original basic authentication values. The default value is protocol, which is ISO-8859-1 (Latin 1). <p>Basic authentication credentials are combined and base64 encoded in the HTTP <tt>Authorization</tt> request header. The contents of the <tt>Authorization</tt> header is transcoded to UTF-8.</p>", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le"),
 				},
@@ -198,8 +198,8 @@ func (r *EBMS3SourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"ssl_server_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile to secure client connections.", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
 				},

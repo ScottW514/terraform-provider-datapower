@@ -61,7 +61,6 @@ func (d *B2BCPASenderSettingDataSource) Schema(ctx context.Context, req datasour
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "CPA sender setting",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -74,39 +74,39 @@ func GetDmOAuthComponentsDataSourceSchema(description string, cliAlias string, r
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"none": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"oauth_validate_request": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validate request", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Validate request",
 				Computed:            true,
 			},
 			"oauth_generate_az_code": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Generate authorization code", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Generate authorization code",
 				Computed:            true,
 			},
 			"oauth_verify_az_code": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Verify authorization code", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Verify authorization code",
 				Computed:            true,
 			},
 			"oauth_verify_refresh_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Verify refresh token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Verify refresh token",
 				Computed:            true,
 			},
 			"oauth_collect_metadata": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Collect Metadata", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Collect Metadata",
 				Computed:            true,
 			},
 			"oauth_generate_access_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Generate access token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Generate access token",
 				Computed:            true,
 			},
 			"oauth_introspect_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Introspect token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Introspect token",
 				Computed:            true,
 			},
 			"oauth_revoke_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Revoke token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Revoke token",
 				Computed:            true,
 			},
 		},

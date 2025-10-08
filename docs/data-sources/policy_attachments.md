@@ -75,18 +75,11 @@ Optional:
 Read-Only:
 
 - `external_attach_message_content_filter` (String) Enter the name of the message content filters object that specifies the service consumer
-  - Reference to: `datapower_message_content_filters:id`
 - `external_attach_message_content_filter_service_provider` (String) Enter the name of the message content filters object that specifies the service provider
-  - Reference to: `datapower_message_content_filters:id`
 - `external_attach_policy_fragment_id` (String) Matches Fragment Identifier
-  - Not Valid When: `external_attach_wsdl_component_type`=`rest`
 - `external_attach_policy_url` (String) Select a document containing policy to be attached
 - `external_attach_wsdl_component_type` (String) Select a type of Component
-  - Choices: `service`, `port`, `fragmentid`, `rest`
-  - Default value: `service`
 - `external_attach_wsdl_component_value` (String) Enter the qname of a WSDL component formatted {ns}ncname
-  - Required When: `external_attach_wsdl_component_type`!=`rest`
-  - Not Valid When: `external_attach_wsdl_component_type`=`rest`
 
 
 <a id="nestedatt--result--ignored_policy_attachment_points"></a>
@@ -96,5 +89,4 @@ Read-Only:
 
 - `policy_attach_fragment_id` (String) Matches Fragment Identifier
 - `policy_attach_wsdl_component_type` (String) Select a type of WSDL Component
-  - Choices: `service`, `port`, `fragmentid`, `rest`
 - `policy_attach_wsdl_component_value` (String) Enter the qname of a wsdl component formatted {ns}ncname

@@ -53,15 +53,15 @@ func GetDmSAMLAttributeNameAndValueDataSourceSchema() DataSourceSchema.NestedAtt
 	var DmSAMLAttributeNameAndValueDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"uri": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the namespace URI for the attribute. The namespace URI must match to a name. If blank, the null namespace is used. For example, <tt>http://www.examples.com</tt> matches a message with the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>", "", "").String,
+				MarkdownDescription: "<p>Specify the namespace URI for the attribute. The namespace URI must match to a name. If blank, the null namespace is used. For example, <tt>http://www.examples.com</tt> matches a message with the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>",
 				Computed:            true,
 			},
 			"local_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the local name of the attribute. For example, <tt>cats</tt> matches a message with the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>", "", "").String,
+				MarkdownDescription: "<p>Specify the local name of the attribute. For example, <tt>cats</tt> matches a message with the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the value for the attribute with the corresponding name. For example, <tt>Winchester</tt> matches the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>", "", "").String,
+				MarkdownDescription: "<p>Specify the value for the attribute with the corresponding name. For example, <tt>Winchester</tt> matches the following attribute.</p><pre><tt>&lt;Attribute AttributeName=\"cats\" AttributeNamespace=\"http://www.example.com\"></tt><tt> &lt;AttributeValue>Winchester&lt;/AttributeValue></tt><tt>&lt;Attribute></tt></pre>",
 				Computed:            true,
 			},
 		},

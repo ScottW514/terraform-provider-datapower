@@ -61,7 +61,6 @@ func (d *SOAPHeaderDispositionDataSource) Schema(ctx context.Context, req dataso
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The list of instructions provided by customers to control how the SOAP headers and/or children elements are handled. This object is used by store:///soap-refine.xsl transform stylesheet.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

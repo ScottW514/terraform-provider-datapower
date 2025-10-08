@@ -102,8 +102,5 @@ Optional:
 Read-Only:
 
 - `connection_error` (Boolean) Connection error
-  - Default value: `false`
 - `operation_error` (Boolean) Operation error
-  - Default value: `false`
 - `soap_error` (Boolean) SOAP error
-  - Default value: `false`

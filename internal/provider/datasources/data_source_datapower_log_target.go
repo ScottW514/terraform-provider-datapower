@@ -61,7 +61,6 @@ func (d *LogTargetDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>Log targets capture messages that are posted by the various objects and services. Target types enable additional capabilities.</p><p>Messages in log targets can be filtered by priority, event code, event category, object type, or IP address. By default, a log target cannot accept messages until it is subscribed to one or more events.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

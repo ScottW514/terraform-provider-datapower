@@ -61,7 +61,6 @@ func (d *OperationRateLimitDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An API operation rate limit defines the operation-specific rate limit scheme. Operation specific rate limits override the schemes in the API plan.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

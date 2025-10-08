@@ -108,8 +108,8 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"max_records": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of records that can be buffered for each API gateway. The collected analytics data for an API gateway is offloaded when 80% of this value or the defined interval is reached. The value must be a power of 2. Enter a value in the range 256 - 65536. The default value is 1024.", "max-records", "").AddIntegerRange(256, 65536).AddDefaultValue("1024").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(256, 65536),
 				},
@@ -117,8 +117,8 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"max_records_memory_kb": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size for each record in KB. Enter a value in the range 4 - 1024. The default value is 512.", "max-record-size", "").AddIntegerRange(4, 1024).AddDefaultValue("512").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(4, 1024),
 				},
@@ -126,8 +126,8 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"max_delivery_memory_mb": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size for each delivery in MB. Enter a value in the range 1 - 1024. The default value is 512.", "max-delivery-size", "").AddIntegerRange(1, 1024).AddDefaultValue("512").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 1024),
 				},
@@ -135,8 +135,8 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between offloads. Data is offloaded at this interval or when an API gateway reaches 80% of the value set for maximum records. Enter a value in the range 1 - 3600. The default value is 600", "interval", "").AddIntegerRange(1, 3600).AddDefaultValue("600").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 3600),
 				},
@@ -144,8 +144,8 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"delivery_connections": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of connections to establish per delivery to the remote server to offload analytics data. Each connection can carry a bulk activity log. Enter a value in the range 1 - 100. The default value is 1.", "delivery-connections", "").AddIntegerRange(1, 100).AddDefaultValue("1").AddNotValidWhen(models.AnalyticsEndpointDeliveryConnectionsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.AnalyticsEndpointDeliveryConnectionsIgnoreVal, true),
@@ -154,8 +154,8 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"enable_jwt": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable JWT feature sending logs to analytics server.", "enable-jwt", "").AddDefaultValue("false").AddNotValidWhen(models.AnalyticsEndpointEnableJWTIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"management_url": schema.StringAttribute{
@@ -204,14 +204,14 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"persistent_connection": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to negotiate persistent connections. By default, persistent connections are enabled. The HTTP/2 protocol controls persistent connections and reuse. Therefore, these settings are ignored.", "persistent-connection", "").AddDefaultValue("true").AddNotValidWhen(models.AnalyticsEndpointPersistentConnectionIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the intra-transaction timeout for connections, which is the maximum idle time to allow in a transaction. This timer monitors idle time in the data transfer process. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 90.", "timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("90").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -219,8 +219,8 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"persistent_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the inter-transaction timeout for connections, which is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 60.", "persistent-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("60").AddNotValidWhen(models.AnalyticsEndpointPersistentTimeoutIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.AnalyticsEndpointPersistentTimeoutIgnoreVal, true),

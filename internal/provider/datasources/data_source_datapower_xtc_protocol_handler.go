@@ -61,7 +61,6 @@ func (d *XTCProtocolHandlerDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The configuration for the stateful TCP protocol handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed. The source protocol also specifies the destination address and any single TCP connection will use the same TCP session on the backside for all of its transactions (one transaction per document). <p>Any gateway that employs one of these handlers must use a dynamic backend.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

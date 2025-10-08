@@ -61,7 +61,6 @@ func (d *WSRRSubscriptionDataSource) Schema(ctx context.Context, req datasource.
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The WSRR (WebSphere Service Registry and Repository) subscription is useful when you want to deploy web services with a direct reference to a service document. The configuration references a WSRR server, the name of the WSRR resource, and its namespace. If more than one version of the service document exists, you must specify the version to reference. <p>The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

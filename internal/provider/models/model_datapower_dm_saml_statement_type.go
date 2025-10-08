@@ -56,15 +56,15 @@ func GetDmSAMLStatementTypeDataSourceSchema(description string, cliAlias string,
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"authentication": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authentication statement", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Authentication statement",
 				Computed:            true,
 			},
 			"attribute": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Attribute statement", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Attribute statement",
 				Computed:            true,
 			},
 			"authorization": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authorization decision statement", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Authorization decision statement",
 				Computed:            true,
 			},
 		},

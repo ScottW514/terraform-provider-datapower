@@ -111,20 +111,13 @@ Optional:
 Read-Only:
 
 - `client` (Boolean) Client Credentials Grant
-  - Default value: `false`
 - `code` (Boolean) Authorization Code Grant
-  - Default value: `false`
 - `implicit` (Boolean) Implicit Grant
-  - Default value: `false`
 - `jwt` (Boolean) JWT Grant
-  - Default value: `false`
 - `novalidate` (Boolean) Disable Validation Grant
-  - Default value: `false`
 - `oidc` (Boolean) OpenID Connect
-  - Default value: `false`
 - `password` (Boolean) Resource Owner Password Credential Grant
-  - Default value: `false`
-- `saml20bearer` (Boolean) - Default value: `false`
+- `saml20bearer` (Boolean)
 
 
 <a id="nestedatt--result--oauth_features"></a>
@@ -133,13 +126,9 @@ Read-Only:
 Read-Only:
 
 - `multiple_uses_refresh_token` (Boolean) Allow reuse of refresh token
-  - Default value: `false`
 - `onetimeuse` (Boolean) One-time use access token
-  - Default value: `false`
 - `pkce` (Boolean) Require PKCE for Authorization Code
-  - Default value: `false`
 - `verboseerror` (Boolean) Verbose
-  - Default value: `false`
 
 
 <a id="nestedatt--result--oauth_role"></a>
@@ -148,9 +137,7 @@ Read-Only:
 Read-Only:
 
 - `azsvr` (Boolean) Authorization and Token Endpoints
-  - Default value: `false`
 - `rssvr` (Boolean) Enforcement Point for Resource Server
-  - Default value: `false`
 
 
 <a id="nestedatt--result--rs_set_header"></a>
@@ -159,13 +146,9 @@ Read-Only:
 Read-Only:
 
 - `client_id` (Boolean) Client ID
-  - Default value: `false`
 - `miscinfo` (Boolean) Customized Info
-  - Default value: `false`
 - `owner` (Boolean) Resource Owner
-  - Default value: `false`
 - `scope` (Boolean) Scope
-  - Default value: `false`
 
 
 <a id="nestedatt--result--validation_features"></a>
@@ -174,6 +157,4 @@ Read-Only:
 Read-Only:
 
 - `introspect` (Boolean) Introspection Format
-  - Default value: `false`
 - `noauthen` (Boolean) Unprotected
-  - Default value: `false`

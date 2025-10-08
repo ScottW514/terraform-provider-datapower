@@ -149,7 +149,6 @@ Optional:
 Read-Only:
 
 - `basic_auth` (Boolean) Basic authentication header
-  - Default value: `true`
 
 
 <a id="nestedatt--result--api_c_oidc_hybrid_response_types"></a>
@@ -158,11 +157,8 @@ Read-Only:
 Read-Only:
 
 - `code_access_token` (Boolean) code token
-  - Default value: `false`
 - `code_id_token` (Boolean) code id_token
-  - Default value: `true`
 - `code_id_token_access_token` (Boolean) code id_token token
-  - Default value: `false`
 
 
 <a id="nestedatt--result--external_revocation_url_security"></a>
@@ -171,7 +167,6 @@ Read-Only:
 Read-Only:
 
 - `basic_auth` (Boolean) Basic authentication header
-  - Default value: `true`
 
 
 <a id="nestedatt--result--metadata_from"></a>
@@ -180,10 +175,8 @@ Read-Only:
 Read-Only:
 
 - `authentication_url` (Boolean) Authentication URL
-  - Default value: `true`
 - `external_url` (Boolean) External metadata URL
-  - Default value: `false`
-- `none` (Boolean) - Default value: `false`
+- `none` (Boolean)
 
 
 <a id="nestedatt--result--supported_client_types"></a>
@@ -192,9 +185,7 @@ Read-Only:
 Read-Only:
 
 - `confidential` (Boolean) Confidential
-  - Default value: `true`
 - `public` (Boolean) Public
-  - Default value: `false`
 
 
 <a id="nestedatt--result--supported_grant_types"></a>
@@ -203,16 +194,11 @@ Read-Only:
 Read-Only:
 
 - `access_code` (Boolean) Authorization code
-  - Default value: `true`
 - `application` (Boolean) Client credentials
-  - Default value: `false`
 - `implicit` (Boolean) Implicit
-  - Default value: `false`
 - `jwt` (Boolean) Resource owner - JSON Web Token
-  - Default value: `false`
-- `none` (Boolean) - Default value: `false`
+- `none` (Boolean)
 - `password` (Boolean) Resource owner - Password
-  - Default value: `false`
 
 
 <a id="nestedatt--result--third_party_introspect_url_security"></a>
@@ -221,4 +207,3 @@ Read-Only:
 Read-Only:
 
 - `basic_auth` (Boolean) Basic authentication header
-  - Default value: `true`

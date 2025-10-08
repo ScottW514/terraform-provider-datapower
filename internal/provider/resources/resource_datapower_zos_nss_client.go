@@ -124,8 +124,8 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and the NSS server.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 				},

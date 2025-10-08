@@ -98,8 +98,8 @@ func (r *MQv9PlusMFTSourceProtocolHandlerResource) Schema(ctx context.Context, r
 			},
 			"get_message_options": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cumulative value of the MQGET options that are applicable to an IBM MQ message in decimal or hex format. The value is passed directly to the IBM MQ API. The default value is 32769, which is the decimal value for the <tt>MQGMO_WAIT</tt> and <tt>MQGMO_LOGICAL_ORDER</tt> options.", "get-message-options", "").AddIntegerRange(0, 4294967295).AddDefaultValue("32769").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 4294967295),
 				},
@@ -107,8 +107,8 @@ func (r *MQv9PlusMFTSourceProtocolHandlerResource) Schema(ctx context.Context, r
 			},
 			"concurrent_connections": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.", "concurrent-connections", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -116,8 +116,8 @@ func (r *MQv9PlusMFTSourceProtocolHandlerResource) Schema(ctx context.Context, r
 			},
 			"polling_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.", "polling-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("30").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -125,20 +125,20 @@ func (r *MQv9PlusMFTSourceProtocolHandlerResource) Schema(ctx context.Context, r
 			},
 			"retrieve_backout_settings": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>", "retrieve-backout-settings", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ignore_backout_errors": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to ignore backout errors. <ul><li>>When enabled, ignore the error in sending the transfer to the backout queue and commit the transfer from the get queue.</li><li>When not enabled roll back and retry the transfer. This setting is the default value.</li></ul>", "ignore-backout-errors", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_qm_name_in_url": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>", "use-qm-in-url", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

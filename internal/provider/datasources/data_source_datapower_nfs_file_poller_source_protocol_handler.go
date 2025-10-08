@@ -61,7 +61,6 @@ func (d *NFSFilePollerSourceProtocolHandlerDataSource) Schema(ctx context.Contex
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Use this handler to have file based input from an NFS mount. The mount point must exist and have the appropriate permissions to perform the designated operations. For these configured mount points, ensure that the read, write, and delete permissions are available, as required.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

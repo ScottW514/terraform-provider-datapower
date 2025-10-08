@@ -61,7 +61,6 @@ func (d *LDAPConnectionPoolDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The LDAP connection pool settings specify the pool of LDAP servers to use.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -61,7 +61,6 @@ func (d *SSHClientProfileDataSource) Schema(ctx context.Context, req datasource.
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An SSH client profile defines the authentication type, credentials, and cipher suites to use for an SSH client connection.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

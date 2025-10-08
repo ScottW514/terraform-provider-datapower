@@ -65,27 +65,27 @@ func GetDmMQHeadersDataSourceSchema(description string, cliAlias string, referen
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"mqcih": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CICS Bridge Header (MQCIH)", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "CICS Bridge Header (MQCIH)",
 				Computed:            true,
 			},
 			"mqdlh": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Dead Letter Header (MQDLH)", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Dead Letter Header (MQDLH)",
 				Computed:            true,
 			},
 			"mqiih": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("IMS Information Header (MQIIH)", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "IMS Information Header (MQIIH)",
 				Computed:            true,
 			},
 			"mqrfh": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH)", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Rules and Formatting Header (MQRFH)",
 				Computed:            true,
 			},
 			"mqrfh2": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rules and Formatting Header (MQRFH2)", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Rules and Formatting Header (MQRFH2)",
 				Computed:            true,
 			},
 			"mqwih": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Work Information Header (MQWIH)", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Work Information Header (MQWIH)",
 				Computed:            true,
 			},
 		},

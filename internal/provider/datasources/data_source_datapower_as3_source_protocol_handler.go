@@ -61,7 +61,6 @@ func (d *AS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req dat
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "AS3 handler",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

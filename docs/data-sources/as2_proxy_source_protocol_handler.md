@@ -99,14 +99,8 @@ Optional:
 Read-Only:
 
 - `cmd_exe` (Boolean) Allows requests when the URL contains cmd.exe
-  - Default value: `false`
 - `dot_dot` (Boolean) Allows requests when the URL contains a .. (dotdot)
-  - Default value: `false`
 - `fragment_identifiers` (Boolean) UAllows requests when the URL contains a # (fragment identifier)
-  - Default value: `true`
 - `http_1d0` (Boolean) Supports HTTP 1.0 requests
-  - Default value: `true`
 - `http_1d1` (Boolean) Supports HTTP 1.1 requests
-  - Default value: `true`
 - `query_string` (Boolean) Allows requests when the URL contains a ? (query string)
-  - Default value: `true`

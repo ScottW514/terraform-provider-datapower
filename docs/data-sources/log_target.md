@@ -115,10 +115,7 @@ Optional:
 Read-Only:
 
 - `class` (String) Sets an event category.
-  - Reference to: `datapower_log_label:id`
 - `priority` (String) Sets the minimum event priority. The priorities are hierarchical.
-  - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
-  - Default value: `notice`
 
 
 <a id="nestedatt--result--log_ip_filter"></a>
@@ -135,9 +132,7 @@ Read-Only:
 Read-Only:
 
 - `class` (String) Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.
-  - Default value: `AAAPolicy`
 - `follow_references` (Boolean) Specify whether to include log messages for objects that the specified object instance references. <ul><li>When enabled, include referenced objects.</li><li>When disabled, exclude referenced objects.</li></ul><p><b>Note:</b> Included objects are a static snapshot when you apply the object filter. If referenced objects are added after you apply the object filter, messages for these referenced objects are not logged.</p>
-  - Default value: `false`
 - `object` (String) Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>
 
 
@@ -150,6 +145,4 @@ Read-Only:
 - `expression` (String) Specify the regular expression to match against message text as trigger criteria.
 - `message_id` (String) Message ID
 - `only_once` (Boolean) Specify whether to run only the first time that trigger criteria is met.
-  - Default value: `true`
 - `stop_processing` (Boolean) Specify whether to not process subsequent rules that match the trigger conditions.
-  - Default value: `true`

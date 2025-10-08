@@ -61,7 +61,6 @@ func (d *AssemblyActionGraphQLCostAnalysisDataSource) Schema(ctx context.Context
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "GraphQL cost analysis assembly action",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

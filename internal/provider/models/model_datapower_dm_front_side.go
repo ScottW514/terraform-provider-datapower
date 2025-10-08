@@ -62,19 +62,19 @@ func GetDmFrontSideDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmFrontSideDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"local_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The address on which the service listens. The default of 0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines.", "", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: "The address on which the service listens. The default of 0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines.",
 				Computed:            true,
 			},
 			"local_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the port monitored by the stateful raw XML over TCP service. Enter a value in the range 1 - 65535. The default value is 3000.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("3000").String,
+				MarkdownDescription: "Specifies the port monitored by the stateful raw XML over TCP service. Enter a value in the range 1 - 65535. The default value is 3000.",
 				Computed:            true,
 			},
 			"use_ssl": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use TLS for this server. Ensure that the TLS server profile or TLS SNI server profile is configured.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Use TLS for this server. Ensure that the TLS server profile or TLS SNI server profile is configured.",
 				Computed:            true,
 			},
 			"credential_charset": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The DataPower Gateway transcodes the contents of the authorization header to UTF-8. Defaults to Protocol that is ISO-8859-1, Latin 1.", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
+				MarkdownDescription: "Specifies the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The DataPower Gateway transcodes the contents of the authorization header to UTF-8. Defaults to Protocol that is ISO-8859-1, Latin 1.",
 				Computed:            true,
 			},
 		},

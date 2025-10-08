@@ -113,39 +113,39 @@ func GetDmWSEndpointSubscriptionLocalRuleDataSourceSchema() DataSourceSchema.Nes
 	var DmWSEndpointSubscriptionLocalRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
+				MarkdownDescription: "Select the subscription and configure its endpoint.",
 				Computed:            true,
 			},
 			"local_endpoint_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").AddNotValidWhen(DmWSEndpointSubscriptionLocalRuleLocalEndpointProtocolIgnoreVal.String()).String,
+				MarkdownDescription: "Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.",
 				Computed:            true,
 			},
 			"local_endpoint_hostname": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").AddNotValidWhen(DmWSEndpointSubscriptionLocalRuleLocalEndpointHostnameIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.",
 				Computed:            true,
 			},
 			"local_endpoint_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").AddDefaultValue("0").AddRequiredWhen(DmWSEndpointSubscriptionLocalRuleLocalEndpointPortCondVal.String()).String,
+				MarkdownDescription: "Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.",
 				Computed:            true,
 			},
 			"local_endpoint_uri": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value that is specified in the WSDL.", "local-endpoint-uri", "").String,
+				MarkdownDescription: "Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value that is specified in the WSDL.",
 				Computed:            true,
 			},
 			"front_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the Front Side Handler to use to determine the IP address, port, and protocol.", "", "").AddRequiredWhen(DmWSEndpointSubscriptionLocalRuleFrontProtocolCondVal.String()).AddNotValidWhen(DmWSEndpointSubscriptionLocalRuleFrontProtocolIgnoreVal.String()).String,
+				MarkdownDescription: "Select the Front Side Handler to use to determine the IP address, port, and protocol.",
 				Computed:            true,
 			},
 			"use_front_protocol": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use a Front Side Handler to determine the IP address, port, and protocol for matching WSDL service port. Selecting this mode overrides these values in this rewrite rule.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Use a Front Side Handler to determine the IP address, port, and protocol for matching WSDL service port. Selecting this mode overrides these values in this rewrite rule.",
 				Computed:            true,
 			},
 			"wsdl_binding_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the WSDL binding protocol to use in the rewritten Web service.", "", "").AddStringEnum("default", "soap-11", "soap-12", "http-get", "http-post").AddDefaultValue("default").String,
+				MarkdownDescription: "Specify the WSDL binding protocol to use in the rewritten Web service.",
 				Computed:            true,
 			},
 			"frontside_port_suffix": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify a suffix to add to the name of the WSDL port that will be used to represent this service endpoint in the rewritten Web service. If empty, rewrite the original port. The original port can only be rewritten once.", "", "").String,
+				MarkdownDescription: "Specify a suffix to add to the name of the WSDL port that will be used to represent this service endpoint in the rewritten Web service. If empty, rewrite the original port. The original port can only be rewritten once.",
 				Computed:            true,
 			},
 		},

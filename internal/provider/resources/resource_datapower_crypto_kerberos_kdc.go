@@ -98,14 +98,14 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"use_tcp": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select to control whether to contact the Kerberos KDC server with UDP (the default, off) or TCP (on).", "tcp", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"server_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the UDP or TCP listening port on the Kerberos KDC server. Use a value in the range 1 - 65535. The default value is 88.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("88").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -113,8 +113,8 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"udp_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The number of seconds to wait for a UDP response from the KDC before declaring failure.", "udp-timeout", "").AddIntegerRange(1, 60).AddDefaultValue("5").AddNotValidWhen(models.CryptoKerberosKDCUDPTimeoutIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 60),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.CryptoKerberosKDCUDPTimeoutIgnoreVal, true),
@@ -123,14 +123,14 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"cache_tickets": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to cache Kerberos service tickets when generating AP-REQ tokens in this realm.", "cache-tickets", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"max_cache_d_tickets": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.", "max-cached-tickets", "").AddIntegerRange(1, 65535).AddDefaultValue("32").AddNotValidWhen(models.CryptoKerberosKDCMaxCachedTicketsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.CryptoKerberosKDCMaxCachedTicketsIgnoreVal, true),
@@ -139,8 +139,8 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"min_cache_d_ticket_validity": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.", "min-cached-ticket-validity", "").AddIntegerRange(1, 65535).AddDefaultValue("60").AddNotValidWhen(models.CryptoKerberosKDCMinCachedTicketValidityIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.CryptoKerberosKDCMinCachedTicketValidityIgnoreVal, true),

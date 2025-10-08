@@ -83,23 +83,23 @@ func GetDmWSOperationSchedulerPriorityDataSourceSchema() DataSourceSchema.Nested
 	var DmWSOperationSchedulerPriorityDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"scheduler_priority": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Service Priority", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
+				MarkdownDescription: "Service Priority",
 				Computed:            true,
 			},
 			"scheduler_priority_wsdl_component_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				MarkdownDescription: "Select a type of WSDL Component. The default is All.",
 				Computed:            true,
 			},
 			"scheduler_priority_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationSchedulerPrioritySchedulerPriorityWSDLComponentValueIgnoreVal.String()).String,
+				MarkdownDescription: "Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.",
 				Computed:            true,
 			},
 			"scheduler_priority_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationSchedulerPrioritySchedulerPrioritySubscriptionIgnoreVal.String()).String,
+				MarkdownDescription: "Select a subscription.",
 				Computed:            true,
 			},
 			"scheduler_priority_fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: "Matches Fragment Identifier",
 				Computed:            true,
 			},
 		},

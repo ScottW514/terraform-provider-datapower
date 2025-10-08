@@ -61,14 +61,14 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"local_time_zone": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time zone to use in management interfaces. The default value is EST-5EDT.", "name", "").AddStringEnum("HST10", "AKST9AKDT", "PST8PDT", "MST7MDT", "CST6CDT", "EST5EDT", "AST4ADT", "UTC", "GMT0BST", "CET-1CEST", "EET-2EEST", "MKS-3MSD", "MSK-3MSD", "AST-3", "KRT-5", "IST-5:30", "NOVST-6NOVDT", "CST-8", "WST-8", "WST-8WDT", "JST-9", "CST-9:30CDT", "EST-10EDT", "EST-10", "Custom").AddDefaultValue("EST5EDT").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HST10", "AKST9AKDT", "PST8PDT", "MST7MDT", "CST6CDT", "EST5EDT", "AST4ADT", "UTC", "GMT0BST", "CET-1CEST", "EET-2EEST", "MKS-3MSD", "MSK-3MSD", "AST-3", "KRT-5", "IST-5:30", "NOVST-6NOVDT", "CST-8", "WST-8", "WST-8WDT", "JST-9", "CST-9:30CDT", "EST-10EDT", "EST-10", "Custom"),
 				},
@@ -76,8 +76,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"custom_tz_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symbolic name for the custom time zone. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.", "custom", "").AddDefaultValue("STD").AddRequiredWhen(models.TimeSettingsCustomTZNameCondVal.String()).AddNotValidWhen(models.TimeSettingsCustomTZNameIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z]{3,}$"), "Must match :"+"^[a-zA-Z]{3,}$"),
 					validators.ConditionalRequiredString(models.TimeSettingsCustomTZNameCondVal, models.TimeSettingsCustomTZNameIgnoreVal, true),
@@ -86,8 +86,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"utc_direction": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the direction relative to UTC for the custom time zone. Asia is east. North America is west. The default value is East.", "direction", "").AddStringEnum("East", "West").AddDefaultValue("West").AddNotValidWhen(models.TimeSettingsUTCDirectionIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("East", "West"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.TimeSettingsUTCDirectionIgnoreVal, true),
@@ -112,8 +112,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_offset_hours": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the offset in hours when the custom time zone observes DST. Generally, the offset is 1 hour. The default value is 1.", "daylight-offset", "").AddIntegerRange(0, 12).AddDefaultValue("1").AddNotValidWhen(models.TimeSettingsDaylightOffsetHoursIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 12),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.TimeSettingsDaylightOffsetHoursIgnoreVal, true),
@@ -122,8 +122,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"tz_name_dst": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.", "daylight-name", "").AddDefaultValue("DST").AddRequiredWhen(models.TimeSettingsTZNameDSTCondVal.String()).AddNotValidWhen(models.TimeSettingsTZNameDSTIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.TimeSettingsTZNameDSTCondVal, models.TimeSettingsTZNameDSTIgnoreVal, true),
 				},
@@ -131,8 +131,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_start_month": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the month when DST starts for the custom time zone. The default value is March.", "daylight-start-month", "").AddStringEnum("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December").AddDefaultValue("March").AddNotValidWhen(models.TimeSettingsDaylightStartMonthIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.TimeSettingsDaylightStartMonthIgnoreVal, true),
@@ -141,8 +141,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_start_week": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance of the day in the month when DST starts for the custom time zone. If DST starts on the second Sunday in the month, enter 2.", "daylight-start-week", "").AddIntegerRange(1, 5).AddDefaultValue("2").AddNotValidWhen(models.TimeSettingsDaylightStartWeekIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 5),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.TimeSettingsDaylightStartWeekIgnoreVal, true),
@@ -151,8 +151,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_start_day": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the day of the week when DST starts for the custom time zone. The default value is Sunday.", "daylight-start-day", "").AddStringEnum("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday").AddDefaultValue("Sunday").AddNotValidWhen(models.TimeSettingsDaylightStartDayIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.TimeSettingsDaylightStartDayIgnoreVal, true),
@@ -161,8 +161,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_start_time_hours": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hour when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 2.", "daylight-start-hours", "").AddIntegerRange(0, 23).AddDefaultValue("2").AddNotValidWhen(models.TimeSettingsDaylightStartTimeHoursIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 23),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.TimeSettingsDaylightStartTimeHoursIgnoreVal, true),
@@ -179,8 +179,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_stop_month": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the month when DST ends for the custom time zone. The default value is November.", "daylight-stop-month", "").AddStringEnum("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December").AddDefaultValue("November").AddNotValidWhen(models.TimeSettingsDaylightStopMonthIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.TimeSettingsDaylightStopMonthIgnoreVal, true),
@@ -189,8 +189,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_stop_week": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance of the day in the month when DST ends for the custom time zone. If DST ends on the second Sunday in the month, enter 2.", "daylight-stop-week", "").AddIntegerRange(1, 5).AddDefaultValue("1").AddNotValidWhen(models.TimeSettingsDaylightStopWeekIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 5),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.TimeSettingsDaylightStopWeekIgnoreVal, true),
@@ -199,8 +199,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_stop_day": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the day of the week when DST ends for the custom time zone. The default value is Sunday.", "daylight-stop-day", "").AddStringEnum("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday").AddDefaultValue("Sunday").AddNotValidWhen(models.TimeSettingsDaylightStopDayIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.TimeSettingsDaylightStopDayIgnoreVal, true),
@@ -209,8 +209,8 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"daylight_stop_time_hours": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hour when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 2.", "daylight-stop-hours", "").AddIntegerRange(0, 23).AddDefaultValue("2").AddNotValidWhen(models.TimeSettingsDaylightStopTimeHoursIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 23),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.TimeSettingsDaylightStopTimeHoursIgnoreVal, true),

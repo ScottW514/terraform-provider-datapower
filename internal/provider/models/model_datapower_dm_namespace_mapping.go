@@ -50,11 +50,11 @@ func GetDmNamespaceMappingDataSourceSchema() DataSourceSchema.NestedAttributeObj
 	var DmNamespaceMappingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"prefix": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The prefix (Prefix:) used to map namespaces that might be encountered in client requests.", "", "").String,
+				MarkdownDescription: "The prefix (Prefix:) used to map namespaces that might be encountered in client requests.",
 				Computed:            true,
 			},
 			"uri": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The URI (URI:) used to map namespaces that might be encountered in client requests.", "", "").String,
+				MarkdownDescription: "The URI (URI:) used to map namespaces that might be encountered in client requests.",
 				Computed:            true,
 			},
 		},

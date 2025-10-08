@@ -83,51 +83,51 @@ func GetDmB2BBackupMsgTypeDataSourceSchema(description string, cliAlias string, 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"in_message": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("AS inbound message", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "AS inbound message",
 				Computed:            true,
 			},
 			"out_message": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("AS outbound message", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "AS outbound message",
 				Computed:            true,
 			},
 			"in_mdn": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("AS inbound MDN", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "AS inbound MDN",
 				Computed:            true,
 			},
 			"out_mdn": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("AS outbound MDN", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "AS outbound MDN",
 				Computed:            true,
 			},
 			"ebms_in_message": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ebMS2 inbound message", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "ebMS2 inbound message",
 				Computed:            true,
 			},
 			"ebms_out_message": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ebMS2 outbound message", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "ebMS2 outbound message",
 				Computed:            true,
 			},
 			"ebms_in_ack": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ebMS2 inbound ACK", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "ebMS2 inbound ACK",
 				Computed:            true,
 			},
 			"ebms_out_ack": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ebMS2 outbound ACK", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "ebMS2 outbound ACK",
 				Computed:            true,
 			},
 			"ebms3_in_message": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ebMS3 inbound message", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "ebMS3 inbound message",
 				Computed:            true,
 			},
 			"ebms3_out_message": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ebMS3 outbound message", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "ebMS3 outbound message",
 				Computed:            true,
 			},
 			"ebms3_in_rcpt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ebMS3 inbound receipt", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "ebMS3 inbound receipt",
 				Computed:            true,
 			},
 			"ebms3_out_rcpt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ebMS3 outbound receipt", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "ebMS3 outbound receipt",
 				Computed:            true,
 			},
 		},

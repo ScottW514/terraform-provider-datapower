@@ -60,7 +60,6 @@ func (d *LunaDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "You can use a network-attached SafeNet Luna Network HSM appliance as the HSM to provide secure storage for RSA keys and accelerate RSA operations remotely. The configuration of the Luna HSM sets up the connection with the Luna HSM.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -61,7 +61,6 @@ func (d *ImportPackageDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An import package allows the system to import a configuration package from an external server, such as a centralized configuration server, when the configuration is reloaded (such as during a restart). This package can optionally overwrite existing files or objects. <p>An import package specifies a source, content type, and import parameters for a single bundle.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

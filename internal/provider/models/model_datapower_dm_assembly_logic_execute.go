@@ -50,11 +50,11 @@ func GetDmAssemblyLogicExecuteDataSourceSchema() DataSourceSchema.NestedAttribut
 	var DmAssemblyLogicExecuteDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"condition": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata expression to match against the input.", "", "").String,
+				MarkdownDescription: "Specify the JSONata expression to match against the input.",
 				Computed:            true,
 			},
 			"execute": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the API rule to run when the JSONata expression evaluates to true. The specified API rule can define further switch assembly actions.", "", "").String,
+				MarkdownDescription: "Specify the name of the API rule to run when the JSONata expression evaluates to true. The specified API rule can define further switch assembly actions.",
 				Computed:            true,
 			},
 		},

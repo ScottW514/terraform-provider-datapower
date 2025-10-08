@@ -26,7 +26,7 @@ endif
 TEST_ENV = DP_HOSTNAME=datapower-dev DP_USERNAME=admin DP_PASSWORD=admin DP_INSECURE=true DP_ACC_ALL=1 TF_ACC=1
 
 # Default target: runs all necessary steps to generate code, documentation, and build binaries
-all: generate tfdocs build-all
+all: generate tfdocs _build-all
 
 # Clean up generated files and directories
 clean:

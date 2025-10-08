@@ -87,14 +87,14 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"factor_id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Factor identifier", "factor-id", "").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"extract_identity_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identity extraction method", "extract-identity-method", "").AddStringEnum("disabled", "basic", "context-var", "html-form", "redirect").AddDefaultValue("basic").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("disabled", "basic", "context-var", "html-form", "redirect"),
 				},
@@ -102,8 +102,8 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"ei_stop_on_error": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if identity extraction fails. If failed, stops the assembly and return an error.", "ei-stop-on-error", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityEIStopOnErrorCondVal.String()).AddNotValidWhen(models.AssemblyActionUserSecurityEIStopOnErrorIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_context_variable": schema.StringAttribute{
@@ -129,8 +129,8 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"redirect_time_limit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the redirect fails. Enter a value in the range 10 - 6000. The default value is 300.", "redirect-time-limit", "").AddIntegerRange(10, 6000).AddDefaultValue("300").AddRequiredWhen(models.AssemblyActionUserSecurityRedirectTimeLimitCondVal.String()).AddNotValidWhen(models.AssemblyActionUserSecurityRedirectTimeLimitIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 6000),
 					validators.ConditionalRequiredInt64(models.AssemblyActionUserSecurityRedirectTimeLimitCondVal, models.AssemblyActionUserSecurityRedirectTimeLimitIgnoreVal, true),
@@ -143,8 +143,8 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"ei_default_form": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the default form or a custom form. When enabled, returns the default login page to obtain credentials. When disabled, define the configuration to return the custom login page.", "ei-default-form", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityEIDefaultFormCondVal.String()).AddNotValidWhen(models.AssemblyActionUserSecurityEIDefaultFormIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ei_custom_form": schema.StringAttribute{
@@ -160,14 +160,14 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"ei_custom_form_content_security_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value to use for the HTTP <tt>Content-Security-Policy</tt> response header for the custom login page. This response header allows you to control which resources the user agent can load. Generally, you set server origins and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking, and other injection attacks.", "ei-custom-form-csp", "").AddDefaultValue("default-src 'self'").AddNotValidWhen(models.AssemblyActionUserSecurityEICustomFormContentSecurityPolicyIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default-src 'self'"),
 			},
 			"ei_form_time_limit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the identity extraction request fails. Enter a value in the range 10 - 600. The default value is 300.", "ei-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").AddRequiredWhen(models.AssemblyActionUserSecurityEIFormTimeLimitCondVal.String()).AddNotValidWhen(models.AssemblyActionUserSecurityEIFormTimeLimitIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 600),
 					validators.ConditionalRequiredInt64(models.AssemblyActionUserSecurityEIFormTimeLimitCondVal, models.AssemblyActionUserSecurityEIFormTimeLimitIgnoreVal, true),
@@ -176,8 +176,8 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"user_auth_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Authentication method", "user-auth-method", "").AddStringEnum("disabled", "user-registry").AddDefaultValue("user-registry").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("disabled", "user-registry"),
 				},
@@ -185,8 +185,8 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"au_stop_on_error": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if authentication fails. If failed, stops the assembly and return an error.", "au-stop-on-error", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityAUStopOnErrorCondVal.String()).AddNotValidWhen(models.AssemblyActionUserSecurityAUStopOnErrorIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_registry": schema.StringAttribute{
@@ -198,20 +198,20 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"auth_response_headers_pattern": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the regular expression to select which response headers to add to the API context for access by subsequent actions. The default value is a case-insensitive search on the <tt>x-api</tt> prefix. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "auth-response-headers-pattern", "").AddDefaultValue("(?i)x-api*").AddNotValidWhen(models.AssemblyActionUserSecurityAuthResponseHeadersPatternIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("(?i)x-api*"),
 			},
 			"auth_response_credential_header": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the response header that contains the authenticated credentials. The default value is <tt>X-API-Authenticated-Credential</tt> . The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "auth-response-header-credential", "").AddDefaultValue("X-API-Authenticated-Credential").AddNotValidWhen(models.AssemblyActionUserSecurityAuthResponseCredentialHeaderIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("X-API-Authenticated-Credential"),
 			},
 			"user_az_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Authorization method", "user-az-method", "").AddStringEnum("disabled", "authenticated", "html-form").AddDefaultValue("authenticated").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("disabled", "authenticated", "html-form"),
 				},
@@ -219,14 +219,14 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"az_stop_on_error": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if authorization fails. If failed, stops the assembly and return an error.", "az-stop-on-error", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityAZStopOnErrorCondVal.String()).AddNotValidWhen(models.AssemblyActionUserSecurityAZStopOnErrorIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"az_default_form": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the default form or a custom form. When enabled, returns the default authorization page to obtain authorization. When disabled, define the configuration to return the custom authorization page.", "az-default-form", "").AddDefaultValue("true").AddRequiredWhen(models.AssemblyActionUserSecurityAZDefaultFormCondVal.String()).AddNotValidWhen(models.AssemblyActionUserSecurityAZDefaultFormIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"az_custom_form": schema.StringAttribute{
@@ -242,14 +242,14 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"az_custom_form_content_security_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP <tt>Content-Security-Policy</tt> response header for the custom authorization page. This response header allows you to control which resources the user agent can load. Generally, you set server origins and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking, and other injection attacks.", "az-custom-form-csp", "").AddDefaultValue("default-src 'self'").AddNotValidWhen(models.AssemblyActionUserSecurityAZCustomFormContentSecurityPolicyIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default-src 'self'"),
 			},
 			"az_form_time_limit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the authorization request fails. Enter a value in the range 10 - 600. The default value is 300.", "az-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").AddRequiredWhen(models.AssemblyActionUserSecurityAZFormTimeLimitCondVal.String()).AddNotValidWhen(models.AssemblyActionUserSecurityAZFormTimeLimitIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 600),
 					validators.ConditionalRequiredInt64(models.AssemblyActionUserSecurityAZFormTimeLimitCondVal, models.AssemblyActionUserSecurityAZFormTimeLimitIgnoreVal, true),
@@ -258,14 +258,14 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"az_table_display_checkboxes": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Display table check boxes", "az-table-display-checkboxes", "").AddDefaultValue("false").AddNotValidWhen(models.AssemblyActionUserSecurityAZTableDisplayCheckboxesIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"az_table_dynamic_entries": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the period-delimited context variable that adds dynamic entries to display. This context variable supports space delimited names, a JSON array of names, or a JSON array of objects with name and description.", "az-table-dynamic-entries", "").AddDefaultValue("user.default.az.dynamic_entries").AddNotValidWhen(models.AssemblyActionUserSecurityAZTableDynamicEntriesIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("user.default.az.dynamic_entries"),
 			},
 			"az_table_default_entry": schema.ListNestedAttribute{
@@ -291,8 +291,8 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 			},
 			"action_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

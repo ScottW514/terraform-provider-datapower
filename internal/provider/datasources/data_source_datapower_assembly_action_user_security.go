@@ -61,7 +61,6 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The user security assembly actions extracts identity, authenticates, and authorizes end users.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

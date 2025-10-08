@@ -69,15 +69,15 @@ func GetDmSSLPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmSSLPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"ssl_client_config_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile to secure connections with targets", "", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: "Specify the type of TLS profile to secure connections with targets",
 				Computed:            true,
 			},
 			"ssl_client": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "ssl_client_profile").AddRequiredWhen(DmSSLPolicySSLClientCondVal.String()).AddNotValidWhen(DmSSLPolicySSLClientIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the TLS client profile to secure connections with targets",
 				Computed:            true,
 			},
 		},

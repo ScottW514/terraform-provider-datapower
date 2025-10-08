@@ -61,7 +61,6 @@ func (d *AssemblyActionMapDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The map assembly action applies data transformations to the assembly flow according to a specified map file. <p>The map file is automatically created from the map policy specification in the OpenAPI document. The API gateway can process only JSON formatted map files and prepares a valid map file as follows.</p><ol><li>Update the map file by complying with the map file structure.</li><li>For a YAML file, convert it to JSON.</li><li>Import the JSON file to the DataPower <tt>local:</tt> or <tt>temporary:</tt> directory or to one of their subdirectories.</li></ol>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

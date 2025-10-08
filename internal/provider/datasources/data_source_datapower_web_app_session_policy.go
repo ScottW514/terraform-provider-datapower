@@ -61,7 +61,6 @@ func (d *WebAppSessionPolicyDataSource) Schema(ctx context.Context, req datasour
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Session policy - specify a series of start pages that the a web application firewall protected host use as initial browsing points. Accessing these pages issues a signed and time limited cookie which must be presented for accessing any pages not designated as a starting point.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

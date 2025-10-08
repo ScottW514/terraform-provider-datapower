@@ -50,11 +50,11 @@ func GetDmPubkeyAuthPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObj
 	var DmPubkeyAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"crypto_key": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the private key for public key authentication.", "", "crypto_key").String,
+				MarkdownDescription: "Specify the private key for public key authentication.",
 				Computed:            true,
 			},
 		},

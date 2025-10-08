@@ -61,7 +61,6 @@ func (d *GitOpsTemplateDataSource) Schema(ctx context.Context, req datasource.Sc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A core capability of the GitOps feature is to replace placeholder or template values with environment or device-specific values. This feature is analogous to deployment policies but differs in implementation.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

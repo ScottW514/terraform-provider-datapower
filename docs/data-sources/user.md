@@ -67,17 +67,13 @@ Optional:
 
 Read-Only:
 
-- `auth_protocol` (String) - Choices: `none`, `md5`, `sha`
-  - Default value: `sha`
+- `auth_protocol` (String)
 - `auth_secret` (String)
-- `auth_secret_type` (String) - Choices: `password`, `key`
-  - Default value: `password`
+- `auth_secret_type` (String)
 - `engine_id` (String)
-- `priv_protocol` (String) - Choices: `none`, `des`, `aes`
-  - Default value: `des`
+- `priv_protocol` (String)
 - `priv_secret` (String)
-- `priv_secret_type` (String) - Choices: `password`, `key`
-  - Default value: `password`
+- `priv_secret_type` (String)
 
 
 <a id="nestedatt--result--snmp_creds"></a>
@@ -86,19 +82,7 @@ Read-Only:
 Read-Only:
 
 - `auth_protocol` (String) Specify the authentication protocol.
-  - Choices: `none`, `md5`, `sha`
-  - Default value: `sha`
 - `auth_secret_type` (String) Specify the format of the authentication key.
-  - Choices: `password`, `key`
-  - Default value: `password`
-  - Required When: `auth_protocol`!=`none`
-  - Not Valid When: attribute is not conditionally required
 - `engine_id` (String) Specify the SNMPv3 engine ID. The value of 0 represents the local engine ID. For any other engine ID, the value is a hex string that represents the 5 - 32 byte value.
 - `priv_protocol` (String) Specify the privacy protocol.
-  - Choices: `none`, `des`, `aes`
-  - Default value: `des`
 - `priv_secret_type` (String) Specify the format of the privacy key. When the privacy protocol is AED or DES, whether the <tt>PrivKey</tt> is generated from a plaintext string or is an explicit key value.
-  - Choices: `password`, `key`
-  - Default value: `password`
-  - Required When: `priv_protocol`!=`none`
-  - Not Valid When: attribute is not conditionally required

@@ -56,15 +56,15 @@ func GetDmWebSphereJMSEndpointDataSourceSchema() DataSourceSchema.NestedAttribut
 	var DmWebSphereJMSEndpointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"host": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
+				MarkdownDescription: "Specify the host name or IP address of a bootstrap server.",
 				Computed:            true,
 			},
 			"port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port number of a bootstrap server.", "", "").String,
+				MarkdownDescription: "Specify the listening port number of a bootstrap server.",
 				Computed:            true,
 			},
 			"transport": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the predefined transport chain for the bootstrap server. This connection is used to exchange information between the DataPower Gateway and the bootstrap server. By default, uses the predefined <tt>BootstrapBasicMessaging</tt> transport chain.", "", "").AddStringEnum("TCP", "SSL", "HTTP", "HTTPS").AddDefaultValue("TCP").String,
+				MarkdownDescription: "Specify the predefined transport chain for the bootstrap server. This connection is used to exchange information between the DataPower Gateway and the bootstrap server. By default, uses the predefined <tt>BootstrapBasicMessaging</tt> transport chain.",
 				Computed:            true,
 			},
 		},

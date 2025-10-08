@@ -91,14 +91,14 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, 
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The address on which the service listens. The default of 0.0.0.0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines. See Local Host Alias under Networking for more.", "local-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("An integer (within the range 1 through 65535, with a default of 4000) that specifies the port monitored by the service.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("4000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -106,8 +106,8 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, 
 			},
 			"persistent_connections": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable or disable persistent connections where appropriate the front end.", "persistent-connections", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"acl": schema.StringAttribute{
@@ -116,8 +116,8 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, 
 			},
 			"ssl_server_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between clients and the DataPower Gateway.", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
 				},

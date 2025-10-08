@@ -50,11 +50,11 @@ func GetDmODRConnectorDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 	var DmODRConnectorDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"dmgr_hostname": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The host name of the server where the Intelligent management service is enabled.", "dmgr-host", "").String,
+				MarkdownDescription: "The host name of the server where the Intelligent management service is enabled.",
 				Computed:            true,
 			},
 			"dmgr_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The port on the server where the Intelligent management service is enabled.", "dmgr-port", "").String,
+				MarkdownDescription: "The port on the server where the Intelligent management service is enabled.",
 				Computed:            true,
 			},
 		},

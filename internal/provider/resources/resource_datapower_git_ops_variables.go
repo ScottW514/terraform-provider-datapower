@@ -55,8 +55,8 @@ func (r *GitOpsVariablesResource) Schema(ctx context.Context, req resource.Schem
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{

@@ -90,8 +90,8 @@ func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"cert_validation_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Certificate validation mode", "cert-validation-mode", "").AddStringEnum("legacy", "pkix", "exact-match").AddDefaultValue("legacy").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("legacy", "pkix", "exact-match"),
 				},
@@ -99,20 +99,20 @@ func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"use_crl": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check certificate revocation lists (CRLs) during certificate validation. When enabled, CRLs are checked. Otherwise, CRLs are not checked.", "use-crl", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"require_crl": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.", "require-crl", "").AddDefaultValue("false").AddNotValidWhen(models.CryptoValCredRequireCRLIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"crl_dp_handling": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.", "crldp", "").AddStringEnum("ignore", "require").AddDefaultValue("ignore").AddNotValidWhen(models.CryptoValCredCRLDPHandlingIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ignore", "require"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.CryptoValCredCRLDPHandlingIgnoreVal, true),
@@ -126,14 +126,14 @@ func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"explicit_policy": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify support for the initial explicit policy variable as defined by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty policy tree. Otherwise, the algorithm can end with an empty policy tree unless policy constraint extensions in the chain require an explicit policy.", "explicit-policy", "").AddDefaultValue("false").AddNotValidWhen(models.CryptoValCredExplicitPolicyIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"check_dates": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check dates during certificate validation. This validation checks the current date and time against the <tt>notBefore</tt> and <tt>notAfter</tt> values in certificates and CRLs. When enabled, the date values are checked and expired certificates cause validation to fail. Otherwise, the date values are ignored and and do not cause validation to fail when a certificate is expired.", "check-dates", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"dependency_actions": actions.ActionsSchema,

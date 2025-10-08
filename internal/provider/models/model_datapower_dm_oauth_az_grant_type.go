@@ -71,35 +71,35 @@ func GetDmOAuthAZGrantTypeDataSourceSchema(description string, cliAlias string, 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"code": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authorization Code Grant", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Authorization Code Grant",
 				Computed:            true,
 			},
 			"implicit": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Implicit Grant", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Implicit Grant",
 				Computed:            true,
 			},
 			"password": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner Password Credential Grant", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Resource Owner Password Credential Grant",
 				Computed:            true,
 			},
 			"client": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client Credentials Grant", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Client Credentials Grant",
 				Computed:            true,
 			},
 			"jwt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("JWT Grant", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "JWT Grant",
 				Computed:            true,
 			},
 			"novalidate": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Disable Validation Grant", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Disable Validation Grant",
 				Computed:            true,
 			},
 			"oidc": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("OpenID Connect", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "OpenID Connect",
 				Computed:            true,
 			},
 			"saml20bearer": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 		},

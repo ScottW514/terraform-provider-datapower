@@ -98,6 +98,7 @@ func (data DomainSettings) IsNull() bool {
 	}
 	return true
 }
+
 func (data DomainSettingsWO) IsNull() bool {
 	if !data.AppDomain.IsNull() {
 		return false
@@ -169,6 +170,7 @@ func (data *DomainSettings) FromBody(ctx context.Context, pathRoot string, res g
 		data.PassphraseWo = types.StringNull()
 	}
 }
+
 func (data *DomainSettingsWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."

@@ -57,15 +57,15 @@ func GetDmFileSystemUsageDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmFileSystemUsageDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the system file system to check.", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
+				MarkdownDescription: "Specify the system file system to check.",
 				Computed:            true,
 			},
 			"warning_threshold": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+				MarkdownDescription: "Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.",
 				Computed:            true,
 			},
 			"critical_threshold": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+				MarkdownDescription: "Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.",
 				Computed:            true,
 			},
 		},

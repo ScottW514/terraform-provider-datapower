@@ -61,7 +61,6 @@ func (d *StylePolicyDataSource) Schema(ctx context.Context, req datasource.Schem
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -102,8 +102,8 @@ func (r *AMQPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 			},
 			"credit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of concurrent messages that a receiver can handle. The minimum value is 1. The default value is 100.", "credit", "").AddIntegerRange(1, 3600).AddDefaultValue("100").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 3600),
 				},
@@ -111,8 +111,8 @@ func (r *AMQPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 			},
 			"ignore_reply_to": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to ignore the AMQP <tt>reply-to</tt> property. The default behavior is to ignore the property. <ul><li>When enabled, ignore the <tt>reply-to</tt> address when sending an AMQP response message.</li><li>When disabled, use the <tt>reply-to</tt> address instead of the address of the target terminus.</li></ul></p>", "ignore-reply-to", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"dependency_actions": actions.ActionsSchema,

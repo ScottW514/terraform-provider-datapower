@@ -61,7 +61,6 @@ func (d *AppSecurityPolicyDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An Application Security Policy establishes the rules to use to enforce security for a Web Application Firewall service. This policy employs request maps, response maps, and error maps that provide a detailed security configuration. Each of these maps, in turn, matches to a Web Request Profile, Web Request Profile, or Error Policy, as the case might be.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

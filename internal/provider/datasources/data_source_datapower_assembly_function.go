@@ -61,7 +61,6 @@ func (d *AssemblyFunctionDataSource) Schema(ctx context.Context, req datasource.
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An assembly function augments the assembly actions that the API gateway uses during processing. You can implement an assembly function in one of the following ways. <ul><li>Define an assembly function to add custom logic to an assembly. After you define the assembly function, you can add it to a function call assembly action.</li><li>When you configure the API Connect gateway service as not V5 compatible, use an assembly function to specify a user-defined policy (UDP) that API Connect advertises and makes available in the API Connect assembly editor. A UDP provides custom processing control of APIs in the gateway server.</li></ul>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

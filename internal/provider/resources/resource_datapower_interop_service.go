@@ -61,8 +61,8 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -79,14 +79,14 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"http_service": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable over HTTP", "http-service", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.", "http-ip-address", "").AddDefaultValue("0.0.0.0").AddRequiredWhen(models.InteropServiceLocalAddressCondVal.String()).AddNotValidWhen(models.InteropServiceLocalAddressIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.InteropServiceLocalAddressCondVal, models.InteropServiceLocalAddressIgnoreVal, true),
 				},
@@ -94,8 +94,8 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "http-port", "").AddIntegerRange(1000, 61000).AddDefaultValue("9990").AddRequiredWhen(models.InteropServiceLocalPortCondVal.String()).AddNotValidWhen(models.InteropServiceLocalPortIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1000, 61000),
 					validators.ConditionalRequiredInt64(models.InteropServiceLocalPortCondVal, models.InteropServiceLocalPortIgnoreVal, true),
@@ -108,14 +108,14 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"https_service": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable over HTTPS", "https-service", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"https_local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.", "https-ip-address", "").AddDefaultValue("0.0.0.0").AddRequiredWhen(models.InteropServiceHttpsLocalAddressCondVal.String()).AddNotValidWhen(models.InteropServiceHttpsLocalAddressIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.InteropServiceHttpsLocalAddressCondVal, models.InteropServiceHttpsLocalAddressIgnoreVal, true),
 				},
@@ -123,8 +123,8 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"https_local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "https-port", "").AddIntegerRange(1000, 61000).AddDefaultValue("9991").AddRequiredWhen(models.InteropServiceHttpsLocalPortCondVal.String()).AddNotValidWhen(models.InteropServiceHttpsLocalPortIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1000, 61000),
 					validators.ConditionalRequiredInt64(models.InteropServiceHttpsLocalPortCondVal, models.InteropServiceHttpsLocalPortIgnoreVal, true),
@@ -137,8 +137,8 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"ssl_server_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").AddRequiredWhen(models.InteropServiceSSLServerConfigTypeCondVal.String()).AddNotValidWhen(models.InteropServiceSSLServerConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
 					validators.ConditionalRequiredString(models.InteropServiceSSLServerConfigTypeCondVal, models.InteropServiceSSLServerConfigTypeIgnoreVal, true),

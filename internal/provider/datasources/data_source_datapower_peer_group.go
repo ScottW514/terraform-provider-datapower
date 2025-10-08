@@ -61,7 +61,6 @@ func (d *PeerGroupDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A collection of systems that automatically update each other with real time data of the selected type. For example, members in the group exchange data to allow the enforcement of a policy across the collection.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

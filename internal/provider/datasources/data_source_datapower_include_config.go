@@ -61,7 +61,6 @@ func (d *IncludeConfigDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An include configuration file defines external configuration data to process on startup. The included configuration files can reside locally or on a remote host.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -61,7 +61,6 @@ func (d *CryptoIdentCredDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Identification credentials consist of a key and a certificate. Identification credentials identify the matched public key cryptography to the public and private keys that an object uses for TLS authentication. You use identification credentials for document encryption, document decryption, and digital signature operations.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

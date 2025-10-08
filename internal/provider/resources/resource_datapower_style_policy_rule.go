@@ -89,8 +89,8 @@ func (r *StylePolicyRuleResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"direction": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select a rule type. The default is Rule.", "type", "").AddStringEnum("rule", "request-rule", "response-rule", "error-rule").AddDefaultValue("rule").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("rule", "request-rule", "response-rule", "error-rule"),
 				},
@@ -98,8 +98,8 @@ func (r *StylePolicyRuleResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"input_format": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select a decompression algorithm to apply to all messages before any other processing occurs (a preprocess step). All messages are decompressed using the selected algorithm. If the message is not compressed with this algorithm, an error is raised. This setting is independent of transport-level decompression. The default is None.", "input-filter", "").AddStringEnum("none", "gzip", "pkzip").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "gzip", "pkzip"),
 				},
@@ -107,8 +107,8 @@ func (r *StylePolicyRuleResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"output_format": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select a compression algorithm to apply to all messages after any other processing occurs (a post-process step). All messages are compressed using the selected algorithm. The resulting archive contains only one file. This setting is independent of transport-level compression. The default is None.", "output-filter", "").AddStringEnum("none", "gzip", "pkzip").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "gzip", "pkzip"),
 				},
@@ -116,14 +116,14 @@ func (r *StylePolicyRuleResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"non_xml_processing": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Normally, processing is only performed on XML content. This option allows processing actions to be performed on Non-XML content as well.", "non-xml-processing", "").AddDefaultValue("false").AddNotValidWhen(models.StylePolicyRuleNonXMLProcessingIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"unprocessed": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Permit rule to pass-through data unprocessed", "unprocessed", "").AddDefaultValue("false").AddNotValidWhen(models.StylePolicyRuleUnprocessedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{

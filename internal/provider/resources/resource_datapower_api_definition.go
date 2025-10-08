@@ -98,14 +98,14 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("API version", "version", "").AddDefaultValue("1.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("1.0.0"),
 			},
 			"base_path": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base path on which the API is served, which is relative to the host. When the base path is not specified, the APIs are served directly under the host. The base path does not include the hostname or any additional segments for paths or operations. The base path must start but not end with slash (/). All resources in a REST API are defined relative to its base path.", "base-path", "").AddDefaultValue("/").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^\\/$||^\\/([0-9a-zA-Z-_.~%!$&'()*+,;=:@]+\\/)*[0-9a-zA-Z-_.~%!$&'()*+,;=:@]+$"), "Must match :"+"^\\/$||^\\/([0-9a-zA-Z-_.~%!$&'()*+,;=:@]+\\/)*[0-9a-zA-Z-_.~%!$&'()*+,;=:@]+$"),
 				},
@@ -117,8 +117,8 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("standard", "wsdl", "graphql").AddDefaultValue("standard").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("standard", "wsdl", "graphql"),
 				},
@@ -179,8 +179,8 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"require_api_mutual_tls": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("API protection", "require-api-mutual-tls", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"api_mutual_tls_source": schema.ListAttribute{
@@ -196,8 +196,8 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"api_mutual_tls_header_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP header that contains the client certificate for mutual TLS. The default value is <tt>X-Client-Certificate</tt> .", "api-mutual-tls-header-name", "").AddDefaultValue("X-Client-Certificate").AddNotValidWhen(models.APIDefinitionAPIMutualTLSHeaderNameIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("X-Client-Certificate"),
 			},
 			"properties": schema.ListNestedAttribute{
@@ -212,8 +212,8 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"cors_toggle": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the API gateway to handle cross-origin resource sharing (CORS) requests. <ul><li>When enabled, the API gateway runs the API CORS action to handle all CORS requests for the API.</li><li>The routing API action matches the API to process, determines that the request is a preflight CORS request, and sets the <tt>request.attributes.isCORSPreflight</tt> flag to <tt>true</tt> .</li><li>When CORS is enabled and a preflight request is received, all assembly actions and many API actions are skipped. Only the following API actions are processed.</li><ul><li>The CORS API action configures the appropriate response headers.</li><li>The result API action sets the response headers.</li></ul><li>For all preflight requests, the security and client identification actions are always skipped.</li></ul>", "cors", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"cors_policy": schema.StringAttribute{
@@ -222,14 +222,14 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"activity_log_toggle": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable API activity logging. The API gateway runs the activity log API action to generate logs. To generate log data for calls, you must enable this property and ensure that the following conditions are met. <ul><li>The logging type is not set to none.</li><li>The activity log action is added in the API rule for the API definition.</li></ul><p>When disabled, the API gateway does not generate log data.</p>", "activity-log", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"content": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the content to log on success. When set to payload data, you must enable message buffering to capture all request and response data.", "success-content", "").AddStringEnum("none", "activity", "header", "payload").AddDefaultValue("activity").AddNotValidWhen(models.APIDefinitionContentIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "activity", "header", "payload"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.APIDefinitionContentIgnoreVal, true),
@@ -238,8 +238,8 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"error_content": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the content to log on error. When set to payload data, you must enable message buffering to capture all request and response data.", "error-content", "").AddStringEnum("none", "activity", "header", "payload").AddDefaultValue("payload").AddNotValidWhen(models.APIDefinitionErrorContentIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "activity", "header", "payload"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.APIDefinitionErrorContentIgnoreVal, true),
@@ -258,14 +258,14 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"message_buffering": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to buffer requests and responses before processing. <ul><li>When enabled, requests and responses are buffered before processing. The message payload and the output of the invoke assembly action are read as a binary large object (BLOB).</li><li>When disabled, requests and responses are streamed. Only an asynchronous API call can read the streamed data. If the message processing requires data to be parsed at the payload level, buffering is used to capture the data.</li></ul><p>If you enable activity logging to capture payload data, you must enable message buffering to capture all request and response data.</p>", "message-buffering", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"deployment_state": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the deployment state of the API. By default, the deployment state is running instead of suspended.", "deployment-state", "").AddStringEnum("running", "suspended").AddDefaultValue("running").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("running", "suspended"),
 				},
@@ -273,8 +273,8 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"share_rate_limit_count": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Share rate limit count", "share-count", "").AddStringEnum("unset", "yes", "no").AddDefaultValue("unset").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("unset", "yes", "no"),
 				},
@@ -282,63 +282,63 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"return_v5responses": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return v5-compatible responses, such as OAuth and client security error responses.", "return-v5-responses", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"copy_id_headers_to_message": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Copy ID headers to message", "copy-id-headers-to-message", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"enforce_required_params": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enforce required parameters", "enforce-required-params", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"allow_chunked_uploads": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to transfer documents to the server in chunks, which is based on the <tt>Transfer-Encoding: chunked</tt> header. This setting applies only to the <tt>invoke</tt> 1.5.0 policy that is deployed from API Connect from using the migration utility.", "allow-chunked-uploads", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"set_v5request_headers": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.", "set-v5-request-headers", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"get_raw_body_value": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the GatewayScript <tt>apim.getvariable()</tt> APIreturns the raw body instead of parsing. This setting applies only when the context is other than <tt>message</tt> .", "get-raw-body-value", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allowed_api_protocols": models.GetDmAPIProtocolsResourceSchema("Allowed API protocols", "allowed-api-protocols", "", false),
 			"allow_trailing_slash": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Allow trailing slash", "allow-trailing-slash", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"enforce_all_headers_case_insensitive": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enforce all headers in case-insensitive. By default, the following behavior applies to headers. <ul><li>Headers in the <tt>message.headers</tt> and <tt>request.headers</tt> contexts are case-insensitive.</li><li>Headers in a custom context, such as <tt>foo.headers</tt> , are case-sensitive. For example, <tt>foo.headers.bar</tt> and <tt>foo.headers.Bar</tt> are different headers.</li></ul>", "enforce-all-headers-case-insensitive", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"enforce_form_data_parameter": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to resolve and populate the form data parameter. <ul><li>When enabled and the operation of the API path configures any form data, resolve the payload as BLOB data and populate the corresponding fields as context variables during routing. Applicable when the <tt>Content-Type</tt> header is <tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt> .</li><li>When disabled and no required form-data parameter is specified, processing does not resolve as a BLOB and populate the parameter. Applicable when the <tt>Content-Type</tt> header is <tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt> .</li></ul>", "enforce-form-data-parameter", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"force_http500_for_soap11": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Force HTTP 500 for SOAP 1.1", "force-http-500-for-soap11", "").AddDefaultValue("false").AddNotValidWhen(models.APIDefinitionForceHttp500ForSoap11IgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

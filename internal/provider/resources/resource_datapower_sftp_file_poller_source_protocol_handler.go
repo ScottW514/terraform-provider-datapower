@@ -100,8 +100,8 @@ func (r *SFTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context
 			},
 			"delay_between_polls": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in milliseconds to wait after the completion of one poll sequence before the next one is started. Enter a value in the range 25 - 100000000. The default value is 60000. <p>A <em>polling sequence</em> is the actual polling action plus the time to complete all transactions that were started by the poll action. The next polling action will start the specified number of milliseconds after the last transaction completes.</p>", "delay-time", "").AddIntegerRange(25, 100000000).AddDefaultValue("60000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(25, 100000000),
 				},
@@ -117,32 +117,32 @@ func (r *SFTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context
 			},
 			"delete_on_success": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether to delete the input file after successful processing.</p><ul><li>When enabled, deletes the input file.</li><li>When not enabled, renames the input file using the renaming pattern specified by Success File Renaming Pattern.</li></ul>", "success-delete", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"success_rename_pattern": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>When Delete File on Success is off, enter the PCRE to use to rename the input file on success. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and you want to rename them to <tt>NNNNNN.processed</tt> , the match pattern would be <tt>\"([0-9]{6})\\.input$\"</tt> and the rename pattern would be <tt>\"$1.processed\"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>\"(.*)\"</tt> and the rename pattern would be <tt>\"../processed/$1\"</tt> .</p>", "success-rename-pattern", "").AddDefaultValue("$1.processed.ok").AddNotValidWhen(models.SFTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("$1.processed.ok"),
 			},
 			"delete_on_error": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether to delete the input or processing rename file when it could not be processed.</p><ul><li>When enabled, deletes the file.</li><li>When not enabled, renames the input or processing rename file using the renaming pattern specified by Error File Renaming Pattern.</li></ul>", "error-delete", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"error_rename_pattern": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When Delete File on Processing Error is not enabled, enter the PCRE to use to rename a file when it could not be processed.", "error-rename-pattern", "").AddDefaultValue("$0.processed.error").AddNotValidWhen(models.SFTPFilePollerSourceProtocolHandlerErrorRenamePatternIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("$0.processed.error"),
 			},
 			"generate_result_file": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether to create a result file after processing an input file.</p><ul><li>When enabled, creates the result file using the naming pattern specified by Result File Name Pattern.</li><li>When not enabled, does not create the result file.</li></ul>", "result", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"result_name_pattern": schema.StringAttribute{
@@ -154,8 +154,8 @@ func (r *SFTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context
 			},
 			"processing_seize_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to wait to process a file that is in the processing state. Enter a value in the range 0 - 1000. The default value is 0, which means disabled.</p><p>Processing seizure allows failure handling of a poller when more than one poller polls the same target. If another poller renames a file and does not process and rename or delete it in the specified time, another poller can take over processing. A poller attempts to take over processing when the following conditions are met when compared to the processing seize pattern.</p><ol><li>The seize pattern includes the portion of the file name with the configured processing suffix to match.</li><li>The time stamp is further in the past than the wait time specified by the timeout.</li></ol><p>When these conditions are met, another poller renames the file with a fresh time stamp and processes the file. The processing assumes that the rename operation succeeded.</p>", "processing-seize-timeout", "").AddIntegerRange(0, 1000).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1000),
 				},
@@ -170,14 +170,14 @@ func (r *SFTPFilePollerSourceProtocolHandlerResource) Schema(ctx context.Context
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("An XML Manager manages the compilation and caching of stylesheets and documents. The XML Manager can also control the size and depth of messages processed by this host. Specify an existing XML Manager. More than one service may use the same XML Manager.", "xml-manager", "xml_manager").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"max_transfers_per_poll": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The number of allowed concurrent client connections in a polling sequence.</p><p>Enter a value in the range 0 - 100. The value must be less than the number of simultaneous connections that the polled server accepts. The default value is 0 which means unlimited number of connections based on available system resources. To avoid the consumption of all the systems resources, enter a value other than 0.</p>", "max-transfers-per-poll", "").AddIntegerRange(0, 100).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
 				},

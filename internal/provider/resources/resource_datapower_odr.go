@@ -57,8 +57,8 @@ func (r *ODRResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -67,8 +67,8 @@ func (r *ODRResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"odr_server_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the name of the ODR routing rules server that is used to determine whether routing rules are delivered to the DataPower Gateway. If the DataPower Gateway is not using routing rules, you can use any server name.</p><p>You must define the <tt>RoutingRulesConnectorClusterName</tt> custom property to set the name of the ODR connector group from which routing rules are accepted.</p><p>The web server name is configured in on one of the following ways. <ul><li>In a Liberty Collective, defined as an attribute of the <tt>routingRules</tt> element.</li><li>In a WebSphere cell as the value of the <tt>serverName</tt> parameter of <tt>WebServerRoutingRule</tt> command.</li></ul></p>", "odr-server-name", "").AddDefaultValue("dp_set").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("dp_set"),
 			},
 			"odr_connector_groups": schema.ListAttribute{

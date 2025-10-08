@@ -61,7 +61,6 @@ func (d *AssemblyActionParseDataSource) Schema(ctx context.Context, req datasour
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The parse assembly action parses a request as XML or JSON and, if binary, parses the binary data into a binary large object (BLOB).",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

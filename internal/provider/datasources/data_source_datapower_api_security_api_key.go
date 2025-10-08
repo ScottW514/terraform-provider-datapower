@@ -61,7 +61,6 @@ func (d *APISecurityAPIKeyDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An API key security definition defines the credentials that an API client must provide to the API gateway to identify itself when calling the API operations. You can require that the client must provide only the client ID, or both the client ID and client secret. When you require the client to provide both the client ID and client secret, you must define two separate configurations, one of type ID and the other of type secret.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

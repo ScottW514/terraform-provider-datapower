@@ -63,8 +63,8 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -159,8 +159,8 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"audit_reserve": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the amount of disk space to reserve for audit records. When the disk is full, all services enter the down operational state and stop processing traffic. To restore disk space and resume traffic processing, manual intervention is required. Enter a value in the range 0 - 10000. The default value is 40.", "audit-reserve", "").AddIntegerRange(0, 10000).AddDefaultValue("40").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 10000),
 				},
@@ -179,8 +179,8 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"locale": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the locale for the operating language of the DataPower Gateway. The locale setting manages locale-specific conventions, such as date and time formats, and controls the language of log messages. The language must be enabled before you can select it.", "locale", "").AddStringEnum("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW").AddDefaultValue("en").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW"),
 				},
@@ -188,8 +188,8 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"system_log_fixed_format": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable fixed format in system logs. When enabled, the system logs are in the format that was used in version 6.0.1 and contain no serviceability improvements after this version that can help with monitoring or troubleshooting.", "system-log-fixed-format", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"uuid": schema.StringAttribute{

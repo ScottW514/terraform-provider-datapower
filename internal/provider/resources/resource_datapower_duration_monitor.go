@@ -83,8 +83,8 @@ func (r *DurationMonitorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"measure": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select which portion of the transaction cycle to monitor. The default is Messages.", "measure", "").AddStringEnum("messages", "requests", "server", "responses").AddDefaultValue("messages").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("messages", "requests", "server", "responses"),
 				},

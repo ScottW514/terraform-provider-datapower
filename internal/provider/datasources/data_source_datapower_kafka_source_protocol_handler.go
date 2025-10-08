@@ -61,7 +61,6 @@ func (d *KafkaSourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A Kafka handler monitors the request topic for incoming client requests.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

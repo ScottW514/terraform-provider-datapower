@@ -91,8 +91,8 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the algorithm to use to balance the real servers.", "algorithm", "").AddStringEnum("round-robin", "weighted-round-robin", "hash", "least-connections", "first-alive", "weighted-least-connections").AddDefaultValue("round-robin").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("round-robin", "weighted-round-robin", "hash", "least-connections", "first-alive", "weighted-least-connections"),
 				},
@@ -100,14 +100,14 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"retrieve_info": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use this setting to control whether this Load Balancer Group has membership and weight information automatically retrieved from the work load management repository WebSphere Cell. When disabled, the static configuration is used.", "retrieve-wlm-info", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"wlm_retrieval": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Contains the back end work load management repository selection type. Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS) Network Deployment (ND) or WAS Virtual Enterprise (VE).", "wlm-type", "").AddStringEnum("use-websphere").AddDefaultValue("use-websphere").AddNotValidWhen(models.LoadBalancerGroupWLMRetrievalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("use-websphere"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.LoadBalancerGroupWLMRetrievalIgnoreVal, true),
@@ -124,8 +124,8 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"wlm_transport": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify either HTTP or HTTPS for the Load Balancer Group protocol. This protocol is used to forward traffic between the DataPower Gateway and the members of the Load Balancer Group.", "wlm-transport", "").AddStringEnum("http", "https").AddDefaultValue("http").AddNotValidWhen(models.LoadBalancerGroupWLMTransportIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("http", "https"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.LoadBalancerGroupWLMTransportIgnoreVal, true),
@@ -134,8 +134,8 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"damp": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When a real server is observed to be non-functioning, it is temporarily disabled. When the damp time has elapsed, it is re-enabled. Allowable values are in the range 1 - 86400.", "damp", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -143,8 +143,8 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"never_return_sick_member": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("During normal operation, when all members of the load-balancing group are down and a new request for that group is made, the first member of the group is automatically selected. If this property is turned on, no attempt will be made to connect under these circumstances.", "giveup-when-all-members-down", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"lb_group_members": schema.ListNestedAttribute{
@@ -154,21 +154,21 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"try_every_server_before_failing": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("This property applies only when none of the group members are in the \"up\" state. If this value is set, every server in the group is tried before failing the connection attempt. It is a \"last best-effort\" attempt.", "try-every-server", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"lb_group_checks": models.GetDmLBGroupCheckResourceSchema("The members of a Load Balancer Group can be periodically polled to verify the health of the server. If the server is found to be unresponsive, it is removed from the list of actively available servers until the unresponsive server passes a health check.", "health-check", "", false),
 			"masquerade_member": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If you set this value, the host name presented to the server will be the name of the group instead of the name of the member being used for that specific transaction.", "masquerade", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"application_routing": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>If set to on, the load balancer group will route to the back end cluster depending on the following conditions.</p><ul><li>the application for which this request is targeted</li><li>the application status on the back end servers</li></ul><p>Application Routing is required for Application Edition (group or atomic) rollout. If you need Application Edition support, set the Update Type to Subscribe in the WebSphere Cell object.</p>", "appl-routing", "").AddDefaultValue("false").AddNotValidWhen(models.LoadBalancerGroupApplicationRoutingIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"lb_group_affinity_conf": models.GetDmLBGroupAffinityResourceSchema("Session affinity allows applications to maintain sessions with clients.", "session-affinity", "", false),

@@ -76,7 +76,5 @@ Read-Only:
 
 - `execute` (String) Specify the API rule to run when the case is matched.
 - `method` (String) Specify the HTTP method to match.
-  - Choices: `GET`, `POST`, `PUT`, `DELETE`, `HEAD`, `PATCH`, `OPTIONS`, `TRACE`
-  - Default value: `GET`
 - `operation_id` (String) Specify the unique operation ID to match.
 - `path` (String) Specify the relative API path to match.

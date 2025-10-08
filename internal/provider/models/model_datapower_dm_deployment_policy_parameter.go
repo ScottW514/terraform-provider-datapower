@@ -50,11 +50,11 @@ func GetDmDeploymentPolicyParameterDataSourceSchema() DataSourceSchema.NestedAtt
 	var DmDeploymentPolicyParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"parameter_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the deployment policy variable.", "", "").String,
+				MarkdownDescription: "Specify the name of the deployment policy variable.",
 				Computed:            true,
 			},
 			"parameter_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the corresponding value of the deployment policy variable.", "", "").String,
+				MarkdownDescription: "Specify the corresponding value of the deployment policy variable.",
 				Computed:            true,
 			},
 		},

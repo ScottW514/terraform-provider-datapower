@@ -51,11 +51,11 @@ func GetDmB2BActiveGroupDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmB2BActiveGroupDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"profile_group": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile group.", "group", "b2b_profile_group").String,
+				MarkdownDescription: "Specify the profile group.",
 				Computed:            true,
 			},
 			"group_enabled": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.", "enabled", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.",
 				Computed:            true,
 			},
 		},

@@ -61,7 +61,6 @@ func (d *SLMScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An SLM schedule defines the time period (hours and days) to enforce the statements in an SLM policy. Schedules allow the application of different statements during different time periods.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -87,8 +87,8 @@ func (r *APIPathResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"path": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the relative path to access the REST APIs. The path is appended to the base path to construct the full URI. The path must start with a / character. When the path contains a parameter, ensure that you define the path parameter at either or both the path and operation levels. <ul><li>A parameter at the end of the path can contain a + qualifier to match one or more levels as in the following example. <p><tt>/petstore/{type}/{+category}</tt></p><p>The <tt>{type}</tt> parameter matches one path level. The <tt>{+category}</tt> parameter matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li><li>A parameter at the end of the path can contain a * qualifier to match zero or more levels as in the following example. <p><tt>/petstore/{type}/{*category}</tt></p><p>The <tt>{type}</tt> parameter matches one path level. The <tt>{*category}</tt> parameter matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/</tt></li><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li></ul>", "path", "").AddDefaultValue("/").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^\\/$||^\\/([0-9a-zA-Z-_.~%!$&'()*+,;=:@\\{\\}]+\\/)*[0-9a-zA-Z-_.~%!$&'()*+,;=:@\\{\\}]+$"), "Must match :"+"^\\/$||^\\/([0-9a-zA-Z-_.~%!$&'()*+,;=:@\\{\\}]+\\/)*[0-9a-zA-Z-_.~%!$&'()*+,;=:@\\{\\}]+$"),
 				},

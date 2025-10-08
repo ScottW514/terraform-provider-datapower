@@ -88,5 +88,3 @@ Read-Only:
 
 - `host` (String) Specify the local IP address or host alias of the peer.
 - `priority` (Number) Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.
-  - Range: `0`-`255`
-  - Default value: `100`

@@ -91,8 +91,8 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"ad_use_ad": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether the Access Manager client uses Microsoft Active Directory instead of LDAP as the registry. The default registry for an Access Manager deployment is LDAP. This selection will cause this client to use Microsoft Active Directory. Active Directory type is not supported after ISAM 7.0 .</p><p><b>Note:</b> The type of registry that an Access Manager deployment supports is determined by the configuration of the Access Manager server. The registry that you define in this configuration is for a client and must match the registry of the server.</p>", "ad-use-ad", "").AddDefaultValue("false").AddRequiredWhen(models.TAMADUseADCondVal.String()).AddNotValidWhen(models.TAMADUseADIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"tam_version": schema.StringAttribute{
@@ -123,14 +123,14 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"use_local_mode": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select whether to create a local copy of the policy database. Set this property to cache the policy database locally instead of accessing the remote policy server. This property must match the behavior defined in the configuration files for the Access Manager client.", "use-local-mode", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"poll_interval": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the interval between requests to update the local policy database from the remote policy server. <ul><li><b>default</b> - Uses the default value, which is 600 seconds.</li><li><b>disable</b> - Disables requests to the policy database for requests.</li><li><i>seconds</i> - Specifies the time interval in seconds.</li></ul>", "cache-refresh-interval", "").AddDefaultValue("default").AddRequiredWhen(models.TAMPollIntervalCondVal.String()).AddNotValidWhen(models.TAMPollIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.TAMPollIntervalCondVal, models.TAMPollIntervalIgnoreVal, true),
 				},
@@ -138,8 +138,8 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"listen_mode": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select whether to accept notifications to update the local policy database from the policy server. When you set this property, it overrides the behavior defined in configuration files for the Access Manager client.", "listen-mode", "").AddDefaultValue("false").AddRequiredWhen(models.TAMListenModeCondVal.String()).AddNotValidWhen(models.TAMListenModeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"listen_port": schema.Int64Attribute{
@@ -148,20 +148,20 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"returning_user_attributes": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select whether the registry returns users attributes for successful authorization requests. When set, the registry returns user attributes.", "return-attributes", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ldap_use_ssl": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select whether to use TLS communication between the Access Manager client and the LDAP or Active Directory server.", "use-ldap-ssl", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ldap_ssl_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the listening port that the LDAP server uses for TLS communication. This property does not apply for TLS communication with an Active Directory server.", "ldap-ssl-port", "").AddDefaultValue("636").AddNotValidWhen(models.TAMLDAPSSLPortIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(636),
 			},
 			"ldap_ssl_key_file": schema.StringAttribute{
@@ -181,8 +181,8 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"tam_use_fips": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select whether the secure communication between the Access Manager client and the authorization server runs in FIPS mode.", "use-fips", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"tam_choose_nist": schema.StringAttribute{
@@ -195,14 +195,14 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"tam_use_basic_user": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Control whether to support basic users in the client. When enabled, you can use LDAP user entries for authentication or authorization without importing them into the ISAM domain.", "use-basic-user", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_principal_attribute": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute that identifies the basic user in the LDAP user entry. The default value is uid.", "user-principal-attribute", "").AddDefaultValue("uid").AddRequiredWhen(models.TAMUserPrincipalAttributeCondVal.String()).AddNotValidWhen(models.TAMUserPrincipalAttributeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.TAMUserPrincipalAttributeCondVal, models.TAMUserPrincipalAttributeIgnoreVal, true),
 				},
@@ -210,8 +210,8 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"user_no_duplicates": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Control whether to allow duplicate principals.</p><ul><li>When enabled, the search for basic users covers all suffixes to ensure that no users with the same name are found. If duplicate principals are found in this client, the system returns an error.</li><li>When disabled, the search for basic users ignores possible duplicates. By default, duplicate principals are not allowed.</li></ul>", "user-no-duplicates", "").AddDefaultValue("true").AddNotValidWhen(models.TAMUserNoDuplicatesIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_search_suffixes": schema.ListAttribute{
@@ -221,8 +221,8 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"user_suffix_optimiser": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Control whether to search the suffixes in an optimized order.</p><ul><li>When enabled and uplicate principals are allowed, the suffixes are searched in an optimized order based on hit count, with the most hit of the suffix at the head of the search suffix list. This can help reduce the number of suffixes searched. If duplicate principals are not allowed, the suffix optimization setting is disregarded and all suffixes are searched to check for duplicates.</li><li>When disabled, the search order is provided by the order that is defined by the search suffixes property.</li></ul>", "user-suffix-optimiser", "").AddDefaultValue("false").AddNotValidWhen(models.TAMUserSuffixOptimiserIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"tam_fed_dirs": schema.ListNestedAttribute{
@@ -238,14 +238,14 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			"tam_ras_trace": models.GetDmTAMRASTraceResourceSchema("<p>Trace logging is a useful debugging tool. By default, trace logging is not enabled. Trace logging collects large amounts of data in a short amount of time and might result in a significant performance degradation. Enable trace logging only at the direction of IBM Support.</p><p>When enabled, the DataPower Gateway creates two trace files for each library. The DataPower Gateway writes the files cyclically. Double the size of the files to obtain the total allowable file size.</p>", "tam-ras-trace", "", false),
 			"auto_retry": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether to attempt starting the Access Manager client after an initial failure. The DataPower Gateway automatically attempts to start the client after a critical error. This property controls the behavior after the initial attempt to restart.</p><ul><li>When enabled, the DataPower Gateway attempts to start the client with the defined configuration.</li><li>When disabled, the client is marked as <tt>down</tt> .</li></ul><p>The default behavior is to not attempt to start the client after an initial failure.</p>", "auto-retry", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the number of seconds to wait between attempts to start the Access Manager client. Enter a value in the range 1 - 65535. The default value is 180.</p>", "retry-interval", "").AddIntegerRange(1, 3600).AddDefaultValue("180").AddNotValidWhen(models.TAMRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 3600),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.TAMRetryIntervalIgnoreVal, true),
@@ -254,14 +254,14 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 			},
 			"retry_attempts": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the number of attempts to perform for the Access Manager client. After performing these attempts and the client did not start, each additional attempt waits the number of seconds defined by the long interval. Enter a value in the range 0 - 65535. A value of 0 disables the long interval. The default value is 3.", "retry-attempts", "").AddDefaultValue("3").AddNotValidWhen(models.TAMRetryAttemptsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(3),
 			},
 			"long_retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the number of seconds to wait after reaching the number of retry attempts. Enter a value in the range 1 - 65535. The default value is 900.", "long-retry-interval", "").AddIntegerRange(1, 3600).AddDefaultValue("900").AddNotValidWhen(models.TAMLongRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 3600),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.TAMLongRetryIntervalIgnoreVal, true),

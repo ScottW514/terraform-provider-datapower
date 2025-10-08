@@ -100,8 +100,8 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"product_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Product version", "product-version", "").AddDefaultValue("1.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("1.0.0"),
 			},
 			"product_title": schema.StringAttribute{
@@ -110,8 +110,8 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"use_rate_limit_group": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use rate limit group", "use-rate-limit-group", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"rate_limit": schema.ListNestedAttribute{
@@ -130,8 +130,8 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"use_limit_definitions": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use limit definitions", "use-definitions", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"assembly_burst_limit": schema.ListNestedAttribute{
@@ -189,8 +189,8 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"rate_limit_scope": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope to apply the rate limit schemes to. You can apply schemes against the application or client ID. For example, <tt>application1</tt> has <tt>client1</tt> and <tt>client2</tt> , and the rate limit is 10 calls per hour. <ul><li>When against the application, <tt>application1</tt> limits 10 calls per hour from either <tt>client1</tt> or <tt>client2.</tt></li><li>When against the client ID, <tt>application1</tt> limits 10 calls per hour from each <tt>client1</tt> and <tt>client2</tt> .</li></ul>", "rate-limit-scope", "").AddStringEnum("per-application", "per-client-id").AddDefaultValue("per-application").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("per-application", "per-client-id"),
 				},

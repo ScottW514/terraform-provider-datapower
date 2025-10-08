@@ -91,14 +91,14 @@ func (r *IncludeConfigResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"on_startup": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to import the configuration file on startup. The default behavior is to import on startup. <ul><li>When enabled, the configuration file is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>", "auto-execute", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"interface_detection": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to wait for the associated IP interface to be operational. This setting only affects configuration files from remote servers. When enabled, remote files are processed asynchronously after the associated IP interface is operational.", "interface-detection", "").AddDefaultValue("false").AddRequiredWhen(models.IncludeConfigInterfaceDetectionCondVal.String()).AddNotValidWhen(models.IncludeConfigInterfaceDetectionIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

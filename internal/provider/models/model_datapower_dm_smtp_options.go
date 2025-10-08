@@ -53,11 +53,11 @@ func GetDmSMTPOptionsDataSourceSchema(description string, cliAlias string, refer
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"start_tls": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("STARTTLS", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "STARTTLS",
 				Computed:            true,
 			},
 			"auth": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authentication", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Authentication",
 				Computed:            true,
 			},
 		},

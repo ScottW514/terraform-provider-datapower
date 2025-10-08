@@ -78,7 +78,4 @@ Optional:
 Read-Only:
 
 - `execute` (String) Specify the function call assembly action to call.
-  - CLI Alias: `execute`
-  - Reference to: `datapower_assembly_action_function_call:id`
 - `target` (String) Specify the target name that is configured in the schema.
-  - CLI Alias: `target`

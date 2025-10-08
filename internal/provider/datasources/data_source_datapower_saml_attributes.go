@@ -61,7 +61,6 @@ func (d *SAMLAttributesDataSource) Schema(ctx context.Context, req datasource.Sc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Define a list of SAML attributes for the SAML Assertion generator.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

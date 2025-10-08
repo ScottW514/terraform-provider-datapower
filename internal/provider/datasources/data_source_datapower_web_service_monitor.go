@@ -61,7 +61,6 @@ func (d *WebServiceMonitorDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A service level monitor (SLM) for a web service watches web services traffic to a specific endpoint.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

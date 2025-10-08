@@ -61,7 +61,6 @@ func (d *MQManagerGroupDataSource) Schema(ctx context.Context, req datasource.Sc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>An IBM MQ queue manager group enables automatic failover between queue managers when a queue manager becomes unavailable. When you define multiple backup queue managers, the first active queue manager in the group replaces the primary queue manager.</p><p>You can configure the queue manager to work with the multi-instance feature in the IBM MQ server. Connect the primary queue manager to one of the instances of a queue manager in the IBM MQ server, and the backup queue manager to the other instance. All connections for the queue manager group go to the queue manager connected to the active instance. If the active instance in the IBM MQ server fails, the queue manager connected to the standby instance automatically takes over all the data and logs from the queue manager connected to the original active instance.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

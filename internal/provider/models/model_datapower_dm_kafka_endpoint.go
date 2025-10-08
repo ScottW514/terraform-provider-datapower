@@ -50,11 +50,11 @@ func GetDmKafkaEndpointDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmKafkaEndpointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"host": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of a bootstrap server.", "", "").String,
+				MarkdownDescription: "Specify the host name or IP address of a bootstrap server.",
 				Computed:            true,
 			},
 			"port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port that the bootstrap server monitors for incoming bootstrap requests.", "", "").String,
+				MarkdownDescription: "Specify the port that the bootstrap server monitors for incoming bootstrap requests.",
 				Computed:            true,
 			},
 		},

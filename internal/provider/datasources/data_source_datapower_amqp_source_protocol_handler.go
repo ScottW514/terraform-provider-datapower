@@ -61,7 +61,6 @@ func (d *AMQPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req da
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "In AMQP, distributed source and target termini are managed by a broker. The broker periodically monitors and polls termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -61,7 +61,6 @@ func (d *WSGatewayDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>A Web Service Proxy virtualizes web services described by WSDL files. The Proxy provides alternate endpoint URLs, message validation, service level monitoring and automatic updating when provided with only one or more WSDL files.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

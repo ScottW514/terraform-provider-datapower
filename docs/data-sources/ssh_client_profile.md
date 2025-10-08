@@ -82,6 +82,4 @@ Optional:
 Read-Only:
 
 - `password` (Boolean) Password
-  - Default value: `true`
 - `publickey` (Boolean) Public key
-  - Default value: `true`

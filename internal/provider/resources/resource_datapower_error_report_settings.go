@@ -60,8 +60,8 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -70,50 +70,50 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 			},
 			"upload_report": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to upload the error report to an NFS, RAID, SMTP, or FTP destination or write the error report to the local temporary directory. If you enable this feature:</p><ul><li>It enables the Failure Notification status provider, which tracks previous error reports</li><li>It changes the naming convention to include the serial number of the appliance and the timestamp, which prevents one report overwriting another</li></ul>", "upload-report", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsUploadReportIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_smtp": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to send an e-mail at start-up only that contains the error report. If you want to receive e-mail notification, use the upload error report property instead of this property.", "use-smtp", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsUseSmtpIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"internal_state": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the internal state of the appliance in the error report. The internal state can be useful in diagnosing the cause of the error.", "internal-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_packet_capture": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use a background packet capture. This feature enables network packet capture for all interfaces including the internal loopback interface. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes the data from this packet capture data. This data helps to determine the messages that the appliance was processing when it encountered the problem.</p>", "ffdc packet-capture", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsFFDCPacketCaptureIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_event_log_capture": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use a background log capture. This feature enables the capture of all log and trace points with minimal overhead. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes data from this log capture. This data can help IBM Support identify the problem.</p><p>These messages are independent of messages written to log and trace targets.</p>", "ffdc event-log", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsFFDCEventLogCaptureIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_memory_leak_capture": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable automatic leak detection. This feature finds gradual memory leaks that occur steadily over time. This feature does not help in situations where messages are larger than the appliance can parse.</p><p>When enabled and if memory falls below an internal threshold, the appliance tracks all memory allocations. When the appliance reaches a critical condition that will lead to a crash, it generates an error report that contains information about memory allocation.</p><p>The configuration of the Throttle Settings affects this feature. The throttle settings can prevent the appliance from reaching the internal threshold.</p>", "ffdc memory-trace", "").AddDefaultValue("false").AddNotValidWhen(models.ErrorReportSettingsFFDCMemoryLeakCaptureIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"always_on_startup": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether the appliance generates an error report when it reboots or reloads. If this feature is enabled logs will be collected before they are overwritten when the system reloads. When the appliance reboots or reloads and when using the upload error report feature, the status provider lists <tt>on-start</tt> as the reason code. If the appliance reloads due to a crash, the status provider lists <tt>crash</tt> as the reason code.</p><p><b>Best Practices:</b></p><ul><li>In general enable this feature.</li><li>In particular when in production, enable this feature to track reloads and reboots.</li></ul>", "always-on-startup", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"always_on_shutdown": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether the appliance generates an error report when it shuts down. When the appliance shuts down and when using the upload error report feature, the status provider lists <tt>on-shutdown</tt> as the reason code. If the appliance shuts down due to a crash, the status provider lists <tt>crash</tt> as the reason code.</p><p><b>Best Practices:</b></p><ul><li>In general enable this feature.</li><li>In particular when in production, enable this feature to make sure debugging information is captured when the appliance shuts down.</li></ul>", "always-on-shutdown", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"protocol": schema.StringAttribute{
@@ -198,8 +198,8 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 			},
 			"report_history_kept": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the maximum number of local error reports to maintain when using the upload error report feature. After reaching this limit, the next local error report overwrites the oldest local error report. Use any value of 2 - 10. The default value is 5.</p><p>This feature only applies to locally stored error reports, including temporary and Raid.</p><p>To view the history, see the Failure Notification status provider.</p>", "report-history", "").AddIntegerRange(2, 10).AddDefaultValue("5").AddNotValidWhen(models.ErrorReportSettingsReportHistoryKeptIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(2, 10),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.ErrorReportSettingsReportHistoryKeptIgnoreVal, true),

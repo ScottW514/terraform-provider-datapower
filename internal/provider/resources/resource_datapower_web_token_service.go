@@ -92,8 +92,8 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"priority": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the service-level priority. When resources are in high demand, the appliance handles transactions for higher priority services over lower priority services.", "priority", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
 				},
@@ -101,14 +101,14 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Assign the XML manager that obtains and manages documents on behalf of the service. The user agent, which is referenced by this XML manager, controls access to remote destinations. Unless you have service-specific needs, use the <tt>default</tt> XML manager.", "xml-manager", "xml_manager").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"request_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Characterizes the traffic that originates from the client. The default is Non-XML.", "request-type", "").AddStringEnum("soap", "xml", "unprocessed", "preprocessed", "json").AddDefaultValue("preprocessed").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("soap", "xml", "unprocessed", "preprocessed", "json"),
 				},
@@ -121,26 +121,26 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"style_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Assign the processing policy to the service. The processing policy defines the actions to perform on security token requests.", "stylepolicy", "style_policy").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"rewrite_errors": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Error messages after a decryption action can provide an attacker who is using the padding oracle attack method with enough information to determine the contents of the plain-text data. When enabled, the default, the client receives error messages without the internal information that could lead to a discovery. When disabled, the client receives the original message with this information.", "rewrite-errors", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the appliance delays error messages for the defined duration. When disabled, the appliance does not delay error messages.", "delay-errors", "").AddDefaultValue("true").AddNotValidWhen(models.WebTokenServiceDelayErrorsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors_duration": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the appliance will not send error messages to the client until 3 seconds have elapsed since the appliance performed decryption on the requests. Enter any value in the range 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").AddRequiredWhen(models.WebTokenServiceDelayErrorsDurationCondVal.String()).AddNotValidWhen(models.WebTokenServiceDelayErrorsDurationIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(250, 300000),
 					validators.ConditionalRequiredInt64(models.WebTokenServiceDelayErrorsDurationCondVal, models.WebTokenServiceDelayErrorsDurationIgnoreVal, true),
@@ -149,8 +149,8 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"front_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the intra-transaction timeout for Web Token Service to client connections. This value is the maximum idle time to allow in a transaction on the Web Token Service to client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.", "front-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -158,8 +158,8 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"front_persistent_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the inter-transaction timeout for Web Token Service to client connections. This value is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction on the Web Token Service to client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.", "front-persistent-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("180").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
 				},
@@ -167,8 +167,8 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"front_http_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the HTTP version for client-to-service connections. If the client submits an HTTP/1.0 request, the service on the DataPower appliance always replies with HTTP/1.0 compatible responses regardless of this setting. The default version is HTTP 1.1.", "http-front-version", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
 				},
@@ -176,20 +176,20 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"http_client_ip_label": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the HTTP header that contains the client IP address. When defined, the client IP address is read from this HTTP header. This IP address will then be used for monitoring and logging. Retain the default value <tt>X-Client-IP</tt> or specify another value; for example, <tt>X-Forwarded-For</tt> .", "http-client-ip-label", "").AddDefaultValue("X-Client-IP").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("X-Client-IP"),
 			},
 			"http_log_cor_id_label": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.", "http-global-tranID-label", "").AddDefaultValue("X-Global-Transaction-ID").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("X-Global-Transaction-ID"),
 			},
 			"debug_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>", "debug-mode", "").AddStringEnum("on", "off", "unbounded").AddDefaultValue("off").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("on", "off", "unbounded"),
 				},
@@ -197,8 +197,8 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"debug_history": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.WebTokenServiceDebugHistoryCondVal.String()).AddNotValidWhen(models.WebTokenServiceDebugHistoryIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 250),
 					validators.ConditionalRequiredInt64(models.WebTokenServiceDebugHistoryCondVal, models.WebTokenServiceDebugHistoryIgnoreVal, true),

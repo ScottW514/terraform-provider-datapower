@@ -56,19 +56,19 @@ func GetDmB2BCPAEntryDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmB2BCPAEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"cpa": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA.", "cpa", "b2b_cpa").String,
+				MarkdownDescription: "Specify the CPA.",
 				Computed:            true,
 			},
 			"collaboration": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the service to attach. A service is either a business collaboration service for exchanging business messages or an MSH signal service for exchanging MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping, and Pong. The value of an MSH signal service is <tt>urn:oasis:names:tc:ebxml-msg:service</tt> . Another value represents a business collaboration service.", "collaboration", "b2b_cpa_collaboration").String,
+				MarkdownDescription: "Specify the service to attach. A service is either a business collaboration service for exchanging business messages or an MSH signal service for exchanging MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping, and Pong. The value of an MSH signal service is <tt>urn:oasis:names:tc:ebxml-msg:service</tt> . Another value represents a business collaboration service.",
 				Computed:            true,
 			},
 			"internal_partner": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the internal partner.", "internal-partner", "b2b_profile").String,
+				MarkdownDescription: "Specify the internal partner.",
 				Computed:            true,
 			},
 			"external_partner": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the external partner.", "external-partner", "b2b_profile").String,
+				MarkdownDescription: "Specify the external partner.",
 				Computed:            true,
 			},
 		},

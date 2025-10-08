@@ -61,7 +61,6 @@ func (d *AssemblyActionRateLimitDataSource) Schema(ctx context.Context, req data
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The rate limit assembly action applies rate limit, burst limits, count limits, or any combination to subsequent actions in the assembly. <p>This action is not supported in IBM Cloud. Any assembly that includes it will fail.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

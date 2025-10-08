@@ -77,6 +77,4 @@ Optional:
 Read-Only:
 
 - `azsvr` (Boolean) Authorization and Token Endpoints
-  - Default value: `false`
 - `rssvr` (Boolean) Enforcement Point for Resource Server
-  - Default value: `false`

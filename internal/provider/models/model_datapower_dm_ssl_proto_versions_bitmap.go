@@ -62,23 +62,23 @@ func GetDmSSLProtoVersionsBitmapDataSourceSchema(description string, cliAlias st
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"ssl_v3": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable SSL version 3", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Enable SSL version 3",
 				Computed:            true,
 			},
 			"tls_v1d0": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.0", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Enable TLS version 1.0",
 				Computed:            true,
 			},
 			"tls_v1d1": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.1", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Enable TLS version 1.1",
 				Computed:            true,
 			},
 			"tls_v1d2": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.2", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Enable TLS version 1.2",
 				Computed:            true,
 			},
 			"tls_v1d3": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS version 1.3", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Enable TLS version 1.3",
 				Computed:            true,
 			},
 		},

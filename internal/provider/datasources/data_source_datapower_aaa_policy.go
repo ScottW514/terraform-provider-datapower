@@ -61,7 +61,6 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>Define the support to authenticate users and authorize their access to resources. An AAA policy consists of the following phases.</p><ul><li>During AAA processing, the identity extraction phase defines which methods the AAA policy uses to extract the claimed identity of the service requester.</li><li>After the claimed identity of the service requester is extracted, an AAA policy authenticates the claimed identity. The authentication process can use internal or external resources.</li><li>After authentication credentials are received, an AAA policy can map these credentials.</li><li>After client authentication, an AAA policy identifies the specific resource that is being requested by that client.</li><li>After requested resources are identified, you might need to map extracted resource to a form that is compatible with the authorization method.</li><li>After the service requester is authenticated from the extracted identity, an AAA policy authorizes the client to the requested resource.</li><li>After client-authorization, an AAA policy can run postprocessing activities.</li></ul>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

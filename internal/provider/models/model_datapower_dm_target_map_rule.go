@@ -50,11 +50,11 @@ func GetDmTargetMapRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmTargetMapRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"target": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the target name that is configured in the schema.", "target", "").String,
+				MarkdownDescription: "Specify the target name that is configured in the schema.",
 				Computed:            true,
 			},
 			"execute": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the function call assembly action to call.", "execute", "assembly_action_function_call").String,
+				MarkdownDescription: "Specify the function call assembly action to call.",
 				Computed:            true,
 			},
 		},

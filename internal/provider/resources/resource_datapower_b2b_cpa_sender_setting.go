@@ -111,8 +111,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"connection_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to maintain an idle connection. Enter a value in the range 3 - 7200. The default value is 300.", "timeout", "").AddIntegerRange(3, 7200).AddDefaultValue("300").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(3, 7200),
 				},
@@ -120,8 +120,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"sync_reply_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Sync reply mode", "syncreply-mode", "").AddStringEnum("mshSignalsOnly", "none").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("mshSignalsOnly", "none"),
 				},
@@ -129,8 +129,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"duplicate_elimination": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("For an outbound ebMS message, specify whether the internal sending party requests the external receiving party to check duplicate elimination. The request is made by presenting the <tt>DuplicateElimination</tt> element in the <tt>MessageHeader</tt> element in the ebMS SOAP header. <p>When imported from CPA, the <tt>duplicateElimination</tt> attribute on the internal party <tt>DeliveryChannel</tt> element in the <tt>MessagingCharacteristics</tt> element.</p>", "duplicate-elimination", "").AddStringEnum("never", "always").AddDefaultValue("always").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always"),
 				},
@@ -138,8 +138,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"ack_requested": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Request acknowledgment", "ack-requested", "").AddStringEnum("never", "always").AddDefaultValue("never").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always"),
 				},
@@ -147,8 +147,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"ack_signature_requested": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Request signed acknowledgment", "ack-signature-requested", "").AddStringEnum("never", "always").AddDefaultValue("never").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always"),
 				},
@@ -156,14 +156,14 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"retry": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Retransmit unacknowledged messages", "retry", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_retries": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.", "max-retries", "").AddIntegerRange(1, 30).AddDefaultValue("3").AddRequiredWhen(models.B2BCPASenderSettingMaxRetriesCondVal.String()).AddNotValidWhen(models.B2BCPASenderSettingMaxRetriesIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 30),
 					validators.ConditionalRequiredInt64(models.B2BCPASenderSettingMaxRetriesCondVal, models.B2BCPASenderSettingMaxRetriesIgnoreVal, true),
@@ -172,8 +172,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between retransmit attempts. Enter a value in the range 1 - 86400. The default value in 1800.", "retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("1800").AddRequiredWhen(models.B2BCPASenderSettingRetryIntervalCondVal.String()).AddNotValidWhen(models.B2BCPASenderSettingRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 					validators.ConditionalRequiredInt64(models.B2BCPASenderSettingRetryIntervalCondVal, models.B2BCPASenderSettingRetryIntervalIgnoreVal, true),
@@ -189,14 +189,14 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"include_time_to_live": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the <tt>TimeToLive</tt> element in the outbound messages. This element indicates when the message expires. The receiving partner can accept the message only when it has not expired.", "include-time-to-live", "").AddDefaultValue("true").AddNotValidWhen(models.B2BCPASenderSettingIncludeTimeToLiveIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"encryption_required": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to encrypt outbound messages. Encryption does not apply to MSH level signals.", "encrypt-required", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"encrypt_cert": schema.StringAttribute{
@@ -208,8 +208,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"encrypt_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Encryption algorithm", "encrypt-algorithm", "").AddStringEnum("http://www.w3.org/2001/04/xmlenc#tripledes-cbc", "http://www.w3.org/2001/04/xmlenc#aes128-cbc", "http://www.w3.org/2001/04/xmlenc#aes192-cbc", "http://www.w3.org/2001/04/xmlenc#aes256-cbc", "http://www.w3.org/2009/xmlenc11#aes128-gcm", "http://www.w3.org/2009/xmlenc11#aes192-gcm", "http://www.w3.org/2009/xmlenc11#aes256-gcm").AddDefaultValue("http://www.w3.org/2001/04/xmlenc#tripledes-cbc").AddRequiredWhen(models.B2BCPASenderSettingEncryptAlgorithmCondVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("http://www.w3.org/2001/04/xmlenc#tripledes-cbc", "http://www.w3.org/2001/04/xmlenc#aes128-cbc", "http://www.w3.org/2001/04/xmlenc#aes192-cbc", "http://www.w3.org/2001/04/xmlenc#aes256-cbc", "http://www.w3.org/2009/xmlenc11#aes128-gcm", "http://www.w3.org/2009/xmlenc11#aes192-gcm", "http://www.w3.org/2009/xmlenc11#aes256-gcm"),
 					validators.ConditionalRequiredString(models.B2BCPASenderSettingEncryptAlgorithmCondVal, validators.Evaluation{}, true),
@@ -218,8 +218,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"signature_required": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Require signature", "sign-required", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"sign_id_cred": schema.StringAttribute{
@@ -231,8 +231,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"signature_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Signature algorithm", "sign-algorithm", "").AddStringEnum("dsa-sha1", "rsa-sha1", "rsa-sha256", "rsa-sha384", "rsa-sha512", "rsa-ripemd160", "rsa-ripemd160-2010", "sha256-rsa-MGF1", "rsa-md5", "ecdsa-sha1", "ecdsa-sha224", "ecdsa-sha256", "ecdsa-sha384", "ecdsa-sha512").AddDefaultValue("rsa-sha1").AddRequiredWhen(models.B2BCPASenderSettingSignatureAlgorithmCondVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("dsa-sha1", "rsa-sha1", "rsa-sha256", "rsa-sha384", "rsa-sha512", "rsa-ripemd160", "rsa-ripemd160-2010", "sha256-rsa-MGF1", "rsa-md5", "ecdsa-sha1", "ecdsa-sha224", "ecdsa-sha256", "ecdsa-sha384", "ecdsa-sha512"),
 					validators.ConditionalRequiredString(models.B2BCPASenderSettingSignatureAlgorithmCondVal, validators.Evaluation{}, true),
@@ -241,8 +241,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"sign_digest_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Signing digest algorithm", "sign-digest-algorithm", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").AddRequiredWhen(models.B2BCPASenderSettingSignDigestAlgorithmCondVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5"),
 					validators.ConditionalRequiredString(models.B2BCPASenderSettingSignDigestAlgorithmCondVal, validators.Evaluation{}, true),
@@ -251,8 +251,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"signature_c14n_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Signature canonicalization method", "sign-c14n-algorithm", "").AddStringEnum("c14n", "exc-c14n", "c14n-comments", "exc-c14n-comments", "c14n11", "c14n11-comments").AddDefaultValue("exc-c14n").AddRequiredWhen(models.B2BCPASenderSettingSignatureC14NAlgorithmCondVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("c14n", "exc-c14n", "c14n-comments", "exc-c14n-comments", "c14n11", "c14n11-comments"),
 					validators.ConditionalRequiredString(models.B2BCPASenderSettingSignatureC14NAlgorithmCondVal, validators.Evaluation{}, true),
@@ -261,8 +261,8 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.B2BCPASenderSettingSSLClientConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BCPASenderSettingSSLClientConfigTypeIgnoreVal, true),

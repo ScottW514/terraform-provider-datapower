@@ -61,7 +61,6 @@ func (d *FTPServerSourceProtocolHandlerDataSource) Schema(ctx context.Context, r
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The FTP server handler provides an FTP server that can be used to submit files for processing by the system. Each file that is written results in one transaction.</p><p>There can be multiple FTP servers, but only one server can listen on the default port 21 on a given IP address. There can be multiple simultaneous connections from FTP clients to the same FTP server.</p><p><b>Notes:</b></p><ul><li>The 226 FTP response code at the end of an FTP <tt>STOR</tt> or <tt>STOU</tt> command is conditional on successful completion of the internal steps and backside operation of the transaction.</li><li>Changes in the configuration affect only new connections to this FTP server. Existing connections continue to use their current configuration until they disconnect.</li></ul>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

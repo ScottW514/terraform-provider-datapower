@@ -140,8 +140,8 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"decrypt_fetch_cred_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The URL indicates the source location where the decryption credentials can be fetched for decrypting the JWT. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/key. This field is meaningful when you choose <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.", "decrypt-fetch-cred-url", "").AddDefaultValue("http://example.com/v3/key").AddRequiredWhen(models.AAAJWTValidatorDecryptFetchCredURLCondVal.String()).AddNotValidWhen(models.AAAJWTValidatorDecryptFetchCredURLIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(7, 255),
 					validators.ConditionalRequiredString(models.AAAJWTValidatorDecryptFetchCredURLCondVal, models.AAAJWTValidatorDecryptFetchCredURLIgnoreVal, true),
@@ -176,8 +176,8 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"verify_certificate_against_val_cred": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("You decide whether to use validation credentials to verify the JWT signature. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt> from the Verify method list.", "verify-certificate-against-valcred", "").AddDefaultValue("false").AddRequiredWhen(models.AAAJWTValidatorVerifyCertificateAgainstValCredCondVal.String()).AddNotValidWhen(models.AAAJWTValidatorVerifyCertificateAgainstValCredIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"verify_val_cred": schema.StringAttribute{
@@ -203,8 +203,8 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"verify_fetch_cred_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The URL indicates the source location where the verification credentials can be fetched for verifying the JWT signature. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/certs. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.", "verify-fetch-cred-url", "").AddDefaultValue("http://example.com/v3/certs").AddRequiredWhen(models.AAAJWTValidatorVerifyFetchCredURLCondVal.String()).AddNotValidWhen(models.AAAJWTValidatorVerifyFetchCredURLIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(7, 255),
 					validators.ConditionalRequiredString(models.AAAJWTValidatorVerifyFetchCredURLCondVal, models.AAAJWTValidatorVerifyFetchCredURLIgnoreVal, true),
@@ -222,8 +222,8 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"username_claim": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("This field is applicable only when the JWT Validator is used in the AAA identity extraction phase. By default, the value of the \"sub\" claim is populated as the username element of the identity extraction output. Ensure that the claim specified in this field is present in the incoming JWT. If no match is found, no username is populated in the AAA processing.", "username-claim", "").AddDefaultValue("sub").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("sub"),
 			},
 			"dependency_actions": actions.ActionsSchema,

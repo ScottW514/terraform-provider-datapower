@@ -61,7 +61,6 @@ func (d *ConfigSequenceDataSource) Schema(ctx context.Context, req datasource.Sc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A configuration sequence defines a series of configuration files to load after the startup configuration. By default, changes in configuration files are detected and reloaded.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -50,11 +50,11 @@ func GetDmODRPropertyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmODRPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"prop_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a property.", "odr-prop-name", "").String,
+				MarkdownDescription: "Enter the name of a property.",
 				Computed:            true,
 			},
 			"prop_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value of a property.", "odr-prop-value", "").String,
+				MarkdownDescription: "Enter the value of a property.",
 				Computed:            true,
 			},
 		},

@@ -62,18 +62,10 @@ Optional:
 Read-Only:
 
 - `amp` (Boolean) AMP endpoint
-  - Default value: `true`
 - `any` (Boolean) SOAP management URI
-  - Default value: `true`
 - `slm` (Boolean) SLM endpoint
-  - Default value: `true`
 - `soma` (Boolean) SOAP configuration management
-  - Default value: `true`
 - `v2004` (Boolean) SOAP configuration management (v2004)
-  - Default value: `true`
 - `wsdm` (Boolean) WSDM endpoint
-  - Default value: `false`
 - `wsm` (Boolean) WS-Management endpoint
-  - Default value: `false`
 - `wsrr_subscription` (Boolean) WSRR subscription
-  - Default value: `true`

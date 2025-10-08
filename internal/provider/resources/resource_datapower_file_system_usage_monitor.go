@@ -59,8 +59,8 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -69,8 +69,8 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 			},
 			"polling_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes between file system checks for their usage. Enter a value in the range 15 - 65535. The default value is 60.", "poll", "").AddIntegerRange(15, 65535).AddDefaultValue("60").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(15, 65535),
 				},
@@ -78,14 +78,14 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 			},
 			"all_system": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the utility checks all or only a subset of system file systems. By default, all file systems are scanned. <ul><li>When enabled, you can define specific file systems that override their default thresholds.</li><li>When not enabled, define the file systems to check with their thresholds.</li></ul>", "all-system", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"all_system_warning_threshold": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-system-warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").AddRequiredWhen(models.FileSystemUsageMonitorAllSystemWarningThresholdCondVal.String()).AddNotValidWhen(models.FileSystemUsageMonitorAllSystemWarningThresholdIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
 					validators.ConditionalRequiredInt64(models.FileSystemUsageMonitorAllSystemWarningThresholdCondVal, models.FileSystemUsageMonitorAllSystemWarningThresholdIgnoreVal, true),
@@ -94,8 +94,8 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 			},
 			"all_system_critical_threshold": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-system-critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").AddRequiredWhen(models.FileSystemUsageMonitorAllSystemCriticalThresholdCondVal.String()).AddNotValidWhen(models.FileSystemUsageMonitorAllSystemCriticalThresholdIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 100),
 					validators.ConditionalRequiredInt64(models.FileSystemUsageMonitorAllSystemCriticalThresholdCondVal, models.FileSystemUsageMonitorAllSystemCriticalThresholdIgnoreVal, true),

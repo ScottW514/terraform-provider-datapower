@@ -60,8 +60,8 @@ func (r *DNSNameServiceResource) Schema(ctx context.Context, req resource.Schema
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -92,14 +92,14 @@ func (r *DNSNameServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"force_ip_preference": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to restrict DNS queries to the preferred IP version to resolve hostnames. You want to force the IP preference except when both IPv4 and IPv6 addresses are in use. When not forced, the device resolves each hostname by querying A and AAAA records and waiting for both responses or a timeout. Waiting for the response or timeout for both records can introduce unnecessary latency in DNS resolution.", "force-ip-preference", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"load_balance_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the load distribution algorithm to resolve hostnames. The default algorithm is first-alive.", "load-balance", "").AddStringEnum("round-robin", "first-alive").AddDefaultValue("first-alive").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("round-robin", "first-alive"),
 				},
@@ -107,8 +107,8 @@ func (r *DNSNameServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"max_retries": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the maximum number of resolution attempts to send a query to the list of name servers before an error is returned. By default, an unacknowledged resolution request is attempted 3 times.", "retries", "").AddDefaultValue("2").AddRequiredWhen(models.DNSNameServiceMaxRetriesCondVal.String()).AddNotValidWhen(models.DNSNameServiceMaxRetriesIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					validators.ConditionalRequiredInt64(models.DNSNameServiceMaxRetriesCondVal, models.DNSNameServiceMaxRetriesIgnoreVal, true),
 				},
@@ -116,8 +116,8 @@ func (r *DNSNameServiceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("For the first alive algorithm, specify the duration in seconds that the resolver waits for a response from a DNS server. After expiry, the resolver attempts the query to a different DNS server. The default value is 5.", "timeout", "").AddDefaultValue("5").AddRequiredWhen(models.DNSNameServiceTimeoutCondVal.String()).AddNotValidWhen(models.DNSNameServiceTimeoutIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					validators.ConditionalRequiredInt64(models.DNSNameServiceTimeoutCondVal, models.DNSNameServiceTimeoutIgnoreVal, true),
 				},

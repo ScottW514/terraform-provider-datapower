@@ -60,7 +60,6 @@ func (d *UserDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Create or edit a local user account. When you modify a local user account, the changes do not affect remote user accounts in a role-based management XML information file. <p>An administrator can change the password for the account. An administrator can force the account owner to change the password during the next log in attempt.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

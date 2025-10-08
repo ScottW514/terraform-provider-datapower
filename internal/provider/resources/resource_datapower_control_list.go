@@ -99,8 +99,8 @@ func (r *ControlListResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"case_insensitive": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the specified values are case-sensitive or case-insensitive.", "case-insensitive", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

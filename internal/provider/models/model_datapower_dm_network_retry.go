@@ -62,19 +62,19 @@ func GetDmNetworkRetryDataSourceSchema(description string, cliAlias string, refe
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"automatic_retry": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The device can automatically retry connecting to the remote host when a TCP connection failure occurs.", "auto-retry", "").AddDefaultValue("false").String,
+				MarkdownDescription: "The device can automatically retry connecting to the remote host when a TCP connection failure occurs.",
 				Computed:            true,
 			},
 			"retry_interval": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This sets the number of seconds to wait between attempting to retry failed connections to a remote host.", "retry-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+				MarkdownDescription: "This sets the number of seconds to wait between attempting to retry failed connections to a remote host.",
 				Computed:            true,
 			},
 			"reporting_interval": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The number of failed retries between creation of error log messages.", "reporting-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+				MarkdownDescription: "The number of failed retries between creation of error log messages.",
 				Computed:            true,
 			},
 			"total_retries": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Total number of times to retry before giving up.", "total-retries", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+				MarkdownDescription: "Total number of times to retry before giving up.",
 				Computed:            true,
 			},
 		},

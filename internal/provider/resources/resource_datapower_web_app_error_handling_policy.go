@@ -88,8 +88,8 @@ func (r *WebAppErrorHandlingPolicyResource) Schema(ctx context.Context, req reso
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the mode for error handling. The default value is standard.", "type", "").AddStringEnum("standard", "redirect", "proxy", "error-rule").AddDefaultValue("standard").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("standard", "redirect", "proxy", "error-rule"),
 				},

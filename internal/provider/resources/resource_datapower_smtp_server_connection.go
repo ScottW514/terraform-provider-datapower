@@ -93,15 +93,15 @@ func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.
 			},
 			"mail_server_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The listening port on the SMTP server to send outgoing e-mail messages.", "server-port", "").AddDefaultValue("25").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(25),
 			},
 			"options": models.GetDmSMTPOptionsResourceSchema("The SMTP options to enable for the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.", "options", "", false),
 			"auth": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("With the client authentication option, the method to authenticate the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.", "auth", "").AddStringEnum("plain", "login").AddDefaultValue("plain").AddNotValidWhen(models.SMTPServerConnectionAuthIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("plain", "login"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.SMTPServerConnectionAuthIgnoreVal, true),
@@ -121,8 +121,8 @@ func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 				},

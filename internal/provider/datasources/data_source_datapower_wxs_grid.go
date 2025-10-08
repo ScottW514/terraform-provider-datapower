@@ -61,7 +61,6 @@ func (d *WXSGridDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The configuration of an eXtreme Scale Grid defines the connection details to an eXtreme Scale grid in an eXtreme Scale collective. To define this configuration, you must define the eXtreme Scale collective, the grid name, and the user and password for the user account who connects to the eXtreme Scale. If you need to secure connections to eXtreme Scale, you must assign a TLS Proxy Profile.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

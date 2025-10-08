@@ -61,7 +61,6 @@ func (d *CryptoValCredDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>Validation credentials authenticate certificates that are received from TLS peers. Validation credentials can be used to validate certificates that are used in digital signature and encryption operations.</p><p>a TLS client requires validation credentials only when it authenticates the certificate that is presented by the remote TLS server. The TLS standard does not require authentication of the server certificate.</p><p>a TLS server requires validation credentials only when it authenticates remote TLS clients. The TLS standard does not require authentication of the client certificate.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

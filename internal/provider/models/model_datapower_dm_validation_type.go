@@ -91,27 +91,27 @@ func GetDmValidationTypeDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmValidationTypeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The regular expression that the submitted names are matched against. If they match the value must also match against the corresponding value constraint to be passed through.", "", "").String,
+				MarkdownDescription: "The regular expression that the submitted names are matched against. If they match the value must also match against the corresponding value constraint to be passed through.",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The regular expression (PCRE style) that is applied to a value input to see if it is an expected input", "", "").String,
+				MarkdownDescription: "The regular expression (PCRE style) that is applied to a value input to see if it is an expected input",
 				Computed:            true,
 			},
 			"fixup": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select which action should be taken when a value constraint fails to validate an input. The default is Error.", "", "").AddStringEnum("passthrough", "strip", "error", "set").AddDefaultValue("error").String,
+				MarkdownDescription: "Select which action should be taken when a value constraint fails to validate an input. The default is Error.",
 				Computed:            true,
 			},
 			"map_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("An value that fails validation is changed to this value if the failure policy is 'set'.", "", "").AddNotValidWhen(DmValidationTypeMapValueIgnoreVal.String()).String,
+				MarkdownDescription: "An value that fails validation is changed to this value if the failure policy is 'set'.",
 				Computed:            true,
 			},
 			"xss": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.",
 				Computed:            true,
 			},
 			"xss_patterns_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "", "").AddDefaultValue("store:///XSS-Patterns.xml").AddRequiredWhen(DmValidationTypeXSSPatternsFileCondVal.String()).AddNotValidWhen(DmValidationTypeXSSPatternsFileIgnoreVal.String()).String,
+				MarkdownDescription: "Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.",
 				Computed:            true,
 			},
 		},

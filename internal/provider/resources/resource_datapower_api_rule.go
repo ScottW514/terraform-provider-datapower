@@ -84,8 +84,8 @@ func (r *APIRuleResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"dynamic_actions_mode": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use dynamic actions instead of explicit actions. Dynamic actions take configuration values at run time and override the default properties in API actions. API rules that contain dynamic actions can be included in user-defined policies that API Connect advertises and makes available in the API Connect assembly editor.", "dynamic-actions-mode", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"actions": schema.ListAttribute{

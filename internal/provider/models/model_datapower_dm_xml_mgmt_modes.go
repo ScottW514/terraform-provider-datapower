@@ -71,35 +71,35 @@ func GetDmXMLMgmtModesDataSourceSchema(description string, cliAlias string, refe
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"any": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SOAP management URI", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "SOAP management URI",
 				Computed:            true,
 			},
 			"soma": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "SOAP configuration management",
 				Computed:            true,
 			},
 			"v2004": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SOAP configuration management (v2004)", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "SOAP configuration management (v2004)",
 				Computed:            true,
 			},
 			"amp": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("AMP endpoint", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "AMP endpoint",
 				Computed:            true,
 			},
 			"slm": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SLM endpoint", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "SLM endpoint",
 				Computed:            true,
 			},
 			"wsm": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WS-Management endpoint", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "WS-Management endpoint",
 				Computed:            true,
 			},
 			"wsdm": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDM endpoint", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "WSDM endpoint",
 				Computed:            true,
 			},
 			"wsrr_subscription": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "WSRR subscription",
 				Computed:            true,
 			},
 		},

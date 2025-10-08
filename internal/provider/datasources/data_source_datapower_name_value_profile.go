@@ -61,7 +61,6 @@ func (d *NameValueProfileDataSource) Schema(ctx context.Context, req datasource.
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Many HTTP things are expressed as name value pairs. These include HTTP headers, cookie values, url-encoded query strings, and url-encoded request messages. This profile provides a mechanism for what kinds of names are expected and for each kind of name what properties should be enforced on the corresponding values. When a name-value pair is not validated successfully that may generate an error, the pair might be stripped from the transaction, or the value may be mapped to another default value.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

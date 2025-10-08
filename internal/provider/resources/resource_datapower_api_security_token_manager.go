@@ -73,8 +73,8 @@ func (r *APISecurityTokenManagerResource) Schema(ctx context.Context, req resour
 			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -91,8 +91,8 @@ func (r *APISecurityTokenManagerResource) Schema(ctx context.Context, req resour
 			},
 			"expired_token_cleanup_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Cleanup interval", "expired-token-cleanup-interval", "").AddIntegerRange(15, 1440).AddDefaultValue("180").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(15, 1440),
 				},

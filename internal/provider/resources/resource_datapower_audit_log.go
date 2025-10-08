@@ -60,14 +60,14 @@ func (r *AuditLogResource) Schema(ctx context.Context, req resource.SchemaReques
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of audit log rotations in KB. Enter a value in the range 250 - 500000. The default value is 1000.", "size", "").AddIntegerRange(250, 500000).AddDefaultValue("1000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(250, 500000),
 				},
@@ -75,8 +75,8 @@ func (r *AuditLogResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"rotate": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.", "rotate", "").AddIntegerRange(1, 100).AddDefaultValue("3").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 				},
@@ -84,8 +84,8 @@ func (r *AuditLogResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"audit_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the audit level. The default value is for standard logging.", "audit-level", "").AddStringEnum("standard", "full").AddDefaultValue("standard").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("standard", "full"),
 				},

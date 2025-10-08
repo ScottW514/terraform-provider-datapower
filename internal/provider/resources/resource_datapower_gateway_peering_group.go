@@ -89,8 +89,8 @@ func (r *GatewayPeeringGroupResource) Schema(ctx context.Context, req resource.S
 			},
 			"mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Mode", "mode", "").AddStringEnum("peer", "cluster").AddDefaultValue("peer").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("peer", "cluster"),
 				},
@@ -106,8 +106,8 @@ func (r *GatewayPeeringGroupResource) Schema(ctx context.Context, req resource.S
 			},
 			"cluster_primary_count": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Primary count", "cluster-primary-count", "").AddStringEnum("3").AddDefaultValue("3").AddRequiredWhen(models.GatewayPeeringGroupClusterPrimaryCountCondVal.String()).AddNotValidWhen(models.GatewayPeeringGroupClusterPrimaryCountIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("3"),
 					validators.ConditionalRequiredString(models.GatewayPeeringGroupClusterPrimaryCountCondVal, models.GatewayPeeringGroupClusterPrimaryCountIgnoreVal, true),
@@ -124,14 +124,14 @@ func (r *GatewayPeeringGroupResource) Schema(ctx context.Context, req resource.S
 			},
 			"cluster_auto_config": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the cluster configuration is managed automatically. By default, cluster configuration is managed automatically. Unless directed by IBM Support, do not change this setting.", "cluster-auto-config", "").AddDefaultValue("true").AddRequiredWhen(models.GatewayPeeringGroupClusterAutoConfigCondVal.String()).AddNotValidWhen(models.GatewayPeeringGroupClusterAutoConfigIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"enable_ssl": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. When enabled, ensure that all members use the same TLS configuration.", "enable-ssl", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"idcred": schema.StringAttribute{

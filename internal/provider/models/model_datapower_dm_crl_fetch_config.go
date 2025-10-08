@@ -181,59 +181,59 @@ func GetDmCRLFetchConfigDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmCRLFetchConfigDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the CRL retrieval policy.", "", "").String,
+				MarkdownDescription: "Enter the name of the CRL retrieval policy.",
 				Computed:            true,
 			},
 			"fetch_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol to obtain the CRL from the authority.", "", "").AddStringEnum("http", "ldap").String,
+				MarkdownDescription: "Select the protocol to obtain the CRL from the authority.",
 				Computed:            true,
 			},
 			"issuer_valcred": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The validation credentials to verify the authenticity of the CRL issuer and, therefor, the CRL. The certificate that the CRL issuer uses must be in the validation credentials for the CRL to be valid.", "issuer", "crypto_val_cred").String,
+				MarkdownDescription: "The validation credentials to verify the authenticity of the CRL issuer and, therefor, the CRL. The certificate that the CRL issuer uses must be in the validation credentials for the CRL to be valid.",
 				Computed:            true,
 			},
 			"refresh_interval": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The interval in minutes between CRL updates. Enter a value in the range 1 - 1440. The default value is 240.", "refresh", "").AddIntegerRange(1, 1440).AddDefaultValue("240").String,
+				MarkdownDescription: "The interval in minutes between CRL updates. Enter a value in the range 1 - 1440. The default value is 240.",
 				Computed:            true,
 			},
 			"url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("A URL that specifies the location of the CRL.", "fetch-url", "").AddRequiredWhen(DmCRLFetchConfigURLCondVal.String()).AddNotValidWhen(DmCRLFetchConfigURLIgnoreVal.String()).String,
+				MarkdownDescription: "A URL that specifies the location of the CRL.",
 				Computed:            true,
 			},
 			"remote_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the LDAP server to obtain the CRL.", "remote-address", "").AddRequiredWhen(DmCRLFetchConfigRemoteAddressCondVal.String()).AddNotValidWhen(DmCRLFetchConfigRemoteAddressIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the host name or IP address of the LDAP server to obtain the CRL.",
 				Computed:            true,
 			},
 			"remote_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The remote LDAP port. Enter a value in the range 1 - 65535. The default value is 389. For LDAP over TLS, the standard port is 636.", "", "").AddDefaultValue("389").AddRequiredWhen(DmCRLFetchConfigRemotePortCondVal.String()).AddNotValidWhen(DmCRLFetchConfigRemotePortIgnoreVal.String()).String,
+				MarkdownDescription: "The remote LDAP port. Enter a value in the range 1 - 65535. The default value is 389. For LDAP over TLS, the standard port is 636.",
 				Computed:            true,
 			},
 			"dn": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("A string containing the DN of the CA that issued the target CRL.", "read-dn", "").AddRequiredWhen(DmCRLFetchConfigDNCondVal.String()).AddNotValidWhen(DmCRLFetchConfigDNIgnoreVal.String()).String,
+				MarkdownDescription: "A string containing the DN of the CA that issued the target CRL.",
 				Computed:            true,
 			},
 			"bind_dn": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("A string containing the DN to login to the LDAP server.", "bind-dn", "").AddNotValidWhen(DmCRLFetchConfigBindDNIgnoreVal.String()).String,
+				MarkdownDescription: "A string containing the DN to login to the LDAP server.",
 				Computed:            true,
 			},
 			"bind_pass_alias": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("A string containing the password alias of the password to login to the LDAP server.", "bind-pass-alias", "password_alias").AddNotValidWhen(DmCRLFetchConfigBindPassAliasIgnoreVal.String()).String,
+				MarkdownDescription: "A string containing the password alias of the password to login to the LDAP server.",
 				Computed:            true,
 			},
 			"ldap_version": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The LDAP server version.", "ldap-version", "").AddStringEnum("v2", "v3").AddDefaultValue("v2").AddNotValidWhen(DmCRLFetchConfigLDAPVersionIgnoreVal.String()).String,
+				MarkdownDescription: "The LDAP server version.",
 				Computed:            true,
 			},
 			"ldap_read_timeout": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The number of seconds to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").AddNotValidWhen(DmCRLFetchConfigLDAPReadTimeoutIgnoreVal.String()).String,
+				MarkdownDescription: "The number of seconds to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.",
 				Computed:            true,
 			},
 			"ssl_client_config_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: "The TLS profile type to secure connections between the DataPower Gateway and its targets.",
 				Computed:            true,
 			},
 			"ssl_client": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "ssl_client_profile").AddNotValidWhen(DmCRLFetchConfigSSLClientIgnoreVal.String()).String,
+				MarkdownDescription: "The TLS client profile to secure connections between the DataPower Gateway and its targets.",
 				Computed:            true,
 			},
 		},

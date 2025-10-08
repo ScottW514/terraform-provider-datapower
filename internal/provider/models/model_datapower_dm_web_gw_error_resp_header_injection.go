@@ -50,11 +50,11 @@ func GetDmWebGWErrorRespHeaderInjectionDataSourceSchema() DataSourceSchema.Neste
 	var DmWebGWErrorRespHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"header_tag": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.", "", "").String,
+				MarkdownDescription: "Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.",
 				Computed:            true,
 			},
 			"header_tag_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header name.", "", "").String,
+				MarkdownDescription: "Enter the value for the header name.",
 				Computed:            true,
 			},
 		},

@@ -61,7 +61,6 @@ func (d *JOSERecipientIdentifierDataSource) Schema(ctx context.Context, req data
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "JOSE Recipient Identifier object for the JSON Web Decrypt.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

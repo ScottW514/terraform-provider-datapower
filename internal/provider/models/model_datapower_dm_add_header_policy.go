@@ -53,15 +53,15 @@ func GetDmAddHeaderPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmAddHeaderPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"add_header": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the header.", "", "").String,
+				MarkdownDescription: "Specify the name of the header.",
 				Computed:            true,
 			},
 			"add_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the header as a string.", "", "").String,
+				MarkdownDescription: "Specify the value for the header as a string.",
 				Computed:            true,
 			},
 		},

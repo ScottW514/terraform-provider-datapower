@@ -61,7 +61,6 @@ func (d *RateLimitDefinitionGroupDataSource) Schema(ctx context.Context, req dat
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A rate limit definition group contains a list of rate limit definitions to enforce.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

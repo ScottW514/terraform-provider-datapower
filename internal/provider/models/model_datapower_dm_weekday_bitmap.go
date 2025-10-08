@@ -68,31 +68,31 @@ func GetDmWeekdayBitmapDataSourceSchema(description string, cliAlias string, ref
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"sunday": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sunday", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Sunday",
 				Computed:            true,
 			},
 			"monday": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Monday", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Monday",
 				Computed:            true,
 			},
 			"tuesday": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Tuesday", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Tuesday",
 				Computed:            true,
 			},
 			"wednesday": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Wednesday", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Wednesday",
 				Computed:            true,
 			},
 			"thursday": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Thursday", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Thursday",
 				Computed:            true,
 			},
 			"friday": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Friday", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Friday",
 				Computed:            true,
 			},
 			"saturday": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Saturday", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Saturday",
 				Computed:            true,
 			},
 		},

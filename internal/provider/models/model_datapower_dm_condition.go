@@ -50,11 +50,11 @@ func GetDmConditionDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmConditionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"expression": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The expression to check for the condition.", "", "").String,
+				MarkdownDescription: "The expression to check for the condition.",
 				Computed:            true,
 			},
 			"condition_action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The action to run when the expression is matched.", "", "").String,
+				MarkdownDescription: "The action to run when the expression is matched.",
 				Computed:            true,
 			},
 		},

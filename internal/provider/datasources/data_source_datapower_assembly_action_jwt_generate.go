@@ -61,7 +61,6 @@ func (d *AssemblyActionJWTGenerateDataSource) Schema(ctx context.Context, req da
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The JWT generate assembly action generates JWT claims and specifies the crypto material to generate a JWT during processing.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

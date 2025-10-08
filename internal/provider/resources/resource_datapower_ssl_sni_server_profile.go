@@ -99,8 +99,8 @@ func (r *SSLSNIServerProfileResource) Schema(ctx context.Context, req resource.S
 			"ssl_options": models.GetDmSSLOptionsResourceSchema("Specify the options to apply to the TLS connection that override settings in the TLS server profiles. These options have negative impact on the performance.", "ssl-options", "", false),
 			"max_ssl_duration": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds for an established TLS session. After the duration is reached, the TLS connection is closed. Enter a value in the range 1 - 691200. The default value is 3600.", "max-duration", "").AddIntegerRange(1, 691200).AddDefaultValue("3600").AddNotValidWhen(models.SSLSNIServerProfileMaxSSLDurationIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 691200),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.SSLSNIServerProfileMaxSSLDurationIgnoreVal, true),

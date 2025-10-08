@@ -61,7 +61,6 @@ func (d *FTPQuoteCommandsDataSource) Schema(ctx context.Context, req datasource.
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The configturation creates a named list of FTP commands to be quoted to a remote FTP server before a file transfer. These commands are referenced by the FTP Policies section of a User Agent configuration.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

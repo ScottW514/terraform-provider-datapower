@@ -56,15 +56,15 @@ func GetDmCORSRuleExposeHeadersDataSourceSchema(description string, cliAlias str
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"predefined": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Append the gateway-predefined value.", "predefined", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Append the gateway-predefined value.",
 				Computed:            true,
 			},
 			"backend": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Append the value in the response from the target endpoint.", "backend", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Append the value in the response from the target endpoint.",
 				Computed:            true,
 			},
 			"custom": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Append a custom string as the value.", "custom", "").String,
+				MarkdownDescription: "Append a custom string as the value.",
 				Computed:            true,
 			},
 		},

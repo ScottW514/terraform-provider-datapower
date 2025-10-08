@@ -209,7 +209,6 @@ Optional:
 Read-Only:
 
 - `policy_attachments` (String) Select an existing policy attachment object to configure the handling of XML element attached policies and to create external policy attachments to this web service.
-  - Reference to: `datapower_policy_attachments:id`
 - `wsdl_name` (String) Specify a mnemonic for this WSDL file. The mnemonic can be be the filename (for example "searchservice.wsdl") or an alias (for example "searchsvc").
 - `wsdl_source_location` (String) Specify the exact location (URL) of the WSDL file. The WSDL file can be stored on the device or on a remote server. For example, an on-device location might be "local:///searchservice.wsdl".
 
@@ -224,7 +223,6 @@ Read-Only:
 - `out_url_match` (String) Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.
 - `rule_match` (String) Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.
 - `rule_type` (String) Select the rule direction or type that will trigger the probe.
-  - Choices: `all`, `response`, `request`, `call`, `error`, `scheduled`, `lbhealth`
 - `xpath` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.
 
 
@@ -234,8 +232,6 @@ Read-Only:
 Read-Only:
 
 - `direction` (String) Select the direction of the message.
-  - Choices: `front`, `back`
-  - Default value: `front`
 - `header_tag` (String) Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.
 - `header_tag_value` (String) Enter the value for the header tag.
 
@@ -246,7 +242,6 @@ Read-Only:
 Read-Only:
 
 - `direction` (String) Select the direction of the message.
-  - Choices: `front`, `back`
 - `header_tag` (String) Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.
 
 
@@ -256,11 +251,8 @@ Read-Only:
 Read-Only:
 
 - `backend` (Boolean) Backend in order
-  - Default value: `false`
 - `request` (Boolean) Request rule in order
-  - Default value: `false`
 - `response` (Boolean) Response rule in order
-  - Default value: `false`
 
 
 <a id="nestedatt--result--operation_conformance_policy"></a>
@@ -269,16 +261,10 @@ Read-Only:
 Read-Only:
 
 - `conformance_policy` (String) Conformance Policy
-  - Reference to: `datapower_conformance_policy:id`
 - `conformance_policy_fragment_id` (String) Matches Fragment Identifier
 - `conformance_policy_subscription` (String) Select a subscription.
-  - Required When: `conformance_policy_wsdl_component_type`=`subscription`
-  - Not Valid When: attribute is not conditionally required
 - `conformance_policy_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
-  - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
-  - Default value: `all`
 - `conformance_policy_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
-  - Not Valid When: `conformance_policy_wsdl_component_type`=`subscription`
 
 
 <a id="nestedatt--result--operation_policy_subject_opt_out"></a>
@@ -289,13 +275,8 @@ Read-Only:
 - `ignored_subjects` (Attributes) Ignored Subjects (see [below for nested schema](#nestedatt--result--operation_policy_subject_opt_out--ignored_subjects))
 - `policy_subject_opt_out_fragment_id` (String) Matches Fragment Identifier
 - `policy_subject_opt_out_subscription` (String) Select a subscription.
-  - Required When: `policy_subject_opt_out_wsdl_component_type`=`subscription`
-  - Not Valid When: attribute is not conditionally required
 - `policy_subject_opt_out_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
-  - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
-  - Default value: `all`
 - `policy_subject_opt_out_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
-  - Not Valid When: `policy_subject_opt_out_wsdl_component_type`=`subscription`
 
 <a id="nestedatt--result--operation_policy_subject_opt_out--ignored_subjects"></a>
 ### Nested Schema for `result.operation_policy_subject_opt_out.ignored_subjects`
@@ -303,15 +284,10 @@ Read-Only:
 Read-Only:
 
 - `endpoint` (Boolean) Endpoint Subject
-  - Default value: `false`
 - `message_in` (Boolean) Message Input Subject
-  - Default value: `false`
 - `message_out` (Boolean) Message Output Subject
-  - Default value: `false`
 - `operation` (Boolean) Operation Subject
-  - Default value: `false`
 - `service` (Boolean) Service Subject
-  - Default value: `false`
 
 
 
@@ -321,17 +297,10 @@ Read-Only:
 Read-Only:
 
 - `scheduler_priority` (String) Service Priority
-  - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
-  - Default value: `normal`
 - `scheduler_priority_fragment_id` (String) Matches Fragment Identifier
 - `scheduler_priority_subscription` (String) Select a subscription.
-  - Required When: `scheduler_priority_wsdl_component_type`=`subscription`
-  - Not Valid When: attribute is not conditionally required
 - `scheduler_priority_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
-  - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
-  - Default value: `all`
 - `scheduler_priority_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
-  - Not Valid When: `scheduler_priority_wsdl_component_type`=`subscription`
 
 
 <a id="nestedatt--result--policy_parameter"></a>
@@ -341,15 +310,9 @@ Read-Only:
 
 - `policy_param_fragment_id` (String) Matches Fragment Identifier
 - `policy_param_parameters` (String) Reference to policy parameter object.
-  - Reference to: `datapower_policy_parameters:id`
 - `policy_param_subscription` (String) Select a subscription.
-  - Required When: `policy_param_wsdl_component_type`=`subscription`
-  - Not Valid When: attribute is not conditionally required
 - `policy_param_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
-  - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
-  - Default value: `all`
 - `policy_param_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
-  - Not Valid When: `policy_param_wsdl_component_type`=`subscription`
 
 
 <a id="nestedatt--result--reliable_messaging"></a>
@@ -358,18 +321,11 @@ Read-Only:
 Read-Only:
 
 - `delivery_assurance_type` (String) Reliable Messaging
-  - Choices: `exactly-once`
-  - Default value: `exactly-once`
 - `options` (Attributes) Reliable Messaging Options (see [below for nested schema](#nestedatt--result--reliable_messaging--options))
 - `reliable_messaging_fragment_id` (String) Matches Fragment Identifier
 - `reliable_messaging_subscription` (String) Select a subscription.
-  - Required When: `reliable_messaging_wsdl_component_type`=`subscription`
-  - Not Valid When: attribute is not conditionally required
 - `reliable_messaging_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
-  - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
-  - Default value: `all`
 - `reliable_messaging_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
-  - Not Valid When: `reliable_messaging_wsdl_component_type`=`subscription`
 
 <a id="nestedatt--result--reliable_messaging--options"></a>
 ### Nested Schema for `result.reliable_messaging.options`
@@ -377,13 +333,9 @@ Read-Only:
 Read-Only:
 
 - `in_order` (Boolean) RM messages must be delivered in the same order as they have been sent by the source
-  - Default value: `false`
 - `optional` (Boolean) Reliable Messaging is optional
-  - Default value: `false`
 - `sequence_transport_security` (Boolean) RM Sequence must be bound to underlying transport-level security protocol
-  - Default value: `false`
 - `two_way` (Boolean) Response messages require RM Sequence headers
-  - Default value: `false`
 
 
 
@@ -393,20 +345,9 @@ Read-Only:
 Read-Only:
 
 - `automatic_retry` (Boolean) The device can automatically retry connecting to the remote host when a TCP connection failure occurs.
-  - CLI Alias: `auto-retry`
-  - Default value: `false`
 - `reporting_interval` (Number) The number of failed retries between creation of error log messages.
-  - CLI Alias: `reporting-interval`
-  - Range: `1`-`4294967295`
-  - Default value: `1`
 - `retry_interval` (Number) This sets the number of seconds to wait between attempting to retry failed connections to a remote host.
-  - CLI Alias: `retry-interval`
-  - Range: `1`-`4294967295`
-  - Default value: `1`
 - `total_retries` (Number) Total number of times to retry before giving up.
-  - CLI Alias: `total-retries`
-  - Range: `1`-`4294967295`
-  - Default value: `1`
 
 
 <a id="nestedatt--result--stylesheet_parameters"></a>
@@ -432,8 +373,6 @@ Read-Only:
 - `subscription` (String) Matches all of the services obtained via the selected subscription. The selection may be further narrowed by configuring matches against specific wsdl components.
 - `toggles` (Attributes) Select the policy (availability and behavior) of the component made available by the Web Service Proxy. The established policy cascade (applies to all components that are contained by the current component). (see [below for nested schema](#nestedatt--result--user_toggles--toggles))
 - `use_fragment_id` (Boolean) Toggle to enable or disable the use of Fragment ID
-  - CLI Alias: `use-fragid`
-  - Default value: `false`
 - `wsdl_name` (String) WSDL file name or "*" to match all files. This is the local name of the WSDL file, as defined on the WSDL tab.
 
 <a id="nestedatt--result--user_toggles--toggles"></a>
@@ -442,25 +381,15 @@ Read-Only:
 Read-Only:
 
 - `allow_xop_include` (Boolean) Accept MTOM/XOP Optimized Messages
-  - Default value: `true`
 - `enable` (Boolean) Enable this component
-  - Default value: `true`
 - `no_request_validation` (Boolean) No Request Validation
-  - Default value: `false`
 - `no_response_validation` (Boolean) No Response Validation
-  - Default value: `false`
 - `no_ws_a` (Boolean) Opt out of WS-Addressing
-  - Default value: `false`
 - `no_ws_rm` (Boolean) Opt out of WS-ReliableMessaging
-  - Default value: `false`
 - `publish` (Boolean) Publish in WSDL
-  - Default value: `true`
 - `suppress_faults_elements_for_rpc_wrappers` (Boolean) Strict Fault Document Style
-  - Default value: `false`
 - `verify_faults` (Boolean) Schema validate faults messages
-  - Default value: `true`
 - `verify_headers` (Boolean) Schema validate SOAP headers
-  - Default value: `false`
 
 
 
@@ -471,8 +400,6 @@ Read-Only:
 
 - `match` (String) Provide a literal or wildcard expression to define a URL set included in this cache policy.
 - `ttl` (Number) Configures lifetime in seconds of document. Enter an integer between 5 and 86400. The default value is 900.
-  - Range: `5`-`86400`
-  - Default value: `900`
 
 
 <a id="nestedatt--result--wsrr_saved_search_subscriptions"></a>
@@ -481,9 +408,7 @@ Read-Only:
 Read-Only:
 
 - `wsrr_attachment` (String) Specify a WS-Policy attachment
-  - Reference to: `datapower_policy_attachments:id`
 - `wsrr_saved_search_subscription` (String) Specify a WSRR saved search subscription
-  - Reference to: `datapower_wsrr_saved_search_subscription:id`
 
 
 <a id="nestedatt--result--wsrr_subscriptions"></a>
@@ -492,6 +417,4 @@ Read-Only:
 Read-Only:
 
 - `wsrr_attachment` (String) Select WS-Policy attachment
-  - Reference to: `datapower_policy_attachments:id`
 - `wsrr_subscription` (String) Select WSRR subscription
-  - Reference to: `datapower_wsrr_subscription:id`

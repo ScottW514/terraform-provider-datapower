@@ -61,7 +61,6 @@ func (d *SQLDataSourceDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>An SQL data source the configuration to establish a direct connection to a database instance on a remote data server. When configured, a DataPower service can dynamically run database operations, such as <tt>SELECT</tt> and <tt>INSERT</tt> , on the remote database.</p><p>An SQL data source is used by SQL actions in processing policies. The SQL action retrieves the data for further processing. Conversely, the processing policy can store the processed data in the configured database instance.</p><p>When you configure an SQL data source, you can define valid configuration parameters for your data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some configuration parameters in the configuration file are informational and define characteristics about the environment. These configuration parameters cannot be modified.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

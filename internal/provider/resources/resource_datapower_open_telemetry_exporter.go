@@ -89,8 +89,8 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Exporter type", "type", "").AddStringEnum("http", "grpc").AddDefaultValue("http").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("http", "grpc"),
 				},
@@ -102,14 +102,14 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 			},
 			"traces_path": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Traces", "traces-path", "").AddDefaultValue("/v1/traces").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/v1/traces"),
 			},
 			"port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("4318").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -117,8 +117,8 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 			},
 			"http_content_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Content-Type", "http-content-type", "").AddStringEnum("json", "binary").AddDefaultValue("json").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("json", "binary"),
 				},
@@ -126,8 +126,8 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Timeout", "timeout", "").AddDefaultValue("10").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(10),
 			},
 			"header": schema.ListNestedAttribute{
@@ -137,8 +137,8 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 			},
 			"processor": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Processor", "processor", "").AddStringEnum("simple", "batch").AddDefaultValue("batch").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("simple", "batch"),
 				},
@@ -146,20 +146,20 @@ func (r *OpenTelemetryExporterResource) Schema(ctx context.Context, req resource
 			},
 			"max_queue_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Max queue size", "max-queue-size", "").AddDefaultValue("2048").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(2048),
 			},
 			"max_export_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Max export size", "max-export-size", "").AddDefaultValue("512").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(512),
 			},
 			"export_delay_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Export interval", "export-delay-interval", "").AddDefaultValue("5000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(5000),
 			},
 			"proxy_policies": schema.ListNestedAttribute{

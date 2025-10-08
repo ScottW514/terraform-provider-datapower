@@ -87,23 +87,23 @@ func GetDmWSOperationReliableMessagingDataSourceSchema() DataSourceSchema.Nested
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"options": GetDmWSRMPolicyBitmapDataSourceSchema("Reliable Messaging Options", "", ""),
 			"delivery_assurance_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
+				MarkdownDescription: "Reliable Messaging",
 				Computed:            true,
 			},
 			"reliable_messaging_wsdl_component_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				MarkdownDescription: "Select a type of WSDL Component. The default is All.",
 				Computed:            true,
 			},
 			"reliable_messaging_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationReliableMessagingReliableMessagingWSDLComponentValueIgnoreVal.String()).String,
+				MarkdownDescription: "Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.",
 				Computed:            true,
 			},
 			"reliable_messaging_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationReliableMessagingReliableMessagingSubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationReliableMessagingReliableMessagingSubscriptionIgnoreVal.String()).String,
+				MarkdownDescription: "Select a subscription.",
 				Computed:            true,
 			},
 			"reliable_messaging_fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: "Matches Fragment Identifier",
 				Computed:            true,
 			},
 		},

@@ -61,7 +61,6 @@ func (d *AssemblyActionXSLTDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "XSLT assembly action runs an XSLT stylesheet. This action is not supported in IBM Cloud. Any assembly that includes this action fails.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -53,11 +53,11 @@ func GetDmSSHUserAuthenticationMethodsDataSourceSchema(description string, cliAl
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"publickey": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Public key", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Public key",
 				Computed:            true,
 			},
 			"password": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Password",
 				Computed:            true,
 			},
 		},

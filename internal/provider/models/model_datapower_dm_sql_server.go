@@ -60,19 +60,19 @@ func GetDmSQLServerDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmSQLServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"host": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the server.", "host", "").String,
+				MarkdownDescription: "Specify the hostname or IP address of the server.",
 				Computed:            true,
 			},
 			"port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddDefaultValue("1521").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the server configuration.", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
+				MarkdownDescription: "Specify the type of the server configuration.",
 				Computed:            true,
 			},
 			"data_source_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Data Source ID", "id", "").String,
+				MarkdownDescription: "Data Source ID",
 				Computed:            true,
 			},
 		},

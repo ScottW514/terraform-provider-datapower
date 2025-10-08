@@ -82,11 +82,11 @@ func GetDmB2BHAHostDataSourceSchema(description string, cliAlias string, referen
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"hostname": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").AddRequiredWhen(DmB2BHAHostHostnameCondVal.String()).AddNotValidWhen(DmB2BHAHostHostnameIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the host name of the other system in the high availability cluster.",
 				Computed:            true,
 			},
 			"port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").AddRequiredWhen(DmB2BHAHostPortCondVal.String()).AddNotValidWhen(DmB2BHAHostPortIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the listening port on the other system in the high availability cluster.",
 				Computed:            true,
 			},
 		},

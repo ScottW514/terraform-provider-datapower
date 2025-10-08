@@ -57,6 +57,4 @@ Optional:
 Read-Only:
 
 - `name` (String) Specify the name of the parameter.
-  - CLI Alias: `name`
 - `value` (String) Specify the value of the parameter.
-  - CLI Alias: `value`

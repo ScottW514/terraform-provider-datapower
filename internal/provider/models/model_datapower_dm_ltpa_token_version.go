@@ -56,15 +56,15 @@ func GetDmLTPATokenVersionDataSourceSchema(description string, cliAlias string, 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"ltpa": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 1", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "WebSphere version 1",
 				Computed:            true,
 			},
 			"ltpa_2": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere version 2", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "WebSphere version 2",
 				Computed:            true,
 			},
 			"ltpa_domino": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Domino", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Domino",
 				Computed:            true,
 			},
 		},

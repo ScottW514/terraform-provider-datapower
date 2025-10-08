@@ -89,15 +89,15 @@ func GetDmAPICGSProxyPolicyDataSourceSchema(description string, cliAlias string,
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"proxy_policy_enable": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").String,
+				MarkdownDescription: "Specify whether to enable a proxy to connect to API Manager.",
 				Computed:            true,
 			},
 			"remote_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").AddRequiredWhen(DmAPICGSProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmAPICGSProxyPolicyRemoteAddressIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.",
 				Computed:            true,
 			},
 			"remote_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").AddRequiredWhen(DmAPICGSProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmAPICGSProxyPolicyRemotePortIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the listening port on the proxy to connect to the API Manager endpoint.",
 				Computed:            true,
 			},
 		},

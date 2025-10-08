@@ -50,11 +50,11 @@ func GetDmWebGWErrorPolicyMapDataSourceSchema() DataSourceSchema.NestedAttribute
 	var DmWebGWErrorPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"match": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that defines the matching criteria.", "", "matching").String,
+				MarkdownDescription: "Select the matching rule that defines the matching criteria.",
 				Computed:            true,
 			},
 			"action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the error action that handles the errors and generates responses.", "", "mpgw_error_action").String,
+				MarkdownDescription: "Select the error action that handles the errors and generates responses.",
 				Computed:            true,
 			},
 		},

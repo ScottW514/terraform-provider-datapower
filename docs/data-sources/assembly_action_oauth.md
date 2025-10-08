@@ -77,12 +77,8 @@ Optional:
 Read-Only:
 
 - `default` (String) Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.
-  - CLI Alias: `default`
-  - Reference to: `datapower_oauth_provider_settings:id`
 - `literal` (String) Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.
-  - CLI Alias: `literal`
 - `url` (String) Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.
-  - CLI Alias: `url`
 
 
 <a id="nestedatt--result--supported_oauth_components"></a>
@@ -90,20 +86,12 @@ Read-Only:
 
 Read-Only:
 
-- `none` (Boolean) - Default value: `false`
+- `none` (Boolean)
 - `oauth_collect_metadata` (Boolean) Collect Metadata
-  - Default value: `false`
 - `oauth_generate_access_token` (Boolean) Generate access token
-  - Default value: `false`
 - `oauth_generate_az_code` (Boolean) Generate authorization code
-  - Default value: `false`
 - `oauth_introspect_token` (Boolean) Introspect token
-  - Default value: `false`
 - `oauth_revoke_token` (Boolean) Revoke token
-  - Default value: `false`
 - `oauth_validate_request` (Boolean) Validate request
-  - Default value: `false`
 - `oauth_verify_az_code` (Boolean) Verify authorization code
-  - Default value: `false`
 - `oauth_verify_refresh_token` (Boolean) Verify refresh token
-  - Default value: `false`

@@ -70,9 +70,7 @@ Optional:
 Read-Only:
 
 - `conn_group_prop_name` (String) The name for a connector group property.
-  - CLI Alias: `odr-conn-prop-name`
 - `conn_group_prop_value` (String) The value for the connector group property.
-  - CLI Alias: `odr-conn-prop-value`
 
 
 <a id="nestedatt--result--odr_group_connectors"></a>
@@ -81,6 +79,4 @@ Read-Only:
 Read-Only:
 
 - `dmgr_hostname` (String) The host name of the server where the Intelligent management service is enabled.
-  - CLI Alias: `dmgr-host`
 - `dmgr_port` (Number) The port on the server where the Intelligent management service is enabled.
-  - CLI Alias: `dmgr-port`

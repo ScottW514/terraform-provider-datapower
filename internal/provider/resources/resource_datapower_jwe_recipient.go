@@ -88,8 +88,8 @@ func (r *JWERecipientResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("JWE key management algorithm for the JWE recipient.", "alg", "").AddStringEnum("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir").AddDefaultValue("RSA1_5").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir"),
 				},

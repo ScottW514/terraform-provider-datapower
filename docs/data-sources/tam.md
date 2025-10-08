@@ -101,14 +101,8 @@ Optional:
 Read-Only:
 
 - `tam_az_replica` (String) Specify the TCP host name of the authorization server replica.
-  - CLI Alias: `host`
 - `tam_az_replica_port` (Number) Specify the listening port on the authorization server replica. The default value is 7136.
-  - CLI Alias: `port`
-  - Default value: `7136`
 - `tam_az_replica_weight` (Number) Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.
-  - CLI Alias: `weight`
-  - Range: `1`-`10`
-  - Default value: `10`
 
 
 <a id="nestedatt--result--tam_fed_dirs"></a>
@@ -117,27 +111,14 @@ Read-Only:
 Read-Only:
 
 - `basic_principal_attribute` (String) Specify the attribute that represents a user in the LDAP registry entry. The attribute overrides the global basic user principal for the client. The attribute is optional when the basic user mode is disabled.
-  - CLI Alias: `basic-principal-attribute`
-  - Default value: `uid`
 - `bind_dn` (String) Specify the distinguished name (DN) of an LDAP administrative user to bind with the LDAP registry.
-  - CLI Alias: `bind-dn`
 - `bind_pw` (String) Enter the password alias of the password for the LDAP administrator that corresponds to the entered distinguished name.
-  - CLI Alias: `bind-pw`
-  - Reference to: `datapower_password_alias:id`
 - `fed_name` (String) Specify the name of the federated directory entry to uniquely identify the entry in the federation.
-  - CLI Alias: `federate-name`
 - `host` (String) Specify the host name or IP address of the LDAP server.
-  - CLI Alias: `hostname`
 - `key_file_label` (String) <p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>
-  - CLI Alias: `key-file-label`
 - `port` (Number) Specify the listening port on the LDAP server. The default value is 389.
-  - CLI Alias: `port`
-  - Default value: `389`
 - `suffix` (String) Specify a single LDAP suffix that is to be searched for users.
-  - CLI Alias: `suffix`
 - `use_ssl` (Boolean) Control whether to use TLS to connect to the LDAP server.
-  - CLI Alias: `UseSSL`
-  - Default value: `false`
 
 
 <a id="nestedatt--result--tam_ras_trace"></a>
@@ -146,56 +127,14 @@ Read-Only:
 Read-Only:
 
 - `gs_kit_trace_enable` (Boolean) Indicates whether to enable GSKit tracing in the client libraries for the Access Manager client.
-  - CLI Alias: `enable-gskit-trace`
-  - Default value: `false`
 - `gs_kit_trace_file` (String) Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.
-  - CLI Alias: `gskit-trace-file`
-  - Required When: `gs_kit_trace_enable`=`true`
-  - Not Valid When: `gs_kit_trace_enable`=`false`
 - `gs_kit_trace_flush` (Boolean) Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.
-  - CLI Alias: `gskit-trace-flush`
-  - Default value: `false`
-  - Required When: `gs_kit_trace_enable`=`true`
-  - Not Valid When: `gs_kit_trace_enable`=`false`
 - `ldap_trace_enable` (Boolean) Indicates whether to enable LDAP tracing in the client libraries for the Access Manager client.
-  - CLI Alias: `enable-ldap-trace`
-  - Default value: `false`
 - `ldap_trace_file` (String) Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.
-  - CLI Alias: `ldap-trace-file`
-  - Required When: `ldap_trace_enable`=`true`
-  - Not Valid When: `ldap_trace_enable`=`false`
 - `ldap_trace_level` (Number) Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.
-  - CLI Alias: `ldap-trace-level`
-  - Range: `1`-`65535`
-  - Default value: `1`
-  - Required When: `ldap_trace_enable`=`true`
-  - Not Valid When: `ldap_trace_enable`=`false`
 - `ldap_trace_size` (Number) Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.
-  - CLI Alias: `ldap-trace-size`
-  - Range: `10000`-`10000000`
-  - Default value: `10000`
-  - Required When: `ldap_trace_enable`=`true`
-  - Not Valid When: `ldap_trace_enable`=`false`
 - `tam_trace_components` (String) Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.
-  - CLI Alias: `tam-trace-components`
-  - Default value: `*:*.9`
-  - Required When: `tam_trace_enable`=`true`
-  - Not Valid When: `tam_trace_enable`=`false`
 - `tam_trace_enable` (Boolean) Indicates whether to enable tracing in the client libraries for the Access Manager client.
-  - CLI Alias: `enable-tam-trace`
-  - Default value: `false`
 - `tam_trace_file` (String) Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.
-  - CLI Alias: `tam-trace-file`
-  - Required When: `tam_trace_enable`=`true`
-  - Not Valid When: `tam_trace_enable`=`false`
 - `tam_trace_size` (Number) Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.
-  - CLI Alias: `tam-trace-size`
-  - Range: `100`-`1000000`
-  - Default value: `100`
-  - Required When: `tam_trace_enable`=`true`
-  - Not Valid When: `tam_trace_enable`=`false`
 - `tam_trace_type` (String) Specifies the format of trace messages in the file.
-  - CLI Alias: `tam-trace-type`
-  - Choices: `textfile`, `utf8file`, `xmlfile`
-  - Required When: `tam_trace_enable`=`true`
-  - Not Valid When: `tam_trace_enable`=`false`

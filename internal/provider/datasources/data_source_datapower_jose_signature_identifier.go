@@ -61,7 +61,6 @@ func (d *JOSESignatureIdentifierDataSource) Schema(ctx context.Context, req data
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "JOSE Signature Identifier object for the JSON Web Verify.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

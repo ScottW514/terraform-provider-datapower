@@ -87,8 +87,8 @@ func (r *APISecurityAPIKeyResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"where": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the client credentials. An API call fails if the credentials are not included in the specified location. <b>Note:</b> Regardless of where the client credentials are sent, you must specify the same location for the client ID and client secret.", "where", "").AddStringEnum("header", "query").AddDefaultValue("header").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("header", "query"),
 				},
@@ -96,8 +96,8 @@ func (r *APISecurityAPIKeyResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("id", "secret").AddDefaultValue("id").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("id", "secret"),
 				},

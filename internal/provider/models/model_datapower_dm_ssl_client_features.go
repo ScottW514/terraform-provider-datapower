@@ -56,15 +56,15 @@ func GetDmSSLClientFeaturesDataSourceSchema(description string, cliAlias string,
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"use_sni": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use SNI", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Use SNI",
 				Computed:            true,
 			},
 			"permit_insecure_servers": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Permit connections without renegotiation", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Permit connections without renegotiation",
 				Computed:            true,
 			},
 			"compression": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable compression", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Enable compression",
 				Computed:            true,
 			},
 		},

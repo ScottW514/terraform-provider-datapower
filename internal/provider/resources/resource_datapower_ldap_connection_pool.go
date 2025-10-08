@@ -89,8 +89,8 @@ func (r *LDAPConnectionPoolResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"idle_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that an LDAP connection can remain idle before the connection is removed from the pool. Enter a value in the range 1-86400. The default value is 120.", "idle-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -98,8 +98,8 @@ func (r *LDAPConnectionPoolResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"max_pool_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of LDAP connections that can exist for a server:port:BindDN combination in an LDAP connection pool. Enter a value in the range 1-2000. The default value is 35.", "max-pool-size", "").AddIntegerRange(1, 2000).AddDefaultValue("35").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 2000),
 				},
@@ -107,8 +107,8 @@ func (r *LDAPConnectionPoolResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"reject_on_pool_limit": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to reject an incoming LDAP connection when the LDAP connection pool reaches the maximum pool size for a server:port:BindDN combination.", "reject-on-pool-limit", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

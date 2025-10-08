@@ -59,19 +59,19 @@ func GetDmConformanceProfilesDataSourceSchema(description string, cliAlias strin
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"bp10": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.0", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "WS-I BP 1.0",
 				Computed:            true,
 			},
 			"bp11": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BP 1.1", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "WS-I BP 1.1",
 				Computed:            true,
 			},
 			"ap10": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WS-I AP 1.0", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "WS-I AP 1.0",
 				Computed:            true,
 			},
 			"bsp10": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WS-I BSP 1.0", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "WS-I BSP 1.0",
 				Computed:            true,
 			},
 		},

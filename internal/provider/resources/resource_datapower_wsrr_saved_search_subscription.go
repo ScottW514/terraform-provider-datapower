@@ -100,8 +100,8 @@ func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req re
 			},
 			"method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Synchronization method", "method", "").AddStringEnum("manual", "poll", "automatic").AddDefaultValue("poll").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("manual", "poll", "automatic"),
 				},
@@ -109,8 +109,8 @@ func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req re
 			},
 			"refresh_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").AddNotValidWhen(models.WSRRSavedSearchSubscriptionRefreshIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(60, 4294967),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.WSRRSavedSearchSubscriptionRefreshIntervalIgnoreVal, true),
@@ -119,8 +119,8 @@ func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req re
 			},
 			"fetch_policy_attachments": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to fetch external policy attachments. When enabled, the registry is queried for external policy attachments for retrieved resources. These policies are processed when the service allow external policy attachments.", "fetch-policy-attachments", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{

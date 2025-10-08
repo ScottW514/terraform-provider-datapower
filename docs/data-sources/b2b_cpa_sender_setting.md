@@ -95,10 +95,6 @@ Optional:
 Read-Only:
 
 - `enable_binary` (Boolean) Binary
-  - Default value: `true`
 - `enable_edifact` (Boolean) EDIFACT
-  - Default value: `true`
 - `enable_x12` (Boolean) X12
-  - Default value: `true`
 - `enable_xml` (Boolean) XML
-  - Default value: `true`

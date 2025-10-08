@@ -88,9 +88,8 @@ func (r *PasswordAliasResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"password_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password", "password", "").String,
-				Optional:            true,
 				WriteOnly:           true,
-				Sensitive:           true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 127),
 				},

@@ -54,15 +54,15 @@ func GetDmSFTPPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmSFTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"ssh_client_profile": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SSH client profile.", "", "ssh_client_profile").String,
+				MarkdownDescription: "Specify the SSH client profile.",
 				Computed:            true,
 			},
 			"use_unique_filenames": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to generate a unique file name for files written to an SSH FTP server. When the target URL represents a directory, a unique file name is generated. When the target URL represents a file name that already exists, any transfers result into a new unique file being created and its name is modified to include a unique prolog.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Specifies whether to generate a unique file name for files written to an SSH FTP server. When the target URL represents a directory, a unique file name is generated. When the target URL represents a file name that already exists, any transfers result into a new unique file being created and its name is modified to include a unique prolog.",
 				Computed:            true,
 			},
 		},

@@ -83,8 +83,8 @@ func (r *DocumentCryptoMapResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"operation": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the operation to perform on the selected document nodes.", "operation", "").AddStringEnum("encrypt", "encrypt-wssec", "decrypt", "sign-wssec").AddDefaultValue("encrypt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("encrypt", "encrypt-wssec", "decrypt", "sign-wssec"),
 				},

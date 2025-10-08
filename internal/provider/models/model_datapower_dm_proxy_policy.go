@@ -83,19 +83,19 @@ func GetDmProxyPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmProxyPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"skip": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.",
 				Computed:            true,
 			},
 			"remote_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").AddRequiredWhen(DmProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmProxyPolicyRemoteAddressIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the hostname or IP address of the remote HTTP server.",
 				Computed:            true,
 			},
 			"remote_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").AddRequiredWhen(DmProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmProxyPolicyRemotePortIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the port on the remote HTTP server.",
 				Computed:            true,
 			},
 		},

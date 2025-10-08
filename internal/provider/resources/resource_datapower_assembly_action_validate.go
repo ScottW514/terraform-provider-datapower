@@ -85,8 +85,8 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 			},
 			"validate_against": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Validate against", "validate-against", "").AddStringEnum("url", "wsdl", "body-param", "response-param", "definition", "graphql").AddDefaultValue("url").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("url", "wsdl", "body-param", "response-param", "definition", "graphql"),
 				},
@@ -94,8 +94,8 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 			},
 			"error_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL error policy", "error-policy", "").AddStringEnum("none", "ignore", "all").AddDefaultValue("all").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "ignore", "all"),
 				},
@@ -110,8 +110,8 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 			},
 			"input": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable in the API context that contains the data to validate. The content of the <tt>body</tt> field is the input to validate. The default variable is <tt>message</tt> .", "input", "").AddDefaultValue("message").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("message"),
 			},
 			"output": schema.StringAttribute{
@@ -143,8 +143,8 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 			},
 			"action_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

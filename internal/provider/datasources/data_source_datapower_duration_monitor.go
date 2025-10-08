@@ -61,7 +61,6 @@ func (d *DurationMonitorDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "On-Line Help for Message-Duration Monitors. Duration Monitors observe the duration, or amount of time, taken to process submissions.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

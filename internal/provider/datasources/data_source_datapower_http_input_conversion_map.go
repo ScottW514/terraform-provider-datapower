@@ -61,7 +61,6 @@ func (d *HTTPInputConversionMapDataSource) Schema(ctx context.Context, req datas
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "This defines the rules for handling HTTP to XML conversion of form values in an HTTP GET or POST of a form. There are different conversion (Encoding) rules for the values. They control how the value is mapped to the contents of its &lt;arg> element in the resulting XML. There is a default Encoding, which is all that is required. There can also be specific Encodings applied to values based on the name associated with a value, which is done using an ordered list of PCREs.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

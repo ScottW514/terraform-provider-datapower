@@ -60,23 +60,23 @@ func GetDmLogTriggerDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmLogTriggerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"message_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message ID", "", "").String,
+				MarkdownDescription: "Message ID",
 				Computed:            true,
 			},
 			"expression": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the regular expression to match against message text as trigger criteria.", "", "").String,
+				MarkdownDescription: "Specify the regular expression to match against message text as trigger criteria.",
 				Computed:            true,
 			},
 			"only_once": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to run only the first time that trigger criteria is met.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Specify whether to run only the first time that trigger criteria is met.",
 				Computed:            true,
 			},
 			"stop_processing": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to not process subsequent rules that match the trigger conditions.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Specify whether to not process subsequent rules that match the trigger conditions.",
 				Computed:            true,
 			},
 			"command": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the sequence of CLI commands to run when the trigger criteria is met.", "", "").String,
+				MarkdownDescription: "Specify the sequence of CLI commands to run when the trigger criteria is met.",
 				Computed:            true,
 			},
 		},

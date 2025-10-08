@@ -86,27 +86,27 @@ func GetDmWSMPolicyMapDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 	var DmWSMPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"wsdl_component_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				MarkdownDescription: "Select a type of WSDL Component. The default is All.",
 				Computed:            true,
 			},
 			"wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.", "", "").AddNotValidWhen(DmWSMPolicyMapWSDLComponentValueIgnoreVal.String()).String,
+				MarkdownDescription: "Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.",
 				Computed:            true,
 			},
 			"match": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select an existing Matching Rule.", "", "matching").String,
+				MarkdownDescription: "Select an existing Matching Rule.",
 				Computed:            true,
 			},
 			"rule": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a WS-Proxy Processing Rule to run for matching transactions.", "", "ws_style_policy_rule").String,
+				MarkdownDescription: "Select a WS-Proxy Processing Rule to run for matching transactions.",
 				Computed:            true,
 			},
 			"subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.", "", "").AddRequiredWhen(DmWSMPolicyMapSubscriptionCondVal.String()).AddNotValidWhen(DmWSMPolicyMapSubscriptionIgnoreVal.String()).String,
+				MarkdownDescription: "Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.",
 				Computed:            true,
 			},
 			"wsdl_fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: "Matches Fragment Identifier",
 				Computed:            true,
 			},
 		},

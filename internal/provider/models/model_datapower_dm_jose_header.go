@@ -50,11 +50,11 @@ func GetDmJOSEHeaderDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmJOSEHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"header_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Name of a JOSE header.", "", "").String,
+				MarkdownDescription: "Name of a JOSE header.",
 				Computed:            true,
 			},
 			"header_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.", "", "").String,
+				MarkdownDescription: "Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.",
 				Computed:            true,
 			},
 		},

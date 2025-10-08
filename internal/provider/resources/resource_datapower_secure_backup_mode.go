@@ -58,8 +58,8 @@ func (r *SecureBackupModeResource) Schema(ctx context.Context, req resource.Sche
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -68,8 +68,8 @@ func (r *SecureBackupModeResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Sets the backup mode to support, when this operational mode is not previously set.</p><p>The creation of a secure backup is available only when secure backup mode is enabled. Unlike a standard backup, a secure backup contains private data (certificates, keys, and user data), which the DataPower Gateway encrypts with a customer-provided and a DataPower certificate.</p>", "mode", "").AddStringEnum("normal", "secure").AddDefaultValue("normal").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("normal", "secure"),
 				},

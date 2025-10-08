@@ -61,7 +61,6 @@ func (d *APISchemaDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An API schema defines the schemas to validate JSON, XML, WSDL, or SOAP messages.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

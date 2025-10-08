@@ -87,8 +87,8 @@ func (r *APIFinalResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"output": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination context that receives variables from the API context. The final API action uses the variables in the destination context to prepare the final response to the client. The default value of <tt>OUTPUT</tt> indicates to transmit the context variables to the destination context. When the value is changed or removed, the context variables are not transmitted to the destination context, and therefore, no response is returned to the client.", "output", "").AddDefaultValue("OUTPUT").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("OUTPUT"),
 			},
 			"title": schema.StringAttribute{

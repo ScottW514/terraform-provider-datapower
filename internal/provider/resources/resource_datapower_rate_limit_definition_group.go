@@ -87,8 +87,8 @@ func (r *RateLimitDefinitionGroupResource) Schema(ctx context.Context, req resou
 			},
 			"update_on_exceed": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Update on exceed", "update-on-exceed", "").AddStringEnum("all", "none", "prior").AddDefaultValue("all").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("all", "none", "prior"),
 				},

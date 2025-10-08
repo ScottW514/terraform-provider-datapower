@@ -50,11 +50,11 @@ func GetDmAssemblyActionExtractDataSourceSchema() DataSourceSchema.NestedAttribu
 	var DmAssemblyActionExtractDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"capture": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path expression that identifies the field.", "capture", "").String,
+				MarkdownDescription: "Specify the path expression that identifies the field.",
 				Computed:            true,
 			},
 			"transform": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expression that defines how to transform the content.", "transform", "").String,
+				MarkdownDescription: "Specify the expression that defines how to transform the content.",
 				Computed:            true,
 			},
 		},

@@ -124,6 +124,7 @@ func (data User) IsNull() bool {
 	}
 	return true
 }
+
 func (data UserWO) IsNull() bool {
 	if !data.Id.IsNull() {
 		return false
@@ -257,6 +258,7 @@ func (data *User) FromBody(ctx context.Context, pathRoot string, res gjson.Resul
 		data.HashedSnmpCreds = types.ListNull(types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType})
 	}
 }
+
 func (data *UserWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."

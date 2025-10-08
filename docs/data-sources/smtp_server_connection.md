@@ -79,6 +79,4 @@ Optional:
 Read-Only:
 
 - `auth` (Boolean) Authentication
-  - Default value: `false`
 - `start_tls` (Boolean) STARTTLS
-  - Default value: `false`

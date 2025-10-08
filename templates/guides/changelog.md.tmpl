@@ -17,6 +17,7 @@ description: |-
 - Added reset to default values when deleting singleton resource
 - Updates to test bed configuration
 - Refactored `UpdateFromBody` method to better handle lists of objects
+- Refactored templates for efficiency
 
 ## v0.11.4
 

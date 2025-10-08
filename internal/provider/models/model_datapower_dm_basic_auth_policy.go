@@ -53,15 +53,15 @@ func GetDmBasicAuthPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmBasicAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"user_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for basic authentication.", "", "").String,
+				MarkdownDescription: "Specify the username for basic authentication.",
 				Computed:            true,
 			},
 			"password_alias": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias that maps to the password for the username.", "", "password_alias").String,
+				MarkdownDescription: "Specify the password alias that maps to the password for the username.",
 				Computed:            true,
 			},
 		},

@@ -337,9 +337,15 @@ func processTemplate(templatePath, outputPath string, config interface{}) {
 		log.Fatalf("Error reading template: %v", err)
 	}
 
-	tmpl, err := template.New(path.Base(templatePath)).Funcs(functions).Parse(temp.String())
+	// Parse the main template content and the shared template
+	tmpl, err := template.New(path.Base(templatePath)).Funcs(functions).ParseFiles("./gen/templates/shared.tmpl")
 	if err != nil {
-		log.Fatalf("Error parsing template: %v", err)
+		log.Fatalf("Error parsing shared template: %v", err)
+	}
+	// Parse the main template content (without first line for .go.tmpl)
+	tmpl, err = tmpl.Parse(temp.String())
+	if err != nil {
+		log.Fatalf("Error parsing main template: %v", err)
 	}
 
 	output := new(bytes.Buffer)

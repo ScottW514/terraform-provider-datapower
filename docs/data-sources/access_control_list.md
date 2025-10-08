@@ -70,5 +70,4 @@ Optional:
 Read-Only:
 
 - `access` (String) Specify whether to allow or deny access. <ul><li>When allow, the range of address is granted access to the service.</li><li>When deny, the range of addresses is denied access to the service.</li></ul>
-  - Choices: `allow`, `deny`
 - `address` (String) Specify the contiguous range of IP addresses that are granted or denied access. Enter the value as an IP address and network mask.

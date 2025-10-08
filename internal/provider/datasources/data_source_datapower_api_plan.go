@@ -61,7 +61,6 @@ func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An API plan packages a list of APIs to expose. An API is not exposed unless you add the API to a plan. When you configure an API plan, define the rate limit schemes to enforce against APIs. By default, the rate limit scheme in the plan applies to all operations. You can override plan-level rate limit schemes with operation-specific rate limit schemes.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

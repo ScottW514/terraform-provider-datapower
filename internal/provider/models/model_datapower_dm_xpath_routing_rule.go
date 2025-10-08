@@ -57,19 +57,19 @@ func GetDmXPathRoutingRuleDataSourceSchema() DataSourceSchema.NestedAttributeObj
 	var DmXPathRoutingRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"xpath": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>", "", "").String,
+				MarkdownDescription: "<p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>",
 				Computed:            true,
 			},
 			"host": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address to which matching documents should be routed.", "", "").String,
+				MarkdownDescription: "Specify the host name or IP address to which matching documents should be routed.",
 				Computed:            true,
 			},
 			"port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port to which matching documents should be routed.", "", "").String,
+				MarkdownDescription: "Specify the port to which matching documents should be routed.",
 				Computed:            true,
 			},
 			"ssl": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the connection to the target destination uses TLS communications. The default is off. When set to on, the DataPower Gateway uses the TLS profile that is specified at the service level to establish TLS communications to the destination host.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Specify whether the connection to the target destination uses TLS communications. The default is off. When set to on, the DataPower Gateway uses the TLS profile that is specified at the service level to establish TLS communications to the destination host.",
 				Computed:            true,
 			},
 		},

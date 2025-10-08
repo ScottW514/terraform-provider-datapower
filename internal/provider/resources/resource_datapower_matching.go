@@ -92,14 +92,14 @@ func (r *MatchingResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"match_with_pcre": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Whether the evaluation uses shell style expressions or PCREs. This setting does not apply to XPath or HTTP method evaluations.", "match-with-pcre", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"combine_with_or": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Whether to use Boolean OR or AND operations during evaluation.</p><ul><li>When enabled, combine with OR semantics. Only one match must evaluate to true for success.</li><li>When disabled, combine with AND semantics. All matches must evaluate to true for success.</li></ul>", "combine-with-or", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

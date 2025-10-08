@@ -91,14 +91,14 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.", "local-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 3000.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("3000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -110,8 +110,8 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"remote_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Remote port", "remote-port", "").AddIntegerRange(1, 65535).AddDefaultValue("12000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -119,8 +119,8 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"close_on_fault": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to close the session on fault. When enabled, TCP connections between clients and servers are closed when the system generates a fault. Otherwise, the session is closed at only connection termination, timeout, or error.", "close-on-fault", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"acl": schema.StringAttribute{
@@ -129,8 +129,8 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"ssl_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
 				},

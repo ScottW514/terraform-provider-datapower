@@ -59,19 +59,19 @@ func GetDmOAuthFeaturesDataSourceSchema(description string, cliAlias string, ref
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"verboseerror": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Verbose", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Verbose",
 				Computed:            true,
 			},
 			"onetimeuse": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("One-time use access token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "One-time use access token",
 				Computed:            true,
 			},
 			"pkce": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Require PKCE for Authorization Code", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Require PKCE for Authorization Code",
 				Computed:            true,
 			},
 			"multiple_uses_refresh_token": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow reuse of refresh token", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Allow reuse of refresh token",
 				Computed:            true,
 			},
 		},

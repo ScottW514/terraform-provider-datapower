@@ -61,7 +61,6 @@ func (d *MPGWErrorHandlingPolicyDataSource) Schema(ctx context.Context, req data
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A Multi-Protocol gateway error policy consists of one or more error actions. A service runs an error action depending on whether or not a corresponding matching rule selects the action for processing. A service can have one policy active at a time. When an error occurs in the Multi-Protocol Gateway from an HTTP or HTTPS request flow and no precedent error handler handles the error, the service calls the error policy.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

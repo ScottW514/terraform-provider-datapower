@@ -61,7 +61,6 @@ func (d *SLMCredClassDataSource) Schema(ctx context.Context, req datasource.Sche
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An SLM credentials class identifies a set of users (credentials) to be subject to an SLM policy. An SLM credentials class consists of the following types and properties. <ul><li>A credential type that specifies the manner to obtain user credentials.</li><li>A match type that determines the credentials to apply to the policy.</li><li>Depending on the credentials and match type, properties that identify specific instances of credentials.</li></ul>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

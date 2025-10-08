@@ -50,11 +50,11 @@ func GetDmGitOpsVariableEntryDataSourceSchema() DataSourceSchema.NestedAttribute
 	var DmGitOpsVariableEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"variable_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Variable name", "name", "").String,
+				MarkdownDescription: "Variable name",
 				Computed:            true,
 			},
 			"variable_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Variable value", "value", "").String,
+				MarkdownDescription: "Variable value",
 				Computed:            true,
 			},
 		},

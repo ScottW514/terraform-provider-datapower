@@ -56,15 +56,15 @@ func GetDmInvokeErrorTypeDataSourceSchema(description string, cliAlias string, r
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"connection_error": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connection error", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Connection error",
 				Computed:            true,
 			},
 			"soap_error": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SOAP error", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "SOAP error",
 				Computed:            true,
 			},
 			"operation_error": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Operation error", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Operation error",
 				Computed:            true,
 			},
 		},

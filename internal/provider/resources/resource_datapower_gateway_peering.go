@@ -103,8 +103,8 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port that the gateway service listens on. The default value is 16380. Ensure that all peers use the same port.", "local-port", "").AddDefaultValue("16380").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(16380),
 			},
 			"peer_group": schema.StringAttribute{
@@ -113,26 +113,26 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"monitor_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port to monitor for state synchronization. The default value is 26380. Ensure that all peers use the same port.", "monitor-port", "").AddDefaultValue("26380").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(26380),
 			},
 			"enable_peer_group": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the gateway-peering instance uses a peer group. <ul><li>When enabled, the instance works in the mode that is set for the peer group. This setting is the default value.</li><li>When not enabled, the instance works in stand-alone mode.</li></ul>", "enable-peer-group", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"enable_ssl": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. In peer-based mode, ensure that all peers use the same TLS configuration.", "", "").AddDefaultValue("false").AddNotValidWhen(models.GatewayPeeringEnableSSLIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"persistence_location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to store data. Ensure that all peers in the group store data in the same location.", "persistence", "").AddStringEnum("memory", "local", "raid").AddDefaultValue("memory").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("memory", "local", "raid"),
 				},
@@ -140,8 +140,8 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"local_directory": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store data. For example, <tt>local:///group1</tt> .", "local-directory", "").AddDefaultValue("local:///").AddRequiredWhen(models.GatewayPeeringLocalDirectoryCondVal.String()).AddNotValidWhen(models.GatewayPeeringLocalDirectoryIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile("^(local):"), "Must match :"+"^(local):"),
 					validators.ConditionalRequiredString(models.GatewayPeeringLocalDirectoryCondVal, models.GatewayPeeringLocalDirectoryIgnoreVal, true),

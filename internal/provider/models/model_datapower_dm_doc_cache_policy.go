@@ -150,39 +150,39 @@ func GetDmDocCachePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmDocCachePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"match": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in the cache policy. The following wildcard characters are available. <table><tr><td valign=\"top\">asterisk (*)</td><td valign=\"top\">Matches 0 or more occurrences of any character.</td></tr><tr><td valign=\"top\">question mark (?)</td><td valign=\"top\">Matches one occurrence of any single character.</td></tr><tr><td valign=\"top\">brackets ( [ ] )</td><td valign=\"top\">Defines a character or numeric range. For example, <tt>[1-5]</tt> matches 1, 2, 3, 4, or 5, while <tt>xs[dl]</tt> matches xsd or xsl.</td></tr></table>", "match", "").String,
+				MarkdownDescription: "Provide a literal or wildcard expression to define a URL set included in the cache policy. The following wildcard characters are available. <table><tr><td valign=\"top\">asterisk (*)</td><td valign=\"top\">Matches 0 or more occurrences of any character.</td></tr><tr><td valign=\"top\">question mark (?)</td><td valign=\"top\">Matches one occurrence of any single character.</td></tr><tr><td valign=\"top\">brackets ( [ ] )</td><td valign=\"top\">Defines a character or numeric range. For example, <tt>[1-5]</tt> matches 1, 2, 3, 4, or 5, while <tt>xs[dl]</tt> matches xsd or xsl.</td></tr></table>",
 				Computed:            true,
 			},
 			"type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.", "type", "").AddStringEnum("protocol", "no-cache", "fixed").AddDefaultValue("protocol").String,
+				MarkdownDescription: "Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.",
 				Computed:            true,
 			},
 			"priority": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>", "priority", "").AddIntegerRange(1, 255).AddDefaultValue("128").String,
+				MarkdownDescription: "<p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>",
 				Computed:            true,
 			},
 			"xc10grid": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").AddNotValidWhen(DmDocCachePolicyXC10GridIgnoreVal.String()).String,
+				MarkdownDescription: "The eXtreme Scale grid configuration to use for caching documents.",
 				Computed:            true,
 			},
 			"cache_backend_responses": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to requests from back-end servers.", "cache-backend-response", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyCacheBackendResponsesIgnoreVal.String()).String,
+				MarkdownDescription: "Caches responses to requests from back-end servers.",
 				Computed:            true,
 			},
 			"http_cache_validation": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.", "http-cache-validation", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyHTTPCacheValidationIgnoreVal.String()).String,
+				MarkdownDescription: "When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.",
 				Computed:            true,
 			},
 			"return_expired": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>", "return-expired", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyReturnExpiredIgnoreVal.String()).String,
+				MarkdownDescription: "<p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>",
 				Computed:            true,
 			},
 			"rest_invalidation": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.", "rest-invalidation", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyRESTInvalidationIgnoreVal.String()).String,
+				MarkdownDescription: "Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.",
 				Computed:            true,
 			},
 			"cache_unsafe_response": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").AddNotValidWhen(DmDocCachePolicyCacheUnsafeResponseIgnoreVal.String()).String,
+				MarkdownDescription: "Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.",
 				Computed:            true,
 			},
 		},

@@ -61,7 +61,6 @@ func (d *CryptoSSKeyDataSource) Schema(ctx context.Context, req datasource.Schem
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A shared secret key is a sequence of characters that is pre-shared between users for use with symmetric encryption.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

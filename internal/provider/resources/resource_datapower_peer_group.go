@@ -90,8 +90,8 @@ func (r *PeerGroupResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("slm", "slm-multicast").AddDefaultValue("slm").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("slm", "slm-multicast"),
 				},
@@ -111,8 +111,8 @@ func (r *PeerGroupResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"update_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the update interval in milliseconds that data is transmitted among peers.", "update-interval", "").AddIntegerRange(1, 10000).AddDefaultValue("10").AddRequiredWhen(models.PeerGroupUpdateIntervalCondVal.String()).AddNotValidWhen(models.PeerGroupUpdateIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 10000),
 					validators.ConditionalRequiredInt64(models.PeerGroupUpdateIntervalCondVal, models.PeerGroupUpdateIntervalIgnoreVal, true),

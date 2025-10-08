@@ -61,7 +61,6 @@ func (d *AssemblyDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An assembly specifies the API rule to apply to the API call and how to handle errors during the assembly execution. The API rule for the assembly comprises only assembly actions that are executed in order to control a specific aspect of processing such as data transformation during API call at run time. When an API is identified for the incoming request, its assembly is executed.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

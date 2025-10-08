@@ -61,7 +61,6 @@ func (d *EBMS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The configuration for an ebMS3 handler.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

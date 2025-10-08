@@ -1998,6 +1998,7 @@ func (data OAuthSupportedClient) IsNull() bool {
 	}
 	return true
 }
+
 func (data OAuthSupportedClientWO) IsNull() bool {
 	if !data.Id.IsNull() {
 		return false
@@ -2477,6 +2478,7 @@ func (data *OAuthSupportedClient) FromBody(ctx context.Context, pathRoot string,
 		data.OauthFeatures = nil
 	}
 }
+
 func (data *OAuthSupportedClientWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."

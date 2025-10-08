@@ -53,11 +53,11 @@ func GetDmValidationFeaturesDataSourceSchema(description string, cliAlias string
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"noauthen": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Unprotected", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Unprotected",
 				Computed:            true,
 			},
 			"introspect": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Introspection Format", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Introspection Format",
 				Computed:            true,
 			},
 		},

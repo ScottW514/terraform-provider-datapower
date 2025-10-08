@@ -75,19 +75,19 @@ func GetDmLTPAUserAttributeNameAndValueDataSourceSchema() DataSourceSchema.Neste
 	var DmLTPAUserAttributeNameAndValueDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"ltpa_user_attribute_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the attribute.", "", "").String,
+				MarkdownDescription: "Specify the name of the attribute.",
 				Computed:            true,
 			},
 			"ltpa_user_attribute_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of attribute.", "", "").AddStringEnum("static", "xpath").String,
+				MarkdownDescription: "Specify the type of attribute.",
 				Computed:            true,
 			},
 			"ltpa_user_attribute_static_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.", "", "").AddNotValidWhen(DmLTPAUserAttributeNameAndValueLTPAUserAttributeStaticValueIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the fixed value for the attribute. If the value contains <tt>$ : %</tt> characters, they are escaped.",
 				Computed:            true,
 			},
 			"ltpa_user_attribute_xpath_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.", "", "").AddNotValidWhen(DmLTPAUserAttributeNameAndValueLTPAUserAttributeXPathValueIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the XPath expression to find the value for the attribute. The expression is evaluated against the input message at run time. The result is the value of the attribute.",
 				Computed:            true,
 			},
 		},

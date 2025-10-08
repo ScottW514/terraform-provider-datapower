@@ -55,15 +55,15 @@ func GetDmPolicyAttachmentPointDataSourceSchema() DataSourceSchema.NestedAttribu
 	var DmPolicyAttachmentPointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"policy_attach_wsdl_component_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
+				MarkdownDescription: "Select a type of WSDL Component",
 				Computed:            true,
 			},
 			"policy_attach_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a wsdl component formatted {ns}ncname", "", "").String,
+				MarkdownDescription: "Enter the qname of a wsdl component formatted {ns}ncname",
 				Computed:            true,
 			},
 			"policy_attach_fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: "Matches Fragment Identifier",
 				Computed:            true,
 			},
 		},

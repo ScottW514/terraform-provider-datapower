@@ -61,7 +61,6 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An OAuth provider settings configuration defines how a client application is authorized to access resources on behalf of the resource owner.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

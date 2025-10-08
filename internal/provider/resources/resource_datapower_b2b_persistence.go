@@ -59,8 +59,8 @@ func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.Schema
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -73,8 +73,8 @@ func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"storage_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size for the data store in MB. Enter a value in the range 1024 - 65536. The default is 1024. <p>This data store is for all B2B gateway services. These services store transaction metadata on the unencrypted partition of the RAID volume. These services store copies of the messages on the encrypted portion of the RAID volume.</p><p>The storage location for messages is defined on a service-by-service basis during the configuration of the B2B gateway.</p><p><b>Attention:</b> The maximum size for the persistent data store cannot be changed to a smaller value. Changing to a larger value might interrupt transactions that are in flight.</p>", "storage-size", "").AddIntegerRange(1024, 65536).AddDefaultValue("1024").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1024, 65536),
 				},
@@ -82,8 +82,8 @@ func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"ha_enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When on, the appliance is in active-passive high availability mode with the configured 'Alternate Host'.", "ha-enabled", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ha_other_hosts": models.GetDmB2BHAHostResourceSchema("Alternate host", "ha-other-hosts", "", false),
@@ -96,8 +96,8 @@ func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"ha_local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Replication port", "ha-local-port", "").AddDefaultValue("1320").AddRequiredWhen(models.B2BPersistenceHALocalPortCondVal.String()).AddNotValidWhen(models.B2BPersistenceHALocalPortIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					validators.ConditionalRequiredInt64(models.B2BPersistenceHALocalPortCondVal, models.B2BPersistenceHALocalPortIgnoreVal, true),
 				},

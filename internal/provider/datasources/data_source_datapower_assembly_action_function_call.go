@@ -61,7 +61,6 @@ func (d *AssemblyActionFunctionCallDataSource) Schema(ctx context.Context, req d
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The function call assembly action specifies an assembly function that contains custom logic to add to an assembly.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -34,7 +34,7 @@ resource "datapower_user" "test" {
 > **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
 
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify the password for the account. The password must comply to the password policy in RBM settings.
+- `password_wo` (String, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify the password for the account. The password must comply to the password policy in RBM settings.
   - CLI Alias: `password`
 
 ### Optional

@@ -61,7 +61,6 @@ func (d *XMLFirewallServiceDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Create or edit an XML Firewall on local IP/port. This XML Firewall can communicate with a dynamically identified servers, a static back end server or as a loopback. The XML Firewall applies the selected processing policy to messages. The XML Firewall can rewrite client request URLs byusing a URL rewrite policy. The XML Firewall can use TLS communications to client, server or both directions if applicable.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

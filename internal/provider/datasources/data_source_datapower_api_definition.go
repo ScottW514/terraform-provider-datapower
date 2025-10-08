@@ -61,7 +61,6 @@ func (d *APIDefinitionDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An API definition uses HTTP requests to GET, PUT, POST, and DELETE data.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

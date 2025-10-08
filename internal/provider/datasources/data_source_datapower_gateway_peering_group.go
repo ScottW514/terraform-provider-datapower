@@ -61,7 +61,6 @@ func (d *GatewayPeeringGroupDataSource) Schema(ctx context.Context, req datasour
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A gateway-peering group defines members as a group to synchronize data across members. When a group can work in stand-alone mode, peer-based mode, or cluster-based mode. <ul><li>For stand-alone, no peers defined. This mode is for only development or testing purposes.</li><li>For a peer group, add peers and configure the connection among the peers.</li><li>For a cluster, add cluster nodes and the other nodes that are in the same data center.</li></ul>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -61,7 +61,6 @@ func (d *SocialLoginPolicyDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DataPower can act as an OpenID Connect client. In this case, a social login policy enables DataPower to redirect the user to a social login provider like Google for user authentication and consent for authorization.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

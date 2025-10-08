@@ -65,27 +65,27 @@ func GetDmDomainFileMapDataSourceSchema(description string, cliAlias string, ref
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"copy_from": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied from", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Allow files to be copied from",
 				Computed:            true,
 			},
 			"copy_to": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be copied to", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Allow files to be copied to",
 				Computed:            true,
 			},
 			"delete": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be deleted", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Allow files to be deleted",
 				Computed:            true,
 			},
 			"display": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow file content to be displayed", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Allow file content to be displayed",
 				Computed:            true,
 			},
 			"exec": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow files to be run as scripts", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Allow files to be run as scripts",
 				Computed:            true,
 			},
 			"subdir": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow subdirectories to be created", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Allow subdirectories to be created",
 				Computed:            true,
 			},
 		},

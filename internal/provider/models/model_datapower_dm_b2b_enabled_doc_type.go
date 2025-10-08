@@ -59,19 +59,19 @@ func GetDmB2BEnabledDocTypeDataSourceSchema(description string, cliAlias string,
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"enable_xml": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "XML",
 				Computed:            true,
 			},
 			"enable_x12": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("X12", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "X12",
 				Computed:            true,
 			},
 			"enable_edifact": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("EDIFACT", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "EDIFACT",
 				Computed:            true,
 			},
 			"enable_binary": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Binary", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Binary",
 				Computed:            true,
 			},
 		},

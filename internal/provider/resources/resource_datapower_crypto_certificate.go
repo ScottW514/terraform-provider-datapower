@@ -91,8 +91,8 @@ func (r *CryptoCertificateResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"ignore_expiration": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to ignore the expiration date of the certificate. When enabled, the certificate remains in the <tt>up</tt> operational state outside of its expiration values. <p>Although the certificate is in the <tt>up</tt> state, other configurations that reference the certificate use the internal expiration values. In other words, the certificate itself is in the <tt>up</tt> state, but any configuration that references the certificate adheres to the internal expiration values.</p><ul><li>If the certificate is for certificate chain validation in validation credentials and the certificate is invalid, validation fails. Expired certificates cause the validation to fail unless you disable check dates in validation credentials.</li><li>If the certificate is in identification credentials, the DataPower Gateway sends the certificate to the peer. The peer can reject the certificate as invalid.</li></ul>", "ignore-expiration", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

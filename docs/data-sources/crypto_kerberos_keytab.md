@@ -75,10 +75,6 @@ Optional:
 Read-Only:
 
 - `conf` (Boolean) CONF
-  - Default value: `false`
 - `integ` (Boolean) INTEG
-  - Default value: `false`
 - `replay` (Boolean) REPLAY
-  - Default value: `false`
 - `sequence` (Boolean) SEQUENCE
-  - Default value: `false`

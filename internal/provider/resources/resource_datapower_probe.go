@@ -73,8 +73,8 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -83,8 +83,8 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 			},
 			"max_records": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of records to allow. Enter a value in the range 1 - 10000. The default value is 1000.", "max-records", "").AddIntegerRange(1, 10000).AddDefaultValue("1000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 10000),
 				},
@@ -92,8 +92,8 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 			},
 			"expiration": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to retain the troubleshooting data. Enter a value in the range 60 - 86400. The default value is 3600.", "expiration", "").AddIntegerRange(60, 86400).AddDefaultValue("3600").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(60, 86400),
 				},

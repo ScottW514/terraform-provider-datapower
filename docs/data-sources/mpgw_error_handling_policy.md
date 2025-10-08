@@ -71,6 +71,4 @@ Optional:
 Read-Only:
 
 - `action` (String) Select the error action that handles the errors and generates responses.
-  - Reference to: `datapower_mpgw_error_action:id`
 - `match` (String) Select the matching rule that defines the matching criteria.
-  - Reference to: `datapower_matching:id`

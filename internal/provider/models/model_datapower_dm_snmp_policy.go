@@ -59,19 +59,19 @@ func GetDmSnmpPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmSnmpPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"community": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a specific SNMP community. All SNMP Version 1 or Version 2c managers identifying themselves as a member of this community will have the Mode permissions set here for the Associated Domains selected here and must originate from the Remote Host Address specified here.", "", "").String,
+				MarkdownDescription: "Enter the name of a specific SNMP community. All SNMP Version 1 or Version 2c managers identifying themselves as a member of this community will have the Mode permissions set here for the Associated Domains selected here and must originate from the Remote Host Address specified here.",
 				Computed:            true,
 			},
 			"domain": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the application domain visible to the SNMP managers belonging to this community. The default value is the default application domain.", "", "domain").String,
+				MarkdownDescription: "Specifies the application domain visible to the SNMP managers belonging to this community. The default value is the default application domain.",
 				Computed:            true,
 			},
 			"mode": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the access privileges accorded to SNMP managers that belong to this community. Use none to disable SNMP access.", "", "").AddStringEnum("none", "read-only", "read-write").String,
+				MarkdownDescription: "Select the access privileges accorded to SNMP managers that belong to this community. Use none to disable SNMP access.",
 				Computed:            true,
 			},
 			"host": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The IP address of an SNMP manager belonging to this community. The default value of '0.0.0.0/0' indicates all hosts, or all SNMP managers claiming membership in the community.", "", "").AddDefaultValue("0.0.0.0/0").String,
+				MarkdownDescription: "The IP address of an SNMP manager belonging to this community. The default value of '0.0.0.0/0' indicates all hosts, or all SNMP managers claiming membership in the community.",
 				Computed:            true,
 			},
 		},

@@ -54,11 +54,11 @@ func GetDmGatewayPeeringGroupPeerNodeDataSourceSchema() DataSourceSchema.NestedA
 	var DmGatewayPeeringGroupPeerNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"host": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the peer.", "", "").String,
+				MarkdownDescription: "Specify the local IP address or host alias of the peer.",
 				Computed:            true,
 			},
 			"priority": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.", "", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
+				MarkdownDescription: "Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.",
 				Computed:            true,
 			},
 		},

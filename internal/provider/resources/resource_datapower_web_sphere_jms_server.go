@@ -92,8 +92,8 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"target_transport_chain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the predefined transport chain to use for WebSphere JMS message exchanges. The transport chain used for message exchange need not match the chain used for bootstrap access.</p><p>This property takes one of the following values. The default value is <tt>InboundBasicMessaging</tt> . <dl><dt><tt>InboundBasicMessaging</tt></dt><dd>Specifies the predefined <tt>InboundBasicMessaging</tt> transport chain (JFAP-TCP/IP).</dd><dt><tt>InboundHTTPMessaging</tt></dt><dd>Specifies the predefined <tt>InboundHTTPMessaging</tt> transport chain (tunnels JFAP using HTTP wrappers).</dd><dt><tt>InboundSecureMessaging</tt></dt><dd>Specifies the predefined <tt>InboundSecureMessaging</tt> transport chain (JFAP-SSL-TCP/IP).</dd></dl></p><p>If you have access to the WebSphere Administrative Console, you can view transport chain information through the <b>Application Servers/serverName/Transport Chain</b> menu.</p>", "target-transport-chain", "").AddDefaultValue("InboundBasicMessaging").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("InboundBasicMessaging"),
 			},
 			"messaging_bus": schema.StringAttribute{
@@ -110,8 +110,8 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"fips": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require the assignment of a FIPS-compliant cipher for the WebSphere JMS message provider. By default, a FIPS-compliant cipher is not required. When enabled, which prevents the use of non-FIPs compliance ciphers, requires the use of one of the following ciphers. <ul><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA256</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA256</tt></li></ul>", "ssl-fips", "").AddDefaultValue("false").AddNotValidWhen(models.WebSphereJMSServerFIPSIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -131,14 +131,14 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"transactional": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to acknowledge messages only after the transaction succeeds. When enabled, messages are acknowledged only after the transaction succeeds. By default, transaction-based processing is disabled.", "transactional", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"memory_threshold": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory allocation for pending messages in bytes. Enter a value in the range 10485760 - 1073741824. The default value is 268435456.", "memory-threshold", "").AddIntegerRange(10485760, 1073741824).AddDefaultValue("268435456").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10485760, 1073741824),
 				},
@@ -146,8 +146,8 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"maximum_message_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum message size in bytes. Enter a value in the range 0 - 1073741824. The default value is 1048576. A value of 0 disables the enforcement of a maximum message size.", "maximum-message-size", "").AddIntegerRange(0, 1073741824).AddDefaultValue("1048576").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1073741824),
 				},
@@ -155,8 +155,8 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"default_message_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the default JMS message type. This message type is provided only when the message type cannot be determined from the JMS message headers. By default, the message payload is accessed as a Java byte array.</p><p>On the transaction level, the <tt>DP_JMSMessageType</tt> header can change this setting.</p>", "default-message-type", "").AddStringEnum("byte", "text").AddDefaultValue("byte").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("byte", "text"),
 				},
@@ -164,8 +164,8 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"total_connection_limit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of simultaneous open connections. Enter a value in the range 1 - 65535. The default value is 64.", "total-connection-limit", "").AddIntegerRange(1, 65535).AddDefaultValue("64").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -173,8 +173,8 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"sessions_per_connection": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent multiplexed sessions that a single connection can support. Enter a value in the range 1 - 65535. The default is 100. <p>Session requests in excess of the defined value trigger the establishment of a new connection to the server. A new connection cannot be established unless the number of current connections is less than the value set for total connections.</p><p>For example, with values of 20 sessions per connection, 5 total connections, and 3 active fully subscribed connections, a new session request generates the establishment of a fourth connection.</p>", "sessions-per-connection", "").AddIntegerRange(1, 65535).AddDefaultValue("100").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -182,14 +182,14 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"auto_retry": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to control the automatic error-recovery procedure for the connection. By default, automatic error-recovery is enabled to reestablish a connection that was broken in response to an error condition.", "auto-retry", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 1.", "retry-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -197,14 +197,14 @@ func (r *WebSphereJMSServerResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"enable_logging": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to control JMS-specific expanded logging. By default, expanded logging is disabled.", "enable-logging", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 				},

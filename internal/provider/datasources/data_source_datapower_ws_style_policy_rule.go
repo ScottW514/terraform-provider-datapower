@@ -61,7 +61,6 @@ func (d *WSStylePolicyRuleDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Create, edit, or delete processing policy rules. Rules can also be created and edited using a drag and drop interface by opening the Services menu area on the left-hand navigation bar. Click the appropriate Policy link which will then present an opportunity to create both Rules and Actions.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

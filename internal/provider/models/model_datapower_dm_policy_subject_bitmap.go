@@ -62,23 +62,23 @@ func GetDmPolicySubjectBitmapDataSourceSchema(description string, cliAlias strin
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"service": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Service Subject", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Service Subject",
 				Computed:            true,
 			},
 			"endpoint": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Endpoint Subject", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Endpoint Subject",
 				Computed:            true,
 			},
 			"operation": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Operation Subject", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Operation Subject",
 				Computed:            true,
 			},
 			"message_in": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message Input Subject", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Message Input Subject",
 				Computed:            true,
 			},
 			"message_out": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message Output Subject", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Message Output Subject",
 				Computed:            true,
 			},
 		},

@@ -61,7 +61,6 @@ func (d *AssemblyActionRedactDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The redact assembly action redacts or removes data from fields in the request body, in the response body, or in the activity logs. <p>This action is useful to remove or block out sensitive data for legal, security, or other reasons. The input to this action must be parsed data. One way to produce parsed data is to add a parse assembly action before the redact assembly action in your assembly.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

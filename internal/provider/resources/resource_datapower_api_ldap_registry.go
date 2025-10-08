@@ -95,8 +95,8 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"ldap_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the LDAP server. The default value is 636.", "ldap-port", "").AddDefaultValue("636").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(636),
 			},
 			"ssl_client_profile": schema.StringAttribute{
@@ -105,8 +105,8 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"ldap_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LDAP protocol version for bind operation. The default value is v3.", "ldap-version", "").AddStringEnum("v2", "v3").AddDefaultValue("v3").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("v2", "v3"),
 				},
@@ -114,8 +114,8 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"ldap_auth_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to create the user for authentication. <ul><li>When compose DN, the DN can be composed from the username. For example, <tt>uid=john,ou=People,dc=company,dc=com</tt> is a DN format that can be composed from the username.</li><li>When compose UPN, the UPN can be composed from the username. For example, <tt>john@example.com</tt> is a UPN format that can be composed from the username.</li><li>When search DN, the DN cannot be composed from the username. You must use an LDAP search to retrieve information that matches the username.</li></ul><p>By default, queries the LDAP server to retrieve user information. Before deciding on the method, contact your LDAP administrator.</p>", "ldap-auth-method", "").AddStringEnum("composeDN", "composeUPN", "searchDN").AddDefaultValue("searchDN").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("composeDN", "composeUPN", "searchDN"),
 				},
@@ -135,8 +135,8 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"ldap_read_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait for a response from the LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
 				},
@@ -144,8 +144,8 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"ldap_group_auth_enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable LDAP group authentication to use to check group membership for a user. The default value is off.", "ldap-group-auth-enabled", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ldap_group_auth_type": schema.StringAttribute{
@@ -158,8 +158,8 @@ func (r *APILDAPRegistryResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"ldap_group_scope": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the depth of the LDAP group search. The default value is subtree.", "ldap-group-scope", "").AddStringEnum("subtree", "one-level", "base").AddDefaultValue("subtree").AddNotValidWhen(models.APILDAPRegistryLDAPGroupScopeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("subtree", "one-level", "base"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.APILDAPRegistryLDAPGroupScopeIgnoreVal, true),

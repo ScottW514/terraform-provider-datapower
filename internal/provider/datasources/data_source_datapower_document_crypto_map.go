@@ -61,7 +61,6 @@ func (d *DocumentCryptoMapDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A Document Crypto Map indicates which elements, of a complete schema, to encrypt or decrypt. The indicated element or elements may also be signed.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

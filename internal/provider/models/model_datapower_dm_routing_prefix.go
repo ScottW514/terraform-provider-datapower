@@ -62,11 +62,11 @@ func GetDmRoutingPrefixDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmRoutingPrefixDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type for the routing prefix.", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
+				MarkdownDescription: "Specify the type for the routing prefix.",
 				Computed:            true,
 			},
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").AddRequiredWhen(DmRoutingPrefixNameCondVal.String()).String,
+				MarkdownDescription: "Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>",
 				Computed:            true,
 			},
 		},

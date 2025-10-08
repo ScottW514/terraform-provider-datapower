@@ -91,8 +91,8 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"max_attributes": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The maximum number of name value pairs allowed in a single entity (header, cookie set, body, and so forth).", "max-attributes", "").AddIntegerRange(1, 4294967295).AddDefaultValue("256").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
@@ -100,8 +100,8 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"max_aggregate_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The lengths of all the names and values in a single entity (header, cookie set, body, query string, and so forth) in aggregate must not exceed this property.", "max-aggregate-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("128000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
@@ -109,8 +109,8 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"max_name_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The maximum size of a name attribute used in this profile.", "max-name-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("512").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
@@ -118,8 +118,8 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"max_value_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The maximum size of a value attribute used in this profile.", "max-value-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1024").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
@@ -132,8 +132,8 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"default_fixup": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the action to taken when no matching entry in the validation list is found. The default is Strip.", "unvalidated-fixup-policy", "").AddStringEnum("passthrough", "strip", "error", "set").AddDefaultValue("strip").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("passthrough", "strip", "error", "set"),
 				},
@@ -145,14 +145,14 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"default_xss": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.", "unvalidated-xss-check", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"no_match_xss_patterns_file": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "unvalidated-xss-patternsfile", "").AddDefaultValue("store:///XSS-Patterns.xml").AddRequiredWhen(models.NameValueProfileNoMatchXSSPatternsFileCondVal.String()).AddNotValidWhen(models.NameValueProfileNoMatchXSSPatternsFileIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.NameValueProfileNoMatchXSSPatternsFileCondVal, models.NameValueProfileNoMatchXSSPatternsFileIgnoreVal, true),
 				},

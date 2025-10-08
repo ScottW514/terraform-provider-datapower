@@ -75,4 +75,3 @@ Read-Only:
 
 - `error` (String) Specifies the name of a custom error.
 - `handler` (String) Specifies the name of the error handler for the custom error.
-  - Reference to: `datapower_api_rule:id`

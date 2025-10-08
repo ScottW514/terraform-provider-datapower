@@ -50,11 +50,11 @@ func GetDmTableEntryDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmTableEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the display name of the entry.", "", "").String,
+				MarkdownDescription: "Specify the display name of the entry.",
 				Computed:            true,
 			},
 			"description": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the description of the entry.", "", "").String,
+				MarkdownDescription: "Specify the description of the entry.",
 				Computed:            true,
 			},
 		},

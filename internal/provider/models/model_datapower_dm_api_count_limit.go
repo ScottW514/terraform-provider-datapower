@@ -79,47 +79,47 @@ func GetDmAPICountLimitDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmAPICountLimitDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the name of the count limit scheme.", "", "").String,
+				MarkdownDescription: "Indicates the name of the count limit scheme.",
 				Computed:            true,
 			},
 			"count": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum count that this limit will allow.", "", "").String,
+				MarkdownDescription: "Indicates the maximum count that this limit will allow.",
 				Computed:            true,
 			},
 			"hard_limit": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "<p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>",
 				Computed:            true,
 			},
 			"cache_only": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.",
 				Computed:            true,
 			},
 			"is_client": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.",
 				Computed:            true,
 			},
 			"use_api_name": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the API name as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Indicates whether to use the API name as part of the count limit key.",
 				Computed:            true,
 			},
 			"use_app_id": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the application ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Indicates whether to use the application ID as part of the count limit key.",
 				Computed:            true,
 			},
 			"use_client_id": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to use the client ID as part of the count limit key.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Indicates whether to use the client ID as part of the count limit key.",
 				Computed:            true,
 			},
 			"dynamic_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.", "", "").String,
+				MarkdownDescription: "Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.",
 				Computed:            true,
 			},
 			"weight": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.", "", "").AddDefaultValue("1").String,
+				MarkdownDescription: "Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.",
 				Computed:            true,
 			},
 			"auto_dec": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to automatically decrement this count limit in each transaction.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Indicates whether to automatically decrement this count limit in each transaction.",
 				Computed:            true,
 			},
 		},

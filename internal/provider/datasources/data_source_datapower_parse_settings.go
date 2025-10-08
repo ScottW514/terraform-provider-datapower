@@ -61,7 +61,6 @@ func (d *ParseSettingsDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Parse settings define the constraints to parsie documents. These constraints overwrite the parser limits in the XML manager. These settings provide threat protection.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

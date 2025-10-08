@@ -95,34 +95,15 @@ Read-Only:
 
 - `burst` (Number) Indicates the maximum allowed burst rate. The value of 0 indicates no limit. A message is rejected when the burst limit is exceeded.
 - `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the burst limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
-  - Default value: `true`
-  - Not Valid When: `burst`=`0`
 - `dynamic_value` (String) Indicates the dynamic value string for the burst limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the burst limit based on parameters other than those defined in the burst limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
-  - Not Valid When: `burst`=`0`
 - `interval` (Number) Indicates the time interval for the burst limit. Specify a value that is greater than or equal to 1. The default value is 1.
-  - Range: `1`-`65535`
-  - Default value: `1`
-  - Not Valid When: `burst`=`0`
 - `is_client` (Boolean) Indicates whether to apply the burst limit to the client or to an internal component. Client burst limits return a 429 error when exceeded. Non-client burst limits return a 503 error when exceeded. When set to <tt>off</tt> , burst limit information is not included in the response header.
-  - Default value: `true`
-  - Not Valid When: `burst`=`0`
 - `name` (String) Indicates the name of the burst limit scheme.
 - `unit` (String) Indicates the time unit for the burst limit. The default value is second.
-  - Choices: `second`, `minute`
-  - Default value: `second`
-  - Not Valid When: `burst`=`0`
 - `use_api_name` (Boolean) Indicates whether to use the API name as part of the burst limit key.
-  - Default value: `false`
-  - Not Valid When: `burst`=`0`
 - `use_app_id` (Boolean) Indicates whether to use the application ID as part of the burst limit key.
-  - Default value: `false`
-  - Not Valid When: `burst`=`0`
 - `use_client_id` (Boolean) Indicates whether to use the client ID as part of the burst limit key.
-  - Default value: `false`
-  - Not Valid When: `burst`=`0`
 - `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the burst limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
-  - Default value: `1`
-  - Not Valid When: `burst`=`0`
 
 
 <a id="nestedatt--result--assembly_count_limit"></a>
@@ -131,24 +112,16 @@ Read-Only:
 Read-Only:
 
 - `auto_dec` (Boolean) Indicates whether to automatically decrement this count limit in each transaction.
-  - Default value: `true`
 - `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
-  - Default value: `true`
 - `count` (Number) Indicates the maximum count that this limit will allow.
 - `dynamic_value` (String) Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.
 - `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>
-  - Default value: `true`
 - `is_client` (Boolean) Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.
-  - Default value: `false`
 - `name` (String) Indicates the name of the count limit scheme.
 - `use_api_name` (Boolean) Indicates whether to use the API name as part of the count limit key.
-  - Default value: `false`
 - `use_app_id` (Boolean) Indicates whether to use the application ID as part of the count limit key.
-  - Default value: `false`
 - `use_client_id` (Boolean) Indicates whether to use the client ID as part of the count limit key.
-  - Default value: `false`
 - `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
-  - Default value: `1`
 
 
 <a id="nestedatt--result--assembly_rate_limit"></a>
@@ -157,39 +130,17 @@ Read-Only:
 Read-Only:
 
 - `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
-  - Default value: `true`
-  - Not Valid When: `rate`=`0`
 - `dynamic_value` (String) Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
-  - Not Valid When: `rate`=`0`
 - `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>
-  - Default value: `false`
-  - Not Valid When: `rate`=`0`
 - `interval` (Number) Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.
-  - Range: `1`-`65535`
-  - Default value: `1`
-  - Not Valid When: `rate`=`0`
 - `is_client` (Boolean) Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.
-  - Default value: `true`
-  - Not Valid When: `rate`=`0`
 - `name` (String) Indicates the name of the rate limit scheme.
 - `rate` (Number) Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.
-  - Range: `0`-`4294967295`
 - `unit` (String) Indicates the time unit for the rate limit. The default value is second.
-  - Choices: `second`, `minute`, `hour`, `day`, `week`
-  - Default value: `second`
-  - Not Valid When: `rate`=`0`
 - `use_api_name` (Boolean) Indicates whether to use the API name as part of the rate limit key.
-  - Default value: `false`
-  - Not Valid When: `rate`=`0`
 - `use_app_id` (Boolean) Indicates whether to use the application ID as part of the rate limit key.
-  - Default value: `false`
-  - Not Valid When: `rate`=`0`
 - `use_client_id` (Boolean) Indicates whether to use the client ID as part of the rate limit key.
-  - Default value: `false`
-  - Not Valid When: `rate`=`0`
 - `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
-  - Default value: `1`
-  - Not Valid When: `rate`=`0`
 
 
 <a id="nestedatt--result--default_rate_limit"></a>
@@ -198,39 +149,17 @@ Read-Only:
 Read-Only:
 
 - `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
-  - Default value: `true`
-  - Not Valid When: `rate`=`0`
 - `dynamic_value` (String) Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
-  - Not Valid When: `rate`=`0`
 - `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>
-  - Default value: `false`
-  - Not Valid When: `rate`=`0`
 - `interval` (Number) Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.
-  - Range: `1`-`65535`
-  - Default value: `1`
-  - Not Valid When: `rate`=`0`
 - `is_client` (Boolean) Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.
-  - Default value: `true`
-  - Not Valid When: `rate`=`0`
 - `name` (String) Indicates the name of the rate limit scheme.
 - `rate` (Number) Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.
-  - Range: `0`-`4294967295`
 - `unit` (String) Indicates the time unit for the rate limit. The default value is second.
-  - Choices: `second`, `minute`, `hour`, `day`, `week`
-  - Default value: `second`
-  - Not Valid When: `rate`=`0`
 - `use_api_name` (Boolean) Indicates whether to use the API name as part of the rate limit key.
-  - Default value: `false`
-  - Not Valid When: `rate`=`0`
 - `use_app_id` (Boolean) Indicates whether to use the application ID as part of the rate limit key.
-  - Default value: `false`
-  - Not Valid When: `rate`=`0`
 - `use_client_id` (Boolean) Indicates whether to use the client ID as part of the rate limit key.
-  - Default value: `false`
-  - Not Valid When: `rate`=`0`
 - `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
-  - Default value: `1`
-  - Not Valid When: `rate`=`0`
 
 
 <a id="nestedatt--result--parse_settings_reference"></a>
@@ -239,12 +168,8 @@ Read-Only:
 Read-Only:
 
 - `default` (String) Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.
-  - CLI Alias: `default`
-  - Reference to: `datapower_parse_settings:id`
 - `literal` (String) Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.
-  - CLI Alias: `literal`
 - `url` (String) Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.
-  - CLI Alias: `url`
 
 
 <a id="nestedatt--result--routing_prefix"></a>
@@ -253,7 +178,4 @@ Read-Only:
 Read-Only:
 
 - `name` (String) Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>
-  - Required When: `type`=`uri`
 - `type` (String) Specify the type for the routing prefix.
-  - Choices: `uri`, `host`
-  - Default value: `uri`

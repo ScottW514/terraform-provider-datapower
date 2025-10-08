@@ -86,17 +86,11 @@ Optional:
 Read-Only:
 
 - `aud` (Boolean) Audience
-  - Default value: `false`
 - `custom` (Boolean) Custom
-  - Default value: `false`
 - `iat` (Boolean) Issued at
-  - Default value: `false`
 - `jti` (Boolean) JWT ID
-  - Default value: `false`
 - `nbf` (Boolean) Not before
-  - Default value: `false`
 - `nonce` (Boolean) Nonce
-  - Default value: `false`
 
 
 <a id="nestedatt--result--gen_method"></a>
@@ -105,6 +99,4 @@ Read-Only:
 Read-Only:
 
 - `encrypt` (Boolean) Encrypt the JWT
-  - Default value: `false`
 - `sign` (Boolean) Sign the JWT
-  - Default value: `false`

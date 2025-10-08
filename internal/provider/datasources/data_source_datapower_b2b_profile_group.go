@@ -61,7 +61,6 @@ func (d *B2BProfileGroupDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A group of B2B partner profiles that can be enable or disable at the same time. Each partner profile in the group is identified by its name and destination. Without a destination, the configuration uses the first destination for the partner profile.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

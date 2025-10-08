@@ -61,7 +61,6 @@ func (d *AssemblyActionThrowDataSource) Schema(ctx context.Context, req datasour
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The throw assembly action customizes an error. When triggered, the custom error is thrown. Subsequent actions in the assembly are not processed. The custom error, including the error identifier and text, is saved in the API context.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

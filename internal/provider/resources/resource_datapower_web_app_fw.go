@@ -92,8 +92,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"priority": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Control the service scheduling priority. When system resources are in high demand, \"high\" priority services will be favored over lower priority services.", "priority", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
 				},
@@ -110,8 +110,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"remote_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote server.", "remote-port", "").AddIntegerRange(1, 65535).AddDefaultValue("80").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -123,8 +123,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>An XML Manager manages the compilation and caching of stylesheets, the caching of documents, and provides configuration constraints on the size and parsing depth of documents. You can enable streaming operation by configuring an XML Manager to use a Streaming Compile Option Policy.</p><p>Note that an XML Manager can optionally employ a User Agent. The User Agent settings, in turn, can affect the behavior of the gateway when communicating with back end servers or with clients when sending back responses.</p><p>More than one firewall may use the same XML Manager. Select an existing XML Manager from the list to assign the Manager to this firewall. Click the + button to create a new XML Manager that is assigned to this firewall. A default Manager is used if you do not create one.</p>", "xml-manager", "xml_manager").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"error_policy": schema.StringAttribute{
@@ -133,26 +133,26 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"uri_normalization": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If this property is enabled the URI is rewritten to make sure the URI is RFC compliant by escaping certain characters. Additionally, characters that are escaped that do not need to be are unescaped. This makes checking for attack sequences such as .. more reliable.", "uri-normalization", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"rewrite_errors": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Error messages after a decryption action can provide an attacker who is using the padding oracle attack method with enough information to determine the contents of the plain-text data. When enabled, the default, the client receives error messages without the internal information that could lead to a discovery. When disabled, the client receives the original message with this information.", "rewrite-errors", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the DataPower Gateway delays error messages for the defined duration. When disabled, the DataPower Gateway does not delay error messages.", "delay-errors", "").AddDefaultValue("true").AddNotValidWhen(models.WebAppFWDelayErrorsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"delay_errors_duration": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.", "delay-errors-duration", "").AddIntegerRange(250, 300000).AddDefaultValue("1000").AddRequiredWhen(models.WebAppFWDelayErrorsDurationCondVal.String()).AddNotValidWhen(models.WebAppFWDelayErrorsDurationIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(250, 300000),
 					validators.ConditionalRequiredInt64(models.WebAppFWDelayErrorsDurationCondVal, models.WebAppFWDelayErrorsDurationIgnoreVal, true),
@@ -161,8 +161,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"stream_output_to_back": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the desired streaming behavior.", "stream-output-to-back", "").AddStringEnum("buffer-until-verification", "stream-until-infraction").AddDefaultValue("buffer-until-verification").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("buffer-until-verification", "stream-until-infraction"),
 				},
@@ -170,8 +170,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"stream_output_to_front": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the desired streaming behavior.", "stream-output-to-front", "").AddStringEnum("buffer-until-verification", "stream-until-infraction").AddDefaultValue("buffer-until-verification").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("buffer-until-verification", "stream-until-infraction"),
 				},
@@ -179,8 +179,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"front_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the intra-transaction timeout for Web Application Firewall to client connections. This value is the maximum idle time to allow in a transaction on the Web Application Firewall to client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.", "front-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -188,8 +188,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"back_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the intra-transaction timeout for Web Application Firewall to server connections. This value is the maximum idle time to allow in a transaction on the Web Application Firewall to server connection. This timer monitors the idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.", "back-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -197,8 +197,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"front_persistent_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the inter-transaction timeout for Web Application Firewall to client connections. This value is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction on the Web Application Firewall to client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.", "front-persistent-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("180").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
 				},
@@ -206,14 +206,14 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"allow_cache_control_header": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow the HTTP GET method to pass the Cache-Control header through to the back end. If disabled, a \"Cache-Control:no-transform\" header is passed. If enabled, the client request can specify the cache control behavior, or if the client request does not specify the Cache-Control header, a \"Cache-Control:no-transform\" header is passed.", "allow-cache-control", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"back_persistent_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the maximum inter-transaction idle time in seconds for Web Application Firewall to server connections. This value is the maximum idle time between the completion of a TCP transaction and the initiation of a new TCP transaction on this connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.</p><p><b>Note:</b> For HTTP GET and HEAD requests, the service attempts the connection again after the specified value, Therefore, the actual timeout is twice the specified value.</p><p>An idle TCP connection can remain in the idle state for 20 seconds after the expiration of the persistence timer.</p>", "back-persistent-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("180").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
 				},
@@ -221,8 +221,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"front_http_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to be use on client responses. Incoming version 1.0 requests will always be replied to with 1.0 compatible responses regardless of this setting. The default is HTTP 1.1.", "http-front-version", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
 				},
@@ -230,8 +230,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"back_http_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.", "http-back-version", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HTTP/1.0", "HTTP/1.1"),
 				},
@@ -239,44 +239,44 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"request_side_security": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If this property is disabled, no request side security policies will be enforced and all requests will be allowed through.", "request-security", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"response_side_security": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If this property is disabled, no response side security policies will be enforced and all responses will be allowed through.", "response-security", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"do_chunked_upload": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use the radio buttons to enable (on) or disable (off) the ability to send Content-Type Chunked Encoded documents to the back end server. When the device employs the HTTP/1.1 protocol, the body of the document can be delimited by either Content-Length or chunked encodings. While all servers will understand how to interpret Content-Length, many applications will fail to understand Chunked encoding. For this reason, Content-Length is the standard method used. However doing so interferes with the ability of the device to fully stream. To stream full documents towards the back end server, this property should be turned on. However, the back end server must be RFC 2616 compatible, because this feature cannot be renegotiated at run time, unlike all other HTTP/1.1 features which can be negotiated down at runtime if necessary. This property can also be enabled by configuring a User Agent to enable it on a per-URL basis.", "chunked-uploads", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"follow_redirects": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Some protocols generate redirects as part of the protocol - for example HTTP response code 302. If this property is enabled the firewall will try and transparently resolve those redirects.", "follow-redirects", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"http_client_ip_label": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Retain the default value (X-Client-IP) or provide an other value (for example, X-Forwarded-For).", "http-client-ip-label", "").AddDefaultValue("X-Client-IP").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("X-Client-IP"),
 			},
 			"http_log_cor_id_label": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.", "http-global-tranID-label", "").AddDefaultValue("X-Global-Transaction-ID").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("X-Global-Transaction-ID"),
 			},
 			"debug_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>", "debug-mode", "").AddStringEnum("on", "off", "unbounded").AddDefaultValue("off").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("on", "off", "unbounded"),
 				},
@@ -284,8 +284,8 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"debug_history": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the number of records for transaction diagnostics in the probe. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.WebAppFWDebugHistoryCondVal.String()).AddNotValidWhen(models.WebAppFWDebugHistoryIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 250),
 					validators.ConditionalRequiredInt64(models.WebAppFWDebugHistoryCondVal, models.WebAppFWDebugHistoryIgnoreVal, true),
@@ -303,14 +303,14 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"do_host_rewriting": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Some protocols have distinct name based elements, separate from the URL, to de multiplex. HTTP uses the Host header for this purposes. If this feature is enabled the backside server will receive a request reflecting the final route, otherwise it will receive a request reflecting the information as it arrived at the DataPower device. Web servers issuing redirects may want to disable this feature, as they often depend on the host header for the value of their redirect.", "host-rewriting", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("server", "sni"),
 				},

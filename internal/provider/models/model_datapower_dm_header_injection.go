@@ -56,15 +56,15 @@ func GetDmHeaderInjectionDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"direction": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").AddDefaultValue("front").String,
+				MarkdownDescription: "Select the direction of the message.",
 				Computed:            true,
 			},
 			"header_tag": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.", "", "").String,
+				MarkdownDescription: "Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.",
 				Computed:            true,
 			},
 			"header_tag_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header tag.", "", "").String,
+				MarkdownDescription: "Enter the value for the header tag.",
 				Computed:            true,
 			},
 		},

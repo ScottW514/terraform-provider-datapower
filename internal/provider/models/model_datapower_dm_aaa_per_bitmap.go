@@ -68,31 +68,31 @@ func GetDmAAAPERBitmapDataSourceSchema(description string, cliAlias string, refe
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"target_url": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL sent to back end", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "URL sent to back end",
 				Computed:            true,
 			},
 			"original_url": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL sent by client", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "URL sent by client",
 				Computed:            true,
 			},
 			"request_uri": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URI of top level element in message", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "URI of top level element in message",
 				Computed:            true,
 			},
 			"request_opname": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local name of request element", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Local name of request element",
 				Computed:            true,
 			},
 			"http_method": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP operation (GET or POST)", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "HTTP operation (GET or POST)",
 				Computed:            true,
 			},
 			"xpath": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "XPath expression",
 				Computed:            true,
 			},
 			"metadata": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Processing metadata",
 				Computed:            true,
 			},
 		},

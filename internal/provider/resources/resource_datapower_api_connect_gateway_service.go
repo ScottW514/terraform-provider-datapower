@@ -74,8 +74,8 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -84,14 +84,14 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or interface through that API Connect uses to manage the gateway service. The default value is 0.0.0.0.", "local-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port for the gateway service. The default value is 3000. <p><b>Note:</b> The gateway service uses four additional consecutive ports after the local port. Therefore, all five consecutive ports must be clear of conflicts.</p>", "local-port", "").AddDefaultValue("3000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(3000),
 			},
 			"ssl_server": schema.StringAttribute{
@@ -100,14 +100,14 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 			},
 			"api_gateway_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias to accept API requests. The default value is 0.0.0.0. This address is used with its port to create an HTTPS handler.", "api-gw-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"api_gateway_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port for API requests. The default value is 9443. This port is used with its address to create an HTTPS handler.", "api-gw-port", "").AddDefaultValue("9443").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(9443),
 			},
 			"gateway_peering": schema.StringAttribute{
@@ -119,8 +119,8 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 			},
 			"gateway_peering_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.", "gateway-peering-manager", "gateway_peering_manager").AddDefaultValue("default").AddRequiredWhen(models.APIConnectGatewayServiceGatewayPeeringManagerCondVal.String()).AddNotValidWhen(models.APIConnectGatewayServiceGatewayPeeringManagerIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.APIConnectGatewayServiceGatewayPeeringManagerCondVal, models.APIConnectGatewayServiceGatewayPeeringManagerIgnoreVal, true),
 				},
@@ -128,8 +128,8 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 			},
 			"v5compatibility_mode": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>", "v5-compatibility-mode", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_defined_policies": schema.ListAttribute{
@@ -139,8 +139,8 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 			},
 			"v5c_slm_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.", "slm-mode", "").AddStringEnum("autounicast", "unicast", "multicast").AddDefaultValue("autounicast").AddRequiredWhen(models.APIConnectGatewayServiceV5CSlmModeCondVal.String()).AddNotValidWhen(models.APIConnectGatewayServiceV5CSlmModeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("autounicast", "unicast", "multicast"),
 					validators.ConditionalRequiredString(models.APIConnectGatewayServiceV5CSlmModeCondVal, models.APIConnectGatewayServiceV5CSlmModeIgnoreVal, true),
@@ -163,8 +163,8 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 			},
 			"jwt_validation_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT validation mode. This property does not control whether a token is validated. This property controls whether transactions fail when validation fails.", "jwt-validate-mode", "").AddStringEnum("request", "require").AddDefaultValue("request").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("request", "require"),
 				},

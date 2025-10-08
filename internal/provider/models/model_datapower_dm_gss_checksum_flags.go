@@ -59,19 +59,19 @@ func GetDmGssChecksumFlagsDataSourceSchema(description string, cliAlias string, 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"replay": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("REPLAY", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "REPLAY",
 				Computed:            true,
 			},
 			"sequence": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SEQUENCE", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "SEQUENCE",
 				Computed:            true,
 			},
 			"conf": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CONF", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "CONF",
 				Computed:            true,
 			},
 			"integ": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("INTEG", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "INTEG",
 				Computed:            true,
 			},
 		},

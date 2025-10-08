@@ -108,27 +108,27 @@ func GetDmAPIProxyPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmAPIProxyPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.", "", "").String,
+				MarkdownDescription: "Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.",
 				Computed:            true,
 			},
 			"skip": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.",
 				Computed:            true,
 			},
 			"remote_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.", "", "").AddRequiredWhen(DmAPIProxyPolicyRemoteAddressCondVal.String()).AddNotValidWhen(DmAPIProxyPolicyRemoteAddressIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.",
 				Computed:            true,
 			},
 			"remote_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.", "", "").AddIntegerRange(1, 65535).AddRequiredWhen(DmAPIProxyPolicyRemotePortCondVal.String()).AddNotValidWhen(DmAPIProxyPolicyRemotePortIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.",
 				Computed:            true,
 			},
 			"user_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").AddNotValidWhen(DmAPIProxyPolicyUserNameIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the username for authentication.",
 				Computed:            true,
 			},
 			"password": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").AddNotValidWhen(DmAPIProxyPolicyPasswordIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the password alias for authentication.",
 				Computed:            true,
 			},
 		},

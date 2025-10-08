@@ -50,11 +50,11 @@ func GetDmSoapActionPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObj
 	var DmSoapActionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"soap_action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP SOAPAction header.", "", "").String,
+				MarkdownDescription: "Specify the value for the HTTP SOAPAction header.",
 				Computed:            true,
 			},
 		},

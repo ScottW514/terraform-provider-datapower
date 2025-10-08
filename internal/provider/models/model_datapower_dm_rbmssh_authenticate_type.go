@@ -53,11 +53,11 @@ func GetDmRBMSSHAuthenticateTypeDataSourceSchema(description string, cliAlias st
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"certificate": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CA-signed user certificate", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "CA-signed user certificate",
 				Computed:            true,
 			},
 			"password": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Password",
 				Computed:            true,
 			},
 		},

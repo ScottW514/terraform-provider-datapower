@@ -91,8 +91,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"profile_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the profile is for an internal or external partner. The default value is internal.", "profile-type", "").AddStringEnum("internal", "external").AddDefaultValue("internal").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("internal", "external"),
 				},
@@ -129,8 +129,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"response_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Characterize the traffic that originates from <tt>To</tt> partners. For inbound transaction, this is the traffic type that originates from internal partner. For outbound transaction, this is the traffic type that originates from external partner. The default value is Non-XML.", "response-type", "").AddStringEnum("soap", "xml", "unprocessed", "preprocessed").AddDefaultValue("preprocessed").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("soap", "xml", "unprocessed", "preprocessed"),
 				},
@@ -152,14 +152,14 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"inbound_require_signed": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether inbound AS messages must be signed. The default behavior is off.", "require-signed", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileInboundRequireSignedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"inbound_require_encrypted": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether inbound AS messages must be encrypted. The default behavior is off.", "require-encrypted", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileInboundRequireEncryptedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"inbound_decrypt_id_cred": schema.StringAttribute{
@@ -171,8 +171,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"outbound_sign": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to sign outbound messages. The default behavior is off. <ul><li>If enabled, sign outbound messages with the configured identification credentials and algorithm. If the destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>If disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound MDN messages. Regardless of this setting and if a partner requests a signed MDN, the outbound MDN is signed if this partner has a configured identification credentials.</p>", "sign", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileOutboundSignIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"outbound_sign_id_cred": schema.StringAttribute{
@@ -184,8 +184,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"outbound_sign_digest_alg": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Signing digest algorithm", "sign-digest-alg", "").AddStringEnum("sha1", "md5", "sha256", "sha384", "sha512").AddDefaultValue("sha1").AddNotValidWhen(models.B2BProfileOutboundSignDigestAlgIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("sha1", "md5", "sha256", "sha384", "sha512"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileOutboundSignDigestAlgIgnoreVal, true),
@@ -211,8 +211,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"as_allow_duplicate_message": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify when to allow and reprocess duplicate AS inbound messages. The default behavior is never. This option does not apply to MDN.", "as-allow-dup-msg", "").AddStringEnum("never", "always", "on-error").AddDefaultValue("never").AddNotValidWhen(models.B2BProfileASAllowDuplicateMessageIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always", "on-error"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileASAllowDuplicateMessageIgnoreVal, true),
@@ -221,8 +221,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"preserve_filename": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to expose the <tt>Content-Disposition</tt> header of inbound AS messages for file name preservation. According to RFC 2183, the file name information is optional in <tt>Content-Disposition</tt> header. When enabled, the <tt>Content-Disposition</tt> header of the inbound AS message is exposed if the inbound AS message is in S/MIME format. Then, the receiving partner can retrieve the original file name that is contained in the header and transfer the received file to its backend system with the received file name.", "preserve-filename", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfilePreserveFilenameIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_role": schema.StringAttribute{
@@ -250,20 +250,20 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_inbound_send_receipt": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to reply to the MSH with a receipt signal message for the received ebMS messages. The default behavior is off.", "ebms-inbound-send-receipt", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMSInboundSendReceiptIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_inbound_send_signed_receipt": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to reply to the MSH with a signed receipt signal message for the received ebMS3 message. The default behavior is off.", "ebms-inbound-send-signed-receipt", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMSInboundSendSignedReceiptIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_inbound_receipt_reply_pattern": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the pattern to send the receipt signal. The default behavior is response.", "ebms-inbound-receipt-reply-pattern", "").AddStringEnum("Response", "Callback").AddDefaultValue("Response").AddNotValidWhen(models.B2BProfileEBMSInboundReceiptReplyPatternIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("Response", "Callback"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMSInboundReceiptReplyPatternIgnoreVal, true),
@@ -294,14 +294,14 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_inbound_require_signed": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether inbound ebMS2 messages must be signed. The default behavior is off.", "ebms-require-signed", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMSInboundRequireSignedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_inbound_require_encrypted": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether inbound ebMS2 messages must be encrypted. The default behavior is off.", "ebms-require-encrypted", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMSInboundRequireEncryptedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_inbound_decrypt_id_cred": schema.StringAttribute{
@@ -313,8 +313,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_outbound_sign": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to sign outbound messages. The default behavior is disabled. <ul><li>If enabled, signs outbound messages with the configured identification credentials and algorithm. If the configuration of a destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>If disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound acknowledgment messages. Regardless of this setting and if a partner requests a signed acknowledgment, the outbound acknowledgment is signed if this partner has a configured identification credentials.</p>", "ebms-sign", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMSOutboundSignIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_outbound_sign_id_cred": schema.StringAttribute{
@@ -326,8 +326,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_outbound_signature_alg": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm to sign the outbound ebMS2 message. The default value is dsa-sha1, which is recommended by the ebMS specification.", "ebms-signature-alg", "").AddStringEnum("dsa-sha1", "rsa-sha1", "rsa-sha256", "rsa-sha384", "rsa-sha512", "rsa-ripemd160", "rsa-ripemd160-2010", "sha256-rsa-MGF1", "rsa-md5", "ecdsa-sha1", "ecdsa-sha224", "ecdsa-sha256", "ecdsa-sha384", "ecdsa-sha512").AddDefaultValue("dsa-sha1").AddNotValidWhen(models.B2BProfileEBMSOutboundSignatureAlgIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("dsa-sha1", "rsa-sha1", "rsa-sha256", "rsa-sha384", "rsa-sha512", "rsa-ripemd160", "rsa-ripemd160-2010", "sha256-rsa-MGF1", "rsa-md5", "ecdsa-sha1", "ecdsa-sha224", "ecdsa-sha256", "ecdsa-sha384", "ecdsa-sha512"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMSOutboundSignatureAlgIgnoreVal, true),
@@ -336,8 +336,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_outbound_signature_c14n_alg": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm to canonicalize the SOAP Envelope XML and exclude comments before signing outbound ebMS2 message. The default value is c14n, which is recommended by the ebMS specification.", "ebms-signature-c14n-alg", "").AddStringEnum("c14n", "exc-c14n", "c14n-comments", "exc-c14n-comments", "c14n11", "c14n11-comments").AddDefaultValue("c14n").AddNotValidWhen(models.B2BProfileEBMSOutboundSignatureC14NAlgIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("c14n", "exc-c14n", "c14n-comments", "exc-c14n-comments", "c14n11", "c14n11-comments"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMSOutboundSignatureC14NAlgIgnoreVal, true),
@@ -346,8 +346,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_outbound_sign_digest_alg": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm to hash the payload during signing. The default value is sha1. See http://www.w3.org/TR/xmldsig-core/", "ebms-sign-digest-alg", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").AddNotValidWhen(models.B2BProfileEBMSOutboundSignDigestAlgIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMSOutboundSignDigestAlgIgnoreVal, true),
@@ -356,8 +356,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_enable_cpa_binding": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable CPA bindings. When enabled, the CPA, service, and action that are specified by the matched CPA binding are used for the outbound ebMS2 messages instead of the default CPA, service, and action of the external profile. The CPA binding is matched by the internal partner profile.", "ebms-enable-cpa-bindings", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMSEnableCPABindingIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_profile_cpa_bindings": schema.ListNestedAttribute{
@@ -379,14 +379,14 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_start_parameter": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a start parameter for the ebMS2 message. The start parameter identifies the root part of the ebMS message. This setting is disabled by default. If enabled, the start parameter is generated with this value enclosed in angle brackets.", "ebms-start-parameter", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_allow_duplicate_message": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify when to allow and reprocess duplicate ebMS2 inbound messages. The default behavior is never. This option does not apply to acknowledgments.", "ebms-allow-dup-msg", "").AddStringEnum("never", "always", "on-error").AddDefaultValue("never").AddNotValidWhen(models.B2BProfileEBMSAllowDuplicateMessageIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always", "on-error"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMSAllowDuplicateMessageIgnoreVal, true),
@@ -395,8 +395,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"mdn_ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("MDN TLS client type", "mdn-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.B2BProfileMDNSSLClientConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileMDNSSLClientConfigTypeIgnoreVal, true),
@@ -409,8 +409,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_ack_ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Acknowledgment/Error TLS client type", "ebmsack-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.B2BProfileEBMSAckSSLClientConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMSAckSSLClientConfigTypeIgnoreVal, true),
@@ -423,8 +423,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms3_outbound_sign": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to sign outbound messages. The default behavior is off. <ul><li>When enabled, signs outbound messages with the configured identification credentials and algorithm. If the configuration of a destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>When disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound receipt signal messages. Regardless of this setting and whether an external partner requests a signed receipt signal, the outbound receipt signal is signed when this internal partner has a configured identification credentials.</p>", "ebms3-sign", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMS3OutboundSignIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms3_outbound_sign_id_cred": schema.StringAttribute{
@@ -436,8 +436,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms3_outbound_sign_digest_alg": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm to hash the payload during signing. The default value is sha1. See http://www.w3.org/TR/xmldsig-core/", "ebms3-sign-digest-alg", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").AddNotValidWhen(models.B2BProfileEBMS3OutboundSignDigestAlgIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMS3OutboundSignDigestAlgIgnoreVal, true),
@@ -446,8 +446,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms3_outbound_signature_alg": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm to sign outbound ebMS3 messages. The default value is dsa-sha1, which is recommended by the ebMS specification.", "ebms3-signature-alg", "").AddStringEnum("dsa-sha1", "rsa-sha1", "rsa-sha256", "rsa-sha384", "rsa-sha512", "rsa-ripemd160", "rsa-ripemd160-2010", "sha256-rsa-MGF1", "rsa-md5", "ecdsa-sha1", "ecdsa-sha224", "ecdsa-sha256", "ecdsa-sha384", "ecdsa-sha512").AddDefaultValue("rsa-sha1").AddNotValidWhen(models.B2BProfileEBMS3OutboundSignatureAlgIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("dsa-sha1", "rsa-sha1", "rsa-sha256", "rsa-sha384", "rsa-sha512", "rsa-ripemd160", "rsa-ripemd160-2010", "sha256-rsa-MGF1", "rsa-md5", "ecdsa-sha1", "ecdsa-sha224", "ecdsa-sha256", "ecdsa-sha384", "ecdsa-sha512"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMS3OutboundSignatureAlgIgnoreVal, true),
@@ -472,14 +472,14 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms3_inbound_require_signed": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether inbound ebMS3 messages must be signed. The default behavior is off.", "ebms3-require-signed", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMS3InboundRequireSignedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms3_inbound_require_encrypted": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether inbound ebMS3 messages must be encrypted. The default behavior is off.", "ebms3-require-encrypted", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMS3InboundRequireEncryptedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms3_inbound_decrypt_id_cred": schema.StringAttribute{
@@ -491,14 +491,14 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms3_inbound_require_compressed": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether internal partners require compressed inbound ebMS3 messages. The default behavior is not to require compression.", "ebms3-require-compressed", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMS3InboundRequireCompressedIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms3_receipt_ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Receipt/Error TLS client type", "ebms3-receipt-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.B2BProfileEBMS3ReceiptSSLClientConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMS3ReceiptSSLClientConfigTypeIgnoreVal, true),
@@ -514,8 +514,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_notification": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable notification. When enabled, send notifications to the message producer or consumer when there are specific errors. The default behavior is off.", "ebms-notification", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMSNotificationIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_notification_url": schema.StringAttribute{
@@ -527,8 +527,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms_notification_ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Notification TLS client type", "ebms-notification-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.B2BProfileEBMSNotificationSSLClientConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMSNotificationSSLClientConfigTypeIgnoreVal, true),
@@ -544,8 +544,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms3_allow_duplicate_message": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify when to allow and reprocess duplicate ebMS3 inbound messages. The default behavior is never. This option does not apply to the receipt signal messages.", "ebms3-allow-dup-msg", "").AddStringEnum("never", "always", "on-error").AddDefaultValue("never").AddNotValidWhen(models.B2BProfileEBMS3AllowDuplicateMessageIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("never", "always", "on-error"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.B2BProfileEBMS3AllowDuplicateMessageIgnoreVal, true),
@@ -554,8 +554,8 @@ func (r *B2BProfileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ebms3_duplicate_detection_notification": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable duplicate detection notification. When enabled, send notification to the message consumer when a duplicate message is detected. The default behavior is disabled.", "ebms3-duplicate-detection-notification", "").AddDefaultValue("false").AddNotValidWhen(models.B2BProfileEBMS3DuplicateDetectionNotificationIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ebms_message_properties": schema.ListNestedAttribute{

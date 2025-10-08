@@ -85,8 +85,8 @@ func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"measure": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the action that advances the counter. The default is Requests.", "measure", "").AddStringEnum("requests", "responses", "xpath", "errors").AddDefaultValue("requests").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("requests", "responses", "xpath", "errors"),
 				},
@@ -94,8 +94,8 @@ func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"source": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select how monitoring is applied to IP addresses. This setting is meaningful only if an associated traffic definition contains and inclusive or exclusive IP address criterion. The default is All.", "source", "").AddStringEnum("all", "each-ip", "ip-from-header").AddDefaultValue("all").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("all", "each-ip", "ip-from-header"),
 				},
@@ -103,8 +103,8 @@ func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"header": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the HTTP header to read to determine the value of the source IP address.", "header", "").AddDefaultValue("X-Client-IP").AddRequiredWhen(models.CountMonitorHeaderCondVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.CountMonitorHeaderCondVal, validators.Evaluation{}, true),
 				},
@@ -117,8 +117,8 @@ func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"max_source_s": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.", "distinct-sources", "").AddDefaultValue("10000").AddNotValidWhen(models.CountMonitorMaxSourcesIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(10000),
 			},
 			"user_summary": schema.StringAttribute{

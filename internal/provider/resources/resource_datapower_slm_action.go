@@ -87,8 +87,8 @@ func (r *SLMActionResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the administrative sanction to trigger for transactions in excess of the threshold. This action is beyond the generation of a log message.", "type", "").AddStringEnum("log-only", "reject", "shape").AddDefaultValue("log-only").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("log-only", "reject", "shape"),
 				},
@@ -96,8 +96,8 @@ func (r *SLMActionResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"log_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Log priority", "log-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("debug").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
 				},

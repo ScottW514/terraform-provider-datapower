@@ -61,7 +61,6 @@ func (d *HTTPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req da
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An HTTP handler receives HTTP requests that are not over TLS and forwards them to the appropriate DataPower service. HTTP handlers conform to RFC 2616.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

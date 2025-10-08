@@ -1,3 +1,4 @@
+// Copyright © 2025 Scott Wiederhold <s.e.wiederhold@gmail.com>
 // All rights reserved.
 //
 // Licensed under the Mozilla Public License, Version 2.0 (the "License");

@@ -67,31 +67,31 @@ func GetDmConfigSequenceCapabilitiesDataSourceSchema(description string, cliAlia
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"api_connect": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Optimize for API Connect processing", "", "").String,
+				MarkdownDescription: "Optimize for API Connect processing",
 				Computed:            true,
 			},
 			"monitor_persistence": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Monitor changes for persistence", "", "").String,
+				MarkdownDescription: "Monitor changes for persistence",
 				Computed:            true,
 			},
 			"apply_all_objects": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Apply to all objects", "", "").String,
+				MarkdownDescription: "Apply to all objects",
 				Computed:            true,
 			},
 			"mark_external": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Mark objects as external", "", "").String,
+				MarkdownDescription: "Mark objects as external",
 				Computed:            true,
 			},
 			"delete_config": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Delete files after processing", "", "").String,
+				MarkdownDescription: "Delete files after processing",
 				Computed:            true,
 			},
 			"batch": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Batch changes from configuration files", "", "").String,
+				MarkdownDescription: "Batch changes from configuration files",
 				Computed:            true,
 			},
 			"git_ops_mode": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Process in GitOps mode", "", "").String,
+				MarkdownDescription: "Process in GitOps mode",
 				Computed:            true,
 			},
 		},

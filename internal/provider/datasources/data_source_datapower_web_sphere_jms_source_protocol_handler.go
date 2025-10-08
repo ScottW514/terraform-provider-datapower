@@ -61,7 +61,6 @@ func (d *WebSphereJMSSourceProtocolHandlerDataSource) Schema(ctx context.Context
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Configure the WebSphere JMS handler to manage WebSphere JMS protocol communications.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

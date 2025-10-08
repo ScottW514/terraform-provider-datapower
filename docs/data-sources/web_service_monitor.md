@@ -76,18 +76,7 @@ Optional:
 Read-Only:
 
 - `action` (String) Specify the action to take when the threshold is reached.
-  - CLI Alias: `action`
-  - Choices: `log`, `throttle`
 - `operation` (String) Specify the name of the operation to monitor. The operation is defined in the WSDL file. The current implementation is to monitor all operations in the WSDL file.
-  - CLI Alias: `operation`
-  - Choices: `all`
-  - Default value: `all`
 - `severity` (String) Specify the action threshold with its value. For example, you can define low and high thresholds as transactions rates increase. If the low threshold is 100 transactions/second and that limit is reached, some action is taken. Then, if the high threshold is 300 transactions/second and that limit is reached, another action is taken.
-  - CLI Alias: `severity`
-  - Choices: `low`, `high`
 - `target` (String) Specify the target activity to monitor. Define the operation for each monitored activity.
-  - CLI Alias: `target`
-  - Choices: `front`, `rate`
 - `threshold` (Number) Specify the threshold value in TPS to trigger the action.
-  - CLI Alias: `threshold`
-  - Default value: `0`

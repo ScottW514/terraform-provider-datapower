@@ -1443,280 +1443,280 @@ func GetDmB2BDestinationDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmB2BDestinationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"dest_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name to identify this destination in the profile.", "name", "").String,
+				MarkdownDescription: "Specify the name to identify this destination in the profile.",
 				Computed:            true,
 			},
 			"dest_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL for the destination. The URL is parsed to determine the protocol. For load distribution, specify the name of the load balancer instead of the address-port pair. <ul><li>If the URL starts with as1:// or dpsmtp://, the service uses the ESMTP protocol. These protocols require an SMTP server connection and email address. Specify the URL in one of the following formats. <ul><li><tt>as1://mailExchange[:port][/queryParameters]</tt></li><li><tt>dpsmtp://mailExchange[:port][/queryParameters]</tt></li></ul></li><li>If the URL starts with as2://, ebms2://, ebms3://, or http://, the service uses the HTTP protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If the URL starts with as2s://, ebms2s://, ebms3s://, or https://, the service uses the HTTPS protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If the URL starts with as3:// or ftp://, the service uses the FTP protocol. <ul><li>For an absolute path to the root directory, specify the URL in the <tt>ftp://user:password@host/%2Fpath</tt> format. %2F is the URL encoding of a forward slash.</li><li>For a relative path to the login directory of the user, specify the URL in the <tt>ftp://user:password@host:port/path</tt> format.</li></ul></li><li>If the URL starts with sftp://, the service uses the SSH FTP protocol. <ul><li>For an absolute path to the root directory, specify the URL in the <tt>sftp://host:port/path</tt> format.</li><li>For a relative path to the login directory of the user, specify the URL in the <tt>sftp://host:port/~/path</tt> format.</li></ul></li><li>If the URL starts with dpnfs://, the service uses the NFS protocol. <ul><li>For static mounts, specify the URL in the <tt>dpnfs://MountName</tt> format, where <tt>MountName</tt> is the name of an NFS mount.</li><li>For dynamic mounts, specify the URL in the <tt>dpnfs://host</tt> or <tt>dpnfs://host/path</tt> format.</li></ul></li><li>If the URL starts with dpims:// or dpimsssl://, the service uses the IMS protocol. Specify the URL in one of the following formats. <ul><li><tt>dpims://ConnectObject/?parameters</tt></li><li><tt>dpimsssl://ConnectObject/?parameters</tt></li></ul></li><li>If the URL starts with dpmq://, the service uses the IBM MQ protocol. The queue manager must exist in current domain. <ul><li>To send a message, specify the URL in the <tt>dpmq://QueueManager/URI?RequestQueue=requestQueue;queryParameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dpmq://QueueManager/URI?ReplyQueue=replyQueue;queryParameters</tt> format.</li></ul><p>If the URL starts with mq://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dpmqfte://, the service uses the IBM MQ FTE protocol. The queue manager must exist in current domain. <ul><li>To send a message, specify the URL in the <tt>dpmqfte://QueueManager/?RequestQueue=request_queue_name;queryParameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dpmqfte://QueueManager/?ReplyQueue=reply_queue_name;queryParameters</tt> format.</li></ul><p>If the URL starts with mqfte://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dptibems://, the service uses the TIBCO EMS protocol. The server must exist. <ul><li>To send a message, specify the URL in the <tt>dptibems://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dptibems://Server/?ReplyQueue=queue;query-parameters</tt> format.</li></ul><p>If the URL starts with tibems://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dpwasjms://, the service uses the WebSphere JMS protocol. The server must exist. <ul><li>To send a message to a request queue, specify the URL in the <tt>dpwasjms://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt> format.</li><li>To send a message to a request topic space, specify the URL in the <tt>dpwasjms://Server/?RequestTopicSpace=topic-space;RequestReply=queue;query-parameters</tt> format.</li><li>To retrieve a message from a reply queue, specify the URL in the <tt>dpwasjms://Server/?ReplyQueue=queue;query-parameters</tt> format.</li><li>To retrieve a message from a reply topic space, specify the URL in the <tt>dpwasjms://Server/?ReplyTopicSpace=topic-space;query-parameters</tt> format.</li></ul></li></ul>", "dest-url", "").String,
+				MarkdownDescription: "Specify the URL for the destination. The URL is parsed to determine the protocol. For load distribution, specify the name of the load balancer instead of the address-port pair. <ul><li>If the URL starts with as1:// or dpsmtp://, the service uses the ESMTP protocol. These protocols require an SMTP server connection and email address. Specify the URL in one of the following formats. <ul><li><tt>as1://mailExchange[:port][/queryParameters]</tt></li><li><tt>dpsmtp://mailExchange[:port][/queryParameters]</tt></li></ul></li><li>If the URL starts with as2://, ebms2://, ebms3://, or http://, the service uses the HTTP protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If the URL starts with as2s://, ebms2s://, ebms3s://, or https://, the service uses the HTTPS protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If the URL starts with as3:// or ftp://, the service uses the FTP protocol. <ul><li>For an absolute path to the root directory, specify the URL in the <tt>ftp://user:password@host/%2Fpath</tt> format. %2F is the URL encoding of a forward slash.</li><li>For a relative path to the login directory of the user, specify the URL in the <tt>ftp://user:password@host:port/path</tt> format.</li></ul></li><li>If the URL starts with sftp://, the service uses the SSH FTP protocol. <ul><li>For an absolute path to the root directory, specify the URL in the <tt>sftp://host:port/path</tt> format.</li><li>For a relative path to the login directory of the user, specify the URL in the <tt>sftp://host:port/~/path</tt> format.</li></ul></li><li>If the URL starts with dpnfs://, the service uses the NFS protocol. <ul><li>For static mounts, specify the URL in the <tt>dpnfs://MountName</tt> format, where <tt>MountName</tt> is the name of an NFS mount.</li><li>For dynamic mounts, specify the URL in the <tt>dpnfs://host</tt> or <tt>dpnfs://host/path</tt> format.</li></ul></li><li>If the URL starts with dpims:// or dpimsssl://, the service uses the IMS protocol. Specify the URL in one of the following formats. <ul><li><tt>dpims://ConnectObject/?parameters</tt></li><li><tt>dpimsssl://ConnectObject/?parameters</tt></li></ul></li><li>If the URL starts with dpmq://, the service uses the IBM MQ protocol. The queue manager must exist in current domain. <ul><li>To send a message, specify the URL in the <tt>dpmq://QueueManager/URI?RequestQueue=requestQueue;queryParameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dpmq://QueueManager/URI?ReplyQueue=replyQueue;queryParameters</tt> format.</li></ul><p>If the URL starts with mq://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dpmqfte://, the service uses the IBM MQ FTE protocol. The queue manager must exist in current domain. <ul><li>To send a message, specify the URL in the <tt>dpmqfte://QueueManager/?RequestQueue=request_queue_name;queryParameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dpmqfte://QueueManager/?ReplyQueue=reply_queue_name;queryParameters</tt> format.</li></ul><p>If the URL starts with mqfte://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dptibems://, the service uses the TIBCO EMS protocol. The server must exist. <ul><li>To send a message, specify the URL in the <tt>dptibems://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dptibems://Server/?ReplyQueue=queue;query-parameters</tt> format.</li></ul><p>If the URL starts with tibems://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dpwasjms://, the service uses the WebSphere JMS protocol. The server must exist. <ul><li>To send a message to a request queue, specify the URL in the <tt>dpwasjms://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt> format.</li><li>To send a message to a request topic space, specify the URL in the <tt>dpwasjms://Server/?RequestTopicSpace=topic-space;RequestReply=queue;query-parameters</tt> format.</li><li>To retrieve a message from a reply queue, specify the URL in the <tt>dpwasjms://Server/?ReplyQueue=queue;query-parameters</tt> format.</li><li>To retrieve a message from a reply topic space, specify the URL in the <tt>dpwasjms://Server/?ReplyTopicSpace=topic-space;query-parameters</tt> format.</li></ul></li></ul>",
 				Computed:            true,
 			},
 			"enabled_doc_type": GetDmB2BEnabledDocTypeDataSourceSchema("Specify the document types to support.", "enabled-doc-type", ""),
 			"smtp_server_connection": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SMTP server connection to send email messages. By default, the gateway uses the default SMTP server connection.", "smtp-server-connection", "smtp_server_connection").AddDefaultValue("default").AddRequiredWhen(DmB2BDestinationSMTPServerConnectionCondVal.String()).AddNotValidWhen(DmB2BDestinationSMTPServerConnectionIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the SMTP server connection to send email messages. By default, the gateway uses the default SMTP server connection.",
 				Computed:            true,
 			},
 			"email_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination email address for messages sent to this partner.", "email-address", "").AddRequiredWhen(DmB2BDestinationEmailAddressCondVal.String()).AddNotValidWhen(DmB2BDestinationEmailAddressIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the destination email address for messages sent to this partner.",
 				Computed:            true,
 			},
 			"ssh_client_connection": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SSH profile for SSH client connections and authentication.", "ssh-client-connection", "ssh_client_profile").AddRequiredWhen(DmB2BDestinationSSHClientConnectionCondVal.String()).AddNotValidWhen(DmB2BDestinationSSHClientConnectionIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the SSH profile for SSH client connections and authentication.",
 				Computed:            true,
 			},
 			"use_unique_filenames": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to generate a unique file name for puts to a remote directory.", "use-unique-filenames", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationUseUniqueFilenamesIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to generate a unique file name for puts to a remote directory.",
 				Computed:            true,
 			},
 			"override_timeout": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration to maintain an idle connection in seconds. Enter a value in the range 3 - 7200. The default value is 300.", "timeout", "").AddIntegerRange(3, 7200).AddDefaultValue("300").AddNotValidWhen(DmB2BDestinationOverrideTimeoutIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the duration to maintain an idle connection in seconds. Enter a value in the range 3 - 7200. The default value is 300.",
 				Computed:            true,
 			},
 			"enable_ftp_settings": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to override the FTP client policy. This policy is defined in user agent of the XML manager for the B2B gateway. <ul><li>When enabled, define the overrides with the advanced AS3 or FTP settings.</li><li>When disabled, uses the original FTP client policy.</li></ul>", "enable-ftp-settings", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEnableFTPSettingsIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to override the FTP client policy. This policy is defined in user agent of the XML manager for the B2B gateway. <ul><li>When enabled, define the overrides with the advanced AS3 or FTP settings.</li><li>When disabled, uses the original FTP client policy.</li></ul>",
 				Computed:            true,
 			},
 			"user_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username to override in the basic authentication policy of the user agent.", "username", "").AddNotValidWhen(DmB2BDestinationUserNameIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the username to override in the basic authentication policy of the user agent.",
 				Computed:            true,
 			},
 			"password_alias": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to override in the basic authentication policy of the user agent.", "password-alias", "password_alias").AddNotValidWhen(DmB2BDestinationPasswordAliasIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the password alias to override in the basic authentication policy of the user agent.",
 				Computed:            true,
 			},
 			"ebms_mpc_auth_method": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.", "embs-mpc-auth-method", "").AddStringEnum("username-token", "cert").AddDefaultValue("username-token").AddNotValidWhen(DmB2BDestinationEBMSMPCAuthMethodIgnoreVal.String()).String,
+				MarkdownDescription: "Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.",
 				Computed:            true,
 			},
 			"user_name_token": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("For ebMS3, the WS-Security UsernameToken authorizes received messages. Enter the username for the wsse:UsernameToken element to package in the SOAP header of the message to send. <ul><li>For one-way push exchange pattern, specify the username token to package in messages to send.</li><li>For one-way pull exchange pattern outbound messages, when the MPC authentication method is username token, specify the username to store messages in the MPC.</li><li>For one-way pull exchange pattern inbound messages, specify the username token to package in pull requests.</li></ul>", "username-token", "").AddNotValidWhen(DmB2BDestinationUserNameTokenIgnoreVal.String()).String,
+				MarkdownDescription: "For ebMS3, the WS-Security UsernameToken authorizes received messages. Enter the username for the wsse:UsernameToken element to package in the SOAP header of the message to send. <ul><li>For one-way push exchange pattern, specify the username token to package in messages to send.</li><li>For one-way pull exchange pattern outbound messages, when the MPC authentication method is username token, specify the username to store messages in the MPC.</li><li>For one-way pull exchange pattern inbound messages, specify the username token to package in pull requests.</li></ul>",
 				Computed:            true,
 			},
 			"user_name_token_password_alias": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the username for the wsse:UsernameToken element.", "username-token-password-alias", "password_alias").AddNotValidWhen(DmB2BDestinationUserNameTokenPasswordAliasIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the password alias of the username for the wsse:UsernameToken element.",
 				Computed:            true,
 			},
 			"ebms_mpc_verify_val_cred": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.", "ebms-mpc-verify-valcred", "crypto_val_cred").AddNotValidWhen(DmB2BDestinationEBMSMPCVerifyValCredIgnoreVal.String()).String,
+				MarkdownDescription: "When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.",
 				Computed:            true,
 			},
 			"passive": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of FTP passive mode with the FTP <tt>PASV</tt> command.", "ftp-passive", "").AddStringEnum("pasv-off", "pasv-opt", "pasv-req").AddDefaultValue("pasv-req").AddNotValidWhen(DmB2BDestinationPassiveIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the use of FTP passive mode with the FTP <tt>PASV</tt> command.",
 				Computed:            true,
 			},
 			"auth_tls": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of TLS to secure connections with the FTP <tt>AUTH TLS</tt> command.", "ftp-auth-tls", "").AddStringEnum("auth-off", "auth-tls-opt", "auth-tls-req", "auth-tls-imp").AddDefaultValue("auth-off").AddNotValidWhen(DmB2BDestinationAuthTLSIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the use of TLS to secure connections with the FTP <tt>AUTH TLS</tt> command.",
 				Computed:            true,
 			},
 			"use_ccc": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of command encryption after authentication with the FTP <tt>CCC</tt> command.", "ftp-use-ccc", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").AddNotValidWhen(DmB2BDestinationUseCCCIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the use of command encryption after authentication with the FTP <tt>CCC</tt> command.",
 				Computed:            true,
 			},
 			"encrypt_data": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the encryption of file transfers with the FTP <tt>PROT P</tt> command.", "ftp-encrypt-data", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").AddNotValidWhen(DmB2BDestinationEncryptDataIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the encryption of file transfers with the FTP <tt>PROT P</tt> command.",
 				Computed:            true,
 			},
 			"data_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of file transfers.", "ftp-data-type", "").AddStringEnum("ascii", "binary").AddDefaultValue("binary").AddNotValidWhen(DmB2BDestinationDataTypeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the data type of file transfers.",
 				Computed:            true,
 			},
 			"slash_stou": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage unique files when the name contains a trailing slash with either the FTP <tt>STOU</tt> or <tt>STOR</tt> command. Some FTP servers do not support the <tt>STOU</tt> command.", "ftp-slash-stou", "").AddStringEnum("slash-stou-off", "slash-stou-on").AddDefaultValue("slash-stou-on").AddNotValidWhen(DmB2BDestinationSlashSTOUIgnoreVal.String()).String,
+				MarkdownDescription: "Specify how to manage unique files when the name contains a trailing slash with either the FTP <tt>STOU</tt> or <tt>STOR</tt> command. Some FTP servers do not support the <tt>STOU</tt> command.",
 				Computed:            true,
 			},
 			"quoted_commands": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the FTP quoted commands list that defines the command to send to the FTP server. before each <tt>STOU</tt> , <tt>STOR</tt> , or <tt>RETR</tt> command. The commands in the list cannot be data-transfer related commands.", "ftp-quoted-commands", "ftp_quote_commands").AddNotValidWhen(DmB2BDestinationQuotedCommandsIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the FTP quoted commands list that defines the command to send to the FTP server. before each <tt>STOU</tt> , <tt>STOR</tt> , or <tt>RETR</tt> command. The commands in the list cannot be data-transfer related commands.",
 				Computed:            true,
 			},
 			"size_check": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check the size of file after transfer with the FTP <tt>SIZE</tt> command. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate responses for files transferred in ASCII mode. If you get such errors, disable this feature or reconfigure vsftpd.", "ftp-size-check", "").AddStringEnum("size-check-optional", "size-check-disabled").AddDefaultValue("size-check-optional").AddNotValidWhen(DmB2BDestinationSizeCheckIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to check the size of file after transfer with the FTP <tt>SIZE</tt> command. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate responses for files transferred in ASCII mode. If you get such errors, disable this feature or reconfigure vsftpd.",
 				Computed:            true,
 			},
 			"binary_transfer_mode": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to transfer the message payload in binary mode.", "binary-transfer-mode", "").AddStringEnum("auto-detect", "enforce").AddDefaultValue("auto-detect").AddNotValidWhen(DmB2BDestinationBinaryTransferModeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to transfer the message payload in binary mode.",
 				Computed:            true,
 			},
 			"as_compress": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to compress the body of outbound AS messages. The default behavior is disabled.", "as-compress", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationASCompressIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to compress the body of outbound AS messages. The default behavior is disabled.",
 				Computed:            true,
 			},
 			"as_compress_before_sign": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to compress the body of outbound AS messages before signing. The default behavior is disabled. <ul><li>If enabled, compress the message body before signing.</li><li>If disabled, sign the message before compressing the message body.</li></ul>", "as-compress-before-sign", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationASCompressBeforeSignIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to compress the body of outbound AS messages before signing. The default behavior is disabled. <ul><li>If enabled, compress the message body before signing.</li><li>If disabled, sign the message before compressing the message body.</li></ul>",
 				Computed:            true,
 			},
 			"as_send_unsigned": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages when the sender has signing credentials.</li></ul>", "as-send-unsigned", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationASSendUnsignedIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages when the sender has signing credentials.</li></ul>",
 				Computed:            true,
 			},
 			"as_encrypt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to encrypt the body of outgoing AS messages. The default behavior is disabled.", "as-encrypt", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationASEncryptIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to encrypt the body of outgoing AS messages. The default behavior is disabled.",
 				Computed:            true,
 			},
 			"as_encrypt_cert": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate to encrypt outbound AS messages. Use the name of a certificate.", "as-encrypt-cert", "crypto_certificate").AddRequiredWhen(DmB2BDestinationASEncryptCertCondVal.String()).AddNotValidWhen(DmB2BDestinationASEncryptCertIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the certificate to encrypt outbound AS messages. Use the name of a certificate.",
 				Computed:            true,
 			},
 			"as_mdn_request": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request an MDN for outbound AS messages. The default behavior is disabled.", "as-mdn-request", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationASMDNRequestIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to request an MDN for outbound AS messages. The default behavior is disabled.",
 				Computed:            true,
 			},
 			"as_mdn_request_async": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the MDN request for outbound AS messages is asynchronous. The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If disabled, the MDN request is synchronous</li></ul>", "as-mdn-request-async", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationASMDNRequestAsyncIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether the MDN request for outbound AS messages is asynchronous. The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If disabled, the MDN request is synchronous</li></ul>",
 				Computed:            true,
 			},
 			"as1_mdn_redirect_email": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection email address for the MDN to outbound AS1 messages. The partner that receives the outbound AS1 message sends the MDN to this email address. When blank, the redirection email in the <tt>From</tt> address of the outgoing message (the default email address of the sending internal partner).", "as1-mdn-email", "").AddNotValidWhen(DmB2BDestinationAS1MDNRedirectEmailIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the redirection email address for the MDN to outbound AS1 messages. The partner that receives the outbound AS1 message sends the MDN to this email address. When blank, the redirection email in the <tt>From</tt> address of the outgoing message (the default email address of the sending internal partner).",
 				Computed:            true,
 			},
 			"as2_mdn_redirect_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection URL for the MDN to outbound AS2 messages.", "as2-mdn-url", "").AddNotValidWhen(DmB2BDestinationAS2MDNRedirectURLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the redirection URL for the MDN to outbound AS2 messages.",
 				Computed:            true,
 			},
 			"as3_mdn_redirect_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the redirection URL for the MDN to outbound AS3 messages.", "as3-mdn-url", "").AddNotValidWhen(DmB2BDestinationAS3MDNRedirectURLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the redirection URL for the MDN to outbound AS3 messages.",
 				Computed:            true,
 			},
 			"as_mdn_request_signed": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request a signed MDN instead of an unsigned one. The default behavior is an unsigned one.", "as-mdn-request-signed", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationASMDNRequestSignedIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to request a signed MDN instead of an unsigned one. The default behavior is an unsigned one.",
 				Computed:            true,
 			},
 			"retransmit": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retransmit messages. The default behavior is off.", "retransmit", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationRetransmitIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to retransmit messages. The default behavior is off.",
 				Computed:            true,
 			},
 			"ack_time": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for the acknowledgment before a message is retransmitted. Enter a value in the range 1 - 3600. The default value is 1800.", "ack-time", "").AddIntegerRange(1, 3600).AddDefaultValue("1800").AddNotValidWhen(DmB2BDestinationACKTimeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the duration in seconds to wait for the acknowledgment before a message is retransmitted. Enter a value in the range 1 - 3600. The default value is 1800.",
 				Computed:            true,
 			},
 			"max_resends": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of attempts to retransmit a message. Enter a value in the range 1 - 30. The default value is 3.", "max-resends", "").AddIntegerRange(1, 30).AddDefaultValue("3").AddNotValidWhen(DmB2BDestinationMaxResendsIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the number of attempts to retransmit a message. Enter a value in the range 1 - 30. The default value is 3.",
 				Computed:            true,
 			},
 			"as_encrypt_alg": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symmetric encryption algorithm to encrypt outbound AS messages.", "as-encrypt-alg", "").AddStringEnum("3des", "des", "rc2-128", "rc2-64", "rc2-40", "aes-128", "aes-192", "aes-256").AddDefaultValue("3des").AddNotValidWhen(DmB2BDestinationASEncryptAlgIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the symmetric encryption algorithm to encrypt outbound AS messages.",
 				Computed:            true,
 			},
 			"as_mdn_request_signed_algs": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .", "as-mdn-request-signed-algs", "").AddDefaultValue("sha1,md5").AddNotValidWhen(DmB2BDestinationASMDNRequestSignedAlgsIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .",
 				Computed:            true,
 			},
 			"ebms_cpa_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA ID in the message that is sent to the destination partner. You can use the value to identify the sender and the recipient. This value is used when the B2B gateway is not CPA-enforced.", "ebms-cpa-id", "").AddNotValidWhen(DmB2BDestinationEBMSCpaIdIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the CPA ID in the message that is sent to the destination partner. You can use the value to identify the sender and the recipient. This value is used when the B2B gateway is not CPA-enforced.",
 				Computed:            true,
 			},
 			"ebms_service": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of service element in outbound ebMS2 request that acts on the message. For example, <tt>urn:services:SupplierOrderProcessing</tt> . This value is used when the B2B gateway is not CPA-enforced. The value can be a string or a URI. If a non-URI string is specified, you must specify the value of <b>Service Type</b>.", "ebms-service", "").AddNotValidWhen(DmB2BDestinationEBMSServiceIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the value of service element in outbound ebMS2 request that acts on the message. For example, <tt>urn:services:SupplierOrderProcessing</tt> . This value is used when the B2B gateway is not CPA-enforced. The value can be a string or a URI. If a non-URI string is specified, you must specify the value of <b>Service Type</b>.",
 				Computed:            true,
 			},
 			"ebms_service_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the type attribute in the ebMS SOAP message. When blank, ensure that the service value is a URI.", "ebms-service-type", "").AddNotValidWhen(DmB2BDestinationEBMSServiceTypeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the value of the type attribute in the ebMS SOAP message. When blank, ensure that the service value is a URI.",
 				Computed:            true,
 			},
 			"ebms_action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of action element in outbound ebMS2 request. For example, <tt>NewPurchaseOrder</tt> . This value is used when the B2B gateway is not CPA-enforced.", "ebms-action", "").AddNotValidWhen(DmB2BDestinationEBMSActionIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the value of action element in outbound ebMS2 request. For example, <tt>NewPurchaseOrder</tt> . This value is used when the B2B gateway is not CPA-enforced.",
 				Computed:            true,
 			},
 			"ebms_send_unsigned": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Controls whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages only if the sender has signing credentials.</li></ul>", "ebms-send-unsigned", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSSendUnsignedIgnoreVal.String()).String,
+				MarkdownDescription: "Controls whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages only if the sender has signing credentials.</li></ul>",
 				Computed:            true,
 			},
 			"ebms_encrypt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to encrypt the body of outgoing ebMS messages.", "ebms-encrypt", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSEncryptIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to encrypt the body of outgoing ebMS messages.",
 				Computed:            true,
 			},
 			"ebms_encrypt_cert": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate to encrypt outbound messages.", "ebms-encrypt-cert", "crypto_certificate").AddRequiredWhen(DmB2BDestinationEBMSEncryptCertCondVal.String()).AddNotValidWhen(DmB2BDestinationEBMSEncryptCertIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the certificate to encrypt outbound messages.",
 				Computed:            true,
 			},
 			"ebms_encrypt_alg": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the encryption algorithm to encrypt outbound ebMS2 messages.", "ebms-encrypt-alg", "").AddStringEnum("http://www.w3.org/2001/04/xmlenc#tripledes-cbc", "http://www.w3.org/2001/04/xmlenc#aes128-cbc", "http://www.w3.org/2001/04/xmlenc#aes192-cbc", "http://www.w3.org/2001/04/xmlenc#aes256-cbc", "http://www.w3.org/2009/xmlenc11#aes128-gcm", "http://www.w3.org/2009/xmlenc11#aes192-gcm", "http://www.w3.org/2009/xmlenc11#aes256-gcm").AddDefaultValue("http://www.w3.org/2001/04/xmlenc#tripledes-cbc").AddNotValidWhen(DmB2BDestinationEBMSEncryptAlgIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the encryption algorithm to encrypt outbound ebMS2 messages.",
 				Computed:            true,
 			},
 			"ebms_key_encrypt_alg": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the ebMS3 asymmetric key transport algorithm to encrypt outbound ebMS3 messages. By default, encrypts with RSA Version 1.5.", "ebms-key-encrypt-alg", "").AddStringEnum("http://www.w3.org/2001/04/xmlenc#rsa-1_5", "http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p", "http://www.w3.org/2009/xmlenc11#rsa-oaep").AddDefaultValue("http://www.w3.org/2001/04/xmlenc#rsa-1_5").AddNotValidWhen(DmB2BDestinationEBMSKeyEncryptAlgIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the ebMS3 asymmetric key transport algorithm to encrypt outbound ebMS3 messages. By default, encrypts with RSA Version 1.5.",
 				Computed:            true,
 			},
 			"ebms_duplicate_elimination_request": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request that the receiving partner checks for duplicates of outbound messages. If enabled, the receiving business partner should ignore duplicate message received. The default behavior is on.", "ebms-duplicate-elimination-request", "").AddDefaultValue("true").AddNotValidWhen(DmB2BDestinationEBMSDuplicateEliminationRequestIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to request that the receiving partner checks for duplicates of outbound messages. If enabled, the receiving business partner should ignore duplicate message received. The default behavior is on.",
 				Computed:            true,
 			},
 			"ebms_ack_request": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request an acknowledgment for outbound ebMS2 messages. The default behavior is off.", "ebms-ack-request", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSAckRequestIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to request an acknowledgment for outbound ebMS2 messages. The default behavior is off.",
 				Computed:            true,
 			},
 			"ebms_ack_request_signed": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request a signed acknowledgment. The default behavior is off.", "ebms-ack-request-signed", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSAckRequestSignedIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to request a signed acknowledgment. The default behavior is off.",
 				Computed:            true,
 			},
 			"ebms_sync_reply_mode": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the response/acknowledgment is synchronous or asynchronous. The syncReplyMode parameter indicates to the receiving partner whether to return the business response or acknowledgment in the same connection. None means asynchronous.", "ebms-syncreply-mode", "").AddStringEnum("mshSignalsOnly", "none").AddDefaultValue("none").AddNotValidWhen(DmB2BDestinationEBMSSyncReplyModeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether the response/acknowledgment is synchronous or asynchronous. The syncReplyMode parameter indicates to the receiving partner whether to return the business response or acknowledgment in the same connection. None means asynchronous.",
 				Computed:            true,
 			},
 			"ebms_retry": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retransmit unacknowledged outbound messages. The default behavior is off.", "ebms-retry", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSRetryIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to retransmit unacknowledged outbound messages. The default behavior is off.",
 				Computed:            true,
 			},
 			"ebms_max_retries": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of retransmit attempts. Enter a value in the range 1 - 30. The default value is 3.", "ebms-max-retries", "").AddIntegerRange(1, 30).AddDefaultValue("3").AddNotValidWhen(DmB2BDestinationEBMSMaxRetriesIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the number of retransmit attempts. Enter a value in the range 1 - 30. The default value is 3.",
 				Computed:            true,
 			},
 			"ebms_retry_interval": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between retry attempts. Enter a value in the range 1 - 3600. This default value is 1800.", "ebms-retry-interval", "").AddIntegerRange(1, 3600).AddDefaultValue("1800").AddNotValidWhen(DmB2BDestinationEBMSRetryIntervalIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the interval in seconds between retry attempts. Enter a value in the range 1 - 3600. This default value is 1800.",
 				Computed:            true,
 			},
 			"ebms_include_time_to_live": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the sending partner includes the <tt>TimeToLive</tt> element in the outbound ebMS2 message header. The <tt>TimeToLive</tt> element indicates when the message expires. <ul><li>If the receiving partner receives the message before it expires, the receiving partner accepts the message.</li><li>If the receiving partner receives the message after it expires, the receiving partner rejects the message.</li></ul>", "ebms-include-time-to-live", "").AddDefaultValue("true").AddNotValidWhen(DmB2BDestinationEBMSIncludeTimeToLiveIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether the sending partner includes the <tt>TimeToLive</tt> element in the outbound ebMS2 message header. The <tt>TimeToLive</tt> element indicates when the message expires. <ul><li>If the receiving partner receives the message before it expires, the receiving partner accepts the message.</li><li>If the receiving partner receives the message after it expires, the receiving partner rejects the message.</li></ul>",
 				Computed:            true,
 			},
 			"ssl_client_config_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile type to secure connections with targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(DmB2BDestinationSSLClientConfigTypeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the type of TLS profile type to secure connections with targets.",
 				Computed:            true,
 			},
 			"ssl_client": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets.", "ssl-client", "ssl_client_profile").AddRequiredWhen(DmB2BDestinationSSLClientCondVal.String()).AddNotValidWhen(DmB2BDestinationSSLClientIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the TLS client profile to secure connections with targets.",
 				Computed:            true,
 			},
 			"ebms_message_exchange_pattern": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the message exchange pattern (MEP) to use. The MEP defines how a business partner exchanges messages with another business partner. The default value is one-way push.", "ebms-mep", "").AddStringEnum("one-way-push", "one-way-pull").AddDefaultValue("one-way-push").AddRequiredWhen(DmB2BDestinationEBMSMessageExchangePatternCondVal.String()).AddNotValidWhen(DmB2BDestinationEBMSMessageExchangePatternIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the message exchange pattern (MEP) to use. The MEP defines how a business partner exchanges messages with another business partner. The default value is one-way push.",
 				Computed:            true,
 			},
 			"ebms_message_partition_channel": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When the MEP is one-way pull, specify the message partition channel (MPC) to pull messages. In the one-way pull mode, a message remains in MPC storage until the B2B gateway receives an authenticated and authorized pull request.", "ebms-mpc", "").AddNotValidWhen(DmB2BDestinationEBMSMessagePartitionChannelIgnoreVal.String()).String,
+				MarkdownDescription: "When the MEP is one-way pull, specify the message partition channel (MPC) to pull messages. In the one-way pull mode, a message remains in MPC storage until the B2B gateway receives an authenticated and authorized pull request.",
 				Computed:            true,
 			},
 			"ebms_agreement_ref": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the reference to the agreement that governs this message exchange. This value maps to <tt>eb:AgreementRef</tt> in the message header.", "ebms-agreementref", "").AddNotValidWhen(DmB2BDestinationEBMSAgreementRefIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the reference to the agreement that governs this message exchange. This value maps to <tt>eb:AgreementRef</tt> in the message header.",
 				Computed:            true,
 			},
 			"ebms_p_mode": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.", "ebms-pmode", "").AddNotValidWhen(DmB2BDestinationEBMSPModeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.",
 				Computed:            true,
 			},
 			"ebms_outbound_request_receipt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request a receipt signal for a sent ebMS3 message. The default behavior is off.", "ebms-outbound-request-receipt", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSOutboundRequestReceiptIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to request a receipt signal for a sent ebMS3 message. The default behavior is off.",
 				Computed:            true,
 			},
 			"ebms_outbound_request_signed_receipt": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request a signed receipt. The default behavior is off.", "ebms-outbound-request-signed-receipt", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSOutboundRequestSignedReceiptIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to request a signed receipt. The default behavior is off.",
 				Computed:            true,
 			},
 			"ebms_outbound_receipt_reply_pattern": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the pattern to send the receipt signal. The default behavior is response.", "ebms-outbound-receipt-reply-pattern", "").AddStringEnum("Response", "Callback").AddDefaultValue("Response").AddNotValidWhen(DmB2BDestinationEBMSOutboundReceiptReplyPatternIgnoreVal.String()).String,
+				MarkdownDescription: "Specifies the pattern to send the receipt signal. The default behavior is response.",
 				Computed:            true,
 			},
 			"ebms_outbound_reception_awareness_notification": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to send a reception awareness error notification to the ebMS3 message producer. The default behavior is off. The B2B gateway reports a reception awareness error to the message producer if the receipt signal message is not received for a sent message.", "ebms-reception-awareness-notification", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSOutboundReceptionAwarenessNotificationIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to send a reception awareness error notification to the ebMS3 message producer. The default behavior is off. The B2B gateway reports a reception awareness error to the message producer if the receipt signal message is not received for a sent message.",
 				Computed:            true,
 			},
 			"ebms_outbound_reception_awareness_timeout": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for the receipt signal. Enter a value in the range 3 - 7200. The default value is 300. If the B2B gateway does not receive the receipt signal after this duration, the B2B gateway sends a reception awareness error notification to the message producer.", "ebms-reception-awareness-timeout", "").AddIntegerRange(3, 7200).AddDefaultValue("300").AddNotValidWhen(DmB2BDestinationEBMSOutboundReceptionAwarenessTimeoutIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the duration in seconds to wait for the receipt signal. Enter a value in the range 3 - 7200. The default value is 300. If the B2B gateway does not receive the receipt signal after this duration, the B2B gateway sends a reception awareness error notification to the message producer.",
 				Computed:            true,
 			},
 			"ebms_compress": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to compress the body of outbound ebMS messages. The default behavior is off.", "ebms-compress", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSCompressIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to compress the body of outbound ebMS messages. The default behavior is off.",
 				Computed:            true,
 			},
 			"ebms_soap_body": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("When compression is not enabled, specify whether to send messages in the SOAP <tt>Body</tt> .", "ebms-soapbody", "").AddDefaultValue("false").AddNotValidWhen(DmB2BDestinationEBMSSOAPBodyIgnoreVal.String()).String,
+				MarkdownDescription: "When compression is not enabled, specify whether to send messages in the SOAP <tt>Body</tt> .",
 				Computed:            true,
 			},
 		},

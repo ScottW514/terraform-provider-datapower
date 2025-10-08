@@ -61,7 +61,6 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An API collection is a logical partition of an API gateway that packages the plans and subscribers to make APIs available to a specific group of clients. An API collection corresponds to a catalog in the API manager.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

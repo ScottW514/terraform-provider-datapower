@@ -85,10 +85,6 @@ Optional:
 Read-Only:
 
 - `ap10` (Boolean) WS-I AP 1.0
-  - Default value: `true`
 - `bp10` (Boolean) WS-I BP 1.0
-  - Default value: `false`
 - `bp11` (Boolean) WS-I BP 1.1
-  - Default value: `true`
 - `bsp10` (Boolean) WS-I BSP 1.0
-  - Default value: `true`

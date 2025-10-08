@@ -61,7 +61,6 @@ func (d *AssemblyLogicOperationSwitchDataSource) Schema(ctx context.Context, req
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The operation switch assembly action evaluates a list of conditions and runs the API rule that is associated with the first condition that matches the API context.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -50,11 +50,11 @@ func GetDmWebAppResponsePolicyMapDataSourceSchema() DataSourceSchema.NestedAttri
 	var DmWebAppResponsePolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"match": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
+				MarkdownDescription: "Select the Matching Rule that defines the matching criteria.",
 				Computed:            true,
 			},
 			"rule": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the Web Response Profile to run.", "", "web_app_response").String,
+				MarkdownDescription: "Select the Web Response Profile to run.",
 				Computed:            true,
 			},
 		},

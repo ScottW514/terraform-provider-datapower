@@ -61,7 +61,6 @@ func (d *AssemblyActionGraphQLIntrospectDataSource) Schema(ctx context.Context, 
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The GraphQL introspect assembly action introspects a GraphQL schema.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

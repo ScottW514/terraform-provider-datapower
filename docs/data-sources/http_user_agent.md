@@ -96,7 +96,6 @@ Read-Only:
 Read-Only:
 
 - `allow_compression` (Boolean) Specify whether to allow compression.
-  - Default value: `false`
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 
 
@@ -106,7 +105,6 @@ Read-Only:
 Read-Only:
 
 - `password_alias` (String) Specify the password alias that maps to the password for the username.
-  - Reference to: `datapower_password_alias:id`
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `user_name` (String) Specify the username for basic authentication.
 
@@ -117,31 +115,14 @@ Read-Only:
 Read-Only:
 
 - `auth_tls` (String) Specify the use of TLS to secure FTP command connections.
-  - Choices: `auth-off`, `auth-tls-opt`, `auth-tls-req`, `auth-tls-imp`
-  - Default value: `auth-off`
 - `data_type` (String) Specify the default file transfer data type. In most cases, the value of binary is appropriate.
-  - Choices: `ascii`, `binary`
-  - Default value: `binary`
 - `encrypt_data` (String) Specify the use of encryption of file transfers. Compatible with NAT in all settings.
-  - Choices: `enc-data-off`, `enc-data-opt`, `enc-data-req`
-  - Default value: `enc-data-off`
-  - Required When: `auth_tls`!=`auth-off`
 - `passive` (String) Specify the use of FTP passive mode to control in which direction FTP data connections are made.
-  - Choices: `pasv-off`, `pasv-opt`, `pasv-req`
-  - Default value: `pasv-req`
 - `quoted_commands` (String) Specify the list of FTP commands to send to the server before each FTP STOR, STOU, or RETR command. Useful with "SITE" commands, such as "SITE RECFM=FB" for the MVS domain on a z/OS system. These commands cannot be data-transfer related, such as STOU, RETR, PORT, PASV, etc.
-  - Reference to: `datapower_ftp_quote_commands:id`
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `size_check` (String) Specify whether to check the file size after file transfer. Uses the SIZE command, and compares the returned number to the number of bytes transferred "over the wire" for the file transfer. If the numbers are not equal, the file transfer is marked as failing. If the FTP server does not support the SIZE command, no error results. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate SIZE responses for files transferred in ASCII mode. If you get such errors, you can disable this feature. Alternately you can reconfigure vsftpd.
-  - Choices: `size-check-optional`, `size-check-disabled`
-  - Default value: `size-check-optional`
 - `slash_stou` (String) Specify whether to create a unique file if the name contains a trailing slash. Some FTP servers provide the STOU command. Use the command only if the FTP server supports this command. The STOU command allows the server to choose the unique file name in the current directory. Using the STOU command does not require the client to choose a unique file name. When enabled and a URL is given to write that ends in a /, the server uses the STOU command instead of the STOR command.
-  - Choices: `slash-stou-off`, `slash-stou-on`
-  - Default value: `slash-stou-on`
 - `use_ccc` (String) Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.
-  - Choices: `ccc-off`, `ccc-opt`, `ccc-req`
-  - Default value: `ccc-off`
-  - Required When: `auth_tls`!=`auth-off`
 
 
 <a id="nestedatt--result--header_retention_policies"></a>
@@ -158,13 +139,9 @@ Read-Only:
 Read-Only:
 
 - `accept_encoding` (Boolean) Accept-Encoding
-  - Default value: `false`
 - `mqmd` (Boolean) MQMD
-  - Default value: `false`
 - `range` (Boolean) Range
-  - Default value: `false`
 - `te` (Boolean) TE
-  - Default value: `false`
 
 
 
@@ -174,12 +151,8 @@ Read-Only:
 Read-Only:
 
 - `http2_required` (Boolean) Specify whether HTTP/2 is required when the version is HTTP/2.
-  - Default value: `false`
-  - Not Valid When: `version`!=`HTTP/2`
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `version` (String) Specify the HTTP version to use.
-  - Choices: `HTTP/1.0`, `HTTP/1.1`, `HTTP/2`
-  - Default value: `HTTP/1.1`
 
 
 <a id="nestedatt--result--proxy_policies"></a>
@@ -189,13 +162,8 @@ Read-Only:
 
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `remote_address` (String) Specify the hostname or IP address of the remote HTTP server.
-  - Required When: `skip`=`false`
-  - Not Valid When: attribute is not conditionally required
 - `remote_port` (Number) Specify the port on the remote HTTP server.
-  - Required When: `skip`=`false`
-  - Not Valid When: attribute is not conditionally required
 - `skip` (Boolean) Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.
-  - Default value: `false`
 
 
 <a id="nestedatt--result--pubkey_auth_policies"></a>
@@ -204,7 +172,6 @@ Read-Only:
 Read-Only:
 
 - `crypto_key` (String) Specify the private key for public key authentication.
-  - Reference to: `datapower_crypto_key:id`
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 
 
@@ -215,9 +182,7 @@ Read-Only:
 
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `ssh_client_profile` (String) Specify the SSH client profile.
-  - Reference to: `datapower_ssh_client_profile:id`
 - `use_unique_filenames` (Boolean) Specifies whether to generate a unique file name for files written to an SSH FTP server. When the target URL represents a directory, a unique file name is generated. When the target URL represents a file name that already exists, any transfers result into a new unique file being created and its name is modified to include a unique prolog.
-  - Default value: `false`
 
 
 <a id="nestedatt--result--smtp_policies"></a>
@@ -226,13 +191,9 @@ Read-Only:
 Read-Only:
 
 - `auth` (String) Specify the method to authenticate the SMTP client.
-  - Choices: `plain`, `login`
-  - Default value: `plain`
-  - Not Valid When: `options`!=`auth`
 - `options` (Attributes) Specify the SMTP options to enable for the client. (see [below for nested schema](#nestedatt--result--smtp_policies--options))
 - `recipient` (String) Specify the e-mail address of the recipient ("To:")
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
-  - Default value: `dpsmtp://*`
 - `sender` (String) Specify the e-mail address of the sender ("From:")
 - `subject` (String) Specify the subject line of the e-mail.
 
@@ -242,9 +203,7 @@ Read-Only:
 Read-Only:
 
 - `auth` (Boolean) Authentication
-  - Default value: `false`
 - `start_tls` (Boolean) STARTTLS
-  - Default value: `false`
 
 
 
@@ -264,12 +223,7 @@ Read-Only:
 
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `ssl_client` (String) Specify the TLS client profile to secure connections with targets
-  - Reference to: `datapower_ssl_client_profile:id`
-  - Required When: `ssl_client_config_type`=`client`
-  - Not Valid When: attribute is not conditionally required
 - `ssl_client_config_type` (String) Specify the type of TLS profile to secure connections with targets
-  - Choices: `client`
-  - Default value: `client`
 
 
 <a id="nestedatt--result--upload_chunked_policies"></a>
@@ -279,4 +233,3 @@ Read-Only:
 
 - `reg_exp` (String) Specify the shell-style expression to define the URL set.
 - `upload_chunked` (Boolean) Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.
-  - Default value: `false`

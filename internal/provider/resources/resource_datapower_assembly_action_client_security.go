@@ -85,20 +85,20 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 			},
 			"stop_on_error": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if client security fails. If failed, stops the assembly and return an error.", "stop-on-error", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"secret_required": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require the client secret. When required, the secret is compared to the registered secret on the application that is identified by the client ID.", "secret-required", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"extract_credential_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the method to extract client credentials from the request.</p><ul><li>For all methods except HTTP, use the ID name and the secret name to specify the locations that contains the ID and the location that contain the secret. <ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul></li><li>For the HTTP method, use the HTTP type to specify the format of the <tt>Authorization</tt> header, which expects the basic form in the <tt>Basic <i>base64_id:secret</i></tt> format.</li></ul>", "extract-credential-method", "").AddStringEnum("header", "query", "form", "cookie", "http", "context-var").AddDefaultValue("header").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("header", "query", "form", "cookie", "http", "context-var"),
 				},
@@ -120,8 +120,8 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 			},
 			"http_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP type", "http-type", "").AddStringEnum("basic").AddDefaultValue("basic").AddRequiredWhen(models.AssemblyActionClientSecurityHTTPTypeCondVal.String()).AddNotValidWhen(models.AssemblyActionClientSecurityHTTPTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("basic"),
 					validators.ConditionalRequiredString(models.AssemblyActionClientSecurityHTTPTypeCondVal, models.AssemblyActionClientSecurityHTTPTypeIgnoreVal, true),
@@ -130,8 +130,8 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 			},
 			"authenticate_client_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the extracted client credentials. When third-party, specify the user-registry to authenticate the extracted client credentials.", "client-auth-method", "").AddStringEnum("native", "third-party").AddDefaultValue("native").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("native", "third-party"),
 				},
@@ -158,8 +158,8 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 			},
 			"action_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

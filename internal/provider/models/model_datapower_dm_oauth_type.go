@@ -53,11 +53,11 @@ func GetDmOAuthTypeDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmOAuthTypeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"client_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client type", "", "").AddStringEnum("confidential", "public").AddDefaultValue("confidential").String,
+				MarkdownDescription: "Client type",
 				Computed:            true,
 			},
 			"grant_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Flow", "", "").AddStringEnum("implicit", "password", "application", "accessCode").AddDefaultValue("implicit").String,
+				MarkdownDescription: "Flow",
 				Computed:            true,
 			},
 		},

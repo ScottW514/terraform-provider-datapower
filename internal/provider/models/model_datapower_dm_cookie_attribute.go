@@ -68,31 +68,31 @@ func GetDmCookieAttributeDataSourceSchema(description string, cliAlias string, r
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"domain": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Domain", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Domain",
 				Computed:            true,
 			},
 			"path": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Path", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Path",
 				Computed:            true,
 			},
 			"secure": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Secure",
 				Computed:            true,
 			},
 			"httponly": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTPOnly", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "HTTPOnly",
 				Computed:            true,
 			},
 			"max_age": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max-Age", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Max-Age",
 				Computed:            true,
 			},
 			"expires": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Expires", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Expires",
 				Computed:            true,
 			},
 			"custom": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom attributes", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Custom attributes",
 				Computed:            true,
 			},
 		},

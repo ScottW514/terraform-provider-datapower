@@ -91,39 +91,39 @@ func GetDmFTPPolicyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmFTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"passive": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of FTP passive mode to control in which direction FTP data connections are made.", "", "").AddStringEnum("pasv-off", "pasv-opt", "pasv-req").AddDefaultValue("pasv-req").String,
+				MarkdownDescription: "Specify the use of FTP passive mode to control in which direction FTP data connections are made.",
 				Computed:            true,
 			},
 			"auth_tls": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of TLS to secure FTP command connections.", "", "").AddStringEnum("auth-off", "auth-tls-opt", "auth-tls-req", "auth-tls-imp").AddDefaultValue("auth-off").String,
+				MarkdownDescription: "Specify the use of TLS to secure FTP command connections.",
 				Computed:            true,
 			},
 			"use_ccc": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.", "", "").AddStringEnum("ccc-off", "ccc-opt", "ccc-req").AddDefaultValue("ccc-off").AddRequiredWhen(DmFTPPolicyUseCCCCondVal.String()).String,
+				MarkdownDescription: "Specify the cessation of FTP command channel encryption after user authentication. Encryption must be stopped for compatibility with NAT and other firewall applications. Although a security risk, no other option exists when NAT is in use.",
 				Computed:            true,
 			},
 			"encrypt_data": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the use of encryption of file transfers. Compatible with NAT in all settings.", "", "").AddStringEnum("enc-data-off", "enc-data-opt", "enc-data-req").AddDefaultValue("enc-data-off").AddRequiredWhen(DmFTPPolicyEncryptDataCondVal.String()).String,
+				MarkdownDescription: "Specify the use of encryption of file transfers. Compatible with NAT in all settings.",
 				Computed:            true,
 			},
 			"data_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default file transfer data type. In most cases, the value of binary is appropriate.", "", "").AddStringEnum("ascii", "binary").AddDefaultValue("binary").String,
+				MarkdownDescription: "Specify the default file transfer data type. In most cases, the value of binary is appropriate.",
 				Computed:            true,
 			},
 			"slash_stou": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to create a unique file if the name contains a trailing slash. Some FTP servers provide the STOU command. Use the command only if the FTP server supports this command. The STOU command allows the server to choose the unique file name in the current directory. Using the STOU command does not require the client to choose a unique file name. When enabled and a URL is given to write that ends in a /, the server uses the STOU command instead of the STOR command.", "", "").AddStringEnum("slash-stou-off", "slash-stou-on").AddDefaultValue("slash-stou-on").String,
+				MarkdownDescription: "Specify whether to create a unique file if the name contains a trailing slash. Some FTP servers provide the STOU command. Use the command only if the FTP server supports this command. The STOU command allows the server to choose the unique file name in the current directory. Using the STOU command does not require the client to choose a unique file name. When enabled and a URL is given to write that ends in a /, the server uses the STOU command instead of the STOR command.",
 				Computed:            true,
 			},
 			"quoted_commands": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of FTP commands to send to the server before each FTP STOR, STOU, or RETR command. Useful with \"SITE\" commands, such as \"SITE RECFM=FB\" for the MVS domain on a z/OS system. These commands cannot be data-transfer related, such as STOU, RETR, PORT, PASV, etc.", "", "ftp_quote_commands").String,
+				MarkdownDescription: "Specify the list of FTP commands to send to the server before each FTP STOR, STOU, or RETR command. Useful with \"SITE\" commands, such as \"SITE RECFM=FB\" for the MVS domain on a z/OS system. These commands cannot be data-transfer related, such as STOU, RETR, PORT, PASV, etc.",
 				Computed:            true,
 			},
 			"size_check": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check the file size after file transfer. Uses the SIZE command, and compares the returned number to the number of bytes transferred \"over the wire\" for the file transfer. If the numbers are not equal, the file transfer is marked as failing. If the FTP server does not support the SIZE command, no error results. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate SIZE responses for files transferred in ASCII mode. If you get such errors, you can disable this feature. Alternately you can reconfigure vsftpd.", "", "").AddStringEnum("size-check-optional", "size-check-disabled").AddDefaultValue("size-check-optional").String,
+				MarkdownDescription: "Specify whether to check the file size after file transfer. Uses the SIZE command, and compares the returned number to the number of bytes transferred \"over the wire\" for the file transfer. If the numbers are not equal, the file transfer is marked as failing. If the FTP server does not support the SIZE command, no error results. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate SIZE responses for files transferred in ASCII mode. If you get such errors, you can disable this feature. Alternately you can reconfigure vsftpd.",
 				Computed:            true,
 			},
 		},

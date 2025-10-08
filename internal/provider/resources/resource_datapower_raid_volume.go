@@ -61,8 +61,8 @@ func (r *RaidVolumeResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"read_only": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The access permission to files on the storage volume.</p><ul><li>When enabled, access permission is read-only. With the B2B feature, access permission must be read/write. B2B storage requires write access to the RAID volume. Setting to read-only is ignored but generates a warning.</li><li>When disabled, the default value, access permission is read/write.</li></ul>", "read-only", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"directory": schema.StringAttribute{

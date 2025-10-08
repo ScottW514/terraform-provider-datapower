@@ -53,11 +53,11 @@ func GetDmSchemaExceptionRuleDataSourceSchema() DataSourceSchema.NestedAttribute
 	var DmSchemaExceptionRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"xpath": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
+				MarkdownDescription: "This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.",
 				Computed:            true,
 			},
 			"exception_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the Exception type for encryption.", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
+				MarkdownDescription: "Select the Exception type for encryption.",
 				Computed:            true,
 			},
 		},

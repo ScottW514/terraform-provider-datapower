@@ -101,8 +101,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the log target. The default value is file.", "type", "").AddStringEnum("console", "cache", "syslog", "syslog-tcp", "smtp", "file", "soap", "snmp", "nfs").AddDefaultValue("file").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("console", "cache", "syslog", "syslog-tcp", "smtp", "file", "soap", "snmp", "nfs"),
 				},
@@ -110,8 +110,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"priority": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority to control the scheduling of logs. When system resources are in high demand, high priority operations are favored over lower priority operations.", "priority", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").AddNotValidWhen(models.LogTargetPriorityIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.LogTargetPriorityIgnoreVal, true),
@@ -120,8 +120,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"soap_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("SOAP version", "soap-version", "").AddStringEnum("soap11", "soap12").AddDefaultValue("soap11").AddNotValidWhen(models.LogTargetSoapVersionIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("soap11", "soap12"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.LogTargetSoapVersionIgnoreVal, true),
@@ -130,8 +130,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"format": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Log format", "format", "").AddStringEnum("text", "raw", "xml", "json-icp", "cbe", "csv", "audit", "diag").AddDefaultValue("xml").AddNotValidWhen(models.LogTargetFormatIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("text", "raw", "xml", "json-icp", "cbe", "csv", "audit", "diag"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.LogTargetFormatIgnoreVal, true),
@@ -140,8 +140,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"timestamp_format": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the format of the timestamp for log entries. The default format is ISO UTC format.", "timestamp", "").AddStringEnum("syslog", "numeric", "zulu").AddDefaultValue("zulu").AddNotValidWhen(models.LogTargetTimestampFormatIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("syslog", "numeric", "zulu"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.LogTargetTimestampFormatIgnoreVal, true),
@@ -150,8 +150,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"fixed_format": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to make the format of logs unchanging. The log format fixed at version 6.0.1. New fields added to log formats are ignored.", "fixed-format", "").AddDefaultValue("false").AddNotValidWhen(models.LogTargetFixedFormatIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"local_identifier": schema.StringAttribute{
@@ -184,8 +184,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of file-based log targets. Enter a value in the range 100 - 50000. The default value is 500.", "size", "").AddIntegerRange(100, 50000).AddDefaultValue("500").AddRequiredWhen(models.LogTargetSizeCondVal.String()).AddNotValidWhen(models.LogTargetSizeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 50000),
 					validators.ConditionalRequiredInt64(models.LogTargetSizeCondVal, models.LogTargetSizeIgnoreVal, true),
@@ -224,8 +224,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"archive_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Archive mode", "archive-mode", "").AddStringEnum("rotate", "upload").AddDefaultValue("rotate").AddRequiredWhen(models.LogTargetArchiveModeCondVal.String()).AddNotValidWhen(models.LogTargetArchiveModeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("rotate", "upload"),
 					validators.ConditionalRequiredString(models.LogTargetArchiveModeCondVal, models.LogTargetArchiveModeIgnoreVal, true),
@@ -234,8 +234,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"upload_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Upload protocol", "upload-method", "").AddStringEnum("ftp", "scp", "sftp", "smtp").AddDefaultValue("ftp").AddRequiredWhen(models.LogTargetUploadMethodCondVal.String()).AddNotValidWhen(models.LogTargetUploadMethodIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ftp", "scp", "sftp", "smtp"),
 					validators.ConditionalRequiredString(models.LogTargetUploadMethodCondVal, models.LogTargetUploadMethodIgnoreVal, true),
@@ -244,8 +244,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"rotate": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.", "rotate", "").AddIntegerRange(1, 100).AddDefaultValue("3").AddRequiredWhen(models.LogTargetRotateCondVal.String()).AddNotValidWhen(models.LogTargetRotateIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 					validators.ConditionalRequiredInt64(models.LogTargetRotateCondVal, models.LogTargetRotateIgnoreVal, true),
@@ -254,8 +254,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"use_ansi_color": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the use of ANSI color scheme. When enabled, ANSI X3.64 escape sequences color-code messages by log level.", "ansi-color", "").AddDefaultValue("false").AddNotValidWhen(models.LogTargetUseANSIColorIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"remote_address": schema.StringAttribute{
@@ -282,9 +282,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"remote_password_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.", "", "").AddRequiredWhen(models.LogTargetRemotePasswordCondVal.String()).AddNotValidWhen(models.LogTargetRemotePasswordIgnoreVal.String()).String,
-				Optional:            true,
 				WriteOnly:           true,
-				Sensitive:           true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.LogTargetRemotePasswordCondVal, models.LogTargetRemotePasswordIgnoreVal, false),
 				},
@@ -319,8 +318,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"syslog_facility": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the syslog log facility (per RFC 3164) to include in messages sent to the syslog log target.", "facility", "").AddStringEnum("user", "security", "authpriv", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7").AddDefaultValue("user").AddRequiredWhen(models.LogTargetSyslogFacilityCondVal.String()).AddNotValidWhen(models.LogTargetSyslogFacilityIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("user", "security", "authpriv", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"),
 					validators.ConditionalRequiredString(models.LogTargetSyslogFacilityCondVal, models.LogTargetSyslogFacilityIgnoreVal, true),
@@ -329,8 +328,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"rate_limit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of events to log per second. Enter a value in the range 1 - 1000. The default value is 100. <ul><li>Remote log targets might receive more than this number of events within a second, depending on network latency and buffering. syslog over TCP log targets are exclusive, because only a single TCP connection is made to the server.</li><li>In the case of syslog over TCP log targets, the rate limit is the maximum number of events transmitted over the connection within one second. A value of 0 disables rate-limiting by the logging target.</li></ul>", "rate-limit", "").AddIntegerRange(0, 1000).AddDefaultValue("100").AddNotValidWhen(models.LogTargetRateLimitIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1000),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.LogTargetRateLimitIgnoreVal, true),
@@ -339,8 +338,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"max_connections": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent connections that can be opened to the syslog-tcp server. Enter a value in the range 1 - 100. The default value is 1.", "maximum-connections", "").AddIntegerRange(1, 100).AddDefaultValue("1").AddNotValidWhen(models.LogTargetMaxConnectionsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.LogTargetMaxConnectionsIgnoreVal, true),
@@ -349,8 +348,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"connect_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait in seconds for a connection to the server to be established before generating an error. At this time, a log message is generated in the default log and connection retry attempts are made. Enter a value in the range 1 - 90. The default value is 60.", "connect-timeout", "").AddIntegerRange(1, 90).AddDefaultValue("60").AddNotValidWhen(models.LogTargetConnectTimeoutIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 90),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.LogTargetConnectTimeoutIgnoreVal, true),
@@ -359,8 +358,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"idle_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in seconds to wait before closing an established but inactive connection to the server. Enter a value in the range 1 - 600. The default value is 15. <p><b>Attention:</b> If multiple log targets have the following configuration, they might share connections. <ul><li>The same local address and port</li><li>The same remote address and port</li></ul> Because of potential connection-sharing, set the same idle timeout value for these log targets.</p>", "idle-timeout", "").AddIntegerRange(1, 600).AddDefaultValue("15").AddNotValidWhen(models.LogTargetIdleTimeoutIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.LogTargetIdleTimeoutIgnoreVal, true),
@@ -369,8 +368,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"active_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait in seconds before closing an established and active connection to the server. Enter a value in the range 0 - 60. A value of 0 allows the log target to most efficiently send messages to the server by maintaining a healthy connection indefinitely. The default value is 0. <p><b>Attention:</b> If multiple log targets have the following configuration, they might share connections. <ul><li>The same local address and port</li><li>The same remote address and port</li></ul> Because of potential connection-sharing, set the same active timeout value for these log targets.</p>", "active-timeout", "").AddIntegerRange(0, 60).AddDefaultValue("0").AddNotValidWhen(models.LogTargetActiveTimeoutIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 60),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.LogTargetActiveTimeoutIgnoreVal, true),
@@ -379,8 +378,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"feedback_detection": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to suppress events from the logging subsystem itself. A log target always suppresses its own events, but will record events from other log targets. Under certain circumstances with multiple log targets, these events could create a positive feedback loop that could cause resource contention. Enable to suppress all log events from the logging subsystem and prevent resource contention.", "feedback-detection", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"log_event_code": schema.ListAttribute{
@@ -414,8 +413,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.LogTargetSSLClientConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.LogTargetSSLClientConfigTypeIgnoreVal, true),
@@ -424,8 +423,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait in seconds before attempting to reestablish a failed connection to the syslog server. Enter a value in the range 1 - 600. The default value is 1.", "retry-interval", "").AddIntegerRange(1, 600).AddDefaultValue("1").AddNotValidWhen(models.LogTargetRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.LogTargetRetryIntervalIgnoreVal, true),
@@ -434,8 +433,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"retry_attempts": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of attempts for a failed connection to the syslog server. After the number of attempts is reached, connection attempts use the value set for the long retry interval. When the long interval is disabled, the log target repeatedly attempts to reconnect to the syslog server with the value set for the retry interval. <p><b>Note:</b> 0 means that the long retry interval is never used and retries forever by using the retry interval.</p>", "retry-attempts", "").AddIntegerRange(1, 100).AddDefaultValue("1").AddNotValidWhen(models.LogTargetRetryAttemptsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 100),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.LogTargetRetryAttemptsIgnoreVal, true),
@@ -444,8 +443,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"long_retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait in seconds before attempting to reestablish a failed connection to the syslog server after the number of attempts is reached. Enter a value in the range 0 - 600. The default value is 20. <p><b>Note:</b> The long retry interval must be greater than the retry interval or it will take no effect.</p>", "long-retry-interval", "").AddIntegerRange(1, 600).AddDefaultValue("20").AddNotValidWhen(models.LogTargetLongRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.LogTargetLongRetryIntervalIgnoreVal, true),
@@ -454,8 +453,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"log_precision": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the precision for the timestamp of log messages. The default value is seconds.", "precision", "").AddStringEnum("second", "microsecond").AddDefaultValue("second").AddRequiredWhen(models.LogTargetLogPrecisionCondVal.String()).AddNotValidWhen(models.LogTargetLogPrecisionIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("second", "microsecond"),
 					validators.ConditionalRequiredString(models.LogTargetLogPrecisionCondVal, models.LogTargetLogPrecisionIgnoreVal, true),
@@ -464,8 +463,8 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"event_buffer_size": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the buffer size in number of event entries. The buffer stores log events before they are written to the target. A buffer of this size is allocated for each connection.", "buffer-size", "").AddStringEnum("2048", "16384", "65536", "131072", "262144", "524288", "1048576", "2097152", "4194304", "8388608").AddDefaultValue("2048").AddNotValidWhen(models.LogTargetEventBufferSizeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("2048", "16384", "65536", "131072", "262144", "524288", "1048576", "2097152", "4194304", "8388608"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.LogTargetEventBufferSizeIgnoreVal, true),

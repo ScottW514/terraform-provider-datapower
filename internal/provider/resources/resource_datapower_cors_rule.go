@@ -98,8 +98,8 @@ func (r *CORSRuleResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"allow_credentials": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the CORS request returns the <tt>Access-Control-Allow-Credentials</tt> response header. By default, this header is not returned in response to a CORS request. When enabled, the CORS request returns this header with a value of <tt>true</tt> .", "allow-credentials", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"expose_headers":     models.GetDmCORSRuleExposeHeadersResourceSchema("Specify the values to append to the value of the <tt>Access-Control-Expose-Headers</tt> response header. When undefined, appends the gateway-predefined value.", "expose-headers", "", false),

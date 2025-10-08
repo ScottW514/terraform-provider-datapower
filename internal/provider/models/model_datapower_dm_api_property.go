@@ -57,15 +57,15 @@ func GetDmAPIPropertyDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmAPIPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"property_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the property name.", "", "").String,
+				MarkdownDescription: "Specify the property name.",
 				Computed:            true,
 			},
 			"catalog": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.", "", "").AddDefaultValue("*").String,
+				MarkdownDescription: "Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the property value.", "", "").String,
+				MarkdownDescription: "Specify the property value.",
 				Computed:            true,
 			},
 		},

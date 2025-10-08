@@ -59,19 +59,19 @@ func GetDmSOAPHeaderDispositionItemDataSourceSchema() DataSourceSchema.NestedAtt
 	var DmSOAPHeaderDispositionItemDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"namespace": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the namespace URI of the SOAP header element, the default value is a blank string, which indicates no restriction.", "", "").String,
+				MarkdownDescription: "Specify the namespace URI of the SOAP header element, the default value is a blank string, which indicates no restriction.",
 				Computed:            true,
 			},
 			"local_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local name of the SOAP header element, the default value is a blank string, which indicates no restriction.", "", "").String,
+				MarkdownDescription: "Specify the local name of the SOAP header element, the default value is a blank string, which indicates no restriction.",
 				Computed:            true,
 			},
 			"child_local_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local name of the SOAP header's child element, the default value is a blank string, which indicates no restriction.", "", "").String,
+				MarkdownDescription: "Specify the local name of the SOAP header's child element, the default value is a blank string, which indicates no restriction.",
 				Computed:            true,
 			},
 			"action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify what action to take for this SOAP header and/or child element.", "", "").AddStringEnum("processed", "unprocessed", "keep", "remove", "fault").AddDefaultValue("processed").String,
+				MarkdownDescription: "Specify what action to take for this SOAP header and/or child element.",
 				Computed:            true,
 			},
 		},

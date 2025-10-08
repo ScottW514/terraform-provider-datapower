@@ -56,15 +56,15 @@ func GetDmTAMAZReplicaDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 	var DmTAMAZReplicaDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"tam_az_replica": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP host name of the authorization server replica.", "host", "").String,
+				MarkdownDescription: "Specify the TCP host name of the authorization server replica.",
 				Computed:            true,
 			},
 			"tam_az_replica_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server replica. The default value is 7136.", "port", "").AddDefaultValue("7136").String,
+				MarkdownDescription: "Specify the listening port on the authorization server replica. The default value is 7136.",
 				Computed:            true,
 			},
 			"tam_az_replica_weight": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.", "weight", "").AddIntegerRange(1, 10).AddDefaultValue("10").String,
+				MarkdownDescription: "Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.",
 				Computed:            true,
 			},
 		},

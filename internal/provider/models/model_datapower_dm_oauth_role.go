@@ -53,11 +53,11 @@ func GetDmOAuthRoleDataSourceSchema(description string, cliAlias string, referen
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"azsvr": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authorization and Token Endpoints", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Authorization and Token Endpoints",
 				Computed:            true,
 			},
 			"rssvr": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enforcement Point for Resource Server", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Enforcement Point for Resource Server",
 				Computed:            true,
 			},
 		},

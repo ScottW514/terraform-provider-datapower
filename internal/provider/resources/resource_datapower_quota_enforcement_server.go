@@ -62,8 +62,8 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -80,26 +80,26 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 			},
 			"server_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the listening port used by the GatewayScript module to communicate with the quota enforcement server. The default port value is 16379.", "server-port", "").AddDefaultValue("16379").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(16379),
 			},
 			"monitor_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the listening port for operational state monitoring for the quota enforcement server. The default port is 26379.", "monitor-port", "").AddDefaultValue("26379").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(26379),
 			},
 			"enable_peer_group": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the DataPower Gateway is enabled to work in peer group mode. By default, peer group mode is disabled, which indicates that the DataPower Gateway works in standalone mode.", "enable-peer-group", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"enable_ssl": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether TLS is used to secure connection among the peers of the peer group. By default, the TLS is enabled.", "enable-ssl", "").AddDefaultValue("true").AddNotValidWhen(models.QuotaEnforcementServerEnableSSLIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_crypto_key": schema.StringAttribute{
@@ -137,8 +137,8 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 			},
 			"priority": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the priority that is used to decide which replica is promoted to the primary node when failover occurs.</p><p>Enter a value in range 0 - 255. The default value is 100. The replica with the lowest priority number is promoted. A replica with the value of 0 can never be promoted.</p>", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").AddRequiredWhen(models.QuotaEnforcementServerPriorityCondVal.String()).AddNotValidWhen(models.QuotaEnforcementServerPriorityIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 255),
 					validators.ConditionalRequiredInt64(models.QuotaEnforcementServerPriorityCondVal, models.QuotaEnforcementServerPriorityIgnoreVal, true),
@@ -147,8 +147,8 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 			},
 			"strict_mode": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Based on your requirements for quota enforcement, enable or disable strict mode. By default, the strict mode is enabled.", "strict-mode", "").AddDefaultValue("true").AddNotValidWhen(models.QuotaEnforcementServerStrictModeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -61,7 +61,6 @@ func (d *XPathRoutingMapDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>An XPath Routing Map matches XPath expressions with corresponding destination URLs. When the XPath expression evaluates to true when applied to the message submitted, the target destination for the message is set to the corresponding URL.</p><p>Use the Rules tab to establish these mappings. Use the Namespace Mapping tab to determine Namespace URIs for namespaces used in the XPath Expressions.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

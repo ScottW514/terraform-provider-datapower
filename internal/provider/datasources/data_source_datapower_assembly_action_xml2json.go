@@ -61,7 +61,6 @@ func (d *AssemblyActionXml2JsonDataSource) Schema(ctx context.Context, req datas
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The XML to JSON assembly action converts the payload of a message from XML to its equivalent JSON.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

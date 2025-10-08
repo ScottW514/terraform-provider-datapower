@@ -89,8 +89,8 @@ func (r *MPGWErrorActionResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select which mode to handle the errors and generate the responses. The default mode is \"Static (Local)\".", "type", "").AddStringEnum("error-rule", "proxy", "redirect", "static").AddDefaultValue("static").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("error-rule", "proxy", "redirect", "static"),
 				},

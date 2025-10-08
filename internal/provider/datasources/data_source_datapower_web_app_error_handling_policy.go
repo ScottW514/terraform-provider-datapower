@@ -61,7 +61,6 @@ func (d *WebAppErrorHandlingPolicyDataSource) Schema(ctx context.Context, req da
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Define an error policy for a web application firewall. When the remote web service returns an error, this policy specifies how to handle the response that is sent to the client.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -84,8 +84,8 @@ func (r *AssemblyActionLogResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage transaction data. <p>Analytics data must strictly conform to the format required by your analytics server. If you modify the format, you must use gather only mode.</p><p>When you use the IBM API Connect analytics server without offloading data to a third-party log server, the format is correct. If you redact the input and output payloads, ensure that you do not modify the format.</p><p>When you offload data to a third-party analytics server, you can redact any aspect of the event data. When you use API Connect analytics, you can redact only the input and output payloads.</p>", "mode", "").AddStringEnum("gather-only", "send-only", "gather-and-send").AddDefaultValue("gather-only").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("gather-only", "send-only", "gather-and-send"),
 				},
@@ -93,14 +93,14 @@ func (r *AssemblyActionLogResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"log_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of content to log. The value can be one of none, activity, header, payload, default, or an inline parameter in the format $(value) to retrieve a value from the API context.", "log-level", "").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"recount_bytes_sent": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to recount the bytes of the response payload. By default, the bytes is the value of the <tt>Content-Length</tt> header. When enabled, the bytes in the response payload are calculated. Recalculation can impact performance.</p>", "recount-bytes", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -117,8 +117,8 @@ func (r *AssemblyActionLogResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"action_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

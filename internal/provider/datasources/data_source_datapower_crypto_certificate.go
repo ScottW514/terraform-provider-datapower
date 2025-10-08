@@ -61,7 +61,6 @@ func (d *CryptoCertificateDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A certificate provides an added layer of security by supplying an indirect reference to a file that contains a public key.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

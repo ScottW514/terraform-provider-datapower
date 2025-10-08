@@ -50,7 +50,7 @@ func GetDmSFTPServerVirtualDirectoryDataSourceSchema() DataSourceSchema.NestedAt
 	var DmSFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"virtual_path": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system of the SFTP server.", "", "").String,
+				MarkdownDescription: "Specify the directory in the virtual file system of the SFTP server.",
 				Computed:            true,
 			},
 		},

@@ -74,6 +74,4 @@ Optional:
 Read-Only:
 
 - `match` (String) Select the Matching Rule that defines the matching criteria.
-  - Reference to: `datapower_matching:id`
 - `rule` (String) Select the Processing Rule to run.
-  - Reference to: `datapower_style_policy_rule:id`

@@ -56,15 +56,15 @@ func GetDmGatewayPeeringClusterNodeDataSourceSchema() DataSourceSchema.NestedAtt
 	var DmGatewayPeeringClusterNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
+				MarkdownDescription: "Specify the local IP address or host alias of the node.",
 				Computed:            true,
 			},
 			"port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port of the node.", "", "").String,
+				MarkdownDescription: "Specify the local port of the node.",
 				Computed:            true,
 			},
 			"local_node": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the node is local to the data center.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Specify whether the node is local to the data center.",
 				Computed:            true,
 			},
 		},

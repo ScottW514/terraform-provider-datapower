@@ -61,7 +61,6 @@ func (d *AAAJWTValidatorDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The JSON Web Token (JWT) Validator specifies credentials and different methods to validate a JWT.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

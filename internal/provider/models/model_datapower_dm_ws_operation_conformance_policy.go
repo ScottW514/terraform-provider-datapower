@@ -83,23 +83,23 @@ func GetDmWSOperationConformancePolicyDataSourceSchema() DataSourceSchema.Nested
 	var DmWSOperationConformancePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"conformance_policy": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Conformance Policy", "", "conformance_policy").String,
+				MarkdownDescription: "Conformance Policy",
 				Computed:            true,
 			},
 			"conformance_policy_wsdl_component_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+				MarkdownDescription: "Select a type of WSDL Component. The default is All.",
 				Computed:            true,
 			},
 			"conformance_policy_wsdl_component_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").AddNotValidWhen(DmWSOperationConformancePolicyConformancePolicyWSDLComponentValueIgnoreVal.String()).String,
+				MarkdownDescription: "Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.",
 				Computed:            true,
 			},
 			"conformance_policy_subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").AddRequiredWhen(DmWSOperationConformancePolicyConformancePolicySubscriptionCondVal.String()).AddNotValidWhen(DmWSOperationConformancePolicyConformancePolicySubscriptionIgnoreVal.String()).String,
+				MarkdownDescription: "Select a subscription.",
 				Computed:            true,
 			},
 			"conformance_policy_fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: "Matches Fragment Identifier",
 				Computed:            true,
 			},
 		},

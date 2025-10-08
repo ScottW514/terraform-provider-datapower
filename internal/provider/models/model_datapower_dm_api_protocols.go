@@ -59,19 +59,19 @@ func GetDmAPIProtocolsDataSourceSchema(description string, cliAlias string, refe
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"http": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for HTTP.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Protocol identifier for HTTP.",
 				Computed:            true,
 			},
 			"https": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for HTTPS.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Protocol identifier for HTTPS.",
 				Computed:            true,
 			},
 			"ws": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for WebSocket. When allowed, the HTTP handler must be configured to allow WebSocket upgrade requests.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Protocol identifier for WebSocket. When allowed, the HTTP handler must be configured to allow WebSocket upgrade requests.",
 				Computed:            true,
 			},
 			"wss": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for WebSocket Secure. When allowed, the HTTPS handler must be configured to allow WebSocket upgrade requests.", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Protocol identifier for WebSocket Secure. When allowed, the HTTPS handler must be configured to allow WebSocket upgrade requests.",
 				Computed:            true,
 			},
 		},

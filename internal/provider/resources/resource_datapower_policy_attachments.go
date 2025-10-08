@@ -88,8 +88,8 @@ func (r *PolicyAttachmentsResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"enforcement_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enforcement Mode defines how the service uses WS-Policy to ensure that messages meet security requirements. The default behavior is enforce.", "enforcement-mode", "").AddStringEnum("filter", "enforce").AddDefaultValue("enforce").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("filter", "enforce"),
 				},
@@ -97,8 +97,8 @@ func (r *PolicyAttachmentsResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"policy_references": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable policies attached to WSDL using PolicyURI attributes and PolicyReference elements. These attachments are sometimes called XML element attachments. If 'off', all PolicyURI attributes and PolicyReference elements are ignored and only external policies are enforced.", "policy-references", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ignored_policy_attachment_points": schema.ListNestedAttribute{
@@ -113,8 +113,8 @@ func (r *PolicyAttachmentsResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"sla_enforcement_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("SLA Enforcement Mode controls the application of SLA Policies to transactions. Transactions are either allowed or rejected based on whether an SLA rule is applied to the transaction.", "sla-enforcement-mode", "").AddStringEnum("allow-if-no-sla", "reject-if-no-sla").AddDefaultValue("allow-if-no-sla").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("allow-if-no-sla", "reject-if-no-sla"),
 				},

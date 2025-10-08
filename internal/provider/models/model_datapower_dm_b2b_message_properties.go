@@ -55,15 +55,15 @@ func GetDmB2BMessagePropertiesDataSourceSchema() DataSourceSchema.NestedAttribut
 	var DmB2BMessagePropertiesDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the eb:Property element that is agreed upon between the partners.", "", "").String,
+				MarkdownDescription: "Specify the name of the eb:Property element that is agreed upon between the partners.",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the eb:Property element.", "", "").String,
+				MarkdownDescription: "Specify the value of the eb:Property element.",
 				Computed:            true,
 			},
 			"type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the eb:Property element for conflict resolution between message properties with the same name.", "", "").String,
+				MarkdownDescription: "Specify the type of the eb:Property element for conflict resolution between message properties with the same name.",
 				Computed:            true,
 			},
 		},

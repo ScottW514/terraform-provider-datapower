@@ -53,11 +53,11 @@ func GetDmDomainMonitoringMapDataSourceSchema(description string, cliAlias strin
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"audit": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable auditing", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Enable auditing",
 				Computed:            true,
 			},
 			"log": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable logging", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Enable logging",
 				Computed:            true,
 			},
 		},

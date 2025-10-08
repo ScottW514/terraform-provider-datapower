@@ -50,11 +50,11 @@ func GetDmRateLimitConfigurationNameValuePairDataSourceSchema() DataSourceSchema
 	var DmRateLimitConfigurationNameValuePairDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
+				MarkdownDescription: "Specify the name of the parameter.",
 				Computed:            true,
 			},
 			"value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the parameter.", "value", "").String,
+				MarkdownDescription: "Specify the value of the parameter.",
 				Computed:            true,
 			},
 		},

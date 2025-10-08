@@ -61,7 +61,6 @@ func (d *AssemblyActionJWTValidateDataSource) Schema(ctx context.Context, req da
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The JWT validate assembly action specifies credentials and methods to validate a JWT in the request. The following guidelines apply. <ul><li>All claims that are specified in the JWT validate assembly action are validated. If any specified claim fails, the JWT validation fails.</li><li>You can use a crypto object or a JWK to decrypt or verify the JWT. When both are specified, the crypto object is used.</li><li>If the original message is signed with a shared secret key, the crypto object that is specified must also be a shared secret key.</li><li>If the original message is signed with a private key, the crypto object that is specified must be a crypto certificate (public certificate).</li><li>If a JWK header parameter is included in the header of the JWT, the parameter must match the crypto object or JWK that is specified in the action. Otherwise, validation fails.</li></ul></p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

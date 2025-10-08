@@ -93,8 +93,8 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"policy_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the satisfaction policy for the profile. The default value is Admission.", "policy-type", "").AddStringEnum("pre-requisite", "admission").AddDefaultValue("admission").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("pre-requisite", "admission"),
 				},
@@ -102,8 +102,8 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"ssl_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select how the client side of the inspected transaction handles SSL. The default value is Allow.", "request-ssl-policy", "").AddStringEnum("allow", "require", "deny").AddDefaultValue("allow").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("allow", "require", "deny"),
 				},
@@ -133,14 +133,14 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"max_body_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the request body.", "request-body-max", "").AddDefaultValue("128000000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(128000000),
 			},
 			"xml_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles requests that contain an XML MIME type.", "request-xml-policy", "").AddStringEnum("nothing", "xml", "soap").AddDefaultValue("nothing").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("nothing", "xml", "soap"),
 				},
@@ -155,8 +155,8 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"non_xml_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles requests that do not contain an XML MIME type.", "request-nonxml-policy", "").AddStringEnum("nothing", "side", "binary").AddDefaultValue("nothing").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("nothing", "side", "binary"),
 				},
@@ -187,8 +187,8 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"query_string_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select how the client URL handles query strings. The default is Allow.", "request-qs-policy", "").AddStringEnum("allow", "require", "deny").AddDefaultValue("allow").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("allow", "require", "deny"),
 				},
@@ -203,38 +203,38 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"sql_injection": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Data parameters from the query string, application/www-urlencoded requests, and multipart/form-data requests will be passed through the standard SQL Injection filter if this property is enabled.", "request-sql-policy", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_uri_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The URI may be no longer than the value specified here.", "request-uri-max", "").AddDefaultValue("1024").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(1024),
 			},
 			"uri_filter_unicode": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("If Unicode is detected in the URI and this property is enabled then the transaction will be rejected", "request-uri-filter-unicode", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"uri_filter_dot_dot": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Filter Requests with .. in the URI after URI normalization", "request-uri-filter-dotdot", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"uri_filter_exe": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Filter Requests with .exe in the URI after URI normalization", "request-uri-filter-exe", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"uri_filter_fragment": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select how to handle URI fragments in requests. A URI fragment is the portion of a URI after the # symbol. The default is Truncate", "request-uri-filter-fragment", "").AddStringEnum("allow", "reject", "truncate").AddDefaultValue("truncate").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("allow", "reject", "truncate"),
 				},
@@ -243,8 +243,8 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			"content_types": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the request. If this list is empty, any content-type is acceptable. If the request does not have a content type that will be represented as an empty string for matching purposes. Requests without a body (GET, HEAD, and so forth) are not subject to this constraint. An empty list will match all content types.", "request-content-type", "").String,
 				ElementType:         types.StringType,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default: listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
 					types.StringValue("application/www-url-encoded"),
 				})),
@@ -253,8 +253,8 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			"cookie_profile":      models.GetDmCookieProfileResourceSchema("The cookie management profile allows you to specify validation profiles for incoming cookies, whether cookies should be allowed at all, and the signature and encryption policies for cookies.", "cookie-policy", "", false),
 			"process_all_cookie": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The process will sign or encrypt all cookies when enabled. The default is enabled.", "process-all-cookie", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"cookie_name_vector": schema.ListAttribute{
@@ -268,8 +268,8 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"sql_injection_patterns_file": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The patterns file that the SQL injection filter uses.", "sql-injection-patterns-file", "").AddDefaultValue("store:///SQL-Injection-Patterns.xml").AddRequiredWhen(models.WebAppRequestSQLInjectionPatternsFileCondVal.String()).AddNotValidWhen(models.WebAppRequestSQLInjectionPatternsFileIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.WebAppRequestSQLInjectionPatternsFileCondVal, models.WebAppRequestSQLInjectionPatternsFileIgnoreVal, true),
 				},

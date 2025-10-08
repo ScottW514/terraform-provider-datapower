@@ -86,20 +86,20 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 			},
 			"jwt": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable to store the generated JWT. The default value is <tt>generated.jwt</tt> . When the variable is not set, the generated JWT is written to the Authorization Header as a Bearer token.", "jwt", "").AddDefaultValue("generated.jwt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("generated.jwt"),
 			},
 			"jwt_id_claims": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to add a JWT ID (jti) claim to the JWT. When enabled, a UUID is generated and set as the value of the JWT ID claim.", "jti-claim", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"issuer_claim": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve the issuer (iss) claim value. The default value is <tt>iss.claim</tt> . The maximum value length is 256 characters.", "iss-claim", "").AddDefaultValue("iss.claim").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(0, 256),
 				},
@@ -121,8 +121,8 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 			},
 			"validity_period": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds to calculate the expiration (exp) claim. This value is added to the current date and time to be the value for the \"exp\" claim. The JWT is considered valid until expiry. Enter a value in the range 1 - 31622400. The default value is 3600.", "exp-claim", "").AddIntegerRange(1, 31622400).AddDefaultValue("3600").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 31622400),
 				},
@@ -191,8 +191,8 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 			},
 			"action_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

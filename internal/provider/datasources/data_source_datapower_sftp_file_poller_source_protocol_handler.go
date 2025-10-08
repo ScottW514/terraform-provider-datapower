@@ -61,7 +61,6 @@ func (d *SFTPFilePollerSourceProtocolHandlerDataSource) Schema(ctx context.Conte
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Use an SFTP poller handler to have file based input from a configured SFTP directory. The directory must exist and have the appropriate permission to perform the designated operations. For these configured directories, ensure that the read, write, and delete permissions are available, as required.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -50,11 +50,11 @@ func GetDmNamedInOutDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmNamedInOutDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.", "", "").String,
+				MarkdownDescription: "Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.",
 				Computed:            true,
 			},
 			"context": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.", "", "").String,
+				MarkdownDescription: "Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.",
 				Computed:            true,
 			},
 		},

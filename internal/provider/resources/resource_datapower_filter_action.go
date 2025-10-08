@@ -87,8 +87,8 @@ func (r *FilterActionResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the action to take The default is notify.", "type", "").AddStringEnum("notify", "reject", "shape").AddDefaultValue("notify").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("notify", "reject", "shape"),
 				},
@@ -96,8 +96,8 @@ func (r *FilterActionResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"log_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority of the log message that is generated when a monitored message type exceeds a threshold value.", "log-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("debug").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
 				},

@@ -61,8 +61,8 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
@@ -71,14 +71,14 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A specific IP address monitored by the SNMP agent or engine for incoming SNMP requests. The default value of 0.0.0.0 allows the agent or engine to listen on all interfaces. Selecting the address of one interface restricts SNMP to that interface.", "ip-address", "").AddDefaultValue("0.0.0.0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("A specific UDP port monitored by the SNMP agent or engine for incoming SNMP requests. By default, the agent or engine monitors port 161.", "port", "").AddDefaultValue("161").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(161),
 			},
 			"policies": schema.ListNestedAttribute{
@@ -108,8 +108,8 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"security_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The minimum security level required for incoming SNMPv3 Get and Set requests. The default is Authentication, Privacy.", "security-level", "").AddStringEnum("noAuthNoPriv", "authNoPriv", "authPriv").AddDefaultValue("authPriv").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("noAuthNoPriv", "authNoPriv", "authPriv"),
 				},
@@ -117,8 +117,8 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"access_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The type of access allowed to MIB objects for incoming SNMPv3 Get and Set requests.", "access-level", "").AddStringEnum("none", "read-only", "read-write").AddDefaultValue("read-only").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "read-only", "read-write"),
 				},
@@ -126,14 +126,14 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"enable_default_trap_subscriptions": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable or Disable the default list of event codes that generate traps. The default is Enable Trap Subscriptions.", "trap-default-subscriptions", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"trap_priority": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select a minimum trap event priority. The priorities are hierarchical. The lowest is listed last. Set to the minimum that is required for your trap events.", "trap-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").AddNotValidWhen(models.SNMPSettingsTrapPriorityIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.SNMPSettingsTrapPriorityIgnoreVal, true),
@@ -147,38 +147,38 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"config_mib": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Configuration", "config-mib", "").AddDefaultValue("/drConfigMIB.txt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/drConfigMIB.txt"),
 			},
 			"config_mib_mq": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Configuration", "config-mib", "").AddDefaultValue("/mqConfigMIB.txt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/mqConfigMIB.txt"),
 			},
 			"status_mib": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Status", "status-mib", "").AddDefaultValue("/drStatusMIB.txt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/drStatusMIB.txt"),
 			},
 			"status_mib_mq": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Status", "status-mib", "").AddDefaultValue("/mqStatusMIB.txt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/mqStatusMIB.txt"),
 			},
 			"notif_mib": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Notifications", "notification-mib", "").AddDefaultValue("/drNotificationMIB.txt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/drNotificationMIB.txt"),
 			},
 			"notif_mib_mq": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Notifications", "notification-mib", "").AddDefaultValue("/mqNotificationMIB.txt").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("/mqNotificationMIB.txt"),
 			},
 			"dependency_actions": actions.ActionsSchema,

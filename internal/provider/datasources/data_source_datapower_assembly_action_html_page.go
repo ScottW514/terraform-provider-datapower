@@ -61,7 +61,6 @@ func (d *AssemblyActionHtmlPageDataSource) Schema(ctx context.Context, req datas
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The HTML assembly action returns a static HTML file.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

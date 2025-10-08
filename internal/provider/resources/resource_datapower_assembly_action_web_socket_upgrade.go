@@ -93,8 +93,8 @@ func (r *AssemblyActionWebSocketUpgradeResource) Schema(ctx context.Context, req
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for a reply from the target. The default value is 60.", "timeout", "").AddDefaultValue("60").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(60),
 			},
 			"user_name": schema.StringAttribute{
@@ -110,44 +110,44 @@ func (r *AssemblyActionWebSocketUpgradeResource) Schema(ctx context.Context, req
 			},
 			"follow_redirects": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to follow the redirects. When enabled, attempts to resolve any redirect transparently.", "follow-redirects", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"decode_request_params": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to decode request parameters in the target URL. When enabled, request parameters are decoded. The default behavior is to not decode request parameters.", "decode-request-params", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"encode_plus_char": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to encode + characters in query strings. When enabled, + characters are encoded to <tt>%2F</tt> . The default behavior is to not encode + characters.", "encode-plus-char", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"inject_user_agent_header": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Inject User-Agent header", "inject-user-agent", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"inject_proxy_headers": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to inject proxy-related headers when not found in the request. The proxy-related headers are <tt>X-Forwarded-For</tt> , <tt>X-Forwarded-Host</tt> , and <tt>X-Forwarded-Port</tt> .", "inject-proxy-headers", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"header_control_list": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the control list that manages whether to accept or reject headers. The default behavior is to accept all headers.", "header-control-list", "control_list").AddDefaultValue("default-accept-all").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default-accept-all"),
 			},
 			"parameter_control_list": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the control list that manages whether to accept or reject URL parameters. The default behavior is to reject all URL parameters.", "parameter-control-list", "control_list").AddDefaultValue("default-reject-all").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default-reject-all"),
 			},
 			"api_request_processing_assembly": schema.StringAttribute{
@@ -172,8 +172,8 @@ func (r *AssemblyActionWebSocketUpgradeResource) Schema(ctx context.Context, req
 			},
 			"action_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

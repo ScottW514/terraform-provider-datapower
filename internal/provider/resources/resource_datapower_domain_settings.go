@@ -74,8 +74,8 @@ func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -84,8 +84,8 @@ func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"password_treatment": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password treatment", "password-treatment", "").AddStringEnum("none", "masked").AddDefaultValue("masked").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "masked"),
 				},
@@ -93,9 +93,8 @@ func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"passphrase_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Passphrase", "passphrase", "").String,
-				Optional:            true,
 				WriteOnly:           true,
-				Sensitive:           true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(8, 24),
 				},

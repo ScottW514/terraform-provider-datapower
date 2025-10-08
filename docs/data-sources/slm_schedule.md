@@ -77,16 +77,9 @@ Optional:
 Read-Only:
 
 - `friday` (Boolean) Friday
-  - Default value: `false`
 - `monday` (Boolean) Monday
-  - Default value: `false`
 - `saturday` (Boolean) Saturday
-  - Default value: `false`
 - `sunday` (Boolean) Sunday
-  - Default value: `false`
 - `thursday` (Boolean) Thursday
-  - Default value: `false`
 - `tuesday` (Boolean) Tuesday
-  - Default value: `false`
 - `wednesday` (Boolean) Wednesday
-  - Default value: `false`

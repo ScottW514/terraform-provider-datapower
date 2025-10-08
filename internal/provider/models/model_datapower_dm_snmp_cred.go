@@ -146,23 +146,23 @@ func GetDmSnmpCredDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmSnmpCredDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"engine_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SNMPv3 engine ID. The value of 0 represents the local engine ID. For any other engine ID, the value is a hex string that represents the 5 - 32 byte value.", "", "").String,
+				MarkdownDescription: "Specify the SNMPv3 engine ID. The value of 0 represents the local engine ID. For any other engine ID, the value is a hex string that represents the 5 - 32 byte value.",
 				Computed:            true,
 			},
 			"auth_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the authentication protocol.", "", "").AddStringEnum("none", "md5", "sha").AddDefaultValue("sha").String,
+				MarkdownDescription: "Specify the authentication protocol.",
 				Computed:            true,
 			},
 			"auth_secret_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the format of the authentication key.", "", "").AddStringEnum("password", "key").AddDefaultValue("password").AddRequiredWhen(DmSnmpCredAuthSecretTypeCondVal.String()).AddNotValidWhen(DmSnmpCredAuthSecretTypeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the format of the authentication key.",
 				Computed:            true,
 			},
 			"priv_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the privacy protocol.", "", "").AddStringEnum("none", "des", "aes").AddDefaultValue("des").String,
+				MarkdownDescription: "Specify the privacy protocol.",
 				Computed:            true,
 			},
 			"priv_secret_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the format of the privacy key. When the privacy protocol is AED or DES, whether the <tt>PrivKey</tt> is generated from a plaintext string or is an explicit key value.", "", "").AddStringEnum("password", "key").AddDefaultValue("password").AddRequiredWhen(DmSnmpCredPrivSecretTypeCondVal.String()).AddNotValidWhen(DmSnmpCredPrivSecretTypeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the format of the privacy key. When the privacy protocol is AED or DES, whether the <tt>PrivKey</tt> is generated from a plaintext string or is an explicit key value.",
 				Computed:            true,
 			},
 		},
@@ -297,6 +297,7 @@ func (data DmSnmpCred) IsNull() bool {
 	}
 	return true
 }
+
 func (data DmSnmpCredWO) IsNull() bool {
 	if !data.EngineId.IsNull() {
 		return false
@@ -392,6 +393,7 @@ func (data *DmSnmpCred) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.PrivSecretWo = types.StringNull()
 	}
 }
+
 func (data *DmSnmpCredWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."

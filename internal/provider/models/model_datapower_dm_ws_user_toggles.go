@@ -75,40 +75,40 @@ func GetDmWSUserTogglesDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmWSUserTogglesDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"wsdl_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL file name or \"*\" to match all files. This is the local name of the WSDL file, as defined on the WSDL tab.", "", "").String,
+				MarkdownDescription: "WSDL file name or \"*\" to match all files. This is the local name of the WSDL file, as defined on the WSDL tab.",
 				Computed:            true,
 			},
 			"service_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:service/@name using the format {serviceNamespace}/name. Enter \"*\" to match all bindings.", "", "").String,
+				MarkdownDescription: "Matches wsdl:service/@name using the format {serviceNamespace}/name. Enter \"*\" to match all bindings.",
 				Computed:            true,
 			},
 			"service_port_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:service/wsdl:port/@name using the format {serviceNamespace}/name. Enter \"*\" to match all ports.", "", "").String,
+				MarkdownDescription: "Matches wsdl:service/wsdl:port/@name using the format {serviceNamespace}/name. Enter \"*\" to match all ports.",
 				Computed:            true,
 			},
 			"port_type_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:portType/@name using the format {portTypeNamespace}name. Enter \"*\" to match all bindings.", "", "").String,
+				MarkdownDescription: "Matches wsdl:portType/@name using the format {portTypeNamespace}name. Enter \"*\" to match all bindings.",
 				Computed:            true,
 			},
 			"binding_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:binding/@name using the format {bindingNamespace}name. Enter \"*\" to match all bindings.", "", "").String,
+				MarkdownDescription: "Matches wsdl:binding/@name using the format {bindingNamespace}name. Enter \"*\" to match all bindings.",
 				Computed:            true,
 			},
 			"operation_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:binding/operation/@name using the format {bindingNamespace}name or wsdl:service/wsdl:port when formatted {serviceNamespace}port-name/operation-name. Enter \"*\" to match all operations.", "", "").String,
+				MarkdownDescription: "Matches wsdl:binding/operation/@name using the format {bindingNamespace}name or wsdl:service/wsdl:port when formatted {serviceNamespace}port-name/operation-name. Enter \"*\" to match all operations.",
 				Computed:            true,
 			},
 			"toggles": GetDmWSDLUserPolicyTogglesDataSourceSchema("Select the policy (availability and behavior) of the component made available by the Web Service Proxy. The established policy cascade (applies to all components that are contained by the current component).", "", ""),
 			"subscription": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches all of the services obtained via the selected subscription. The selection may be further narrowed by configuring matches against specific wsdl components.", "", "").String,
+				MarkdownDescription: "Matches all of the services obtained via the selected subscription. The selection may be further narrowed by configuring matches against specific wsdl components.",
 				Computed:            true,
 			},
 			"use_fragment_id": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Toggle to enable or disable the use of Fragment ID", "use-fragid", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Toggle to enable or disable the use of Fragment ID",
 				Computed:            true,
 			},
 			"fragment_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
+				MarkdownDescription: "Matches Fragment Identifier",
 				Computed:            true,
 			},
 		},

@@ -91,8 +91,8 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			"neighbor_domain": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify which domains have their <tt>local:</tt> directory visible to this domain. <p>References to visible domains are explicit, not bidirectional. If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following conditions apply.</p><ul><li>Domain <tt>domainA</tt> has read-only access to the <tt>local:</tt> directory of domain <tt>domainB</tt> .</li><li>Domain <tt>domainB</tt> cannot see domain <tt>domainA</tt> .</li></ul><p>In this case, you cannot make domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible domains cannot be circular.</p>", "visible-domain", "domain").String,
 				ElementType:         types.StringType,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default: listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
 					types.StringValue("default"),
 				})),
@@ -106,8 +106,8 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			"monitoring_map": models.GetDmDomainMonitoringMapResourceSchema("File-monitoring of the local: directory", "file-monitoring", "", false),
 			"config_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Configuration mode", "config-mode", "").AddStringEnum("local", "import").AddDefaultValue("local").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("local", "import"),
 				},
@@ -122,8 +122,8 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"import_format": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Import format", "import-format", "").AddStringEnum("ZIP", "XML").AddDefaultValue("ZIP").AddRequiredWhen(models.DomainImportFormatCondVal.String()).AddNotValidWhen(models.DomainImportFormatIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ZIP", "XML"),
 					validators.ConditionalRequiredString(models.DomainImportFormatCondVal, models.DomainImportFormatIgnoreVal, true),
@@ -140,14 +140,14 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"local_ip_rewrite": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to rewrite local IP addresses during import. When enabled, local IP addresses in the import package are rewritten to match the local IP address on the DataPower Gateway. In other words, a service that binds to <tt>eth10</tt> in the import package is rewritten to bind to the local IP address of <tt>eth10</tt> on the DataPower Gateway.", "local-ip-rewrite", "").AddDefaultValue("true").AddRequiredWhen(models.DomainLocalIPRewriteCondVal.String()).AddNotValidWhen(models.DomainLocalIPRewriteIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"max_chkpoints": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Checkpoint limit", "maxchkpoints", "").AddIntegerRange(1, 5).AddDefaultValue("3").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 5),
 				},
@@ -155,8 +155,8 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"config_permissions_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Configuration permissions mode", "config-permissions-mode", "").AddStringEnum("scope-domain", "global-profile", "specific-profile").AddDefaultValue("scope-domain").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("scope-domain", "global-profile", "specific-profile"),
 				},

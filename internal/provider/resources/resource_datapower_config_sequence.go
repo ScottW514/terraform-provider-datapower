@@ -96,38 +96,38 @@ func (r *ConfigSequenceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"match_pattern": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PCRE pattern to determine whether a file is considered part of the location match. For example, when the configuration files to match are <tt>NNNNNN.input</tt> , the PCRE pattern is <tt>\"([0-9]{6})\\.input$\"</tt> .", "match-pattern", "").AddDefaultValue("(.*)\\\\.cfg$").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("(.*)\\\\.cfg$"),
 			},
 			"result_name_pattern": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PCRE pattern to name the result file. This pattern normally has a back-reference to the base input file name. For example, when input files are <tt>NNNNNN.input</tt> and the wanted result file name is <tt>NNNNNN.result</tt> , the pattern is <tt>\"$1.result\"</tt> .", "result-name-pattern", "").AddDefaultValue("$1.log").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("$1.log"),
 			},
 			"status_name_pattern": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PCRE pattern to name the status file. This pattern normally has a back-reference to the base input file name. For example, when the input files are <tt>NNNNNN.input</tt> and the wanted status file name is <tt>NNNNNN.json</tt> , the pattern is <tt>\"$1.json\"</tt> .", "status-name-pattern", "").AddDefaultValue("$1.status").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("$1.status"),
 			},
 			"watch": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to watch the specified directory for configuration file changes and automatically reload the configuration when a change is detected. By default, the specified directory is watched.", "watch", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"use_output_location": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to place output log and status files in the configured output location after processing. By default, output files are stored in the input file location.", "use-output-location", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"output_location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store the output files that processing generates. When not specified, the input file location is used.", "output-location", "").AddDefaultValue("logtemp:///").AddRequiredWhen(models.ConfigSequenceOutputLocationCondVal.String()).AddNotValidWhen(models.ConfigSequenceOutputLocationIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					validators.ConditionalRequiredString(models.ConfigSequenceOutputLocationCondVal, models.ConfigSequenceOutputLocationIgnoreVal, true),
 				},
@@ -135,14 +135,14 @@ func (r *ConfigSequenceResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"delete_unused": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to clean up objects that are no longer needed. When enabled, the configuration sequence detects and attempts to delete objects that are no longer modified by any configuration file. By default, the configuration sequence does not delete unneeded objects.", "delete-unused", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"run_sequence_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in milliseconds between the processing of changes. This delay enables multiple file events to be aggregated and handled within the same sequence run. Enter a value in the range 100 - 60000. The default value is 100.", "run-sequence-interval", "").AddIntegerRange(100, 60000).AddDefaultValue("100").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 60000),
 				},

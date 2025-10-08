@@ -88,8 +88,8 @@ func (r *JWSSignatureResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Algorithm.", "alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").AddDefaultValue("RS256").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512"),
 				},

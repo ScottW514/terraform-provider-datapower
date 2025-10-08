@@ -61,7 +61,6 @@ func (d *ControlListDataSource) Schema(ctx context.Context, req datasource.Schem
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>A control list uses a value-matching pattern to determine whether values are on the allowlist or blocklist.</p><p>The value-matching pattern is defined by a PCRE. When you define the control list, you can indicates whether evaluation is case-sensitive or case-insensitive.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

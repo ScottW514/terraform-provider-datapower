@@ -60,19 +60,19 @@ func GetDmMultipartFormDataProfileDataSourceSchema(description string, cliAlias 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"max_parts": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum number of parts allowed. Defaults to 4.", "", "").AddDefaultValue("4").String,
+				MarkdownDescription: "Maximum number of parts allowed. Defaults to 4.",
 				Computed:            true,
 			},
 			"max_size_per_part": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for any one part. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
+				MarkdownDescription: "Maximum size allowed for any one part. Defaults to 5000000.",
 				Computed:            true,
 			},
 			"max_size": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for all parts combined. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
+				MarkdownDescription: "Maximum size allowed for all parts combined. Defaults to 5000000.",
 				Computed:            true,
 			},
 			"content_type_restricted": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("If set, this forces the individual form-data content types to be matched against the general list of request acceptable content-type expressions.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "If set, this forces the individual form-data content types to be matched against the general list of request acceptable content-type expressions.",
 				Computed:            true,
 			},
 		},

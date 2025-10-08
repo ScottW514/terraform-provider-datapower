@@ -61,7 +61,6 @@ func (d *APISecurityOAuthReqDataSource) Schema(ctx context.Context, req datasour
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An OAuth security requirement defines the allowed scopes for controlling access to APIs or operations through the token-based OAuth protocol. By using an OAuth token, a user can grant websites or applications to access their data that are stored with another service provider, without sharing their personal credentials. <p><b>Note:</b> You cannot apply more than one OAuth security requirement to an API or operation.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

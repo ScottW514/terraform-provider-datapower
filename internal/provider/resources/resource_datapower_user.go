@@ -77,9 +77,8 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			},
 			"password_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password for the account. The password must comply to the password policy in RBM settings.", "password", "").String,
-				Required:            true,
 				WriteOnly:           true,
-				Sensitive:           true,
+				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
 				},
@@ -103,8 +102,8 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			},
 			"access_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Access level", "access-level", "").AddStringEnum("none", "privileged", "group-defined", "technician", "expired", "config-sequence").AddDefaultValue("group-defined").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "privileged", "group-defined", "technician", "expired", "config-sequence"),
 				},

@@ -59,19 +59,19 @@ func GetDmHeaderRetentionBitmapDataSourceSchema(description string, cliAlias str
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"te": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TE", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "TE",
 				Computed:            true,
 			},
 			"accept_encoding": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Accept-Encoding", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Accept-Encoding",
 				Computed:            true,
 			},
 			"range": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Range", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Range",
 				Computed:            true,
 			},
 			"mqmd": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("MQMD", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "MQMD",
 				Computed:            true,
 			},
 		},

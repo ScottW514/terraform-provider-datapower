@@ -61,7 +61,6 @@ func (d *LunaHAGroupDataSource) Schema(ctx context.Context, req datasource.Schem
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An HA group on the SafeNet Luna Network HSM appliance allows you to define multiple Luna HSM partitions as a group for load balancing and failover.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -83,5 +83,4 @@ Read-Only:
 - `host` (String) Specify the host name or IP address to which matching documents should be routed.
 - `port` (Number) Specify the port to which matching documents should be routed.
 - `ssl` (Boolean) Specify whether the connection to the target destination uses TLS communications. The default is off. When set to on, the DataPower Gateway uses the TLS profile that is specified at the service level to establish TLS communications to the destination host.
-  - Default value: `false`
 - `xpath` (String) <p>The XPath expression applied to submitted documents. This expression evaluates to true or false. If the expression points to a particular node and that node is present in the submitted document, the expression evaluates to true.</p><p>This expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish mapping that then allow the use of qualified names in the XPath expression, shortening the expression.</p>

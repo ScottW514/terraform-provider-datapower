@@ -47,7 +47,7 @@ func GetDmLogIPFilterDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmLogIPFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"ip_address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the explicit IP address.", "", "").String,
+				MarkdownDescription: "Specify the explicit IP address.",
 				Computed:            true,
 			},
 		},

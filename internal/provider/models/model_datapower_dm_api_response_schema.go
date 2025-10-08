@@ -53,11 +53,11 @@ func GetDmAPIResponseSchemaDataSourceSchema() DataSourceSchema.NestedAttributeOb
 	var DmAPIResponseSchemaDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"status_code": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>", "", "").String,
+				MarkdownDescription: "<p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>",
 				Computed:            true,
 			},
 			"response_schema": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to describe the response message.", "", "api_schema").String,
+				MarkdownDescription: "Specify the API schema to describe the response message.",
 				Computed:            true,
 			},
 		},

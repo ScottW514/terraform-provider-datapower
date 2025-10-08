@@ -61,7 +61,6 @@ func (d *JSONSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The JSON settings specify constraints for parsing JSON messages. JSON settings work in conjunction with the parser limits in the XML manager. The more restrictive limits apply.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

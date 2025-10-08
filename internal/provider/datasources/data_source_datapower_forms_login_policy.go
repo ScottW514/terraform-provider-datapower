@@ -61,7 +61,6 @@ func (d *FormsLoginPolicyDataSource) Schema(ctx context.Context, req datasource.
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Define the policy for HTML form behavior. This policy identifies the location of the HTML login, logout, and error pages.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

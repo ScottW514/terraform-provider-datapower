@@ -61,7 +61,6 @@ func (d *APIClientIdentificationDataSource) Schema(ctx context.Context, req data
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The client identification API action examines the API key credentials that are carried in the API request and validates the subscription of the client.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

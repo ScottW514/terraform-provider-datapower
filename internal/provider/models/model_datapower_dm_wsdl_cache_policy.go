@@ -53,11 +53,11 @@ func GetDmWSDLCachePolicyDataSourceSchema() DataSourceSchema.NestedAttributeObje
 	var DmWSDLCachePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"match": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in this cache policy.", "", "").String,
+				MarkdownDescription: "Provide a literal or wildcard expression to define a URL set included in this cache policy.",
 				Computed:            true,
 			},
 			"ttl": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Configures lifetime in seconds of document. Enter an integer between 5 and 86400. The default value is 900.", "", "").AddIntegerRange(5, 86400).AddDefaultValue("900").String,
+				MarkdownDescription: "Configures lifetime in seconds of document. Enter an integer between 5 and 86400. The default value is 900.",
 				Computed:            true,
 			},
 		},

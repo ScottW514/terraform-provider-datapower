@@ -65,27 +65,27 @@ func GetDmHostKeyAlgorithmsDataSourceSchema(description string, cliAlias string,
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"ssh_ed25519": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ssh-ed25519", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "ssh-ed25519",
 				Computed:            true,
 			},
 			"ecdsa_sha2_nistp256": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp256", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "ecdsa-sha2-nistp256",
 				Computed:            true,
 			},
 			"ecdsa_sha2_nistp384": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp384", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "ecdsa-sha2-nistp384",
 				Computed:            true,
 			},
 			"ecdsa_sha2_nistp521": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ecdsa-sha2-nistp521", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "ecdsa-sha2-nistp521",
 				Computed:            true,
 			},
 			"rsa_sha2_512": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-512", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "rsa-sha2-512",
 				Computed:            true,
 			},
 			"rsa_sha2_256": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("rsa-sha2-256", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "rsa-sha2-256",
 				Computed:            true,
 			},
 		},

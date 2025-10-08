@@ -61,7 +61,6 @@ func (d *MTOMPolicyDataSource) Schema(ctx context.Context, req datasource.Schema
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An MTOM policy provides a mechanism for optimizing the transmission and wire format of an XML/SOAP message. Optimization is performed by selecting elements with base64-encoded character data. The selected elements are decoded and attached as MIME attachment parts before transmission. Decoding before transmission reduces the overhead that is associated with base64-encoded data.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

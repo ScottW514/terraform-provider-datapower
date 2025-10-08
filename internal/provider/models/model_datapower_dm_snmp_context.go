@@ -52,11 +52,11 @@ func GetDmSnmpContextDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmSnmpContextDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"context": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("An SNMPv3 context that will allow access to an application domain.", "", "").String,
+				MarkdownDescription: "An SNMPv3 context that will allow access to an application domain.",
 				Computed:            true,
 			},
 			"domain": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.", "", "domain").String,
+				MarkdownDescription: "The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.",
 				Computed:            true,
 			},
 		},

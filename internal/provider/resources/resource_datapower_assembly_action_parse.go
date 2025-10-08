@@ -85,20 +85,20 @@ func (r *AssemblyActionParseResource) Schema(ctx context.Context, req resource.S
 			"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceResourceSchema("Specify the parse settings configuration. A parse settings configuration defines the constraints on the documents to parse. You can configure the constraints by specifying a URL reference from which to retrieve the constraints definition. You can also specify a literal configuration string in XML management interface or REST management interface format that contains the constraints definition. You can also select a parse settings configuration from the list in Object reference to retrieve constraints definition. Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method.", "parse-settings-reference", "", false),
 			"input": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable in the API context that contains the message to parse. The content of the <tt>body</tt> field is the input. The default variable is <tt>message</tt> .", "input", "").AddDefaultValue("message").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("message"),
 			},
 			"warn_on_empty_input": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Warn on empty input", "warn-on-empty-input", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_content_type": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to attempt a parse with the specified content type. This property is only applicable when the expected content type is either JSON or XML. When enabled, the action fails when the content type does not match the parse-settings. For example, <tt>Content-Type: application/json</tt> and the setting is configured for XML. If configured to detect, forced to the specified content type.", "use-content-type", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"output": schema.StringAttribute{
@@ -119,8 +119,8 @@ func (r *AssemblyActionParseResource) Schema(ctx context.Context, req resource.S
 			},
 			"action_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

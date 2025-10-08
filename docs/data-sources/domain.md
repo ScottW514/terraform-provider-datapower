@@ -80,17 +80,11 @@ Optional:
 Read-Only:
 
 - `copy_from` (Boolean) Allow files to be copied from
-  - Default value: `true`
 - `copy_to` (Boolean) Allow files to be copied to
-  - Default value: `true`
 - `delete` (Boolean) Allow files to be deleted
-  - Default value: `true`
 - `display` (Boolean) Allow file content to be displayed
-  - Default value: `true`
 - `exec` (Boolean) Allow files to be run as scripts
-  - Default value: `true`
 - `subdir` (Boolean) Allow subdirectories to be created
-  - Default value: `true`
 
 
 <a id="nestedatt--result--monitoring_map"></a>
@@ -99,6 +93,4 @@ Read-Only:
 Read-Only:
 
 - `audit` (Boolean) Enable auditing
-  - Default value: `false`
 - `log` (Boolean) Enable logging
-  - Default value: `false`

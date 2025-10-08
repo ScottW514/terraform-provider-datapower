@@ -52,11 +52,11 @@ func GetDmACEDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmACEDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"access": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow or deny access. <ul><li>When allow, the range of address is granted access to the service.</li><li>When deny, the range of addresses is denied access to the service.</li></ul>", "", "").AddStringEnum("allow", "deny").String,
+				MarkdownDescription: "Specify whether to allow or deny access. <ul><li>When allow, the range of address is granted access to the service.</li><li>When deny, the range of addresses is denied access to the service.</li></ul>",
 				Computed:            true,
 			},
 			"address": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the contiguous range of IP addresses that are granted or denied access. Enter the value as an IP address and network mask.", "", "").String,
+				MarkdownDescription: "Specify the contiguous range of IP addresses that are granted or denied access. Enter the value as an IP address and network mask.",
 				Computed:            true,
 			},
 		},

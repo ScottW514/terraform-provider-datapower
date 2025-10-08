@@ -91,8 +91,8 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"sandbox": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the APIs in this catalog are for test purposes. By default, a catalog is not for test purposes.", "sandbox", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"org_id": schema.StringAttribute{
@@ -105,14 +105,14 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"catalog_id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Catalog ID", "catalog-id", "").AddDefaultValue("default-catalog-id").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default-catalog-id"),
 			},
 			"catalog_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Catalog name", "catalog-name", "").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"dev_portal_endpoint": schema.StringAttribute{
@@ -121,8 +121,8 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"cache_capacity": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of subscriber entries to cache. Enter a value in the range 8 - 51200. The default value is 128. When the limit is exceeded, the least recently used (LRU) entry is removed.", "cache-capacity", "").AddIntegerRange(8, 51200).AddDefaultValue("128").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(8, 51200),
 				},
@@ -135,8 +135,8 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"use_rate_limit_group": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use rate limit group", "use-rate-limit-group", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"default_rate_limit": schema.ListNestedAttribute{
@@ -165,20 +165,20 @@ func (r *APICollectionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"enforce_pre_assembly_rate_limits": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enforce the API rate and burst limits from the plan. When disabled, only the limits specified in a rate limit assembly action are applied to this API.", "enforce-pre-assembly-rate-limits", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"api_processing_rule": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the processing rule to process API requests. When your collection requires custom processing, use API Connect global policies to define the custom rules.", "processing-rule", "api_rule").AddDefaultValue("default-api-rule").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default-api-rule"),
 			},
 			"api_error_rule": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the processing rule to handle errors during API processing. When your collection requires custom processing, use API Connect global policies to define the custom rules.", "error-rule", "api_rule").AddDefaultValue("default-api-error-rule").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default-api-error-rule"),
 			},
 			"assembly_preflow": schema.StringAttribute{

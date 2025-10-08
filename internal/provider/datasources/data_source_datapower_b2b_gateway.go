@@ -61,7 +61,6 @@ func (d *B2BGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A B2B gateway can handle B2B messages transmitted over a variety of AS and non-AS protocols for inbound and outbound flows, as well as MDN messages.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

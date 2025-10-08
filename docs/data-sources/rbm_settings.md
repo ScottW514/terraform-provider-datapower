@@ -115,6 +115,4 @@ Optional:
 Read-Only:
 
 - `certificate` (Boolean) CA-signed user certificate
-  - Default value: `false`
 - `password` (Boolean) Password
-  - Default value: `false`

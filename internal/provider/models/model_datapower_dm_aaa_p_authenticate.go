@@ -994,230 +994,230 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"au_method": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the extracted identity.", "method", "").AddStringEnum("xmlfile", "ldap", "tivoli", "netegrity", "oblix", "cleartrust", "radius", "client-ssl", "validate-signer", "saml-signature", "saml-artifact", "saml-authen-query", "ws-trust", "ws-secureconversation", "token", "kerberos", "ltpa", "binarytokenx509", "zosnss", "verified-oauth", "custom").AddDefaultValue("ldap").String,
+				MarkdownDescription: "Specify the method to authenticate the extracted identity.",
 				Computed:            true,
 			},
 			"au_custom_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the processing file. This file is the stylesheet or GatewayScript that authenticates the extracted identity.", "custom-url", "").AddRequiredWhen(DmAAAPAuthenticateAUCustomURLCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUCustomURLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the location of the processing file. This file is the stylesheet or GatewayScript that authenticates the extracted identity.",
 				Computed:            true,
 			},
 			"au_map_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA information file. This file contains a list of authenticated identities and the various values needed to authenticate successfully.", "xmlfile-url", "").AddRequiredWhen(DmAAAPAuthenticateAUMapURLCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUMapURLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the location of the AAA information file. This file contains a list of authenticated identities and the various values needed to authenticate successfully.",
 				Computed:            true,
 			},
 			"au_host": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the authentication server.", "remote-host", "").AddRequiredWhen(DmAAAPAuthenticateAUHostCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUHostIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the host name or IP address of the authentication server.",
 				Computed:            true,
 			},
 			"au_port": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify this listening port on the authentication server.", "remote-port", "").AddDefaultValue("389").AddRequiredWhen(DmAAAPAuthenticateAUPortCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUPortIgnoreVal.String()).String,
+				MarkdownDescription: "Specify this listening port on the authentication server.",
 				Computed:            true,
 			},
 			"au_ssl_valcred": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validation credentials that contain the certificate to validate the remote TLS peer.", "valcred", "crypto_val_cred").AddNotValidWhen(DmAAAPAuthenticateAUSSLValcredIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the validation credentials that contain the certificate to validate the remote TLS peer.",
 				Computed:            true,
 			},
 			"au_cache_allow": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to control the caching of AAA authentication results. A protocol TTL is available only with SAML. The default value is absolute.", "cache-type", "").AddStringEnum("absolute", "disabled", "maximum", "minimum").AddDefaultValue("absolute").String,
+				MarkdownDescription: "Specify how to control the caching of AAA authentication results. A protocol TTL is available only with SAML. The default value is absolute.",
 				Computed:            true,
 			},
 			"au_cache_ttl": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to cache authentication decisions. Enter a value in the range 1 - 86400. The default value is 3.", "cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("3").AddNotValidWhen(DmAAAPAuthenticateAUCacheTTLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the duration in seconds to cache authentication decisions. Enter a value in the range 1 - 86400. The default value is 3.",
 				Computed:            true,
 			},
 			"au_kerberos_principal": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the principal name that must appear as the server name in the Kerberos ticket.This value must be a full principal name, including the Kerberos realm. For example, <tt>foo/bar@REALM</tt> .", "kerberos-principal", "").AddNotValidWhen(DmAAAPAuthenticateAUKerberosPrincipalIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the principal name that must appear as the server name in the Kerberos ticket.This value must be a full principal name, including the Kerberos realm. For example, <tt>foo/bar@REALM</tt> .",
 				Computed:            true,
 			},
 			"au_kerberos_password": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddNotValidWhen(DmAAAPAuthenticateAUKerberosPasswordIgnoreVal.String()).String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"au_clear_trust_server_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the ClearTrust server for authentication.", "cleartrust-url", "").AddRequiredWhen(DmAAAPAuthenticateAUClearTrustServerURLCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUClearTrustServerURLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the URL to access the ClearTrust server for authentication.",
 				Computed:            true,
 			},
 			"au_clear_trust_application": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddNotValidWhen(DmAAAPAuthenticateAUClearTrustApplicationIgnoreVal.String()).String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"au_saml_artifact_responder": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the SAML artifact responder.", "saml-artifact-responder", "").AddNotValidWhen(DmAAAPAuthenticateAUSAMLArtifactResponderIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the URL of the SAML artifact responder.",
 				Computed:            true,
 			},
 			"au_kerberos_verify_signature": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddDefaultValue("true").AddNotValidWhen(DmAAAPAuthenticateAUKerberosVerifySignatureIgnoreVal.String()).String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"au_netegrity_base_uri": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base URI sent to CA Single Sign-On server. The base URI is combined with the host and port to form the URL for attempting CA Single Sign-On authentication. This base URI must equal the concatenation of the <tt>servlet-name</tt> and its <tt>url-pattern</tt> set in its <tt>web.xml</tt> configuration file. If the <tt>servlet-name</tt> is <tt>datapoweragent</tt> and the <tt>url-pattern</tt> is <tt>/</tt> , then the base URI must be <tt>datapoweragent/</tt> .", "netegrity-base-uri", "").AddNotValidWhen(DmAAAPAuthenticateAUNetegrityBaseURIIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the base URI sent to CA Single Sign-On server. The base URI is combined with the host and port to form the URL for attempting CA Single Sign-On authentication. This base URI must equal the concatenation of the <tt>servlet-name</tt> and its <tt>url-pattern</tt> set in its <tt>web.xml</tt> configuration file. If the <tt>servlet-name</tt> is <tt>datapoweragent</tt> and the <tt>url-pattern</tt> is <tt>/</tt> , then the base URI must be <tt>datapoweragent/</tt> .",
 				Computed:            true,
 			},
 			"au_saml_auth_query_server": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the SAML authentication query server and to post a SAML authentication query.", "saml-authen-query-url", "").AddNotValidWhen(DmAAAPAuthenticateAUSAMLAuthQueryServerIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the URL to access the SAML authentication query server and to post a SAML authentication query.",
 				Computed:            true,
 			},
 			"au_saml_version": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the version of SAML messages. The default value is 1.1.", "saml-version", "").AddStringEnum("2.0", "1.1", "1.0").AddDefaultValue("1.1").AddRequiredWhen(DmAAAPAuthenticateAUSAMLVersionCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUSAMLVersionIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the version of SAML messages. The default value is 1.1.",
 				Computed:            true,
 			},
 			"au_ldap_prefix": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix to construct the LDAP lookup DN. The default value is <tt>cn=</tt> .", "ldap-prefix", "").AddDefaultValue("cn=").AddNotValidWhen(DmAAAPAuthenticateAULDAPPrefixIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the prefix to construct the LDAP lookup DN. The default value is <tt>cn=</tt> .",
 				Computed:            true,
 			},
 			"au_ldap_suffix": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the suffix used to construct the LDAP lookup DN.", "ldap-suffix", "").AddNotValidWhen(DmAAAPAuthenticateAULDAPSuffixIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the suffix used to construct the LDAP lookup DN.",
 				Computed:            true,
 			},
 			"au_ldap_load_balance_group": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the load balancer group that contains the LDAP servers.", "ldap-lbgroup", "load_balancer_group").AddNotValidWhen(DmAAAPAuthenticateAULDAPLoadBalanceGroupIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the name of the load balancer group that contains the LDAP servers.",
 				Computed:            true,
 			},
 			"au_kerberos_keytab": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the keytab for the Kerberos server principal. This keytab is required to decrypt the client Kerberos ticket.", "kerberos-keytab", "crypto_kerberos_keytab").AddRequiredWhen(DmAAAPAuthenticateAUKerberosKeytabCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUKerberosKeytabIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the name of the keytab for the Kerberos server principal. This keytab is required to decrypt the client Kerberos ticket.",
 				Computed:            true,
 			},
 			"au_ws_trust_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL to access the WS-Trust server.", "ws-trust-url", "").AddRequiredWhen(DmAAAPAuthenticateAUWSTrustURLCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUWSTrustURLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the URL to access the WS-Trust server.",
 				Computed:            true,
 			},
 			"au_saml2_issuer": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddNotValidWhen(DmAAAPAuthenticateAUSAML2IssuerIgnoreVal.String()).String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"au_signer_valcred": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the validation credentials to verify the signature validity for the incoming message. When validation credentials are set, the signer certificate must be contained in the validation credentials or the signature is rejected as untrusted.", "valcred", "crypto_val_cred").AddNotValidWhen(DmAAAPAuthenticateAUSignerValcredIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the name of the validation credentials to verify the signature validity for the incoming message. When validation credentials are set, the signer certificate must be contained in the validation credentials or the signature is rejected as untrusted.",
 				Computed:            true,
 			},
 			"au_signed_xpath": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression for the XML entity that is protected by signature. After the signature validity is verified, this property verifies if the specific XPath expression is part of the signed message.", "signed-xpath", "").AddNotValidWhen(DmAAAPAuthenticateAUSignedXPathIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the XPath expression for the XML entity that is protected by signature. After the signature validity is verified, this property verifies if the specific XPath expression is part of the signed message.",
 				Computed:            true,
 			},
 			"au_ldap_bind_dn": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the DN to bind to the LDAP server for an LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.", "ldap-bind-dn", "").AddNotValidWhen(DmAAAPAuthenticateAULDAPBindDNIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the DN to bind to the LDAP server for an LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.",
 				Computed:            true,
 			},
 			"au_ldap_search_attribute": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute to use in the LDAP search. The default value is userPassword.", "ldap-search-attr", "").AddDefaultValue("userPassword").AddNotValidWhen(DmAAAPAuthenticateAULDAPSearchAttributeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the attribute to use in the LDAP search. The default value is userPassword.",
 				Computed:            true,
 			},
 			"au_ltpa_token_versions_bitmap": GetDmLTPATokenVersionDataSourceSchema("Specify which versions of LTPA tokens are acceptable.", "lpta-version", ""),
 			"au_ltpa_key_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the LTPA key file that contains the crypto material to create an LTPA token that can be consumed by WebSphere (both version 1 and version 2) or Domino.</p><ul><li>For WebSphere token creation, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino token creation, the key file contains only the base 64-encoded Domino shared secret.</li></ul>", "lpta-key-file", "").AddRequiredWhen(DmAAAPAuthenticateAULTPAKeyFileCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAULTPAKeyFileIgnoreVal.String()).String,
+				MarkdownDescription: "<p>Specify the LTPA key file that contains the crypto material to create an LTPA token that can be consumed by WebSphere (both version 1 and version 2) or Domino.</p><ul><li>For WebSphere token creation, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino token creation, the key file contains only the base 64-encoded Domino shared secret.</li></ul>",
 				Computed:            true,
 			},
 			"au_ltpa_stash_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify stash file file that contains the password for the LTPA key file.", "lpta-stash-file", "").AddNotValidWhen(DmAAAPAuthenticateAULTPAStashFileIgnoreVal.String()).String,
+				MarkdownDescription: "Specify stash file file that contains the password for the LTPA key file.",
 				Computed:            true,
 			},
 			"au_binary_token_x509_valcred": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the validation credentials to validate the X.509 certificate in the BinarySecurityToken.", "x509-bin-token-valcred", "crypto_val_cred").AddRequiredWhen(DmAAAPAuthenticateAUBinaryTokenX509ValcredCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUBinaryTokenX509ValcredIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the name of the validation credentials to validate the X.509 certificate in the BinarySecurityToken.",
 				Computed:            true,
 			},
 			"au_tam_server": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the Access Manager client.", "tam", "tam").AddRequiredWhen(DmAAAPAuthenticateAUTAMServerCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUTAMServerIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the name of the Access Manager client.",
 				Computed:            true,
 			},
 			"au_allow_remote_token_reference": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to allow the retrieval of a remote security token. By default, retrieval is prohibited.</p><p>Examples of remote security tokens are as follows.</p><ul><li>The SAML assertion holds the signer public certificate.</li><li>The SAML assertion at which the signed Security Token Reference (STR dereference transform) points.</li></ul>", "remote-token-allowed", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPAuthenticateAUAllowRemoteTokenReferenceIgnoreVal.String()).String,
+				MarkdownDescription: "<p>Specify whether to allow the retrieval of a remote security token. By default, retrieval is prohibited.</p><p>Examples of remote security tokens are as follows.</p><ul><li>The SAML assertion holds the signer public certificate.</li><li>The SAML assertion at which the signed Security Token Reference (STR dereference transform) points.</li></ul>",
 				Computed:            true,
 			},
 			"au_remote_token_process_service": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the URL for a service that can process the remote security token. This service accepts the WS-Security token as the request of the SOAP call and, if successful, provides the final security token as the response.</p><p>The remote WS-Security token can be signed, encrypted, or encoded DataPower services with different processing actions can process the remote token. Processing can be by decrypting parts of a remote SAML assertion, doing an XSLT transform, or with an AAA policy to assert the token.</p>", "remote-token-url", "").AddNotValidWhen(DmAAAPAuthenticateAURemoteTokenProcessServiceIgnoreVal.String()).String,
+				MarkdownDescription: "<p>Specify the URL for a service that can process the remote security token. This service accepts the WS-Security token as the request of the SOAP call and, if successful, provides the final security token as the response.</p><p>The remote WS-Security token can be signed, encrypted, or encoded DataPower services with different processing actions can process the remote token. Processing can be by decrypting parts of a remote SAML assertion, doing an XSLT transform, or with an AAA policy to assert the token.</p>",
 				Computed:            true,
 			},
 			"au_ws_trust_version": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the version of the WS-Trust and the WS-SecureConversation specifications to use when WS-Trust authentication sends a request to the remote STS. Usually these specifications are updated together. The default value is 1.2.", "ws-trust-version", "").AddStringEnum("1.3", "1.2", "1.1").AddDefaultValue("1.2").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustVersionIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the version of the WS-Trust and the WS-SecureConversation specifications to use when WS-Trust authentication sends a request to the remote STS. Usually these specifications are updated together. The default value is 1.2.",
 				Computed:            true,
 			},
 			"au_ldap_search_for_dn": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve the user DN with an LDAP search. By default, the login name that the user presents is used with the LDAP prefix and LDAP suffix to construct the user DN.", "ldap-search-for-dn", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPAuthenticateAULDAPSearchForDNIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to retrieve the user DN with an LDAP search. By default, the login name that the user presents is used with the LDAP prefix and LDAP suffix to construct the user DN.",
 				Computed:            true,
 			},
 			"au_ldap_search_parameters": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of an LDAP search parameters that retrieves the user DN.", "ldap-search-param", "ldap_search_parameters").AddRequiredWhen(DmAAAPAuthenticateAULDAPSearchParametersCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAULDAPSearchParametersIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the name of an LDAP search parameters that retrieves the user DN.",
 				Computed:            true,
 			},
 			"au_ws_trust_require_client_entropy": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to require client entropy in the WS-Trust request. When required, a WS-Trust entropy element is sent by the client as part of the security token request exchange. By default, entropy is not required.</p><ul><li>If a WS-Trust encryption certificate is used, the client entropy material is encrypted.</li><li>If a WS-Trust encryption certificate is not used, a WS-Trust <tt>BinarySecret</tt> element contains the entropy material. In this case, use a TLS profile to secure the exchange with the WS-Trust server.</li></ul>", "trust-require-client-entropy", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustRequireClientEntropyIgnoreVal.String()).String,
+				MarkdownDescription: "<p>Specify whether to require client entropy in the WS-Trust request. When required, a WS-Trust entropy element is sent by the client as part of the security token request exchange. By default, entropy is not required.</p><ul><li>If a WS-Trust encryption certificate is used, the client entropy material is encrypted.</li><li>If a WS-Trust encryption certificate is not used, a WS-Trust <tt>BinarySecret</tt> element contains the entropy material. In this case, use a TLS profile to secure the exchange with the WS-Trust server.</li></ul>",
 				Computed:            true,
 			},
 			"au_ws_trust_client_entropy_size": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the size in bytes of the WS-Trust client entropy material. The size refers to the length of the entropy before base 64-encoding. Enter a value in the range 8 - 128. The default value is 32.", "trust-client-entropy-size", "").AddIntegerRange(8, 128).AddDefaultValue("32").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustClientEntropySizeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the size in bytes of the WS-Trust client entropy material. The size refers to the length of the entropy before base 64-encoding. Enter a value in the range 8 - 128. The default value is 32.",
 				Computed:            true,
 			},
 			"au_ws_trust_require_server_entropy": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require server entropy in the WS-Trust response. When required, a WS-Trust <tt>entropy</tt> element must be returned to the client as part of the security token request exchange. By default, entropy is not required.", "trust-require-server-entropy", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustRequireServerEntropyIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to require server entropy in the WS-Trust response. When required, a WS-Trust <tt>entropy</tt> element must be returned to the client as part of the security token request exchange. By default, entropy is not required.",
 				Computed:            true,
 			},
 			"au_ws_trust_server_entropy_size": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum size in bytes for the WS-Trust server entropy. The size refers to the length of the entropy before base 64-encoding. Enter any value in the range 8 - 128. The default value is 32.", "trust-server-entropy-size", "").AddIntegerRange(8, 128).AddDefaultValue("32").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustServerEntropySizeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the minimum size in bytes for the WS-Trust server entropy. The size refers to the length of the entropy before base 64-encoding. Enter any value in the range 8 - 128. The default value is 32.",
 				Computed:            true,
 			},
 			"au_ws_trust_require_rstc": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the message exchange with the client requires a WS-Trust <tt>RequestSecurityToken</tt> or WS-Trust <tt>RequestSecurityTokenCollection</tt> element to be sent by the client. By default, the element is not required.", "trust-require-rstc", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustRequireRSTCIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether the message exchange with the client requires a WS-Trust <tt>RequestSecurityToken</tt> or WS-Trust <tt>RequestSecurityTokenCollection</tt> element to be sent by the client. By default, the element is not required.",
 				Computed:            true,
 			},
 			"au_ws_trust_require_applies_to_header": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require a WS-Addressing <tt>AppliesTo</tt> header in the message exchange. By default, the header is not required.", "trust-require-applies-to-header", "").AddDefaultValue("false").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustRequireAppliesToHeaderIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to require a WS-Addressing <tt>AppliesTo</tt> header in the message exchange. By default, the header is not required.",
 				Computed:            true,
 			},
 			"au_ws_trust_applies_to_header": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the WS-Addressing <tt>AppliesTo</tt> header. The <tt>header</tt> element is included in the WS-Trust request security token message sent to the WS-Trust server.", "trust-applies-to-header", "").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustAppliesToHeaderIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the value for the WS-Addressing <tt>AppliesTo</tt> header. The <tt>header</tt> element is included in the WS-Trust request security token message sent to the WS-Trust server.",
 				Computed:            true,
 			},
 			"au_ws_trust_encryption_certificate": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate to encrypt WS-Trust elements for recipient. If client entropy is configured, the certificate public key encrypts the material for the recipient. If client entropy is configured and this certificate is not specified, use a TLS profile to secure the message exchange.", "trust-encryption-certificate", "crypto_certificate").AddNotValidWhen(DmAAAPAuthenticateAUWSTrustEncryptionCertificateIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the certificate to encrypt WS-Trust elements for recipient. If client entropy is configured, the certificate public key encrypts the material for the recipient. If client entropy is configured and this certificate is not specified, use a TLS profile to secure the message exchange.",
 				Computed:            true,
 			},
 			"au_zos_nss_config": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the z/OS NSS client for SAF communication.", "zos-nss-au", "zos_nss_client").AddRequiredWhen(DmAAAPAuthenticateAUZOSNSSConfigCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUZOSNSSConfigIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the name of the z/OS NSS client for SAF communication.",
 				Computed:            true,
 			},
 			"au_ldap_attributes": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of the extra user attributes to retrieve from the LDAP user store and kept in a <tt>var://context/ldap/auxiliary-attributes</tt> context variable for future use, such as AAA postprocessing. To define the list of LDAP attributes as the auxiliary information for AAA, use the comma (,) as the delimiter. For example, <tt>email, cn, userPassword</tt> .", "au-ldap-attributes", "").AddNotValidWhen(DmAAAPAuthenticateAULDAPAttributesIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the list of the extra user attributes to retrieve from the LDAP user store and kept in a <tt>var://context/ldap/auxiliary-attributes</tt> context variable for future use, such as AAA postprocessing. To define the list of LDAP attributes as the auxiliary information for AAA, use the comma (,) as the delimiter. For example, <tt>email, cn, userPassword</tt> .",
 				Computed:            true,
 			},
 			"au_skew_time": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. <p>When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>", "au-skew-time", "").AddDefaultValue("0").AddNotValidWhen(DmAAAPAuthenticateAUSkewTimeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the skew time in seconds. The skew time is the difference between the clock time on the DataPower Gateway and the time on other systems. The default value is 0. <p>When defined, the expiration of the SAML assertion takes the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>",
 				Computed:            true,
 			},
 			"au_tam_pac_return": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authentication for further use. You can use the PAC in the postprocessing phase. By default, The default the PAC token is not returned.", "tam-pac-return", "").AddDefaultValue("false").AddRequiredWhen(DmAAAPAuthenticateAUTAMPACReturnCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUTAMPACReturnIgnoreVal.String()).String,
+				MarkdownDescription: "Specify whether to return the Access Manager privilege attribute certificate (PAC) token from a successful authentication for further use. You can use the PAC in the postprocessing phase. By default, The default the PAC token is not returned.",
 				Computed:            true,
 			},
 			"au_ldap_read_timeout": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for a response from the LDAP server before the LDAP connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out. <p>If you configure an LDAP connection pool and assign it to the XML manager, the service can use this LDAP connection pool. The LDAP read timer can work with the idle timer of the LDAP connection pool to remove idle connections from the LDAP connection pool.</p>", "ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").AddNotValidWhen(DmAAAPAuthenticateAULDAPReadTimeoutIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the duration in seconds to wait for a response from the LDAP server before the LDAP connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out. <p>If you configure an LDAP connection pool and assign it to the XML manager, the service can use this LDAP connection pool. The LDAP read timer can work with the idle timer of the LDAP connection pool to remove idle connections from the LDAP connection pool.</p>",
 				Computed:            true,
 			},
 			"au_ssl_client_config_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(DmAAAPAuthenticateAUSSLClientConfigTypeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the TLS profile type to secure connections.",
 				Computed:            true,
 			},
 			"au_ssl_client_profile": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections.", "ssl-client", "ssl_client_profile").AddNotValidWhen(DmAAAPAuthenticateAUSSLClientProfileIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the TLS client profile to secure connections.",
 				Computed:            true,
 			},
 			"au_ldap_bind_password_alias": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the alias for the password to bind to the LDAP server for the LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.", "ldap-bind-password-alias", "password_alias").AddNotValidWhen(DmAAAPAuthenticateAULDAPBindPasswordAliasIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the alias for the password to bind to the LDAP server for the LDAP search. This value is used when the password from the extract identity phase is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for the corresponding password to verify the PasswordDigest.",
 				Computed:            true,
 			},
 			"au_ltpa_key_file_password_alias": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the password that decrypts the LTPA key file. This password decrypts certain entries in a WebSphere LTPA key file. This password is not applicable to Domino key files.", "ltpa-key-password-alias", "password_alias").AddRequiredWhen(DmAAAPAuthenticateAULTPAKeyFilePasswordAliasCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAULTPAKeyFilePasswordAliasIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the password alias of the password that decrypts the LTPA key file. This password decrypts certain entries in a WebSphere LTPA key file. This password is not applicable to Domino key files.",
 				Computed:            true,
 			},
 			"au_sm_request_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of request to make. By default, the request is against the CA Single Sign-On web agent.", "sm-request-type", "").AddStringEnum("webagent", "webservice").AddDefaultValue("webagent").AddRequiredWhen(DmAAAPAuthenticateAUSMRequestTypeCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUSMRequestTypeIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the type of request to make. By default, the request is against the CA Single Sign-On web agent.",
 				Computed:            true,
 			},
 			"au_sm_cookie_flow": GetDmSMFlowDataSourceSchema("Specify which flow to include the authentication session cookie.", "sm-cookie-flow", ""),
 			"au_sm_header_flow": GetDmSMFlowDataSourceSchema("Identifies the flow to include the CA Single Sign-On headers that are generated during authentication. The CA Single Sign-On HTTP headers start with <tt>SM_</tt> .", "sm-header-flow", ""),
 			"au_sm_cookie_attributes": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.", "cookie-attributes", "cookie_attribute_policy").AddNotValidWhen(DmAAAPAuthenticateAUSMCookieAttributesIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the cookie attribute policy that allows predefined or custom attributes to be included in CA Single Sign-On cookies.",
 				Computed:            true,
 			},
 			"au_cache_control": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage the caching of failures. By default, all failures are cached.", "cache-control", "").AddStringEnum("default", "disable-all", "disable-ldap-failures").AddDefaultValue("default").String,
+				MarkdownDescription: "Specify how to manage the caching of failures. By default, all failures are cached.",
 				Computed:            true,
 			},
 		},

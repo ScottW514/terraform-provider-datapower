@@ -61,7 +61,6 @@ func (d *ZosNSSClientDataSource) Schema(ctx context.Context, req datasource.Sche
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The z/OS NSS client object provides the parameters for authentication with SAF on a z/OS Communications Server.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

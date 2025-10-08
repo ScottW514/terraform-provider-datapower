@@ -50,11 +50,11 @@ func GetDmPolicyMapDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"match": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
+				MarkdownDescription: "Select the Matching Rule that defines the matching criteria.",
 				Computed:            true,
 			},
 			"rule": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the Processing Rule to run.", "", "style_policy_rule").String,
+				MarkdownDescription: "Select the Processing Rule to run.",
 				Computed:            true,
 			},
 		},

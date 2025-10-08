@@ -59,8 +59,8 @@ func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.Sche
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
@@ -69,14 +69,14 @@ func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"frozen_enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to freeze the GatewayScript built-in object prototypes. <ul><li>When frozen, you cannot modify, add, or remove prototypes. This setting is the default setting.</li><li>When not frozen, you can manipulate prototypes.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>", "freeze-prototype", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"untrusted_code_mitigated": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable untrusted code mitigation to protect against Speculative Side-Channel Attacks (SSCA). <ul><li>When enabled, protects untrusted code against SSCA. This setting is the default setting.</li><li>When disabled, does not protect untrusted code against SSCA.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>", "untrusted-code-mitigations", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"reload_needed": schema.BoolAttribute{

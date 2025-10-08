@@ -105,8 +105,8 @@ func (r *KafkaSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 			},
 			"batch_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of messages to retrieve and process as a batch. The handler attempts to retrieve the number of specified messages from the consumer and processes these messages as a batch. Enter a value in the range 1 - 65535. The default value is 1.", "batch-size", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},

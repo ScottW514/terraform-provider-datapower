@@ -61,7 +61,6 @@ func (d *MCFHttpMethodDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Filter based on the HTTP method. The filter value is matched to the HTTP method in the request message.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

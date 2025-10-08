@@ -91,14 +91,14 @@ func (r *CryptoKerberosKeytabResource) Schema(ctx context.Context, req resource.
 			},
 			"use_replay_cache": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Whether to cache authenticator values from AP-REQ tokens that were verified with this keytab. Caching prevents replay attacks.", "use-replay-cache", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"generate_gss_checksum": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Whether to generate a GSS-API checksum when generating AP-REQ tokens with this keytab.", "generate-gss-checksum", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"gss_checksum_flags": models.GetDmGssChecksumFlagsResourceSchema("Which flags to set in GSS-API checksums when generating AP-REQ tokens with this keytab. Refer to RFC 4121 for the flag definitions.", "gss-checksum-flags", "", false),

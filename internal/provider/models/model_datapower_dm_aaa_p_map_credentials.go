@@ -98,19 +98,19 @@ func GetDmAAAPMapCredentialsDataSourceSchema(description string, cliAlias string
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"mc_method": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to map credentials.", "method", "").AddStringEnum("none", "custom", "xmlfile", "xpath", "ws-secureconversation", "TFIM").AddDefaultValue("none").String,
+				MarkdownDescription: "Specify the method to map credentials.",
 				Computed:            true,
 			},
 			"mc_custom_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.", "custom-url", "").AddRequiredWhen(DmAAAPMapCredentialsMCCustomURLCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCCustomURLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the location of the stylesheet or GatewayScript file that defines how to map credentials.",
 				Computed:            true,
 			},
 			"mc_map_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the AAA XML file that defines how to map credentials.", "xmlfile-url", "").AddRequiredWhen(DmAAAPMapCredentialsMCMapURLCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCMapURLIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the location of the AAA XML file that defines how to map credentials.",
 				Computed:            true,
 			},
 			"mc_map_xpath": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to map credentials.", "xpath", "").AddRequiredWhen(DmAAAPMapCredentialsMCMapXPathCondVal.String()).AddNotValidWhen(DmAAAPMapCredentialsMCMapXPathIgnoreVal.String()).String,
+				MarkdownDescription: "Specify the XPath expression to map credentials.",
 				Computed:            true,
 			},
 		},

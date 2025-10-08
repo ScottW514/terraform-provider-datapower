@@ -95,8 +95,8 @@ func (r *MessageMatchingResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"http_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP method included in this traffic definition. The default value is any, which indicates that HTTP method is not a match criteria.", "method", "").AddStringEnum("any", "OPTIONS", "GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "TRACE", "CONNECT").AddDefaultValue("any").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("any", "OPTIONS", "GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "TRACE", "CONNECT"),
 				},

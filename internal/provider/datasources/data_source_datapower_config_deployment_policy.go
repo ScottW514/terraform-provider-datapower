@@ -61,7 +61,6 @@ func (d *ConfigDeploymentPolicyDataSource) Schema(ctx context.Context, req datas
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A deployment policy contains a set of rules that are applied during a configuration import. A deployment policy can be used to accept, filter, or modify configuration during import.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

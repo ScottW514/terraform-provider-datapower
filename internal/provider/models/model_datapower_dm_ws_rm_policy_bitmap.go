@@ -59,19 +59,19 @@ func GetDmWSRMPolicyBitmapDataSourceSchema(description string, cliAlias string, 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"optional": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging is optional", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Reliable Messaging is optional",
 				Computed:            true,
 			},
 			"sequence_transport_security": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("RM Sequence must be bound to underlying transport-level security protocol", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "RM Sequence must be bound to underlying transport-level security protocol",
 				Computed:            true,
 			},
 			"in_order": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("RM messages must be delivered in the same order as they have been sent by the source", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "RM messages must be delivered in the same order as they have been sent by the source",
 				Computed:            true,
 			},
 			"two_way": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Response messages require RM Sequence headers", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Response messages require RM Sequence headers",
 				Computed:            true,
 			},
 		},

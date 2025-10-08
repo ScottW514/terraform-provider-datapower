@@ -56,15 +56,15 @@ func GetDmGatewayInOrderModeDataSourceSchema(description string, cliAlias string
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"request": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Request rule in order", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Request rule in order",
 				Computed:            true,
 			},
 			"backend": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Backend in order", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Backend in order",
 				Computed:            true,
 			},
 			"response": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Response rule in order", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Response rule in order",
 				Computed:            true,
 			},
 		},

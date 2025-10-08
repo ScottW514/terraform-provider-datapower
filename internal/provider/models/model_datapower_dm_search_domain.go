@@ -47,7 +47,7 @@ func GetDmSearchDomainDataSourceSchema() DataSourceSchema.NestedAttributeObject 
 	var DmSearchDomainDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"search_domain": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the domain name.", "", "").String,
+				MarkdownDescription: "Specify the domain name.",
 				Computed:            true,
 			},
 		},

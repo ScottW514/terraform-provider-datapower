@@ -61,7 +61,6 @@ func (d *LoadBalancerGroupDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The DataPower device distributes traffic to members of a Load Balancer Group. These are back end servers and not additional DataPower devices. A Load Balancer Group lists members of a virtual server group and sets the algorithm for balancing them. Periodic health checks can be performed. Load Balancers may also be used to provide redundant LDAP server access.</p><p>When created, a DataPower service can use a Load Balancer Group by associating it with an XML manager that is associated with this service.</p><p>The back end destination URL is set to the name of the Load Balancer Group (example: \"BackEndServers\").</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

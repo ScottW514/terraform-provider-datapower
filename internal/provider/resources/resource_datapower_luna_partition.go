@@ -106,8 +106,8 @@ func (r *LunaPartitionResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"login_role": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Login role", "login-role", "").AddStringEnum("co", "cu").AddDefaultValue("co").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("co", "cu"),
 				},

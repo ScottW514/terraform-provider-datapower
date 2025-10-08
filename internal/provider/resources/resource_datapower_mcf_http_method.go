@@ -83,8 +83,8 @@ func (r *MCFHttpMethodResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"http_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Method", "value", "").AddStringEnum("POST", "GET", "PUT", "PATCH", "DELETE", "HEAD").AddDefaultValue("GET").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("POST", "GET", "PUT", "PATCH", "DELETE", "HEAD"),
 				},

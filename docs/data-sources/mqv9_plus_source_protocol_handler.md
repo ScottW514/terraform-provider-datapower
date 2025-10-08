@@ -90,14 +90,8 @@ Optional:
 Read-Only:
 
 - `mqcih` (Boolean) CICS Bridge Header (MQCIH)
-  - Default value: `false`
 - `mqdlh` (Boolean) Dead Letter Header (MQDLH)
-  - Default value: `false`
 - `mqiih` (Boolean) IMS Information Header (MQIIH)
-  - Default value: `false`
 - `mqrfh` (Boolean) Rules and Formatting Header (MQRFH)
-  - Default value: `false`
 - `mqrfh2` (Boolean) Rules and Formatting Header (MQRFH2)
-  - Default value: `false`
 - `mqwih` (Boolean) Work Information Header (MQWIH)
-  - Default value: `false`

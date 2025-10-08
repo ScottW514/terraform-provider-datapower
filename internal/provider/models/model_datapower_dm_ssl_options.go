@@ -53,11 +53,11 @@ func GetDmSSLOptionsDataSourceSchema(description string, cliAlias string, refere
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"max_duration": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set maximum TLS session duration", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Set maximum TLS session duration",
 				Computed:            true,
 			},
 			"max_renegotiation": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set maximum number client initiated renegotiation allow", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Set maximum number client initiated renegotiation allow",
 				Computed:            true,
 			},
 		},

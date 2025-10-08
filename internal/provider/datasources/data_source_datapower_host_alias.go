@@ -60,7 +60,6 @@ func (d *HostAliasDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A host alias is a map between a local IP address to a local alias. The host alias is resolved like a static host entry. Host aliases provide a level of abstraction between concrete network addresses and configuration. You can use host aliases where you can define local IP addresses. Host aliases ease the export and migration of service among DataPower Gateway instances. The alias is exported, but the alias map is not. If the alias is defined on the destination system, the alias resolves to the IP address that is defined on the destination system.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

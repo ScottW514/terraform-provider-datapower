@@ -61,7 +61,6 @@ func (d *AssemblyActionGraphQLExecuteDataSource) Schema(ctx context.Context, req
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The GraphQL execute assembly action processes a GraphQL schema.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

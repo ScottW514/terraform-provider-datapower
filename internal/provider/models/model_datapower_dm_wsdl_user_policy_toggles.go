@@ -77,43 +77,43 @@ func GetDmWSDLUserPolicyTogglesDataSourceSchema(description string, cliAlias str
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"enable": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable this component", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Enable this component",
 				Computed:            true,
 			},
 			"publish": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Publish in WSDL", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Publish in WSDL",
 				Computed:            true,
 			},
 			"verify_faults": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Schema validate faults messages", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Schema validate faults messages",
 				Computed:            true,
 			},
 			"verify_headers": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Schema validate SOAP headers", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Schema validate SOAP headers",
 				Computed:            true,
 			},
 			"no_request_validation": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("No Request Validation", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "No Request Validation",
 				Computed:            true,
 			},
 			"no_response_validation": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("No Response Validation", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "No Response Validation",
 				Computed:            true,
 			},
 			"suppress_faults_elements_for_rpc_wrappers": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Strict Fault Document Style", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Strict Fault Document Style",
 				Computed:            true,
 			},
 			"no_ws_a": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-Addressing", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Opt out of WS-Addressing",
 				Computed:            true,
 			},
 			"no_ws_rm": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Opt out of WS-ReliableMessaging", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Opt out of WS-ReliableMessaging",
 				Computed:            true,
 			},
 			"allow_xop_include": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Accept MTOM/XOP Optimized Messages", "", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Accept MTOM/XOP Optimized Messages",
 				Computed:            true,
 			},
 		},

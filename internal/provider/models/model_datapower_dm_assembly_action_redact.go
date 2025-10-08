@@ -53,11 +53,11 @@ func GetDmAssemblyActionRedactDataSourceSchema() DataSourceSchema.NestedAttribut
 	var DmAssemblyActionRedactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"path": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata path expression to the content.", "path", "").String,
+				MarkdownDescription: "Specify the JSONata path expression to the content.",
 				Computed:            true,
 			},
 			"action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to redact or remove the content.", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
+				MarkdownDescription: "Specify whether to redact or remove the content.",
 				Computed:            true,
 			},
 		},

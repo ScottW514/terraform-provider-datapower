@@ -61,7 +61,6 @@ func (d *CryptoFWCredDataSource) Schema(ctx context.Context, req datasource.Sche
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The set of crypto credentials (private keys, shared secret keys, and certificates) that are usable by an XML firewall when calling security extension functions to perform actions such as encryption, decryption, digital signing, and verification. If a firewall uses firewall credentials and a particular certificate or key is not included in this list, the crypto operation attempting to use the key or certificate fails.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

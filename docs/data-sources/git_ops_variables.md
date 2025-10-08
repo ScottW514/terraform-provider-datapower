@@ -53,6 +53,4 @@ Optional:
 Read-Only:
 
 - `variable_name` (String) Variable name
-  - CLI Alias: `name`
 - `variable_value` (String) Variable value
-  - CLI Alias: `value`

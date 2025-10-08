@@ -61,7 +61,6 @@ func (d *NFSStaticMountDataSource) Schema(ctx context.Context, req datasource.Sc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Create static NFS mounts for URL or file system access. These mounts remain mounted as long as their application domain is up.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

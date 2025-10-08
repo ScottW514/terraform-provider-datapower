@@ -92,8 +92,8 @@ func (r *HTTPUserAgentResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"max_redirects": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of HTTP redirect messages received before the target URL is declared unreachable. Enter a value in the range 0 - 128. The default value is 8.", "max-redirects", "").AddIntegerRange(0, 128).AddDefaultValue("8").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 128),
 				},
@@ -101,8 +101,8 @@ func (r *HTTPUserAgentResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("the maximum idle time in seconds before an established connection to a remote server is torn down. Enter a avlue in the range 1 - 86400. The default value is 300.", "timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("300").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},

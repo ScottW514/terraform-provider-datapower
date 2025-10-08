@@ -51,11 +51,11 @@ func GetDmAllowCompressionPolicyDataSourceSchema() DataSourceSchema.NestedAttrib
 	var DmAllowCompressionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"reg_exp": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
+				MarkdownDescription: "Specify the shell-style expression to define the URL set.",
 				Computed:            true,
 			},
 			"allow_compression": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow compression.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Specify whether to allow compression.",
 				Computed:            true,
 			},
 		},

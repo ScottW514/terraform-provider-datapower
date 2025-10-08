@@ -61,7 +61,6 @@ func (d *LDAPSearchParametersDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "LDAP search parameters are a container for the parameters to use to perform an LDAP search operation. When used with authentication, the search retrieves the distinguished name (DN) for the user. When used with credential authorization mapping, the search retrieves the group name (DN or attribute value) based on the DN of the authenticated user.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

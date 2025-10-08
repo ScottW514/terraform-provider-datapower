@@ -90,6 +90,7 @@ func (data PasswordAlias) IsNull() bool {
 	}
 	return true
 }
+
 func (data PasswordAliasWO) IsNull() bool {
 	if !data.Id.IsNull() {
 		return false
@@ -144,6 +145,7 @@ func (data *PasswordAlias) FromBody(ctx context.Context, pathRoot string, res gj
 		data.PasswordWo = types.StringNull()
 	}
 }
+
 func (data *PasswordAliasWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
 		pathRoot = pathRoot + "."

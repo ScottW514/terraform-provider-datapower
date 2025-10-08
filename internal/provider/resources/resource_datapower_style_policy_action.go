@@ -92,8 +92,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Action type", "type", "").AddStringEnum("validate", "filter", "route-action", "aaa", "xformpi", "xformbin", "cryptobin", "xform", "convert-http", "log", "results", "results-async", "setvar", "fetch", "extract", "rewrite", "route-set", "strip-attachments", "call", "on-error", "checkpoint", "slm", "quota-enforcement", "sql", "conditional", "for-each", "event-sink", "method-rewrite", "xformng", "gatewayscript", "jose-sign", "jose-verify", "jose-encrypt", "jose-decrypt", "parse").AddDefaultValue("xform").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("validate", "filter", "route-action", "aaa", "xformpi", "xformbin", "cryptobin", "xform", "convert-http", "log", "results", "results-async", "setvar", "fetch", "extract", "rewrite", "route-set", "strip-attachments", "call", "on-error", "checkpoint", "slm", "quota-enforcement", "sql", "conditional", "for-each", "event-sink", "method-rewrite", "xformng", "gatewayscript", "jose-sign", "jose-verify", "jose-encrypt", "jose-decrypt", "parse"),
 				},
@@ -116,8 +116,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceResourceSchema("Specify the configuration that defines the constraints against the documents to parse. Use any or all of the following ways to define the constraints. <ul><li>Specify a URL reference from which to retrieve the constraints definition.</li><li>Specify a literal configuration string in XML or JSON format that contains the constraints definition.</li><li>Specify an instance of the parse settings configuration object to retrieve constraints definition.</li></ul><p>Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method.</p>", "parse-settings-reference", "", false),
 			"parse_metrics_result_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Parse metrics result type", "parse-settings-result-type", "").AddStringEnum("none", "xml", "json", "graphql").AddDefaultValue("none").AddNotValidWhen(models.StylePolicyActionParseMetricsResultTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "xml", "json", "graphql"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.StylePolicyActionParseMetricsResultTypeIgnoreVal, true),
@@ -133,8 +133,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"input_language": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Input language", "input-language", "").AddStringEnum("xml", "dfdl", "xsd", "json").AddDefaultValue("xml").AddRequiredWhen(models.StylePolicyActionInputLanguageCondVal.String()).AddNotValidWhen(models.StylePolicyActionInputLanguageIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("xml", "dfdl", "xsd", "json"),
 					validators.ConditionalRequiredString(models.StylePolicyActionInputLanguageCondVal, models.StylePolicyActionInputLanguageIgnoreVal, true),
@@ -155,8 +155,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"transform_language": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Transform language", "transform-language", "").AddStringEnum("none", "xquery").AddDefaultValue("none").AddRequiredWhen(models.StylePolicyActionTransformLanguageCondVal.String()).AddNotValidWhen(models.StylePolicyActionTransformLanguageIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "xquery"),
 					validators.ConditionalRequiredString(models.StylePolicyActionTransformLanguageCondVal, models.StylePolicyActionTransformLanguageIgnoreVal, true),
@@ -165,8 +165,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"output_language": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Output language", "output-language", "").AddStringEnum("default", "dfdl").AddDefaultValue("default").AddNotValidWhen(models.StylePolicyActionOutputLanguageIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "dfdl"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.StylePolicyActionOutputLanguageIgnoreVal, true),
@@ -186,8 +186,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"action_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable GatewayScript debug", "debug", "").AddDefaultValue("false").AddNotValidWhen(models.StylePolicyActionActionDebugIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"tx_top_level_map": schema.StringAttribute{
@@ -220,14 +220,14 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"no_transcode_utf8": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the output from the convert action retains the input encoding or uses ISO 8859-1. An encoding is also known as a character set. For illustrative purposes, assume UTF-8 is the input encoding. <ul><li>When enabled and the input encoding is UTF-8, the output is UTF-8.</li><li>When not enabled and the input encoding is UTF-8, the output is ISO 8859-1. This behavior is the default behavior.</li></ul>", "charset-transparency", "").AddDefaultValue("false").AddNotValidWhen(models.StylePolicyActionNoTranscodeUtf8IgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"named_in_out_location_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to locate named inputs and outputs. Use values that are appropriate for your Transformation Extender configuration.", "named-inouts", "").AddStringEnum("default", "explicit", "dynamic", "interop").AddDefaultValue("default").AddNotValidWhen(models.StylePolicyActionNamedInOutLocationTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "explicit", "dynamic", "interop"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.StylePolicyActionNamedInOutLocationTypeIgnoreVal, true),
@@ -307,8 +307,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").AddNotValidWhen(models.StylePolicyActionSSLClientConfigTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.StylePolicyActionSSLClientConfigTypeIgnoreVal, true),
@@ -376,8 +376,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"transactional": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Transactional", "transactional", "").AddDefaultValue("false").AddNotValidWhen(models.StylePolicyActionTransactionalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"checkpoint_event": schema.StringAttribute{
@@ -411,8 +411,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"soap_validation": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify which parts of the SOAP message to validate. This setting does not affect the validation of the input context to ensure that it is a valid document.", "soap-validation", "").AddStringEnum("body", "body-or-detail", "ignore-faults", "envelope").AddDefaultValue("body").AddNotValidWhen(models.StylePolicyActionSOAPValidationIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("body", "body-or-detail", "ignore-faults", "envelope"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.StylePolicyActionSOAPValidationIgnoreVal, true),
@@ -421,8 +421,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"sql_source_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("SQL input method", "sql-source-type", "").AddStringEnum("static", "variable", "stylesheet", "static_internal").AddDefaultValue("static").AddRequiredWhen(models.StylePolicyActionSQLSourceTypeCondVal.String()).AddNotValidWhen(models.StylePolicyActionSQLSourceTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("static", "variable", "stylesheet", "static_internal"),
 					validators.ConditionalRequiredString(models.StylePolicyActionSQLSourceTypeCondVal, models.StylePolicyActionSQLSourceTypeIgnoreVal, true),
@@ -523,14 +523,14 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"jws_verify_strip_signature": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Strip Signature", "strip-signature", "").AddDefaultValue("true").AddNotValidWhen(models.StylePolicyActionJWSVerifyStripSignatureIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"asynchronous": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to mark the action as asynchronous. When asynchronous, the action does not need to complete for the next action to start.", "asynchronous", "").AddDefaultValue("false").AddNotValidWhen(models.StylePolicyActionAsynchronousIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"condition": schema.ListNestedAttribute{
@@ -540,8 +540,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"results_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the processing mode for multiple targets. The default behavior, is first available.", "results-mode", "").AddStringEnum("first-available", "require-all", "attempt-all").AddDefaultValue("first-available").AddNotValidWhen(models.StylePolicyActionResultsModeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("first-available", "require-all", "attempt-all"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.StylePolicyActionResultsModeIgnoreVal, true),
@@ -554,20 +554,20 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration between connection attempts in milliseconds. The default value is 1000.", "retry-interval", "").AddDefaultValue("1000").AddNotValidWhen(models.StylePolicyActionRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(1000),
 			},
 			"multiple_outputs": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to place parallel outputs into separate contexts. A results action can target several targets simultaneously by specifying a variable that contains an XML nodeset as the results target. <ul><li>When enabled, the context for the output context is ignored. The status of the individual attempts to reach the targets are recorded in separate contexts by appending a number. For example, the resultant context name is <tt>ctx_1</tt> for the <tt>ctx</tt> context name.</li><li>When not enabled, only one result is kept. <ul><li>In require-all mode, keep the first target that failed and has no remaining attempts or the last target to succeed.</li><li>In attempt-all mode, the last target attempted.</li><li>In first-available mode, the first target to succeed or the last to fail.</li></ul></li></ul>", "multiple-outputs", "").AddDefaultValue("false").AddNotValidWhen(models.StylePolicyActionMultipleOutputsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"iterator_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Iterator type", "iterator-type", "").AddStringEnum("XPATH", "COUNT").AddDefaultValue("XPATH").AddRequiredWhen(models.StylePolicyActionIteratorTypeCondVal.String()).AddNotValidWhen(models.StylePolicyActionIteratorTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("XPATH", "COUNT"),
 					validators.ConditionalRequiredString(models.StylePolicyActionIteratorTypeCondVal, models.StylePolicyActionIteratorTypeIgnoreVal, true),
@@ -623,8 +623,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"method_rewrite_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Method", "http-method", "").AddStringEnum("POST", "GET", "PUT", "PATCH", "DELETE", "HEAD").AddDefaultValue("GET").AddRequiredWhen(models.StylePolicyActionMethodRewriteTypeCondVal.String()).AddNotValidWhen(models.StylePolicyActionMethodRewriteTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("POST", "GET", "PUT", "PATCH", "DELETE", "HEAD"),
 					validators.ConditionalRequiredString(models.StylePolicyActionMethodRewriteTypeCondVal, models.StylePolicyActionMethodRewriteTypeIgnoreVal, true),
@@ -633,8 +633,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"method_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Method", "http-method-limited", "").AddStringEnum("POST", "GET", "PUT", "PATCH", "DELETE", "HEAD").AddDefaultValue("POST").AddRequiredWhen(models.StylePolicyActionMethodTypeCondVal.String()).AddNotValidWhen(models.StylePolicyActionMethodTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("POST", "GET", "PUT", "PATCH", "DELETE", "HEAD"),
 					validators.ConditionalRequiredString(models.StylePolicyActionMethodTypeCondVal, models.StylePolicyActionMethodTypeIgnoreVal, true),
@@ -643,8 +643,8 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"method_type2": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Method", "http-method-limited2", "").AddStringEnum("POST", "GET", "PUT", "PATCH", "DELETE", "HEAD").AddDefaultValue("POST").AddRequiredWhen(models.StylePolicyActionMethodType2CondVal.String()).AddNotValidWhen(models.StylePolicyActionMethodType2IgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("POST", "GET", "PUT", "PATCH", "DELETE", "HEAD"),
 					validators.ConditionalRequiredString(models.StylePolicyActionMethodType2CondVal, models.StylePolicyActionMethodType2IgnoreVal, true),

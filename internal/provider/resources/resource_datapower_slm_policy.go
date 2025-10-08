@@ -87,8 +87,8 @@ func (r *SLMPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"execution_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the operational behavior of the policy. The default behavior is to process all policy statements.", "eval-method", "").AddStringEnum("terminate-at-first-reject", "terminate-at-first-action", "execute-all-statements").AddDefaultValue("execute-all-statements").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("terminate-at-first-reject", "terminate-at-first-action", "execute-all-statements"),
 				},

@@ -61,7 +61,6 @@ func (d *CryptoKeyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A private key provides an added layer of security by supplying an indirect reference to a file that contains a private key.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

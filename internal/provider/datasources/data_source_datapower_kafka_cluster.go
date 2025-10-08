@@ -61,7 +61,6 @@ func (d *KafkaClusterDataSource) Schema(ctx context.Context, req datasource.Sche
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Define the Kafka cluster that is responsible for the messaging services. The Kafka cluster periodically monitors and polls topics. The Kafka cluster ensures that sent messages are directed to the correct response topic or are routed to another server.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -61,7 +61,6 @@ func (d *OAuthSupportedClientDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>An OAuth client profile is the basic building block for an OAuth client group. When you create an OAuth client profile, you define its role. As you select the role, the WebGUI refreshes to display the appropriate properties.</p><p>You can create the following types of OAuth client profiles. <ul><li>A client profile for authorization server endpoints: authorization endpoint and token endpoint.</li><li>A client profile for the enforcement point for the resource server.</li><li>A client profile for both authorization server endpoints and the enforcement point.</li></ul></p><p>When creating an OAuth client profile, you can use stylesheets or GatewayScript files for customization.</p><p>You can create a customized OAuth client profile that defines any combination of roles. Customization uses stylesheets or GatewayScript files that must be in the local: or store: directory. For information about the operations that these stylesheets or GatewayScript files must define, see the topic in IBM Knowledge Center.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

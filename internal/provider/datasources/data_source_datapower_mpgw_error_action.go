@@ -61,7 +61,6 @@ func (d *MPGWErrorActionDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Define how the Multi-Protocol gateway handles errors and generates error responses to the client.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

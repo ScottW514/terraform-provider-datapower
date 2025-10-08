@@ -53,11 +53,11 @@ func GetDmLogEventDataSourceSchema() DataSourceSchema.NestedAttributeObject {
 	var DmLogEventDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"class": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sets an event category.", "", "log_label").String,
+				MarkdownDescription: "Sets an event category.",
 				Computed:            true,
 			},
 			"priority": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sets the minimum event priority. The priorities are hierarchical.", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
+				MarkdownDescription: "Sets the minimum event priority. The priorities are hierarchical.",
 				Computed:            true,
 			},
 		},

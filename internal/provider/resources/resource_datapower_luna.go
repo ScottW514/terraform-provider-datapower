@@ -83,8 +83,8 @@ func (r *LunaResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			},
 			"security_option": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the security option for connection.", "option", "").AddStringEnum("none", "htl").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "htl"),
 				},

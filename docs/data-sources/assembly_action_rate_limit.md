@@ -80,11 +80,7 @@ Optional:
 Read-Only:
 
 - `action` (String) Specify the action to apply to the count limit.
-  - CLI Alias: `action`
-  - Choices: `inc`, `dec`
-  - Default value: `inc`
 - `name` (String) Specify the name of the count limit.
-  - CLI Alias: `name`
 
 
 <a id="nestedatt--result--rate_limit"></a>
@@ -93,11 +89,7 @@ Read-Only:
 Read-Only:
 
 - `action` (String) Specify the action to apply to the rate limit.
-  - CLI Alias: `action`
-  - Choices: `consume`, `replenish`
-  - Default value: `consume`
 - `name` (String) Specify the name of the rate limit.
-  - CLI Alias: `name`
 
 
 <a id="nestedatt--result--rate_limit_definition"></a>
@@ -106,9 +98,4 @@ Read-Only:
 Read-Only:
 
 - `action` (String) Specify the action to apply to the rate limit definition.
-  - CLI Alias: `action`
-  - Choices: `consume`, `replenish`, `check`, `update`
-  - Default value: `consume`
 - `name` (String) Specify the name of the rate limit definition.
-  - CLI Alias: `name`
-  - Reference to: `datapower_rate_limit_definition:id`

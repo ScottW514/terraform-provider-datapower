@@ -61,7 +61,6 @@ func (d *MessageMatchingDataSource) Schema(ctx context.Context, req datasource.S
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>Message Matching determines what messages will be monitored by any monitor that uses the Message Matching object. It is a definition of the traffic flow that is monitored.</p><p>To capture all messages, set the HTTP Method field to 'any' and leave all other fields blank.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

@@ -53,11 +53,11 @@ func GetDmCountLimitInfoDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmCountLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the count limit.", "name", "").String,
+				MarkdownDescription: "Specify the name of the count limit.",
 				Computed:            true,
 			},
 			"action": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the count limit.", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
+				MarkdownDescription: "Specify the action to apply to the count limit.",
 				Computed:            true,
 			},
 		},

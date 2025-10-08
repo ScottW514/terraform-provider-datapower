@@ -50,11 +50,11 @@ func GetDmSQLDataSourceConfigNVPairDataSourceSchema() DataSourceSchema.NestedAtt
 	var DmSQLDataSourceConfigNVPairDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"param_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "", "").String,
+				MarkdownDescription: "Parameter name",
 				Computed:            true,
 			},
 			"param_value": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "", "").String,
+				MarkdownDescription: "Parameter value",
 				Computed:            true,
 			},
 		},

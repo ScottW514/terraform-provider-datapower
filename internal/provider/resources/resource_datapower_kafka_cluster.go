@@ -91,8 +91,8 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"protocol": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the transport protocol for the Kafka bootstrap connection. The selected protocol is used for the exchange of information between the Kafka server and the bootstrap server. By default, uses a non-encrypted transport.", "protocol", "").AddStringEnum("plaintext", "ssl", "sasl_plaintext", "sasl_ssl").AddDefaultValue("plaintext").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("plaintext", "ssl", "sasl_plaintext", "sasl_ssl"),
 				},
@@ -105,8 +105,8 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"sasl_mechanism": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.", "sasl-mechanism", "").AddStringEnum("plain", "scram-sha-256", "scram-sha-512").AddDefaultValue("plain").AddRequiredWhen(models.KafkaClusterSASLMechanismCondVal.String()).AddNotValidWhen(models.KafkaClusterSASLMechanismIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("plain", "scram-sha-256", "scram-sha-512"),
 					validators.ConditionalRequiredString(models.KafkaClusterSASLMechanismCondVal, models.KafkaClusterSASLMechanismIgnoreVal, true),
@@ -130,8 +130,8 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"autocommit": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to commit offsets at the defined interval or at process-completion. <ul><li>When enabled, commits offsets at the defined interval. The default interval is 5 seconds. To change the interval, set the <tt>auto.commit.interval.ms</tt> property.</li><li>When disabled, commits offsets at process-completion. You can use the batch size setting for the Kafka handle to define the number of messages to attempt to receive from the consumer.</li></ul>", "autocommit", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_client": schema.StringAttribute{
@@ -143,8 +143,8 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"memory_threshold": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory to allocate in bytes. Enter a value in the range 10485760 - 1073741824. The default value is 268435456.", "memory-threshold", "").AddIntegerRange(10485760, 1073741824).AddDefaultValue("268435456").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10485760, 1073741824),
 				},
@@ -152,8 +152,8 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"maximum_message_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum message size in bytes. Enter a value in the range 0 - 1073741824. The default value is 1048576. A value of 0 disables the enforcement of a maximum message size.", "maximum-message-size", "").AddIntegerRange(0, 1073741824).AddDefaultValue("1048576").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1073741824),
 				},
@@ -161,14 +161,14 @@ func (r *KafkaClusterResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"auto_retry": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Automatic retry", "auto-retry", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 10.", "retry-interval", "").AddIntegerRange(1, 65535).AddDefaultValue("10").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},

@@ -73,15 +73,8 @@ Optional:
 Read-Only:
 
 - `match` (String) Select an existing Matching Rule.
-  - Reference to: `datapower_matching:id`
 - `rule` (String) Select a WS-Proxy Processing Rule to run for matching transactions.
-  - Reference to: `datapower_ws_style_policy_rule:id`
 - `subscription` (String) Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.
-  - Required When: `wsdl_component_type`=`subscription`
-  - Not Valid When: attribute is not conditionally required
 - `wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
-  - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
-  - Default value: `all`
 - `wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.
-  - Not Valid When: `wsdl_component_type`=`subscription`
 - `wsdl_fragment_id` (String) Matches Fragment Identifier

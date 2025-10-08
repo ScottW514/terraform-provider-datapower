@@ -61,13 +61,8 @@ Read-Only:
 
 - `ip_address` (String) Specify the IP address of DNS server.
 - `max_retries` (Number) Specify the maximum number of times to send a query to the DNS server. By default, an unacknowledged resolution request is attempted 3 times. This setting is ignored with the first alive load balancing algorithm. For the first alive algorithm, define this behavior at the DNS settings level rather than the individual server level.
-  - Default value: `3`
 - `tcp_port` (Number) Specify the TCP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.
-  - Range: `1`-`65535`
-  - Default value: `53`
 - `udp_port` (Number) Specify the UDP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.
-  - Range: `1`-`65535`
-  - Default value: `53`
 
 
 <a id="nestedatt--search_domains"></a>

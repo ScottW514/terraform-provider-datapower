@@ -61,7 +61,6 @@ func (d *AccessControlListDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An access control list (ACL) consists of a sequence of allow and deny clauses. Each clause identifies an IP address or range of addresses that grants or denies access to a service. <p>Candidate addresses are sequentially evaluated against each clause. A candidate address is granted or denied access in accordance with the first clause that matches. Consequently, the order of the clauses is vital.</p><p>An ACL with only deny clauses effectively disables the service. To complete the configuration, include an allow clause to ensure that all addresses that are not explicitly denied access are granted access.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

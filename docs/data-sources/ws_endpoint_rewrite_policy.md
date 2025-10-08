@@ -76,32 +76,14 @@ Optional:
 Read-Only:
 
 - `front_protocol` (String) Select the Front Side Handler to use to determine the IP address, port, and protocol.
-  - Required When: `use_front_protocol`=`true`
-  - Not Valid When: attribute is not conditionally required
 - `frontside_port_suffix` (String) Specify a suffix to add to the name of the WSDL port that will be used to represent this service endpoint in the rewritten Web service. If empty, rewrite the original port. The original port can only be rewritten once.
 - `local_endpoint_hostname` (String) Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.
-  - CLI Alias: `local-endpoint-hostname`
-  - Default value: `0.0.0.0`
-  - Not Valid When: `use_front_protocol`!=`false`
 - `local_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
-  - CLI Alias: `local-endpoint-port`
-  - Default value: `0`
-  - Required When: `use_front_protocol`=`false`
 - `local_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.
-  - CLI Alias: `local-endpoint-protocol`
-  - Choices: `default`, `http`, `https`
-  - Default value: `default`
-  - Not Valid When: `use_front_protocol`!=`false`
 - `local_endpoint_uri` (String) Specify the URL portion of the rewrriten web service binding that specifies the local path. If not specified, uses the value that is specified in the WSDL.
-  - CLI Alias: `local-endpoint-uri`
 - `service_port_match_regexp` (String) Specify a PCRE as the match criteria to identify the web services port. When the PCRE matches a Service Port in WSDL, the rewrite rules is applied.
-  - CLI Alias: `service-port-match`
-  - Default value: `.*`
 - `use_front_protocol` (Boolean) Use a Front Side Handler to determine the IP address, port, and protocol for matching WSDL service port. Selecting this mode overrides these values in this rewrite rule.
-  - Default value: `false`
 - `wsdl_binding_protocol` (String) Specify the WSDL binding protocol to use in the rewritten Web service.
-  - Choices: `default`, `soap-11`, `soap-12`, `http-get`, `http-post`
-  - Default value: `default`
 
 
 <a id="nestedatt--result--ws_endpoint_publish_rewrite_rule"></a>
@@ -110,19 +92,10 @@ Read-Only:
 Read-Only:
 
 - `published_endpoint_hostname` (String) Specify the URL portion of the rewritten web service binding that specifies the host name or IP address.
-  - CLI Alias: `published-endpoint-hostname`
 - `published_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
-  - CLI Alias: `published-endpoint-port`
-  - Default value: `0`
 - `published_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the publish endpoint. The protocol can be different from the one in the WSDL.
-  - CLI Alias: `published-endpoint-protocol`
-  - Choices: `default`, `http`, `https`
-  - Default value: `default`
 - `published_endpoint_uri` (String) Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value from the WSDL.
-  - CLI Alias: `published-endpoint-path`
 - `service_port_match_regexp` (String) Specify a PCRE as the match criteria to identify the web services port. When the PCRE matches a Service Port in WSDL, the rewrite rules is applied.
-  - CLI Alias: `service-port-match`
-  - Default value: `.*`
 
 
 <a id="nestedatt--result--ws_endpoint_remote_rewrite_rule"></a>
@@ -131,40 +104,14 @@ Read-Only:
 Read-Only:
 
 - `remote_endpoint_hostname` (String) Specify the URL portion of the rewritten web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.
-  - CLI Alias: `remote-endpoint-hostname`
-  - Required When: `remote_endpoint_protocol`!=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
-  - Not Valid When: `remote_endpoint_protocol`=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
 - `remote_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
-  - CLI Alias: `remote-endpoint-port`
-  - Default value: `0`
-  - Required When: `remote_endpoint_protocol`!=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
 - `remote_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the remote endpoint. The protocol can be different from the one in the WSDL.
-  - CLI Alias: `remote-endpoint-protocol`
-  - Choices: `default`, `http`, `https`, `dpmq`, `mq`, `idgmq`, `dptibems`, `tibems`, `dpwasjms`
-  - Default value: `default`
 - `remote_endpoint_uri` (String) Specify the URL portion of the rewritten web service binding that specifies the remote path. If not specified, the value from the location attribute of the soap:address element in the WSDL is used. For the IBM MQ, TIBCO EMS, and WebSphere JMS protocols, the URI must specify a RequestQueue parameter. For most web services, the ReplyQueue parameter is required to receive the SOAP response.
-  - CLI Alias: `remote-endpoint-uri`
 - `remote_mq_manager` (String) Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.
-  - CLI Alias: `remote-idg-mq-qm`
-  - Required When: `remote_endpoint_protocol`=`idgmq`
-  - Not Valid When: `remote_endpoint_protocol`!=`idgmq`
 - `remote_mqqm` (String) Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.
-  - CLI Alias: `remote-mq-qm`
-  - Required When: `remote_endpoint_protocol`=`dpmq`
-  - Not Valid When: `remote_endpoint_protocol`!=`dpmq`
 - `remote_tibco_ems` (String) Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.
-  - CLI Alias: `remote-tibems-server`
-  - Reference to: `datapower_tibco_ems_server:id`
-  - Required When: `remote_endpoint_protocol`=`dptibems`
-  - Not Valid When: `remote_endpoint_protocol`!=`dptibems`
 - `remote_web_sphere_jms` (String) Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.
-  - CLI Alias: `remote-wasjms-server`
-  - Reference to: `datapower_web_sphere_jms_server:id`
-  - Required When: `remote_endpoint_protocol`=`dpwasjms`
-  - Not Valid When: `remote_endpoint_protocol`!=`dpwasjms`
 - `service_port_match_regexp` (String) Specify a PCRE as the match criteria to identify the web services port. When the PCRE matches a Service Port in WSDL, the rewrite rules is applied.
-  - CLI Alias: `service-port-match`
-  - Default value: `.*`
 
 
 <a id="nestedatt--result--ws_endpoint_subscription_local_rule"></a>
@@ -173,31 +120,14 @@ Read-Only:
 Read-Only:
 
 - `front_protocol` (String) Select the Front Side Handler to use to determine the IP address, port, and protocol.
-  - Required When: `use_front_protocol`=`true`
-  - Not Valid When: attribute is not conditionally required
 - `frontside_port_suffix` (String) Specify a suffix to add to the name of the WSDL port that will be used to represent this service endpoint in the rewritten Web service. If empty, rewrite the original port. The original port can only be rewritten once.
 - `local_endpoint_hostname` (String) Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.
-  - CLI Alias: `local-endpoint-hostname`
-  - Default value: `0.0.0.0`
-  - Not Valid When: `use_front_protocol`!=`false`
 - `local_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
-  - CLI Alias: `local-endpoint-port`
-  - Default value: `0`
-  - Required When: `use_front_protocol`=`false`
 - `local_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.
-  - CLI Alias: `local-endpoint-protocol`
-  - Choices: `default`, `http`, `https`
-  - Default value: `default`
-  - Not Valid When: `use_front_protocol`!=`false`
 - `local_endpoint_uri` (String) Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value that is specified in the WSDL.
-  - CLI Alias: `local-endpoint-uri`
 - `subscription` (String) Select the subscription and configure its endpoint.
-  - CLI Alias: `subscription`
 - `use_front_protocol` (Boolean) Use a Front Side Handler to determine the IP address, port, and protocol for matching WSDL service port. Selecting this mode overrides these values in this rewrite rule.
-  - Default value: `false`
 - `wsdl_binding_protocol` (String) Specify the WSDL binding protocol to use in the rewritten Web service.
-  - Choices: `default`, `soap-11`, `soap-12`, `http-get`, `http-post`
-  - Default value: `default`
 
 
 <a id="nestedatt--result--ws_endpoint_subscription_publish_rule"></a>
@@ -206,18 +136,10 @@ Read-Only:
 Read-Only:
 
 - `published_endpoint_hostname` (String) Specify the URL portion of the rewritten web service binding that specifies the host name or IP address.
-  - CLI Alias: `published-endpoint-hostname`
 - `published_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
-  - CLI Alias: `published-endpoint-port`
-  - Default value: `0`
 - `published_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the publish endpoint. The protocol can be different from the one in the WSDL.
-  - CLI Alias: `published-endpoint-protocol`
-  - Choices: `default`, `http`, `https`
-  - Default value: `default`
 - `published_endpoint_uri` (String) Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value from the WSDL.
-  - CLI Alias: `published-endpoint-path`
 - `subscription` (String) Select the subscription and configure its endpoint.
-  - CLI Alias: `subscription`
 
 
 <a id="nestedatt--result--ws_endpoint_subscription_remote_rule"></a>
@@ -226,36 +148,11 @@ Read-Only:
 Read-Only:
 
 - `remote_endpoint_hostname` (String) Specify the URL portion of the rewritten rule web service binding that specifies the host name or IP address. If not specified, uses the value from the WSDL.
-  - CLI Alias: `remote-endpoint-hostname`
-  - Required When: `remote_endpoint_protocol`!=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
-  - Not Valid When: `remote_endpoint_protocol`=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
 - `remote_endpoint_port` (Number) Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.
-  - CLI Alias: `remote-endpoint-port`
-  - Default value: `0`
-  - Required When: `remote_endpoint_protocol`!=`dpmq`|`idgmq`|`dptibems`|`dpwasjms`
 - `remote_endpoint_protocol` (String) Select the protocol portion of the rewritten web service binding used by the remote endpoint. The protocol can be different from the one in the WSDL.
-  - CLI Alias: `remote-endpoint-protocol`
-  - Choices: `default`, `http`, `https`, `dpmq`, `mq`, `idgmq`, `dptibems`, `tibems`, `dpwasjms`
-  - Default value: `default`
 - `remote_endpoint_uri` (String) Specify the URL portion of the rewritten web service binding that specifies the remote path. If not specified, the value from the location attribute of the soap:address element in the WSDL is used. For the IBM MQ, TIBCO EMS, and WebSphere JMS protocols, the URI must specify a RequestQueue parameter. For most web services, the ReplyQueue parameter is required to receive the SOAP response.
-  - CLI Alias: `remote-endpoint-uri`
 - `remote_mq_manager` (String) Specify the URL portion of the rewritten web service binding that specifies IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.
-  - CLI Alias: `remote-idg-mq-qm`
-  - Required When: `remote_endpoint_protocol`=`idgmq`
-  - Not Valid When: `remote_endpoint_protocol`!=`idgmq`
 - `remote_mqqm` (String) Specify the URL portion of the rewritten web service binding that specifies IBM MQ Queue Manager. Required when remote server is IBM MQ.
-  - CLI Alias: `remote-mq-qm`
-  - Required When: `remote_endpoint_protocol`=`dpmq`
-  - Not Valid When: `remote_endpoint_protocol`!=`dpmq`
 - `remote_tibco_ems` (String) Specify the URL portion of the rewritten web service binding that specifies TIBCO EMS. Required when remote server is TIBCO EMS.
-  - CLI Alias: `remote-tibems-server`
-  - Reference to: `datapower_tibco_ems_server:id`
-  - Required When: `remote_endpoint_protocol`=`dptibems`
-  - Not Valid When: `remote_endpoint_protocol`!=`dptibems`
 - `remote_web_sphere_jms` (String) Specify the URL portion of the rewritten web service binding that specifies WebSphere JMS. Required when remote server is WebSphere Application Server.
-  - CLI Alias: `remote-wasjms-server`
-  - Reference to: `datapower_web_sphere_jms_server:id`
-  - Required When: `remote_endpoint_protocol`=`dpwasjms`
-  - Not Valid When: `remote_endpoint_protocol`!=`dpwasjms`
 - `subscription` (String) Select the subscription and configure its endpoint.
-  - CLI Alias: `subscription`

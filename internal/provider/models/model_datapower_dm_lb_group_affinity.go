@@ -80,27 +80,27 @@ func GetDmLBGroupAffinityDataSourceSchema(description string, cliAlias string, r
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"enable_sa": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enables or disables session affinity operations.", "enable-affinity", "").AddDefaultValue("true").String,
+				MarkdownDescription: "Enables or disables session affinity operations.",
 				Computed:            true,
 			},
 			"insertion_cookie_name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Name of the cookie inserted into the response when active or active-conditional session affinity is required.", "i-cookie-name", "").AddDefaultValue("DPJSESSIONID").String,
+				MarkdownDescription: "Name of the cookie inserted into the response when active or active-conditional session affinity is required.",
 				Computed:            true,
 			},
 			"insertion_path": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The path added to the insertion cookie in the response when active or active-conditional session affinity is required.", "i-path", "").AddDefaultValue("/").String,
+				MarkdownDescription: "The path added to the insertion cookie in the response when active or active-conditional session affinity is required.",
 				Computed:            true,
 			},
 			"insertion_domain": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The domain added to the insertion cookie in the response when active or active-conditional session affinity is required. The domain name cannot begin with a dot.", "i-domain", "").AddDefaultValue("datapower.com").String,
+				MarkdownDescription: "The domain added to the insertion cookie in the response when active or active-conditional session affinity is required. The domain name cannot begin with a dot.",
 				Computed:            true,
 			},
 			"affinity_wlm_override": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Overrides the WebSphere Cell Session Affinity cluster configuration with the DataPower Gateway configuration information below.", "override-wlm-affinity", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Overrides the WebSphere Cell Session Affinity cluster configuration with the DataPower Gateway configuration information below.",
 				Computed:            true,
 			},
 			"affinity_mode": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").AddDefaultValue("activeConditional").AddNotValidWhen(DmLBGroupAffinityAffinityModeIgnoreVal.String()).String,
+				MarkdownDescription: "The mode of session affinity applied to this load balancer group.",
 				Computed:            true,
 			},
 			"insertion_attributes": GetDmInsertionAttributesDataSourceSchema("Specifies the attributes to insert in the cookie in the response when active or active-conditional session affinity is required.", "i-cookie-attributes", ""),

@@ -61,7 +61,6 @@ func (d *AnalyticsEndpointDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "An analytics endpoint buffers API event data and offloads the collected data as a bulk activity log to a remote server. When offloaded, you can use this data for display and analysis.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

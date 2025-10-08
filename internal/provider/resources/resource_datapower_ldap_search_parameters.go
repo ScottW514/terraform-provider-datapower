@@ -91,8 +91,8 @@ func (r *LDAPSearchParametersResource) Schema(ctx context.Context, req resource.
 			},
 			"ldap_returned_attribute": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LDAP attribute to return for each entry that matches the search filter. The default value is dn.", "returned-attribute", "").AddDefaultValue("dn").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("dn"),
 			},
 			"ldap_filter_prefix": schema.StringAttribute{
@@ -105,8 +105,8 @@ func (r *LDAPSearchParametersResource) Schema(ctx context.Context, req resource.
 			},
 			"ldap_scope": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the depth of the LDAP search. The default is subtree.", "scope", "").AddStringEnum("subtree", "one-level", "base").AddDefaultValue("subtree").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("subtree", "one-level", "base"),
 				},

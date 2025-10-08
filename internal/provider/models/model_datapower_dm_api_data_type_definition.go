@@ -50,11 +50,11 @@ func GetDmAPIDataTypeDefinitionDataSourceSchema() DataSourceSchema.NestedAttribu
 	var DmAPIDataTypeDefinitionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"name": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the data type.", "", "").String,
+				MarkdownDescription: "Specify the name of the data type.",
 				Computed:            true,
 			},
 			"schema": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema object.", "", "api_schema").String,
+				MarkdownDescription: "Specify the API schema object.",
 				Computed:            true,
 			},
 		},

@@ -61,7 +61,6 @@ func (d *AS2ProxySourceProtocolHandlerDataSource) Schema(ctx context.Context, re
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A MEIG AS2 proxy handler receives AS2 requests over HTTP or HTTPS and forwards them to the back end which is assumed to be an IBM Multi-Enterprise Integration Gateway (MEIG) server. AS2 proxy handlers conform to gateway specifications of RFC 2616 and AS2 specification of RFC 4130.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

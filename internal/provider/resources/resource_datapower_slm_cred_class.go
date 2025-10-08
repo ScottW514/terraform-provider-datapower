@@ -88,8 +88,8 @@ func (r *SLMCredClassResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"cred_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the manner to obtain the credentials (user identity) for each transaction. The default value is mapped credentials from an AAA action.", "type", "").AddStringEnum("aaa-mapped-credential", "aaa-username", "mq-application", "client-ip", "request-header", "ip-from-header", "custom-stylesheet").AddDefaultValue("aaa-mapped-credential").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("aaa-mapped-credential", "aaa-username", "mq-application", "client-ip", "request-header", "ip-from-header", "custom-stylesheet"),
 				},
@@ -97,8 +97,8 @@ func (r *SLMCredClassResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"cred_match_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Match Type", "match-type", "").AddStringEnum("per-extracted-value", "exact-match", "regexp-match").AddDefaultValue("per-extracted-value").AddRequiredWhen(models.SLMCredClassCredMatchTypeCondVal.String()).AddNotValidWhen(models.SLMCredClassCredMatchTypeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("per-extracted-value", "exact-match", "regexp-match"),
 					validators.ConditionalRequiredString(models.SLMCredClassCredMatchTypeCondVal, models.SLMCredClassCredMatchTypeIgnoreVal, true),

@@ -61,7 +61,6 @@ func (d *APIRoutingDataSource) Schema(ctx context.Context, req datasource.Schema
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The routing API action examines the information that is carried in the API request and matches the API and operation to respond to the request.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

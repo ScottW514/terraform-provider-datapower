@@ -61,7 +61,6 @@ func (d *OAuthSupportedClientGroupDataSource) Schema(ctx context.Context, req da
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>To support the OAuth 2.0 protocol, an AAA policy requires the configuration of an OAuth client group. An OAuth client group contains the configured OAuth clients that the DataPower Gateway accepts requests from.</p><p>When creating an OAuth client group for an AAA policy, the OAuth client group consists of one or more OAuth clients with the same OAuth roles.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

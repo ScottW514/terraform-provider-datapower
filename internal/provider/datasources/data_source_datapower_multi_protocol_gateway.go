@@ -61,7 +61,6 @@ func (d *MultiProtocolGatewayDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>A Multi-Protocol Gateway service can accept client-originated messages in a variety of protocols. The Gateway can subsequently pass messages to a back end server using a variety of protocols. The protocol used on the client side need not be the same as that on the back side.</p><p>A Gateway can support more than one client, or Front Side, protocol. Similarly, the Gateway can support more than one back side, or server protocol. The messages may be processed and routed using any of the standard Document Processing Actions available to a firewall or a proxy.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

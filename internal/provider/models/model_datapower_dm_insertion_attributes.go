@@ -53,11 +53,11 @@ func GetDmInsertionAttributesDataSourceSchema(description string, cliAlias strin
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"secure": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Secure", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Secure",
 				Computed:            true,
 			},
 			"httponly": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HttpOnly", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "HttpOnly",
 				Computed:            true,
 			},
 		},

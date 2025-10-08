@@ -51,11 +51,11 @@ func GetDmScheduledRuleDataSourceSchema() DataSourceSchema.NestedAttributeObject
 	var DmScheduledRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"rule": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the rule to run.", "", "style_policy_rule").String,
+				MarkdownDescription: "Select the rule to run.",
 				Computed:            true,
 			},
 			"interval": DataSourceSchema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").AddDefaultValue("0").String,
+				MarkdownDescription: "Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.",
 				Computed:            true,
 			},
 		},

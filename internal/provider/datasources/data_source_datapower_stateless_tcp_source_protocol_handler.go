@@ -61,7 +61,6 @@ func (d *StatelessTCPSourceProtocolHandlerDataSource) Schema(ctx context.Context
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The configuration for the stateless TCP handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

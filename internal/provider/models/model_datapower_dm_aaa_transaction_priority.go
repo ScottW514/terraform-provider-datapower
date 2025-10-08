@@ -56,15 +56,15 @@ func GetDmAAATransactionPriorityDataSourceSchema() DataSourceSchema.NestedAttrib
 	var DmAAATransactionPriorityDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"credential": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the output credentials.", "", "").String,
+				MarkdownDescription: "Specify the name of the output credentials.",
 				Computed:            true,
 			},
 			"priority": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority for scheduling or resource allocation.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
+				MarkdownDescription: "Specify the priority for scheduling or resource allocation.",
 				Computed:            true,
 			},
 			"authorization": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require authorization. By default, authorization is not required.", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Specify whether to require authorization. By default, authorization is not required.",
 				Computed:            true,
 			},
 		},

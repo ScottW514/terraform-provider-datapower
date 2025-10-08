@@ -61,7 +61,6 @@ func (d *SchemaExceptionMapDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "This object describes exceptions to an XML Schema by identifying elements of the schema that may be encrypted in an instance document. When Schema Validation is performed on the document using this Exception Map, encrypted elements are considered valid when they appear in place of the specified elements.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

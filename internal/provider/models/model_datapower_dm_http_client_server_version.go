@@ -55,11 +55,11 @@ func GetDmHTTPClientServerVersionDataSourceSchema(description string, cliAlias s
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"front": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+				MarkdownDescription: "Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.",
 				Computed:            true,
 			},
 			"back": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+				MarkdownDescription: "Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.",
 				Computed:            true,
 			},
 		},

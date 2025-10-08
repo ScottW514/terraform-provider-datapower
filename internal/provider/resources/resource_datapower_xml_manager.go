@@ -99,14 +99,14 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"cache_memory_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum size of the stylesheet cache. The default value is 2147483647. A value of 0 disables caching. Stylesheets are purged when either the cache size or the cache count is reached.", "xsl cache memorysize", "").AddDefaultValue("2147483647").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(2147483647),
 			},
 			"cache_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of stylesheets to cache. Enter a value in the range 5 - 250000. The default value is 256. Stylesheets are purged when either the cache size or the cache count is reached.", "xsl cache size", "").AddIntegerRange(5, 250000).AddDefaultValue("256").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(5, 250000),
 				},
@@ -114,20 +114,20 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"sha1caching": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.", "xsl checksummed cache", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"static_document_calls": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable to allow all document calls to operate independently.", "static-document-calls", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"search_results": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Configures optimization of '//' in XPath expressions", "search results", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"virtual_servers": schema.ListAttribute{
@@ -137,26 +137,26 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"parser_limits_bytes_scanned": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of bytes scanned in one message. This property applies to any XML document that is parsed. If the value is 0, no limit is enforced. The default value is 4194304.", "bytes-scanned", "").AddDefaultValue("4194304").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(4194304),
 			},
 			"parser_limits_element_depth": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum depth of element nesting in XML parser. The default value is 512.", "element-depth", "").AddDefaultValue("512").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(512),
 			},
 			"parser_limits_attribute_count": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of attributes of a given element. The default value is 128.", "attribute-count", "").AddDefaultValue("128").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(128),
 			},
 			"parser_limits_max_node_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum size that any one node can consume. Enter a value in the range 1024 - 4294967295. The default value is 33554432. Sizes which are powers of two result in the best performance. Although you define a value, the DataPower Gateway uses a value that is the rounded-down to the largest power of two that is smaller than the defined value.", "max-node-size", "").AddIntegerRange(1024, 4294967295).AddDefaultValue("33554432").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1024, 4294967295),
 				},
@@ -164,8 +164,8 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"parser_limits_external_references": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.", "external-references", "").AddStringEnum("forbid", "ignore", "allow").AddDefaultValue("forbid").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("forbid", "ignore", "allow"),
 				},
@@ -173,8 +173,8 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"parser_limits_max_prefixes": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the range 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-prefixes", "").AddIntegerRange(0, 262143).AddDefaultValue("1024").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 262143),
 				},
@@ -182,8 +182,8 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"parser_limits_max_namespaces": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.", "max-namespaces", "").AddIntegerRange(0, 65535).AddDefaultValue("1024").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -191,8 +191,8 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"parser_limits_max_local_names": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.", "max-local-names", "").AddIntegerRange(0, 1048575).AddDefaultValue("60000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 1048575),
 				},
@@ -200,8 +200,8 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"doc_cache_max_docs": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of documents to cache. Enter a value in the range 1 - 250000. The default value is 5000.", "maxdocs", "").AddIntegerRange(1, 250000).AddDefaultValue("5000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 250000),
 				},
@@ -209,8 +209,8 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"doc_cache_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.", "size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
@@ -218,8 +218,8 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"doc_max_writes": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.", "max-writes", "").AddIntegerRange(1, 32768).AddDefaultValue("32768").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 32768),
 				},
@@ -242,8 +242,8 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"user_agent": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identifies the User Agent configuration the XML manager uses to connect to external servers to retrieve resources.", "user-agent", "http_user_agent").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"json_parser_settings": schema.StringAttribute{

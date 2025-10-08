@@ -69,31 +69,31 @@ func GetDmSnmpCredMaskedDataSourceSchema() DataSourceSchema.NestedAttributeObjec
 	var DmSnmpCredMaskedDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"engine_id": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"auth_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "md5", "sha").AddDefaultValue("sha").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"auth_secret_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"auth_secret": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"priv_protocol": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("none", "des", "aes").AddDefaultValue("des").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"priv_secret_type": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddStringEnum("password", "key").AddDefaultValue("password").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"priv_secret": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 		},

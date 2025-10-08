@@ -87,8 +87,8 @@ func (r *WSRRServerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"soap_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of SOAP API endpoint on the WSRR server. The port in the URL depends on whether the server has enabled global security. A typical default URL is similar to <tt>https://192.18.1.120:9443/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> or <tt>http://192.18.1.120:9080/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> .", "soap-url", "").AddDefaultValue("https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort"),
 			},
 			"server_prefix": schema.StringAttribute{
@@ -105,8 +105,8 @@ func (r *WSRRServerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 				},

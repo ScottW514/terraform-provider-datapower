@@ -122,8 +122,8 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 			},
 			"code_page": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the coded character set identifier to which the remote IBM MQ queue manager converts output data. This property is meaningful only when the queue manager has the convert property set to on. The CCSI will be put in the CodeCharSetId field of MQMD.</p><p>The default CCSI is for ISO-8859-1 (latin-1).</p><p>For MQCCSI_EMBEDDED enter 4294967295; for MQCCSI_INHERIT enter 4294967294. For the other CCSIDs, refer to the IBM Code Pages.</p>", "ccsi", "").AddIntegerRange(0, 4294967295).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 4294967295),
 				},
@@ -131,8 +131,8 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 			},
 			"get_message_options": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cumulative value of the MQGET options that are applicable to an IBM MQ message in decimal or hex format. The value is passed directly to the IBM MQ API. The default value is 1, which is the decimal value for the MQGMO_WAIT option.", "get-message-options", "").AddIntegerRange(0, 4294967295).AddDefaultValue("1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 4294967295),
 				},
@@ -144,21 +144,21 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 			},
 			"parse_properties": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to parse the properties of the incoming messages from a queue or a subscription. By default, properties are not parsed.", "parse-properties", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"async_put": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to asynchronously put a message to a queue without waiting for a response from the queue manager.", "async-put", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"exclude_headers": models.GetDmMQHeadersResourceSchema("Specify the headers after MQMD to strip from the message. By default only the MQMD header is parsed.", "exclude-headers", "", false),
 			"concurrent_connections": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.", "concurrent-connections", "").AddIntegerRange(1, 65535).AddDefaultValue("1").AddNotValidWhen(models.MQv9PlusSourceProtocolHandlerConcurrentConnectionsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.MQv9PlusSourceProtocolHandlerConcurrentConnectionsIgnoreVal, true),
@@ -167,8 +167,8 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 			},
 			"polling_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.", "polling-interval", "").AddIntegerRange(0, 65535).AddDefaultValue("30").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -176,8 +176,8 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 			},
 			"batch_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of messages to process as a batch. The handler gathers the specified number of messages and processes them as a batch.", "batch-size", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 65535),
 				},
@@ -185,8 +185,8 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 			},
 			"content_type_header": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Header to extract Content-Type", "content-type-header", "").AddStringEnum("None", "MQRFH", "MQRFH2").AddDefaultValue("None").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("None", "MQRFH", "MQRFH2"),
 				},
@@ -201,14 +201,14 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 			},
 			"retrieve_backout_settings": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>", "retrieve-backout-settings", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_qm_name_in_url": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>", "use-qm-in-url", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"dependency_actions": actions.ActionsSchema,

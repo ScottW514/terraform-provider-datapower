@@ -92,8 +92,8 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"priority": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority of service-scheduling. When system resources are in high demand, high priority services are favored over lower priority services.", "priority", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
 				},
@@ -101,8 +101,8 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"doc_store_location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location for document storage, which saves copies of inbound, outbound, and intermediate documents that might be needed for a retransmit operation. If unspecified, documents are stored in the encrypted area on the RAID volume. For storage on the RAID volume, set the maximum disk usage to 30 GB.", "doc-location", "").AddDefaultValue("(default)").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("(default)"),
 			},
 			"as_front_protocol": schema.ListNestedAttribute{
@@ -141,8 +141,8 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"document_routing_preprocessor_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the file type of the document-routing preprocessor file to run against messages that are not received through AS or ebMS protocols. The default value is stylesheet.", "document-routing-preprocessor-type", "").AddStringEnum("stylesheet", "gatewayscript").AddDefaultValue("stylesheet").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("stylesheet", "gatewayscript"),
 				},
@@ -150,20 +150,20 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"document_routing_preprocessor": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the document-routing preprocessor file, which is a stylesheet or a GatewayScript file to run against transactions that cannot be handled by B2B-specific handlers. <ul><li>A stylesheet examines information from transport headers and other non-content sources to select relevant trading partners. The default stylesheet is <tt>store:///b2b-routing.xsl</tt> .</li><li>A GatewayScript examines information from transport headers and payloads to select relevant trading partners. A GatewayScript can parse messages of different data types, such as JSON, XML, and non-XML. A sample GatewayScript file is <tt>store:///gateayscript/example-b2b-routing.js</tt> .</li></ul>", "document-routing-preprocessor", "").AddDefaultValue("store:///b2b-routing.xsl").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("store:///b2b-routing.xsl"),
 			},
 			"document_routing_preprocessor_debug": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the GatewayScript debugger to detect and diagnose errors in the document routing preprocessor file. To debug a file, ensure that the file contains one or more <tt>debugger;</tt> statements where you want to start debugging.", "document-routing-preprocessor-debug", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"archive_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Purge mode", "arch-mode", "").AddStringEnum("archpurge", "purgeonly").AddDefaultValue("archpurge").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("archpurge", "purgeonly"),
 				},
@@ -187,14 +187,14 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"archive_minimum_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum remaining size in KB of document storage that triggers archival. The default value is 1024.", "arch-minimum-size", "").AddDefaultValue("1024").AddNotValidWhen(models.B2BGatewayArchiveMinimumSizeIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(1024),
 			},
 			"archive_document_age": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in days to retain processed documents. Enter a value in the range 1 - 3650. The default value is 90.", "arch-document-age", "").AddIntegerRange(1, 3650).AddDefaultValue("90").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 3650),
 				},
@@ -202,8 +202,8 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"archive_minimum_documents": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum number of documents to retain in document storage after archival. The minimum value is 1. The default value is 100.", "arch-minimum-documents", "").AddIntegerRange(1, 65535).AddDefaultValue("100").AddNotValidWhen(models.B2BGatewayArchiveMinimumDocumentsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.B2BGatewayArchiveMinimumDocumentsIgnoreVal, true),
@@ -212,8 +212,8 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"disk_use_check_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes between checks for documents that exceed the maximum age. During the check, documents that exceed the maximum age are purged. Enter a value in the range 1 - 1440. The default value is 60.", "diskuse-check-interval", "").AddIntegerRange(1, 1440).AddDefaultValue("60").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 1440),
 				},
@@ -221,8 +221,8 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"max_document_disk_use": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size in KB for document storage. When storage exceeds this value, documents are purged. The default value is 25165824.", "max-diskuse", "").AddIntegerRange(1, 4294967295).AddDefaultValue("25165824").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 4294967295),
 				},
@@ -230,14 +230,14 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"archive_monitor": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use a monitor during archival. The monitor limits the message injection rate to prevent problems in a critical situation like performance testing or on a heavily loaded system.", "arch-monitor", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"shaping_threshold": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum TPS to allow during archival. When the threshold is reached, the service queues transactions. When the queue is full, the service rejects transactions and generates a log message. Enter a value in the range 10 - 10000. The default value is 200.", "arch-shaping-threshold", "").AddIntegerRange(10, 10000).AddDefaultValue("200").AddNotValidWhen(models.B2BGatewayShapingThresholdIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 10000),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.B2BGatewayShapingThresholdIgnoreVal, true),
@@ -252,14 +252,14 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XML manager", "xml-manager", "xml_manager").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"debug_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable diagnostics. Diagnostics are not intended for use in production environments. Diagnostics consume significant resources that can slow down processing.", "debug-mode", "").AddStringEnum("on", "off", "unbounded").AddDefaultValue("off").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("on", "off", "unbounded"),
 				},
@@ -267,8 +267,8 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"debug_history": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of transactions to capture for diagnostics. Enter a value in the range 10 - 250. The default value is 25.", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").AddRequiredWhen(models.B2BGatewayDebugHistoryCondVal.String()).AddNotValidWhen(models.B2BGatewayDebugHistoryIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 250),
 					validators.ConditionalRequiredInt64(models.B2BGatewayDebugHistoryCondVal, models.B2BGatewayDebugHistoryIgnoreVal, true),
@@ -286,8 +286,8 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"front_side_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration that a client connection can be idle before the connection is closed. For outbound transactions, this connection is between an internal application and the B2B gateway. For inbound transaction, this connection is between an external partner and a B2B gateway.", "front-side-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},

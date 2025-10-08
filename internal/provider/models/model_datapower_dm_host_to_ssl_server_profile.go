@@ -50,11 +50,11 @@ func GetDmHostToSSLServerProfileDataSourceSchema() DataSourceSchema.NestedAttrib
 	var DmHostToSSLServerProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"host_name_wildmat": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style pattern to match against the hostname.", "", "").String,
+				MarkdownDescription: "Specify the shell-style pattern to match against the hostname.",
 				Computed:            true,
 			},
 			"ssl_server": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to use when a hostname matches the pattern.", "", "ssl_server_profile").String,
+				MarkdownDescription: "Specify the TLS server profile to use when a hostname matches the pattern.",
 				Computed:            true,
 			},
 		},

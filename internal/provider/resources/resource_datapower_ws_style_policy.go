@@ -87,14 +87,14 @@ func (r *WSStylePolicyResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"def_stylesheet_for_soap": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identify the default stylesheet used for SOAP filtering. The default rejects all SOAP documents.", "filter", "").AddDefaultValue("store:///filter-reject-all.xsl").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("store:///filter-reject-all.xsl"),
 			},
 			"def_stylesheet_for_xsl": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identify the default stylesheet used for XSL transformation. The default mirrors all documents.", "xsldefault", "").AddDefaultValue("store:///identity.xsl").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("store:///identity.xsl"),
 			},
 			"policy_maps": schema.ListNestedAttribute{

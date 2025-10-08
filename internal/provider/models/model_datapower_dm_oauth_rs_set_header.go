@@ -59,19 +59,19 @@ func GetDmOAuthRSSetHeaderDataSourceSchema(description string, cliAlias string, 
 		Computed: true,
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"owner": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Resource Owner", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Resource Owner",
 				Computed:            true,
 			},
 			"client_id": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Client ID",
 				Computed:            true,
 			},
 			"scope": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Scope", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Scope",
 				Computed:            true,
 			},
 			"miscinfo": DataSourceSchema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Customized Info", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: "Customized Info",
 				Computed:            true,
 			},
 		},

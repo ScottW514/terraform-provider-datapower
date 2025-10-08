@@ -73,15 +73,6 @@ Optional:
 Read-Only:
 
 - `match` (String) Matching configuration is modified. To create a match statement, type a correctly formatted resource match in the horizontal text box select Build. Selecting Build displays the Configuration Match Builder in a popup window. <p>A match statement takes the following general form: <br/><i>Addr</i> / <i>Domain</i> / <i>Resource</i> [? <i>Name=resource-name</i> &amp; <i>Property=property-name</i> &amp; <i>Value=property-value</i> ]</p><table><tr><td valign="top">Addr</td><td>Device Address. Specifies IP address or host alias. The value (*) matches all IP addresses.</td></tr><tr><td valign="top">Domain</td><td>Application Domain. The name of the application domain. The value (*) matches all domains.</td></tr><tr><td valign="top">Resource</td><td>Resource Type. The name of the resource type. The value (*) matches all resource types.</td></tr><tr><td valign="top">Name=resource-name</td><td>An additional specification field, such as "Name". Limits the match statement to resources of the specified name. Use a PCRE to select groups of resource instances. For example, "Name=foo.*" would match all resources with names that start with "foo".</td></tr><tr><td valign="top">Property=property-name</td><td>Property Name. The name of the configuration property. Limits the match statement to resources of the specified property. If change specified, set property-name to null string.</td></tr><tr><td valign="top">Value=property-value</td><td>Property Value. Specifies the value for the configuration property. This property limits the match statement to resources with the specified property value.</td></tr></table>
-  - CLI Alias: `match`
 - `property` (String) Specifies the name of the property to add.
-  - CLI Alias: `name`
-  - Required When: `type`=`add`
-  - Not Valid When: attribute is not conditionally required
 - `type` (String) Selects the type of configuration modification.
-  - CLI Alias: `type`
-  - Choices: `add`, `delete`, `change`
 - `value` (String) Specifies the value of the added or changed property. To change a property value, you can use an explicit value or a value that contains a variable in the <tt>${ <i>variable</i> }</tt> format. If you use variables, you need a deployment policy variable configuration to map the variable to its replacement value. For example, when the value is <tt>${newName}</tt> or <tt>${newName}_Service</tt> , a referenced deployment policy variable configuration must map the <tt>newName</tt> variable to an explicit replacement value.
-  - CLI Alias: `value`
-  - Required When: `type`=`add`|`change`
-  - Not Valid When: attribute is not conditionally required

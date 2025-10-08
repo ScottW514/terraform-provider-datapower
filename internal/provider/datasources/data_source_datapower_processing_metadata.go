@@ -61,7 +61,6 @@ func (d *ProcessingMetadataDataSource) Schema(ctx context.Context, req datasourc
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "A Processing Metadata object contains a list of metadata items extracted from a message, such as protocol header values, or from the device processing scope, such as system variables. This list, or manifest, of item values is then returned by the metadata object in an XML nodeset. Currently used by an AAA Policy for Identity and Resource extraction.",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

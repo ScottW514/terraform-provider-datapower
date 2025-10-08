@@ -95,8 +95,8 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("5672").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -104,8 +104,8 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XML manager to control access to the remote AMQP server. The XML manager obtains and manages documents.", "xml-manager", "xml_manager").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"container_id": schema.StringAttribute{
@@ -114,8 +114,8 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"authorization": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SASL layer that the AMQP broker uses to authenticate with the AMQP server. The default setting in no authentication.", "authorization", "").AddStringEnum("none", "anonymous", "plain").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "anonymous", "plain"),
 				},
@@ -137,8 +137,8 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"maximum_frame_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum frame size in bytes to allow. Frames Frames that are larger are rejected. When rejected, the connection is closed. Enter a value in the range 512 - 104857600. The default value is 104857600.", "maximum-frame-size", "").AddIntegerRange(512, 104857600).AddDefaultValue("104857600").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(512, 104857600),
 				},
@@ -146,14 +146,14 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"auto_retry": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the automatic retry procedure after an AMQP connection failure. By default, the automatic retry behavior is enabled. This setting does not affect attempts over an established connection.", "auto-retry", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds to wait before attempting to reestablish a failed connection. After the number of attempts is reached, attempts to reestablish a failed connection use the interval that is defined by the long retry interval. Enter a value in the range 1 - 65535. The default value is 10. <p>This setting does not affect attempts over an established connection.</p>", "retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").AddNotValidWhen(models.AMQPBrokerRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.AMQPBrokerRetryIntervalIgnoreVal, true),
@@ -162,14 +162,14 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"retry_attempts": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of attempts for a failed connection to the remote AMQP server. After the number of attempts is reached, the long retry interval is used. Enter a value in the range 0 - 65535. The default value is 6. The special value of 0 disables the long interval, where the retry interval is used forever.", "retry-attempts", "").AddDefaultValue("6").AddNotValidWhen(models.AMQPBrokerRetryAttemptsIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(6),
 			},
 			"long_retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds to use after the number of attempts is reached to attempt to reestablish a failed connection. Enter a value in the range 1 - 65535. The default value is 600. <p>This setting does not affect attempts over an established connection.</p>", "long-retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("600").AddNotValidWhen(models.AMQPBrokerLongRetryIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.AMQPBrokerLongRetryIntervalIgnoreVal, true),
@@ -178,8 +178,8 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"reporting_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between the writing of identical log message. Enter a value in the range 1 - 65535. The default value is 10.", "reporting-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").AddNotValidWhen(models.AMQPBrokerReportingIntervalIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 					validators.ConditionalRequiredInt64(validators.Evaluation{}, models.AMQPBrokerReportingIntervalIgnoreVal, true),

@@ -104,14 +104,14 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"cache_memory_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the stylesheet cache. The default value is 2147483647. A value of 0 disables caching. Stylesheets are purged when either the cache size or the cache count is reached.", "xsl-cache-memorysize", "").AddDefaultValue("2147483647").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             int64default.StaticInt64(2147483647),
 			},
 			"cache_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of stylesheets to cache. Enter a value in the range 5 - 250000. The default value is 256. Stylesheets are purged when either the cache size or the cache count is reached.", "xsl-cache-size", "").AddIntegerRange(5, 250000).AddDefaultValue("256").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(5, 250000),
 				},
@@ -119,14 +119,14 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"sha1caching": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.", "xsl-checksummed-cache", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"static_document_calls": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to manage static document calls. The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable this setting to allow all document calls to operate independently.", "static-document-calls", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"virtual_servers": schema.ListAttribute{
@@ -136,8 +136,8 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"doc_cache_max_docs": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of documents to cache. Enter a value in the range 1 - 250000. The default value is 5000.", "maxdocs", "").AddIntegerRange(1, 250000).AddDefaultValue("5000").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 250000),
 				},
@@ -149,8 +149,8 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"doc_max_writes": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.", "max-writes", "").AddIntegerRange(1, 32768).AddDefaultValue("32768").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 32768),
 				},
@@ -173,8 +173,8 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"share_rate_limit_count": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Share rate limit count", "share-count", "").AddStringEnum("yes", "no").AddDefaultValue("yes").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("yes", "no"),
 				},
@@ -206,8 +206,8 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"front_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the intra-transaction timeout for client connections. This value is the maximum idle time to allow in a transaction for a client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.", "front-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 86400),
 				},
@@ -215,8 +215,8 @@ func (r *APIGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"front_persistent_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the inter-transaction timeout for client connections. This value is the maximum idle time to allow between the completion of a transaction and the initiation of a new transaction for a client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.", "front-persistent-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("180").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 86400),
 				},

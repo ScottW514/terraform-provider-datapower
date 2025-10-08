@@ -95,15 +95,10 @@ Optional:
 Read-Only:
 
 - `ssl_v3` (Boolean) Enable SSL version 3
-  - Default value: `false`
 - `tls_v1d0` (Boolean) Enable TLS version 1.0
-  - Default value: `false`
 - `tls_v1d1` (Boolean) Enable TLS version 1.1
-  - Default value: `true`
 - `tls_v1d2` (Boolean) Enable TLS version 1.2
-  - Default value: `true`
 - `tls_v1d3` (Boolean) Enable TLS version 1.3
-  - Default value: `true`
 
 
 <a id="nestedatt--result--ssl_options"></a>
@@ -112,6 +107,4 @@ Read-Only:
 Read-Only:
 
 - `max_duration` (Boolean) Set maximum TLS session duration
-  - Default value: `false`
 - `max_renegotiation` (Boolean) Set maximum number client initiated renegotiation allow
-  - Default value: `false`

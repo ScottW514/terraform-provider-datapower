@@ -61,7 +61,6 @@ func (d *AssemblyActionLogDataSource) Schema(ctx context.Context, req datasource
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The log assembly action writes transaction data to the <tt>log</tt> variable and can send the data to the analytics server. At the end of the transaction, the API gateway updates the log according to the content type that is specified in the last log action in the assembly. When the content type is not specified in the log action, the API gateway uses the content type specified in the API definition. <p>This action is not supported in IBM Cloud. Any assembly that includes it will fail.</p>",
 		Attributes: map[string]schema.Attribute{
-
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,

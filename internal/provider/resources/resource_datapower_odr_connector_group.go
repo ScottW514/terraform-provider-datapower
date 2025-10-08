@@ -82,8 +82,8 @@ func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"max_retry_interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The time to wait before attempting to reestablish a connection to the Intelligent Management Service. Enter a value in the range 1 - 120. The default value is 60.", "max-retry-interval", "").AddIntegerRange(1, 120).AddDefaultValue("60").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 120),
 				},
@@ -91,8 +91,8 @@ func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The XML manager to use when processing transactions with the Intelligent management service.", "xml-manager", "xml_manager").AddDefaultValue("default").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"odr_conn_group_properties": schema.ListNestedAttribute{
@@ -102,8 +102,8 @@ func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("client"),
 				},

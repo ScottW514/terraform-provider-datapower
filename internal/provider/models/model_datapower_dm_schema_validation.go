@@ -110,23 +110,23 @@ func GetDmSchemaValidationDataSourceSchema() DataSourceSchema.NestedAttributeObj
 	var DmSchemaValidationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		Attributes: map[string]DataSourceSchema.Attribute{
 			"matching": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that is applied to candidate XML documents. Documents whose URL conforms to an expression contained in the matching rule are subject to XML schema validation.", "", "matching").String,
+				MarkdownDescription: "Select the matching rule that is applied to candidate XML documents. Documents whose URL conforms to an expression contained in the matching rule are subject to XML schema validation.",
 				Computed:            true,
 			},
 			"validation_mode": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select the procedure to use to validate a schema.", "", "").AddStringEnum("default", "schema", "schema-rewrite", "attribute-rewrite", "dynamic-schema").String,
+				MarkdownDescription: "Select the procedure to use to validate a schema.",
 				Computed:            true,
 			},
 			"schema_url": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.", "", "").AddRequiredWhen(DmSchemaValidationSchemaURLCondVal.String()).AddNotValidWhen(DmSchemaValidationSchemaURLIgnoreVal.String()).String,
+				MarkdownDescription: "Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.",
 				Computed:            true,
 			},
 			"url_rewrite_policy": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.", "", "url_rewrite_policy").AddRequiredWhen(DmSchemaValidationURLRewritePolicyCondVal.String()).AddNotValidWhen(DmSchemaValidationURLRewritePolicyIgnoreVal.String()).String,
+				MarkdownDescription: "Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.",
 				Computed:            true,
 			},
 			"dynamic_schema": DataSourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.", "", "").AddRequiredWhen(DmSchemaValidationDynamicSchemaCondVal.String()).AddNotValidWhen(DmSchemaValidationDynamicSchemaIgnoreVal.String()).String,
+				MarkdownDescription: "Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.",
 				Computed:            true,
 			},
 		},

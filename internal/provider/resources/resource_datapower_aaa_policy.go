@@ -139,8 +139,8 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"saml_signing_hash_alg": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm to calculate the message digest for signing. The default value is sha1.", "saml-sign-hash", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha1").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5"),
 				},
@@ -148,8 +148,8 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"saml_signing_alg": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm to sign SAML messages. The default value is rsa.", "saml-sign-alg", "").AddStringEnum("rsa-sha1", "dsa-sha1", "rsa-sha256", "rsa-sha384", "rsa-sha512", "rsa-ripemd160", "rsa-ripemd160-2010", "sha256-rsa-MGF1", "rsa-md5", "rsa", "dsa", "ecdsa-sha1", "ecdsa-sha224", "ecdsa-sha256", "ecdsa-sha384", "ecdsa-sha512").AddDefaultValue("rsa").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("rsa-sha1", "dsa-sha1", "rsa-sha256", "rsa-sha384", "rsa-sha512", "rsa-ripemd160", "rsa-ripemd160-2010", "sha256-rsa-MGF1", "rsa-md5", "rsa", "dsa", "ecdsa-sha1", "ecdsa-sha224", "ecdsa-sha256", "ecdsa-sha384", "ecdsa-sha512"),
 				},
@@ -161,14 +161,14 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"log_allowed": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Whether to log successful AAA operations. When enabled and if needed, modify the default logging level from informational.", "log-allowed", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"log_allowed_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for successful AAA operations. The default level is informational.", "log-allowed-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("info").AddRequiredWhen(models.AAAPolicyLogAllowedLevelCondVal.String()).AddNotValidWhen(models.AAAPolicyLogAllowedLevelIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
 					validators.ConditionalRequiredString(models.AAAPolicyLogAllowedLevelCondVal, models.AAAPolicyLogAllowedLevelIgnoreVal, true),
@@ -177,14 +177,14 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"log_rejected": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Whether to log unsuccessful AAA operations. When enabled and if needed, modify the default logging level from warning.", "log-rejected", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"log_rejected_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Set the logging level for unsuccessful AAA operations. The default level is warning.", "log-rejected-level", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").AddRequiredWhen(models.AAAPolicyLogRejectedLevelCondVal.String()).AddNotValidWhen(models.AAAPolicyLogRejectedLevelIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
 					validators.ConditionalRequiredString(models.AAAPolicyLogRejectedLevelCondVal, models.AAAPolicyLogRejectedLevelIgnoreVal, true),
@@ -201,8 +201,8 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"ping_identity_compatibility": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Control compatibility with a PingFederate identity server. By default, compatibility is disabled. Enable compatibility for SAML authentication or authorization.", "ping-identity-compatibility", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"saml2_metadata_file": schema.StringAttribute{
@@ -211,8 +211,8 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"dos_valve": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the number of times to process the same request to protect against a denial of service (DoS) attack. Enter a value in the range 1 - 1000. The default value is 3.</p><p>With the default value, AAA processes only the first 3 signature and each signature can contain up to 3 reference URIs. Additional signatures or reference URIs are ignored.</p><p>XML processing includes encryption, decryption, message signing, and signature validation. The AAA policy supports only identity extraction with subject DN from certificate in message signature and authorization with signer certificate for digitally signed messages.</p>", "dos-valve", "").AddIntegerRange(1, 1000).AddDefaultValue("3").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 1000),
 				},
@@ -220,8 +220,8 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"ldap_version": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LDAP version to access the LDAP server. The default value is v2.", "ldap-version", "").AddStringEnum("v2", "v3").AddDefaultValue("v2").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("v2", "v3"),
 				},
@@ -229,8 +229,8 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"enforce_soap_actor": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Whether to enforce the <tt>S11:actor</tt> or <tt>S12:role</tt> on WS-Security messages. In general, a WS-Security message has a <tt>S11:actor</tt> or <tt>S12:role</tt> attribute for its <tt>Security</tt> header. Processing can enforce these attributes when the AAA policy tries to use the <tt>Security</tt> header. For example, the <tt>Security</tt> element has only one actor or role. In this case, the AAA policy processes only the <tt>Security</tt> header for this actor or role identifier. This setting applies to all AAA phases, except postprocessing. For postprocessing, the activity generally generates a new message for next SOAP node.", "enforce-actor-role", "").AddDefaultValue("true").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ws_sec_actor_role_id": schema.StringAttribute{
@@ -249,8 +249,8 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"dyn_config": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to obtain the AAA policy configuration dynamically. With dynamic configuration, you can configure the AAA policy at run time. When enabled, the configuration of AAA is determined dynamically based on the template AAA policy and the parameters that the dynamic configuration custom URL returns. By default, uses no template.", "dyn-config", "").AddStringEnum("none", "current-aaa", "external-aaa").AddDefaultValue("none").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "current-aaa", "external-aaa"),
 				},

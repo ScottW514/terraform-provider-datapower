@@ -89,8 +89,8 @@ func (r *XACMLPDPResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"equal_policies": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("In case of a top level policy-set is undefined, all policies are evaluated equally, PDP will use the PolicyCombiningAlg for the final decision.", "equal-policies", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"general_policy": schema.StringAttribute{

@@ -64,14 +64,8 @@ Optional:
 Read-Only:
 
 - `ecdsa_sha2_nistp256` (Boolean) ecdsa-sha2-nistp256
-  - Default value: `false`
 - `ecdsa_sha2_nistp384` (Boolean) ecdsa-sha2-nistp384
-  - Default value: `false`
 - `ecdsa_sha2_nistp521` (Boolean) ecdsa-sha2-nistp521
-  - Default value: `false`
 - `rsa_sha2_256` (Boolean) rsa-sha2-256
-  - Default value: `false`
 - `rsa_sha2_512` (Boolean) rsa-sha2-512
-  - Default value: `false`
 - `ssh_ed25519` (Boolean) ssh-ed25519
-  - Default value: `false`

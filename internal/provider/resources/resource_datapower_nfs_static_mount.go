@@ -98,14 +98,14 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"local_filesystem_access": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow local file system access through the <tt>nfs-&lt;name></tt> directory. By default, local access is not enabled. When enabled, the NFS mount is available for file system access through the CLI in the <tt>nfs-&lt;name></tt> directory, where <tt>&lt;name></tt> is the name of the mount.", "local-filesystem-access", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"version": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the preferred NFS protocol version. Enter a value in the range 2 - 4. The default value is 3. <ul><li>If version 3 and the server only implements version 2, the client falls back to version 2.</li><li>If version 4, the remote export paths are different and prevents fallback.</li></ul>", "version", "").AddIntegerRange(2, 4).AddDefaultValue("3").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(2, 4),
 				},
@@ -113,8 +113,8 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"transport": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the transport protocol. The default transport protocol is TCP.", "transport", "").AddStringEnum("tcp", "udp").AddDefaultValue("tcp").AddNotValidWhen(models.NFSStaticMountTransportIgnoreVal.String()).String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("tcp", "udp"),
 					validators.ConditionalRequiredString(validators.Evaluation{}, models.NFSStaticMountTransportIgnoreVal, true),
@@ -123,8 +123,8 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"mount_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of NFS mount. The default mount type is a hard mount.", "mount-type", "").AddStringEnum("hard", "soft").AddDefaultValue("hard").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("hard", "soft"),
 				},
@@ -132,14 +132,14 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"read_only": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the mount is read-only. By default, the mount is not read-only.", "read-only", "").AddDefaultValue("false").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"read_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the size in bytes for NFS read operations. Enter a value in the range 1024 - 32768. The default value is 4096.", "rsize", "").AddIntegerRange(1024, 32768).AddDefaultValue("4096").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1024, 32768),
 				},
@@ -147,8 +147,8 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"write_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the size in bytes for NFS write operations. Enter a value in the range 1024 - 32768. The default value is 4096.", "wsize", "").AddIntegerRange(1024, 32768).AddDefaultValue("4096").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1024, 32768),
 				},
@@ -156,8 +156,8 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in tenths of seconds until the first retransmission on RPC times out. Enter a value in the range 1 - 600. The default value is 7.", "timeo", "").AddIntegerRange(1, 600).AddDefaultValue("7").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600),
 				},
@@ -165,8 +165,8 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"retransmissions": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of minor RPC timeouts and retransmissions until a major timeout. Enter a value in the range 1 - 60. The default value is 3.", "retrans", "").AddIntegerRange(1, 60).AddDefaultValue("3").String,
-				Optional:            true,
 				Computed:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 60),
 				},
