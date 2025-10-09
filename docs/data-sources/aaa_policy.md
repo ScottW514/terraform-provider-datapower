@@ -37,6 +37,10 @@ data "datapower_aaa_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -85,6 +89,23 @@ Read-Only:
 - `user_summary` (String) Comments
 - `ws_sec_actor_role_id` (String) Set the assumed <tt>S11:actor</tt> or <tt>S12:role</tt> identifier. The AAA policy acts as the assumed actor or role when it consumes <tt>Security</tt> headers. This setting takes effect only when the AAA policy attempts to process the incoming message before it makes an authorization decision. Postprocessing does not use this setting. Postprocessing uses its own setting in generating the message for the next SOAP node. The default value is an empty string. <table border="1"><tr><td valign="left"><tt>http://schemas.xmlsoap.org/soap/actor/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign="left"><tt>http://www.w3.org/2003/05/soap-envelope/role/none</tt></td><td>No one can process the <tt>Security</tt> header.</td></tr><tr><td valign="left"><tt>http://www.w3.org/2003/05/soap-envelope/role/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign="left"><tt>http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</tt></td><td>The ultimate receiver can process the <tt>Security</tt> header.</td></tr><tr><td valign="left">No value, which is an empty string</td><td>The empty string (without quotation marks) indicates that no "actor/role" identifier is configured. With a configured actor/role, the ultimate receiver is assumed for the message. No actor/role attribute is added during the generation of the <tt>Security</tt> header. More than one <tt>Security</tt> header cannot omit the actor/role identifier.</td></tr><tr><td valign="left"><tt>USE_MESSAGE_BASE_URI</tt></td><td>The identifier is the base URL of the message. When the SOAP message is transported, the base URI is the request-URI of the HTTP request.</td></tr><tr><td valign="left">A string value</td><td>Any string to identify the actor or role of the <tt>Security</tt> header.</td></tr></table>
 - `ws_secure_conversation_crypto_key` (String) WS-Trust encryption recipient certificate
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--authenticate"></a>
 ### Nested Schema for `result.authenticate`

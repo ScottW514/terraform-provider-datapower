@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -84,6 +85,7 @@ func (d *WebServicesAgentDataSource) Schema(ctx context.Context, req datasource.
 				MarkdownDescription: "Specify the maximum total payload size in KB of a buffered transaction record. The total payload size is the sum of the payloads that are collected at the following points. <ul><li>When the service accepts the request.</li><li>When the service sends the processed request to its target.</li><li>When the service accepts the response.</li><li>When the service sends the processed response to the client.</li></ul><p>A record is dropped when its total payload size exceeds the maximum value. The default value is 0, which indicates no limit.</p>",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

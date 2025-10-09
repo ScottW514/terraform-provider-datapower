@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -158,6 +159,7 @@ func (d *MQv9PlusSourceProtocolHandlerDataSource) Schema(ctx context.Context, re
 							MarkdownDescription: "Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

@@ -37,6 +37,10 @@ data "datapower_mcf_custom_rule" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -44,3 +48,19 @@ Read-Only:
 - `custom_rule_value` (String) <p>Enter the value to match against the value that is retrieved from the named processing rule. Enter either a string that must match the outcome of the rule or enter an asterisk (*) to match any value.</p><p>When the value is a string, an identical literal string comparison result is a match. When the value is an asterisk, any value other than NULL or an empty string results in a match.</p>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

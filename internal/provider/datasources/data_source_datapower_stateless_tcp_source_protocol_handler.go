@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -113,6 +114,7 @@ func (d *StatelessTCPSourceProtocolHandlerDataSource) Schema(ctx context.Context
 							MarkdownDescription: "The TLS SNI server profile to secure connections between clients and the DataPower Gateway.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

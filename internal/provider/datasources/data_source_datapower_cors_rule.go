@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -94,7 +95,8 @@ func (d *CORSRuleDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							MarkdownDescription: "Specify whether the CORS request returns the <tt>Access-Control-Allow-Credentials</tt> response header. By default, this header is not returned in response to a CORS request. When enabled, the CORS request returns this header with a value of <tt>true</tt> .",
 							Computed:            true,
 						},
-						"expose_headers": models.GetDmCORSRuleExposeHeadersDataSourceSchema("Specify the values to append to the value of the <tt>Access-Control-Expose-Headers</tt> response header. When undefined, appends the gateway-predefined value.", "expose-headers", ""),
+						"expose_headers":     models.GetDmCORSRuleExposeHeadersDataSourceSchema("Specify the values to append to the value of the <tt>Access-Control-Expose-Headers</tt> response header. When undefined, appends the gateway-predefined value.", "expose-headers", ""),
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

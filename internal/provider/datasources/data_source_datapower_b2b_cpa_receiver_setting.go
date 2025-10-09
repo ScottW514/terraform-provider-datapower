@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -129,6 +130,7 @@ func (d *B2BCPAReceiverSettingDataSource) Schema(ctx context.Context, req dataso
 							MarkdownDescription: "Specify the default certificate to verify the signature. This certificate is used when either the <tt>keyInfo</tt> element is missing or the signature method is not supported.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

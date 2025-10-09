@@ -37,6 +37,10 @@ data "datapower_load_balancer_group" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `algorithm` (String) Select the algorithm to use to balance the real servers.
@@ -59,6 +63,23 @@ Read-Only:
 - `wlm_group` (String) The Workload Management Group Name is used to define a group. In a WebSphere Application Server environment, the back end group is a cluster name. Once specified, the Load Balancer Group will be populated with the members and weights retrieved from the back end.
 - `wlm_retrieval` (String) Contains the back end work load management repository selection type. Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS) Network Deployment (ND) or WAS Virtual Enterprise (VE).
 - `wlm_transport` (String) Specify either HTTP or HTTPS for the Load Balancer Group protocol. This protocol is used to forward traffic between the DataPower Gateway and the members of the Load Balancer Group.
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--lb_group_affinity_conf"></a>
 ### Nested Schema for `result.lb_group_affinity_conf`

@@ -25,6 +25,10 @@ data "datapower_nfs_dynamic_mounts" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 
+### Optional
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+
 ### Read-Only
 
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
@@ -39,3 +43,19 @@ data "datapower_nfs_dynamic_mounts" "test" {
 - `user_summary` (String) Comments
 - `version` (Number) Specify the preferred NFS protocol version. Enter a value in the range 2 - 4. The default value is 3. <ul><li>If version 3 and the server only implements version 2, the client falls back to version 2.</li><li>If version 4, the remote export paths are different and prevents fallback.</li></ul>
 - `write_size` (Number) Specify the size in bytes for NFS write operations. Enter a value in the range 1024 - 32768. The default value is 4096.
+
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

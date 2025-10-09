@@ -148,6 +148,7 @@ func (r *ConfigSequenceResource) Schema(ctx context.Context, req resource.Schema
 				},
 				Default: int64default.StaticInt64(100),
 			},
+			"capabilities":       models.GetDmConfigSequenceCapabilitiesResourceSchema("Capabilities", "", "", false),
 			"dependency_actions": actions.ActionsSchema,
 		},
 	}

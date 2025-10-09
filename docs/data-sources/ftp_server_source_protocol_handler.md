@@ -37,6 +37,10 @@ data "datapower_ftp_server_source_protocol_handler" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `acl` (String) Access control list
@@ -80,6 +84,23 @@ Read-Only:
 - `use_pasv_port_range` (Boolean) Specify whether to limit the port range for passive connections. <p>When enabled and the FTP server receives a <tt>PASV</tt> or <tt>EPSV</tt> command from the FTP client, the available port range is restricted from the listening port range 1024 - 65534. Use this setting when a firewall mandates that incoming FTP data connections on only a limited range of ports when it cannot sniff the FTP control connection.</p><p>The specified range limits how many FTP clients can be in the state between the receipt of the 227 response code to the <tt>PASV</tt> or <tt>EPSV</tt> command and the establishment of the FTP data connection. You can limit the pressure on this limited range by adjusting the idle timeout for passive data connections.</p><p><b>Note:</b> Do not configure a port range that overlaps with other services on the system. The system provides no check for these port conflicts. Generally, the other service allocates the ports, which makes these ports unavailable for the FTP server. The FTP server allocates these listing ports dynamically.</p>
 - `user_summary` (String) Comments
 - `virtual_directories` (Attributes List) Specify the directories to create in virtual file system that the FTP server presents. The FTP client can use all of these directories to write file to be processed. The root directory (/) is always present, cannot be created, and is its own response directory. (see [below for nested schema](#nestedatt--result--virtual_directories))
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--virtual_directories"></a>
 ### Nested Schema for `result.virtual_directories`

@@ -25,6 +25,10 @@ data "datapower_api_security_token_manager" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 
+### Optional
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+
 ### Read-Only
 
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
@@ -32,3 +36,19 @@ data "datapower_api_security_token_manager" "test" {
 - `gateway_peering` (String) Specify the gateway-peering instance to store and manage internal OAuth token data in this domain. Native OAuth tokens that are managed by an external token management service are not stored in this gateway-peering instance. This gateway-peering instance must be configured to persist data across a restart.
 - `gateway_peering_external` (String) Specify the gateway-peering instance to store and manage responses from external OAuth token management services in this domain. This gateway-peering instance does not require that data persist across a restart.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

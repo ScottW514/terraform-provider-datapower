@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -111,6 +112,7 @@ func (d *MessageMatchingDataSource) Schema(ctx context.Context, req datasource.S
 							MarkdownDescription: "Provide a literal or wildcard expression to define a URL set included in this traffic definition. The following wildcard characters are available when defining the URL set. <table><tr><td valign=\"top\">asterisk (*)</td><td valign=\"top\">Matches 0 or more occurrences of any character</td></tr><tr><td valign=\"top\">question mark (?)</td><td valign=\"top\">Matches one occurrence of any single character</td></tr><tr><td valign=\"top\">brackets ( [ ] )</td><td valign=\"top\">Defines a character or numeric range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</td></tr></table>",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

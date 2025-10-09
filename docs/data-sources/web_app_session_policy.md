@@ -37,6 +37,10 @@ data "datapower_web_app_session_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `address_agnostic_cookie` (Boolean) Normally the session cookie contains the client IP address and this prevents them from using the session on any other host. Some proxy server environments may make this undesirable. Turning this property on will make the session cookie address independent.
@@ -46,3 +50,19 @@ Read-Only:
 - `start_matches` (String) Select the matching rule that is used to identify start pages. Start pages are pages that can be accessed without a session cookie and if their security policy passes will issue a session cookie.
 - `timeout` (Number) The login cookie is only good for the amount of time specified by this property. It may be automatically renewed during activity depending on the value of the Auto Renew property.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

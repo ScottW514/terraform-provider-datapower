@@ -37,6 +37,10 @@ data "datapower_wxs_grid" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -53,3 +57,19 @@ Read-Only:
 - `timeout` (Number) Specify the maximum time to wait to establish a connection to an eXtreme Scale. If unable to establish a connection, the operation fails. Enter a value in the range 10 - 86400000. The default value is 1000.
 - `user_name` (String) <p>Specify the user account of the eXtreme Scale user who connects to the eXtreme Scale collective. The value can be up to 64 characters in length and cannot be blank. You can use all alphanumeric characters and most special characters. You cannot use spaces or the following special characters: <tt># &lt;</tt> .</p><p>The user must have sufficient eXtreme Scale permissions to access the grid.</p>
 - `user_summary` (String) Specify a brief, but descriptive, summary of the configuration.
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -80,6 +81,7 @@ func (d *GatewayPeeringManagerDataSource) Schema(ctx context.Context, req dataso
 				MarkdownDescription: "GatewayScript ratelimit module keys",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

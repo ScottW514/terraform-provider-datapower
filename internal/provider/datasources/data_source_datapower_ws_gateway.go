@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -645,6 +646,7 @@ func (d *WSGatewayDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Enter a value in the range 250 - 300000. The default value is 1000.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

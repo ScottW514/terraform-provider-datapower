@@ -37,6 +37,10 @@ data "datapower_message_matching" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -48,6 +52,23 @@ Read-Only:
 - `ip_exclude` (String) Use an IP network address and prefix length to define a contiguous range of IP addresses excluded from this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).
 - `request_url` (String) Provide a literal or wildcard expression to define a URL set included in this traffic definition. The following wildcard characters are available when defining the URL set. <table><tr><td valign="top">asterisk (*)</td><td valign="top">Matches 0 or more occurrences of any character</td></tr><tr><td valign="top">question mark (?)</td><td valign="top">Matches one occurrence of any single character</td></tr><tr><td valign="top">brackets ( [ ] )</td><td valign="top">Defines a character or numeric range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</td></tr></table>
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--http_header"></a>
 ### Nested Schema for `result.http_header`

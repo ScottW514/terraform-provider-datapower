@@ -37,6 +37,10 @@ data "datapower_api_plan" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `api` (List of String) Specify the APIs to package for the plan. An API is exposed through a plan by associating the API to the plan.
@@ -65,6 +69,23 @@ Read-Only:
 - `use_limit_definitions` (Boolean) Use limit definitions
 - `use_rate_limit_group` (Boolean) Use rate limit group
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--assembly_burst_limit"></a>
 ### Nested Schema for `result.assembly_burst_limit`

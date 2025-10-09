@@ -25,6 +25,10 @@ data "datapower_ssh_server_profile" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 
+### Optional
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+
 ### Read-Only
 
 - `ciphers` (List of String) Specify the SSH cipher suites to support.
@@ -36,6 +40,23 @@ data "datapower_ssh_server_profile" "test" {
 - `pre_auth_msg` (String) Specify the banner message to display to users before the login prompt. White space characters ( <tt>\n</tt> , <tt>\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.
 - `send_pre_auth_msg` (Boolean) Specify whether to include a banner message during SSH preauthentication. The banner message contains the text to display to users before the login prompt.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--host_key_alg"></a>
 ### Nested Schema for `host_key_alg`

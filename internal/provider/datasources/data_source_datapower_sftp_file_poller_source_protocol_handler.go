@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -145,6 +146,7 @@ func (d *SFTPFilePollerSourceProtocolHandlerDataSource) Schema(ctx context.Conte
 							MarkdownDescription: "<p>The number of allowed concurrent client connections in a polling sequence.</p><p>Enter a value in the range 0 - 100. The value must be less than the number of simultaneous connections that the polled server accepts. The default value is 0 which means unlimited number of connections based on available system resources. To avoid the consumption of all the systems resources, enter a value other than 0.</p>",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

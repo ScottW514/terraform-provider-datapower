@@ -37,6 +37,10 @@ data "datapower_mtom_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -45,6 +49,23 @@ Read-Only:
 - `mode` (String) Specify the optimization mode. <p>The encode option optimizes (serializes) input messages. For serialization, provide an XPath expression or a list of XPath expressions to identify the content to extract. Optionally, per XPath expression, exercise control over the Content Type and Content ID values. These two values can be determined automatically using the xmlmime:contentType declaration and namespace declaration.</p><p>The decode option decodes (deserializes) attachment parts of an optimized message. Deserialization, by default, reassembles the original infoset, which results in either a SOAP document or MIME document depending on whether all attachments were referenced by &lt;Include/> elements. Optionally, you can specify a Content ID to select individual attachment parts to reassemble.</p>
 - `rule` (Attributes List) Each MTOM rule describes which message elements to optimize. A single XPath expression selects one or more elements for optimization. (see [below for nested schema](#nestedatt--result--rule))
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--rule"></a>
 ### Nested Schema for `result.rule`

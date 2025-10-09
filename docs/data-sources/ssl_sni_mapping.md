@@ -37,12 +37,33 @@ data "datapower_ssl_sni_mapping" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `sni_mapping` (Attributes List) Specify a match pattern to select the TLS server profile based on the SNI hostname sent by the TLS client. The map allows virtual TLS server configuration where different server profiles are used in response to the hostname value in the <tt>ClientHello</tt> SNI extension from the TLS client. In this way, a single IP address and port can be used to host multiple TLS servers with separate crypto keys and certificates. (see [below for nested schema](#nestedatt--result--sni_mapping))
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--sni_mapping"></a>
 ### Nested Schema for `result.sni_mapping`

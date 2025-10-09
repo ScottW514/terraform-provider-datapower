@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -125,6 +126,7 @@ func (d *GatewayPeeringDataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

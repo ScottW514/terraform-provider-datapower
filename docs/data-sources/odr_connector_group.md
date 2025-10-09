@@ -32,6 +32,10 @@ data "datapower_odr_connector_group" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `id` (String) Name of the object. Must be unique among object types in application domain.
@@ -42,6 +46,23 @@ Read-Only:
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 - `user_summary` (String) Comments
 - `xml_manager` (String) The XML manager to use when processing transactions with the Intelligent management service.
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--odr_conn_group_properties"></a>
 ### Nested Schema for `result.odr_conn_group_properties`

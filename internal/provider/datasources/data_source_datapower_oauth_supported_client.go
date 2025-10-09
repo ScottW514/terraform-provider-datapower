@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -214,7 +215,8 @@ func (d *OAuthSupportedClientDataSource) Schema(ctx context.Context, req datasou
 							MarkdownDescription: "<p>Specify the JWT generator configuration that generates an ID token. The JWT generator configuration must meet the following requirements.</p><ul><li>Must configure \"Issuer\" for the \"iss\" claim.</li><li>Must support \"Issued at\" for the \"iat\" claim.</li><li>Must support signing of the JWT.</li></ul><p>The following items are added to the JWT.</p><ul><li>Authenticated resource owner is added as the value of the \"sub\" claim.</li><li>Client ID is added as part of the \"aud\" claim.</li><li>\"Validity period\" is used to generate the value of the \"exp\" claim.</li><li>Requested \"nonce\" is used for the \"nonce\" claim.</li></ul>",
 							Computed:            true,
 						},
-						"oauth_features": models.GetDmOAuthFeaturesDataSourceSchema("Specify which features to enable.", "oauth-features", ""),
+						"oauth_features":     models.GetDmOAuthFeaturesDataSourceSchema("Specify which features to enable.", "oauth-features", ""),
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

@@ -37,6 +37,10 @@ data "datapower_sql_data_source" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -65,6 +69,23 @@ Read-Only:
 - `username` (String) Specify the user to establish the connection to the SQL database. The server maintains this information.
 - `validate_host_name` (Boolean) Specify whether to validate the hostname against the hostname in the server certificate. Hostname validate uses the value of the data source host. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.
 - `validate_server_certificate` (String) Validate server certificate
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--sql_data_source_config_nv_pairs"></a>
 ### Nested Schema for `result.sql_data_source_config_nv_pairs`

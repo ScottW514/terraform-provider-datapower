@@ -37,6 +37,10 @@ data "datapower_conformance_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -57,6 +61,23 @@ Read-Only:
 - `response_report_level` (String) Select the degree of nonconformance in a response message to cause a conformance report to be recorded.
 - `result_is_conformance_report` (Boolean) The normal behavior of the conformance action is to deliver the original message, possibly modified by one or more stylesheets, to the next multistep stage. Setting this property will instead cause the analysis result to be used as the output. This is primarily intended for use within a loopback firewall, which will return the analysis results to the client.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--profiles"></a>
 ### Nested Schema for `result.profiles`

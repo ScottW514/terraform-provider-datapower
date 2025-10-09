@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -68,6 +69,7 @@ func (d *AuditLogDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 				MarkdownDescription: "Specify the audit level. The default value is for standard logging.",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

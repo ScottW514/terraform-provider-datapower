@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -105,6 +106,7 @@ func (d *KafkaSourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "Specify the number of messages to retrieve and process as a batch. The handler attempts to retrieve the number of specified messages from the consumer and processes these messages as a batch. Enter a value in the range 1 - 65535. The default value is 1.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -76,6 +77,7 @@ func (d *CertMonitorDataSource) Schema(ctx context.Context, req datasource.Schem
 				MarkdownDescription: "Specify the behavior for expired certificates. By default, expired certificate objects are not disabled, which allows the use of expired certificates. When enabled, prevents the use of expired certificates either directly or through inheritance, which disables the use of any objects the reference expired certificates.",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

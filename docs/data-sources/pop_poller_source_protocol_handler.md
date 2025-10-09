@@ -37,6 +37,10 @@ data "datapower_pop_poller_source_protocol_handler" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `account` (String) The name to access the mailbox on the server; for example, user@example.com.
@@ -52,3 +56,19 @@ Read-Only:
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

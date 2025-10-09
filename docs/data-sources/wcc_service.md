@@ -37,6 +37,10 @@ data "datapower_wcc_service" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -48,3 +52,19 @@ Read-Only:
 - `time_interval` (Number) <p>If the update method is poll, the time interval specifies the amount of time in seconds between poll requests.</p><p>If the update method is subscribe, the time interval specifies the maximum duration of the request in seconds.</p><p>Use any value of 1 - 86400. The default is 10.</p>
 - `update_type` (String) Specifies the method for retrieving WebSphere information. The method defines the responsiveness of the updates received by the DataPower Gateway. The method also affects the amount of system resource used for providing those updates. The default is poll.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

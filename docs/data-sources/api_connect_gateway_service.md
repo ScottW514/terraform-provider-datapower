@@ -25,6 +25,10 @@ data "datapower_api_connect_gateway_service" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 
+### Optional
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+
 ### Read-Only
 
 - `api_gateway_address` (String) Specify the IP address or host alias to accept API requests. The default value is 0.0.0.0. This address is used with its port to create an HTTPS handler.
@@ -45,6 +49,23 @@ data "datapower_api_connect_gateway_service" "test" {
 - `user_summary` (String) Comments
 - `v5c_slm_mode` (String) Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.
 - `v5compatibility_mode` (Boolean) Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>
+
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--proxy_policy"></a>
 ### Nested Schema for `proxy_policy`

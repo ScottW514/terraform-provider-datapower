@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -104,6 +105,7 @@ func (d *ThrottlerDataSource) Schema(ctx context.Context, req datasource.SchemaR
 				MarkdownDescription: "Specify the duration in seconds that a request remains in the backlog queue before it is rejected if a throttling threshold is reached. Specify a value that is less than the timeout value of your browser. The default value is 30.",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

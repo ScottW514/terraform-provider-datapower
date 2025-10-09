@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -207,6 +208,7 @@ func (d *B2BGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 							MarkdownDescription: "Specify the duration that a client connection can be idle before the connection is closed. For outbound transactions, this connection is between an internal application and the B2B gateway. For inbound transaction, this connection is between an external partner and a B2B gateway.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

@@ -37,6 +37,10 @@ data "datapower_rate_limit_definition" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `allow_cache_fallback` (Boolean) Specify whether to use the cache as a fallback when gateway-peering instances cannot be contacted. By default, the cache can enforce rate limits when the cache is disabled. When disabled, the cache cannot enforce rate limits.
@@ -61,6 +65,23 @@ Read-Only:
 - `use_interval_offset` (Boolean) Specify whether to allow limit intervals to start at different offsets. By default, intervals can start at different offsets. When disabled, intervals cannot start at different offsets.
 - `user_summary` (String) Comments
 - `weight` (String) Specify a JSONata expression to assign a weight value to the rate limit. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--parameters"></a>
 ### Nested Schema for `result.parameters`

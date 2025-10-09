@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -97,6 +98,7 @@ func (d *IncludeConfigDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify whether to wait for the associated IP interface to be operational. This setting only affects configuration files from remote servers. When enabled, remote files are processed asynchronously after the associated IP interface is operational.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

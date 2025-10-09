@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -122,6 +123,7 @@ func (d *NameValueProfileDataSource) Schema(ctx context.Context, req datasource.
 							MarkdownDescription: "Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

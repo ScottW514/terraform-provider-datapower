@@ -37,6 +37,10 @@ data "datapower_https_source_protocol_handler" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `acl` (String) Access control list
@@ -69,6 +73,23 @@ Read-Only:
 - `ssl_sni_server` (String) Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
 - `user_summary` (String) Comments
 - `web_socket_idle_timeout` (Number) Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--allowed_features"></a>
 ### Nested Schema for `result.allowed_features`

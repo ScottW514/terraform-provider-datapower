@@ -37,6 +37,10 @@ data "datapower_include_config" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -45,3 +49,19 @@ Read-Only:
 - `on_startup` (Boolean) Specify whether to import the configuration file on startup. The default behavior is to import on startup. <ul><li>When enabled, the configuration file is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
 - `url` (String) Specify the URL of the configuration file. The file must be a configuration file of type <tt>.cfg</tt> . The URL takes the form 'protocol://username:password@host/path' when a username and password are needed to retrieve the file.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

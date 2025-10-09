@@ -37,6 +37,10 @@ data "datapower_compile_options_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `allow_soap_enc_array` (String) Designates a set of schemas that will accept most uses of elements with xsi:type='SOAP-ENC:Array' consistent with SOAP 1.1 Section 5, even when these attributes violate the XML Schema specification. Normally the xsi:type attribute must name a type equal to or derived from the actual type of the element. For schemas compiled with this option, xsi:type is accepted specifically for the SOAP 1.1 Encoding 'Array' complex type if the element's type is derived from SOAP-ENC:Array; this is the opposite of the normal allowable case.
@@ -63,3 +67,19 @@ Read-Only:
 - `wsdl_wrapped_faults` (Boolean) For compatibility, require a rpc-style wrapper around fault details that are specified by type.
 - `xacml_debug` (Boolean) Setting to "on" to make the XACML compiler to put more debugging information when evaluate a policy. Note that the XACML debugging messages are also controlled by the log event in the 'XACML' category. Use the "debug" log level to view the full XACML debugging messages.
 - `xslt_version` (String) Select the XSLT processor version.
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

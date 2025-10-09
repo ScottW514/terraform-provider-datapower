@@ -25,7 +25,27 @@ data "datapower_statistics" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 
+### Optional
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+
 ### Read-Only
 
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `load_interval` (Number) Specifies the measurement interval for load estimation in milliseconds. Enter a value in the range 500 - 5000. The default value is 1000. During this interval, the system load reported by the <tt>show load</tt> command is estimated and expressed as a percentage. <p><b>Note:</b> You can modify this property in only the <tt>default</tt> domain. In application domains, this property is read-only.</p>
+
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

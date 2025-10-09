@@ -57,6 +57,20 @@ resource "datapower_system_settings" "test" {
 - `user_summary` (String) Enter a descriptive summary for the configuration.
   - CLI Alias: `summary`
 
+### Read-Only
+
+- `backup_mode` (String) The read-only installation setting that indicates whether a secure-backup is allowed.
+  - Choices: `normal`, `secure`
+- `capacity_mode` (String) The read-only installation setting that indicates the licensed capacity mode.
+- `description` (String) The read-only string that identifies the product.
+- `product_id` (String) The read-only string that identifies the product type.
+- `product_mode` (String) The read-only installation setting that indicates the operational mode of the product.
+  - Choices: `normal`, `cc`
+- `product_oid` (String) The read-only string that identifies the installed DataPower agent software.
+- `serial_number` (String) The read-only string that identifies the product serial number.
+- `services` (Number) The read-only hex value that indicates support for application, presentation, session, and data-link layer services.
+- `uuid` (String) UUID
+
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`
 

@@ -37,6 +37,10 @@ data "datapower_cors_rule" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `allow_credentials` (Boolean) Specify whether the CORS request returns the <tt>Access-Control-Allow-Credentials</tt> response header. By default, this header is not returned in response to a CORS request. When enabled, the CORS request returns this header with a value of <tt>true</tt> .
@@ -46,6 +50,23 @@ Read-Only:
   - CLI Alias: `expose-headers` (see [below for nested schema](#nestedatt--result--expose_headers))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--expose_headers"></a>
 ### Nested Schema for `result.expose_headers`

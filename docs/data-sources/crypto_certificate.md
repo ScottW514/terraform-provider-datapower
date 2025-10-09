@@ -37,6 +37,10 @@ data "datapower_crypto_certificate" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `alias` (String) Password alias
@@ -44,3 +48,19 @@ Read-Only:
 - `filename` (String) Specify the file that contains the public key. The name might be the same as the file that contains the private key. <ul><li>When in the public crypto area, the file is in the <tt>pubcert:</tt> directory.</li><li>When in the private crypto area, the file is in the <tt>cert:</tt> directory.</li><li>When in the public area, the file is in the <tt>local:</tt> directory. <p><b>Attention:</b> Any file in the <tt>local:</tt> directory can be downloaded or included in an export. Therefore, consider carefully before you store crypto files in this directory.</p></li><li>When retrieved from z/OS, the file is in the <tt>saf-cert:</tt> directory.</li><li>When on the SafeNet Luna HSM, the file is in a partition of the <tt>luna-cert:</tt> directory.</li></ul>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `ignore_expiration` (Boolean) Specify whether to ignore the expiration date of the certificate. When enabled, the certificate remains in the <tt>up</tt> operational state outside of its expiration values. <p>Although the certificate is in the <tt>up</tt> state, other configurations that reference the certificate use the internal expiration values. In other words, the certificate itself is in the <tt>up</tt> state, but any configuration that references the certificate adheres to the internal expiration values.</p><ul><li>If the certificate is for certificate chain validation in validation credentials and the certificate is invalid, validation fails. Expired certificates cause the validation to fail unless you disable check dates in validation credentials.</li><li>If the certificate is in identification credentials, the DataPower Gateway sends the certificate to the peer. The peer can reject the certificate as invalid.</li></ul>
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

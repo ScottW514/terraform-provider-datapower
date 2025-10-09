@@ -37,6 +37,10 @@ data "datapower_style_policy_rule" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `actions` (List of String) Define XSL filters and/or transformations. Select the desired existing action from the list and click Add to add the action to the rule. Actions are executed in the order (top to bottom) in which they are listed in the box. Click the + button to create a new Action; select an action and click the ... button to edit an existing action. To delete an action, select it from the list and click Delete.
@@ -48,3 +52,19 @@ Read-Only:
 - `output_format` (String) Select a compression algorithm to apply to all messages after any other processing occurs (a post-process step). All messages are compressed using the selected algorithm. The resulting archive contains only one file. This setting is independent of transport-level compression. The default is None.
 - `unprocessed` (Boolean) Permit rule to pass-through data unprocessed
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

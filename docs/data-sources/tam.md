@@ -37,6 +37,10 @@ data "datapower_tam" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `ad_configuration_file` (String) Select the location of the configuration file for user directories. To be available for selection, files must have .conf or .cfg as their file extension.
@@ -73,6 +77,23 @@ Read-Only:
 - `user_search_suffixes` (List of String) <p>Specify the ordered list of LDAP suffixes to be searched for principals. When specified and suffix optimization is disabled, the suffixes are searched in entry order. If suffix optimization is enabled, this order is overridden by the suffix optimization order.</p><p>If you do not specify any suffixes, the system searches all available suffixes.</p>
 - `user_suffix_optimiser` (Boolean) <p>Control whether to search the suffixes in an optimized order.</p><ul><li>When enabled and uplicate principals are allowed, the suffixes are searched in an optimized order based on hit count, with the most hit of the suffix at the head of the search suffix list. This can help reduce the number of suffixes searched. If duplicate principals are not allowed, the suffix optimization setting is disregarded and all suffixes are searched to check for duplicates.</li><li>When disabled, the search order is provided by the order that is defined by the search suffixes property.</li></ul>
 - `user_summary` (String) Enter the descriptive summary for the configuration.
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--tam_az_replicas"></a>
 ### Nested Schema for `result.tam_az_replicas`

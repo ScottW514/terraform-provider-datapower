@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -105,6 +106,7 @@ func (d *APISecurityHTTPSchemeDataSource) Schema(ctx context.Context, req dataso
 							MarkdownDescription: "Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

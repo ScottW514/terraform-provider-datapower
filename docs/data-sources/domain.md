@@ -32,6 +32,10 @@ data "datapower_domain" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -52,6 +56,23 @@ Read-Only:
   - CLI Alias: `file-monitoring` (see [below for nested schema](#nestedatt--result--monitoring_map))
 - `neighbor_domain` (List of String) Specify which domains have their <tt>local:</tt> directory visible to this domain. <p>References to visible domains are explicit, not bidirectional. If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following conditions apply.</p><ul><li>Domain <tt>domainA</tt> has read-only access to the <tt>local:</tt> directory of domain <tt>domainB</tt> .</li><li>Domain <tt>domainB</tt> cannot see domain <tt>domainA</tt> .</li></ul><p>In this case, you cannot make domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible domains cannot be circular.</p>
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--file_map"></a>
 ### Nested Schema for `result.file_map`

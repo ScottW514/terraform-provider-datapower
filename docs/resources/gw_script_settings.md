@@ -40,6 +40,12 @@ resource "datapower_gw_script_settings" "test" {
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
+### Read-Only
+
+- `reload_needed` (Boolean) System reload needed
+  - CLI Alias: `reload-needed`
+  - Default value: `false`
+
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`
 

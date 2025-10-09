@@ -37,6 +37,10 @@ data "datapower_multi_protocol_gateway" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `allow_cache_control_header` (Boolean) Specify whether to allow the HTTP GET method to pass the <tt>Cache-Control</tt> header through to the back end. If disabled, a <tt>Cache-Control: no-transform</tt> header is passed. If enabled, the client request can specify the cache control behavior, or if the client request does not specify the <tt>Cache-Control</tt> header, a <tt>Cache-Control: no-transform</tt> header is passed.
@@ -162,6 +166,23 @@ Read-Only:
 - `wsrr_saved_search_subscriptions` (Attributes List) The Gateway services endpoints based on the metadata returned by the saved search or named query. (see [below for nested schema](#nestedatt--result--wsrr_saved_search_subscriptions))
 - `wsrr_subscriptions` (Attributes List) The Gateway services endpoints based on the metadata obtained using these subscriptions. (see [below for nested schema](#nestedatt--result--wsrr_subscriptions))
 - `xml_manager` (String) <p>An XML Manager manages the compilation and caching of style sheets, the caching of documents, and provides configuration constraints on the size and parsing depth of documents. You can enable streaming operation by configuring an XML Manager to use a Streaming Compile Option Policy.</p><p>Optionally, an XML Manager can employ a User Agent. The User Agent settings, in turn, can affect the behavior of the gateway when communicating with remote servers or with clients when sending back responses.</p>
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--debug_trigger"></a>
 ### Nested Schema for `result.debug_trigger`

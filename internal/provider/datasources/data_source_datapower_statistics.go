@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -64,6 +65,7 @@ func (d *StatisticsDataSource) Schema(ctx context.Context, req datasource.Schema
 				MarkdownDescription: "Specifies the measurement interval for load estimation in milliseconds. Enter a value in the range 500 - 5000. The default value is 1000. During this interval, the system load reported by the <tt>show load</tt> command is estimated and expressed as a percentage. <p><b>Note:</b> You can modify this property in only the <tt>default</tt> domain. In application domains, this property is read-only.</p>",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

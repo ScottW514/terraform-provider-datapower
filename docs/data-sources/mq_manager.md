@@ -37,6 +37,10 @@ data "datapower_mq_manager" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `alternate_user` (Boolean) Specify whether to use the ALTERNATE_USER_AUTHORITY flag. The valdue determines whether to use <tt>MQOD.AlternateUserId</tt> as the value of the username setting. <ul><li>When enabled, uses <tt>MQOD.AlternateUserId</tt> .</li><li>When disabled, uses <tt>MQMD.UserIdentifier</tt> .</li></ul>
@@ -79,3 +83,19 @@ Read-Only:
 - `units_of_work` (Number) Specify whether to use units-of-work. <ul><li>When 0, the default value, get and put messages without provisions for rollback. Either the operation succeeds or not. Undeliverable messages are silently discarded, which leaves higher level protocols with the responsibility to detect and retransmit lost packets</li><li>When 1, use syncpoints. A syncpoint commits and rolls back each message, not the entire transaction. When specified, the local queue manager does not remove the message that it gets from a server queue until it completes its transaction by using that message (such as placing the message on a server queue for processing). If the transaction fails and the message is left available on the server queue, the local queue manager can attempt to get the message from the server queue and process it again.</li></ul>
 - `user_summary` (String) Comments
 - `xml_manager` (String) XML manager
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

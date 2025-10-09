@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -105,6 +106,7 @@ func (d *AMQPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req da
 							MarkdownDescription: "<p>Specify whether to ignore the AMQP <tt>reply-to</tt> property. The default behavior is to ignore the property. <ul><li>When enabled, ignore the <tt>reply-to</tt> address when sending an AMQP response message.</li><li>When disabled, use the <tt>reply-to</tt> address instead of the address of the target terminus.</li></ul></p>",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

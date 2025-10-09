@@ -37,6 +37,10 @@ data "datapower_b2b_cpa_collaboration" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `actions` (Attributes List) Specify CPA actions to bind. For a business collaboration, each action entry identifies a business message that a party can send or receive. For a collaboration of MSH level signal, the action overrides the sending or receiving behaviors of the default sender setting or default receiver setting. (see [below for nested schema](#nestedatt--result--actions))
@@ -50,6 +54,23 @@ Read-Only:
 - `service` (String) Specify the value of the service that acts on the message. The value is used to specify and identify the value of the Service element in the outbound and inbound ebMS message header. The service is one of the following types. <ul><li>A business collaboration service for exchanging business messages.</li><li>An MSH signal service for exchanging MSH signals.</li></ul><p>The value of <tt>urn:oasis:names:tc:ebxml-msg:service;</tt> is an MSH signal service. Any other value represents a business collaboration service.</p>
 - `service_type` (String) Specify the value of the service type. If you specify the type, the value is present in the type attribute of the <tt>Service</tt> element within the message to be sent. If the type is empty, the value of the <tt>Service</tt> element must be a URI.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--actions"></a>
 ### Nested Schema for `result.actions`

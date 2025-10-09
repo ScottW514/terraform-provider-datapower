@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -97,6 +98,7 @@ func (d *FilterActionDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "Specify an optional interval during which an over-threshold message type is denied service. Meaningful only when the message is rejected due to policy or shaping queue overflow. This value is the duration of service denial in milliseconds. The default value is 0, indicates that over-threshold messages are dropped but no service denial penalty is imposed.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

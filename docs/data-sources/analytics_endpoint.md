@@ -37,6 +37,10 @@ data "datapower_analytics_endpoint" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `analytics_server_url` (String) Specify the URL to offload the collected API event data. The URL can start with <tt>http</tt> or <tt>https</tt> for an Elasticsearch server or start with <tt>dpkafka</tt> for a Kafka server. <ul><li>For an Elasticsearch server, specify the full URL to the endpoint starting with the <tt>http</tt> or <tt>https</tt> protocol identifier. With HTTPS, you must assign a TLS client profile.</li><li>For a Kafka server, specify only the name of the existing Kafka cluster configuration after the <tt>dpkafka</tt> protocol identifier. To complete the URL, you must specify which request topic to offload analytics data.</li></ul>
@@ -60,3 +64,19 @@ Read-Only:
 - `ssl_client` (String) TLS client profile
 - `timeout` (Number) Specify the intra-transaction timeout for connections, which is the maximum idle time to allow in a transaction. This timer monitors idle time in the data transfer process. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 90.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

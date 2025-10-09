@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -64,6 +65,7 @@ func (d *RaidVolumeDataSource) Schema(ctx context.Context, req datasource.Schema
 				MarkdownDescription: "The subdirectory where the files on the storage volume are available. The name can be up to 64 characters long. The name cannot start with a period. The name can use all alphanumeric characters and the following special characters: . - _.",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

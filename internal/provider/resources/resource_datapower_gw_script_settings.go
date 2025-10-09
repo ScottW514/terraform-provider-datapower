@@ -30,6 +30,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -76,6 +78,14 @@ func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.Sche
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(true),
+			},
+			"reload_needed": schema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("System reload needed", "reload-needed", "").AddDefaultValue("false").String,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
+				PlanModifiers: []planmodifier.Bool{
+					boolplanmodifier.UseStateForUnknown(),
+				},
 			},
 			"terminate_time": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds that a GatewayScript action can continuously use CPU without yielding back to the system event loop. When the processing of a GatewayScript action exceeds the duration, processing is stopped and an error is logged. Enter a value in the range 1 - 300. The default value is 0, which indicates unlimited.", "max-processing-duration", "").AddIntegerRange(0, 300).String,

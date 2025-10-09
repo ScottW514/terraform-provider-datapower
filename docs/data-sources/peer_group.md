@@ -37,6 +37,10 @@ data "datapower_peer_group" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -46,3 +50,19 @@ Read-Only:
 - `update_interval` (Number) Specify the update interval in milliseconds that data is transmitted among peers.
 - `url` (List of String) Specify the URL of each peer in the <tt>protocol://address:port</tt> format for an Ethernet interface or a VLAN interface. For unicast peering, peers exchange SLM data over the XML management interface as SOAP over HTTPS. Multicast peering shares the initial SLM state using SOAP over HTTPS; the data transfers are done using multicast. <p>The default port for the XML Management Interface is 5550. If this port is changed on any peer, the URL must reflect the correct port.</p><p>Define all peers, which includes the local system.</p>
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

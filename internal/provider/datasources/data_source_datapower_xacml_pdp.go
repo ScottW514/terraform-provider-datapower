@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -111,6 +112,7 @@ func (d *XACMLPDPDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							MarkdownDescription: "This sets the explicit time to live (TTL) for cached XACML policies, either raw or compiled. The default value 0 means the cache never expire unless PDP explicitly refreshes the policies. The maximum TTL is 31 days (2,678,400 seconds).",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -88,7 +89,8 @@ func (d *SSHServerProfileDataSource) Schema(ctx context.Context, req datasource.
 				MarkdownDescription: "Specify the banner message to display to users before the login prompt. White space characters ( <tt>\\n</tt> , <tt>\\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.",
 				Computed:            true,
 			},
-			"host_key_alg": models.GetDmHostKeyAlgorithmsDataSourceSchema("Host key algorithms", "host-key-alg", ""),
+			"host_key_alg":       models.GetDmHostKeyAlgorithmsDataSourceSchema("Host key algorithms", "host-key-alg", ""),
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

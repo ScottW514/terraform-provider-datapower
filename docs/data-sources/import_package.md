@@ -37,6 +37,10 @@ data "datapower_import_package" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -51,3 +55,19 @@ Read-Only:
 - `overwrite_objects` (Boolean) Specify whether to overwrite existing objects. When enabled, objects in the package overwrite any object of the same class and name that already exist. The default behavior is to overwrite objects.
 - `url` (String) Specify the URL of the import package. The tool does not support SCP and SFTP protocols. All other URL protocols are available; for example, HTTP, HTTPS, or FTP.
 - `user_summary` (String) Comments
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

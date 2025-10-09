@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -125,6 +126,7 @@ func (d *APISchemaDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "Specify the mime:content to validate in the format <tt>mime:content/@part</tt> . The value must be the unqualified name of the message part. The name is the same as the part attribute on the corresponding <tt>mime:content</tt> component in the WSDL file. When not specified or <tt>*</tt> , the root MIME part is validated. The root MIME part is bound to a <tt>soap:Body</tt> .",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

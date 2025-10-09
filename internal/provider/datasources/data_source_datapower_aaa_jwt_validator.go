@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -167,6 +168,7 @@ func (d *AAAJWTValidatorDataSource) Schema(ctx context.Context, req datasource.S
 							MarkdownDescription: "This field is applicable only when the JWT Validator is used in the AAA identity extraction phase. By default, the value of the \"sub\" claim is populated as the username element of the identity extraction output. Ensure that the claim specified in this field is present in the incoming JWT. If no match is found, no username is populated in the AAA processing.",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

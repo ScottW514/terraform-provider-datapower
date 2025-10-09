@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -122,7 +123,8 @@ func (d *APIConnectGatewayServiceDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: "JWT URL",
 				Computed:            true,
 			},
-			"proxy_policy": models.GetDmAPICGSProxyPolicyDataSourceSchema("API Manager proxy", "proxy", ""),
+			"proxy_policy":       models.GetDmAPICGSProxyPolicyDataSourceSchema("API Manager proxy", "proxy", ""),
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

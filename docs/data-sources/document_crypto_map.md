@@ -37,6 +37,10 @@ data "datapower_document_crypto_map" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -45,6 +49,23 @@ Read-Only:
 - `operation` (String) Select the operation to perform on the selected document nodes.
 - `user_summary` (String) Comments
 - `xpath` (List of String) <p>Enter the XPath expression identifying the elements on which to operate in the blank field in front of the Add button. Click Add to add the expression to those included in the map.</p><p>Click the XPath Tool button to use the graphically oriented XPath Tool to construct the message. You will need to upload an example document to use this tool. Note that this example should be the encrypted document when the operation is decrypt.</p>
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
+
 
 <a id="nestedatt--result--name_space_mappings"></a>
 ### Nested Schema for `result.name_space_mappings`
