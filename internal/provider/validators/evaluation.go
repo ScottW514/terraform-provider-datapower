@@ -103,6 +103,10 @@ func (e *Evaluation) matchesConditions(ctx context.Context, config *tfsdk.Config
 			a = intAttr.ValueInt64()
 		}
 		return a < v
+	case "property-null":
+		return e.attrIsNull(ctx, config, diag, attrPath)
+	case "property-not-null":
+		return !e.attrIsNull(ctx, config, diag, attrPath)
 	default:
 		diag.AddAttributeError(
 			attrPath,
@@ -277,6 +281,10 @@ func (e *Evaluation) String() string {
 		return fmt.Sprintf("`%s`!=%s", e.Attribute, fmtSliceToString(e.Value))
 	case "property-less-than":
 		return fmt.Sprintf("`%s`<`%s`", e.Attribute, e.Value[0])
+	case "property-null":
+		return fmt.Sprintf("`%s`==`null`", e.Attribute)
+	case "property-not-null":
+		return fmt.Sprintf("`%s`!=`null`", e.Attribute)
 	}
 	return ""
 }
@@ -294,4 +302,41 @@ func (e *Evaluation) parentPath() bool {
 		return false
 	}
 	return e.AttrPath[0:3] == "../"
+}
+
+func (e *Evaluation) attrIsNull(ctx context.Context, config *tfsdk.Config, diag *diag.Diagnostics, attrPath path.Path) bool {
+	var isNull bool
+	if e.AttrType == "String" {
+		var attr types.String
+		diag.Append(config.GetAttribute(ctx, attrPath.ParentPath().AtName(e.Attribute), &attr)...)
+		isNull = attr.IsNull()
+	} else if e.AttrType == "Int64" {
+		var attr types.Int64
+		diag.Append(config.GetAttribute(ctx, attrPath.ParentPath().AtName(e.Attribute), &attr)...)
+		isNull = attr.IsNull()
+	} else if e.AttrType == "Bool" {
+		var attr types.Bool
+		diag.Append(config.GetAttribute(ctx, attrPath.ParentPath().AtName(e.Attribute), &attr)...)
+		isNull = attr.IsNull()
+	} else if e.AttrType == "List" {
+		var attr types.List
+		diag.Append(config.GetAttribute(ctx, attrPath.ParentPath().AtName(e.Attribute), &attr)...)
+		isNull = attr.IsNull()
+	} else if e.AttrType[0:2] == "Dm" {
+		diag.AddAttributeError(
+			attrPath,
+			"Invalid Attribute Validation",
+			fmt.Sprintf("Attribute '%s' ('%s') cannot be tested for null.", e.Attribute, e.AttrType),
+		)
+	} else {
+		diag.AddAttributeError(
+			attrPath,
+			"Invalid Attribute Validation",
+			fmt.Sprintf("Property type '%s' not valid to evaluate attribute '%s'.", e.AttrType, e.Attribute),
+		)
+	}
+	if diag.HasError() {
+		return false
+	}
+	return isNull
 }

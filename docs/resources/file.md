@@ -3,12 +3,12 @@
 page_title: "datapower_file Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Files
+  The datapower_file resource manages files on an IBM DataPower Gateway, allowing practitioners to upload files to a specified remote path within an application domain. The resource supports uploading file content either by referencing a local file path or by providing the file content directly as a string. It tracks file changes using a computed hash, which is updated based on the local file or provided content. If the remote file is readable (e.g. not in a cert folder), the hash attribute is updated during the plan phase to reflect changes in the remote file. This resource is useful for managing stylesheets, gateway scripts, certificates, or other file based assets on the DataPower Gateway.
 ---
 
 # datapower_file (Resource)
 
-Files
+The `datapower_file` resource manages files on an IBM DataPower Gateway, allowing practitioners to upload files to a specified remote path within an application domain. The resource supports uploading file content either by referencing a local file path or by providing the file content directly as a string. It tracks file changes using a computed hash, which is updated based on the local file or provided content. If the remote file is readable (e.g. not in a `cert` folder), the hash attribute is updated during the plan phase to reflect changes in the remote file. This resource is useful for managing stylesheets, gateway scripts, certificates, or other file based assets on the DataPower Gateway.
 
 ## Example Usage
 
@@ -26,13 +26,18 @@ resource "datapower_file" "acc_test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `local_path` (String) Path to local file, which will be uploaded.
 - `remote_path` (String) File remote path
 
 ### Optional
 
+- `content` (String, Sensitive) String content of file (UTF-8 text only), which will be uploaded. Not valid if `local_file` is set.
+  - Required When: `local_path`==`null`
+  - Not Valid When: `local_path`!=`null`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `hash` (String, Deprecated) Provider calculated hash to track file changes.
+- `local_path` (String) Path to local file, which will be uploaded. Not valid if `content` is set.
+  - Required When: `content`==`null`
+  - Not Valid When: `content`!=`null`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

@@ -20,7 +20,7 @@ actions: # Actions available for the model
   body: str(required=False) # Body of the API message to trigger action
 ---
 conditions: # Conditions that need to be met for required/ignored
-  evaluation: str(required=True): # Test to performed. One of the following: logical-true, logical-not, logical-and, logical-or, property-url-protocol-in-list, property-url-protocol-not-in-list, property-value-in-list, property-value-not-in-list, property-less-than
+  evaluation: str(required=True): # Test to performed. One of the following: logical-true, logical-not, logical-and, logical-or, property-url-protocol-in-list, property-url-protocol-not-in-list, property-value-in-list, property-value-not-in-list, property-less-than, property-null, property-not-null
   conditions: list(conditions()) # Conditions for logical tests. Ignored for other tests. Supports up to 4 levels of recursion.
   # Remaining fields are ignored for logical tests
   attribute: str(required=True) # Go name of attribute to test

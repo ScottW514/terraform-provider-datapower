@@ -26,6 +26,11 @@ description: |-
   - `resource_datapower_gw_script_settings`
   - `resource_datapower_system_settings`
 - BREAKING CHANGE: Removed `dependency_actions` from all data sources.
+- Updated `resource_file`
+  - Added `content` attribute to allow UTF-8 strings for file content as alternative to `local_file`
+  - Added removal of empty directories upon resource deletion
+  - BREAKING CHANGE: Changed hashing algorithm from CRC32 to SHA256. This will trigger a file upload and the execution of `dependency_actions` for any existing resources.
+  - Refactored path handling
 
 ## v0.11.4
 

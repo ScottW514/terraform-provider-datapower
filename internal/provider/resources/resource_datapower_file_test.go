@@ -36,7 +36,36 @@ func TestAccResourceFile(t *testing.T) {
 		Config: testutils.FileTestConfig.GetResourceConfig(),
 		Check:  resource.ComposeTestCheckFunc(checks...),
 	})
-
+	steps = append(steps, resource.TestStep{
+		Config: `
+	resource "datapower_file" "content" {
+	  app_domain = "acceptance_test"
+	  remote_path = "local:///somepath/another/pluseonemore/test_content_file.txt"
+	  content = "Test File"
+	}
+			`,
+		Check: resource.ComposeTestCheckFunc(checks...),
+	})
+	steps = append(steps, resource.TestStep{
+		Config: `
+	resource "datapower_file" "content" {
+	  app_domain = "acceptance_test"
+	  remote_path = "local:///newpath/test_content_file.txt"
+	  content = "Test File"
+	}
+			`,
+		Check: resource.ComposeTestCheckFunc(checks...),
+	})
+	steps = append(steps, resource.TestStep{
+		Config: `
+	resource "datapower_file" "content" {
+	  app_domain = "acceptance_test"
+	  remote_path = "local:///newpath/test_content_file.txt"
+	  content = "Test File2"
+	}
+			`,
+		Check: resource.ComposeTestCheckFunc(checks...),
+	})
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testutils.TestAccPreCheck(t) },
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
