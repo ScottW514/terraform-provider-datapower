@@ -22,6 +22,8 @@
   - Added removal of empty directories upon resource deletion
   - BREAKING CHANGE: Changed hashing algorithm from CRC32 to SHA256. This will trigger a file upload and the execution of `dependency_actions` for any existing resources.
   - Refactored path handling
+- Bump golang.org/x/tools from 0.37.0 to 0.38.0 (PR18)
+- Bump golang.org/x/crypto from 0.42.0 to 0.43.0 (PR19)
 
 ## v0.11.4
 
