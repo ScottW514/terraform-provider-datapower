@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -122,7 +121,6 @@ func (d *ImportPackageDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify whether to import the import package on startup. The default behavior is to import on startup. <ul><li>When enabled, the import package is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

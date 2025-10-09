@@ -37,10 +37,6 @@ data "datapower_as2_proxy_source_protocol_handler" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `acl` (String) Specifies the access control list to allow or deny access to this service based on the IP address of the client. When attached to a service, an access control list denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.
@@ -75,23 +71,6 @@ Read-Only:
 - `user_summary` (String) Comments
 - `visibility_event_endpoint` (String) Specifies the URL of the MEIG visibility event endpoint. Enter the URL in the format of static IBM MQ URL that provides the information about the IBM MQ server name, queue manager name, and name of the channel configured in the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT
 - `xml_manager` (String) Specifies an existing XML manager. An XML manager obtains and manages XML documents, stylesheets, and other document resources on behalf of one or more services.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--allowed_features"></a>
 ### Nested Schema for `result.allowed_features`

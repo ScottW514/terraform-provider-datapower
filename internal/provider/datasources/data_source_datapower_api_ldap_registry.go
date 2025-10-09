@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -150,7 +149,6 @@ func (d *APILDAPRegistryDataSource) Schema(ctx context.Context, req datasource.S
 							MarkdownDescription: "Specify the filter expression of the LDAP dynamic group configuration. Only for dynamic. <p>When the filter is <tt>(memberOf=CN=ibm-group,DC=ibm,DC=com)</tt> , the value is used verbatim for LDAP group dynamic search.</p>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

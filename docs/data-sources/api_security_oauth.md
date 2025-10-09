@@ -37,10 +37,6 @@ data "datapower_api_security_oauth" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -51,19 +47,3 @@ Read-Only:
 - `oauth_provider` (String) OAuth provider
 - `oauth_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <ul><li>The allowed scopes for this configuration must be a subset of the allowed scopes set for the API OAuth security definition.</li><li>The allowed scopes for the API OAuth security definition must be a subset of the allowed scopes set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

@@ -37,10 +37,6 @@ data "datapower_slm_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `api_mgmt` (Boolean)
@@ -50,23 +46,6 @@ Read-Only:
 - `peer_group` (String) Specify the peer group that share in load distribution of traffic that is destined for the same resources. A peer group establishes a data-sharing protocol among members where each member has the data to determine whether a threshold is reached.
 - `statement` (Attributes List) Specify the policy statement that establishes criteria to select messages, to set a measurement interval, to set thresholds, and to determine the action to take when the threshold is met. A policy can have multiple statements that run in the sequence defined by the statement identifier. (see [below for nested schema](#nestedatt--result--statement))
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--statement"></a>
 ### Nested Schema for `result.statement`

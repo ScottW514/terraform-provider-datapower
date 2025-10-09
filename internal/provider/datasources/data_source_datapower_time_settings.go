@@ -27,7 +27,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -125,7 +124,6 @@ func (d *TimeSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 				MarkdownDescription: "Specify the minute when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 30.",
 				Computed:            true,
 			},
-			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

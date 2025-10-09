@@ -27,7 +27,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -69,7 +68,6 @@ func (d *DistributedVariableDataSource) Schema(ctx context.Context, req datasour
 				MarkdownDescription: "Specify the gateway-peering instance for distributed variable. This instance synchronizes the variables among the configured members. If you do not want to persist variable values across a restart, store the data in memory.",
 				Computed:            true,
 			},
-			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

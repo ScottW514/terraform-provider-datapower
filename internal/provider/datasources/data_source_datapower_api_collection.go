@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -182,7 +181,6 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceDataSourceSchema("Specify the constraints to parse documents. Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method. <ul><li>You can specify a URL reference from which to retrieve the constraints definition.</li><li>You can specify a literal configuration string in XML management interface or REST management interface format that contains the constraints definition.</li><li>You can specify a parse settings configuration object to retrieve the constraints definition.</li></ul>", "parse-settings-reference", ""),
-						"dependency_actions":       actions.ActionsSchema,
 					},
 				},
 			},

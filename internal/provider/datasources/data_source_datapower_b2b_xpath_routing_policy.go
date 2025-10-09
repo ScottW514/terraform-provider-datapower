@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -102,7 +101,6 @@ func (d *B2BXPathRoutingPolicyDataSource) Schema(ctx context.Context, req dataso
 							MarkdownDescription: "Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

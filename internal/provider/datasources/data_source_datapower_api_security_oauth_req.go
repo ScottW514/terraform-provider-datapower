@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -94,7 +93,6 @@ func (d *APISecurityOAuthReqDataSource) Schema(ctx context.Context, req datasour
 							MarkdownDescription: "Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

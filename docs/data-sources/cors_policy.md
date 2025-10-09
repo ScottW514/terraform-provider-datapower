@@ -37,29 +37,9 @@ data "datapower_cors_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `rule` (List of String) Specify the CORS rules to to apply to the CORS policy. A CORS rule defines allowed origins and other CORS properties. The first rule that is valid is applied to the inbound CORS request. If no rule applies, the CORS request is rejected.
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

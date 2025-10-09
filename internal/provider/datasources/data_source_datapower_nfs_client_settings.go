@@ -27,7 +27,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -65,7 +64,6 @@ func (d *NFSClientSettingsDataSource) Schema(ctx context.Context, req datasource
 				MarkdownDescription: "Specify the interval between the validation of NFS mounts. The status of each NFS mount is checked at this interval. This check detects whether the NFS server is up or down to prevent application-level NFS timeouts.",
 				Computed:            true,
 			},
-			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

@@ -25,10 +25,6 @@ data "datapower_git_ops" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 
-### Optional
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-
 ### Read-Only
 
 - `commit_identifier` (String) Commit identifier
@@ -48,23 +44,6 @@ data "datapower_git_ops" "test" {
 - `tls_valcred` (String) HTTPS validation credentials
 - `user_summary` (String) Comments
 - `username` (String) Username
-
-<a id="nestedatt--dependency_actions"></a>
-### Nested Schema for `dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--template_policies"></a>
 ### Nested Schema for `template_policies`

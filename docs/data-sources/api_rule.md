@@ -37,10 +37,6 @@ data "datapower_api_rule" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `actions` (List of String) Specify the processing actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.
@@ -49,23 +45,6 @@ Read-Only:
 - `dynamic_actions_mode` (Boolean) Specify whether to use dynamic actions instead of explicit actions. Dynamic actions take configuration values at run time and override the default properties in API actions. API rules that contain dynamic actions can be included in user-defined policies that API Connect advertises and makes available in the API Connect assembly editor.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--dynamic_actions"></a>
 ### Nested Schema for `result.dynamic_actions`

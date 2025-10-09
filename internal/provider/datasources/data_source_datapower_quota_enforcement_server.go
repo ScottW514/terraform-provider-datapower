@@ -28,7 +28,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -111,7 +110,6 @@ func (d *QuotaEnforcementServerDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "Based on your requirements for quota enforcement, enable or disable strict mode. By default, the strict mode is enabled.",
 				Computed:            true,
 			},
-			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

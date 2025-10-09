@@ -37,29 +37,9 @@ data "datapower_crypto_key" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `alias` (String) Password alias
 - `app_domain` (String) The name of the application domain the object belongs to
 - `filename` (String) Specify the file that contains the private key. The name might be the same as the file that contains the public key. <ul><li>When in the public crypto area, the file is in the <tt>pubcert:</tt> directory.</li><li>When in the private crypto area, the file is in the <tt>cert:</tt> directory.</li><li>When in the public area, the file is in the <tt>local:</tt> directory. <p><b>Attention:</b> Any file in the <tt>local:</tt> directory can be downloaded or included in an export. Therefore, consider carefully before you store crypto files in this directory.</p></li><li>When retrieved from z/OS, the file is in the <tt>saf-key:</tt> directory. The key must be a SAF key that is stored in ICSF.</li><li>When on z/OS, the file is in the <tt>saf-remote-key:</tt> directory. The key must be a SAF key that is stored in ICSF.</li><li>When on SafeNet Luna HSM, the file is in a partition of the <tt>luna-key:</tt> directory.</li></ul>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

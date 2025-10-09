@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -123,8 +122,7 @@ func (d *ConfigSequenceDataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "Specify the interval in milliseconds between the processing of changes. This delay enables multiple file events to be aggregated and handled within the same sequence run. Enter a value in the range 100 - 60000. The default value is 100.",
 							Computed:            true,
 						},
-						"capabilities":       models.GetDmConfigSequenceCapabilitiesDataSourceSchema("Capabilities", "", ""),
-						"dependency_actions": actions.ActionsSchema,
+						"capabilities": models.GetDmConfigSequenceCapabilitiesDataSourceSchema("Capabilities", "", ""),
 					},
 				},
 			},

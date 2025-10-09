@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -90,7 +89,6 @@ func (d *B2BCPADataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 							MarkdownDescription: "Specify the CPA ID in the ebMS message header. <ul><li>For outbound transactions, specify the CPA ID in the outbound ebMS message to the external partner.</li><li>For inbound transactions, specify the CPA ID to identify the inbound ebMS message.</li></ul>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

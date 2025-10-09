@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -104,7 +103,6 @@ func (d *SSLSNIServerProfileDataSource) Schema(ctx context.Context, req datasour
 							MarkdownDescription: "Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

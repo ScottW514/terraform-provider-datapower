@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -116,7 +115,6 @@ func (d *CryptoValCredDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify whether to check dates during certificate validation. This validation checks the current date and time against the <tt>notBefore</tt> and <tt>notAfter</tt> values in certificates and CRLs. When enabled, the date values are checked and expired certificates cause validation to fail. Otherwise, the date values are ignored and and do not cause validation to fail when a certificate is expired.",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

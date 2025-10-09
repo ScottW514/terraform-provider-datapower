@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -99,7 +98,6 @@ func (d *MatchingDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							MarkdownDescription: "<p>Whether to use Boolean OR or AND operations during evaluation.</p><ul><li>When enabled, combine with OR semantics. Only one match must evaluate to true for success.</li><li>When disabled, combine with AND semantics. All matches must evaluate to true for success.</li></ul>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

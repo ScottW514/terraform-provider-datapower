@@ -27,7 +27,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -65,7 +64,6 @@ func (d *SecureBackupModeDataSource) Schema(ctx context.Context, req datasource.
 				MarkdownDescription: "<p>Sets the backup mode to support, when this operational mode is not previously set.</p><p>The creation of a secure backup is available only when secure backup mode is enabled. Unlike a standard backup, a secure backup contains private data (certificates, keys, and user data), which the DataPower Gateway encrypts with a customer-provided and a DataPower certificate.</p>",
 				Computed:            true,
 			},
-			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

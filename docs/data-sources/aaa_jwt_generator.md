@@ -37,10 +37,6 @@ data "datapower_aaa_jwt_generator" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `additional_claims` (Attributes) <p>Additional JWT claims, such as audience "aud" claim, not before "nbf" claim, issued at "iat" claim, JWT ID "jit" claim, "nonce" claim, and custom claim, can be added for JWT.</p><p>The subject, "sub" claim is added by default. You can override the subject claim value by specifying the "sub" claim in the Custom claims field.</p>
@@ -62,23 +58,6 @@ Read-Only:
 - `sign_key` (String) The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.
 - `sign_sskey` (String) The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
 - `user_summary` (String) A descriptive summary for the JWT Generator configuration.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--additional_claims"></a>
 ### Nested Schema for `result.additional_claims`

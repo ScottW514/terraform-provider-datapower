@@ -37,10 +37,6 @@ data "datapower_api_path" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -50,23 +46,6 @@ Read-Only:
 - `path` (String) Specify the relative path to access the REST APIs. The path is appended to the base path to construct the full URI. The path must start with a / character. When the path contains a parameter, ensure that you define the path parameter at either or both the path and operation levels. <ul><li>A parameter at the end of the path can contain a + qualifier to match one or more levels as in the following example. <p><tt>/petstore/{type}/{+category}</tt></p><p>The <tt>{type}</tt> parameter matches one path level. The <tt>{+category}</tt> parameter matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li><li>A parameter at the end of the path can contain a * qualifier to match zero or more levels as in the following example. <p><tt>/petstore/{type}/{*category}</tt></p><p>The <tt>{type}</tt> parameter matches one path level. The <tt>{*category}</tt> parameter matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/</tt></li><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li></ul>
 - `request_schema` (String) Request schema
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--parameter"></a>
 ### Nested Schema for `result.parameter`

@@ -37,10 +37,6 @@ data "datapower_http_user_agent" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `add_header_policies` (Attributes List) Specify the policy that associates a set of URLS to inject HTTP headers into the message. (see [below for nested schema](#nestedatt--result--add_header_policies))
@@ -62,23 +58,6 @@ Read-Only:
 - `timeout` (Number) the maximum idle time in seconds before an established connection to a remote server is torn down. Enter a avlue in the range 1 - 86400. The default value is 300.
 - `upload_chunked_policies` (Attributes List) Specify the policy that associates a set of URL to control whether to send chunked-encoded documents. With HTTP/1.1, the body of the document can be delimited by <tt>Content-Length</tt> or chunked encoding. All servers understand <tt>Content-Length</tt> but many applications fail to understand chunked encoding. Therefore, <tt>Content-Length</tt> is used. However, the use of <tt>Content-Length</tt> interferes with the ability of the service to fully stream. <p>Unlike all other HTTP/1.1 features that can be negotiated down at run time, you must know beforehand that the target server is RFC 2616 compatible.</p> (see [below for nested schema](#nestedatt--result--upload_chunked_policies))
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--add_header_policies"></a>
 ### Nested Schema for `result.add_header_policies`

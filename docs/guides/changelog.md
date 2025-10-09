@@ -25,6 +25,7 @@ description: |-
   - `resource_datapower_domain`
   - `resource_datapower_gw_script_settings`
   - `resource_datapower_system_settings`
+- BREAKING CHANGE: Removed `dependency_actions` from all data sources.
 
 ## v0.11.4
 

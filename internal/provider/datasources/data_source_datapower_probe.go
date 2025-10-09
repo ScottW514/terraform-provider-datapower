@@ -27,7 +27,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -77,7 +76,6 @@ func (d *ProbeDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				MarkdownDescription: "Specify the gateway-peering instance for the probe. This instance synchronizes the captured data across the members. If you do not want to persist data across a restart, store the data in memory.",
 				Computed:            true,
 			},
-			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

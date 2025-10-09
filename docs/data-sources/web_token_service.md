@@ -37,10 +37,6 @@ data "datapower_web_token_service" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -61,23 +57,6 @@ Read-Only:
 - `style_policy` (String) Assign the processing policy to the service. The processing policy defines the actions to perform on security token requests.
 - `user_summary` (String) Specify a brief, descriptive comment.
 - `xml_manager` (String) Assign the XML manager that obtains and manages documents on behalf of the service. The user agent, which is referenced by this XML manager, controls access to remote destinations. Unless you have service-specific needs, use the <tt>default</tt> XML manager.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--front_side"></a>
 ### Nested Schema for `result.front_side`

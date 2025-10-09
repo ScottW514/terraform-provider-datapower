@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -118,7 +117,6 @@ func (d *WebSphereJMSSourceProtocolHandlerDataSource) Schema(ctx context.Context
 							MarkdownDescription: "<p>If enabled messages taken from the get queue will be processed not necessarily in the same order as they were queued.</p><p>This property may be set to improve performance only if associated Multi-Protocol Gateway or WS-Proxy isn't configured to process messages in order.</p>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

@@ -27,7 +27,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -69,7 +68,6 @@ func (d *LunaHASettingsDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "Specify the interval in seconds between recovery attempts for failed members in the HA group. Enter a value in the range 60 - 1200. The default value is 60.",
 				Computed:            true,
 			},
-			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

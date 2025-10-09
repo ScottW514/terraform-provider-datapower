@@ -37,10 +37,6 @@ data "datapower_oauth_supported_client_group" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -53,23 +49,6 @@ Read-Only:
   - CLI Alias: `oauth-role` (see [below for nested schema](#nestedatt--result--oauth_role))
 - `template_process_url` (String) <p>Specifies the location of the stylesheet or GatewayScript file that defines the OAuth client. You can define parts of the configuration parameters in the stylesheet or GatewayScript file and then specify an OAuth client template to derive the remaining information. Note that the stylesheet or GatewayScript file must at least provide the "client-id" node. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>The stylesheet or GatewayScript file must follow the guidelines when it returns the information: <ul><li>The stylesheet or GatewayScript file must return the &lt;client-id> element.</li><li>If the &lt;customized> element value is set to "on", the &lt;customized-process-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;customized> element value is set to "on" in the client template, the &lt;customized-process-url> element cannot unset this value.</li><li>If the &lt;use-validation-url> element value is set to "on", the &lt;validation-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-scope-check> element value is set to "on", the &lt;scope-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-resource-owner> element value is set to "on", the &lt;resource-owner-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;role> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;client-type> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;az-grant> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;az-grant> element value is set to "+code+" or "+token+", the &lt;local-az-page-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;caching> element value is set to "custom", the &lt;additional-oauth-processing-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;refresh-token-allowed> is set to a non-zero value, the &lt;refresh-token-lifetime> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;check-client-credential> element value is set to "on", the &lt;client-authen-method> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method> element value is set to "secret", the &lt;client-secret> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method> element value is set to "ssl", the &lt;client-valcred> element value must be provided by either the stylesheet or GatewayScript file or the template.</li></ul></p>
 - `user_summary` (String) Specifies a brief comment that describes the configuration.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--oauth_role"></a>
 ### Nested Schema for `result.oauth_role`

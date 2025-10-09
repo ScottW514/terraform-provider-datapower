@@ -37,10 +37,6 @@ data "datapower_luna_ha_group" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -49,19 +45,3 @@ Read-Only:
 - `member` (List of String) Specify the members for HA group. An HA group member is an HSM partition that the system can access. The first member is the primary member. The Luna HSM balances cryptographic requests across the members in the HA group.
 - `standby` (List of String) Specify the standby HSM partition. Standby members are not active for load balancing until all non-standby members fail. You must add the HSM partition as a member of the HA group before you can specify the partition as standby.
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

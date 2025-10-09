@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -103,7 +102,6 @@ func (d *CookieAttributePolicyDataSource) Schema(ctx context.Context, req dataso
 							MarkdownDescription: "The additional attributes to include in the cookie. Enter each attribute in name-value pair. When you enter multiple pairs, use a semicolon (;) to separate them. A name-value pair with an empty value (name-only portion) can also be specified here. You can use variables instead of name-value pair(s). Enter a context variable as var://variablename",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

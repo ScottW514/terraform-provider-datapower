@@ -37,10 +37,6 @@ data "datapower_http_input_conversion_map" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -48,23 +44,6 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `input_encoding` (Attributes List) This allows selecting the Encoding for values based on their name. The names are matched by PCREs. Each PCRE is associated with an Encoding that controls how the value is mapped to the contents of an &lt;arg> element in the resulting XML. This is an ordered list, comparision of the name proceeds until the first match. If there is no match, the Encoding will be selected by the Default Encoding of this HTTP Input Conversion Map. (see [below for nested schema](#nestedatt--result--input_encoding))
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--input_encoding"></a>
 ### Nested Schema for `result.input_encoding`

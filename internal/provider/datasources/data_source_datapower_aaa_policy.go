@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -215,7 +214,6 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							MarkdownDescription: "<p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -86,7 +85,6 @@ func (d *CryptoSSKeyDataSource) Schema(ctx context.Context, req datasource.Schem
 							MarkdownDescription: "Specify the file that contains the shared secret key. If the file begins with <tt>0x</tt> , processing assumes that the rest of the file contains bytes in hex. You can access the file in the <tt>cert:</tt> or <tt>local:</tt> directory. <p><b>Attention:</b> Any file in the <tt>local:</tt> directory can be downloaded or included in an export. Therefore, consider whether to store crypto files in this directory.</p>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

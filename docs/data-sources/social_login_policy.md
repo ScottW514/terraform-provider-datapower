@@ -37,10 +37,6 @@ data "datapower_social_login_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -58,19 +54,3 @@ Read-Only:
 - `social_provider` (String) Controls which social login provider to use.
 - `user_summary` (String) Enter a descriptive summary for the configuration.
 - `validate_jwt_token` (Boolean) <p>Controls whether to validate the JWT token (ID token)from the provider. If yes, it is recommended that you validate the ID token that is obtained from Google by defining the following settings in the JWT Validator configuration.</p><p><ol><li>Verify the signature by fetching the certs from https://www.googleapis.com/oauth2/v3/certs</li><li>Verify that the <tt>aud</tt> claim matches the client ID of DataPower.</li><li>Verify that the <tt>iss</tt> claim matches accounts.google.com or https://accounts.google.com</li></ol></p><p>For other recommendations on validating the ID token from Google, see https://developers.google.com/identity/protocols/OpenIDConnect.</p>
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

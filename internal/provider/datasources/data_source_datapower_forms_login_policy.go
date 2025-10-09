@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -178,7 +177,6 @@ func (d *FormsLoginPolicyDataSource) Schema(ctx context.Context, req datasource.
 							MarkdownDescription: "Specify the location of the custom file that generates the HTML pages. This stylesheet or GatewayScript file must generate the following pages. <ul><li>A login form request to generate a login form with the <tt>login</tt> operation.</li><li>A logout page request to generate a logout page with the <tt>logout</tt> operation.</li><li>An error page request to generate an error page with the <tt>error</tt> operation.</li></ul>",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

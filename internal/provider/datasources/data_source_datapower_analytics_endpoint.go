@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -158,7 +157,6 @@ func (d *AnalyticsEndpointDataSource) Schema(ctx context.Context, req datasource
 							MarkdownDescription: "Specify the inter-transaction timeout for connections, which is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 60.",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

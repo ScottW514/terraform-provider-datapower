@@ -37,10 +37,6 @@ data "datapower_oauth_supported_client" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `access_token_life_time` (Number) Sets the lifetime for the access token in seconds. Enter a value in the range 1 - 63244800. The default value is 3600.
@@ -87,23 +83,6 @@ Read-Only:
 - `validation_url` (String) Specifies the validation url.
 - `validation_url_ssl_client` (String) Specifies the TLS Client Profile for the validation URL.
 - `validation_url_ssl_client_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--az_grant"></a>
 ### Nested Schema for `result.az_grant`

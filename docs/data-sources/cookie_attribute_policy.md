@@ -37,10 +37,6 @@ data "datapower_cookie_attribute_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -52,23 +48,6 @@ Read-Only:
 - `interval` (Number) <p>Sets the cookie's maximum age and/or the cookie's expiration date as an interval of seconds, relative to the time the transaction occurred on the object. For example, if this value is set to 3600 and the transaction on this object occurred on Feb 10, 2014 12:00:00 GMT, then the maximum age of the cookie is 3600 seconds and the expiration date is Feb 10, 2014 13:00:00 GMT, depending on whether the Max-Age and the Expires attribute are included.</p><p>When the maximum age or the expiration date is reached, the cookie is deleted. Enter a value in the range 1 - 2678400. The default value is 3600. Note that the Max-Age attribute in this policy overrides Inactivity Timeout and Session Lifetime attributes in HTML Forms Login policy.</p>
 - `path` (String) Identifies path attribute of a cookie. A browser accepts cookies only when the current path matches the value you enter there. If this policy object is attached to HTML Forms Login Policy, this property overrides Form POST Action URL property. The maximum length of the path is 256 characters.
 - `user_summary` (String) A descriptive summary for the configuration.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--cookie_attribute"></a>
 ### Nested Schema for `result.cookie_attribute`

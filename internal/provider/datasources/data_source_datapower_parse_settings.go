@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -130,7 +129,6 @@ func (d *ParseSettingsDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify whether to enforce strict UTF-8 encoding throughout the entire JSON document. When enabled, the entire document is checked for valid UTF-8 encoding. When disabled, only the first few bytes are checked for proper encoding and the rest of the document is assumed to be in the same encoding.",
 							Computed:            true,
 						},
-						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

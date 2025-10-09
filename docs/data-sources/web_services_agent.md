@@ -25,10 +25,6 @@ data "datapower_web_services_agent" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 
-### Optional
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-
 ### Read-Only
 
 - `capture_mode` (String) Specify the mode to capture messages for further analysis. Because not all Web Services Management protocols can accommodate full message-capture, configure this property only when the spooler can forward full messages. <p>Full message-capture incurs a performance penalty.</p>
@@ -38,19 +34,3 @@ data "datapower_web_services_agent" "test" {
 - `max_records` (Number) Specify the maximum number of transaction records to buffer. Buffering controls the behavior of the agent when there are no registered consumers of transaction events. Records are accumulated until they reach the configured threshold. After this threshold is reached, new records are dropped. The loss of records are visible to web service managers that understand the concept.
 - `mediation_metrics` (Boolean) Specify whether to collect metrics about mediation enforcement. The default behavior is to not collect metrics.
 - `user_summary` (String) Comments
-
-<a id="nestedatt--dependency_actions"></a>
-### Nested Schema for `dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

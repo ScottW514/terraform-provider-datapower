@@ -93,7 +93,6 @@ func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaR
 {{- range  .Attributes}}
     {{- template "renderSchemaAttribute" (dict "Attr" . "SchemaPrefix" "schema." "ValidatorPrefix" "" "DmTypeCallPrefix" "models." "DmTypeCallSuffix" "DataSourceSchema" "IsList" (isList .) "IsDataSource" true "IsResource" false "IncludeWriteOnly" false "Root" $root)}}
 {{- end}}
-						"dependency_actions": actions.ActionsSchema,
 					},
 {{- if not .Singleton}}
 				},

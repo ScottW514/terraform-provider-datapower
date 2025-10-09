@@ -37,10 +37,6 @@ data "datapower_api_definition" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `activity_log_toggle` (Boolean) Specify whether to enable API activity logging. The API gateway runs the activity log API action to generate logs. To generate log data for calls, you must enable this property and ensure that the following conditions are met. <ul><li>The logging type is not set to none.</li><li>The activity log action is added in the API rule for the API definition.</li></ul><p>When disabled, the API gateway does not generate log data.</p>
@@ -88,23 +84,6 @@ Read-Only:
 - `version` (String) API version
 - `wsdl_advertised_schema_location` (String) WSDL advertised schema location
 - `wsdl_validation_schema` (String) WSDL validation schema location
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--allowed_api_protocols"></a>
 ### Nested Schema for `result.allowed_api_protocols`

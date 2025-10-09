@@ -37,10 +37,6 @@ data "datapower_config_deployment_policy" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `accepted_config` (List of String) Matching configuration is accepted during import. To create a match statement, type a correctly formatted resource match in the horizontal text box or select Build. Selecting Build displays the Configuration Match Builder in a popup window. <p>A match statement takes the following general form: <br/><i>Addr</i> / <i>Domain</i> / <i>Resource</i> [? <i>Name=resource-name</i> &amp; <i>Property=property-name</i> &amp; <i>Value=property-value</i> ]</p><table><tr><td valign="top">Addr</td><td>Device Address. Specifies IP address or host alias. The value (*) matches all IP addresses.</td></tr><tr><td valign="top">Domain</td><td>Application Domain. The name of the application domain. The value (*) matches all domains.</td></tr><tr><td valign="top">Resource</td><td>Resource Type. The name of the resource type. The value (*) matches all resource types.</td></tr><tr><td valign="top">Name=resource-name</td><td>An additional specification field, such as "Name". Limits the match statement to resources of the specified name. Use a PCRE to select groups of resource instances. For example, "Name=foo.*" would match all resources with names that start with "foo".</td></tr><tr><td valign="top">Property=property-name</td><td>Property Name. The name of the configuration property. Limits the match statement to resources of the specified property. If change specified, set property-name to null string.</td></tr><tr><td valign="top">Value=property-value</td><td>Property Value. Specifies the value for the configuration property. This property limits the match statement to resources with the specified property value.</td></tr></table>
@@ -49,23 +45,6 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `modified_config` (Attributes List) Matching configuration is modified during import. The matching configuration may be changed, added, or deleted. To create a match statement, type a correctly formatted resource match in the horizontal text box or select Build. Selecting Build displays the Configuration Match Builder in a popup window. <p>A match statement takes the following general form: <br/><i>Addr</i> / <i>Domain</i> / <i>Resource</i> [? <i>Name=resource-name</i> &amp; <i>Property=property-name</i> &amp; <i>Value=property-value</i> ]</p><table><tr><td valign="top">Addr</td><td>Device Address. Specifies IP address or host alias. The value (*) matches all IP addresses.</td></tr><tr><td valign="top">Domain</td><td>Application Domain. The name of the application domain. The value (*) matches all domains.</td></tr><tr><td valign="top">Resource</td><td>Resource Type. The name of the resource type. The value (*) matches all resource types.</td></tr><tr><td valign="top">Name=resource-name</td><td>An additional specification field, such as "Name". Limits the match statement to resources of the specified name. Use a PCRE to select groups of resource instances. For example, "Name=foo.*" would match all resources with names that start with "foo".</td></tr><tr><td valign="top">Property=property-name</td><td>Property Name. The name of the configuration property. Limits the match statement to resources of the specified property. If change specified, set property-name to null string.</td></tr><tr><td valign="top">Value=property-value</td><td>Property Value. Specifies the value for the configuration property. This property limits the match statement to resources with the specified property value.</td></tr></table> (see [below for nested schema](#nestedatt--result--modified_config))
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--modified_config"></a>
 ### Nested Schema for `result.modified_config`

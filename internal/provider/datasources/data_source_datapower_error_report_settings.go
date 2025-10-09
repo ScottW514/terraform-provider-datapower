@@ -27,7 +27,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -145,7 +144,6 @@ func (d *ErrorReportSettingsDataSource) Schema(ctx context.Context, req datasour
 				MarkdownDescription: "<p>Specify the maximum number of local error reports to maintain when using the upload error report feature. After reaching this limit, the next local error report overwrites the oldest local error report. Use any value of 2 - 10. The default value is 5.</p><p>This feature only applies to locally stored error reports, including temporary and Raid.</p><p>To view the history, see the Failure Notification status provider.</p>",
 				Computed:            true,
 			},
-			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

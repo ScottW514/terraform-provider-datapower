@@ -37,10 +37,6 @@ data "datapower_crypto_val_cred" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -53,19 +49,3 @@ Read-Only:
 - `initial_policy_set` (List of String) Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>
 - `require_crl` (Boolean) Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.
 - `use_crl` (Boolean) Specify whether to check certificate revocation lists (CRLs) during certificate validation. When enabled, CRLs are checked. Otherwise, CRLs are not checked.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

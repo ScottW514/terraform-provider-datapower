@@ -37,10 +37,6 @@ data "datapower_zos_nss_client" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -54,19 +50,3 @@ Read-Only:
 - `system_name` (String) <p>Specifies a name for the NSS client. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The System Name identifies the NSS client to the NSS server. NSS server commands identify NSS clients by system name in the output when displaying information for connected NSS clients.</p>
 - `user_name` (String) <p>Specifies a user name to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The user name must match an existing user ID on the NSS Server.</p>
 - `user_summary` (String) A descriptive summary for the configuration.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

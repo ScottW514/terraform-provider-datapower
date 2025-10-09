@@ -37,10 +37,6 @@ data "datapower_sftp_file_poller_source_protocol_handler" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -61,19 +57,3 @@ Read-Only:
 - `target_directory` (String) <p>Specify the directory to poll. The path must end in a slash. The path denotes a directory.</p><ul><li>FTP examples: <ul><li>Absolute to the root directory: <tt>"ftp://user:password@host:port/%2Fpath/"</tt><p>If the username or password contains the characters colon (:), at symbol (@), or slash (/), use their URL-encoded values in accordance with the specification.</p></li><li>Relative to the home directory of the user: <tt>"ftp://user:password@host:port/path/"</tt></li></ul><p>Include a password in the URL with caution. The use of user:/password@host results in a server connection. However, with this configuration, the connection could be unable to send multiple commands to the FTP server. For a stable connection, define a basic authentication policy in the user agent. The user agent is in the XML manager associated with the DataPower service.</p></li><li>NFS example: <ul><li><tt>"dpnfs://static-mount-name/path/"</tt></li></ul></li><li>SFTP examples: <ul><li>Absolute to the root directory: <tt>"sftp://host:port/path/"</tt></li><li>Relative to the home directory of the user: <tt>"sftp://host:port/~/path/"</tt></li></ul></li></ul><p>Do not configure one poller to point at a host name that is a virtual name of a load balancer group. This configuration is not the correct way to poll multiple hosts. To poll multiple hosts, use the same DataPower service and configure one poller object for each real host.</p>
 - `user_summary` (String) Comments
 - `xml_manager` (String) An XML Manager manages the compilation and caching of stylesheets and documents. The XML Manager can also control the size and depth of messages processed by this host. Specify an existing XML Manager. More than one service may use the same XML Manager.
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

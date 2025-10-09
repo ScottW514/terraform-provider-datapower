@@ -37,10 +37,6 @@ data "datapower_parse_settings" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
@@ -57,19 +53,3 @@ Read-Only:
 - `user_summary` (String) Comments
 - `value_length` (Number) Specify the maximum value length in bytes. A document is rejected when its value length exceeds the maximum length. Enter a value in the range 0 - 5368709121. The default value is 8192. A value of 0 indicates unlimited. When 0, the action does not return the value length. This setting is applicable to XML, JSON, and GraphQL documents. <ul><li>For XML, applies to the length of an attribute or text value.</li><li>For JSON, applies to the length of a string value.</li><li>For GraphQL, applies to the number of bytes in any string from which GraphQL is composed.</li></ul><p>The length includes any white space between tags in XML or quotation marks in JSON.</p>
 - `width` (Number) Specify the maximum width of the payload. A document is rejected when its width exceeds the maximum width. Enter a value in the range 0 - 65535. The default value is 4096. A value of 0 indicates unlimited. When 0, the action does not return the width. This setting is application to XML, JSON, and GraphQL documents. <ul><li>For XML applies to the maximum number of attributes on an element and the maximum number of child elements for an element.</li><li>For JSON, applies to the maximum number of properties on a JSON object and the maximum number of JSON items in a JSON array</li><li>For GraphQL, applies to the maximum number of selections in a selection set.</li></ul>
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

@@ -37,10 +37,6 @@ data "datapower_log_target" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
-Optional:
-
-- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
-
 Read-Only:
 
 - `active_timeout` (Number) Specify the time to wait in seconds before closing an established and active connection to the server. Enter a value in the range 0 - 60. A value of 0 allows the log target to most efficiently send messages to the server by maintaining a healthy connection indefinitely. The default value is 0. <p><b>Attention:</b> If multiple log targets have the following configuration, they might share connections. <ul><li>The same local address and port</li><li>The same remote address and port</li></ul> Because of potential connection-sharing, set the same active timeout value for these log targets.</p>
@@ -91,23 +87,6 @@ Read-Only:
 - `url` (String) Specify the HTTP URL to send log entries. Entries are sent with the POST method and uses the default user agent.
 - `use_ansi_color` (Boolean) Specify whether to enable the use of ANSI color scheme. When enabled, ANSI X3.64 escape sequences color-code messages by log level.
 - `user_summary` (String) Comments
-
-<a id="nestedatt--result--dependency_actions"></a>
-### Nested Schema for `result.dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
-
 
 <a id="nestedatt--result--log_events"></a>
 ### Nested Schema for `result.log_events`
