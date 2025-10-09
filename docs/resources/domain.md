@@ -96,11 +96,6 @@ resource "datapower_domain" "test" {
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
-### Read-Only
-
-- `config_dir` (String) Specify where the configuration file for this domain is stored. This property is read-only because it is configured in domain settings.
-  - Not Valid When: `config_mode`!=`local`
-
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`
 

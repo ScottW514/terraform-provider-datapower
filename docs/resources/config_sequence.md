@@ -35,7 +35,6 @@ resource "datapower_config_sequence" "test" {
 
 ### Optional
 
-- `capabilities` (Attributes) Capabilities (see [below for nested schema](#nestedatt--capabilities))
 - `delete_unused` (Boolean) Specify whether to clean up objects that are no longer needed. When enabled, the configuration sequence detects and attempts to delete objects that are no longer modified by any configuration file. By default, the configuration sequence does not delete unneeded objects.
   - CLI Alias: `delete-unused`
   - Default value: `true`
@@ -68,20 +67,6 @@ resource "datapower_config_sequence" "test" {
 - `watch` (Boolean) Specify whether to watch the specified directory for configuration file changes and automatically reload the configuration when a change is detected. By default, the specified directory is watched.
   - CLI Alias: `watch`
   - Default value: `true`
-
-<a id="nestedatt--capabilities"></a>
-### Nested Schema for `capabilities`
-
-Optional:
-
-- `api_connect` (Boolean) Optimize for API Connect processing
-- `apply_all_objects` (Boolean) Apply to all objects
-- `batch` (Boolean) Batch changes from configuration files
-- `delete_config` (Boolean) Delete files after processing
-- `git_ops_mode` (Boolean) Process in GitOps mode
-- `mark_external` (Boolean) Mark objects as external
-- `monitor_persistence` (Boolean) Monitor changes for persistence
-
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

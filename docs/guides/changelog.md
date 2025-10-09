@@ -18,6 +18,13 @@ description: |-
 - Updates to test bed configuration
 - Refactored `UpdateFromBody` method to better handle lists of objects
 - Refactored templates for efficiency
+- Bump github.com/hashicorp/terraform-plugin-framework-validators from 0.18.0 to 0.19.0 in the terraform-plugin group (PR17)
+- BREAKING CHANGE: Removed "read only" computed attributes from resources. <br/>
+  Impacts:
+  - `resource_datapower_config_sequence`
+  - `resource_datapower_domain`
+  - `resource_datapower_gw_script_settings`
+  - `resource_datapower_system_settings`
 
 ## v0.11.4
 

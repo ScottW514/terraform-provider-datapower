@@ -78,7 +78,9 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 		Attributes: map[string]schema.Attribute{
 {{- $root := . }}
 {{- range  .Attributes}}
+	{{- if not .Computed}}
     {{- template "renderSchemaAttribute" (dict "Attr" . "SchemaPrefix" "schema." "ValidatorPrefix" "models." "DmTypeCallPrefix" "models." "DmTypeCallSuffix" "ResourceSchema" "IsList" (isList .) "IsDataSource" false "IsResource" true "IncludeWriteOnly" true "Root" $root)}}
+	{{- end}}
 {{- end}}
 			"dependency_actions": actions.ActionsSchema,
 		},

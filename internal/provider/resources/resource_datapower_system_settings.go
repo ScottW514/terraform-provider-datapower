@@ -32,10 +32,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -71,44 +68,9 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter a descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
-			"product_oid": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The read-only string that identifies the installed DataPower agent software.", "", "").String,
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
-			"description": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The read-only string that identifies the product.", "", "").String,
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
-			"serial_number": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The read-only string that identifies the product serial number.", "", "").String,
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
 			"entitlement_number": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("After an appliance replacement, the serial number of the original appliance. Without the original serial number, IBM cannot entitle the replacement appliance for maintenance or warranty services.", "entitlement", "").String,
 				Optional:            true,
-			},
-			"product_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The read-only string that identifies the product type.", "", "").String,
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
-			"capacity_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The read-only installation setting that indicates the licensed capacity mode.", "", "").String,
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"contact": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify any information that identifies the individual or functional area that is responsible maintenance and management.", "contact", "").String,
@@ -125,33 +87,6 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 			"location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the location of the DataPower Gateway.", "location", "").String,
 				Optional:            true,
-			},
-			"services": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The read-only hex value that indicates support for application, presentation, session, and data-link layer services.", "", "").String,
-				Computed:            true,
-				PlanModifiers: []planmodifier.Int64{
-					int64planmodifier.UseStateForUnknown(),
-				},
-			},
-			"backup_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The read-only installation setting that indicates whether a secure-backup is allowed.", "", "").AddStringEnum("normal", "secure").String,
-				Computed:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("normal", "secure"),
-				},
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
-			"product_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("The read-only installation setting that indicates the operational mode of the product.", "", "").AddStringEnum("normal", "cc").String,
-				Computed:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("normal", "cc"),
-				},
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"custom_ui_file": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the URL of the custom user interface file. This file contains custom messages for CLI and GUI sessions as well as the custom CLI prompt. The file must reside in the <tt>store:</tt> or <tt>local:</tt> directory, not on a mounted file system.</p>", "custom-ui-file", "").String,
@@ -191,13 +126,6 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
-			},
-			"uuid": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("UUID", "", "").String,
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},
