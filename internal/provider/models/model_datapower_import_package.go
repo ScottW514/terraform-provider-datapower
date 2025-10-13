@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -42,16 +41,11 @@ type ImportPackage struct {
 	ImportFormat               types.String                `tfsdk:"import_format"`
 	OverwriteFiles             types.Bool                  `tfsdk:"overwrite_files"`
 	OverwriteObjects           types.Bool                  `tfsdk:"overwrite_objects"`
-	DestinationDomain          types.String                `tfsdk:"destination_domain"`
 	DeploymentPolicy           types.String                `tfsdk:"deployment_policy"`
 	DeploymentPolicyParameters types.String                `tfsdk:"deployment_policy_parameters"`
 	LocalIpRewrite             types.Bool                  `tfsdk:"local_ip_rewrite"`
 	OnStartup                  types.Bool                  `tfsdk:"on_startup"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
-}
-
-var ImportPackageDestinationDomainIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
 }
 
 var ImportPackageObjectType = map[string]attr.Type{
@@ -62,7 +56,6 @@ var ImportPackageObjectType = map[string]attr.Type{
 	"import_format":                types.StringType,
 	"overwrite_files":              types.BoolType,
 	"overwrite_objects":            types.BoolType,
-	"destination_domain":           types.StringType,
 	"deployment_policy":            types.StringType,
 	"deployment_policy_parameters": types.StringType,
 	"local_ip_rewrite":             types.BoolType,
@@ -96,9 +89,6 @@ func (data ImportPackage) IsNull() bool {
 		return false
 	}
 	if !data.OverwriteObjects.IsNull() {
-		return false
-	}
-	if !data.DestinationDomain.IsNull() {
 		return false
 	}
 	if !data.DeploymentPolicy.IsNull() {
@@ -139,9 +129,6 @@ func (data ImportPackage) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.OverwriteObjects.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`OverwriteObjects`, tfutils.StringFromBool(data.OverwriteObjects, ""))
-	}
-	if !data.DestinationDomain.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DestinationDomain`, data.DestinationDomain.ValueString())
 	}
 	if !data.DeploymentPolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DeploymentPolicy`, data.DeploymentPolicy.ValueString())
@@ -191,11 +178,6 @@ func (data *ImportPackage) FromBody(ctx context.Context, pathRoot string, res gj
 		data.OverwriteObjects = tfutils.BoolFromString(value.String())
 	} else {
 		data.OverwriteObjects = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `DestinationDomain`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.DestinationDomain = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.DestinationDomain = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `DeploymentPolicy`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.DeploymentPolicy = tfutils.ParseStringFromGJSON(value)
@@ -252,11 +234,6 @@ func (data *ImportPackage) UpdateFromBody(ctx context.Context, pathRoot string, 
 		data.OverwriteObjects = tfutils.BoolFromString(value.String())
 	} else if !data.OverwriteObjects.ValueBool() {
 		data.OverwriteObjects = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `DestinationDomain`); value.Exists() && !data.DestinationDomain.IsNull() {
-		data.DestinationDomain = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.DestinationDomain = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `DeploymentPolicy`); value.Exists() && !data.DeploymentPolicy.IsNull() {
 		data.DeploymentPolicy = tfutils.ParseStringFromGJSON(value)

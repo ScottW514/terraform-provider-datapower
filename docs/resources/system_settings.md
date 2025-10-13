@@ -40,9 +40,6 @@ resource "datapower_system_settings" "test" {
   - Default value: `true`
 - `entitlement_number` (String) After an appliance replacement, the serial number of the original appliance. Without the original serial number, IBM cannot entitle the replacement appliance for maintenance or warranty services.
   - CLI Alias: `entitlement`
-- `hardware_xml_acceleration` (Boolean) <p>Indicates whether to use the Hardware XML accelerator.</p><p><b>Attention: </b>Disable the XML hardware accelerator only when directed by IBM Support. When disabled, XML hardware acceleration rules in the compile options policy have no effect.</p><p>After you change the state, restart the appliance to remove items from the cache. After the appliance restarts, the specified state is in effect. You can view the status of the XML hardware accelerator in the appliance version information. The XML accelerator shows the type appended with <tt>(disabled)</tt> when the accelerator is disabled.</p>
-  - CLI Alias: `xml-accelerator`
-  - Not Valid When: attribute is not conditionally required
 - `locale` (String) Specifies the locale for the operating language of the DataPower Gateway. The locale setting manages locale-specific conventions, such as date and time formats, and controls the language of log messages. The language must be enabled before you can select it.
   - CLI Alias: `locale`
   - Choices: `de`, `en`, `es`, `fr`, `it`, `ja`, `ko`, `pt_BR`, `zh_CN`, `zh_TW`

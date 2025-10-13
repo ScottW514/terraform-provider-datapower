@@ -45,7 +45,6 @@ Read-Only:
 - `config_permissions_profile` (String) Global permissions profile
 - `deployment_policy` (String) Deployment policy
 - `deployment_policy_parameters` (String) Deployment policy variables
-- `domain_user` (List of String) Specify the set of CLI users who can access this domain. These users can log into this domain through the CLI. This setting can be superseded by an existing access policy of the user.
 - `file_map` (Attributes) Specify the file permissions to apply to the <tt>local:</tt> directory. When access permissions are defined and with role-based management, users are granted the lesser privilege.
   - CLI Alias: `file-permissions` (see [below for nested schema](#nestedatt--result--file_map))
 - `import_format` (String) Import format

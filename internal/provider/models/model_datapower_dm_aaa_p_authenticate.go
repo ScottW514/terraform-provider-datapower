@@ -70,7 +70,6 @@ type DmAAAPAuthenticate struct {
 	AuLdapSearchAttribute           types.String        `tfsdk:"au_ldap_search_attribute"`
 	AuLtpaTokenVersionsBitmap       *DmLTPATokenVersion `tfsdk:"au_ltpa_token_versions_bitmap"`
 	AuLtpaKeyFile                   types.String        `tfsdk:"au_ltpa_key_file"`
-	AuLtpaStashFile                 types.String        `tfsdk:"au_ltpa_stash_file"`
 	AuBinaryTokenX509Valcred        types.String        `tfsdk:"au_binary_token_x509_valcred"`
 	AuTamServer                     types.String        `tfsdk:"au_tam_server"`
 	AuAllowRemoteTokenReference     types.Bool          `tfsdk:"au_allow_remote_token_reference"`
@@ -419,10 +418,6 @@ var DmAAAPAuthenticateAULTPAKeyFileCondVal = validators.Evaluation{
 }
 
 var DmAAAPAuthenticateAULTPAKeyFileIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-
-var DmAAAPAuthenticateAULTPAStashFileIgnoreVal = validators.Evaluation{
 	Evaluation: "logical-true",
 }
 
@@ -896,7 +891,6 @@ var DmAAAPAuthenticateObjectType = map[string]attr.Type{
 	"au_ldap_search_attribute":              types.StringType,
 	"au_ltpa_token_versions_bitmap":         types.ObjectType{AttrTypes: DmLTPATokenVersionObjectType},
 	"au_ltpa_key_file":                      types.StringType,
-	"au_ltpa_stash_file":                    types.StringType,
 	"au_binary_token_x509_valcred":          types.StringType,
 	"au_tam_server":                         types.StringType,
 	"au_allow_remote_token_reference":       types.BoolType,
@@ -957,7 +951,6 @@ var DmAAAPAuthenticateObjectDefault = map[string]attr.Value{
 	"au_ldap_search_attribute":              types.StringValue("userPassword"),
 	"au_ltpa_token_versions_bitmap":         types.ObjectValueMust(DmLTPATokenVersionObjectType, DmLTPATokenVersionObjectDefault),
 	"au_ltpa_key_file":                      types.StringNull(),
-	"au_ltpa_stash_file":                    types.StringNull(),
 	"au_binary_token_x509_valcred":          types.StringNull(),
 	"au_tam_server":                         types.StringNull(),
 	"au_allow_remote_token_reference":       types.BoolValue(false),
@@ -1104,10 +1097,6 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 			"au_ltpa_token_versions_bitmap": GetDmLTPATokenVersionDataSourceSchema("Specify which versions of LTPA tokens are acceptable.", "lpta-version", ""),
 			"au_ltpa_key_file": DataSourceSchema.StringAttribute{
 				MarkdownDescription: "<p>Specify the LTPA key file that contains the crypto material to create an LTPA token that can be consumed by WebSphere (both version 1 and version 2) or Domino.</p><ul><li>For WebSphere token creation, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino token creation, the key file contains only the base 64-encoded Domino shared secret.</li></ul>",
-				Computed:            true,
-			},
-			"au_ltpa_stash_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: "Specify stash file file that contains the password for the LTPA key file.",
 				Computed:            true,
 			},
 			"au_binary_token_x509_valcred": DataSourceSchema.StringAttribute{
@@ -1400,10 +1389,6 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 					validators.ConditionalRequiredString(DmAAAPAuthenticateAULTPAKeyFileCondVal, DmAAAPAuthenticateAULTPAKeyFileIgnoreVal, false),
 				},
 			},
-			"au_ltpa_stash_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify stash file file that contains the password for the LTPA key file.", "lpta-stash-file", "").AddNotValidWhen(DmAAAPAuthenticateAULTPAStashFileIgnoreVal.String()).String,
-				Optional:            true,
-			},
 			"au_binary_token_x509_valcred": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the validation credentials to validate the X.509 certificate in the BinarySecurityToken.", "x509-bin-token-valcred", "crypto_val_cred").AddRequiredWhen(DmAAAPAuthenticateAUBinaryTokenX509ValcredCondVal.String()).AddNotValidWhen(DmAAAPAuthenticateAUBinaryTokenX509ValcredIgnoreVal.String()).String,
 				Optional:            true,
@@ -1688,9 +1673,6 @@ func (data DmAAAPAuthenticate) IsNull() bool {
 	if !data.AuLtpaKeyFile.IsNull() {
 		return false
 	}
-	if !data.AuLtpaStashFile.IsNull() {
-		return false
-	}
 	if !data.AuBinaryTokenX509Valcred.IsNull() {
 		return false
 	}
@@ -1879,9 +1861,6 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 	}
 	if !data.AuLtpaKeyFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULTPAKeyFile`, data.AuLtpaKeyFile.ValueString())
-	}
-	if !data.AuLtpaStashFile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULTPAStashFile`, data.AuLtpaStashFile.ValueString())
 	}
 	if !data.AuBinaryTokenX509Valcred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUBinaryTokenX509Valcred`, data.AuBinaryTokenX509Valcred.ValueString())
@@ -2126,11 +2105,6 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AuLtpaKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AuLtpaKeyFile = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AULTPAStashFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuLtpaStashFile = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AuLtpaStashFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUBinaryTokenX509Valcred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuBinaryTokenX509Valcred = tfutils.ParseStringFromGJSON(value)
@@ -2429,11 +2403,6 @@ func (data *DmAAAPAuthenticate) UpdateFromBody(ctx context.Context, pathRoot str
 		data.AuLtpaKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AuLtpaKeyFile = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AULTPAStashFile`); value.Exists() && !data.AuLtpaStashFile.IsNull() {
-		data.AuLtpaStashFile = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AuLtpaStashFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AUBinaryTokenX509Valcred`); value.Exists() && !data.AuBinaryTokenX509Valcred.IsNull() {
 		data.AuBinaryTokenX509Valcred = tfutils.ParseStringFromGJSON(value)

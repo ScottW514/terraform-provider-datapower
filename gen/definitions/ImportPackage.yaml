@@ -69,13 +69,6 @@ attributes:
     in the package overwrite any object of the same class and name that already exist.
     The default behavior is to overwrite objects.
   cli_alias: overwrite-objects
-- name: DestinationDomain
-  type: String
-  reference_to: Domain
-  description: Destination domain
-  cli_alias: destination-domain
-  ignored_when:
-  - evaluation: logical-true
 - name: DeploymentPolicy
   type: String
   reference_to: ConfigDeploymentPolicy

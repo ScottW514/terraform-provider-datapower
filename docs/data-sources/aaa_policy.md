@@ -137,7 +137,6 @@ Read-Only:
 - `au_ldap_suffix` (String) Specify the suffix used to construct the LDAP lookup DN.
 - `au_ltpa_key_file` (String) <p>Specify the LTPA key file that contains the crypto material to create an LTPA token that can be consumed by WebSphere (both version 1 and version 2) or Domino.</p><ul><li>For WebSphere token creation, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino token creation, the key file contains only the base 64-encoded Domino shared secret.</li></ul>
 - `au_ltpa_key_file_password_alias` (String) Specify the password alias of the password that decrypts the LTPA key file. This password decrypts certain entries in a WebSphere LTPA key file. This password is not applicable to Domino key files.
-- `au_ltpa_stash_file` (String) Specify stash file file that contains the password for the LTPA key file.
 - `au_ltpa_token_versions_bitmap` (Attributes) Specify which versions of LTPA tokens are acceptable.
   - CLI Alias: `lpta-version` (see [below for nested schema](#nestedatt--result--authenticate--au_ltpa_token_versions_bitmap))
 - `au_map_url` (String) Specify the location of the AAA information file. This file contains a list of authenticated identities and the various values needed to authenticate successfully.
@@ -253,7 +252,6 @@ Read-Only:
 - `az_tam_server` (String) Specify the IBM Security Access Manager client.
 - `az_valcred` (String)
 - `az_xacml_binding_method` (String) Specify the method to generate the XACML context request. The default value is custom processing.
-- `az_xacml_binding_object` (String) XACML binding
 - `az_xacml_binding_xsl` (String) Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.
 - `az_xacml_custom_obligation` (String) Specify the location of the stylesheet or GatewayScript file that can fulfill XACML obligations. he file must understand the obligations from the PDP and take the appropriate action to fulfill the obligations that are based on the request context. <ul><li>For fulfilled obligations, the output is &lt; <tt>xsl:value-of select="true()"</tt> />.</li><li>For unfulfilled obligations, the output is &lt; <tt>xsl:value-of select="false()"</tt> />.</li></ul>
 - `az_xacml_external_pdp_url` (String) Specify the URL for the external XACML PDP service. The AAA policy sends the authorization request to and receives the authorization response from this service.
@@ -448,7 +446,6 @@ Read-Only:
 - `pp_ltpa_key_file` (String) Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>
 - `pp_ltpa_key_file_password` (String) Use the LTPA key file password alias.
 - `pp_ltpa_key_file_password_alias` (String) Specify the the alias for password of the LTPA key file.
-- `pp_ltpa_stash_file` (String) Specify the location of the file that contains the LTPA key file password.
 - `pp_ltpa_version` (String) Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.
 - `pp_one_time_use` (Boolean) Specify whether the destination system or relying party should cache the generated token. The generated token might contain the property for this characteristic, which is especially practical for SAML assertions. By default, the destination system can cache the generated token. When enabled, he destination system should not cache the generated token.
 - `pp_result_wrapup` (String) Specify the method to generate the result. When the DataPower Gateway is configured for SOAP or WS-Security processing, different output methods can be used. By default, generates the results to an existing WS-Security message and replaces the same token in the requesting message.

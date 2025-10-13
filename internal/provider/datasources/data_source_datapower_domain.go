@@ -86,11 +86,6 @@ func (d *DomainDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"domain_user": schema.ListAttribute{
-							MarkdownDescription: "Specify the set of CLI users who can access this domain. These users can log into this domain through the CLI. This setting can be superseded by an existing access policy of the user.",
-							ElementType:         types.StringType,
-							Computed:            true,
-						},
 						"file_map":       models.GetDmDomainFileMapDataSourceSchema("Specify the file permissions to apply to the <tt>local:</tt> directory. When access permissions are defined and with role-based management, users are granted the lesser privilege.", "file-permissions", ""),
 						"monitoring_map": models.GetDmDomainMonitoringMapDataSourceSchema("File-monitoring of the local: directory", "file-monitoring", ""),
 						"config_mode": schema.StringAttribute{

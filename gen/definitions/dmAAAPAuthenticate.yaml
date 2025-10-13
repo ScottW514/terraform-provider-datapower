@@ -389,13 +389,6 @@ attributes:
   - store
   - cert
   - sharedcert
-- name: AULTPAStashFile
-  type: String
-  description: Specify stash file file that contains the password for the LTPA key
-    file.
-  cli_alias: lpta-stash-file
-  ignored_when:
-  - evaluation: logical-true
 - name: AUBinaryTokenX509Valcred
   type: String
   reference_to: CryptoValCred

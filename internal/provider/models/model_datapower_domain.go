@@ -39,7 +39,6 @@ type Domain struct {
 	UserSummary                types.String                `tfsdk:"user_summary"`
 	ConfigDir                  types.String                `tfsdk:"config_dir"`
 	NeighborDomain             types.List                  `tfsdk:"neighbor_domain"`
-	DomainUser                 types.List                  `tfsdk:"domain_user"`
 	FileMap                    *DmDomainFileMap            `tfsdk:"file_map"`
 	MonitoringMap              *DmDomainMonitoringMap      `tfsdk:"monitoring_map"`
 	ConfigMode                 types.String                `tfsdk:"config_mode"`
@@ -60,10 +59,6 @@ var DomainConfigDirIgnoreVal = validators.Evaluation{
 	AttrType:    "String",
 	AttrDefault: "local",
 	Value:       []string{"local"},
-}
-
-var DomainDomainUserIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
 }
 
 var DomainImportURLCondVal = validators.Evaluation{
@@ -139,7 +134,6 @@ var DomainObjectType = map[string]attr.Type{
 	"user_summary":                 types.StringType,
 	"config_dir":                   types.StringType,
 	"neighbor_domain":              types.ListType{ElemType: types.StringType},
-	"domain_user":                  types.ListType{ElemType: types.StringType},
 	"file_map":                     types.ObjectType{AttrTypes: DmDomainFileMapObjectType},
 	"monitoring_map":               types.ObjectType{AttrTypes: DmDomainMonitoringMapObjectType},
 	"config_mode":                  types.StringType,
@@ -171,9 +165,6 @@ func (data Domain) IsNull() bool {
 		return false
 	}
 	if !data.NeighborDomain.IsNull() {
-		return false
-	}
-	if !data.DomainUser.IsNull() {
 		return false
 	}
 	if data.FileMap != nil {
@@ -236,13 +227,6 @@ func (data Domain) ToBody(ctx context.Context, pathRoot string) string {
 			body, _ = sjson.Set(body, pathRoot+`NeighborDomain`+".-1", map[string]string{"value": val})
 		}
 	}
-	if !data.DomainUser.IsNull() {
-		var dataValues []string
-		data.DomainUser.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`DomainUser`+".-1", map[string]string{"value": val})
-		}
-	}
 	if data.FileMap != nil {
 		if !data.FileMap.IsNull() {
 			body, _ = sjson.SetRaw(body, pathRoot+`FileMap`, data.FileMap.ToBody(ctx, ""))
@@ -301,11 +285,6 @@ func (data *Domain) FromBody(ctx context.Context, pathRoot string, res gjson.Res
 		data.NeighborDomain = tfutils.ParseStringListFromGJSON(value)
 	} else {
 		data.NeighborDomain = types.ListNull(types.StringType)
-	}
-	if value := res.Get(pathRoot + `DomainUser`); value.Exists() {
-		data.DomainUser = tfutils.ParseStringListFromGJSON(value)
-	} else {
-		data.DomainUser = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `FileMap`); value.Exists() {
 		data.FileMap = &DmDomainFileMap{}
@@ -384,11 +363,6 @@ func (data *Domain) UpdateFromBody(ctx context.Context, pathRoot string, res gjs
 		data.NeighborDomain = tfutils.ParseStringListFromGJSON(value)
 	} else {
 		data.NeighborDomain = types.ListNull(types.StringType)
-	}
-	if value := res.Get(pathRoot + `DomainUser`); value.Exists() && !data.DomainUser.IsNull() {
-		data.DomainUser = tfutils.ParseStringListFromGJSON(value)
-	} else {
-		data.DomainUser = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `FileMap`); value.Exists() {
 		data.FileMap.UpdateFromBody(ctx, "", value)
@@ -469,13 +443,6 @@ func (data *Domain) UpdateUnknownFromBody(ctx context.Context, pathRoot string, 
 			data.NeighborDomain = tfutils.ParseStringListFromGJSON(value)
 		} else {
 			data.NeighborDomain = types.ListNull(types.StringType)
-		}
-	}
-	if data.DomainUser.IsUnknown() {
-		if value := res.Get(pathRoot + `DomainUser`); value.Exists() && !data.DomainUser.IsNull() {
-			data.DomainUser = tfutils.ParseStringListFromGJSON(value)
-		} else {
-			data.DomainUser = types.ListNull(types.StringType)
 		}
 	}
 	if data.FileMap == nil {

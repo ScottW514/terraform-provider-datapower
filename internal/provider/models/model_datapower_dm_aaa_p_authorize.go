@@ -69,7 +69,6 @@ type DmAAAPAuthorize struct {
 	AzXacmlPdp                 types.String `tfsdk:"az_xacml_pdp"`
 	AzXacmlExternalPdpUrl      types.String `tfsdk:"az_xacml_external_pdp_url"`
 	AzXacmlBindingMethod       types.String `tfsdk:"az_xacml_binding_method"`
-	AzXacmlBindingObject       types.String `tfsdk:"az_xacml_binding_object"`
 	AzXacmlBindingXsl          types.String `tfsdk:"az_xacml_binding_xsl"`
 	AzXacmlCustomObligation    types.String `tfsdk:"az_xacml_custom_obligation"`
 	AzXacmlUseSaml2            types.Bool   `tfsdk:"az_xacml_use_saml2"`
@@ -488,10 +487,6 @@ var DmAAAPAuthorizeAZXACMLBindingMethodIgnoreVal = validators.Evaluation{
 	Value:       []string{"xacml"},
 }
 
-var DmAAAPAuthorizeAZXACMLBindingObjectIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
-}
-
 var DmAAAPAuthorizeAZXACMLBindingXSLCondVal = validators.Evaluation{
 	Evaluation: "logical-and",
 	Conditions: []validators.Evaluation{
@@ -804,7 +799,6 @@ var DmAAAPAuthorizeObjectType = map[string]attr.Type{
 	"az_xacml_pdp":                   types.StringType,
 	"az_xacml_external_pdp_url":      types.StringType,
 	"az_xacml_binding_method":        types.StringType,
-	"az_xacml_binding_object":        types.StringType,
 	"az_xacml_binding_xsl":           types.StringType,
 	"az_xacml_custom_obligation":     types.StringType,
 	"az_xacml_use_saml2":             types.BoolType,
@@ -859,7 +853,6 @@ var DmAAAPAuthorizeObjectDefault = map[string]attr.Value{
 	"az_xacml_pdp":                   types.StringNull(),
 	"az_xacml_external_pdp_url":      types.StringNull(),
 	"az_xacml_binding_method":        types.StringValue("custom"),
-	"az_xacml_binding_object":        types.StringNull(),
 	"az_xacml_binding_xsl":           types.StringNull(),
 	"az_xacml_custom_obligation":     types.StringNull(),
 	"az_xacml_use_saml2":             types.BoolValue(false),
@@ -1000,10 +993,6 @@ func GetDmAAAPAuthorizeDataSourceSchema(description string, cliAlias string, ref
 			},
 			"az_xacml_binding_method": DataSourceSchema.StringAttribute{
 				MarkdownDescription: "Specify the method to generate the XACML context request. The default value is custom processing.",
-				Computed:            true,
-			},
-			"az_xacml_binding_object": DataSourceSchema.StringAttribute{
-				MarkdownDescription: "XACML binding",
 				Computed:            true,
 			},
 			"az_xacml_binding_xsl": DataSourceSchema.StringAttribute{
@@ -1311,10 +1300,6 @@ func GetDmAAAPAuthorizeResourceSchema(description string, cliAlias string, refer
 				},
 				Default: stringdefault.StaticString("custom"),
 			},
-			"az_xacml_binding_object": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XACML binding", "xacml-binding-object", "").AddNotValidWhen(DmAAAPAuthorizeAZXACMLBindingObjectIgnoreVal.String()).String,
-				Optional:            true,
-			},
 			"az_xacml_binding_xsl": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.", "xacml-binding-custom-url", "").AddRequiredWhen(DmAAAPAuthorizeAZXACMLBindingXSLCondVal.String()).AddNotValidWhen(DmAAAPAuthorizeAZXACMLBindingXSLIgnoreVal.String()).String,
 				Optional:            true,
@@ -1560,9 +1545,6 @@ func (data DmAAAPAuthorize) IsNull() bool {
 	if !data.AzXacmlBindingMethod.IsNull() {
 		return false
 	}
-	if !data.AzXacmlBindingObject.IsNull() {
-		return false
-	}
 	if !data.AzXacmlBindingXsl.IsNull() {
 		return false
 	}
@@ -1731,9 +1713,6 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 	}
 	if !data.AzXacmlBindingMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZXACMLBindingMethod`, data.AzXacmlBindingMethod.ValueString())
-	}
-	if !data.AzXacmlBindingObject.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZXACMLBindingObject`, data.AzXacmlBindingObject.ValueString())
 	}
 	if !data.AzXacmlBindingXsl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZXACMLBindingXSL`, data.AzXacmlBindingXsl.ValueString())
@@ -1957,11 +1936,6 @@ func (data *DmAAAPAuthorize) FromBody(ctx context.Context, pathRoot string, res 
 		data.AzXacmlBindingMethod = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AzXacmlBindingMethod = types.StringValue("custom")
-	}
-	if value := res.Get(pathRoot + `AZXACMLBindingObject`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AzXacmlBindingObject = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AzXacmlBindingObject = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AZXACMLBindingXSL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AzXacmlBindingXsl = tfutils.ParseStringFromGJSON(value)
@@ -2230,11 +2204,6 @@ func (data *DmAAAPAuthorize) UpdateFromBody(ctx context.Context, pathRoot string
 		data.AzXacmlBindingMethod = tfutils.ParseStringFromGJSON(value)
 	} else if data.AzXacmlBindingMethod.ValueString() != "custom" {
 		data.AzXacmlBindingMethod = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AZXACMLBindingObject`); value.Exists() && !data.AzXacmlBindingObject.IsNull() {
-		data.AzXacmlBindingObject = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AzXacmlBindingObject = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AZXACMLBindingXSL`); value.Exists() && !data.AzXacmlBindingXsl.IsNull() {
 		data.AzXacmlBindingXsl = tfutils.ParseStringFromGJSON(value)

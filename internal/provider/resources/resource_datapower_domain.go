@@ -97,11 +97,6 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 					types.StringValue("default"),
 				})),
 			},
-			"domain_user": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the set of CLI users who can access this domain. These users can log into this domain through the CLI. This setting can be superseded by an existing access policy of the user.", "domain-user", "user").AddNotValidWhen(models.DomainDomainUserIgnoreVal.String()).String,
-				ElementType:         types.StringType,
-				Optional:            true,
-			},
 			"file_map":       models.GetDmDomainFileMapResourceSchema("Specify the file permissions to apply to the <tt>local:</tt> directory. When access permissions are defined and with role-based management, users are granted the lesser privilege.", "file-permissions", "", false),
 			"monitoring_map": models.GetDmDomainMonitoringMapResourceSchema("File-monitoring of the local: directory", "file-monitoring", "", false),
 			"config_mode": schema.StringAttribute{

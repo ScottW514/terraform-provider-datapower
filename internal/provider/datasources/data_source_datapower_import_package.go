@@ -102,10 +102,6 @@ func (d *ImportPackageDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Specify whether to overwrite existing objects. When enabled, objects in the package overwrite any object of the same class and name that already exist. The default behavior is to overwrite objects.",
 							Computed:            true,
 						},
-						"destination_domain": schema.StringAttribute{
-							MarkdownDescription: "Destination domain",
-							Computed:            true,
-						},
 						"deployment_policy": schema.StringAttribute{
 							MarkdownDescription: "Deployment policy",
 							Computed:            true,

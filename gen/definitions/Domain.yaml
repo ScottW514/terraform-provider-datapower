@@ -59,16 +59,6 @@ attributes:
     domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible
     domains cannot be circular.</p>
   cli_alias: visible-domain
-- name: DomainUser
-  type: List
-  reference_to: User
-  element_type: String
-  description: Specify the set of CLI users who can access this domain. These users
-    can log into this domain through the CLI. This setting can be superseded by an
-    existing access policy of the user.
-  cli_alias: domain-user
-  ignored_when:
-  - evaluation: logical-true
 - name: FileMap
   dm_type: DmDomainFileMap
   description: Specify the file permissions to apply to the <tt>local:</tt> directory.

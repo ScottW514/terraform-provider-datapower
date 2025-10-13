@@ -46,7 +46,6 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `deployment_policy` (String) Deployment policy
 - `deployment_policy_parameters` (String) Deployment policy variables
-- `destination_domain` (String) Destination domain
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `import_format` (String) Specify the format of the import package. The default value is ZIP.
 - `local_ip_rewrite` (Boolean) Specify whether to rewrite local IP addresses on import. When enabled, local IP addresses in the import package are rewritten to match the local configuration on import. In other words, a service bound to eth1 in the import package are rewritten to bind to eth1 on the local system on import. The default behavior is to rewrite IP addresses.

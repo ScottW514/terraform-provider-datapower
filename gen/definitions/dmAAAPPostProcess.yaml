@@ -436,12 +436,6 @@ attributes:
       attribute: PPLTPAKeyFilePassword
       value:
       - ''
-- name: PPLTPAStashFile
-  type: String
-  description: Specify the location of the file that contains the LTPA key file password.
-  cli_alias: lpta-stash-file
-  ignored_when:
-  - evaluation: logical-true
 - name: PPKerberosSPNEGOToken
   type: Bool
   default: false

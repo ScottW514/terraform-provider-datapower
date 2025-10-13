@@ -290,9 +290,6 @@ Optional:
   - Reference to: `datapower_password_alias:id`
   - Required When: (`au_method`=`ltpa` AND `au_ltpa_token_versions_bitmap`=`LTPA`|`LTPA2`)
   - Not Valid When: (`au_method`!=`ltpa` OR (`au_ltpa_token_versions_bitmap`!=`LTPA`|`LTPA2` AND `au_ltpa_token_versions_bitmap`=`LTPADomino`))
-- `au_ltpa_stash_file` (String) Specify stash file file that contains the password for the LTPA key file.
-  - CLI Alias: `lpta-stash-file`
-  - Not Valid When: attribute is not conditionally required
 - `au_ltpa_token_versions_bitmap` (Attributes) Specify which versions of LTPA tokens are acceptable.
   - CLI Alias: `lpta-version` (see [below for nested schema](#nestedatt--authenticate--au_ltpa_token_versions_bitmap))
 - `au_map_url` (String) Specify the location of the AAA information file. This file contains a list of authenticated identities and the various values needed to authenticate successfully.
@@ -638,9 +635,6 @@ Optional:
   - Choices: `dp-pdp`, `custom`
   - Default value: `custom`
   - Not Valid When: `az_method`!=`xacml`
-- `az_xacml_binding_object` (String) XACML binding
-  - CLI Alias: `xacml-binding-object`
-  - Not Valid When: attribute is not conditionally required
 - `az_xacml_binding_xsl` (String) Specify the location of the stylesheet or GatewayScript file that generates the XACML context request. This file maps the AAA result, input message, or both AAA result and input message to the XACML context request.
   - CLI Alias: `xacml-binding-custom-url`
   - Required When: (`az_method`=`xacml` AND `az_xacml_binding_method`!=`dp-pdp`)
@@ -1130,9 +1124,6 @@ Optional:
   - Reference to: `datapower_password_alias:id`
   - Required When: (`pp_ltpa_key_file_password`=`` AND (`pp_ltpa`=`true` AND `pp_ltpa_version`=`LTPA`|`LTPA1FIPS`|`LTPA2`|`LTPA2WAS7`))
   - Not Valid When: (`pp_ltpa`=`false` OR (`pp_ltpa_version`!=`LTPA`|`LTPA1FIPS`|`LTPA2`|`LTPA2WAS7` AND `pp_ltpa_version`=`LTPADomino`))
-- `pp_ltpa_stash_file` (String) Specify the location of the file that contains the LTPA key file password.
-  - CLI Alias: `lpta-stash-file`
-  - Not Valid When: attribute is not conditionally required
 - `pp_ltpa_version` (String) Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.
   - CLI Alias: `lpta-version`
   - Choices: `LTPA`, `LTPA1FIPS`, `LTPA2`, `LTPA2WAS7`, `LTPADomino`

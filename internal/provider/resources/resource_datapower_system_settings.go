@@ -173,10 +173,6 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 					stringvalidator.OneOf("enable", "disable"),
 				},
 			},
-			"hardware_xml_acceleration": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to use the Hardware XML accelerator.</p><p><b>Attention: </b>Disable the XML hardware accelerator only when directed by IBM Support. When disabled, XML hardware acceleration rules in the compile options policy have no effect.</p><p>After you change the state, restart the appliance to remove items from the cache. After the appliance restarts, the specified state is in effect. You can view the status of the XML hardware accelerator in the appliance version information. The XML accelerator shows the type appended with <tt>(disabled)</tt> when the accelerator is disabled.</p>", "xml-accelerator", "").AddNotValidWhen(models.SystemSettingsHardwareXMLAccelerationIgnoreVal.String()).String,
-				Optional:            true,
-			},
 			"locale": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the locale for the operating language of the DataPower Gateway. The locale setting manages locale-specific conventions, such as date and time formats, and controls the language of log messages. The language must be enabled before you can select it.", "locale", "").AddStringEnum("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW").AddDefaultValue("en").String,
 				Computed:            true,

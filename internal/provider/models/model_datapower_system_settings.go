@@ -28,63 +28,56 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SystemSettings struct {
-	Enabled                 types.Bool                  `tfsdk:"enabled"`
-	UserSummary             types.String                `tfsdk:"user_summary"`
-	ProductOid              types.String                `tfsdk:"product_oid"`
-	Description             types.String                `tfsdk:"description"`
-	SerialNumber            types.String                `tfsdk:"serial_number"`
-	EntitlementNumber       types.String                `tfsdk:"entitlement_number"`
-	ProductId               types.String                `tfsdk:"product_id"`
-	CapacityMode            types.String                `tfsdk:"capacity_mode"`
-	Contact                 types.String                `tfsdk:"contact"`
-	SystemName              types.String                `tfsdk:"system_name"`
-	Location                types.String                `tfsdk:"location"`
-	Services                types.Int64                 `tfsdk:"services"`
-	BackupMode              types.String                `tfsdk:"backup_mode"`
-	ProductMode             types.String                `tfsdk:"product_mode"`
-	CustomUiFile            types.String                `tfsdk:"custom_ui_file"`
-	AuditReserve            types.Int64                 `tfsdk:"audit_reserve"`
-	DetectIntrusion         types.String                `tfsdk:"detect_intrusion"`
-	HardwareXmlAcceleration types.Bool                  `tfsdk:"hardware_xml_acceleration"`
-	Locale                  types.String                `tfsdk:"locale"`
-	SystemLogFixedFormat    types.Bool                  `tfsdk:"system_log_fixed_format"`
-	Uuid                    types.String                `tfsdk:"uuid"`
-	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
-}
-
-var SystemSettingsHardwareXMLAccelerationIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
+	Enabled              types.Bool                  `tfsdk:"enabled"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	ProductOid           types.String                `tfsdk:"product_oid"`
+	Description          types.String                `tfsdk:"description"`
+	SerialNumber         types.String                `tfsdk:"serial_number"`
+	EntitlementNumber    types.String                `tfsdk:"entitlement_number"`
+	ProductId            types.String                `tfsdk:"product_id"`
+	CapacityMode         types.String                `tfsdk:"capacity_mode"`
+	Contact              types.String                `tfsdk:"contact"`
+	SystemName           types.String                `tfsdk:"system_name"`
+	Location             types.String                `tfsdk:"location"`
+	Services             types.Int64                 `tfsdk:"services"`
+	BackupMode           types.String                `tfsdk:"backup_mode"`
+	ProductMode          types.String                `tfsdk:"product_mode"`
+	CustomUiFile         types.String                `tfsdk:"custom_ui_file"`
+	AuditReserve         types.Int64                 `tfsdk:"audit_reserve"`
+	DetectIntrusion      types.String                `tfsdk:"detect_intrusion"`
+	Locale               types.String                `tfsdk:"locale"`
+	SystemLogFixedFormat types.Bool                  `tfsdk:"system_log_fixed_format"`
+	Uuid                 types.String                `tfsdk:"uuid"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SystemSettingsObjectType = map[string]attr.Type{
-	"enabled":                   types.BoolType,
-	"user_summary":              types.StringType,
-	"product_oid":               types.StringType,
-	"description":               types.StringType,
-	"serial_number":             types.StringType,
-	"entitlement_number":        types.StringType,
-	"product_id":                types.StringType,
-	"capacity_mode":             types.StringType,
-	"contact":                   types.StringType,
-	"system_name":               types.StringType,
-	"location":                  types.StringType,
-	"services":                  types.Int64Type,
-	"backup_mode":               types.StringType,
-	"product_mode":              types.StringType,
-	"custom_ui_file":            types.StringType,
-	"audit_reserve":             types.Int64Type,
-	"detect_intrusion":          types.StringType,
-	"hardware_xml_acceleration": types.BoolType,
-	"locale":                    types.StringType,
-	"system_log_fixed_format":   types.BoolType,
-	"uuid":                      types.StringType,
-	"dependency_actions":        actions.ActionsListType,
+	"enabled":                 types.BoolType,
+	"user_summary":            types.StringType,
+	"product_oid":             types.StringType,
+	"description":             types.StringType,
+	"serial_number":           types.StringType,
+	"entitlement_number":      types.StringType,
+	"product_id":              types.StringType,
+	"capacity_mode":           types.StringType,
+	"contact":                 types.StringType,
+	"system_name":             types.StringType,
+	"location":                types.StringType,
+	"services":                types.Int64Type,
+	"backup_mode":             types.StringType,
+	"product_mode":            types.StringType,
+	"custom_ui_file":          types.StringType,
+	"audit_reserve":           types.Int64Type,
+	"detect_intrusion":        types.StringType,
+	"locale":                  types.StringType,
+	"system_log_fixed_format": types.BoolType,
+	"uuid":                    types.StringType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data SystemSettings) GetPath() string {
@@ -144,9 +137,6 @@ func (data SystemSettings) IsNull() bool {
 	if !data.DetectIntrusion.IsNull() {
 		return false
 	}
-	if !data.HardwareXmlAcceleration.IsNull() {
-		return false
-	}
 	if !data.Locale.IsNull() {
 		return false
 	}
@@ -168,7 +158,6 @@ func (data *SystemSettings) ToDefault() {
 	data.CustomUiFile = types.StringNull()
 	data.AuditReserve = types.Int64Value(40)
 	data.DetectIntrusion = types.StringNull()
-	data.HardwareXmlAcceleration = types.BoolNull()
 	data.Locale = types.StringValue("en")
 	data.SystemLogFixedFormat = types.BoolValue(false)
 }
@@ -230,9 +219,6 @@ func (data SystemSettings) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.DetectIntrusion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DetectIntrusion`, data.DetectIntrusion.ValueString())
-	}
-	if !data.HardwareXmlAcceleration.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HardwareXMLAcceleration`, tfutils.StringFromBool(data.HardwareXmlAcceleration, ""))
 	}
 	if !data.Locale.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Locale`, data.Locale.ValueString())
@@ -334,11 +320,6 @@ func (data *SystemSettings) FromBody(ctx context.Context, pathRoot string, res g
 		data.DetectIntrusion = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.DetectIntrusion = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `HardwareXMLAcceleration`); value.Exists() {
-		data.HardwareXmlAcceleration = tfutils.BoolFromString(value.String())
-	} else {
-		data.HardwareXmlAcceleration = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `Locale`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Locale = tfutils.ParseStringFromGJSON(value)
@@ -445,11 +426,6 @@ func (data *SystemSettings) UpdateFromBody(ctx context.Context, pathRoot string,
 		data.DetectIntrusion = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.DetectIntrusion = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `HardwareXMLAcceleration`); value.Exists() && !data.HardwareXmlAcceleration.IsNull() {
-		data.HardwareXmlAcceleration = tfutils.BoolFromString(value.String())
-	} else {
-		data.HardwareXmlAcceleration = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `Locale`); value.Exists() && !data.Locale.IsNull() {
 		data.Locale = tfutils.ParseStringFromGJSON(value)
@@ -588,13 +564,6 @@ func (data *SystemSettings) UpdateUnknownFromBody(ctx context.Context, pathRoot 
 			data.DetectIntrusion = tfutils.ParseStringFromGJSON(value)
 		} else {
 			data.DetectIntrusion = types.StringNull()
-		}
-	}
-	if data.HardwareXmlAcceleration.IsUnknown() {
-		if value := res.Get(pathRoot + `HardwareXMLAcceleration`); value.Exists() && !data.HardwareXmlAcceleration.IsNull() {
-			data.HardwareXmlAcceleration = tfutils.BoolFromString(value.String())
-		} else {
-			data.HardwareXmlAcceleration = types.BoolNull()
 		}
 	}
 	if data.Locale.IsUnknown() {

@@ -67,7 +67,6 @@ type DmAAAPPostProcess struct {
 	PpLtpaExpiry                          types.Int64          `tfsdk:"pp_ltpa_expiry"`
 	PpLtpaKeyFile                         types.String         `tfsdk:"pp_ltpa_key_file"`
 	PpLtpaKeyFilePassword                 types.String         `tfsdk:"pp_ltpa_key_file_password"`
-	PpLtpaStashFile                       types.String         `tfsdk:"pp_ltpa_stash_file"`
 	PpKerberosSpnegoToken                 types.Bool           `tfsdk:"pp_kerberos_spnego_token"`
 	PpKerberosBstValueType                types.String         `tfsdk:"pp_kerberos_bst_value_type"`
 	PpSamlUseWsSec                        types.Bool           `tfsdk:"pp_saml_use_ws_sec"`
@@ -574,10 +573,6 @@ var DmAAAPPostProcessPPLTPAKeyFilePasswordIgnoreVal = validators.Evaluation{
 			Value:       []string{""},
 		},
 	},
-}
-
-var DmAAAPPostProcessPPLTPAStashFileIgnoreVal = validators.Evaluation{
-	Evaluation: "logical-true",
 }
 
 var DmAAAPPostProcessPPKerberosBstValueTypeCondVal = validators.Evaluation{
@@ -1926,7 +1921,6 @@ var DmAAAPPostProcessObjectType = map[string]attr.Type{
 	"pp_ltpa_expiry":                              types.Int64Type,
 	"pp_ltpa_key_file":                            types.StringType,
 	"pp_ltpa_key_file_password":                   types.StringType,
-	"pp_ltpa_stash_file":                          types.StringType,
 	"pp_kerberos_spnego_token":                    types.BoolType,
 	"pp_kerberos_bst_value_type":                  types.StringType,
 	"pp_saml_use_ws_sec":                          types.BoolType,
@@ -2012,7 +2006,6 @@ var DmAAAPPostProcessObjectDefault = map[string]attr.Value{
 	"pp_ltpa_expiry":                              types.Int64Value(600),
 	"pp_ltpa_key_file":                            types.StringNull(),
 	"pp_ltpa_key_file_password":                   types.StringNull(),
-	"pp_ltpa_stash_file":                          types.StringNull(),
 	"pp_kerberos_spnego_token":                    types.BoolValue(false),
 	"pp_kerberos_bst_value_type":                  types.StringValue("http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ"),
 	"pp_saml_use_ws_sec":                          types.BoolValue(false),
@@ -2178,10 +2171,6 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 			},
 			"pp_ltpa_key_file_password": DataSourceSchema.StringAttribute{
 				MarkdownDescription: "Use the LTPA key file password alias.",
-				Computed:            true,
-			},
-			"pp_ltpa_stash_file": DataSourceSchema.StringAttribute{
-				MarkdownDescription: "Specify the location of the file that contains the LTPA key file password.",
 				Computed:            true,
 			},
 			"pp_kerberos_spnego_token": DataSourceSchema.BoolAttribute{
@@ -2592,10 +2581,6 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 			},
 			"pp_ltpa_key_file_password": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use the LTPA key file password alias.", "lpta-key-file-password", "").AddNotValidWhen(DmAAAPPostProcessPPLTPAKeyFilePasswordIgnoreVal.String()).String,
-				Optional:            true,
-			},
-			"pp_ltpa_stash_file": ResourceSchema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the file that contains the LTPA key file password.", "lpta-stash-file", "").AddNotValidWhen(DmAAAPPostProcessPPLTPAStashFileIgnoreVal.String()).String,
 				Optional:            true,
 			},
 			"pp_kerberos_spnego_token": ResourceSchema.BoolAttribute{
@@ -3078,9 +3063,6 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpLtpaKeyFilePassword.IsNull() {
 		return false
 	}
-	if !data.PpLtpaStashFile.IsNull() {
-		return false
-	}
 	if !data.PpKerberosSpnegoToken.IsNull() {
 		return false
 	}
@@ -3340,9 +3322,6 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	if !data.PpLtpaKeyFilePassword.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPLTPAKeyFilePassword`, data.PpLtpaKeyFilePassword.ValueString())
-	}
-	if !data.PpLtpaStashFile.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAStashFile`, data.PpLtpaStashFile.ValueString())
 	}
 	if !data.PpKerberosSpnegoToken.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosSPNEGOToken`, tfutils.StringFromBool(data.PpKerberosSpnegoToken, ""))
@@ -3653,11 +3632,6 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpLtpaKeyFilePassword = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.PpLtpaKeyFilePassword = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `PPLTPAStashFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PpLtpaStashFile = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.PpLtpaStashFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosSPNEGOToken`); value.Exists() {
 		data.PpKerberosSpnegoToken = tfutils.BoolFromString(value.String())
@@ -4080,11 +4054,6 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 		data.PpLtpaKeyFilePassword = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.PpLtpaKeyFilePassword = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `PPLTPAStashFile`); value.Exists() && !data.PpLtpaStashFile.IsNull() {
-		data.PpLtpaStashFile = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.PpLtpaStashFile = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPKerberosSPNEGOToken`); value.Exists() && !data.PpKerberosSpnegoToken.IsNull() {
 		data.PpKerberosSpnegoToken = tfutils.BoolFromString(value.String())

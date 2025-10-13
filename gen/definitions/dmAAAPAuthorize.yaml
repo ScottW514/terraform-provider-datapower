@@ -447,12 +447,6 @@ attributes:
     attribute: AZMethod
     value:
     - xacml
-- name: AZXACMLBindingObject
-  type: String
-  description: XACML binding
-  cli_alias: xacml-binding-object
-  ignored_when:
-  - evaluation: logical-true
 - name: AZXACMLBindingXSL
   type: String
   description: Specify the location of the stylesheet or GatewayScript file that generates

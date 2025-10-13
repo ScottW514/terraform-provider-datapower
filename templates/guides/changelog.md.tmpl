@@ -26,6 +26,7 @@ description: |-
   - Refactored path handling
 - Bump golang.org/x/tools from 0.37.0 to 0.38.0 (PR18)
 - Bump golang.org/x/crypto from 0.42.0 to 0.43.0 (PR19)
+- Removed attributes with `ignored_when` set to `logical-true` and had no `required_when` conditions.
 
 ## v0.11.4
 
