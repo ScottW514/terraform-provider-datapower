@@ -88,7 +88,7 @@ resource "datapower_time_settings" "test" {
   - Default value: `true`
 - `local_time_zone` (String) Specify the time zone to use in management interfaces. The default value is EST-5EDT.
   - CLI Alias: `name`
-  - Choices: `HST10`, `AKST9AKDT`, `PST8PDT`, `MST7MDT`, `CST6CDT`, `EST5EDT`, `AST4ADT`, `UTC`, `GMT0BST`, `CET-1CEST`, `EET-2EEST`, `MKS-3MSD`, `MSK-3MSD`, `AST-3`, `KRT-5`, `IST-5:30`, `NOVST-6NOVDT`, `CST-8`, `WST-8`, `WST-8WDT`, `JST-9`, `CST-9:30CDT`, `EST-10EDT`, `EST-10`, `Custom`
+  - Choices: `HST10`, `AKST9AKDT`, `PST8PDT`, `MST7MDT`, `CST6CDT`, `EST5EDT`, `AST4ADT`, `UTC`, `GMT0BST`, `CET-1CEST`, `EET-2EEST`, `MSK-3MSD`, `AST-3`, `KRT-5`, `IST-5:30`, `NOVST-6NOVDT`, `CST-8`, `WST-8`, `WST-8WDT`, `JST-9`, `CST-9:30CDT`, `EST-10EDT`, `EST-10`, `Custom`
   - Default value: `EST5EDT`
 - `offset_hours` (Number) Specify the number of hours the custom time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 2.
   - CLI Alias: `offset-hours`

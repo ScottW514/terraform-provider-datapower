@@ -66,11 +66,11 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default:             booldefault.StaticBool(true),
 			},
 			"local_time_zone": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time zone to use in management interfaces. The default value is EST-5EDT.", "name", "").AddStringEnum("HST10", "AKST9AKDT", "PST8PDT", "MST7MDT", "CST6CDT", "EST5EDT", "AST4ADT", "UTC", "GMT0BST", "CET-1CEST", "EET-2EEST", "MKS-3MSD", "MSK-3MSD", "AST-3", "KRT-5", "IST-5:30", "NOVST-6NOVDT", "CST-8", "WST-8", "WST-8WDT", "JST-9", "CST-9:30CDT", "EST-10EDT", "EST-10", "Custom").AddDefaultValue("EST5EDT").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time zone to use in management interfaces. The default value is EST-5EDT.", "name", "").AddStringEnum("HST10", "AKST9AKDT", "PST8PDT", "MST7MDT", "CST6CDT", "EST5EDT", "AST4ADT", "UTC", "GMT0BST", "CET-1CEST", "EET-2EEST", "MSK-3MSD", "AST-3", "KRT-5", "IST-5:30", "NOVST-6NOVDT", "CST-8", "WST-8", "WST-8WDT", "JST-9", "CST-9:30CDT", "EST-10EDT", "EST-10", "Custom").AddDefaultValue("EST5EDT").String,
 				Computed:            true,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("HST10", "AKST9AKDT", "PST8PDT", "MST7MDT", "CST6CDT", "EST5EDT", "AST4ADT", "UTC", "GMT0BST", "CET-1CEST", "EET-2EEST", "MKS-3MSD", "MSK-3MSD", "AST-3", "KRT-5", "IST-5:30", "NOVST-6NOVDT", "CST-8", "WST-8", "WST-8WDT", "JST-9", "CST-9:30CDT", "EST-10EDT", "EST-10", "Custom"),
+					stringvalidator.OneOf("HST10", "AKST9AKDT", "PST8PDT", "MST7MDT", "CST6CDT", "EST5EDT", "AST4ADT", "UTC", "GMT0BST", "CET-1CEST", "EET-2EEST", "MSK-3MSD", "AST-3", "KRT-5", "IST-5:30", "NOVST-6NOVDT", "CST-8", "WST-8", "WST-8WDT", "JST-9", "CST-9:30CDT", "EST-10EDT", "EST-10", "Custom"),
 				},
 				Default: stringdefault.StaticString("EST5EDT"),
 			},
