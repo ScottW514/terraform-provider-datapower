@@ -37,14 +37,12 @@ import (
 type Statistics struct {
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	Enabled           types.Bool                  `tfsdk:"enabled"`
-	LoadInterval      types.Int64                 `tfsdk:"load_interval"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var StatisticsObjectType = map[string]attr.Type{
 	"app_domain":         types.StringType,
 	"enabled":            types.BoolType,
-	"load_interval":      types.Int64Type,
 	"dependency_actions": actions.ActionsListType,
 }
 
@@ -61,14 +59,10 @@ func (data Statistics) IsNull() bool {
 	if !data.Enabled.IsNull() {
 		return false
 	}
-	if !data.LoadInterval.IsNull() {
-		return false
-	}
 	return true
 }
 func (data *Statistics) ToDefault() {
 	data.Enabled = types.BoolValue(false)
-	data.LoadInterval = types.Int64Value(1000)
 }
 
 func (data Statistics) ToBody(ctx context.Context, pathRoot string) string {
@@ -80,9 +74,6 @@ func (data Statistics) ToBody(ctx context.Context, pathRoot string) string {
 
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
-	}
-	if !data.LoadInterval.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LoadInterval`, data.LoadInterval.ValueInt64())
 	}
 	return body
 }
@@ -96,11 +87,6 @@ func (data *Statistics) FromBody(ctx context.Context, pathRoot string, res gjson
 	} else {
 		data.Enabled = types.BoolNull()
 	}
-	if value := res.Get(pathRoot + `LoadInterval`); value.Exists() {
-		data.LoadInterval = types.Int64Value(value.Int())
-	} else {
-		data.LoadInterval = types.Int64Value(1000)
-	}
 }
 
 func (data *Statistics) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -111,10 +97,5 @@ func (data *Statistics) UpdateFromBody(ctx context.Context, pathRoot string, res
 		data.Enabled = tfutils.BoolFromString(value.String())
 	} else if data.Enabled.ValueBool() {
 		data.Enabled = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `LoadInterval`); value.Exists() && !data.LoadInterval.IsNull() {
-		data.LoadInterval = types.Int64Value(value.Int())
-	} else if data.LoadInterval.ValueInt64() != 1000 {
-		data.LoadInterval = types.Int64Null()
 	}
 }

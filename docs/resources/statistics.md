@@ -33,10 +33,6 @@ resource "datapower_statistics" "test" {
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `load_interval` (Number) Specifies the measurement interval for load estimation in milliseconds. Enter a value in the range 500 - 5000. The default value is 1000. During this interval, the system load reported by the <tt>show load</tt> command is estimated and expressed as a percentage. <p><b>Note:</b> You can modify this property in only the <tt>default</tt> domain. In application domains, this property is read-only.</p>
-  - CLI Alias: `load-interval`
-  - Range: `500`-`5000`
-  - Default value: `1000`
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

@@ -37,7 +37,6 @@ func TestAccResourceStatistics(t *testing.T) {
 		Config: testutils.StatisticsTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_statistics.test", "enabled", "false"),
-			resource.TestCheckResourceAttr("datapower_statistics.test", "load_interval", "1000"),
 		}...),
 	})
 

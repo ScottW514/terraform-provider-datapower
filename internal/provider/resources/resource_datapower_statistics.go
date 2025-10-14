@@ -26,12 +26,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -76,15 +74,6 @@ func (r *StatisticsResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Computed:            true,
 				Optional:            true,
 				Default:             booldefault.StaticBool(false),
-			},
-			"load_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the measurement interval for load estimation in milliseconds. Enter a value in the range 500 - 5000. The default value is 1000. During this interval, the system load reported by the <tt>show load</tt> command is estimated and expressed as a percentage. <p><b>Note:</b> You can modify this property in only the <tt>default</tt> domain. In application domains, this property is read-only.</p>", "load-interval", "").AddIntegerRange(500, 5000).AddDefaultValue("1000").String,
-				Computed:            true,
-				Optional:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(500, 5000),
-				},
-				Default: int64default.StaticInt64(1000),
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

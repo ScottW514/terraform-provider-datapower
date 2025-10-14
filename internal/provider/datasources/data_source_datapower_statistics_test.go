@@ -40,7 +40,6 @@ func TestAccDataSourceStatistics(t *testing.T) {
 				Config: testutils.StatisticsTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_statistics.test", "enabled", "false"),
-					resource.TestCheckResourceAttr("data.datapower_statistics.test", "load_interval", "1000"),
 				}...),
 			},
 		},
