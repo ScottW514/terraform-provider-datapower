@@ -1907,16 +1907,28 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.NamedInputs.IsNull() {
 		var dataValues []DmNamedInOut
 		data.NamedInputs.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`NamedInputs`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`NamedInputs`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`NamedInputs`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`NamedInputs`, "[]")
 	}
 	if !data.NamedOutputs.IsNull() {
 		var dataValues []DmNamedInOut
 		data.NamedOutputs.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`NamedOutputs`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`NamedOutputs`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`NamedOutputs`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`NamedOutputs`, "[]")
 	}
 	if !data.Destination.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Destination`, data.Destination.ValueString())
@@ -1966,9 +1978,15 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.StylesheetParameters.IsNull() {
 		var dataValues []DmStylesheetParameter
 		data.StylesheetParameters.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`, "[]")
 	}
 	if !data.ErrorMode.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ErrorMode`, data.ErrorMode.ValueString())
@@ -2033,16 +2051,28 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.SignatureIdentifier.IsNull() {
 		var dataValues []string
 		data.SignatureIdentifier.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`SignatureIdentifier`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`SignatureIdentifier`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SignatureIdentifier`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SignatureIdentifier`, "[]")
 	}
 	if !data.RecipientIdentifier.IsNull() {
 		var dataValues []string
 		data.RecipientIdentifier.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`RecipientIdentifier`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`RecipientIdentifier`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RecipientIdentifier`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RecipientIdentifier`, "[]")
 	}
 	if !data.SingleCertificate.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SingleCertificate`, data.SingleCertificate.ValueString())
@@ -2065,9 +2095,15 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.Condition.IsNull() {
 		var dataValues []DmCondition
 		data.Condition.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Condition`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Condition`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Condition`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Condition`, "[]")
 	}
 	if !data.ResultsMode.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ResultsMode`, data.ResultsMode.ValueString())
@@ -2096,9 +2132,15 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.AsyncAction.IsNull() {
 		var dataValues []string
 		data.AsyncAction.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`AsyncAction`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`AsyncAction`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AsyncAction`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AsyncAction`, "[]")
 	}
 	if !data.Timeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Timeout`, data.Timeout.ValueInt64())

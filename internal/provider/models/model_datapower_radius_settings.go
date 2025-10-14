@@ -159,9 +159,15 @@ func (data RADIUSSettings) ToBody(ctx context.Context, pathRoot string, config *
 		data.AaaServers.ElementsAs(ctx, &dataValues, false)
 		var configValues []DmRadiusServer
 		config.AaaServers.ElementsAs(ctx, &configValues, false)
-		for idx, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AAAServers`+".-1", val.ToBody(ctx, "", &configValues[idx]))
+		if len(dataValues) > 0 {
+			for idx, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AAAServers`+".-1", val.ToBody(ctx, "", &configValues[idx]))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AAAServers`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AAAServers`, "[]")
 	}
 	return body
 }

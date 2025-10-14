@@ -140,16 +140,28 @@ func (data JOSESignatureIdentifier) ToBody(ctx context.Context, pathRoot string)
 	if !data.ValidAlgorithms.IsNull() {
 		var dataValues []string
 		data.ValidAlgorithms.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`ValidAlgorithms`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`ValidAlgorithms`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ValidAlgorithms`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ValidAlgorithms`, "[]")
 	}
 	if !data.HeaderParam.IsNull() {
 		var dataValues []DmJOSEHeader
 		data.HeaderParam.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HeaderParam`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HeaderParam`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HeaderParam`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HeaderParam`, "[]")
 	}
 	return body
 }

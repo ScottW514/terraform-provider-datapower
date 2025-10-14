@@ -94,9 +94,15 @@ func (data APIApplicationType) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.SupportedOauthTypes.IsNull() {
 		var dataValues []DmOAuthType
 		data.SupportedOauthTypes.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SupportedOAuthTypes`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SupportedOAuthTypes`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SupportedOAuthTypes`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SupportedOAuthTypes`, "[]")
 	}
 	return body
 }

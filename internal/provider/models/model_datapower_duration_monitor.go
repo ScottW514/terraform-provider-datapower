@@ -96,9 +96,15 @@ func (data DurationMonitor) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.Filter.IsNull() {
 		var dataValues []DmDurationMonitorFilter
 		data.Filter.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Filter`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Filter`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Filter`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Filter`, "[]")
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())

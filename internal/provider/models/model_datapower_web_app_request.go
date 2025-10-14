@@ -404,9 +404,15 @@ func (data WebAppRequest) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ContentTypes.IsNull() {
 		var dataValues []string
 		data.ContentTypes.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`ContentTypes`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`ContentTypes`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ContentTypes`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ContentTypes`, "[]")
 	}
 	if data.MultipartFormData != nil {
 		if !data.MultipartFormData.IsNull() {
@@ -424,9 +430,15 @@ func (data WebAppRequest) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.CookieNameVector.IsNull() {
 		var dataValues []string
 		data.CookieNameVector.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`CookieNameVector`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`CookieNameVector`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`CookieNameVector`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`CookieNameVector`, "[]")
 	}
 	if !data.SqlInjectionPatternsFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SQLInjectionPatternsFile`, data.SqlInjectionPatternsFile.ValueString())

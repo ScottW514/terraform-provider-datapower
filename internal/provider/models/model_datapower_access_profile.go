@@ -86,9 +86,15 @@ func (data AccessProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AccessPolicies.IsNull() {
 		var dataValues []string
 		data.AccessPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`AccessPolicies`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`AccessPolicies`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AccessPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AccessPolicies`, "[]")
 	}
 	return body
 }

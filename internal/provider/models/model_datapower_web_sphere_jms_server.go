@@ -217,9 +217,15 @@ func (data WebSphereJMSServer) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.Endpoint.IsNull() {
 		var dataValues []DmWebSphereJMSEndpoint
 		data.Endpoint.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Endpoint`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Endpoint`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Endpoint`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Endpoint`, "[]")
 	}
 	if !data.TargetTransportChain.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TargetTransportChain`, data.TargetTransportChain.ValueString())

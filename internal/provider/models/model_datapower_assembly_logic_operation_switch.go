@@ -103,9 +103,15 @@ func (data AssemblyLogicOperationSwitch) ToBody(ctx context.Context, pathRoot st
 	if !data.Case.IsNull() {
 		var dataValues []DmAssemblyLogicOperationSwitchCase
 		data.Case.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Case`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Case`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Case`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Case`, "[]")
 	}
 	if !data.Otherwise.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Otherwise`, data.Otherwise.ValueString())

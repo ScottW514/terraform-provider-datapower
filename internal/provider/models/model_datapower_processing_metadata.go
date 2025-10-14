@@ -86,9 +86,15 @@ func (data ProcessingMetadata) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.MetaItem.IsNull() {
 		var dataValues []DmMetaItem
 		data.MetaItem.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`MetaItem`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`MetaItem`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`MetaItem`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`MetaItem`, "[]")
 	}
 	return body
 }

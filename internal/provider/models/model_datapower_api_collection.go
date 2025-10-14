@@ -236,9 +236,15 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.RoutingPrefix.IsNull() {
 		var dataValues []DmRoutingPrefix
 		data.RoutingPrefix.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`RoutingPrefix`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`RoutingPrefix`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RoutingPrefix`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RoutingPrefix`, "[]")
 	}
 	if !data.UseRateLimitGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UseRateLimitGroup`, tfutils.StringFromBool(data.UseRateLimitGroup, ""))
@@ -246,9 +252,15 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.DefaultRateLimit.IsNull() {
 		var dataValues []DmAPIRateLimit
 		data.DefaultRateLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`DefaultRateLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`DefaultRateLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DefaultRateLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DefaultRateLimit`, "[]")
 	}
 	if !data.RateLimitGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RateLimitGroup`, data.RateLimitGroup.ValueString())
@@ -256,23 +268,41 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AssemblyBurstLimit.IsNull() {
 		var dataValues []DmAPIBurstLimit
 		data.AssemblyBurstLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`, "[]")
 	}
 	if !data.AssemblyRateLimit.IsNull() {
 		var dataValues []DmAPIRateLimit
 		data.AssemblyRateLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`, "[]")
 	}
 	if !data.AssemblyCountLimit.IsNull() {
 		var dataValues []DmAPICountLimit
 		data.AssemblyCountLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`, "[]")
 	}
 	if !data.EnforcePreAssemblyRateLimits.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EnforcePreAssemblyRateLimits`, tfutils.StringFromBool(data.EnforcePreAssemblyRateLimits, ""))
@@ -292,9 +322,15 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Plan.IsNull() {
 		var dataValues []string
 		data.Plan.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Plan`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Plan`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Plan`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Plan`, "[]")
 	}
 	if !data.AnalyticsEndpoint.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AnalyticsEndpoint`, data.AnalyticsEndpoint.ValueString())
@@ -302,9 +338,15 @@ func (data APICollection) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ApplicationType.IsNull() {
 		var dataValues []string
 		data.ApplicationType.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`ApplicationType`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`ApplicationType`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ApplicationType`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ApplicationType`, "[]")
 	}
 	if data.ParseSettingsReference != nil {
 		if !data.ParseSettingsReference.IsNull() {

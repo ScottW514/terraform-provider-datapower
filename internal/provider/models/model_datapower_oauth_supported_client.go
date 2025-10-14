@@ -2196,9 +2196,15 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string, co
 	if !data.RedirectUri.IsNull() {
 		var dataValues []string
 		data.RedirectUri.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`RedirectURI`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`RedirectURI`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RedirectURI`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RedirectURI`, "[]")
 	}
 	if !data.CustomScopeCheck.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CustomScopeCheck`, tfutils.StringFromBool(data.CustomScopeCheck, ""))

@@ -315,9 +315,15 @@ func (data QuotaEnforcementServer) ToBody(ctx context.Context, pathRoot string) 
 	if !data.Peers.IsNull() {
 		var dataValues []string
 		data.Peers.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Peers`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Peers`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Peers`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Peers`, "[]")
 	}
 	if !data.Priority.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Priority`, data.Priority.ValueInt64())

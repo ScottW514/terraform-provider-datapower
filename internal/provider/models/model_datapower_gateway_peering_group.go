@@ -213,9 +213,15 @@ func (data GatewayPeeringGroup) ToBody(ctx context.Context, pathRoot string) str
 	if !data.PeerNodes.IsNull() {
 		var dataValues []DmGatewayPeeringGroupPeerNode
 		data.PeerNodes.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`PeerNodes`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`PeerNodes`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`PeerNodes`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`PeerNodes`, "[]")
 	}
 	if !data.ClusterPrimaryCount.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ClusterPrimaryCount`, data.ClusterPrimaryCount.ValueString())
@@ -223,9 +229,15 @@ func (data GatewayPeeringGroup) ToBody(ctx context.Context, pathRoot string) str
 	if !data.ClusterNodes.IsNull() {
 		var dataValues []DmGatewayPeeringGroupClusterNode
 		data.ClusterNodes.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ClusterNodes`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ClusterNodes`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ClusterNodes`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ClusterNodes`, "[]")
 	}
 	if !data.ClusterAutoConfig.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ClusterAutoConfig`, tfutils.StringFromBool(data.ClusterAutoConfig, ""))

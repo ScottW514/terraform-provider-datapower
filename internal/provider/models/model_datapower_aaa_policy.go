@@ -356,9 +356,15 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.NamespaceMapping.IsNull() {
 		var dataValues []DmNamespaceMapping
 		data.NamespaceMapping.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`NamespaceMapping`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`NamespaceMapping`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`NamespaceMapping`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`NamespaceMapping`, "[]")
 	}
 	if data.ExtractIdentity != nil {
 		if !data.ExtractIdentity.IsNull() {
@@ -398,23 +404,41 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.SamlAttribute.IsNull() {
 		var dataValues []DmSAMLAttributeNameAndValue
 		data.SamlAttribute.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SAMLAttribute`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SAMLAttribute`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SAMLAttribute`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SAMLAttribute`, "[]")
 	}
 	if !data.LtpaAttributes.IsNull() {
 		var dataValues []DmLTPAUserAttributeNameAndValue
 		data.LtpaAttributes.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`LTPAAttributes`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`LTPAAttributes`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`LTPAAttributes`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`LTPAAttributes`, "[]")
 	}
 	if !data.TransactionPriority.IsNull() {
 		var dataValues []DmAAATransactionPriority
 		data.TransactionPriority.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`TransactionPriority`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`TransactionPriority`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`TransactionPriority`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`TransactionPriority`, "[]")
 	}
 	if !data.SamlValcred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SAMLValcred`, data.SamlValcred.ValueString())
@@ -473,16 +497,28 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AuSmHttpHeader.IsNull() {
 		var dataValues []string
 		data.AuSmHttpHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`AUSMHTTPHeader`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`AUSMHTTPHeader`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AUSMHTTPHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AUSMHTTPHeader`, "[]")
 	}
 	if !data.AzSmHttpHeader.IsNull() {
 		var dataValues []string
 		data.AzSmHttpHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`AZSMHTTPHeader`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`AZSMHTTPHeader`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AZSMHTTPHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AZSMHTTPHeader`, "[]")
 	}
 	if !data.DynConfig.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DynConfig`, data.DynConfig.ValueString())

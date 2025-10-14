@@ -94,9 +94,15 @@ func (data RateLimitDefinitionGroup) ToBody(ctx context.Context, pathRoot string
 	if !data.RateLimitDefinitions.IsNull() {
 		var dataValues []string
 		data.RateLimitDefinitions.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`RateLimitDefinitions`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`RateLimitDefinitions`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RateLimitDefinitions`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RateLimitDefinitions`, "[]")
 	}
 	return body
 }

@@ -129,9 +129,15 @@ func (data PeerGroup) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Url.IsNull() {
 		var dataValues []string
 		data.Url.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`URL`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`URL`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`URL`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`URL`, "[]")
 	}
 	if !data.IpMulticast.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`IPMulticast`, data.IpMulticast.ValueString())

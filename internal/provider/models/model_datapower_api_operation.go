@@ -167,16 +167,28 @@ func (data APIOperation) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Consume.IsNull() {
 		var dataValues []string
 		data.Consume.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Consume`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Consume`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Consume`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Consume`, "[]")
 	}
 	if !data.Produce.IsNull() {
 		var dataValues []string
 		data.Produce.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Produce`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Produce`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Produce`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Produce`, "[]")
 	}
 	if !data.RequestSchema.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RequestSchema`, data.RequestSchema.ValueString())
@@ -184,16 +196,28 @@ func (data APIOperation) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ResponseSchema.IsNull() {
 		var dataValues []DmAPIResponseSchema
 		data.ResponseSchema.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ResponseSchema`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ResponseSchema`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ResponseSchema`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ResponseSchema`, "[]")
 	}
 	if !data.Parameter.IsNull() {
 		var dataValues []DmAPIParameter
 		data.Parameter.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Parameter`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Parameter`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Parameter`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Parameter`, "[]")
 	}
 	if !data.RemoveSecurity.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RemoveSecurity`, tfutils.StringFromBool(data.RemoveSecurity, ""))
@@ -201,9 +225,15 @@ func (data APIOperation) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Security.IsNull() {
 		var dataValues []string
 		data.Security.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Security`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Security`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Security`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Security`, "[]")
 	}
 	if !data.SoapAction.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SOAPAction`, data.SoapAction.ValueString())

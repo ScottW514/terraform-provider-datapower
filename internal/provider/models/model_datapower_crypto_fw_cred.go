@@ -88,23 +88,41 @@ func (data CryptoFWCred) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.PrivateKey.IsNull() {
 		var dataValues []string
 		data.PrivateKey.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`PrivateKey`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`PrivateKey`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`PrivateKey`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`PrivateKey`, "[]")
 	}
 	if !data.SharedSecretKey.IsNull() {
 		var dataValues []string
 		data.SharedSecretKey.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`SharedSecretKey`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`SharedSecretKey`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SharedSecretKey`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SharedSecretKey`, "[]")
 	}
 	if !data.Certificate.IsNull() {
 		var dataValues []string
 		data.Certificate.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Certificate`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Certificate`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Certificate`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Certificate`, "[]")
 	}
 	return body
 }

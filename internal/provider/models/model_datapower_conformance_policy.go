@@ -260,16 +260,28 @@ func (data ConformancePolicy) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.IgnoredRequirements.IsNull() {
 		var dataValues []string
 		data.IgnoredRequirements.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`IgnoredRequirements`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`IgnoredRequirements`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`IgnoredRequirements`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`IgnoredRequirements`, "[]")
 	}
 	if !data.FixupStylesheets.IsNull() {
 		var dataValues []string
 		data.FixupStylesheets.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`FixupStylesheets`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`FixupStylesheets`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`FixupStylesheets`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`FixupStylesheets`, "[]")
 	}
 	if !data.AssertBp10Conformance.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AssertBP10Conformance`, tfutils.StringFromBool(data.AssertBp10Conformance, ""))

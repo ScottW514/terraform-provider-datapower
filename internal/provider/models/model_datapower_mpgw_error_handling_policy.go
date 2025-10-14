@@ -86,9 +86,15 @@ func (data MPGWErrorHandlingPolicy) ToBody(ctx context.Context, pathRoot string)
 	if !data.PolicyMaps.IsNull() {
 		var dataValues []DmWebGWErrorPolicyMap
 		data.PolicyMaps.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`PolicyMaps`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`PolicyMaps`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`PolicyMaps`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`PolicyMaps`, "[]")
 	}
 	return body
 }

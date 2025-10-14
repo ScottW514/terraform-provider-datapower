@@ -339,9 +339,15 @@ func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string{{if .WriteOnly
 		var configValues []{{if isStringList .}}string{{else}}{{.ElementType}}{{end}}
 		config.{{toGoName .TfName}}.ElementsAs(ctx, &configValues, false)
             {{- end}}
-		for {{if .WriteOnlyAttrs}}idx{{else}}_{{end}}, val := range dataValues {
-			body, _ = sjson.Set{{if ne .ElementType "String"}}Raw{{end}}(body, pathRoot+{{.Path}}+".-1", {{if eq .ElementType "String"}}map[string]string{"value": val}{{else}}val.ToBody(ctx, ""{{if .WriteOnlyAttrs}}, &configValues[idx]{{end}}){{end}})
-		}
+		if len(dataValues) > 0 {
+            for {{if .WriteOnlyAttrs}}idx{{else}}_{{end}}, val := range dataValues {
+                body, _ = sjson.Set{{if ne .ElementType "String"}}Raw{{end}}(body, pathRoot+{{.Path}}+".-1", {{if eq .ElementType "String"}}map[string]string{"value": val}{{else}}val.ToBody(ctx, ""{{if .WriteOnlyAttrs}}, &configValues[idx]{{end}}){{end}})
+            }
+        } else {
+    		body, _ = sjson.SetRaw(body, pathRoot+{{.Path}}, "[]")
+        }
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+{{.Path}}, "[]")
 	}
         {{- else if isObject .}}
 	if data.{{toGoName .TfName}} != nil {

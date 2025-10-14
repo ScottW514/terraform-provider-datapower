@@ -112,9 +112,15 @@ func (data ODRConnectorGroup) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.OdrGroupConnectors.IsNull() {
 		var dataValues []DmODRConnector
 		data.OdrGroupConnectors.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ODRGroupConnectors`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ODRGroupConnectors`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ODRGroupConnectors`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ODRGroupConnectors`, "[]")
 	}
 	if !data.MaxRetryInterval.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MaxRetryInterval`, data.MaxRetryInterval.ValueInt64())
@@ -125,9 +131,15 @@ func (data ODRConnectorGroup) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.OdrConnGroupProperties.IsNull() {
 		var dataValues []DmODRConnProperty
 		data.OdrConnGroupProperties.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ODRConnGroupProperties`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ODRConnGroupProperties`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ODRConnGroupProperties`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ODRConnGroupProperties`, "[]")
 	}
 	if !data.SslClientConfigType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLClientConfigType`, data.SslClientConfigType.ValueString())

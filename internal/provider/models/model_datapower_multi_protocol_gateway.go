@@ -1817,16 +1817,28 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 	if !data.WsrrSavedSearchSubscriptions.IsNull() {
 		var dataValues []DmWSRRSavedSearchWSDLSource
 		data.WsrrSavedSearchSubscriptions.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`WSRRSavedSearchSubscriptions`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`WSRRSavedSearchSubscriptions`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`WSRRSavedSearchSubscriptions`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`WSRRSavedSearchSubscriptions`, "[]")
 	}
 	if !data.WsrrSubscriptions.IsNull() {
 		var dataValues []DmWSRRWSDLSource
 		data.WsrrSubscriptions.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`WSRRSubscriptions`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`WSRRSubscriptions`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`WSRRSubscriptions`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`WSRRSubscriptions`, "[]")
 	}
 	if !data.PolicyAttachments.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PolicyAttachments`, data.PolicyAttachments.ValueString())
@@ -1834,9 +1846,15 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 	if !data.PolicyParameter.IsNull() {
 		var dataValues []DmWSPolicyParameters
 		data.PolicyParameter.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`PolicyParameter`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`PolicyParameter`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`PolicyParameter`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`PolicyParameter`, "[]")
 	}
 	if !data.WSmAgentMonitor.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSMAgentMonitor`, tfutils.StringFromBool(data.WSmAgentMonitor, ""))
@@ -1862,9 +1880,15 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 	if !data.FrontProtocol.IsNull() {
 		var dataValues []string
 		data.FrontProtocol.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`FrontProtocol`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`FrontProtocol`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`FrontProtocol`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`FrontProtocol`, "[]")
 	}
 	if !data.XmlManager.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`XMLManager`, data.XmlManager.ValueString())
@@ -1884,23 +1908,41 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 	if !data.HeaderInjection.IsNull() {
 		var dataValues []DmHeaderInjection
 		data.HeaderInjection.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`, "[]")
 	}
 	if !data.HeaderSuppression.IsNull() {
 		var dataValues []DmHeaderSuppression
 		data.HeaderSuppression.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`, "[]")
 	}
 	if !data.StylesheetParameters.IsNull() {
 		var dataValues []DmStylesheetParameter
 		data.StylesheetParameters.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`, "[]")
 	}
 	if !data.DefaultParamNamespace.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DefaultParamNamespace`, data.DefaultParamNamespace.ValueString())
@@ -1917,23 +1959,41 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 	if !data.ServiceMonitors.IsNull() {
 		var dataValues []string
 		data.ServiceMonitors.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`ServiceMonitors`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`ServiceMonitors`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ServiceMonitors`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ServiceMonitors`, "[]")
 	}
 	if !data.CountMonitors.IsNull() {
 		var dataValues []string
 		data.CountMonitors.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`CountMonitors`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`CountMonitors`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`CountMonitors`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`CountMonitors`, "[]")
 	}
 	if !data.DurationMonitors.IsNull() {
 		var dataValues []string
 		data.DurationMonitors.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`DurationMonitors`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`DurationMonitors`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DurationMonitors`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DurationMonitors`, "[]")
 	}
 	if !data.MonitorProcessingPolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MonitorProcessingPolicy`, data.MonitorProcessingPolicy.ValueString())
@@ -2013,9 +2073,15 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 	if !data.DebugTrigger.IsNull() {
 		var dataValues []DmMSDebugTriggerType
 		data.DebugTrigger.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`, "[]")
 	}
 	if !data.FlowControl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`FlowControl`, tfutils.StringFromBool(data.FlowControl, ""))

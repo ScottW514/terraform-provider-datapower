@@ -160,23 +160,41 @@ func (data DNSNameService) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.SearchDomains.IsNull() {
 		var dataValues []DmSearchDomain
 		data.SearchDomains.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SearchDomains`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SearchDomains`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SearchDomains`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SearchDomains`, "[]")
 	}
 	if !data.NameServers.IsNull() {
 		var dataValues []DmNameServer
 		data.NameServers.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`NameServers`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`NameServers`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`NameServers`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`NameServers`, "[]")
 	}
 	if !data.StaticHosts.IsNull() {
 		var dataValues []DmStaticHost
 		data.StaticHosts.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`StaticHosts`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`StaticHosts`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`StaticHosts`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`StaticHosts`, "[]")
 	}
 	if !data.IpPreference.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`IPPreference`, data.IpPreference.ValueString())

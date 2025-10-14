@@ -628,9 +628,15 @@ func (data AS3SourceProtocolHandler) ToBody(ctx context.Context, pathRoot string
 	if !data.VirtualDirectories.IsNull() {
 		var dataValues []DmFTPServerVirtualDirectory
 		data.VirtualDirectories.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`VirtualDirectories`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`VirtualDirectories`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`VirtualDirectories`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`VirtualDirectories`, "[]")
 	}
 	if !data.DefaultDirectory.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DefaultDirectory`, data.DefaultDirectory.ValueString())

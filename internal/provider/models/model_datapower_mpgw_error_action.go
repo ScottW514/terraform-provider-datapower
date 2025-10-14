@@ -195,9 +195,15 @@ func (data MPGWErrorAction) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.HeaderInjection.IsNull() {
 		var dataValues []DmWebGWErrorRespHeaderInjection
 		data.HeaderInjection.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`, "[]")
 	}
 	return body
 }

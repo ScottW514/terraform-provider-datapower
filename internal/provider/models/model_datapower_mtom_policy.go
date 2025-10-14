@@ -102,9 +102,15 @@ func (data MTOMPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Rule.IsNull() {
 		var dataValues []DmMtomRule
 		data.Rule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Rule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Rule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Rule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Rule`, "[]")
 	}
 	return body
 }

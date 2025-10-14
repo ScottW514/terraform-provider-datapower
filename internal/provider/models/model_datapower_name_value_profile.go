@@ -163,9 +163,15 @@ func (data NameValueProfile) ToBody(ctx context.Context, pathRoot string) string
 	if !data.ValidationList.IsNull() {
 		var dataValues []DmValidationType
 		data.ValidationList.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ValidationList`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ValidationList`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ValidationList`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ValidationList`, "[]")
 	}
 	if !data.DefaultFixup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DefaultFixup`, data.DefaultFixup.ValueString())

@@ -125,9 +125,15 @@ func (data WSStylePolicyRule) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.Actions.IsNull() {
 		var dataValues []string
 		data.Actions.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Actions`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Actions`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Actions`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Actions`, "[]")
 	}
 	if !data.Direction.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Direction`, data.Direction.ValueString())

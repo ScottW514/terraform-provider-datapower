@@ -247,9 +247,15 @@ func (data XSLCoprocService) ToBody(ctx context.Context, pathRoot string) string
 	if !data.DebugTrigger.IsNull() {
 		var dataValues []DmMSDebugTriggerType
 		data.DebugTrigger.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`, "[]")
 	}
 	if !data.SslServerConfigType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServerConfigType`, data.SslServerConfigType.ValueString())

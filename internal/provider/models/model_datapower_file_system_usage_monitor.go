@@ -154,9 +154,15 @@ func (data FileSystemUsageMonitor) ToBody(ctx context.Context, pathRoot string) 
 	if !data.System.IsNull() {
 		var dataValues []DmFileSystemUsage
 		data.System.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`System`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`System`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`System`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`System`, "[]")
 	}
 	return body
 }

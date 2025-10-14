@@ -96,16 +96,28 @@ func (data DocumentCryptoMap) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.Xpath.IsNull() {
 		var dataValues []string
 		data.Xpath.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`XPath`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`XPath`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`XPath`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`XPath`, "[]")
 	}
 	if !data.NameSpaceMappings.IsNull() {
 		var dataValues []DmNamespaceMapping
 		data.NameSpaceMappings.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`, "[]")
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())

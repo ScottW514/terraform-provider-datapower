@@ -1146,9 +1146,15 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.RevokedKeys.IsNull() {
 		var dataValues []string
 		data.RevokedKeys.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`RevokedKeys`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`RevokedKeys`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RevokedKeys`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RevokedKeys`, "[]")
 	}
 	if !data.AuZosNssConfig.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUZOSNSSConfig`, data.AuZosNssConfig.ValueString())
@@ -1264,9 +1270,15 @@ func (data RBMSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.FallbackUser.IsNull() {
 		var dataValues []string
 		data.FallbackUser.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`FallbackUser`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`FallbackUser`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`FallbackUser`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`FallbackUser`, "[]")
 	}
 	if !data.ApplyToCli.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ApplyToCLI`, tfutils.StringFromBool(data.ApplyToCli, ""))

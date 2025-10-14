@@ -86,9 +86,15 @@ func (data B2BProfileGroup) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.B2bProfiles.IsNull() {
 		var dataValues []DmB2BGroupedProfile
 		data.B2bProfiles.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`, "[]")
 	}
 	return body
 }

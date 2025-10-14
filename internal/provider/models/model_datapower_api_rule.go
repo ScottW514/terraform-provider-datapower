@@ -121,16 +121,28 @@ func (data APIRule) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Actions.IsNull() {
 		var dataValues []string
 		data.Actions.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Actions`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Actions`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Actions`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Actions`, "[]")
 	}
 	if !data.DynamicActions.IsNull() {
 		var dataValues []DmDynamicStylePolicyActionBaseReference
 		data.DynamicActions.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`DynamicActions`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`DynamicActions`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DynamicActions`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DynamicActions`, "[]")
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())

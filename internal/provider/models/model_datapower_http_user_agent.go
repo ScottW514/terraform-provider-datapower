@@ -170,93 +170,171 @@ func (data HTTPUserAgent) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ProxyPolicies.IsNull() {
 		var dataValues []DmProxyPolicy
 		data.ProxyPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`, "[]")
 	}
 	if !data.SslPolicies.IsNull() {
 		var dataValues []DmSSLPolicy
 		data.SslPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SSLPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SSLPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SSLPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SSLPolicies`, "[]")
 	}
 	if !data.BasicAuthPolicies.IsNull() {
 		var dataValues []DmBasicAuthPolicy
 		data.BasicAuthPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`BasicAuthPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`BasicAuthPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`BasicAuthPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`BasicAuthPolicies`, "[]")
 	}
 	if !data.SoapActionPolicies.IsNull() {
 		var dataValues []DmSoapActionPolicy
 		data.SoapActionPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SoapActionPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SoapActionPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SoapActionPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SoapActionPolicies`, "[]")
 	}
 	if !data.PubkeyAuthPolicies.IsNull() {
 		var dataValues []DmPubkeyAuthPolicy
 		data.PubkeyAuthPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`PubkeyAuthPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`PubkeyAuthPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`PubkeyAuthPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`PubkeyAuthPolicies`, "[]")
 	}
 	if !data.AllowCompressionPolicies.IsNull() {
 		var dataValues []DmAllowCompressionPolicy
 		data.AllowCompressionPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AllowCompressionPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AllowCompressionPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AllowCompressionPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AllowCompressionPolicies`, "[]")
 	}
 	if !data.HeaderRetentionPolicies.IsNull() {
 		var dataValues []DmHeaderRetentionPolicy
 		data.HeaderRetentionPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HeaderRetentionPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HeaderRetentionPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HeaderRetentionPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HeaderRetentionPolicies`, "[]")
 	}
 	if !data.HttpVersionPolicies.IsNull() {
 		var dataValues []DmHTTPVersionPolicy
 		data.HttpVersionPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HTTPVersionPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HTTPVersionPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HTTPVersionPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HTTPVersionPolicies`, "[]")
 	}
 	if !data.AddHeaderPolicies.IsNull() {
 		var dataValues []DmAddHeaderPolicy
 		data.AddHeaderPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AddHeaderPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AddHeaderPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AddHeaderPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AddHeaderPolicies`, "[]")
 	}
 	if !data.UploadChunkedPolicies.IsNull() {
 		var dataValues []DmUploadChunkedPolicy
 		data.UploadChunkedPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`UploadChunkedPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`UploadChunkedPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`UploadChunkedPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`UploadChunkedPolicies`, "[]")
 	}
 	if !data.FtpPolicies.IsNull() {
 		var dataValues []DmFTPPolicy
 		data.FtpPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`FTPPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`FTPPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`FTPPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`FTPPolicies`, "[]")
 	}
 	if !data.SmtpPolicies.IsNull() {
 		var dataValues []DmSMTPPolicy
 		data.SmtpPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SMTPPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SMTPPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SMTPPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SMTPPolicies`, "[]")
 	}
 	if !data.SftpPolicies.IsNull() {
 		var dataValues []DmSFTPPolicy
 		data.SftpPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SFTPPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SFTPPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SFTPPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SFTPPolicies`, "[]")
 	}
 	return body
 }

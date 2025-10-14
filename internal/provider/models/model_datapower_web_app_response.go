@@ -192,9 +192,15 @@ func (data WebAppResponse) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ContentTypes.IsNull() {
 		var dataValues []string
 		data.ContentTypes.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`ContentTypes`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`ContentTypes`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ContentTypes`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ContentTypes`, "[]")
 	}
 	if !data.XmlPolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`XMLPolicy`, data.XmlPolicy.ValueString())

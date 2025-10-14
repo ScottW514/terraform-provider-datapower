@@ -1384,23 +1384,41 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.BusinessIds.IsNull() {
 		var dataValues []string
 		data.BusinessIds.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`BusinessIDs`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`BusinessIDs`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`BusinessIDs`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`BusinessIDs`, "[]")
 	}
 	if !data.BusinessIdDuns.IsNull() {
 		var dataValues []string
 		data.BusinessIdDuns.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`BusinessIDsDUNS`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`BusinessIDsDUNS`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`BusinessIDsDUNS`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`BusinessIDsDUNS`, "[]")
 	}
 	if !data.BusinessIdDuns4.IsNull() {
 		var dataValues []string
 		data.BusinessIdDuns4.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`BusinessIDsDUNSPlus4`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`BusinessIDsDUNSPlus4`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`BusinessIDsDUNSPlus4`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`BusinessIDsDUNSPlus4`, "[]")
 	}
 	if !data.CustomStylePolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CustomStylePolicy`, data.CustomStylePolicy.ValueString())
@@ -1411,16 +1429,28 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.EmailAddresses.IsNull() {
 		var dataValues []string
 		data.EmailAddresses.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`EmailAddresses`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`EmailAddresses`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`EmailAddresses`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`EmailAddresses`, "[]")
 	}
 	if !data.Destinations.IsNull() {
 		var dataValues []DmB2BDestination
 		data.Destinations.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Destinations`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Destinations`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Destinations`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Destinations`, "[]")
 	}
 	if !data.InboundVerifyValCred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`InboundVerifyValCred`, data.InboundVerifyValCred.ValueString())
@@ -1449,9 +1479,15 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Contacts.IsNull() {
 		var dataValues []DmB2BContact
 		data.Contacts.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Contacts`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Contacts`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Contacts`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Contacts`, "[]")
 	}
 	if !data.OverrideAsid.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`OverrideASID`, data.OverrideAsid.ValueString())
@@ -1525,9 +1561,15 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.EbmsProfileCpaBindings.IsNull() {
 		var dataValues []DmProfileCPABinding
 		data.EbmsProfileCpaBindings.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`EBMSProfileCPABindings`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`EBMSProfileCPABindings`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`EBMSProfileCPABindings`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`EBMSProfileCPABindings`, "[]")
 	}
 	if !data.EbmsCpaId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EBMSCpaId`, data.EbmsCpaId.ValueString())
@@ -1616,9 +1658,15 @@ func (data B2BProfile) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.EbmsMessageProperties.IsNull() {
 		var dataValues []DmB2BMessageProperties
 		data.EbmsMessageProperties.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`EBMSMessageProperties`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`EBMSMessageProperties`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`EBMSMessageProperties`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`EBMSMessageProperties`, "[]")
 	}
 	return body
 }

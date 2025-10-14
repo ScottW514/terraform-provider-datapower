@@ -111,44 +111,80 @@ func (data WSEndpointRewritePolicy) ToBody(ctx context.Context, pathRoot string)
 	if !data.WsEndpointLocalRewriteRule.IsNull() {
 		var dataValues []DmWSEndpointLocalRewriteRule
 		data.WsEndpointLocalRewriteRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointLocalRewriteRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointLocalRewriteRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointLocalRewriteRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointLocalRewriteRule`, "[]")
 	}
 	if !data.WsEndpointRemoteRewriteRule.IsNull() {
 		var dataValues []DmWSEndpointRemoteRewriteRule
 		data.WsEndpointRemoteRewriteRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointRemoteRewriteRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointRemoteRewriteRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointRemoteRewriteRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointRemoteRewriteRule`, "[]")
 	}
 	if !data.WsEndpointPublishRewriteRule.IsNull() {
 		var dataValues []DmWSEndpointPublishRewriteRule
 		data.WsEndpointPublishRewriteRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointPublishRewriteRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointPublishRewriteRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointPublishRewriteRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointPublishRewriteRule`, "[]")
 	}
 	if !data.WsEndpointSubscriptionLocalRule.IsNull() {
 		var dataValues []DmWSEndpointSubscriptionLocalRule
 		data.WsEndpointSubscriptionLocalRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionLocalRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionLocalRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionLocalRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionLocalRule`, "[]")
 	}
 	if !data.WsEndpointSubscriptionRemoteRule.IsNull() {
 		var dataValues []DmWSEndpointSubscriptionRemoteRule
 		data.WsEndpointSubscriptionRemoteRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionRemoteRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionRemoteRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionRemoteRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionRemoteRule`, "[]")
 	}
 	if !data.WsEndpointSubscriptionPublishRule.IsNull() {
 		var dataValues []DmWSEndpointSubscriptionPublishRule
 		data.WsEndpointSubscriptionPublishRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionPublishRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionPublishRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionPublishRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`WSEndpointSubscriptionPublishRule`, "[]")
 	}
 	return body
 }

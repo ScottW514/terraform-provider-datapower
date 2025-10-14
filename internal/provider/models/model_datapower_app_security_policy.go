@@ -96,23 +96,41 @@ func (data AppSecurityPolicy) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.RequestMaps.IsNull() {
 		var dataValues []DmWebAppRequestPolicyMap
 		data.RequestMaps.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`RequestMaps`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`RequestMaps`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RequestMaps`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RequestMaps`, "[]")
 	}
 	if !data.ResponseMaps.IsNull() {
 		var dataValues []DmWebAppResponsePolicyMap
 		data.ResponseMaps.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ResponseMaps`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ResponseMaps`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ResponseMaps`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ResponseMaps`, "[]")
 	}
 	if !data.ErrorMaps.IsNull() {
 		var dataValues []DmPolicyMap
 		data.ErrorMaps.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ErrorMaps`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ErrorMaps`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ErrorMaps`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ErrorMaps`, "[]")
 	}
 	return body
 }

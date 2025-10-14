@@ -148,16 +148,28 @@ func (data JWSSignature) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ProtectedHeader.IsNull() {
 		var dataValues []DmJOSEHeader
 		data.ProtectedHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ProtectedHeader`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ProtectedHeader`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ProtectedHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ProtectedHeader`, "[]")
 	}
 	if !data.UnprotectedHeader.IsNull() {
 		var dataValues []DmJOSEHeader
 		data.UnprotectedHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`, "[]")
 	}
 	return body
 }

@@ -180,30 +180,54 @@ func (data AssemblyActionRateLimit) ToBody(ctx context.Context, pathRoot string)
 	if !data.BurstLimit.IsNull() {
 		var dataValues []string
 		data.BurstLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`BurstLimit`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`BurstLimit`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`BurstLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`BurstLimit`, "[]")
 	}
 	if !data.RateLimit.IsNull() {
 		var dataValues []DmRateLimitInfo
 		data.RateLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`, "[]")
 	}
 	if !data.CountLimit.IsNull() {
 		var dataValues []DmCountLimitInfo
 		data.CountLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`CountLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`CountLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`CountLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`CountLimit`, "[]")
 	}
 	if !data.RateLimitDefinition.IsNull() {
 		var dataValues []DmRateLimitInfoDomainNamed
 		data.RateLimitDefinition.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`RateLimitDefinition`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`RateLimitDefinition`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RateLimitDefinition`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RateLimitDefinition`, "[]")
 	}
 	if !data.RateLimitGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RateLimitGroup`, data.RateLimitGroup.ValueString())

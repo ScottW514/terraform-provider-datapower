@@ -86,9 +86,15 @@ func (data URLRewritePolicy) ToBody(ctx context.Context, pathRoot string) string
 	if !data.UrlRewriteRule.IsNull() {
 		var dataValues []DmURLRewriteRule
 		data.UrlRewriteRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`URLRewriteRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`URLRewriteRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`URLRewriteRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`URLRewriteRule`, "[]")
 	}
 	return body
 }

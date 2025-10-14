@@ -28,12 +28,10 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -91,11 +89,7 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			"neighbor_domain": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify which domains have their <tt>local:</tt> directory visible to this domain. <p>References to visible domains are explicit, not bidirectional. If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following conditions apply.</p><ul><li>Domain <tt>domainA</tt> has read-only access to the <tt>local:</tt> directory of domain <tt>domainB</tt> .</li><li>Domain <tt>domainB</tt> cannot see domain <tt>domainA</tt> .</li></ul><p>In this case, you cannot make domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible domains cannot be circular.</p>", "visible-domain", "domain").String,
 				ElementType:         types.StringType,
-				Computed:            true,
 				Optional:            true,
-				Default: listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
-					types.StringValue("default"),
-				})),
 			},
 			"file_map":       models.GetDmDomainFileMapResourceSchema("Specify the file permissions to apply to the <tt>local:</tt> directory. When access permissions are defined and with role-based management, users are granted the lesser privilege.", "file-permissions", "", false),
 			"monitoring_map": models.GetDmDomainMonitoringMapResourceSchema("File-monitoring of the local: directory", "file-monitoring", "", false),

@@ -78,9 +78,15 @@ func (data AccessControlList) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.AccessControlEntry.IsNull() {
 		var dataValues []DmACE
 		data.AccessControlEntry.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AccessControlEntry`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AccessControlEntry`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AccessControlEntry`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AccessControlEntry`, "[]")
 	}
 	return body
 }

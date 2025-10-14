@@ -98,9 +98,15 @@ func (data CORSRule) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AllowOrigin.IsNull() {
 		var dataValues []string
 		data.AllowOrigin.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`AllowOrigin`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`AllowOrigin`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AllowOrigin`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AllowOrigin`, "[]")
 	}
 	if !data.AllowCredentials.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AllowCredentials`, tfutils.StringFromBool(data.AllowCredentials, ""))

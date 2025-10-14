@@ -86,9 +86,15 @@ func (data SOAPHeaderDisposition) ToBody(ctx context.Context, pathRoot string) s
 	if !data.Refine.IsNull() {
 		var dataValues []DmSOAPHeaderDispositionItem
 		data.Refine.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Refine`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Refine`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Refine`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Refine`, "[]")
 	}
 	return body
 }

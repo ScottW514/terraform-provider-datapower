@@ -667,9 +667,15 @@ func (data AssemblyActionUserSecurity) ToBody(ctx context.Context, pathRoot stri
 	if !data.AzTableDefaultEntry.IsNull() {
 		var dataValues []DmTableEntry
 		data.AzTableDefaultEntry.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AZTableDefaultEntry`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AZTableDefaultEntry`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AZTableDefaultEntry`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AZTableDefaultEntry`, "[]")
 	}
 	if !data.Hostname.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Hostname`, data.Hostname.ValueString())

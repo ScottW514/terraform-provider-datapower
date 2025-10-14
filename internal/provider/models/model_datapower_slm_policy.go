@@ -104,9 +104,15 @@ func (data SLMPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Statement.IsNull() {
 		var dataValues []DmSLMStatement
 		data.Statement.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Statement`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Statement`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Statement`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Statement`, "[]")
 	}
 	if !data.PeerGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PeerGroup`, data.PeerGroup.ValueString())

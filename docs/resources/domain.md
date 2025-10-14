@@ -17,8 +17,7 @@ An application domain contains the resources that support DataPower services. Th
 
 ```terraform
 resource "datapower_domain" "test" {
-  app_domain      = "domain_resource_test"
-  neighbor_domain = ["default", ]
+  app_domain = "domain_resource_test"
   file_map = {
     copy_from = true
     copy_to   = true

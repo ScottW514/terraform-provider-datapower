@@ -333,9 +333,15 @@ func (data APIConnectGatewayService) ToBody(ctx context.Context, pathRoot string
 	if !data.UserDefinedPolicies.IsNull() {
 		var dataValues []string
 		data.UserDefinedPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`UserDefinedPolicies`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`UserDefinedPolicies`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`UserDefinedPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`UserDefinedPolicies`, "[]")
 	}
 	if !data.V5cSlmMode.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`V5CSlmMode`, data.V5cSlmMode.ValueString())

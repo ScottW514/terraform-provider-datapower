@@ -164,9 +164,15 @@ func (data OpenTelemetryExporter) ToBody(ctx context.Context, pathRoot string) s
 	if !data.Header.IsNull() {
 		var dataValues []DmOpenTelemetryExporterHeader
 		data.Header.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Header`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Header`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Header`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Header`, "[]")
 	}
 	if !data.Processor.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Processor`, data.Processor.ValueString())
@@ -183,9 +189,15 @@ func (data OpenTelemetryExporter) ToBody(ctx context.Context, pathRoot string) s
 	if !data.ProxyPolicies.IsNull() {
 		var dataValues []DmAPIProxyPolicy
 		data.ProxyPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`, "[]")
 	}
 	if !data.SslClient.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLClient`, data.SslClient.ValueString())

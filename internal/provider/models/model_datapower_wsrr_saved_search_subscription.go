@@ -123,9 +123,15 @@ func (data WSRRSavedSearchSubscription) ToBody(ctx context.Context, pathRoot str
 	if !data.SavedSearchParameters.IsNull() {
 		var dataValues []string
 		data.SavedSearchParameters.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`SavedSearchParameters`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`SavedSearchParameters`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SavedSearchParameters`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SavedSearchParameters`, "[]")
 	}
 	if !data.Method.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Method`, data.Method.ValueString())

@@ -86,9 +86,15 @@ func (data MessageType) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Matching.IsNull() {
 		var dataValues []string
 		data.Matching.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Matching`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Matching`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Matching`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Matching`, "[]")
 	}
 	return body
 }

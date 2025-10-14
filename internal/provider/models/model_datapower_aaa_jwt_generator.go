@@ -335,9 +335,15 @@ func (data AAAJWTGenerator) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.Audience.IsNull() {
 		var dataValues []string
 		data.Audience.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Audience`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Audience`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Audience`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Audience`, "[]")
 	}
 	if !data.NotBefore.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`NotBefore`, data.NotBefore.ValueInt64())

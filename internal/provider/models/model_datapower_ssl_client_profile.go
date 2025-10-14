@@ -268,9 +268,15 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 	if !data.Ciphers.IsNull() {
 		var dataValues []string
 		data.Ciphers.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Ciphers`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Ciphers`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Ciphers`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Ciphers`, "[]")
 	}
 	if !data.Idcred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Idcred`, data.Idcred.ValueString())
@@ -298,9 +304,15 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 	if !data.EllipticCurves.IsNull() {
 		var dataValues []string
 		data.EllipticCurves.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`EllipticCurves`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`EllipticCurves`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`EllipticCurves`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`EllipticCurves`, "[]")
 	}
 	if !data.UseCustomSniHostname.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UseCustomSNIHostname`, tfutils.StringFromBool(data.UseCustomSniHostname, "flag"))
@@ -328,9 +340,15 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 	if !data.SigAlgs.IsNull() {
 		var dataValues []string
 		data.SigAlgs.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`SigAlgs`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`SigAlgs`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SigAlgs`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SigAlgs`, "[]")
 	}
 	if !data.RequireClosureNotification.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RequireClosureNotification`, tfutils.StringFromBool(data.RequireClosureNotification, ""))

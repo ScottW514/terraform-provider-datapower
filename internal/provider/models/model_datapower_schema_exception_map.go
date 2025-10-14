@@ -91,9 +91,15 @@ func (data SchemaExceptionMap) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.SchemaExceptionRules.IsNull() {
 		var dataValues []DmSchemaExceptionRule
 		data.SchemaExceptionRules.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SchemaExceptionRules`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SchemaExceptionRules`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SchemaExceptionRules`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SchemaExceptionRules`, "[]")
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())

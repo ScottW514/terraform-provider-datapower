@@ -120,16 +120,28 @@ func (data MessageMatching) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.HttpHeader.IsNull() {
 		var dataValues []DmHTTPHeader
 		data.HttpHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeader`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeader`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeader`, "[]")
 	}
 	if !data.HttpHeaderExclude.IsNull() {
 		var dataValues []DmHTTPHeader
 		data.HttpHeaderExclude.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeaderExclude`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeaderExclude`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeaderExclude`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HTTPHeaderExclude`, "[]")
 	}
 	if !data.RequestUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RequestURL`, data.RequestUrl.ValueString())

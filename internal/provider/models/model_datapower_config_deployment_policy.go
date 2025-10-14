@@ -96,23 +96,41 @@ func (data ConfigDeploymentPolicy) ToBody(ctx context.Context, pathRoot string) 
 	if !data.AcceptedConfig.IsNull() {
 		var dataValues []string
 		data.AcceptedConfig.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`AcceptedConfig`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`AcceptedConfig`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AcceptedConfig`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AcceptedConfig`, "[]")
 	}
 	if !data.FilteredConfig.IsNull() {
 		var dataValues []string
 		data.FilteredConfig.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`FilteredConfig`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`FilteredConfig`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`FilteredConfig`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`FilteredConfig`, "[]")
 	}
 	if !data.ModifiedConfig.IsNull() {
 		var dataValues []DmConfigModifyType
 		data.ModifiedConfig.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ModifiedConfig`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ModifiedConfig`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ModifiedConfig`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ModifiedConfig`, "[]")
 	}
 	return body
 }

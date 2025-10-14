@@ -86,9 +86,15 @@ func (data URLRefreshPolicy) ToBody(ctx context.Context, pathRoot string) string
 	if !data.UrlRefreshRule.IsNull() {
 		var dataValues []DmURLRefreshRule
 		data.UrlRefreshRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`URLRefreshRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`URLRefreshRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`URLRefreshRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`URLRefreshRule`, "[]")
 	}
 	return body
 }

@@ -132,9 +132,15 @@ func (data OperationRateLimit) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.RateLimit.IsNull() {
 		var dataValues []DmAPIRateLimit
 		data.RateLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`, "[]")
 	}
 	if !data.RateLimitGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RateLimitGroup`, data.RateLimitGroup.ValueString())

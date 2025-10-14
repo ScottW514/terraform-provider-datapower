@@ -204,9 +204,15 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.FrontProtocol.IsNull() {
 		var dataValues []string
 		data.FrontProtocol.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`FrontProtocol`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`FrontProtocol`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`FrontProtocol`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`FrontProtocol`, "[]")
 	}
 	if !data.UrlRefreshPolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`URLRefreshPolicy`, data.UrlRefreshPolicy.ValueString())
@@ -226,9 +232,15 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.VirtualServers.IsNull() {
 		var dataValues []string
 		data.VirtualServers.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`VirtualServers`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`VirtualServers`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`VirtualServers`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`VirtualServers`, "[]")
 	}
 	if !data.DocCacheMaxDocs.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DocCacheMaxDocs`, data.DocCacheMaxDocs.ValueInt64())
@@ -242,23 +254,41 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.DocCachePolicy.IsNull() {
 		var dataValues []DmDocCachePolicy
 		data.DocCachePolicy.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`, "[]")
 	}
 	if !data.ScheduledRule.IsNull() {
 		var dataValues []DmScheduledRule
 		data.ScheduledRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`, "[]")
 	}
 	if !data.ApiCollection.IsNull() {
 		var dataValues []string
 		data.ApiCollection.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`APICollection`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`APICollection`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`APICollection`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`APICollection`, "[]")
 	}
 	if !data.ShareRateLimitCount.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ShareRateLimitCount`, data.ShareRateLimitCount.ValueString())
@@ -266,23 +296,41 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AssemblyBurstLimit.IsNull() {
 		var dataValues []DmAPIBurstLimit
 		data.AssemblyBurstLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`, "[]")
 	}
 	if !data.AssemblyRateLimit.IsNull() {
 		var dataValues []DmAPIRateLimit
 		data.AssemblyRateLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`, "[]")
 	}
 	if !data.AssemblyCountLimit.IsNull() {
 		var dataValues []DmAPICountLimit
 		data.AssemblyCountLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`, "[]")
 	}
 	if !data.LdapConnPool.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPConnPool`, data.LdapConnPool.ValueString())
@@ -290,9 +338,15 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ProxyPolicies.IsNull() {
 		var dataValues []DmAPIProxyPolicy
 		data.ProxyPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ProxyPolicies`, "[]")
 	}
 	if !data.FrontTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`FrontTimeout`, data.FrontTimeout.ValueInt64())
@@ -306,9 +360,15 @@ func (data APIGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.OpenTelemetryResourceAttribute.IsNull() {
 		var dataValues []DmOpenTelemetryResourceAttribute
 		data.OpenTelemetryResourceAttribute.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`OpenTelemetryResourceAttribute`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`OpenTelemetryResourceAttribute`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`OpenTelemetryResourceAttribute`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`OpenTelemetryResourceAttribute`, "[]")
 	}
 	return body
 }

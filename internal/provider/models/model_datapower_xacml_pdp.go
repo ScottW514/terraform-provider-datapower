@@ -145,16 +145,28 @@ func (data XACMLPDP) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.DependentPolicy.IsNull() {
 		var dataValues []string
 		data.DependentPolicy.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`DependentPolicy`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`DependentPolicy`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DependentPolicy`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DependentPolicy`, "[]")
 	}
 	if !data.Directory.IsNull() {
 		var dataValues []string
 		data.Directory.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Directory`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Directory`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Directory`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Directory`, "[]")
 	}
 	if !data.CacheTtl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CacheTTL`, data.CacheTtl.ValueInt64())

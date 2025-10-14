@@ -637,9 +637,15 @@ func (data AAAJWTValidator) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.Claims.IsNull() {
 		var dataValues []DmClaim
 		data.Claims.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Claims`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Claims`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Claims`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Claims`, "[]")
 	}
 	if !data.UsernameClaim.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UsernameClaim`, data.UsernameClaim.ValueString())

@@ -86,9 +86,15 @@ func (data CORSPolicy) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Rule.IsNull() {
 		var dataValues []string
 		data.Rule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Rule`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Rule`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Rule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Rule`, "[]")
 	}
 	return body
 }

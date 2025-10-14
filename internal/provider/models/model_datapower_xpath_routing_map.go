@@ -88,16 +88,28 @@ func (data XPathRoutingMap) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.XpathRoutingRules.IsNull() {
 		var dataValues []DmXPathRoutingRule
 		data.XpathRoutingRules.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`XPathRoutingRules`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`XPathRoutingRules`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`XPathRoutingRules`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`XPathRoutingRules`, "[]")
 	}
 	if !data.NameSpaceMappings.IsNull() {
 		var dataValues []DmNamespaceMapping
 		data.NameSpaceMappings.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`NameSpaceMappings`, "[]")
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())

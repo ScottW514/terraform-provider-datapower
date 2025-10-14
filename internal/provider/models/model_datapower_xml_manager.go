@@ -227,9 +227,15 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.VirtualServers.IsNull() {
 		var dataValues []string
 		data.VirtualServers.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`VirtualServers`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`VirtualServers`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`VirtualServers`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`VirtualServers`, "[]")
 	}
 	if !data.ParserLimitsBytesScanned.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsBytesScanned`, data.ParserLimitsBytesScanned.ValueInt64())
@@ -267,23 +273,41 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.DocCachePolicy.IsNull() {
 		var dataValues []DmDocCachePolicy
 		data.DocCachePolicy.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DocCachePolicy`, "[]")
 	}
 	if !data.SchemaValidation.IsNull() {
 		var dataValues []DmSchemaValidation
 		data.SchemaValidation.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SchemaValidation`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SchemaValidation`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SchemaValidation`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SchemaValidation`, "[]")
 	}
 	if !data.ScheduledRule.IsNull() {
 		var dataValues []DmScheduledRule
 		data.ScheduledRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ScheduledRule`, "[]")
 	}
 	if !data.UserAgent.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserAgent`, data.UserAgent.ValueString())

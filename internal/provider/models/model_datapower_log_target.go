@@ -1251,9 +1251,15 @@ func (data LogTarget) ToBody(ctx context.Context, pathRoot string, config *LogTa
 	if !data.LogEvents.IsNull() {
 		var dataValues []DmLogEvent
 		data.LogEvents.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`LogEvents`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`LogEvents`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`LogEvents`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`LogEvents`, "[]")
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
@@ -1360,37 +1366,67 @@ func (data LogTarget) ToBody(ctx context.Context, pathRoot string, config *LogTa
 	if !data.LogEventCode.IsNull() {
 		var dataValues []string
 		data.LogEventCode.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`LogEventCode`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`LogEventCode`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`LogEventCode`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`LogEventCode`, "[]")
 	}
 	if !data.LogEventFilter.IsNull() {
 		var dataValues []string
 		data.LogEventFilter.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`LogEventFilter`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`LogEventFilter`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`LogEventFilter`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`LogEventFilter`, "[]")
 	}
 	if !data.LogObjects.IsNull() {
 		var dataValues []DmLogObject
 		data.LogObjects.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`LogObjects`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`LogObjects`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`LogObjects`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`LogObjects`, "[]")
 	}
 	if !data.LogIpFilter.IsNull() {
 		var dataValues []DmLogIPFilter
 		data.LogIpFilter.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`LogIPFilter`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`LogIPFilter`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`LogIPFilter`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`LogIPFilter`, "[]")
 	}
 	if !data.LogTriggers.IsNull() {
 		var dataValues []DmLogTrigger
 		data.LogTriggers.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`LogTriggers`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`LogTriggers`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`LogTriggers`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`LogTriggers`, "[]")
 	}
 	if !data.SslClientProfile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLClientProfile`, data.SslClientProfile.ValueString())

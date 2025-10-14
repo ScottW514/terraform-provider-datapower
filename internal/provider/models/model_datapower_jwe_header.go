@@ -96,16 +96,28 @@ func (data JWEHeader) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.JweProtectedHeader.IsNull() {
 		var dataValues []DmJOSEHeader
 		data.JweProtectedHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`JWEProtectedHeader`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`JWEProtectedHeader`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`JWEProtectedHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`JWEProtectedHeader`, "[]")
 	}
 	if !data.JweSharedUnprotectedHeader.IsNull() {
 		var dataValues []DmJOSEHeader
 		data.JweSharedUnprotectedHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`JWESharedUnprotectedHeader`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`JWESharedUnprotectedHeader`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`JWESharedUnprotectedHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`JWESharedUnprotectedHeader`, "[]")
 	}
 	if !data.Recipient.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Recipient`, data.Recipient.ValueString())

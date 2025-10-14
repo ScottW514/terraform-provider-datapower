@@ -231,9 +231,15 @@ func (data OAuthSupportedClientGroup) ToBody(ctx context.Context, pathRoot strin
 	if !data.Client.IsNull() {
 		var dataValues []string
 		data.Client.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Client`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Client`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Client`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Client`, "[]")
 	}
 	if !data.TemplateProcessUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TemplateProcessUrl`, data.TemplateProcessUrl.ValueString())

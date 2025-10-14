@@ -459,23 +459,41 @@ func (data XSLProxyService) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.HeaderInjection.IsNull() {
 		var dataValues []DmHeaderInjection
 		data.HeaderInjection.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HeaderInjection`, "[]")
 	}
 	if !data.HeaderSuppression.IsNull() {
 		var dataValues []DmHeaderSuppression
 		data.HeaderSuppression.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HeaderSuppression`, "[]")
 	}
 	if !data.StylesheetParameters.IsNull() {
 		var dataValues []DmStylesheetParameter
 		data.StylesheetParameters.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`StylesheetParameters`, "[]")
 	}
 	if !data.DefaultParamNamespace.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DefaultParamNamespace`, data.DefaultParamNamespace.ValueString())
@@ -489,16 +507,28 @@ func (data XSLProxyService) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.CountMonitors.IsNull() {
 		var dataValues []string
 		data.CountMonitors.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`CountMonitors`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`CountMonitors`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`CountMonitors`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`CountMonitors`, "[]")
 	}
 	if !data.DurationMonitors.IsNull() {
 		var dataValues []string
 		data.DurationMonitors.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`DurationMonitors`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`DurationMonitors`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DurationMonitors`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DurationMonitors`, "[]")
 	}
 	if !data.MonitorProcessingPolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MonitorProcessingPolicy`, data.MonitorProcessingPolicy.ValueString())
@@ -512,9 +542,15 @@ func (data XSLProxyService) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.DebugTrigger.IsNull() {
 		var dataValues []DmMSDebugTriggerType
 		data.DebugTrigger.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DebugTrigger`, "[]")
 	}
 	if !data.LocalAddress.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LocalAddress`, data.LocalAddress.ValueString())

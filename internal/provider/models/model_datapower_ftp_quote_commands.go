@@ -86,9 +86,15 @@ func (data FTPQuoteCommands) ToBody(ctx context.Context, pathRoot string) string
 	if !data.FtpQuotedCommands.IsNull() {
 		var dataValues []DmFTPQuotedCommand
 		data.FtpQuotedCommands.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`FTPQuotedCommands`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`FTPQuotedCommands`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`FTPQuotedCommands`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`FTPQuotedCommands`, "[]")
 	}
 	return body
 }

@@ -127,9 +127,15 @@ func (data AssemblyActionGraphQLExecute) ToBody(ctx context.Context, pathRoot st
 	if !data.TargetMapRule.IsNull() {
 		var dataValues []DmTargetMapRule
 		data.TargetMapRule.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`TargetMapRule`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`TargetMapRule`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`TargetMapRule`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`TargetMapRule`, "[]")
 	}
 	if !data.AllowCostIntrospection.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AllowCostIntrospection`, tfutils.StringFromBool(data.AllowCostIntrospection, ""))

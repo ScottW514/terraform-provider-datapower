@@ -4890,7 +4890,6 @@ var DomainTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_domain" "test" {
   app_domain = "domain_resource_test"
-  neighbor_domain = ["default",]
   file_map = ` + DmDomainFileMapTestConfig.GetModelConfig() + `
   monitoring_map = ` + DmDomainMonitoringMapTestConfig.GetModelConfig() + `
 }`,

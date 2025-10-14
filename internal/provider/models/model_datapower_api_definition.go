@@ -402,23 +402,41 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Path.IsNull() {
 		var dataValues []string
 		data.Path.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Path`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Path`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Path`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Path`, "[]")
 	}
 	if !data.Consume.IsNull() {
 		var dataValues []string
 		data.Consume.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Consume`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Consume`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Consume`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Consume`, "[]")
 	}
 	if !data.Produce.IsNull() {
 		var dataValues []string
 		data.Produce.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Produce`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Produce`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Produce`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Produce`, "[]")
 	}
 	if !data.SwaggerLocation.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SwaggerLocation`, data.SwaggerLocation.ValueString())
@@ -435,9 +453,15 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.SecurityRequirement.IsNull() {
 		var dataValues []string
 		data.SecurityRequirement.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`SecurityRequirement`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`SecurityRequirement`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SecurityRequirement`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SecurityRequirement`, "[]")
 	}
 	if !data.RequireApiMutualTls.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RequireAPIMutualTLS`, tfutils.StringFromBool(data.RequireApiMutualTls, ""))
@@ -445,9 +469,15 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.ApiMutualTlsSource.IsNull() {
 		var dataValues []string
 		data.ApiMutualTlsSource.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`APIMutualTLSSource`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`APIMutualTLSSource`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`APIMutualTLSSource`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`APIMutualTLSSource`, "[]")
 	}
 	if !data.ApiMutualTlsHeaderName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`APIMutualTLSHeaderName`, data.ApiMutualTlsHeaderName.ValueString())
@@ -455,16 +485,28 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Properties.IsNull() {
 		var dataValues []DmAPIProperty
 		data.Properties.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Properties`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Properties`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Properties`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Properties`, "[]")
 	}
 	if !data.Schemas.IsNull() {
 		var dataValues []DmAPIDataTypeDefinition
 		data.Schemas.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Schemas`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Schemas`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Schemas`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Schemas`, "[]")
 	}
 	if !data.CorsToggle.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CORSToggle`, tfutils.StringFromBool(data.CorsToggle, ""))
@@ -484,16 +526,28 @@ func (data APIDefinition) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.PreservedRequestHeader.IsNull() {
 		var dataValues []string
 		data.PreservedRequestHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`PreservedRequestHeader`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`PreservedRequestHeader`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`PreservedRequestHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`PreservedRequestHeader`, "[]")
 	}
 	if !data.PreservedResponseHeader.IsNull() {
 		var dataValues []string
 		data.PreservedResponseHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`PreservedResponseHeader`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`PreservedResponseHeader`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`PreservedResponseHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`PreservedResponseHeader`, "[]")
 	}
 	if !data.MessageBuffering.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MessageBuffering`, tfutils.StringFromBool(data.MessageBuffering, ""))

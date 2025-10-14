@@ -143,9 +143,15 @@ func (data JWERecipient) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.UnprotectedHeader.IsNull() {
 		var dataValues []DmJOSEHeader
 		data.UnprotectedHeader.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`UnprotectedHeader`, "[]")
 	}
 	return body
 }

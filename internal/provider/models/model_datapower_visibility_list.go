@@ -86,9 +86,15 @@ func (data VisibilityList) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Value.IsNull() {
 		var dataValues []string
 		data.Value.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Value`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Value`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Value`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Value`, "[]")
 	}
 	return body
 }

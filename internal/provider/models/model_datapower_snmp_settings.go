@@ -210,37 +210,67 @@ func (data SNMPSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Policies.IsNull() {
 		var dataValues []DmSnmpPolicy
 		data.Policies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Policies`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Policies`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Policies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Policies`, "[]")
 	}
 	if !data.PoliciesMq.IsNull() {
 		var dataValues []DmSnmpPolicyMQ
 		data.PoliciesMq.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`PoliciesMQ`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`PoliciesMQ`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`PoliciesMQ`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`PoliciesMQ`, "[]")
 	}
 	if !data.Targets.IsNull() {
 		var dataValues []DmSnmpTarget
 		data.Targets.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Targets`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Targets`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Targets`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Targets`, "[]")
 	}
 	if !data.Users.IsNull() {
 		var dataValues []string
 		data.Users.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Users`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Users`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Users`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Users`, "[]")
 	}
 	if !data.Contexts.IsNull() {
 		var dataValues []DmSnmpContext
 		data.Contexts.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Contexts`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Contexts`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Contexts`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Contexts`, "[]")
 	}
 	if !data.SecurityLevel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SecurityLevel`, data.SecurityLevel.ValueString())
@@ -257,9 +287,15 @@ func (data SNMPSettings) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.TrapEventCode.IsNull() {
 		var dataValues []string
 		data.TrapEventCode.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`TrapEventCode`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`TrapEventCode`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`TrapEventCode`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`TrapEventCode`, "[]")
 	}
 	if !data.ConfigMib.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ConfigMib`, data.ConfigMib.ValueString())

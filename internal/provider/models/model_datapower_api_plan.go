@@ -287,16 +287,28 @@ func (data APIPlan) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.RateLimit.IsNull() {
 		var dataValues []DmAPIRateLimit
 		data.RateLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`RateLimit`, "[]")
 	}
 	if !data.BurstLimit.IsNull() {
 		var dataValues []DmAPIBurstLimit
 		data.BurstLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`BurstLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`BurstLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`BurstLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`BurstLimit`, "[]")
 	}
 	if !data.RateLimitGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RateLimitGroup`, data.RateLimitGroup.ValueString())
@@ -307,44 +319,80 @@ func (data APIPlan) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AssemblyBurstLimit.IsNull() {
 		var dataValues []DmAPIBurstLimit
 		data.AssemblyBurstLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimit`, "[]")
 	}
 	if !data.AssemblyBurstLimitDefinition.IsNull() {
 		var dataValues []DmDefinitionLink
 		data.AssemblyBurstLimitDefinition.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimitDefinition`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimitDefinition`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimitDefinition`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyBurstLimitDefinition`, "[]")
 	}
 	if !data.AssemblyRateLimit.IsNull() {
 		var dataValues []DmAPIRateLimit
 		data.AssemblyRateLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimit`, "[]")
 	}
 	if !data.AssemblyRateLimitDefinition.IsNull() {
 		var dataValues []DmDefinitionLink
 		data.AssemblyRateLimitDefinition.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimitDefinition`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimitDefinition`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimitDefinition`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyRateLimitDefinition`, "[]")
 	}
 	if !data.AssemblyCountLimit.IsNull() {
 		var dataValues []DmAPICountLimit
 		data.AssemblyCountLimit.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimit`, "[]")
 	}
 	if !data.AssemblyCountLimitDefinition.IsNull() {
 		var dataValues []DmDefinitionLink
 		data.AssemblyCountLimitDefinition.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimitDefinition`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimitDefinition`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimitDefinition`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`AssemblyCountLimitDefinition`, "[]")
 	}
 	if !data.SpaceId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SpaceID`, data.SpaceId.ValueString())
@@ -355,23 +403,41 @@ func (data APIPlan) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Api.IsNull() {
 		var dataValues []string
 		data.Api.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`API`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`API`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`API`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`API`, "[]")
 	}
 	if !data.ExcludeOperation.IsNull() {
 		var dataValues []string
 		data.ExcludeOperation.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`ExcludeOperation`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`ExcludeOperation`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ExcludeOperation`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ExcludeOperation`, "[]")
 	}
 	if !data.Override.IsNull() {
 		var dataValues []string
 		data.Override.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Override`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Override`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Override`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Override`, "[]")
 	}
 	if !data.RateLimitScope.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RateLimitScope`, data.RateLimitScope.ValueString())
@@ -379,9 +445,15 @@ func (data APIPlan) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.GraphqlSchemaOptions.IsNull() {
 		var dataValues []string
 		data.GraphqlSchemaOptions.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`GraphQLSchemaOptions`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`GraphQLSchemaOptions`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`GraphQLSchemaOptions`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`GraphQLSchemaOptions`, "[]")
 	}
 	return body
 }

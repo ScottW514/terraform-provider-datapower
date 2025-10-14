@@ -697,9 +697,15 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.UserSearchSuffixes.IsNull() {
 		var dataValues []string
 		data.UserSearchSuffixes.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`UserSearchSuffixes`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`UserSearchSuffixes`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`UserSearchSuffixes`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`UserSearchSuffixes`, "[]")
 	}
 	if !data.UserSuffixOptimiser.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSuffixOptimiser`, tfutils.StringFromBool(data.UserSuffixOptimiser, ""))
@@ -707,16 +713,28 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.TamFedDirs.IsNull() {
 		var dataValues []DmTAMFedDir
 		data.TamFedDirs.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`TAMFedDirs`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`TAMFedDirs`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`TAMFedDirs`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`TAMFedDirs`, "[]")
 	}
 	if !data.TamAzReplicas.IsNull() {
 		var dataValues []DmTAMAZReplica
 		data.TamAzReplicas.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`TAMAZReplicas`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`TAMAZReplicas`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`TAMAZReplicas`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`TAMAZReplicas`, "[]")
 	}
 	if data.TamRasTrace != nil {
 		if !data.TamRasTrace.IsNull() {

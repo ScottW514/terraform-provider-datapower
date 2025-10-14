@@ -86,9 +86,15 @@ func (data DeploymentPolicyParametersBinding) ToBody(ctx context.Context, pathRo
 	if !data.DeploymentPolicyParameter.IsNull() {
 		var dataValues []DmDeploymentPolicyParameter
 		data.DeploymentPolicyParameter.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`DeploymentPolicyParameter`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`DeploymentPolicyParameter`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`DeploymentPolicyParameter`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`DeploymentPolicyParameter`, "[]")
 	}
 	return body
 }

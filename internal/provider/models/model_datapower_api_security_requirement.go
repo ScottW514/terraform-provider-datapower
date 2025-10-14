@@ -86,9 +86,15 @@ func (data APISecurityRequirement) ToBody(ctx context.Context, pathRoot string) 
 	if !data.Security.IsNull() {
 		var dataValues []string
 		data.Security.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Security`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Security`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Security`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Security`, "[]")
 	}
 	return body
 }

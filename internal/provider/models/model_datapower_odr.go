@@ -100,16 +100,28 @@ func (data ODR) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.OdrConnectorGroups.IsNull() {
 		var dataValues []string
 		data.OdrConnectorGroups.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`ODRConnectorGroups`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`ODRConnectorGroups`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ODRConnectorGroups`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ODRConnectorGroups`, "[]")
 	}
 	if !data.OdrCustomProperties.IsNull() {
 		var dataValues []DmODRProperty
 		data.OdrCustomProperties.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ODRCustomProperties`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ODRCustomProperties`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ODRCustomProperties`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ODRCustomProperties`, "[]")
 	}
 	return body
 }

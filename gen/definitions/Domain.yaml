@@ -48,8 +48,6 @@ attributes:
   type: List
   reference_to: Domain
   element_type: String
-  list_default:
-  - default
   description: Specify which domains have their <tt>local:</tt> directory visible
     to this domain. <p>References to visible domains are explicit, not bidirectional.
     If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following

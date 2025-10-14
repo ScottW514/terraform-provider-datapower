@@ -146,9 +146,15 @@ func (data CryptoValCred) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.Certificate.IsNull() {
 		var dataValues []string
 		data.Certificate.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Certificate`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Certificate`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Certificate`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Certificate`, "[]")
 	}
 	if !data.CertValidationMode.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CertValidationMode`, data.CertValidationMode.ValueString())
@@ -165,9 +171,15 @@ func (data CryptoValCred) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.InitialPolicySet.IsNull() {
 		var dataValues []string
 		data.InitialPolicySet.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`InitialPolicySet`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`InitialPolicySet`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`InitialPolicySet`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`InitialPolicySet`, "[]")
 	}
 	if !data.ExplicitPolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ExplicitPolicy`, tfutils.StringFromBool(data.ExplicitPolicy, ""))

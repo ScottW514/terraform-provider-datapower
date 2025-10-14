@@ -324,9 +324,15 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.AsFrontProtocol.IsNull() {
 		var dataValues []DmASFrontProtocol
 		data.AsFrontProtocol.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`ASFrontProtocol`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`ASFrontProtocol`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`ASFrontProtocol`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`ASFrontProtocol`, "[]")
 	}
 	if !data.As1MdnEmail.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AS1MDNEmail`, data.As1MdnEmail.ValueString())
@@ -343,16 +349,28 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.B2bProfiles.IsNull() {
 		var dataValues []DmB2BActiveProfile
 		data.B2bProfiles.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`B2BProfiles`, "[]")
 	}
 	if !data.B2bGroups.IsNull() {
 		var dataValues []DmB2BActiveGroup
 		data.B2bGroups.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`B2BGroups`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`B2BGroups`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`B2BGroups`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`B2BGroups`, "[]")
 	}
 	if !data.DocumentRoutingPreprocessorType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DocumentRoutingPreprocessorType`, data.DocumentRoutingPreprocessorType.ValueString())
@@ -401,9 +419,15 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.XpathRoutingPolicies.IsNull() {
 		var dataValues []string
 		data.XpathRoutingPolicies.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`XPathRoutingPolicies`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`XPathRoutingPolicies`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`XPathRoutingPolicies`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`XPathRoutingPolicies`, "[]")
 	}
 	if !data.XmlManager.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`XMLManager`, data.XmlManager.ValueString())
@@ -417,9 +441,15 @@ func (data B2BGateway) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.CpaEntries.IsNull() {
 		var dataValues []DmB2BCPAEntry
 		data.CpaEntries.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`CPAEntries`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`CPAEntries`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`CPAEntries`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`CPAEntries`, "[]")
 	}
 	if !data.SqlDataSource.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SQLDataSource`, data.SqlDataSource.ValueString())

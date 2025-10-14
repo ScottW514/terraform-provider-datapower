@@ -363,9 +363,15 @@ func (data RateLimitDefinition) ToBody(ctx context.Context, pathRoot string) str
 	if !data.Parameters.IsNull() {
 		var dataValues []DmRateLimitDefinitionNameValuePair
 		data.Parameters.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`Parameters`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`Parameters`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Parameters`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Parameters`, "[]")
 	}
 	return body
 }

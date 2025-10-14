@@ -399,23 +399,41 @@ func (data SSHClientProfile) ToBody(ctx context.Context, pathRoot string) string
 	if !data.Ciphers.IsNull() {
 		var dataValues []string
 		data.Ciphers.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`Ciphers`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`Ciphers`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`Ciphers`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`Ciphers`, "[]")
 	}
 	if !data.KexAlg.IsNull() {
 		var dataValues []string
 		data.KexAlg.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`KEXAlg`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`KEXAlg`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`KEXAlg`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`KEXAlg`, "[]")
 	}
 	if !data.MacAlg.IsNull() {
 		var dataValues []string
 		data.MacAlg.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.Set(body, pathRoot+`MACAlg`+".-1", map[string]string{"value": val})
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.Set(body, pathRoot+`MACAlg`+".-1", map[string]string{"value": val})
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`MACAlg`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`MACAlg`, "[]")
 	}
 	return body
 }

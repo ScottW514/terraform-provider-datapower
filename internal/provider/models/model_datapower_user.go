@@ -176,16 +176,28 @@ func (data User) ToBody(ctx context.Context, pathRoot string, config *User) stri
 		data.SnmpCreds.ElementsAs(ctx, &dataValues, false)
 		var configValues []DmSnmpCred
 		config.SnmpCreds.ElementsAs(ctx, &configValues, false)
-		for idx, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`SnmpCreds`+".-1", val.ToBody(ctx, "", &configValues[idx]))
+		if len(dataValues) > 0 {
+			for idx, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`SnmpCreds`+".-1", val.ToBody(ctx, "", &configValues[idx]))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`SnmpCreds`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`SnmpCreds`, "[]")
 	}
 	if !data.HashedSnmpCreds.IsNull() {
 		var dataValues []DmSnmpCredMasked
 		data.HashedSnmpCreds.ElementsAs(ctx, &dataValues, false)
-		for _, val := range dataValues {
-			body, _ = sjson.SetRaw(body, pathRoot+`HashedSnmpCreds`+".-1", val.ToBody(ctx, ""))
+		if len(dataValues) > 0 {
+			for _, val := range dataValues {
+				body, _ = sjson.SetRaw(body, pathRoot+`HashedSnmpCreds`+".-1", val.ToBody(ctx, ""))
+			}
+		} else {
+			body, _ = sjson.SetRaw(body, pathRoot+`HashedSnmpCreds`, "[]")
 		}
+	} else {
+		body, _ = sjson.SetRaw(body, pathRoot+`HashedSnmpCreds`, "[]")
 	}
 	return body
 }
