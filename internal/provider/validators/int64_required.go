@@ -50,7 +50,7 @@ func (v conditionalRequiredInt64) ValidateInt64(ctx context.Context, req validat
 			"Invalid Attribute Configuration",
 			fmt.Sprintf("Attribute '%s' is required when %s", req.Path, v.RequiredConditions.String()),
 		)
-	} else if !req.ConfigValue.IsNull() && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
+	} else if !(req.ConfigValue.IsNull() || req.ConfigValue.ValueInt64() == 0) && v.IgnoredConditions.matchesConditions(ctx, &req.Config, &resp.Diagnostics, req.Path) {
 		resp.Diagnostics.AddAttributeError(
 			req.Path,
 			"Invalid Attribute Configuration",
