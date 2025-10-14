@@ -256,7 +256,7 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	}
 
 	var fileData string
-	if data.Content.IsUnknown() {
+	if data.Content.IsUnknown() || data.Content.IsNull() {
 		data.Content = types.StringNull()
 		var err error
 		fileData, err = r.loadLocalFile(data.LocalPath.ValueString())
