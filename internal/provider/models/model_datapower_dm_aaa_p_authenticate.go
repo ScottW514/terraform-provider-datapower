@@ -1025,6 +1025,7 @@ func GetDmAAAPAuthenticateDataSourceSchema(description string, cliAlias string, 
 			"au_kerberos_password": DataSourceSchema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
+				Sensitive:           true,
 			},
 			"au_clear_trust_server_url": DataSourceSchema.StringAttribute{
 				MarkdownDescription: "Specify the URL to access the ClearTrust server for authentication.",
@@ -1290,6 +1291,7 @@ func GetDmAAAPAuthenticateResourceSchema(description string, cliAlias string, re
 			},
 			"au_kerberos_password": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddNotValidWhen(DmAAAPAuthenticateAUKerberosPasswordIgnoreVal.String()).String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"au_clear_trust_server_url": ResourceSchema.StringAttribute{

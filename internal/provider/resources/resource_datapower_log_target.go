@@ -282,6 +282,7 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"remote_password_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.", "", "").AddRequiredWhen(models.LogTargetRemotePasswordCondVal.String()).AddNotValidWhen(models.LogTargetRemotePasswordIgnoreVal.String()).String,
+				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
 				Validators: []validator.String{

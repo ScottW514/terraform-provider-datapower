@@ -161,7 +161,7 @@ resource "datapower_log_target" "test" {
   - CLI Alias: `remote-login`
   - Required When: (`upload_method`=`ftp`|`scp`|`sftp` AND `archive_mode`=`upload` AND `type`=`file`)
   - Not Valid When: attribute is not conditionally required
-- `remote_password_wo` (String, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.
+- `remote_password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.
   - Required When: (`upload_method`=`ftp` AND `archive_mode`=`upload` AND `type`=`file`)
   - Not Valid When: (`upload_method`!=`ftp`|`scp`|`sftp` OR `archive_mode`!=`upload` OR `type`!=`file`)
 - `remote_password_wo_version` (Number) Changes to this value trigger an update to `write_only` value.

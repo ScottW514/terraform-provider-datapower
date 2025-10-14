@@ -93,6 +93,7 @@ func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"passphrase_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Passphrase", "passphrase", "").String,
+				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
 				Validators: []validator.String{

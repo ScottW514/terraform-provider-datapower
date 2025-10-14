@@ -87,54 +87,54 @@ PlanModifiers: []planmodifier.{{.Attr.Type}}{
     {{- if and .Attr.Type (or (not .Attr.WriteOnly) (and .Attr.WriteOnly .IncludeWriteOnly))}}
 "{{.Attr.TfName}}": {{.SchemaPrefix}}{{if eq .Attr.Type "Object"}}SingleNested{{else if .IsList}}List{{- if and (ne .Attr.ElementType "String") (ne .Attr.ElementType "Int64")}}Nested{{end}}{{else}}{{.Attr.Type}}{{end}}Attribute{
     MarkdownDescription: {{if not .IsDataSource}}tfutils.NewAttributeDescription({{end}}{{quote .Attr.Description}},{{if not .IsDataSource}} {{quote .Attr.CliAlias}}, {{quote (toTfName .Attr.ReferenceTo)}}){{end}}
-    {{- if not .IsDataSource}}
-        {{- if len .Attr.Enum -}}
+        {{- if not .IsDataSource}}
+            {{- if len .Attr.Enum -}}
         .AddStringEnum({{range .Attr.Enum}}"{{.}}", {{end}})
-        {{- end -}}
-        {{- if or (ne .Attr.Minimum 0) (ne .Attr.Maximum 0) -}}
+            {{- end -}}
+            {{- if or (ne .Attr.Minimum 0) (ne .Attr.Maximum 0) -}}
         .AddIntegerRange({{.Attr.Minimum}}, {{.Attr.Maximum}})
-        {{- end -}}
-        {{- if .Attr.Default -}}
+            {{- end -}}
+            {{- if .Attr.Default -}}
         .AddDefaultValue({{quote .Attr.Default}})
-        {{- end -}}
-        {{- if len .Attr.RequiredWhen -}}
+            {{- end -}}
+            {{- if len .Attr.RequiredWhen -}}
         .AddRequiredWhen({{.ValidatorPrefix}}{{.Root.Name}}{{.Attr.Name}}CondVal.String())
-        {{- end -}}
-        {{- if len .Attr.IgnoredWhen -}}
+            {{- end -}}
+            {{- if len .Attr.IgnoredWhen -}}
         .AddNotValidWhen({{.ValidatorPrefix}}{{.Root.Name}}{{.Attr.Name}}IgnoreVal.String())
-        {{- end -}}
+            {{- end -}}
         .String,
-    {{- end}}
-    {{- if .IsList}}
-        {{- if or (eq .Attr.ElementType "String") (eq .Attr.ElementType "Int64")}}
+        {{- end}}
+        {{- if .IsList}}
+            {{- if or (eq .Attr.ElementType "String") (eq .Attr.ElementType "Int64")}}
     ElementType:         types.{{.Attr.ElementType}}Type,
-        {{- else}}
+            {{- else}}
     NestedObject:        {{.DmTypeCallPrefix}}Get{{.Attr.ElementType}}{{.DmTypeCallSuffix}}(),
+            {{- end}}
         {{- end}}
-    {{- end}}
-    {{- if and (or (len .Attr.Default) (len .Attr.ListDefault) .Attr.Computed .IsDataSource) (not (and .IsDataSource (eq .Attr.Name "AppDomain") .Root.Singleton))}}
+        {{- if and (or (len .Attr.Default) (len .Attr.ListDefault) .Attr.Computed .IsDataSource) (not (and .IsDataSource (eq .Attr.Name "AppDomain") .Root.Singleton))}}
     Computed:            true,
-    {{- end}}
-    {{- if and .Attr.Sensitive (eq .Attr.ElementType "String")}}
-    Sensitive:           true,
-    {{- end}}
-    {{- if and .Attr.WriteOnly .IncludeWriteOnly}}
-    WriteOnly:           true,
-    {{- end}}
-    {{- if and .IsDataSource (eq .Attr.Name "AppDomain") .Root.Singleton}}
-    Required:            true,
-    {{- else if .IsResource}}
-        {{- if and .Attr.Required (not (or (len .Attr.Default) (len .Attr.ListDefault)))}}
-    Required:            true,
-        {{- else if not .Attr.Computed}}
-    Optional:            true,
         {{- end}}
+        {{- if .Attr.Sensitive}}
+    Sensitive:           true,
+        {{- end}}
+        {{- if and .Attr.WriteOnly .IncludeWriteOnly}}
+    WriteOnly:           true,
+        {{- end}}
+        {{- if and .IsDataSource (eq .Attr.Name "AppDomain") .Root.Singleton}}
+    Required:            true,
+        {{- else if .IsResource}}
+            {{- if and .Attr.Required (not (or (len .Attr.Default) (len .Attr.ListDefault)))}}
+    Required:            true,
+            {{- else if not .Attr.Computed}}
+    Optional:            true,
+            {{- end}}
         {{- template "renderValidators" (dict "Attr" .Attr "ValidatorPrefix" .ValidatorPrefix "Root" .Root )}}
         {{- template "renderDefault" (dict "Attr" .Attr)}}
-    {{- end}}
-    {{- if not .IsDataSource}}
+        {{- end}}
+        {{- if not .IsDataSource}}
     {{- template "renderPlanModifiers" (dict "Attr" .Attr)}}
-    {{- end}}
+        {{- end}}
 },
     {{- else if and .Attr.DmType (or (not .Attr.WriteOnly) (and .Attr.WriteOnly .IncludeWriteOnly))}}
 "{{.Attr.TfName}}": {{.DmTypeCallPrefix}}Get{{.Attr.DmType}}{{.DmTypeCallSuffix}}({{quote .Attr.Description}}, {{quote .Attr.CliAlias}}, {{quote (toTfName .Attr.ReferenceTo)}}{{if .IsResource}}, {{if .Attr.Required}}true{{else}}false{{end}}{{end}}),

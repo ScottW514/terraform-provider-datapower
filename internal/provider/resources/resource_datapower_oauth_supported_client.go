@@ -153,6 +153,7 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			},
 			"client_secret_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the client secret for the OAuth client. The specification references the client secret as <tt>client_secret</tt> .", "client-secret", "").AddRequiredWhen(models.OAuthSupportedClientClientSecretCondVal.String()).AddNotValidWhen(models.OAuthSupportedClientClientSecretIgnoreVal.String()).String,
+				Sensitive:           true,
 				WriteOnly:           true,
 				Optional:            true,
 				Validators: []validator.String{

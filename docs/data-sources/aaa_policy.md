@@ -122,7 +122,7 @@ Read-Only:
 - `au_custom_url` (String) Specify the location of the processing file. This file is the stylesheet or GatewayScript that authenticates the extracted identity.
 - `au_host` (String) Specify the host name or IP address of the authentication server.
 - `au_kerberos_keytab` (String) Specify the name of the keytab for the Kerberos server principal. This keytab is required to decrypt the client Kerberos ticket.
-- `au_kerberos_password` (String)
+- `au_kerberos_password` (String, Sensitive)
 - `au_kerberos_principal` (String) Specify the principal name that must appear as the server name in the Kerberos ticket.This value must be a full principal name, including the Kerberos realm. For example, <tt>foo/bar@REALM</tt> .
 - `au_kerberos_verify_signature` (Boolean)
 - `au_ldap_attributes` (String) Specify the list of the extra user attributes to retrieve from the LDAP user store and kept in a <tt>var://context/ldap/auxiliary-attributes</tt> context variable for future use, such as AAA postprocessing. To define the list of LDAP attributes as the auxiliary information for AAA, use the comma (,) as the delimiter. For example, <tt>email, cn, userPassword</tt> .
@@ -428,7 +428,7 @@ Read-Only:
 - `pp_kerberos_client_ctx_var` (String) Specify the context variable. The value of this context variable is used as the Kerberos client principal. This context variable must be specified in the <tt>var://context/name</tt> format. For example, <tt>var://context/AAA/krb-client-princ</tt> . You can use the set variable action to set this variable in the processing rule before the AAA action.
 - `pp_kerberos_client_custom_url` (String) <p>Specify the location of the stylesheet or GatewayScript file. This file returns the client principal name within the <tt>kerberos-client-principal</tt> element. This file gets the following input.</p><ul><li>The output of all the steps that are executed in this AAA action.</li><li>The incoming request message.</li></ul>
 - `pp_kerberos_client_keytab` (String) Specify the Kerberos keytab that defines the keytab for the client. This keytab is required to authenticate the client to the KDC.
-- `pp_kerberos_client_password` (String)
+- `pp_kerberos_client_password` (String, Sensitive)
 - `pp_kerberos_client_source` (String) Specify where to get the principal name of the Kerberos client. By default, uses the output of credential mapping. The client principal is based on the authenticated identity, which is followed by the corresponding realm name. For example, if the authenticated user is <tt>alice</tt> , the client principal name can be <tt>HTTP/alice.datapower.com@DATAPOWER.COM</tt> . The client principal must be present in the KDC for S4U2Self to work.
 - `pp_kerberos_self` (String) Specify the principal name of the DataPower Gateway.
 - `pp_kerberos_self_keytab` (String) Specify the name of the Kerberos keytab that defines the keytab for the DataPower Gateway. This keytab is required to authenticate the DataPower Gateway to the KDC.
@@ -444,7 +444,7 @@ Read-Only:
 - `pp_ltpa_expiry` (Number) Specify the lifetime of LTPA token in seconds. Enter a value in the range 1 - 628992000. The default value is 600.
 - `pp_ltpa_insert_cookie` (Boolean) Specify whether to insert a <tt>Set-Cookie</tt> header in the response that contains the LTPA token. This setting is for generating LTPA tokens that are not wrapped in the WS-Security <tt>wsse:Security</tt> header. By default, inserts a Set-Cookie header in the response. When disabled, does not insert a Set-Cookie header in the response.
 - `pp_ltpa_key_file` (String) Specify the location of the LTPA key file that secures the LTPA token. The LTPA key file contains the crypto material to create an LTPA token that can be consumed by WebSphere or Domino. <ul><li>For WebSphere tokens, you must export the LTPA key file from WebSphere. This file has portions encrypted by a password.</li><li>For Domino tokens, the key file should contain only the base 64-encoded Domino shared secret.</li></ul>
-- `pp_ltpa_key_file_password` (String) Use the LTPA key file password alias.
+- `pp_ltpa_key_file_password` (String, Sensitive) Use the LTPA key file password alias.
 - `pp_ltpa_key_file_password_alias` (String) Specify the the alias for password of the LTPA key file.
 - `pp_ltpa_version` (String) Specify the LTPA token version to generate. By default, generates a WebSphere version 2 token.
 - `pp_one_time_use` (Boolean) Specify whether the destination system or relying party should cache the generated token. The generated token might contain the property for this characteristic, which is especially practical for SAML assertions. By default, the destination system can cache the generated token. When enabled, he destination system should not cache the generated token.

@@ -111,6 +111,7 @@ func GetDmRadiusServerResourceSchema() ResourceSchema.NestedAttributeObject {
 			},
 			"secret_wo": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password login to the RADIUS server. You must confirm the password for accuracy.", "", "").String,
+				Sensitive:           true,
 				WriteOnly:           true,
 				Required:            true,
 			},

@@ -2100,6 +2100,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 			"pp_kerberos_client_password": DataSourceSchema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
+				Sensitive:           true,
 			},
 			"pp_kerberos_server": DataSourceSchema.StringAttribute{
 				MarkdownDescription: "Specify the server identity (sname of the Kerberos ticket) for the Kerberos server principal.",
@@ -2172,6 +2173,7 @@ func GetDmAAAPPostProcessDataSourceSchema(description string, cliAlias string, r
 			"pp_ltpa_key_file_password": DataSourceSchema.StringAttribute{
 				MarkdownDescription: "Use the LTPA key file password alias.",
 				Computed:            true,
+				Sensitive:           true,
 			},
 			"pp_kerberos_spnego_token": DataSourceSchema.BoolAttribute{
 				MarkdownDescription: "Specify whether to generate an SPNEGO token to insert into the HTTP WWW-Authenticate header.",
@@ -2455,6 +2457,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 			},
 			"pp_kerberos_client_password": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("", "", "").AddNotValidWhen(DmAAAPPostProcessPPKerberosClientPasswordIgnoreVal.String()).String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"pp_kerberos_server": ResourceSchema.StringAttribute{
@@ -2581,6 +2584,7 @@ func GetDmAAAPPostProcessResourceSchema(description string, cliAlias string, ref
 			},
 			"pp_ltpa_key_file_password": ResourceSchema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use the LTPA key file password alias.", "lpta-key-file-password", "").AddNotValidWhen(DmAAAPPostProcessPPLTPAKeyFilePasswordIgnoreVal.String()).String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"pp_kerberos_spnego_token": ResourceSchema.BoolAttribute{

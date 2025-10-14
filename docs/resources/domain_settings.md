@@ -37,7 +37,7 @@ resource "datapower_domain_settings" "test" {
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `passphrase_wo` (String, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Passphrase
+- `passphrase_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Passphrase
   - CLI Alias: `passphrase`
 - `passphrase_wo_version` (Number) Changes to this value trigger an update to `write_only` value.
 - `password_treatment` (String) Password treatment

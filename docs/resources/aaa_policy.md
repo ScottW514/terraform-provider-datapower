@@ -236,7 +236,7 @@ Optional:
   - Reference to: `datapower_crypto_kerberos_keytab:id`
   - Required When: `au_method`=`kerberos`
   - Not Valid When: attribute is not conditionally required
-- `au_kerberos_password` (String) - Not Valid When: attribute is not conditionally required
+- `au_kerberos_password` (String, Sensitive) - Not Valid When: attribute is not conditionally required
 - `au_kerberos_principal` (String) Specify the principal name that must appear as the server name in the Kerberos ticket.This value must be a full principal name, including the Kerberos realm. For example, <tt>foo/bar@REALM</tt> .
   - CLI Alias: `kerberos-principal`
   - Not Valid When: `au_method`!=`kerberos`
@@ -1052,7 +1052,7 @@ Optional:
   - Reference to: `datapower_crypto_kerberos_keytab:id`
   - Required When: ((`pp_kerberos_ticket`=`true` OR `pp_kerberos_spnego_token`=`true`) AND (`pp_kerberos_use_s4u2proxy`=`false` OR (`pp_kerberos_use_s4u2proxy`=`true` AND `au_method`!=`kerberos`)) AND (`pp_kerberos_use_s4u2self_and_s4u2proxy`=`false` OR (`pp_kerberos_use_s4u2self_and_s4u2proxy`=`true` AND `au_method`=`kerberos`)))
   - Not Valid When: attribute is not conditionally required
-- `pp_kerberos_client_password` (String) - Not Valid When: attribute is not conditionally required
+- `pp_kerberos_client_password` (String, Sensitive) - Not Valid When: attribute is not conditionally required
 - `pp_kerberos_client_source` (String) Specify where to get the principal name of the Kerberos client. By default, uses the output of credential mapping. The client principal is based on the authenticated identity, which is followed by the corresponding realm name. For example, if the authenticated user is <tt>alice</tt> , the client principal name can be <tt>HTTP/alice.datapower.com@DATAPOWER.COM</tt> . The client principal must be present in the KDC for S4U2Self to work.
   - CLI Alias: `kerberos-client-source`
   - Choices: `mc-output`, `custom-url`, `ctx-var`
@@ -1116,7 +1116,7 @@ Optional:
   - CLI Alias: `lpta-key-file`
   - Required When: `pp_ltpa`=`true`
   - Not Valid When: `pp_ltpa`=`false`
-- `pp_ltpa_key_file_password` (String) Use the LTPA key file password alias.
+- `pp_ltpa_key_file_password` (String, Sensitive) Use the LTPA key file password alias.
   - CLI Alias: `lpta-key-file-password`
   - Not Valid When: ((`pp_ltpa`=`false` OR (`pp_ltpa_version`!=`LTPA`|`LTPA1FIPS`|`LTPA2`|`LTPA2WAS7` AND `pp_ltpa_version`=`LTPADomino`)) OR `pp_ltpa_key_file_password`=``)
 - `pp_ltpa_key_file_password_alias` (String) Specify the the alias for password of the LTPA key file.

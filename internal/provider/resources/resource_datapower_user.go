@@ -77,6 +77,7 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			},
 			"password_wo": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password for the account. The password must comply to the password policy in RBM settings.", "password", "").String,
+				Sensitive:           true,
 				WriteOnly:           true,
 				Required:            true,
 				Validators: []validator.String{

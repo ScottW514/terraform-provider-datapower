@@ -84,7 +84,7 @@ resource "datapower_oauth_supported_client" "test" {
   - Reference to: `datapower_aaa_jwt_validator:id`
   - Required When: (`customized`=`false` AND (`client_type`=`confidential` OR (`oauth_role`=`azsvr` AND `az_grant`=`client`)) AND `client_authen_method`=`jwt` AND ((`oauth_role`=`azsvr` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt`) OR (`oauth_role`=`rssvr` AND `oauth_role`!=`azsvr` AND `check_client_credential`=`true`)))
   - Not Valid When: attribute is not conditionally required
-- `client_secret_wo` (String, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specifies the client secret for the OAuth client. The specification references the client secret as <tt>client_secret</tt> .
+- `client_secret_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Specifies the client secret for the OAuth client. The specification references the client secret as <tt>client_secret</tt> .
   - CLI Alias: `client-secret`
   - Required When: (`customized`=`false` AND (`client_type`=`confidential` OR (`oauth_role`=`azsvr` AND `az_grant`=`client`)) AND `client_authen_method`=`secret` AND ((`oauth_role`=`azsvr` AND `generate_client_secret`=`false` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt`|`saml20bearer`) OR (`oauth_role`=`rssvr` AND `oauth_role`!=`azsvr` AND (`check_client_credential`=`true` OR `use_validation_url`=`true`))))
   - Not Valid When: attribute is not conditionally required
