@@ -124,7 +124,7 @@ func (r *FileResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				},
 			},
 			"content": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("String content of file (UTF-8 text only), which will be uploaded. Not valid if `local_file` is set.", "", "").AddRequiredWhen(contentCondVal.String()).AddNotValidWhen(contentIgnoreVal.String()).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("String content of file (UTF-8 text only), which will be uploaded. Not valid if `local_file` is set. \n!> **Note:** This is string is stored in the state file and may not be appropriate for sensitive values.", "", "").AddRequiredWhen(contentCondVal.String()).AddNotValidWhen(contentIgnoreVal.String()).String,
 				Computed:            true,
 				Optional:            true,
 				Sensitive:           true,

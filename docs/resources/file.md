@@ -30,7 +30,8 @@ resource "datapower_file" "acc_test" {
 
 ### Optional
 
-- `content` (String, Sensitive) String content of file (UTF-8 text only), which will be uploaded. Not valid if `local_file` is set.
+- `content` (String, Sensitive) String content of file (UTF-8 text only), which will be uploaded. Not valid if `local_file` is set. 
+!> **Note:** This is string is stored in the state file and may not be appropriate for sensitive values.
   - Required When: `local_path`==`null`
   - Not Valid When: `local_path`!=`null`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
