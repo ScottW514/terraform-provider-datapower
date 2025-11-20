@@ -24,6 +24,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -198,5 +199,19 @@ func (c *DatapowerClient) Delete(path string) (*resty.Response, error) {
 
 // normalizePath ensures the path is properly formatted (removes leading/trailing slashes).
 func normalizePath(path string) string {
-	return "/" + strings.Trim(path, "/")
+	// Remove single / from the start, if present.
+	r, size := utf8.DecodeRuneInString(path)
+	if size > 0 && strings.ContainsRune("/", r) {
+		path = path[size:]
+	}
+
+	// Remove single / from the send, if present.
+	if len(path) == 0 {
+		return path
+	}
+	r, size = utf8.DecodeLastRuneInString(path)
+	if size > 0 && strings.ContainsRune("/", r) {
+		path = path[:len(path)-size]
+	}
+	return "/" + path
 }

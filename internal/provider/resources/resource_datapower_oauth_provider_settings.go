@@ -557,6 +557,12 @@ func (r *OAuthProviderSettingsResource) Create(ctx context.Context, req resource
 				return
 			}
 			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
+		} else if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
+			return
 		} else {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create resource, got error: %s", err))
 			return
@@ -579,12 +585,20 @@ func (r *OAuthProviderSettingsResource) Read(ctx context.Context, req resource.R
 		return
 	}
 	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
-	if err != nil && (strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400")) {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400") {
+			resp.State.RemoveResource(ctx)
+			return
+		} else if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.State.RemoveResource(ctx)
+			}
+			return
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
+			return
+		}
 	}
 
 	data.UpdateFromBody(ctx, `OAuthProviderSettings`, res)
@@ -608,8 +622,16 @@ func (r *OAuthProviderSettingsResource) Update(ctx context.Context, req resource
 	}
 	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `OAuthProviderSettings`))
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
-		return
+		if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
+			return
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
+			return
+		}
 	}
 
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
@@ -637,6 +659,12 @@ func (r *OAuthProviderSettingsResource) Delete(ctx context.Context, req resource
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
 			resp.Diagnostics.AddWarning("Resource Conflict", fmt.Sprintf("Resource is no longer tracked by Terraform, but may need to be manually deleted on DataPower host. Got error: %s", err))
+		} else if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
+			return
 		} else if !strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete resource, got error: %s", err))
 			return
@@ -679,6 +707,11 @@ func (r *OAuthProviderSettingsResource) ImportState(ctx context.Context, req res
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
+		} else if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
 		} else {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		}

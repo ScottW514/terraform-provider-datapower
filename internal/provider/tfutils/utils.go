@@ -19,11 +19,13 @@
 package tfutils
 
 import (
+	"fmt"
 	"strings"
 	"sync"
 	"unicode"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/tidwall/gjson"
@@ -227,4 +229,14 @@ func ToTfName(s string) string {
 		i++
 	}
 	return strings.Trim(b.String(), "_")
+}
+
+// Test if credentials are good and domain exists
+func DomainCredentialTest(c *client.DatapowerClient, diag *diag.Diagnostics, domain string) bool {
+	res, err := c.Get("/mgmt/domains/config//")
+	if err != nil {
+		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve domain list, got error: %s", err))
+		return false
+	}
+	return res.Get(`domain.#(name=="` + domain + `")`).Exists()
 }

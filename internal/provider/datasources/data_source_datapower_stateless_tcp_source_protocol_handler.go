@@ -151,7 +151,13 @@ func (d *StatelessTCPSourceProtocolHandlerDataSource) Read(ctx context.Context, 
 	res, err := d.pData.Client.Get(path)
 	resFound := true
 	if err != nil {
-		if !strings.Contains(err.Error(), "status 404") {
+		if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
+			return
+		} else if !strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 			return
 		} else {

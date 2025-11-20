@@ -7,6 +7,14 @@ description: |-
 
 # Changelog
 
+## UNRELEASED
+- Bump github.com/hashicorp/terraform-plugin-docs from 0.23.0 to 0.24.0 in the terraform-plugin group (PR20)
+- Bump golang.org/x/crypto from 0.43.0 to 0.44.0 (PR21)
+- Bump golang.org/x/tools from 0.38.0 to 0.39.0 (PR22)
+- Bump actions/checkout from 5.0.0 to 5.0.1 in the github-actions group (PR23)
+- Bump golang.org/x/crypto from 0.44.0 to 0.45.0 (PR24)
+- Improved handling of 401 errors from DataPower when an application domain does not exist
+
 ## v0.12.0
 
 - Bump github.com/hashicorp/terraform-plugin-framework from 1.16.0 to 1.16.1 in the terraform-plugin group (PR16)

@@ -144,13 +144,21 @@ func (d *{{.Name}}DataSource) Read(ctx context.Context, req datasource.ReadReque
 	res, err := d.pData.Client.Get(path)
 	resFound := true
 	if err != nil {
-		if !strings.Contains(err.Error(), "status 404") {
+{{- if hasDomainAttribute .Attributes}}
+		if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
+			return
+{{- end}}
+		{{if hasDomainAttribute .Attributes}} } else {{end}}if !strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 			return
 		} else {
 			resFound = false
 		}
-	} 
+	}
 
 {{- if .Singleton}}
 	if resFound {

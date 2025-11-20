@@ -1,8 +1,10 @@
 # Files to prevent from deletion during cleanup before running go generate.
 # Format is the same as .gitignore
 actions/
+datasources/data_source_datapower_test.go
 modifiers/
 resources/resource_datapower_file.go
 resources/resource_datapower_file_test.go
+resources/resource_datapower_test.go
 tfutils/
 validators/

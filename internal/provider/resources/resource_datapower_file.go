@@ -184,22 +184,38 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 	// Create directory, if needed
 	if len(dpDirs) > 0 {
 		_, err := r.pData.Client.Post(baseUrl+"/"+dpStore, fmt.Sprintf(`{"directory": {"name": "%s"}}`, dpDirPath))
-		if err != nil && !strings.Contains(err.Error(), "status 409") {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to create remote directory (%s), got error: %s", dpDirPath, err))
-			return
+		if err != nil {
+			if strings.Contains(err.Error(), "status 401") {
+				_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+				if !resp.Diagnostics.HasError() {
+					resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+				}
+				return
+			} else if !strings.Contains(err.Error(), "status 409") {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to create remote directory (%s), got error: %s", dpDirPath, err))
+				return
+			}
 		}
 	}
 
 	body := fmt.Sprintf(`{"file": {"name": "%s", "content": "%s"}}`, dpFileName, fileData)
 	_, err := r.pData.Client.Post(fmt.Sprintf("%s/%s/%s", baseUrl, dpStore, dpDirPath), body)
-	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
-		return
-	} else if err != nil {
-		_, err = r.pData.Client.Put(baseUrl+dpFullPath, body)
-		if err != nil && !strings.Contains(err.Error(), "status 409") {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload (overwrite) remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
+	if err != nil {
+		if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
 			return
+		} else if !strings.Contains(err.Error(), "status 409") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
+			return
+		} else {
+			_, err = r.pData.Client.Put(baseUrl+dpFullPath, body)
+			if err != nil && !strings.Contains(err.Error(), "status 409") {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload (overwrite) remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
+				return
+			}
 		}
 	}
 
@@ -225,14 +241,22 @@ func (r *FileResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 	baseUrl, _, dpFullPath, _, _, _ := data.getPathAttrs()
 
 	remoteFileData, err := r.loadRemoteFile(baseUrl + dpFullPath)
-	if err != nil && !strings.Contains(err.Error(), "status 403") && !strings.Contains(err.Error(), "status 404") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (%s), got error: %s", dpFullPath, err))
-		return
-	} else if err != nil && strings.Contains(err.Error(), "status 403") {
-		// Ignore 403 forbidden, as we cannot read files in some protected directorys, and must assume they are unchanged on the remote end
-	} else if err != nil && strings.Contains(err.Error(), "status 404") {
-		resp.State.RemoveResource(ctx)
-		return
+	if err != nil {
+		if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.State.RemoveResource(ctx)
+			}
+			return
+		} else if !strings.Contains(err.Error(), "status 403") && !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (%s), got error: %s", dpFullPath, err))
+			return
+		} else if strings.Contains(err.Error(), "status 403") {
+			// Ignore 403 forbidden, as we cannot read files in some protected directorys, and must assume they are unchanged on the remote end
+		} else if strings.Contains(err.Error(), "status 404") {
+			resp.State.RemoveResource(ctx)
+			return
+		}
 	} else {
 		data.Hash = types.StringValue(r.generateHash(remoteFileData))
 	}
@@ -268,12 +292,20 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		data.LocalPath = types.StringNull()
 		fileData = base64.StdEncoding.EncodeToString([]byte(data.Content.ValueString()))
 	}
+
 	baseUrl, dpFileName, dpFullPath, _, _, _ := data.getPathAttrs()
 
 	body := fmt.Sprintf(`{"file": {"name": "%s", "content": "%s"}}`, dpFileName, fileData)
 	_, err := r.pData.Client.Put(baseUrl+dpFullPath, body)
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to update remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
+		if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
+		} else {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to update remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
+		}
 		return
 	}
 
@@ -304,8 +336,15 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 	baseUrl, _, dpFullPath, dpStore, _, dpDirs := data.getPathAttrs()
 
 	_, err := r.pData.Client.Delete(baseUrl + dpFullPath)
-	if err != nil && !strings.Contains(err.Error(), "status 404") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to delete remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
+	if err != nil {
+		if strings.Contains(err.Error(), "status 401") {
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			if !resp.Diagnostics.HasError() {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
+			}
+		} else if !strings.Contains(err.Error(), "status 404") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to delete remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
+		}
 		return
 	}
 
