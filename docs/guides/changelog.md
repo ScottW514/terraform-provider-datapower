@@ -7,7 +7,8 @@ description: |-
 
 # Changelog
 
-## UNRELEASED
+## v0.15.0
+
 - Bump github.com/hashicorp/terraform-plugin-docs from 0.23.0 to 0.24.0 in the terraform-plugin group (PR20)
 - Bump golang.org/x/crypto from 0.43.0 to 0.44.0 (PR21)
 - Bump golang.org/x/tools from 0.38.0 to 0.39.0 (PR22)
@@ -15,6 +16,8 @@ description: |-
 - Bump golang.org/x/crypto from 0.44.0 to 0.45.0 (PR24)
 - Improved handling of 401 errors from DataPower when an application domain does not exist
 - Added provider targets to permit resource/datasource management on multiple hosts
+- Bump github.com/go-resty/resty/v2 from 2.16.5 to 2.17.0 (PR25)
+- Bump the github-actions group with 2 updates(PR26)
 
 ## v0.12.0
 
