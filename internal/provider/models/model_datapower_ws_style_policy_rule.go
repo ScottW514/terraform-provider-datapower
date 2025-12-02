@@ -45,6 +45,7 @@ type WSStylePolicyRule struct {
 	Unprocessed       types.Bool                  `tfsdk:"unprocessed"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var WSStylePolicyRuleNonXMLProcessingIgnoreVal = validators.Evaluation{
@@ -64,6 +65,7 @@ var WSStylePolicyRuleUnprocessedIgnoreVal = validators.Evaluation{
 }
 
 var WSStylePolicyRuleObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"actions":            types.ListType{ElemType: types.StringType},

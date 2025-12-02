@@ -55,6 +55,7 @@ type SNMPSettings struct {
 	NotifMib                       types.String                `tfsdk:"notif_mib"`
 	NotifMibMq                     types.String                `tfsdk:"notif_mib_mq"`
 	DependencyActions              []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                 types.String                `tfsdk:"provider_target"`
 }
 
 var SNMPSettingsTrapPriorityIgnoreVal = validators.Evaluation{
@@ -74,6 +75,7 @@ var SNMPSettingsTrapEventCodeIgnoreVal = validators.Evaluation{
 }
 
 var SNMPSettingsObjectType = map[string]attr.Type{
+	"provider_target":                   types.StringType,
 	"enabled":                           types.BoolType,
 	"user_summary":                      types.StringType,
 	"local_address":                     types.StringType,

@@ -29,6 +29,7 @@ data "datapower_api_auth_url_registry" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `auth_url` (String) Specify the URL of the authentication endpoint to authenticate credentials. The user credentials in the authorization header are validated by the authentication endpoint. When the user is authenticated, DataPower expects the authentication endpoint to return an HTTP 200 status code. All other status codes result in an authentication failure, and access is denied.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `tls_client_profile` (String) TLS client profile
 - `user_summary` (String) Comments
 

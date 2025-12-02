@@ -29,6 +29,7 @@ data "datapower_peer_group" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `ip_multicast` (String) IP multicast
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `type` (String) Type
 - `update_interval` (Number) Specify the update interval in milliseconds that data is transmitted among peers.
 - `url` (List of String) Specify the URL of each peer in the <tt>protocol://address:port</tt> format for an Ethernet interface or a VLAN interface. For unicast peering, peers exchange SLM data over the XML management interface as SOAP over HTTPS. Multicast peering shares the initial SLM state using SOAP over HTTPS; the data transfers are done using multicast. <p>The default port for the XML Management Interface is 5550. If this port is changed on any peer, the URL must reflect the correct port.</p><p>Define all peers, which includes the local system.</p>

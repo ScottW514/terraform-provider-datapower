@@ -29,6 +29,7 @@ data "datapower_slm_cred_class" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `cred_value` (List of String) Credential value
 - `header` (String) Request header
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `stylesheet` (String) Custom stylesheet
 - `user_summary` (String) Comments
 

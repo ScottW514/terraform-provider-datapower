@@ -76,6 +76,7 @@ resource "datapower_api_connect_gateway_service" "test" {
 - `local_port` (Number) Specify the listening port for the gateway service. The default value is 3000. <p><b>Note:</b> The gateway service uses four additional consecutive ports after the local port. Therefore, all five consecutive ports must be clear of conflicts.</p>
   - CLI Alias: `local-port`
   - Default value: `3000`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `proxy_policy` (Attributes) API Manager proxy
   - CLI Alias: `proxy` (see [below for nested schema](#nestedatt--proxy_policy))
 - `ssl_server` (String) Specify the TLS server profile to secure connections between API Connect to the gateway service. The following restrictions apply. <ul><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li><li>The validation credentials must use PEM formatted material.</li></ul>

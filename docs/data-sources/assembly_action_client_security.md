@@ -29,6 +29,7 @@ data "datapower_assembly_action_client_security" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `http_type` (String) HTTP type
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `id_name` (String) <p>Specify the location where to find the client ID to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `secret_name` (String) <p>Specify the location where to find the secret to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>
 - `secret_required` (Boolean) Specify whether to require the client secret. When required, the secret is compared to the registered secret on the application that is identified by the client ID.
 - `stop_on_error` (Boolean) Specify whether to stop processing if client security fails. If failed, stops the assembly and return an error.

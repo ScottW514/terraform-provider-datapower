@@ -45,6 +45,7 @@ type XACMLPDP struct {
 	Directory         types.List                  `tfsdk:"directory"`
 	CacheTtl          types.Int64                 `tfsdk:"cache_ttl"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var XACMLPDPGeneralPolicyCondVal = validators.Evaluation{
@@ -72,6 +73,7 @@ var XACMLPDPCombiningAlgIgnoreVal = validators.Evaluation{
 }
 
 var XACMLPDPObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

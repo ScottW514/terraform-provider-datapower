@@ -53,6 +53,7 @@ resource "datapower_compile_options_policy" "test" {
 - `profile` (String) Designates a set of stylesheets to be profiled based on their URL. This should not be used in production environments.
   - CLI Alias: `profile`
   - Reference to: `datapower_url_map:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `stack_size` (Number) Indicates the maximum number of bytes the stack is allowed to use while executing a stylesheet or other compiled content. This blocks infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The default is half a megabyte, or 524,288 bytes.
   - CLI Alias: `stack-size`
   - Range: `10240`-`104857600`

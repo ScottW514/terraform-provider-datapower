@@ -48,6 +48,7 @@ resource "datapower_ws_endpoint_rewrite_policy" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `ws_endpoint_local_rewrite_rule` (Attributes List) Add, edit, or delete a local endpoint rewrite rule. These rules evaluate services in a deployed WSDL file and specify the URL the appliance should use locally for matched services. They convert addresses in WSDL files to local endpoints.

@@ -29,6 +29,7 @@ data "datapower_xml_manager" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -62,6 +63,7 @@ Read-Only:
 - `parser_limits_max_namespaces` (Number) Enter the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.
 - `parser_limits_max_node_size` (Number) Enter the maximum size that any one node can consume. Enter a value in the range 1024 - 4294967295. The default value is 33554432. Sizes which are powers of two result in the best performance. Although you define a value, the DataPower Gateway uses a value that is the rounded-down to the largest power of two that is smaller than the defined value.
 - `parser_limits_max_prefixes` (Number) Enter the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the range 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `scheduled_rule` (Attributes List) Certain applications might require the running of a scheduled processing rule. Integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager. (see [below for nested schema](#nestedatt--result--scheduled_rule))
 - `schema_validation` (Attributes List) (see [below for nested schema](#nestedatt--result--schema_validation))
 - `search_results` (Boolean) Configures optimization of '//' in XPath expressions

@@ -29,6 +29,7 @@ data "datapower_web_token_service" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -56,6 +57,7 @@ Read-Only:
 - `http_log_cor_id_label` (String) Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `priority` (String) Set the service-level priority. When resources are in high demand, the appliance handles transactions for higher priority services over lower priority services.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `request_type` (String) Characterizes the traffic that originates from the client. The default is Non-XML.
 - `rewrite_errors` (Boolean) Error messages after a decryption action can provide an attacker who is using the padding oracle attack method with enough information to determine the contents of the plain-text data. When enabled, the default, the client receives error messages without the internal information that could lead to a discovery. When disabled, the client receives the original message with this information.
 - `style_policy` (String) Assign the processing policy to the service. The processing policy defines the actions to perform on security token requests.

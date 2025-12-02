@@ -45,6 +45,7 @@ type CountMonitor struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	MessageType       types.String                `tfsdk:"message_type"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var CountMonitorHeaderCondVal = validators.Evaluation{
@@ -64,6 +65,7 @@ var CountMonitorMaxSourcesIgnoreVal = validators.Evaluation{
 }
 
 var CountMonitorObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"measure":            types.StringType,

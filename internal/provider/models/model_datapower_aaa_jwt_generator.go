@@ -53,6 +53,7 @@ type AAAJWTGenerator struct {
 	EncryptCertificate types.String                `tfsdk:"encrypt_certificate"`
 	EncryptSskey       types.String                `tfsdk:"encrypt_sskey"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget     types.String                `tfsdk:"provider_target"`
 }
 
 var AAAJWTGeneratorAudienceCondVal = validators.Evaluation{
@@ -224,6 +225,7 @@ var AAAJWTGeneratorEncryptSSKeyIgnoreVal = validators.Evaluation{
 }
 
 var AAAJWTGeneratorObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,

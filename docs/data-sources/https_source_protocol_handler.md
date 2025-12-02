@@ -29,6 +29,7 @@ data "datapower_https_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -68,6 +69,7 @@ Read-Only:
 - `max_url_len` (Number) Specify the length in bytes of the longest incoming URL to accept. The length includes any query string or fragment identifier. Enter a value in the range 1 - 128000. The default value is 16384.
 - `max_value_hdr_len` (Number) Specify the maximum length of a header value in bytes to allow in client requests. Each HTTP header is expressed as a name-value pair. This setting sets the maximum length of the value portion of a header. The default value is 0, which indicates no limit.
 - `persistent_connections` (Boolean) Specify whether to negotiate persistent connections with clients. The HTTP/2 protocol controls persistent connections and reuse. Therefore, this setting is ignored for the HTTP/2 protocol.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_server` (String) Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
 - `ssl_server_config_type` (String) TLS server type
 - `ssl_sni_server` (String) Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.

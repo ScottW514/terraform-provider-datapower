@@ -110,6 +110,7 @@ type XMLFirewallService struct {
 	DebugTrigger                           types.List                  `tfsdk:"debug_trigger"`
 	LocalAddress                           types.String                `tfsdk:"local_address"`
 	DependencyActions                      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                         types.String                `tfsdk:"provider_target"`
 }
 
 var XMLFirewallServiceRequestAttachmentsIgnoreVal = validators.Evaluation{
@@ -397,6 +398,7 @@ var XMLFirewallServiceDebugTriggerIgnoreVal = validators.Evaluation{
 }
 
 var XMLFirewallServiceObjectType = map[string]attr.Type{
+	"provider_target":                             types.StringType,
 	"id":                                          types.StringType,
 	"app_domain":                                  types.StringType,
 	"type":                                        types.StringType,

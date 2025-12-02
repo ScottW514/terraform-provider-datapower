@@ -54,6 +54,7 @@ type WebTokenService struct {
 	DebugMode              types.String                `tfsdk:"debug_mode"`
 	DebugHistory           types.Int64                 `tfsdk:"debug_history"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var WebTokenServiceDelayErrorsIgnoreVal = validators.Evaluation{
@@ -101,6 +102,7 @@ var WebTokenServiceDebugHistoryIgnoreVal = validators.Evaluation{
 }
 
 var WebTokenServiceObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"id":                       types.StringType,
 	"app_domain":               types.StringType,
 	"user_summary":             types.StringType,

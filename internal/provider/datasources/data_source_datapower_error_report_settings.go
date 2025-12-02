@@ -23,10 +23,13 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -53,6 +56,14 @@ func (d *ErrorReportSettingsDataSource) Schema(ctx context.Context, req datasour
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>Failure notification is a serviceability tool. By default, failure notification is disabled. To use failure notification, you must enable the configuration and allow the error report to be uploaded.</p><p>The uploading of an error report allows the capture of more diagnostic information, which safely improves serviceability. Although there is a tradeoff between performance and serviceability, you should choose serviceability by enabling the following properties:</p><ul><li>Include Internal State</li><li>Background Packet Capture</li><li>Background Log Capture</li><li>Background Memory Trace</li></ul><p>When you allow the error report to be uploaded, this setting enables the Failure Notification status provider. This status provide in combination with the report history tracks the error reports that the appliance generates, the reason why the appliance generated the error report, and its upload status to the specific destination.</p><p>You can specify an NFS, RAID, SMTP, or FTP destination. You can also specify the local temporary directory as the destination. The appliance generates error reports, the naming convention includes the serial number of the appliance and the timestamp of the report. This naming convention prevents one report from overwriting another.</p><p>You can use Event Triggers to generate error reports automatically when specific events occur.</p>",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
@@ -168,9 +179,14 @@ func (d *ErrorReportSettingsDataSource) Read(ctx context.Context, req datasource
 		return
 	}
 
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
+
 	path := data.GetPath()
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if !strings.Contains(err.Error(), "status 404") {

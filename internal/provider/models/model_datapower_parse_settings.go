@@ -49,9 +49,11 @@ type ParseSettings struct {
 	NumberLength       types.Int64                 `tfsdk:"number_length"`
 	StrictUtf8encoding types.Bool                  `tfsdk:"strict_utf8encoding"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget     types.String                `tfsdk:"provider_target"`
 }
 
 var ParseSettingsObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,

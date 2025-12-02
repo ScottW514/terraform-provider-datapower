@@ -40,9 +40,11 @@ type APISecurityOAuthReq struct {
 	ApiSecurityOauthDef types.String                `tfsdk:"api_security_oauth_def"`
 	OauthAllowedScope   types.String                `tfsdk:"oauth_allowed_scope"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var APISecurityOAuthReqObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"id":                     types.StringType,
 	"app_domain":             types.StringType,
 	"user_summary":           types.StringType,

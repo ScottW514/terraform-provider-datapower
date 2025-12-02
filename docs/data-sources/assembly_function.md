@@ -29,6 +29,7 @@ data "datapower_assembly_function" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `description` (String) Specify the description of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the description to advertise to API Connect.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `parameter` (Attributes List) Parameters (see [below for nested schema](#nestedatt--result--parameter))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `scope` (String) Scope
 - `title` (String) Specify the title of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the title to advertise to API Connect.
 - `user_summary` (String) Comments

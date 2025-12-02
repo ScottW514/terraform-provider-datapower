@@ -29,6 +29,7 @@ data "datapower_ws_style_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `def_stylesheet_for_xsl` (String) Identify the default stylesheet used for XSL transformation. The default mirrors all documents.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `policy_maps` (Attributes List) A list of Policy Rules and corresponding Matching Rules that this policy will execute. If a Match is found, the corresponding Rule runs. The policy executes the first Rule with a successful Match. The order in this list is therefore important. (see [below for nested schema](#nestedatt--result--policy_maps))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Enter a comment. This appears on the Policy catalog page.
 
 <a id="nestedatt--result--dependency_actions"></a>

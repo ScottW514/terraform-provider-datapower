@@ -42,6 +42,7 @@ resource "datapower_assembly_function" "test" {
   - CLI Alias: `description`
 - `parameter` (Attributes List) Parameters
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameter))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `scope` (String) Scope
   - CLI Alias: `scope`
   - Choices: `all`, `api`, `catalog`

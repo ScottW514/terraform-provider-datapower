@@ -42,6 +42,7 @@ resource "datapower_xpath_routing_map" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `name_space_mappings` (Attributes List) The prefix and URI for namespaces that might be encountered in requests.
   - CLI Alias: `namespace-mapping` (see [below for nested schema](#nestedatt--name_space_mappings))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

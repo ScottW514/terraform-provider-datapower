@@ -29,6 +29,7 @@ data "datapower_operation_rate_limit" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `operation` (String) API operation
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rate_limit` (Attributes List) Rate limit (see [below for nested schema](#nestedatt--result--rate_limit))
 - `rate_limit_group` (String) Rate limit group
 - `use_rate_limit_group` (Boolean) Use rate limit group

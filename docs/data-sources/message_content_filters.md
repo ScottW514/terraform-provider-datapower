@@ -29,6 +29,7 @@ data "datapower_message_content_filters" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `filter_refs` (List of String) Defines the group of message content filter objects.
 - `filters` (Attributes List) Defines the group of message content filters. (see [below for nested schema](#nestedatt--result--filters))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

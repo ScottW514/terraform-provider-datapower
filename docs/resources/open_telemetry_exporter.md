@@ -70,6 +70,7 @@ resource "datapower_open_telemetry_exporter" "test" {
   - CLI Alias: `processor`
   - Choices: `simple`, `batch`
   - Default value: `batch`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `proxy_policies` (Attributes List) Proxy policies
   - CLI Alias: `proxy` (see [below for nested schema](#nestedatt--proxy_policies))
 - `ssl_client` (String) TLS client profile

@@ -44,9 +44,11 @@ type WebServiceMonitor struct {
 	Transport         types.String                `tfsdk:"transport"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var WebServiceMonitorObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"wsdl_url":           types.StringType,

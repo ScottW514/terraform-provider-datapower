@@ -29,6 +29,7 @@ data "datapower_assembly_action_function_call" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `function_call` (String) Called action
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `parameter` (Attributes List) Parameters (see [below for nested schema](#nestedatt--result--parameter))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `title` (String) Title
 - `user_summary` (String) Comments
 

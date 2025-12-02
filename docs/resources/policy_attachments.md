@@ -52,6 +52,7 @@ resource "datapower_policy_attachments" "test" {
 - `policy_references` (Boolean) Enable policies attached to WSDL using PolicyURI attributes and PolicyReference elements. These attachments are sometimes called XML element attachments. If 'off', all PolicyURI attributes and PolicyReference elements are ignored and only external policies are enforced.
   - CLI Alias: `policy-references`
   - Default value: `false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `sla_enforcement_mode` (String) SLA Enforcement Mode controls the application of SLA Policies to transactions. Transactions are either allowed or rejected based on whether an SLA rule is applied to the transaction.
   - CLI Alias: `sla-enforcement-mode`
   - Choices: `allow-if-no-sla`, `reject-if-no-sla`

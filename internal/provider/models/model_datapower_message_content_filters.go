@@ -40,9 +40,11 @@ type MessageContentFilters struct {
 	FilterRefs        types.List                  `tfsdk:"filter_refs"`
 	Filters           types.List                  `tfsdk:"filters"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var MessageContentFiltersObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

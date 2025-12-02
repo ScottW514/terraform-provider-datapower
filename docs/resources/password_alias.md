@@ -39,6 +39,7 @@ resource "datapower_password_alias" "test" {
 - `password_wo` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Password
   - CLI Alias: `password`
 - `password_wo_version` (Number) Changes to this value trigger an update to `write_only` value.
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

@@ -29,6 +29,7 @@ data "datapower_assembly_action_web_socket_upgrade" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -57,6 +58,7 @@ Read-Only:
 - `inject_user_agent_header` (Boolean) Inject User-Agent header
 - `parameter_control_list` (String) Specify the control list that manages whether to accept or reject URL parameters. The default behavior is to reject all URL parameters.
 - `password` (String) Password alias
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_client` (String) TLS client profile
 - `timeout` (Number) Specify the duration in seconds to wait for a reply from the target. The default value is 60.
 - `title` (String) Title

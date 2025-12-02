@@ -33,6 +33,7 @@ resource "datapower_domain_availability" "test" {
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

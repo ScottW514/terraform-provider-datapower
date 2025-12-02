@@ -32,6 +32,7 @@ resource "datapower_git_ops_variables" "test" {
 - `enabled` (Boolean) Administrative state
   - CLI Alias: `admin-state`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `variables` (Attributes List) Variables

@@ -47,6 +47,7 @@ type B2BCPACollaboration struct {
 	ReceiverMshSetting   types.String                `tfsdk:"receiver_msh_setting"`
 	Actions              types.List                  `tfsdk:"actions"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget       types.String                `tfsdk:"provider_target"`
 }
 
 var B2BCPACollaborationInternalRoleCondVal = validators.Evaluation{
@@ -122,6 +123,7 @@ var B2BCPACollaborationActionsCondVal = validators.Evaluation{
 }
 
 var B2BCPACollaborationObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"id":                    types.StringType,
 	"app_domain":            types.StringType,
 	"user_summary":          types.StringType,

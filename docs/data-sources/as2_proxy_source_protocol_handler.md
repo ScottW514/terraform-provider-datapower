@@ -29,6 +29,7 @@ data "datapower_as2_proxy_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -64,6 +65,7 @@ Read-Only:
 - `max_url_len` (Number) Specify the length in bytes of the longest incoming URL to accept. The length includes any query string or fragment identifier. Enter a value in the range 1 - 128000. The default value is 16384.
 - `max_value_hdr_len` (Number) Specify the maximum length of HTTP header values in bytes to allow. Each HTTP header is expressed as a name-value pair. This setting specifies the maximum length of the value portion of that header. The default value is 0, which indicates no limit.
 - `persistent_connections` (Boolean) Specify whether to negotiate persistent connections with clients. The default value is enabled.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `remote_address` (String) Specifies the IP address, host name, or name of a load balancer group of the Multi-Enterprise Integration Gateway server.
 - `remote_connection_timeout` (Number) Specify the duration in seconds to wait to establish a connection with the server. Enter a value in the range 1 - 86400. The default value is 60.
 - `remote_port` (Number) Specifies the destination port on the Multi-Enterprise Integration Gateway server.

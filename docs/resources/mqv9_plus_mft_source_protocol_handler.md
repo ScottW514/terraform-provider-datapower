@@ -54,6 +54,7 @@ resource "datapower_mqv9_plus_mft_source_protocol_handler" "test" {
   - CLI Alias: `polling-interval`
   - Range: `1`-`65535`
   - Default value: `30`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `retrieve_backout_settings` (Boolean) Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>
   - CLI Alias: `retrieve-backout-settings`
   - Default value: `false`

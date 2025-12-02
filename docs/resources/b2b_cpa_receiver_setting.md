@@ -60,6 +60,7 @@ resource "datapower_b2b_cpa_receiver_setting" "test" {
 - `persist_duration` (Number) Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
   - CLI Alias: `persist-duration`
   - Range: `0`-`6000000`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `signature_required` (Boolean) Require signature
   - CLI Alias: `sign-required`
   - Default value: `false`

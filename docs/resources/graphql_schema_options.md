@@ -36,6 +36,7 @@ resource "datapower_graphql_schema_options" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `visibility_list` (String) Visibility list
   - CLI Alias: `visibility-list`
   - Reference to: `datapower_visibility_list:id`

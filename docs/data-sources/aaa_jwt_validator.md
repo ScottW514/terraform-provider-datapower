@@ -29,6 +29,7 @@ data "datapower_aaa_jwt_validator" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -55,6 +56,7 @@ Read-Only:
 - `decrypt_s_secret` (String) The shared secret key can be used to decrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>Shared secret</tt> from the Decrypt method list.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `issuer` (String) The optional issuer claim. The "iss" PCRE can be used to verify the JWT. The maximum length of the value is 256 characters.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the JWT Validator configuration.
 - `username_claim` (String) This field is applicable only when the JWT Validator is used in the AAA identity extraction phase. By default, the value of the "sub" claim is populated as the username element of the identity extraction output. Ensure that the claim specified in this field is present in the incoming JWT. If no match is found, no username is populated in the AAA processing.
 - `val_method` (Attributes) Various methods can be used to validate the JWT. You can decrypt the JWT, verify the JWT signature, and process a custom GatewayScript or XSLT file for further processing.

@@ -29,6 +29,7 @@ data "datapower_web_app_session_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `auto_renew` (Boolean) If this property is enabled, the session lifetime is renewed on each use of the session. Otherwise the session lifetime is the total amount of time allowed before returning to the login sections.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `start_matches` (String) Select the matching rule that is used to identify start pages. Start pages are pages that can be accessed without a session cookie and if their security policy passes will issue a session cookie.
 - `timeout` (Number) The login cookie is only good for the amount of time specified by this property. It may be automatically renewed during activity depending on the value of the Auto Renew property.
 - `user_summary` (String) Comments

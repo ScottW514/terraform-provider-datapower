@@ -59,9 +59,11 @@ type CompileOptionsPolicy struct {
 	XacmlDebug             types.Bool                  `tfsdk:"xacml_debug"`
 	AllowXopInclude        types.String                `tfsdk:"allow_xop_include"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var CompileOptionsPolicyObjectType = map[string]attr.Type{
+	"provider_target":           types.StringType,
 	"id":                        types.StringType,
 	"app_domain":                types.StringType,
 	"user_summary":              types.StringType,

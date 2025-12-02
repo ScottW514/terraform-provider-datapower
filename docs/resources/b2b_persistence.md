@@ -57,6 +57,7 @@ resource "datapower_b2b_persistence" "test" {
   - CLI Alias: `ha-virtual-ip`
   - Required When: `ha_enabled`=`true`
   - Not Valid When: `ha_enabled`=`false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `storage_size` (Number) Specify the maximum size for the data store in MB. Enter a value in the range 1024 - 65536. The default is 1024. <p>This data store is for all B2B gateway services. These services store transaction metadata on the unencrypted partition of the RAID volume. These services store copies of the messages on the encrypted portion of the RAID volume.</p><p>The storage location for messages is defined on a service-by-service basis during the configuration of the B2B gateway.</p><p><b>Attention:</b> The maximum size for the persistent data store cannot be changed to a smaller value. Changing to a larger value might interrupt transactions that are in flight.</p>
   - CLI Alias: `storage-size`
   - Range: `1024`-`65536`

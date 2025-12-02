@@ -59,6 +59,7 @@ resource "datapower_assembly_action_rate_limit" "test" {
   - Choices: `consume`, `replenish`
   - Default value: `consume`
   - Not Valid When: `source`!=`group`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `rate_limit` (Attributes List) Rate limits
   - CLI Alias: `rate-limit`
   - Not Valid When: `source`=`plan-default`|`domain-named`|`group` (see [below for nested schema](#nestedatt--rate_limit))

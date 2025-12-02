@@ -39,8 +39,10 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
-var _ resource.Resource = &LunaResource{}
-var _ resource.ResourceWithImportState = &LunaResource{}
+var (
+	_ resource.Resource                = &LunaResource{}
+	_ resource.ResourceWithImportState = &LunaResource{}
+)
 
 func NewLunaResource() resource.Resource {
 	return &LunaResource{}
@@ -58,6 +60,17 @@ func (r *LunaResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("You can use a network-attached SafeNet Luna Network HSM appliance as the HSM to provide secure storage for RSA keys and accelerate RSA operations remotely. The configuration of the Luna HSM sets up the connection with the Luna HSM.", "luna", "").String,
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host for this resource. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
 				Required:            true,
@@ -113,16 +126,21 @@ func (r *LunaResource) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Create, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Create, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	body := data.ToBody(ctx, `Luna`)
-	_, err := r.pData.Client.Post(data.GetPath(), body)
+	_, err := r.pData.Client.Post(data.GetPath(), body, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
-			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
+			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body, data.ProviderTarget)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
 				return
@@ -133,10 +151,13 @@ func (r *LunaResource) Create(ctx context.Context, req resource.CreateRequest, r
 			return
 		}
 	}
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -149,7 +170,12 @@ func (r *LunaResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400") {
 			resp.State.RemoveResource(ctx)
@@ -175,20 +201,28 @@ func (r *LunaResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Update, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Update, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `Luna`))
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `Luna`), data.ProviderTarget)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -202,11 +236,16 @@ func (r *LunaResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Delete, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Delete, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Delete(data.GetPath() + "/" + data.Id.ValueString())
+	_, err := r.pData.Client.Delete(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
 			resp.Diagnostics.AddWarning("Resource Conflict", fmt.Sprintf("Resource is no longer tracked by Terraform, but may need to be manually deleted on DataPower host. Got error: %s", err))
@@ -216,10 +255,12 @@ func (r *LunaResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		}
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
 
 	resp.State.RemoveResource(ctx)
 }
@@ -247,7 +288,7 @@ func (r *LunaResource) ImportState(ctx context.Context, req resource.ImportState
 
 	var data models.Luna
 	data.Id = types.StringValue(id)
-	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
@@ -260,15 +301,4 @@ func (r *LunaResource) ImportState(ctx context.Context, req resource.ImportState
 	data.FromBody(ctx, `Luna`, res)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
-}
-
-func (r *LunaResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
-	var data models.Luna
-
-	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

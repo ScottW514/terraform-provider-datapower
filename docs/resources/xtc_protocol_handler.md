@@ -52,6 +52,7 @@ resource "datapower_xtc_protocol_handler" "test" {
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `3000`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `remote_port` (Number) Remote port
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`

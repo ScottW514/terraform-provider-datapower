@@ -70,6 +70,7 @@ resource "datapower_rate_limit_definition" "test" {
   - Not Valid When: `rate`=`0`
 - `parameters` (Attributes List) Parameters
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameters))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `response_headers` (Boolean) Specify whether response headers include rate limit information. By default, headers include rate limit information. When disabled, headers exclude rate limit information.
   - CLI Alias: `response-headers`
   - Default value: `true`

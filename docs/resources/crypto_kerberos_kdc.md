@@ -51,6 +51,7 @@ resource "datapower_crypto_kerberos_kdc" "test" {
   - Range: `1`-`65535`
   - Default value: `60`
   - Not Valid When: `cache_tickets`=`false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `server_port` (Number) Specify the UDP or TCP listening port on the Kerberos KDC server. Use a value in the range 1 - 65535. The default value is 88.
   - CLI Alias: `port`
   - Range: `1`-`65535`

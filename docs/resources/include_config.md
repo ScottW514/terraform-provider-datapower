@@ -43,6 +43,7 @@ resource "datapower_include_config" "test" {
 - `on_startup` (Boolean) Specify whether to import the configuration file on startup. The default behavior is to import on startup. <ul><li>When enabled, the configuration file is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
   - CLI Alias: `auto-execute`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

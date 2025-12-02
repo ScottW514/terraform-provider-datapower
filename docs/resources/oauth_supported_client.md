@@ -154,6 +154,7 @@ resource "datapower_oauth_supported_client" "test" {
   - Reference to: `datapower_aaa_jwt_generator:id`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`oidc` AND `az_grant`=`code`|`implicit`|`password`|`client`|`jwt`)
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `redirect_uri` (List of String) <p>Defines redirection URIs that the OAuth client supports to exchange tokens. Specify each redirection URI as a PCRE.</p><p>Redirection URIs help to detect malicious clients and prevent phishing attacks. The authorization endpoint must have the registered redirection URIs before the authorization endpoint can validate the authorization request from the client. For mobile applications, the redirection URI can be an application URL; for example, <tt>mobiletrafficapp://</tt> that is defined with the <tt>^mobiletrafficapp:\/\/?</tt> PCRE.</p>
   - CLI Alias: `redirect-uri`
   - Required When: (`customized`=`false` AND `oauth_role`=`azsvr` AND `az_grant`=`implicit`|`code`)

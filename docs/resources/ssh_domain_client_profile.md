@@ -45,6 +45,7 @@ resource "datapower_ssh_domain_client_profile" "test" {
 - `mac_alg` (List of String) Specify the message authentication codes (MAC) to support.
   - CLI Alias: `mac-alg`
   - Choices: `HMAC-SHA1`, `HMAC-SHA2-256`, `HMAC-SHA2-512`, `UMAC-64_AT_OPENSSH.COM`, `UMAC-128_AT_OPENSSH.COM`, `HMAC-SHA1-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-256-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-512-ETM_AT_OPENSSH.COM`, `UMAC-64-ETM_AT_OPENSSH.COM`, `UMAC-128-ETM_AT_OPENSSH.COM`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

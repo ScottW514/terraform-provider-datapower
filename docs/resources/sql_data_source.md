@@ -116,6 +116,7 @@ resource "datapower_sql_data_source" "test" {
   - Reference to: `datapower_password_alias:id`
   - Required When: NOT(`database`=`DB2` AND `encryption_method_db2`!=`NoEncryption` AND `keystore_ref`!=``)
   - Not Valid When: (`database`=`DB2` AND `encryption_method_db2`!=`NoEncryption` AND `keystore_ref`!=``)
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `sql_data_source_config_nv_pairs` (Attributes List) Specify configuration parameters for the data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some parameters in the configuration file are informational and define characteristics about the environment. These parameters cannot be modified.
   - CLI Alias: `sql-config-param` (see [below for nested schema](#nestedatt--sql_data_source_config_nv_pairs))
 - `truststore_ref` (String) Truststore

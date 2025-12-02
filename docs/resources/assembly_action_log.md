@@ -45,6 +45,7 @@ resource "datapower_assembly_action_log" "test" {
   - CLI Alias: `mode`
   - Choices: `gather-only`, `send-only`, `gather-and-send`
   - Default value: `gather-only`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `recount_bytes_sent` (Boolean) <p>Specify whether to recount the bytes of the response payload. By default, the bytes is the value of the <tt>Content-Length</tt> header. When enabled, the bytes in the response payload are calculated. Recalculation can impact performance.</p>
   - CLI Alias: `recount-bytes`
   - Default value: `false`

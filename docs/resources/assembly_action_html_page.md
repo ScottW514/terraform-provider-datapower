@@ -42,6 +42,7 @@ resource "datapower_assembly_action_html_page" "test" {
 - `output` (String) Specify the variable in the API context to store the results. The content of the <tt>body</tt> field of the variable is the results of the action. The default variable is <tt>message</tt> .
   - CLI Alias: `output`
   - Default value: `message`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

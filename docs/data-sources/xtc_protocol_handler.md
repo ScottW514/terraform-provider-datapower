@@ -29,6 +29,7 @@ data "datapower_xtc_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `local_address` (String) Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.
 - `local_port` (Number) Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 3000.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `remote_address` (String) Remote host
 - `remote_port` (Number) Remote port
 - `ssl_client` (String) TLS client profile

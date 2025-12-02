@@ -46,6 +46,7 @@ resource "datapower_assembly_action_throw" "test" {
   - CLI Alias: `error-status-reason`
 - `error_text` (String) Specify the text for the error message. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$( <i>property_name</i> )</tt> when the assembly action does not have a property with the same name.
   - CLI Alias: `error-text`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

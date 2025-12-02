@@ -29,6 +29,7 @@ data "datapower_ldap_connection_pool" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `idle_timeout` (Number) Specify the duration in seconds that an LDAP connection can remain idle before the connection is removed from the pool. Enter a value in the range 1-86400. The default value is 120.
 - `max_pool_size` (Number) Specify the maximum number of LDAP connections that can exist for a server:port:BindDN combination in an LDAP connection pool. Enter a value in the range 1-2000. The default value is 35.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `reject_on_pool_limit` (Boolean) Specify whether to reject an incoming LDAP connection when the LDAP connection pool reaches the maximum pool size for a server:port:BindDN combination.
 - `user_summary` (String) Comments
 

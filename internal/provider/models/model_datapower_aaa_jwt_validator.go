@@ -60,6 +60,7 @@ type AAAJWTValidator struct {
 	Claims                          types.List                  `tfsdk:"claims"`
 	UsernameClaim                   types.String                `tfsdk:"username_claim"`
 	DependencyActions               []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                  types.String                `tfsdk:"provider_target"`
 }
 
 var AAAJWTValidatorCustomizedScriptCondVal = validators.Evaluation{
@@ -452,6 +453,7 @@ var AAAJWTValidatorVerifyFetchCredSSLProfileIgnoreVal = validators.Evaluation{
 }
 
 var AAAJWTValidatorObjectType = map[string]attr.Type{
+	"provider_target":                     types.StringType,
 	"id":                                  types.StringType,
 	"app_domain":                          types.StringType,
 	"user_summary":                        types.StringType,

@@ -36,6 +36,7 @@ resource "datapower_user_group" "test" {
   - CLI Alias: `add`
   - Choices: `aaapolicy`, `acl`, `assembly`, `b2b`, `common`, `compile-options`, `config-management`, `configuration`, `crl`, `quota-enforcement`, `crypto`, `device-management`, `diagnostics`, `document-crypto-map`, `domain`, `failure-notification`, `file-management`, `firewallcred`, `flash`, `httpserv`, `input-conversion`, `interface`, `load-balancer`, `logging`, `matching`, `messages`, `monitors`, `mpgw`, `mq-qm`, `idg-mqqm`, `network`, `radius`, `rbm`, `schema-exception-map`, `service-monitor`, `snmp`, `sql`, `sslforwarder`, `stylesheetaction`, `stylesheetpolicy`, `stylesheetrule`, `system`, `tam`, `tcpproxy`, `urlmap`, `urlrefresh`, `urlrewrite`, `useragent`, `usergroup`, `validation`, `webservice`, `wsm-agent`, `xmlfirewall`, `xmlmgr`, `xpath-routing`, `xslcoproc`, `xslproxy`, `http`, `document-cache`, `parserlimit`, `rule`, `password-change`, `reserved50`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

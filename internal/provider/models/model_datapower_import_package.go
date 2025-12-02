@@ -46,9 +46,11 @@ type ImportPackage struct {
 	LocalIpRewrite             types.Bool                  `tfsdk:"local_ip_rewrite"`
 	OnStartup                  types.Bool                  `tfsdk:"on_startup"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget             types.String                `tfsdk:"provider_target"`
 }
 
 var ImportPackageObjectType = map[string]attr.Type{
+	"provider_target":              types.StringType,
 	"id":                           types.StringType,
 	"app_domain":                   types.StringType,
 	"user_summary":                 types.StringType,

@@ -42,6 +42,7 @@ resource "datapower_assembly_action_rate_limit_info" "test" {
   - Default value: `message`
 - `output` (String) Specify the API context variable for the output. The output variable is a variable in the API context to store the rate limit details. The content of the <tt>body</tt> field is the results. The default variable is the same as the input variable. Therefore, by default, the output overwrites the input.
   - CLI Alias: `output`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

@@ -23,11 +23,14 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -35,9 +38,10 @@ import (
 )
 
 type AAAPolicyList struct {
-	Id        types.String `tfsdk:"id"`
-	AppDomain types.String `tfsdk:"app_domain"`
-	Result    types.List   `tfsdk:"result"`
+	ProviderTarget types.String `tfsdk:"provider_target"`
+	Id             types.String `tfsdk:"id"`
+	AppDomain      types.String `tfsdk:"app_domain"`
+	Result         types.List   `tfsdk:"result"`
 }
 
 var (
@@ -61,6 +65,14 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>Define the support to authenticate users and authorize their access to resources. An AAA policy consists of the following phases.</p><ul><li>During AAA processing, the identity extraction phase defines which methods the AAA policy uses to extract the claimed identity of the service requester.</li><li>After the claimed identity of the service requester is extracted, an AAA policy authenticates the claimed identity. The authentication process can use internal or external resources.</li><li>After authentication credentials are received, an AAA policy can map these credentials.</li><li>After client authentication, an AAA policy identifies the specific resource that is being requested by that client.</li><li>After requested resources are identified, you might need to map extracted resource to a form that is compatible with the authorization method.</li><li>After the service requester is authenticated from the extracted identity, an AAA policy authorizes the client to the requested resource.</li><li>After client-authorization, an AAA policy can run postprocessing activities.</li></ul>",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,
@@ -216,6 +228,10 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,
+						"provider_target": schema.StringAttribute{
+							MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -240,6 +256,11 @@ func (d *AAAPolicyDataSource) Read(ctx context.Context, req datasource.ReadReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
 	o := models.AAAPolicy{
 		AppDomain: data.AppDomain,
 	}
@@ -249,11 +270,11 @@ func (d *AAAPolicyDataSource) Read(ctx context.Context, req datasource.ReadReque
 		path = path + "/" + data.Id.ValueString()
 	}
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}

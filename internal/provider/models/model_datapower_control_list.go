@@ -41,9 +41,11 @@ type ControlList struct {
 	Value             types.List                  `tfsdk:"value"`
 	CaseInsensitive   types.Bool                  `tfsdk:"case_insensitive"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var ControlListObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

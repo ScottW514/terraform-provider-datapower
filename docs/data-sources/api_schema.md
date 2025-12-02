@@ -29,6 +29,7 @@ data "datapower_api_schema" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `graphql_schema` (String) Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `json_schema` (String) Specify the schema URL for JSON message validation. For example, <tt>local:///petstore.json#/definitions/Pet</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 - `wsdl_attachment_part` (String) Specify the mime:content to validate in the format <tt>mime:content/@part</tt> . The value must be the unqualified name of the message part. The name is the same as the part attribute on the corresponding <tt>mime:content</tt> component in the WSDL file. When not specified or <tt>*</tt> , the root MIME part is validated. The root MIME part is bound to a <tt>soap:Body</tt> .
 - `wsdl_message_direction_or_name` (String) Specify the <tt>wsdl:input</tt> , <tt>wsdl:output</tt> , or <tt>wsdl:fault</tt> for the traffic to validate. The value must be the name of one or more WSDL input, output, or fault components, or <tt>#input</tt> or <tt>#output</tt> for the request and response directions respectively, or <tt>*</tt> for all inputs, outputs, and faults in the WSDL file. When specified and not <tt>*</tt> , only messages that match the specified direction or name are valid. Faults are valid for the response direction.

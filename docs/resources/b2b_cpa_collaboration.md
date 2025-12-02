@@ -56,6 +56,7 @@ resource "datapower_b2b_cpa_collaboration" "test" {
   - Not Valid When: `service`=`urn:oasis:names:tc:ebxml-msg:service`
 - `process_specification` (String) Specify the location of the process specification document that defines the interactions between the internal and external partners. For example, <tt>http://www.rosettanet.org/processes/3A4</tt> .
   - CLI Alias: `process-spec`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `receiver_msh_setting` (String) Specify the name of the default MSH signal receiver to receive ebMS MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .
   - CLI Alias: `receiver-msh-setting`
   - Reference to: `datapower_b2b_cpa_receiver_setting:id`

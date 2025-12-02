@@ -38,9 +38,11 @@ type LogLabel struct {
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var LogLabelObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

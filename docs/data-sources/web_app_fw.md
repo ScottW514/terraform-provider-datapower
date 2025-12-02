@@ -29,6 +29,7 @@ data "datapower_web_app_fw" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -65,6 +66,7 @@ Read-Only:
 - `http_log_cor_id_label` (String) Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `remote_address` (String) Specify the host name or IP address of the backend server. If the backend requires TLS, ensure that the TLS client profile is configured for client (forward) connections.
 - `remote_port` (Number) Specify the port on the remote server.
 - `request_side_security` (Boolean) If this property is disabled, no request side security policies will be enforced and all requests will be allowed through.

@@ -54,6 +54,7 @@ resource "datapower_assembly_action_validate" "test" {
   - Default value: `message`
 - `output` (String) <p>Specify the variable in the API context to store the results. For a JSON schema, adds any default values that are missing from the payload.</p><p>Without an output variable, the results are not stored. By default, no output variable is specified.</p><p>If the validation fails, no output is stored.</p>
   - CLI Alias: `output`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `schema` (String) Schema
   - CLI Alias: `schema`
   - Reference to: `datapower_api_schema:id`

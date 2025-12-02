@@ -23,11 +23,14 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -35,9 +38,10 @@ import (
 )
 
 type OAuthSupportedClientWOList struct {
-	Id        types.String `tfsdk:"id"`
-	AppDomain types.String `tfsdk:"app_domain"`
-	Result    types.List   `tfsdk:"result"`
+	ProviderTarget types.String `tfsdk:"provider_target"`
+	Id             types.String `tfsdk:"id"`
+	AppDomain      types.String `tfsdk:"app_domain"`
+	Result         types.List   `tfsdk:"result"`
 }
 
 var (
@@ -61,6 +65,14 @@ func (d *OAuthSupportedClientDataSource) Schema(ctx context.Context, req datasou
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>An OAuth client profile is the basic building block for an OAuth client group. When you create an OAuth client profile, you define its role. As you select the role, the WebGUI refreshes to display the appropriate properties.</p><p>You can create the following types of OAuth client profiles. <ul><li>A client profile for authorization server endpoints: authorization endpoint and token endpoint.</li><li>A client profile for the enforcement point for the resource server.</li><li>A client profile for both authorization server endpoints and the enforcement point.</li></ul></p><p>When creating an OAuth client profile, you can use stylesheets or GatewayScript files for customization.</p><p>You can create a customized OAuth client profile that defines any combination of roles. Customization uses stylesheets or GatewayScript files that must be in the local: or store: directory. For information about the operations that these stylesheets or GatewayScript files must define, see the topic in IBM Knowledge Center.</p>",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,
@@ -217,6 +229,10 @@ func (d *OAuthSupportedClientDataSource) Schema(ctx context.Context, req datasou
 						},
 						"oauth_features":     models.GetDmOAuthFeaturesDataSourceSchema("Specify which features to enable.", "oauth-features", ""),
 						"dependency_actions": actions.ActionsSchema,
+						"provider_target": schema.StringAttribute{
+							MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -241,6 +257,11 @@ func (d *OAuthSupportedClientDataSource) Read(ctx context.Context, req datasourc
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
 	o := models.OAuthSupportedClientWO{
 		AppDomain: data.AppDomain,
 	}
@@ -250,11 +271,11 @@ func (d *OAuthSupportedClientDataSource) Read(ctx context.Context, req datasourc
 		path = path + "/" + data.Id.ValueString()
 	}
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}

@@ -29,6 +29,7 @@ data "datapower_b2b_cpa_sender_setting" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -59,6 +60,7 @@ Read-Only:
 - `max_retries` (Number) Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.
 - `password_alias` (String) Password alias
 - `persist_duration` (Number) Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `retry` (Boolean) Retransmit unacknowledged messages
 - `retry_interval` (Number) Specify the interval in seconds between retransmit attempts. Enter a value in the range 1 - 86400. The default value in 1800.
 - `sign_digest_algorithm` (String) Signing digest algorithm

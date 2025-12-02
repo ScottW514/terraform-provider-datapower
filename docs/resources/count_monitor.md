@@ -60,6 +60,7 @@ resource "datapower_count_monitor" "test" {
   - CLI Alias: `measure`
   - Choices: `requests`, `responses`, `xpath`, `errors`
   - Default value: `requests`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `source` (String) Select how monitoring is applied to IP addresses. This setting is meaningful only if an associated traffic definition contains and inclusive or exclusive IP address criterion. The default is All.
   - CLI Alias: `source`
   - Choices: `all`, `each-ip`, `ip-from-header`

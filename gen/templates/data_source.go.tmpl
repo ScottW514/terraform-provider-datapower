@@ -24,20 +24,26 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 {{- if not .Singleton}}
 type {{.Name}}{{if .WriteOnlyAttrs}}WO{{end}}List struct {
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 	{{- range  .Attributes}}
 		{{- if eq .Name "Id"}}
 	Id        types.String       `tfsdk:"id"`
@@ -70,6 +76,14 @@ func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaR
 	resp.Schema = schema.Schema{
 		MarkdownDescription: {{quote .Description}},
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 {{- $root := .}}
 {{- if not .Singleton}}
 	{{- if ne .Name "Domain"}}
@@ -94,6 +108,12 @@ func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaR
     {{- template "renderSchemaAttribute" (dict "Attr" . "SchemaPrefix" "schema." "ValidatorPrefix" "" "DmTypeCallPrefix" "models." "DmTypeCallSuffix" "DataSourceSchema" "IsList" (isList .) "IsDataSource" true "IsResource" false "IncludeWriteOnly" false "Root" $root)}}
 {{- end}}
 						"dependency_actions": actions.ActionsSchema,
+{{- if not .Singleton}}
+						"provider_target": schema.StringAttribute{
+							MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+							Computed:            true,
+						},
+{{- end}}
 					},
 {{- if not .Singleton}}
 				},
@@ -121,6 +141,11 @@ func (d *{{.Name}}DataSource) Read(ctx context.Context, req datasource.ReadReque
 		return
 	}
 
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
+
 {{- if not .Singleton}}
 	o := models.{{.Name}}{{if .WriteOnlyAttrs}}WO{{end}}{
 		{{- if hasDomainAttribute .Attributes}}
@@ -141,12 +166,12 @@ func (d *{{.Name}}DataSource) Read(ctx context.Context, req datasource.ReadReque
 	{{- end}}
 {{- end}}
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 {{- if hasDomainAttribute .Attributes}}
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}

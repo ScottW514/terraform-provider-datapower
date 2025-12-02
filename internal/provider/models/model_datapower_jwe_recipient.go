@@ -43,6 +43,7 @@ type JWERecipient struct {
 	Certificate       types.String                `tfsdk:"certificate"`
 	UnprotectedHeader types.List                  `tfsdk:"unprotected_header"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var JWERecipientSSKeyCondVal = validators.Evaluation{
@@ -78,6 +79,7 @@ var JWERecipientCertificateIgnoreVal = validators.Evaluation{
 }
 
 var JWERecipientObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

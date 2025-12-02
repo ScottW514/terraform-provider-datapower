@@ -46,6 +46,7 @@ resource "datapower_wsrr_saved_search_subscription" "test" {
   - CLI Alias: `method`
   - Choices: `manual`, `poll`, `automatic`
   - Default value: `poll`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.
   - CLI Alias: `refresh-interval`
   - Range: `60`-`4294967`

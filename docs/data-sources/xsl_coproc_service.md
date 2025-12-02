@@ -29,6 +29,7 @@ data "datapower_xsl_coproc_service" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -56,6 +57,7 @@ Read-Only:
 - `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
 - `local_port` (Number)
 - `priority` (String)
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_server` (String)
 - `ssl_server_config_type` (String)
 - `ssl_sni_server` (String)

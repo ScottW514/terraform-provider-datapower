@@ -29,6 +29,7 @@ data "datapower_duration_monitor" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `measure` (String) Select which portion of the transaction cycle to monitor. The default is Messages.
 - `message_type` (String) Select the message type monitored by this message-count monitor.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).
 
 <a id="nestedatt--result--dependency_actions"></a>

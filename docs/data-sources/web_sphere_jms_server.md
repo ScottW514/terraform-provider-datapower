@@ -29,6 +29,7 @@ data "datapower_web_sphere_jms_server" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -54,6 +55,7 @@ Read-Only:
 - `memory_threshold` (Number) Specify the maximum memory allocation for pending messages in bytes. Enter a value in the range 10485760 - 1073741824. The default value is 268435456.
 - `messaging_bus` (String) <p>Specify the SIB to access the remote WebSphere JMS service provider.</p><p>A SIB supports applications that use message-based and service-oriented architectures. A bus is a group of interconnected servers and clusters that were added as members of the bus. Applications connect to a bus at one of the messaging engines that is associated with its bus members.</p><p>If you have access to the WebSphere Application Server administrative console, you can view bus information through the <b>Service integration/Buses</b> menu. This information includes bus members and messaging engines, queues, topics, and the bus-specific default topic space.</p>
 - `password_alias` (String) Password alias
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `retry_interval` (Number) Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 1.
 - `sessions_per_connection` (Number) Specify the maximum number of concurrent multiplexed sessions that a single connection can support. Enter a value in the range 1 - 65535. The default is 100. <p>Session requests in excess of the defined value trigger the establishment of a new connection to the server. A new connection cannot be established unless the number of current connections is less than the value set for total connections.</p><p>For example, with values of 20 sessions per connection, 5 total connections, and 3 active fully subscribed connections, a new session request generates the establishment of a fourth connection.</p>
 - `ssl_cipher` (String) Specify the IBM cipher specification when the TLS profile establishes a secure connection with the WebSphere JMS message provider. When you specify a TLS profile, the cipher suite that is associated with the profile is replaced by an IBM default cipher specification. The default value is <tt>SSL_RSA_WITH_NULL_MD5</tt> .

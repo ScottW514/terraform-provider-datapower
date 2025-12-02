@@ -29,6 +29,7 @@ data "datapower_import_package" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -52,6 +53,7 @@ Read-Only:
 - `on_startup` (Boolean) Specify whether to import the import package on startup. The default behavior is to import on startup. <ul><li>When enabled, the import package is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
 - `overwrite_files` (Boolean) Specify whether to overwrite existing files. When enabled, files in the package overwrite any file of the same path and name that already exist. The default behavior is to overwrite files.
 - `overwrite_objects` (Boolean) Specify whether to overwrite existing objects. When enabled, objects in the package overwrite any object of the same class and name that already exist. The default behavior is to overwrite objects.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `url` (String) Specify the URL of the import package. The tool does not support SCP and SFTP protocols. All other URL protocols are available; for example, HTTP, HTTPS, or FTP.
 - `user_summary` (String) Comments
 

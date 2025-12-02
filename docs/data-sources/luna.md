@@ -24,6 +24,7 @@ data "datapower_luna" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -39,6 +40,7 @@ Optional:
 Read-Only:
 
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `remote_address` (String) Host
 - `security_option` (String) Specify the security option for connection.
 - `server_cert` (String) Encryption certificate

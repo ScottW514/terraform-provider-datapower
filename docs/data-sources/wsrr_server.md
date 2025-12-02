@@ -29,6 +29,7 @@ data "datapower_wsrr_server" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `password_alias` (String) Specify the password alias for authentication with the server. The password alias references the password. Leave blank when authentication is not required.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `server_prefix` (String) WSRR instance prefix
 - `soap_url` (String) Specify the URL of SOAP API endpoint on the WSRR server. The port in the URL depends on whether the server has enabled global security. A typical default URL is similar to <tt>https://192.18.1.120:9443/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> or <tt>http://192.18.1.120:9080/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> .
 - `ssl_client` (String) TLS client profile

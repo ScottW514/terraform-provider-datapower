@@ -23,11 +23,14 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -35,9 +38,10 @@ import (
 )
 
 type NameValueProfileList struct {
-	Id        types.String `tfsdk:"id"`
-	AppDomain types.String `tfsdk:"app_domain"`
-	Result    types.List   `tfsdk:"result"`
+	ProviderTarget types.String `tfsdk:"provider_target"`
+	Id             types.String `tfsdk:"id"`
+	AppDomain      types.String `tfsdk:"app_domain"`
+	Result         types.List   `tfsdk:"result"`
 }
 
 var (
@@ -61,6 +65,14 @@ func (d *NameValueProfileDataSource) Schema(ctx context.Context, req datasource.
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Many HTTP things are expressed as name value pairs. These include HTTP headers, cookie values, url-encoded query strings, and url-encoded request messages. This profile provides a mechanism for what kinds of names are expected and for each kind of name what properties should be enforced on the corresponding values. When a name-value pair is not validated successfully that may generate an error, the pair might be stripped from the transaction, or the value may be mapped to another default value.",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,
@@ -124,6 +136,10 @@ func (d *NameValueProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,
+						"provider_target": schema.StringAttribute{
+							MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -148,6 +164,11 @@ func (d *NameValueProfileDataSource) Read(ctx context.Context, req datasource.Re
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
 	o := models.NameValueProfile{
 		AppDomain: data.AppDomain,
 	}
@@ -157,11 +178,11 @@ func (d *NameValueProfileDataSource) Read(ctx context.Context, req datasource.Re
 		path = path + "/" + data.Id.ValueString()
 	}
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}

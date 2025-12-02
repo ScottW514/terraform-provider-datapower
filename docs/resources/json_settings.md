@@ -52,6 +52,7 @@ resource "datapower_json_settings" "test" {
   - CLI Alias: `max-value-string-length`
   - Range: `8192`-`5368709121`
   - Default value: `8192`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

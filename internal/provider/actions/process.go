@@ -20,26 +20,20 @@ package actions
 import (
 	"context"
 	"fmt"
-	"slices"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 )
 
 type processData struct {
-	// [domain][objectType][objectId]{action,...}
-	saveDomains []string
-	Provider    *tfutils.ProviderData
-	stateMu     sync.Mutex
+	Provider *tfutils.ProviderData
 }
 
-var Process = processData{
-	stateMu: sync.Mutex{},
-}
+var Process = processData{}
 
 type qstate int
 
@@ -54,16 +48,7 @@ const (
 
 // Called by resources prior to create/update runs.
 // Triggers quiesce calls, and queues the rest for post-process execution. Duplicate actions on the same domain/resource are ignored.
-func PreProcess(ctx context.Context, diag *diag.Diagnostics, srcDomain string, actions []*DependencyAction, operation Operation, saveDefault bool) {
-	Process.stateMu.Lock()
-	if !slices.Contains(Process.saveDomains, srcDomain) {
-		Process.saveDomains = append(Process.saveDomains, srcDomain)
-	}
-	if saveDefault && !slices.Contains(Process.saveDomains, "default") {
-		Process.saveDomains = append(Process.saveDomains, "default")
-	}
-	Process.stateMu.Unlock()
-
+func PreProcess(ctx context.Context, diag *diag.Diagnostics, srcDomain string, actions []*DependencyAction, operation Operation, saveDefault bool, target types.String) {
 	for _, item := range actions {
 		var name string
 		if (operation == Create && !item.OnCreate.ValueBool()) ||
@@ -79,7 +64,7 @@ func PreProcess(ctx context.Context, diag *diag.Diagnostics, srcDomain string, a
 			name = item.TargetId.ValueString()
 		}
 
-		submitAction(ctx, diag, item.TargetDomain.ValueString(), item.TargetType.ValueString(), name, item.Action.ValueString(), false)
+		submitAction(ctx, diag, item.TargetDomain.ValueString(), item.TargetType.ValueString(), name, item.Action.ValueString(), false, target)
 
 		if diag.HasError() {
 			return
@@ -89,7 +74,7 @@ func PreProcess(ctx context.Context, diag *diag.Diagnostics, srcDomain string, a
 }
 
 // Called prior to exit of resource Create, Update and Delete operations
-func PostProcess(ctx context.Context, diag *diag.Diagnostics, actions []*DependencyAction, operation Operation) {
+func PostProcess(ctx context.Context, diag *diag.Diagnostics, actions []*DependencyAction, operation Operation, target types.String) {
 	for _, item := range actions {
 		if (operation == Create && !item.OnCreate.ValueBool()) ||
 			(operation == Update && !item.OnUpdate.ValueBool()) ||
@@ -106,7 +91,7 @@ func PostProcess(ctx context.Context, diag *diag.Diagnostics, actions []*Depende
 			name = domain
 		}
 
-		submitAction(ctx, diag, domain, targetType, name, action, true)
+		submitAction(ctx, diag, domain, targetType, name, action, true, target)
 
 		if diag.HasError() {
 			return
@@ -114,22 +99,7 @@ func PostProcess(ctx context.Context, diag *diag.Diagnostics, actions []*Depende
 	}
 }
 
-// Called upon exit of provider Serve method
-func SaveDomains() error {
-	for _, domain := range Process.saveDomains {
-		res, err := Process.Provider.Client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), `{"SaveConfig": 0}`)
-		if err == nil {
-			if res.StatusCode() != 200 {
-				return fmt.Errorf("failed to save domain `%s`. status: %d body: %s", domain, res.StatusCode(), res.Body())
-			}
-		} else if !strings.Contains(err.Error(), "status 401") {
-			return fmt.Errorf("failed to save domain `%s`. error: %s", domain, err.Error())
-		}
-	}
-	return nil
-}
-
-func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectType, objectId, action string, postAction bool) {
+func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectType, objectId, action string, postAction bool, target types.String) {
 	postStr := "pre"
 	if postAction {
 		postStr = "post"
@@ -137,7 +107,7 @@ func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectTyp
 
 	// If object already in proper quiesce state, skip
 	if action == "quiesce" {
-		qState, err := getQuiesceState(domain, objectType, objectId)
+		qState, err := getQuiesceState(domain, objectType, objectId, target)
 		if err != nil {
 			diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), got error: %s",
 				postStr, action, domain, objectType, objectId, err))
@@ -149,7 +119,7 @@ func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectTyp
 	}
 
 	var cbUrl = ""
-	res, err := Process.Provider.Client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), getBody(domain, objectType, objectId, action, postAction))
+	res, err := Process.Provider.Client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), getBody(domain, objectType, objectId, action, postAction), target)
 	if err == nil {
 		if res.StatusCode() == 200 {
 			return
@@ -188,7 +158,7 @@ func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectTyp
 				postStr, action, domain, objectType, objectId))
 			return
 		case <-ticker.C:
-			status, resBody, err := getOperationState(cbUrl)
+			status, resBody, err := getOperationState(cbUrl, target)
 			if err != nil && !strings.Contains(err.Error(), "status 404") {
 				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), error while reading action submission status: %s",
 					postStr, action, domain, objectType, objectId, err))
@@ -219,7 +189,7 @@ func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectTyp
 					postStr, action, domain, objectType, objectId))
 				return
 			case <-ticker.C:
-				qState, err := getQuiesceState(domain, objectType, objectId)
+				qState, err := getQuiesceState(domain, objectType, objectId, target)
 				if err != nil {
 					diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), got error: %s",
 						postStr, action, domain, objectType, objectId, err))
@@ -244,7 +214,7 @@ func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectTyp
 					postStr, action, domain, objectType, objectId))
 				return
 			case <-ticker.C:
-				_, cErr := Process.Provider.Client.Get(fmt.Sprintf("/mgmt/actionqueue/%s/operations", domain))
+				_, cErr := Process.Provider.Client.Get(fmt.Sprintf("/mgmt/actionqueue/%s/operations", domain), target)
 				if cErr != nil && !strings.Contains(cErr.Error(), "status 404") {
 					diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), while waiting for domain to restart got error: %s",
 						postStr, action, domain, objectType, objectId, cErr))
@@ -275,8 +245,8 @@ func getBody(domain, objectType, objectId, action string, postAction bool) strin
 	return strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(body, "{type}", actionMap[objectType].ObjectName), "{name}", objectId), "{domain}", domain)
 }
 
-func getQuiesceState(domain, objectType, objectId string) (qstate, error) {
-	sRes, err := Process.Provider.Client.Get(fmt.Sprintf("/mgmt/status/%s/%sSummary", domain, actionMap[objectType].ObjectName))
+func getQuiesceState(domain, objectType, objectId string, target types.String) (qstate, error) {
+	sRes, err := Process.Provider.Client.Get(fmt.Sprintf("/mgmt/status/%s/%sSummary", domain, actionMap[objectType].ObjectName), target)
 	if err != nil {
 		return errorState, err
 	}
@@ -316,8 +286,8 @@ func getQuiesceState(domain, objectType, objectId string) (qstate, error) {
 	return errorState, fmt.Errorf("invalid Summary response from host: %s", sRes.Raw)
 }
 
-func getOperationState(cbUrl string) (string, string, error) {
-	cbRes, err := Process.Provider.Client.Get(cbUrl)
+func getOperationState(cbUrl string, target types.String) (string, string, error) {
+	cbRes, err := Process.Provider.Client.Get(cbUrl, target)
 	if err == nil {
 		if status := cbRes.Get("status"); status.Exists() {
 			if status.String() == "error" {

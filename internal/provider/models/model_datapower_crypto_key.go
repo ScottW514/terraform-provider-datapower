@@ -39,9 +39,11 @@ type CryptoKey struct {
 	Filename          types.String                `tfsdk:"filename"`
 	Alias             types.String                `tfsdk:"alias"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var CryptoKeyObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"filename":           types.StringType,

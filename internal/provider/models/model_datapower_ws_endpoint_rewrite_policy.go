@@ -44,9 +44,11 @@ type WSEndpointRewritePolicy struct {
 	WsEndpointSubscriptionRemoteRule  types.List                  `tfsdk:"ws_endpoint_subscription_remote_rule"`
 	WsEndpointSubscriptionPublishRule types.List                  `tfsdk:"ws_endpoint_subscription_publish_rule"`
 	DependencyActions                 []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                    types.String                `tfsdk:"provider_target"`
 }
 
 var WSEndpointRewritePolicyObjectType = map[string]attr.Type{
+	"provider_target":                       types.StringType,
 	"id":                                    types.StringType,
 	"app_domain":                            types.StringType,
 	"user_summary":                          types.StringType,

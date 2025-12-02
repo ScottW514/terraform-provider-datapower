@@ -39,9 +39,11 @@ type URLRefreshPolicy struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	UrlRefreshRule    types.List                  `tfsdk:"url_refresh_rule"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var URLRefreshPolicyObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

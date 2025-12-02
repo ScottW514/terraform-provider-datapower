@@ -40,15 +40,18 @@ type PasswordAlias struct {
 	PasswordWo        types.String                `tfsdk:"password_wo"`
 	PasswordWoVersion types.Int64                 `tfsdk:"password_wo_version"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 type PasswordAliasWO struct {
 	Id                types.String                `tfsdk:"id"`
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var PasswordAliasObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,
@@ -57,6 +60,7 @@ var PasswordAliasObjectType = map[string]attr.Type{
 	"dependency_actions":  actions.ActionsListType,
 }
 var PasswordAliasObjectTypeWO = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

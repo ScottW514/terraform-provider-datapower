@@ -139,6 +139,7 @@ resource "datapower_assembly_action_user_security" "test" {
   - CLI Alias: `pass-context-var`
   - Required When: `extract_identity_method`=`context-var`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `query_parameters` (String) Query parameters
   - CLI Alias: `query-parameters`
   - Not Valid When: `extract_identity_method`!=`redirect`

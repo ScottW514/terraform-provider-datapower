@@ -81,6 +81,7 @@ resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   - CLI Alias: `polling-interval`
   - Range: `0`-`65535`
   - Default value: `30`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `publish_topic_string` (String) Specify the publish topic string associated with the queue manager. The topic string describes the subject of the information that is published in a publish or subscribe message. The handler publishes messages to this topic string. If the put queue is specified, this property is ignored.
   - CLI Alias: `publish-topic-string`
 - `put_queue` (String) Specify the the name of the put queue associated with the queue manager. The handler puts server-originated reply messages to this queue.

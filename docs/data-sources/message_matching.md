@@ -29,6 +29,7 @@ data "datapower_message_matching" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `ip_address` (String) Use an IP network address and prefix length to define a contiguous range of IP addresses included in this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).
 - `ip_exclude` (String) Use an IP network address and prefix length to define a contiguous range of IP addresses excluded from this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `request_url` (String) Provide a literal or wildcard expression to define a URL set included in this traffic definition. The following wildcard characters are available when defining the URL set. <table><tr><td valign="top">asterisk (*)</td><td valign="top">Matches 0 or more occurrences of any character</td></tr><tr><td valign="top">question mark (?)</td><td valign="top">Matches one occurrence of any single character</td></tr><tr><td valign="top">brackets ( [ ] )</td><td valign="top">Defines a character or numeric range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</td></tr></table>
 - `user_summary` (String) Comments
 

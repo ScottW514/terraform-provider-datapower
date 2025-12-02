@@ -40,9 +40,11 @@ type GWScriptSettings struct {
 	ReloadNeeded           types.Bool                  `tfsdk:"reload_needed"`
 	TerminateTime          types.Int64                 `tfsdk:"terminate_time"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var GWScriptSettingsObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"enabled":                  types.BoolType,
 	"user_summary":             types.StringType,
 	"frozen_enabled":           types.BoolType,

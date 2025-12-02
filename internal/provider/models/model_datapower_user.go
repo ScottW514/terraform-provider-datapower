@@ -42,6 +42,7 @@ type User struct {
 	SnmpCreds         types.List                  `tfsdk:"snmp_creds"`
 	HashedSnmpCreds   types.List                  `tfsdk:"hashed_snmp_creds"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 type UserWO struct {
 	Id                types.String                `tfsdk:"id"`
@@ -51,6 +52,7 @@ type UserWO struct {
 	SnmpCreds         types.List                  `tfsdk:"snmp_creds"`
 	HashedSnmpCreds   types.List                  `tfsdk:"hashed_snmp_creds"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var UserGroupNameCondVal = validators.Evaluation{
@@ -70,6 +72,7 @@ var UserHashedSnmpCredsIgnoreVal = validators.Evaluation{
 }
 
 var UserObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"user_summary":        types.StringType,
 	"password_wo":         types.StringType,
@@ -81,6 +84,7 @@ var UserObjectType = map[string]attr.Type{
 	"dependency_actions":  actions.ActionsListType,
 }
 var UserObjectTypeWO = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"user_summary":       types.StringType,
 	"access_level":       types.StringType,

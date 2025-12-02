@@ -29,6 +29,7 @@ data "datapower_api_rule" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `dynamic_actions` (Attributes List) Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence. (see [below for nested schema](#nestedatt--result--dynamic_actions))
 - `dynamic_actions_mode` (Boolean) Specify whether to use dynamic actions instead of explicit actions. Dynamic actions take configuration values at run time and override the default properties in API actions. API rules that contain dynamic actions can be included in user-defined policies that API Connect advertises and makes available in the API Connect assembly editor.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

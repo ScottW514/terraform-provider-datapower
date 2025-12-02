@@ -31,6 +31,7 @@ resource "datapower_gw_script_settings" "test" {
 - `frozen_enabled` (Boolean) Specify whether to freeze the GatewayScript built-in object prototypes. <ul><li>When frozen, you cannot modify, add, or remove prototypes. This setting is the default setting.</li><li>When not frozen, you can manipulate prototypes.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>
   - CLI Alias: `freeze-prototype`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `terminate_time` (Number) Specify the maximum duration in seconds that a GatewayScript action can continuously use CPU without yielding back to the system event loop. When the processing of a GatewayScript action exceeds the duration, processing is stopped and an error is logged. Enter a value in the range 1 - 300. The default value is 0, which indicates unlimited.
   - CLI Alias: `max-processing-duration`
   - Range: `0`-`300`

@@ -75,6 +75,7 @@ resource "datapower_snmp_settings" "test" {
   - CLI Alias: `community` (see [below for nested schema](#nestedatt--policies))
 - `policies_mq` (Attributes List) SNMPv1/v2c Communities
   - CLI Alias: `snmp-community` (see [below for nested schema](#nestedatt--policies_mq))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `security_level` (String) The minimum security level required for incoming SNMPv3 Get and Set requests. The default is Authentication, Privacy.
   - CLI Alias: `security-level`
   - Choices: `noAuthNoPriv`, `authNoPriv`, `authPriv`

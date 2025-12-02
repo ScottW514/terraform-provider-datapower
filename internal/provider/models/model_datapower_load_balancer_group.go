@@ -54,6 +54,7 @@ type LoadBalancerGroup struct {
 	LbGroupAffinityConf         *DmLBGroupAffinity          `tfsdk:"lb_group_affinity_conf"`
 	MonitoredCookies            types.List                  `tfsdk:"monitored_cookies"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget              types.String                `tfsdk:"provider_target"`
 }
 
 var LoadBalancerGroupWLMRetrievalIgnoreVal = validators.Evaluation{
@@ -155,6 +156,7 @@ var LoadBalancerGroupMonitoredCookiesIgnoreVal = validators.Evaluation{
 }
 
 var LoadBalancerGroupObjectType = map[string]attr.Type{
+	"provider_target":                 types.StringType,
 	"id":                              types.StringType,
 	"app_domain":                      types.StringType,
 	"user_summary":                    types.StringType,

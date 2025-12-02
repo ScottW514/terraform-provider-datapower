@@ -29,6 +29,7 @@ data "datapower_cors_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -45,6 +46,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rule` (List of String) Specify the CORS rules to to apply to the CORS policy. A CORS rule defines allowed origins and other CORS properties. The first rule that is valid is applied to the inbound CORS request. If no rule applies, the CORS request is rejected.
 - `user_summary` (String) Comments
 

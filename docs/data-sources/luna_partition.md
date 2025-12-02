@@ -29,6 +29,7 @@ data "datapower_luna_partition" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `partition_name` (String) Specify the partition name for key storage. The name identifies the Luna partition. The minimum length is 1 character. The maximum length is 32 characters.
 - `partition_serial` (String) Partition serial
 - `password_alias` (String) Password alias
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

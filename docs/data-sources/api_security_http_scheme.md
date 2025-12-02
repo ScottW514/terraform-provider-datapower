@@ -29,6 +29,7 @@ data "datapower_api_security_http_scheme" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `bearer_validation_method` (String) Bearer validation method
 - `bearer_validation_tls_profile` (String) Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `scheme` (String) Specify the HTTP authentication security scheme. The only supported value is <tt>bearer</tt> .
 - `user_summary` (String) Comments
 

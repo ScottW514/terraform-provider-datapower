@@ -39,9 +39,11 @@ type ODR struct {
 	OdrConnectorGroups  types.List                  `tfsdk:"odr_connector_groups"`
 	OdrCustomProperties types.List                  `tfsdk:"odr_custom_properties"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var ODRObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"enabled":               types.BoolType,
 	"user_summary":          types.StringType,
 	"odr_server_name":       types.StringType,

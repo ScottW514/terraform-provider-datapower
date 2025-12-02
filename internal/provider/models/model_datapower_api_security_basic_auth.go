@@ -39,9 +39,11 @@ type APISecurityBasicAuth struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	UserRegistry      types.String                `tfsdk:"user_registry"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var APISecurityBasicAuthObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

@@ -87,6 +87,7 @@ resource "datapower_ssl_client_profile" "test" {
   - Reference to: `datapower_crypto_ident_cred:id`
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--protocols))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `require_closure_notification` (Boolean) Require closure notification
   - CLI Alias: `require-closure-notification`
   - Default value: `true`

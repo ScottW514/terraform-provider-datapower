@@ -41,6 +41,7 @@ resource "datapower_crypto_certificate" "test" {
 - `ignore_expiration` (Boolean) Specify whether to ignore the expiration date of the certificate. When enabled, the certificate remains in the <tt>up</tt> operational state outside of its expiration values. <p>Although the certificate is in the <tt>up</tt> state, other configurations that reference the certificate use the internal expiration values. In other words, the certificate itself is in the <tt>up</tt> state, but any configuration that references the certificate adheres to the internal expiration values.</p><ul><li>If the certificate is for certificate chain validation in validation credentials and the certificate is invalid, validation fails. Expired certificates cause the validation to fail unless you disable check dates in validation credentials.</li><li>If the certificate is in identification credentials, the DataPower Gateway sends the certificate to the peer. The peer can reject the certificate as invalid.</li></ul>
   - CLI Alias: `ignore-expiration`
   - Default value: `false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

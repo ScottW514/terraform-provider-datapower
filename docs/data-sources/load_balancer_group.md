@@ -29,6 +29,7 @@ data "datapower_load_balancer_group" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -56,6 +57,7 @@ Read-Only:
 - `masquerade_member` (Boolean) If you set this value, the host name presented to the server will be the name of the group instead of the name of the member being used for that specific transaction.
 - `monitored_cookies` (List of String) The DataPower Gateway enforces session affinity when the application server attempts to establish session affinity using one of these cookie names.
 - `never_return_sick_member` (Boolean) During normal operation, when all members of the load-balancing group are down and a new request for that group is made, the first member of the group is automatically selected. If this property is turned on, no attempt will be made to connect under these circumstances.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `retrieve_info` (Boolean) Use this setting to control whether this Load Balancer Group has membership and weight information automatically retrieved from the work load management repository WebSphere Cell. When disabled, the static configuration is used.
 - `try_every_server_before_failing` (Boolean) This property applies only when none of the group members are in the "up" state. If this value is set, every server in the group is tried before failing the connection attempt. It is a "last best-effort" attempt.
 - `user_summary` (String) Comments

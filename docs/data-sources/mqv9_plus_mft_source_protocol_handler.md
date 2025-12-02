@@ -29,6 +29,7 @@ data "datapower_mqv9_plus_mft_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `ignore_backout_errors` (Boolean) Specify whether to ignore backout errors. <ul><li>>When enabled, ignore the error in sending the transfer to the backout queue and commit the transfer from the get queue.</li><li>When not enabled roll back and retry the transfer. This setting is the default value.</li></ul>
 - `polling_interval` (Number) Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `queue_manager` (String) Specify the name of the queue manager that provides messaging services for communicating applications by periodically monitoring or polling queues and by ensuring that messages are directed to the correct receive queue or routed to another queue manager. The local queue manager corresponds to a queue manager running on another host on the network.
 - `retrieve_backout_settings` (Boolean) Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>
 - `use_qm_name_in_url` (Boolean) Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>

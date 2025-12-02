@@ -29,6 +29,7 @@ data "datapower_control_list" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `case_insensitive` (Boolean) Indicates whether the specified values are case-sensitive or case-insensitive.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `type` (String) Specifies whether values are accepted or rejected.
 - `user_summary` (String) A descriptive summary for the configuration.
 - `value` (List of String) <p>Specifies the PCRE to evaluate values.</p><ul><li>An entry of <tt>^foo</tt> indicates a match against only values that start with <tt>foo</tt> .</li><li>An empty list indicates no match against any value.</li><li>A list with only <tt>.*</tt> indicates a match against all values.</li></ul>

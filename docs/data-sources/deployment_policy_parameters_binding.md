@@ -29,6 +29,7 @@ data "datapower_deployment_policy_parameters_binding" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `deployment_policy_parameter` (Attributes List) A list of name-value pairs. The name specifies a variable in a deployment policy, which will be replaced by its associated value before applying the policy to a configuration import. (see [below for nested schema](#nestedatt--result--deployment_policy_parameter))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

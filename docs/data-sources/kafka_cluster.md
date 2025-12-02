@@ -29,6 +29,7 @@ data "datapower_kafka_cluster" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `password_alias` (String) Password alias
 - `property` (Attributes List) Specify extra property to configure the connection to the Kafka server. Use this property for each extra property that is required. Some properties are unsupported and will cause a configuration failure. (see [below for nested schema](#nestedatt--result--property))
 - `protocol` (String) Specify the transport protocol for the Kafka bootstrap connection. The selected protocol is used for the exchange of information between the Kafka server and the bootstrap server. By default, uses a non-encrypted transport.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `retry_interval` (Number) Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 10.
 - `sasl_mechanism` (String) Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.
 - `ssl_client` (String) TLS client profile

@@ -51,6 +51,7 @@ type WebAppResponse struct {
 	NonXmlRule        types.String                `tfsdk:"non_xml_rule"`
 	ErrorPolicy       types.String                `tfsdk:"error_policy"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var WebAppResponseXMLRuleCondVal = validators.Evaluation{
@@ -78,6 +79,7 @@ var WebAppResponseNonXMLRuleIgnoreVal = validators.Evaluation{
 }
 
 var WebAppResponseObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

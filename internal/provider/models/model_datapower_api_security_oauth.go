@@ -43,9 +43,11 @@ type APISecurityOAuth struct {
 	OauthAdvScopeUrl        types.String                `tfsdk:"oauth_adv_scope_url"`
 	OauthAdvScopeTlsProfile types.String                `tfsdk:"oauth_adv_scope_tls_profile"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget          types.String                `tfsdk:"provider_target"`
 }
 
 var APISecurityOAuthObjectType = map[string]attr.Type{
+	"provider_target":             types.StringType,
 	"id":                          types.StringType,
 	"app_domain":                  types.StringType,
 	"user_summary":                types.StringType,

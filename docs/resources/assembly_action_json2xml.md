@@ -49,6 +49,7 @@ resource "datapower_assembly_action_json2xml" "test" {
   - Default value: `message`
 - `output` (String) Specify the variable in the API context to store the converted output message. The results are written to the <tt>body</tt> field of the specified variable. The output variable cannot be a read-only variable. <p>When you want the converted output to be returned to the client, you must use <tt>message</tt> as the output variable.</p><ul><li>Without an output variable, the output variable matches the input variable. For example, if the input variable is <tt>message</tt> , the output variable is <tt>message</tt> . Therefore, if the input variable is <tt>foo</tt> , the output variable is <tt>foo</tt> .</li><li>When the output variable is not <tt>message</tt> , the content is converted but not returned to the client.</li></ul>
   - CLI Alias: `output`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `root_element_name` (String) Specify the name of the root element that wraps the resultant XML document. The default value is <tt>json</tt> . <p>The root element is generated with the specified name when one of the following conditions is met.</p><ul><li>The output include the root element.</li><li>The input has no root object.</li></ul>
   - CLI Alias: `root-element`
   - Default value: `json`

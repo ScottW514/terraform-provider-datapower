@@ -49,6 +49,7 @@ resource "datapower_mpgw_error_action" "test" {
   - CLI Alias: `local-url`
   - Required When: `type`=`static`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `reason_phrase` (String) Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.
   - CLI Alias: `reason-phrase`
   - Not Valid When: `type`!=`proxy`|`static`

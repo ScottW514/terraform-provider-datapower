@@ -56,6 +56,7 @@ resource "datapower_ssl_sni_server_profile" "test" {
   - Not Valid When: `ssl_options`!=`max-renegotiation`
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--protocols))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `sni_server_default` (String) Specify the TLS server profile to process requests when the client does not send a <tt>ClientHello</tt> SNI extension. <p>The request is rejected when either of the following conditions apply. <ul><li>The client sends a <tt>ClientHello</tt> SNI extension that does not match a hostname in the map.</li><li>The client does not send a <tt>ClientHello</tt> SNI extension</li></ul></p>
   - CLI Alias: `sni-server-default`
   - Reference to: `datapower_ssl_server_profile:id`

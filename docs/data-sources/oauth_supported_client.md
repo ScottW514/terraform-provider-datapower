@@ -29,6 +29,7 @@ data "datapower_oauth_supported_client" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -71,6 +72,7 @@ Read-Only:
 - `oauth_role` (Attributes) Identifies the role of the client when interacting with a request to access a protected resource.
   - CLI Alias: `oauth-role` (see [below for nested schema](#nestedatt--result--oauth_role))
 - `oidc_id_token_generator` (String) <p>Specify the JWT generator configuration that generates an ID token. The JWT generator configuration must meet the following requirements.</p><ul><li>Must configure "Issuer" for the "iss" claim.</li><li>Must support "Issued at" for the "iat" claim.</li><li>Must support signing of the JWT.</li></ul><p>The following items are added to the JWT.</p><ul><li>Authenticated resource owner is added as the value of the "sub" claim.</li><li>Client ID is added as part of the "aud" claim.</li><li>"Validity period" is used to generate the value of the "exp" claim.</li><li>Requested "nonce" is used for the "nonce" claim.</li></ul>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `redirect_uri` (List of String) <p>Defines redirection URIs that the OAuth client supports to exchange tokens. Specify each redirection URI as a PCRE.</p><p>Redirection URIs help to detect malicious clients and prevent phishing attacks. The authorization endpoint must have the registered redirection URIs before the authorization endpoint can validate the authorization request from the client. For mobile applications, the redirection URI can be an application URL; for example, <tt>mobiletrafficapp://</tt> that is defined with the <tt>^mobiletrafficapp:\/\/?</tt> PCRE.</p>
 - `refresh_token_allowed` (Number) <p>Sets the maximum number of refresh tokens that can be generated for a specific permission set. A permission set is defined as a combination of the resource owner, application, and protected resources. For example, <tt>jack,mobileapp1,scope1</tt> and <tt>john,mobileapp1,scope1</tt> are different permission sets. When an application asks the resource owner for access to protected resources again, the application receives a new permission set with its own counter for refresh tokens.</p><p>Enter a value in the range 0 - 4096. The default value is 0. Remember that refresh tokens and access tokens are distributed in pairs.</p>
 - `refresh_token_life_time` (Number) Sets the lifetime for the refresh token in seconds. Enter a value in the range 2 - 252979200. The default value is 5400. The lifetime for a refresh token must be longer than that for the corresponding access token.

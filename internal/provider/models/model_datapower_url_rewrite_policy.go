@@ -39,9 +39,11 @@ type URLRewritePolicy struct {
 	Direction         types.String                `tfsdk:"direction"`
 	UrlRewriteRule    types.List                  `tfsdk:"url_rewrite_rule"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var URLRewritePolicyObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"direction":          types.StringType,

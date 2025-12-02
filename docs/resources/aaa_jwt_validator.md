@@ -75,6 +75,7 @@ resource "datapower_aaa_jwt_validator" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `issuer` (String) The optional issuer claim. The "iss" PCRE can be used to verify the JWT. The maximum length of the value is 256 characters.
   - CLI Alias: `iss`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the JWT Validator configuration.
   - CLI Alias: `summary`
 - `username_claim` (String) This field is applicable only when the JWT Validator is used in the AAA identity extraction phase. By default, the value of the "sub" claim is populated as the username element of the identity extraction output. Ensure that the claim specified in this field is present in the incoming JWT. If no match is found, no username is populated in the AAA processing.

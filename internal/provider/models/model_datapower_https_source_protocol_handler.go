@@ -65,6 +65,7 @@ type HTTPSSourceProtocolHandler struct {
 	HeaderTimeout                 types.Int64                 `tfsdk:"header_timeout"`
 	Http2IdleTimeout              types.Int64                 `tfsdk:"http2_idle_timeout"`
 	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                types.String                `tfsdk:"provider_target"`
 }
 
 var HTTPSSourceProtocolHandlerMaxPersistentConnectionsReuseIgnoreVal = validators.Evaluation{
@@ -132,6 +133,7 @@ var HTTPSSourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 }
 
 var HTTPSSourceProtocolHandlerObjectType = map[string]attr.Type{
+	"provider_target":                  types.StringType,
 	"id":                               types.StringType,
 	"app_domain":                       types.StringType,
 	"user_summary":                     types.StringType,

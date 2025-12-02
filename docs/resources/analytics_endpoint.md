@@ -96,6 +96,7 @@ resource "datapower_analytics_endpoint" "test" {
   - Range: `1`-`86400`
   - Default value: `60`
   - Not Valid When: (`persistent_connection`=`false` OR `analytics_server_url` protocol!=`http`|`https`)
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `request_topic` (String) Request topic
   - CLI Alias: `request-topic`
   - Required When: `analytics_server_url` protocol=`dpkafka`

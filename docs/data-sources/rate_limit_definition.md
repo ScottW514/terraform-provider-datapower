@@ -29,6 +29,7 @@ data "datapower_rate_limit_definition" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `interval` (Number) Specify the interval for the rate limit. Enter a value that is greater than or equal to 1. The default value is 1.
 - `is_client` (Boolean) Specify whether to apply the rate limit to the client or to an internal component. By default, the rate limit is applied to the client. Client rate limits return a 429 error when exceeded. When disabled, rate limit information is not applied to the client. Non-client rate limits return a 503 error when exceeded.
 - `parameters` (Attributes List) Parameters (see [below for nested schema](#nestedatt--result--parameters))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rate` (Number) Specify the maximum number of requests that the API gateway can handle in an interval. The value of 0 indicates no limit.
 - `response_headers` (Boolean) Specify whether response headers include rate limit information. By default, headers include rate limit information. When disabled, headers exclude rate limit information.
 - `short_name` (String) Specify the name shown in rate limit response headers. If not specified, the object name is used in response headers.

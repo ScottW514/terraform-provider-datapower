@@ -39,9 +39,11 @@ type DeploymentPolicyParametersBinding struct {
 	UserSummary               types.String                `tfsdk:"user_summary"`
 	DeploymentPolicyParameter types.List                  `tfsdk:"deployment_policy_parameter"`
 	DependencyActions         []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget            types.String                `tfsdk:"provider_target"`
 }
 
 var DeploymentPolicyParametersBindingObjectType = map[string]attr.Type{
+	"provider_target":             types.StringType,
 	"id":                          types.StringType,
 	"app_domain":                  types.StringType,
 	"user_summary":                types.StringType,

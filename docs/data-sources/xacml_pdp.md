@@ -29,6 +29,7 @@ data "datapower_xacml_pdp" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `equal_policies` (Boolean) In case of a top level policy-set is undefined, all policies are evaluated equally, PDP will use the PolicyCombiningAlg for the final decision.
 - `general_policy` (String) The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

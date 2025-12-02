@@ -29,6 +29,7 @@ data "datapower_web_service_monitor" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `frontend_url` (String) Specify the URL that clients use to access the web service. This value cannot be the same value as the endpoint URL.. Wildcards are supported.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `operations` (Attributes List) Operations to monitor (see [below for nested schema](#nestedatt--result--operations))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `transport` (String) Specify the transport type for the endpoint. The transport type must agree with the transport type in the WSDL file.
 - `user_summary` (String) Comments
 - `wsdl_url` (String) Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.

@@ -44,9 +44,11 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
-var _ resource.Resource = &AAAPolicyResource{}
-var _ resource.ResourceWithValidateConfig = &AAAPolicyResource{}
-var _ resource.ResourceWithImportState = &AAAPolicyResource{}
+var (
+	_ resource.Resource                   = &AAAPolicyResource{}
+	_ resource.ResourceWithValidateConfig = &AAAPolicyResource{}
+	_ resource.ResourceWithImportState    = &AAAPolicyResource{}
+)
 
 func NewAAAPolicyResource() resource.Resource {
 	return &AAAPolicyResource{}
@@ -64,6 +66,17 @@ func (r *AAAPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("<p>Define the support to authenticate users and authorize their access to resources. An AAA policy consists of the following phases.</p><ul><li>During AAA processing, the identity extraction phase defines which methods the AAA policy uses to extract the claimed identity of the service requester.</li><li>After the claimed identity of the service requester is extracted, an AAA policy authenticates the claimed identity. The authentication process can use internal or external resources.</li><li>After authentication credentials are received, an AAA policy can map these credentials.</li><li>After client authentication, an AAA policy identifies the specific resource that is being requested by that client.</li><li>After requested resources are identified, you might need to map extracted resource to a form that is compatible with the authorization method.</li><li>After the service requester is authenticated from the extracted identity, an AAA policy authorizes the client to the requested resource.</li><li>After client-authorization, an AAA policy can run postprocessing activities.</li></ul>", "aaapolicy", "").AddActions("flush_cache").String,
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host for this resource. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
 				Required:            true,
@@ -293,23 +306,28 @@ func (r *AAAPolicyResource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	body := data.ToBody(ctx, `AAAPolicy`)
-	_, err := r.pData.Client.Post(data.GetPath(), body)
+	_, err := r.pData.Client.Post(data.GetPath(), body, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
-			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
+			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body, data.ProviderTarget)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
 				return
 			}
 			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -319,10 +337,13 @@ func (r *AAAPolicyResource) Create(ctx context.Context, req resource.CreateReque
 			return
 		}
 	}
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -335,13 +356,18 @@ func (r *AAAPolicyResource) Read(ctx context.Context, req resource.ReadRequest, 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400") {
 			resp.State.RemoveResource(ctx)
 			return
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.State.RemoveResource(ctx)
 			}
@@ -367,14 +393,19 @@ func (r *AAAPolicyResource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `AAAPolicy`))
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `AAAPolicy`), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -385,10 +416,13 @@ func (r *AAAPolicyResource) Update(ctx context.Context, req resource.UpdateReque
 		}
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -402,16 +436,21 @@ func (r *AAAPolicyResource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Delete(data.GetPath() + "/" + data.Id.ValueString())
+	_, err := r.pData.Client.Delete(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
 			resp.Diagnostics.AddWarning("Resource Conflict", fmt.Sprintf("Resource is no longer tracked by Terraform, but may need to be manually deleted on DataPower host. Got error: %s", err))
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -422,10 +461,12 @@ func (r *AAAPolicyResource) Delete(ctx context.Context, req resource.DeleteReque
 		}
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
 
 	resp.State.RemoveResource(ctx)
 }
@@ -454,12 +495,12 @@ func (r *AAAPolicyResource) ImportState(ctx context.Context, req resource.Import
 	var data models.AAAPolicy
 	data.AppDomain = types.StringValue(appDomain)
 	data.Id = types.StringValue(id)
-	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -473,7 +514,6 @@ func (r *AAAPolicyResource) ImportState(ctx context.Context, req resource.Import
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
-
 func (r *AAAPolicyResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
 	var data models.AAAPolicy
 

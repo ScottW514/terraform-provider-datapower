@@ -44,9 +44,11 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
-var _ resource.Resource = &MQv9PlusSourceProtocolHandlerResource{}
-var _ resource.ResourceWithValidateConfig = &MQv9PlusSourceProtocolHandlerResource{}
-var _ resource.ResourceWithImportState = &MQv9PlusSourceProtocolHandlerResource{}
+var (
+	_ resource.Resource                   = &MQv9PlusSourceProtocolHandlerResource{}
+	_ resource.ResourceWithValidateConfig = &MQv9PlusSourceProtocolHandlerResource{}
+	_ resource.ResourceWithImportState    = &MQv9PlusSourceProtocolHandlerResource{}
+)
 
 func NewMQv9PlusSourceProtocolHandlerResource() resource.Resource {
 	return &MQv9PlusSourceProtocolHandlerResource{}
@@ -64,6 +66,17 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Schema(ctx context.Context, req 
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("Configure the IBM MQ v9+ handler to manage IBM MQ protocol communications.", "source-idg-mq", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host for this resource. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
 				Required:            true,
@@ -234,23 +247,28 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Create(ctx context.Context, req 
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	body := data.ToBody(ctx, `MQv9PlusSourceProtocolHandler`)
-	_, err := r.pData.Client.Post(data.GetPath(), body)
+	_, err := r.pData.Client.Post(data.GetPath(), body, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
-			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
+			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body, data.ProviderTarget)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
 				return
 			}
 			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -260,10 +278,13 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Create(ctx context.Context, req 
 			return
 		}
 	}
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -276,13 +297,18 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Read(ctx context.Context, req re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400") {
 			resp.State.RemoveResource(ctx)
 			return
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.State.RemoveResource(ctx)
 			}
@@ -308,14 +334,19 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Update(ctx context.Context, req 
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `MQv9PlusSourceProtocolHandler`))
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `MQv9PlusSourceProtocolHandler`), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -326,10 +357,13 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Update(ctx context.Context, req 
 		}
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -343,16 +377,21 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Delete(ctx context.Context, req 
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Delete(data.GetPath() + "/" + data.Id.ValueString())
+	_, err := r.pData.Client.Delete(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
 			resp.Diagnostics.AddWarning("Resource Conflict", fmt.Sprintf("Resource is no longer tracked by Terraform, but may need to be manually deleted on DataPower host. Got error: %s", err))
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -363,10 +402,12 @@ func (r *MQv9PlusSourceProtocolHandlerResource) Delete(ctx context.Context, req 
 		}
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
 
 	resp.State.RemoveResource(ctx)
 }
@@ -395,12 +436,12 @@ func (r *MQv9PlusSourceProtocolHandlerResource) ImportState(ctx context.Context,
 	var data models.MQv9PlusSourceProtocolHandler
 	data.AppDomain = types.StringValue(appDomain)
 	data.Id = types.StringValue(id)
-	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -414,7 +455,6 @@ func (r *MQv9PlusSourceProtocolHandlerResource) ImportState(ctx context.Context,
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
-
 func (r *MQv9PlusSourceProtocolHandlerResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
 	var data models.MQv9PlusSourceProtocolHandler
 

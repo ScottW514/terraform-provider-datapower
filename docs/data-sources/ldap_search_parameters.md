@@ -29,6 +29,7 @@ data "datapower_ldap_search_parameters" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `ldap_filter_suffix` (String) Specify the suffix of the LDAP filter expression. An LDAP filter expression is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt> , the username is <tt>bob</tt> , and the suffix is <tt>)(objectClass=person))</tt> , the LDAP search filter is <tt>(&amp;(uid=bob)(objectClass=person))</tt> .
 - `ldap_returned_attribute` (String) Specify the LDAP attribute to return for each entry that matches the search filter. The default value is dn.
 - `ldap_scope` (String) Specify the depth of the LDAP search. The default is subtree.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

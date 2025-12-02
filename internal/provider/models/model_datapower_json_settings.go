@@ -43,9 +43,11 @@ type JSONSettings struct {
 	JsonMaxNumberLength types.Int64                 `tfsdk:"json_max_number_length"`
 	JsonDocumentSize    types.Int64                 `tfsdk:"json_document_size"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var JSONSettingsObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"id":                     types.StringType,
 	"app_domain":             types.StringType,
 	"user_summary":           types.StringType,

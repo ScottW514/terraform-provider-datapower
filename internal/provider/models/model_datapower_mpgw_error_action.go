@@ -46,6 +46,7 @@ type MPGWErrorAction struct {
 	ReasonPhrase      types.String                `tfsdk:"reason_phrase"`
 	HeaderInjection   types.List                  `tfsdk:"header_injection"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var MPGWErrorActionRemoteURLCondVal = validators.Evaluation{
@@ -109,6 +110,7 @@ var MPGWErrorActionHeaderInjectionIgnoreVal = validators.Evaluation{
 }
 
 var MPGWErrorActionObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

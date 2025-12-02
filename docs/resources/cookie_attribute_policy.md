@@ -55,6 +55,7 @@ resource "datapower_cookie_attribute_policy" "test" {
   - Default value: `/`
   - Required When: `cookie_attribute`=`path`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 

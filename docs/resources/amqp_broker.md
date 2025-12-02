@@ -65,6 +65,7 @@ resource "datapower_amqp_broker" "test" {
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `5672`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `reporting_interval` (Number) Specify the interval in seconds between the writing of identical log message. Enter a value in the range 1 - 65535. The default value is 10.
   - CLI Alias: `reporting-interval`
   - Range: `1`-`86400`

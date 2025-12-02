@@ -29,6 +29,7 @@ data "datapower_assembly" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `default_catch` (String) Specifies how to handle errors that are not caught by the catch setting during the assembly execution.
 - `finally` (String) Specifies the final API rule to apply to the API call after the main rule, catch rule, or both have finished executing. The final API rule comprises only assembly actions.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rule` (String) Specifies the API rule that comprises only assembly actions to apply to the API call.
 - `user_summary` (String) A descriptive summary for the assembly configuration.
 

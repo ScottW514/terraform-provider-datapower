@@ -44,6 +44,7 @@ resource "datapower_cors_rule" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `expose_headers` (Attributes) Specify the values to append to the value of the <tt>Access-Control-Expose-Headers</tt> response header. When undefined, appends the gateway-predefined value.
   - CLI Alias: `expose-headers` (see [below for nested schema](#nestedatt--expose_headers))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

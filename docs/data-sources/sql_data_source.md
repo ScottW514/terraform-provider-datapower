@@ -29,6 +29,7 @@ data "datapower_sql_data_source" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -62,6 +63,7 @@ Read-Only:
 - `max_connection` (Number) Specify the maximum number of concurrent SQL connections. Enter a value in the range 1 - 65535. The default value is 10.
 - `oracle_data_source_type` (String) Data source type - Oracle
 - `password_alias` (String) Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `query_timeout` (Number) Specify the duration in seconds to wait for an SQL request to complete. Enter a value in the range 0 - 4294967295. The default value is 0, which uses the standard timeout in the user agent. <p>The duration is from when the service sends the request to when the service receives the results.</p><p>The query timeout must be greater than the connection timeout. With this configuration, the initial query has time to establish the connection to the remote data server.</p>
 - `sql_data_source_config_nv_pairs` (Attributes List) Specify configuration parameters for the data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some parameters in the configuration file are informational and define characteristics about the environment. These parameters cannot be modified. (see [below for nested schema](#nestedatt--result--sql_data_source_config_nv_pairs))
 - `truststore_ref` (String) Truststore

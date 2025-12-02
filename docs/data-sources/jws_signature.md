@@ -29,6 +29,7 @@ data "datapower_jws_signature" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `key` (String) Private key.
 - `protected_header` (Attributes List) Add a protected header to the JWS Sign action. (see [below for nested schema](#nestedatt--result--protected_header))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `sskey` (String) Shared secret key.
 - `unprotected_header` (Attributes List) Add an unprotected header to the JWS Sign action. (see [below for nested schema](#nestedatt--result--unprotected_header))
 - `user_summary` (String) A descriptive summary for the configuration.

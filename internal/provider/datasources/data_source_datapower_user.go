@@ -23,11 +23,14 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -35,8 +38,9 @@ import (
 )
 
 type UserWOList struct {
-	Id     types.String `tfsdk:"id"`
-	Result types.List   `tfsdk:"result"`
+	ProviderTarget types.String `tfsdk:"provider_target"`
+	Id             types.String `tfsdk:"id"`
+	Result         types.List   `tfsdk:"result"`
 }
 
 var (
@@ -60,6 +64,14 @@ func (d *UserDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Create or edit a local user account. When you modify a local user account, the changes do not affect remote user accounts in a role-based management XML information file. <p>An administrator can change the password for the account. An administrator can force the account owner to change the password during the next log in attempt.</p>",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,
@@ -96,6 +108,10 @@ func (d *UserDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,
+						"provider_target": schema.StringAttribute{
+							MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -120,6 +136,11 @@ func (d *UserDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
 	o := models.UserWO{}
 
 	path := o.GetPath()
@@ -127,7 +148,7 @@ func (d *UserDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 		path = path + "/" + data.Id.ValueString()
 	}
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if !strings.Contains(err.Error(), "status 404") {

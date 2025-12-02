@@ -38,9 +38,11 @@ type LunaHASettings struct {
 	RecoveryCount     types.Int64                 `tfsdk:"recovery_count"`
 	Interval          types.Int64                 `tfsdk:"interval"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var LunaHASettingsObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"mode":               types.StringType,
 	"recovery_count":     types.Int64Type,

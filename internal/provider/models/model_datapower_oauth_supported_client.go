@@ -77,6 +77,7 @@ type OAuthSupportedClient struct {
 	OidcIdTokenGenerator       types.String                `tfsdk:"oidc_id_token_generator"`
 	OauthFeatures              *DmOAuthFeatures            `tfsdk:"oauth_features"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget             types.String                `tfsdk:"provider_target"`
 }
 type OAuthSupportedClientWO struct {
 	Id                         types.String                `tfsdk:"id"`
@@ -119,6 +120,7 @@ type OAuthSupportedClientWO struct {
 	OidcIdTokenGenerator       types.String                `tfsdk:"oidc_id_token_generator"`
 	OauthFeatures              *DmOAuthFeatures            `tfsdk:"oauth_features"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget             types.String                `tfsdk:"provider_target"`
 }
 
 var OAuthSupportedClientCustomizedProcessUrlCondVal = validators.Evaluation{
@@ -1767,6 +1769,7 @@ var OAuthSupportedClientOIDCIDTokenGeneratorIgnoreVal = validators.Evaluation{
 }
 
 var OAuthSupportedClientObjectType = map[string]attr.Type{
+	"provider_target":                types.StringType,
 	"id":                             types.StringType,
 	"app_domain":                     types.StringType,
 	"user_summary":                   types.StringType,
@@ -1811,6 +1814,7 @@ var OAuthSupportedClientObjectType = map[string]attr.Type{
 	"dependency_actions":             actions.ActionsListType,
 }
 var OAuthSupportedClientObjectTypeWO = map[string]attr.Type{
+	"provider_target":                types.StringType,
 	"id":                             types.StringType,
 	"app_domain":                     types.StringType,
 	"user_summary":                   types.StringType,

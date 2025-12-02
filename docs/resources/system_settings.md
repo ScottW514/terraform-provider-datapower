@@ -46,6 +46,7 @@ resource "datapower_system_settings" "test" {
   - Default value: `en`
 - `location` (String) Enter the location of the DataPower Gateway.
   - CLI Alias: `location`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `system_log_fixed_format` (Boolean) Indicates whether to enable fixed format in system logs. When enabled, the system logs are in the format that was used in version 6.0.1 and contain no serviceability improvements after this version that can help with monitoring or troubleshooting.
   - CLI Alias: `system-log-fixed-format`
   - Default value: `false`

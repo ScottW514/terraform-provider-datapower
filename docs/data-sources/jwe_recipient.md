@@ -29,6 +29,7 @@ data "datapower_jwe_recipient" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `certificate` (String) Certificate.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `sskey` (String) Shared secret key.
 - `unprotected_header` (Attributes List) Unprotected header for the JWE recipient. (see [below for nested schema](#nestedatt--result--unprotected_header))
 - `user_summary` (String) A descriptive summary for the configuration.

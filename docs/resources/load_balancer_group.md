@@ -76,6 +76,7 @@ resource "datapower_load_balancer_group" "test" {
 - `never_return_sick_member` (Boolean) During normal operation, when all members of the load-balancing group are down and a new request for that group is made, the first member of the group is automatically selected. If this property is turned on, no attempt will be made to connect under these circumstances.
   - CLI Alias: `giveup-when-all-members-down`
   - Default value: `false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `retrieve_info` (Boolean) Use this setting to control whether this Load Balancer Group has membership and weight information automatically retrieved from the work load management repository WebSphere Cell. When disabled, the static configuration is used.
   - CLI Alias: `retrieve-wlm-info`
   - Default value: `false`

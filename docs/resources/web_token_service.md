@@ -85,6 +85,7 @@ resource "datapower_web_token_service" "test" {
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `request_type` (String) Characterizes the traffic that originates from the client. The default is Non-XML.
   - CLI Alias: `request-type`
   - Choices: `soap`, `xml`, `unprocessed`, `preprocessed`, `json`

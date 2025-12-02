@@ -39,9 +39,11 @@ type SOAPHeaderDisposition struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	Refine            types.List                  `tfsdk:"refine"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var SOAPHeaderDispositionObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

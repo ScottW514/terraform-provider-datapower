@@ -40,9 +40,11 @@ type XPathRoutingMap struct {
 	NameSpaceMappings types.List                  `tfsdk:"name_space_mappings"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var XPathRoutingMapObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"xpath_routing_rules": types.ListType{ElemType: types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}},

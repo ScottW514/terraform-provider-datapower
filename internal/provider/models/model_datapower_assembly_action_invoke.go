@@ -70,6 +70,7 @@ type AssemblyActionInvoke struct {
 	CorrelationPath       types.String                `tfsdk:"correlation_path"`
 	ActionDebug           types.Bool                  `tfsdk:"action_debug"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget        types.String                `tfsdk:"provider_target"`
 }
 
 var AssemblyActionInvokeGraphQLSendTypeCondVal = validators.Evaluation{
@@ -161,6 +162,7 @@ var AssemblyActionInvokeErrorTypesIgnoreVal = validators.Evaluation{
 }
 
 var AssemblyActionInvokeObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"id":                       types.StringType,
 	"app_domain":               types.StringType,
 	"url":                      types.StringType,

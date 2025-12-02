@@ -29,6 +29,7 @@ data "datapower_assembly_action_graphql_cost_analysis" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `input` (String) Cost query
 - `output` (String) Output message
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `target` (String) Target query
 - `title` (String) Title
 - `user_summary` (String) Comments

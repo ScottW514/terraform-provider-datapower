@@ -50,6 +50,7 @@ type NFSDynamicMounts struct {
 	IdleUnmountSeconds  types.Int64                 `tfsdk:"idle_unmount_seconds"`
 	MountTimeoutSeconds types.Int64                 `tfsdk:"mount_timeout_seconds"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var NFSDynamicMountsTransportIgnoreVal = validators.Evaluation{
@@ -61,6 +62,7 @@ var NFSDynamicMountsTransportIgnoreVal = validators.Evaluation{
 }
 
 var NFSDynamicMountsObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"app_domain":            types.StringType,
 	"enabled":               types.BoolType,
 	"user_summary":          types.StringType,

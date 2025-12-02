@@ -45,6 +45,7 @@ type DNSNameService struct {
 	MaxRetries           types.Int64                 `tfsdk:"max_retries"`
 	Timeout              types.Int64                 `tfsdk:"timeout"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget       types.String                `tfsdk:"provider_target"`
 }
 
 var DNSNameServiceMaxRetriesCondVal = validators.Evaluation{
@@ -80,6 +81,7 @@ var DNSNameServiceTimeoutIgnoreVal = validators.Evaluation{
 }
 
 var DNSNameServiceObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"enabled":                types.BoolType,
 	"user_summary":           types.StringType,
 	"search_domains":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmSearchDomainObjectType}},

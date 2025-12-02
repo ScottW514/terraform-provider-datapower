@@ -29,6 +29,7 @@ data "datapower_api_gateway" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -62,6 +63,7 @@ Read-Only:
 - `ldap_conn_pool` (String) LDAP connection pool
 - `open_telemetry` (String) OpenTelemetry instance
 - `open_telemetry_resource_attribute` (Attributes List) OpenTelemetry resource attributes (see [below for nested schema](#nestedatt--result--open_telemetry_resource_attribute))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `proxy_policies` (Attributes List) Specify the proxy policies to associate a set of URLs with a specific HTTP proxy. When multiple proxy policies are defined, URLs are evaluated against each policy in order. (see [below for nested schema](#nestedatt--result--proxy_policies))
 - `scheduled_rule` (Attributes List) Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager. (see [below for nested schema](#nestedatt--result--scheduled_rule))
 - `sha1caching` (Boolean) Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.

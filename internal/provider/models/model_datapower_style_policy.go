@@ -42,9 +42,11 @@ type StylePolicy struct {
 	DefXQueryForJson     types.String                `tfsdk:"def_x_query_for_json"`
 	PolicyMaps           types.List                  `tfsdk:"policy_maps"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget       types.String                `tfsdk:"provider_target"`
 }
 
 var StylePolicyObjectType = map[string]attr.Type{
+	"provider_target":         types.StringType,
 	"id":                      types.StringType,
 	"app_domain":              types.StringType,
 	"user_summary":            types.StringType,

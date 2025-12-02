@@ -69,6 +69,7 @@ resource "datapower_name_value_profile" "test" {
   - Default value: `store:///XSS-Patterns.xml`
   - Required When: `default_xss`=`true`
   - Not Valid When: `default_xss`!=`true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `validation_list` (Attributes List) Each pair submitted to this profile consults this validation list, looking for the first regular expression match of the name against the name expression in the list. When that is found, the corresponding value constraint is matched against the value portion of the name-value pair. If that does not match, the policy applies the 'fixup' attribute to the submitted value. That may result in no change, the pair being removed, an error being generated, or the value being mapped to a known constant.

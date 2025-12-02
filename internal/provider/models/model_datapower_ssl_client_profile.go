@@ -58,6 +58,7 @@ type SSLClientProfile struct {
 	SigAlgs                       types.List                    `tfsdk:"sig_algs"`
 	RequireClosureNotification    types.Bool                    `tfsdk:"require_closure_notification"`
 	DependencyActions             []*actions.DependencyAction   `tfsdk:"dependency_actions"`
+	ProviderTarget                types.String                  `tfsdk:"provider_target"`
 }
 
 var SSLClientProfileValcredCondVal = validators.Evaluation{
@@ -141,6 +142,7 @@ var SSLClientProfileHostnameValidationFailOnErrorIgnoreVal = validators.Evaluati
 }
 
 var SSLClientProfileObjectType = map[string]attr.Type{
+	"provider_target":                   types.StringType,
 	"id":                                types.StringType,
 	"app_domain":                        types.StringType,
 	"user_summary":                      types.StringType,

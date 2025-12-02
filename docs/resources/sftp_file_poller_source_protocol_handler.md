@@ -78,6 +78,7 @@ resource "datapower_sftp_file_poller_source_protocol_handler" "test" {
   - CLI Alias: `processing-seize-timeout`
   - Range: `0`-`1000`
   - Default value: `0`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `result_name_pattern` (String) <p>When Generate Result File is on, enter the PCRE to use as the match pattern to build the name of the result file. This PCRE will normally have a back reference for the base input file name. For instance, if input files are <tt>NNNNNN.input</tt> and the desired result file name is <tt>NNNNNN.result</tt> , then the match pattern would be <tt>"([0-9]{6})\.input$"</tt> and the result pattern would be <tt>"$1.result"</tt> .</p><p>Some servers might allow this pattern to indicate a path that puts the file in a different directory, if it allows cross-directory renames. For instance, the match pattern would be <tt>"(.*)"</tt> and the result pattern would be <tt>"../result/$1"</tt> .</p>
   - CLI Alias: `result-name-pattern`
   - Required When: `generate_result_file`=`true`

@@ -62,6 +62,7 @@ type FormsLoginPolicy struct {
 	FormSupportType     types.String                `tfsdk:"form_support_type"`
 	FormSupportScript   types.String                `tfsdk:"form_support_script"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var FormsLoginPolicyCookieAttributesCondVal = validators.Evaluation{
@@ -305,6 +306,7 @@ var FormsLoginPolicyFormSupportScriptIgnoreVal = validators.Evaluation{
 }
 
 var FormsLoginPolicyObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"id":                    types.StringType,
 	"app_domain":            types.StringType,
 	"user_summary":          types.StringType,

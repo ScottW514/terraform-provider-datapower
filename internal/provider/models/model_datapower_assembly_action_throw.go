@@ -45,9 +45,11 @@ type AssemblyActionThrow struct {
 	CorrelationPath   types.String                `tfsdk:"correlation_path"`
 	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var AssemblyActionThrowObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"error_id":            types.StringType,

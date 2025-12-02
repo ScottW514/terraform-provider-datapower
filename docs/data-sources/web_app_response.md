@@ -29,6 +29,7 @@ data "datapower_web_app_response" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -57,6 +58,7 @@ Read-Only:
 - `ok_versions` (Attributes) Specify which HTTP versions are acceptable from the backend server.
   - CLI Alias: `response-versions` (see [below for nested schema](#nestedatt--result--ok_versions))
 - `policy_type` (String) Select the satisfaction policy for the profile. The default is Admission.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 - `xml_policy` (String) Specify how the device handles responses that contain an XML MIME type.
 - `xml_rule` (String) This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.

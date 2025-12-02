@@ -42,6 +42,7 @@ type ODRConnectorGroup struct {
 	SslClientConfigType    types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient              types.String                `tfsdk:"ssl_client"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var ODRConnectorGroupSSLClientIgnoreVal = validators.Evaluation{
@@ -53,6 +54,7 @@ var ODRConnectorGroupSSLClientIgnoreVal = validators.Evaluation{
 }
 
 var ODRConnectorGroupObjectType = map[string]attr.Type{
+	"provider_target":           types.StringType,
 	"id":                        types.StringType,
 	"user_summary":              types.StringType,
 	"odr_group_connectors":      types.ListType{ElemType: types.ObjectType{AttrTypes: DmODRConnectorObjectType}},

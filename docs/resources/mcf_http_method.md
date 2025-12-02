@@ -37,6 +37,7 @@ resource "datapower_mcf_http_method" "test" {
   - CLI Alias: `value`
   - Choices: `POST`, `GET`, `PUT`, `PATCH`, `DELETE`, `HEAD`
   - Default value: `GET`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

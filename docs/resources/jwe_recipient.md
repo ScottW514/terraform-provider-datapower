@@ -46,6 +46,7 @@ resource "datapower_jwe_recipient" "test" {
   - Required When: `algorithm`=`RSA1_5`|`RSA-OAEP`|`RSA-OAEP-256`
   - Not Valid When: `algorithm`!=`RSA1_5`|`RSA-OAEP`|`RSA-OAEP-256`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `sskey` (String) Shared secret key.
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`

@@ -42,6 +42,7 @@ resource "datapower_message_content_filters" "test" {
   - CLI Alias: `filter`
 - `filters` (Attributes List) Defines the group of message content filters.
   - CLI Alias: `mcfilter` (see [below for nested schema](#nestedatt--filters))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

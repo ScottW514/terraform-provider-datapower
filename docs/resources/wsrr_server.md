@@ -36,6 +36,7 @@ resource "datapower_wsrr_server" "test" {
 - `password_alias` (String) Specify the password alias for authentication with the server. The password alias references the password. Leave blank when authentication is not required.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `server_prefix` (String) WSRR instance prefix
   - CLI Alias: `server-prefix`
 - `soap_url` (String) Specify the URL of SOAP API endpoint on the WSRR server. The port in the URL depends on whether the server has enabled global security. A typical default URL is similar to <tt>https://192.18.1.120:9443/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> or <tt>http://192.18.1.120:9080/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> .

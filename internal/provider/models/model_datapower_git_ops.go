@@ -55,6 +55,7 @@ type GitOps struct {
 	JsonParseSettings     types.String                `tfsdk:"json_parse_settings"`
 	TemplatePolicies      types.List                  `tfsdk:"template_policies"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget        types.String                `tfsdk:"provider_target"`
 }
 
 var GitOpsCommitIdentifierTypeIgnoreVal = validators.Evaluation{
@@ -194,6 +195,7 @@ var GitOpsGitEmailIgnoreVal = validators.Evaluation{
 }
 
 var GitOpsObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"app_domain":               types.StringType,
 	"enabled":                  types.BoolType,
 	"user_summary":             types.StringType,

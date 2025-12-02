@@ -29,6 +29,7 @@ data "datapower_jwe_header" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `jwe_protected_header` (Attributes List) Add a JWE protected header to a JWE encrypt action. (see [below for nested schema](#nestedatt--result--jwe_protected_header))
 - `jwe_shared_unprotected_header` (Attributes List) Add a JWE shared unprotected header to a JWE encrypt action. (see [below for nested schema](#nestedatt--result--jwe_shared_unprotected_header))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `recipient` (String) Add a JWE recipient object to a JWE encrypt action.
 - `user_summary` (String) A descriptive summary for the configuration.
 

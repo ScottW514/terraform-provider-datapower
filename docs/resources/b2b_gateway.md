@@ -138,6 +138,7 @@ resource "datapower_b2b_gateway" "test" {
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `shaping_threshold` (Number) Specify the maximum TPS to allow during archival. When the threshold is reached, the service queues transactions. When the queue is full, the service rejects transactions and generates a log message. Enter a value in the range 10 - 10000. The default value is 200.
   - CLI Alias: `arch-shaping-threshold`
   - Range: `10`-`10000`

@@ -29,6 +29,7 @@ data "datapower_slm_rsrc_class" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -45,6 +46,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rsrc_match_type` (String) Match type
 - `rsrc_type` (String) Resource type
 - `rsrc_value` (List of String) Resource value

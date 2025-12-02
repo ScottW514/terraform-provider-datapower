@@ -29,6 +29,7 @@ data "datapower_message_type" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `matching` (List of String) Use the values list (a list of traffic definitions), in conjunction with the Add and Delete buttons, to add one or more traffic definitions to this message type. Click the + button to create a new traffic definition (Message Matching object). Select an object and click ... to edit it.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

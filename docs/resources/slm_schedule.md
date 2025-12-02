@@ -44,6 +44,7 @@ resource "datapower_slm_schedule" "test" {
   - CLI Alias: `duration`
   - Range: `1`-`1440`
   - Default value: `1440`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `start_date` (String) Start date
   - CLI Alias: `start-date`
 - `stop_date` (String) Specify the stop date to enforce the schedule. The enforcement period does not include the stop date.

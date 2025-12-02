@@ -62,6 +62,7 @@ type APIPlan struct {
 	RateLimitScope               types.String                `tfsdk:"rate_limit_scope"`
 	GraphqlSchemaOptions         types.List                  `tfsdk:"graphql_schema_options"`
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget               types.String                `tfsdk:"provider_target"`
 }
 
 var APIPlanRateLimitIgnoreVal = validators.Evaluation{
@@ -137,6 +138,7 @@ var APIPlanAssemblyCountLimitDefinitionIgnoreVal = validators.Evaluation{
 }
 
 var APIPlanObjectType = map[string]attr.Type{
+	"provider_target":                 types.StringType,
 	"id":                              types.StringType,
 	"app_domain":                      types.StringType,
 	"user_summary":                    types.StringType,

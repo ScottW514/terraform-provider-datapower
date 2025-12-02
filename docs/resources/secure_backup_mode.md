@@ -32,6 +32,7 @@ resource "datapower_secure_backup_mode" "test" {
   - CLI Alias: `mode`
   - Choices: `normal`, `secure`
   - Default value: `normal`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 

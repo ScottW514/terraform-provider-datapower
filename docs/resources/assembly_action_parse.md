@@ -47,6 +47,7 @@ resource "datapower_assembly_action_parse" "test" {
   - CLI Alias: `output`
 - `parse_settings_reference` (Attributes) Specify the parse settings configuration. A parse settings configuration defines the constraints on the documents to parse. You can configure the constraints by specifying a URL reference from which to retrieve the constraints definition. You can also specify a literal configuration string in XML management interface or REST management interface format that contains the constraints definition. You can also select a parse settings configuration from the list in Object reference to retrieve constraints definition. Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method.
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--parse_settings_reference))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `use_content_type` (Boolean) Specify whether to attempt a parse with the specified content type. This property is only applicable when the expected content type is either JSON or XML. When enabled, the action fails when the content type does not match the parse-settings. For example, <tt>Content-Type: application/json</tt> and the setting is configured for XML. If configured to detect, forced to the specified content type.

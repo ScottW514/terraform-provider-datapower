@@ -42,7 +42,22 @@ provider "datapower" {
 - `insecure` (Boolean) Allow insecure HTTPS client. Can be set via DP_INSECURE evnvironment variable. Defaults to `false`.
 - `password` (String, Sensitive) Password for the Datapower instance. Can be set via DP_PASSWORD evnvironment variable.
 - `port` (Number) Port for REST API calls. Can be set via DP_PORT evnvironment variable. Defaults to `5554`.
+- `targets` (Attributes Map) Map of available target hosts. The map key value is assigned to `provider_target` on `resource` or `datasource` blocks. Top levels values will be used for any unset attributes on the target. (see [below for nested schema](#nestedatt--targets))
 - `username` (String) Username for the Datapower instance. Can be set via DP_USERNAME evnvironment variable.
+
+<a id="nestedatt--targets"></a>
+### Nested Schema for `targets`
+
+Required:
+
+- `hostname` (String) Hostname or IP address of the target.
+
+Optional:
+
+- `insecure` (Boolean) Allow insecure HTTPS client. If unset, will use the top level `insecure` or evnvironment variable.
+- `password` (String, Sensitive) Password for the target. If unset, will use the top level `password` or evnvironment variable.
+- `port` (Number) Port for REST API calls. Defaults to `5554`.
+- `username` (String) Username for the target. If unset, will use the top level `username` or evnvironment variable.
 
 ## Disclaimer
 **This provider is under active development, and not recommended for production workloads. EXPECT BREAKING CHANGES!**

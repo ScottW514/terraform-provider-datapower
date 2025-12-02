@@ -39,9 +39,11 @@ type SSLSNIMapping struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	SniMapping        types.List                  `tfsdk:"sni_mapping"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var SSLSNIMappingObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

@@ -40,9 +40,11 @@ type CryptoIdentCred struct {
 	Certificate       types.String                `tfsdk:"certificate"`
 	Ca                types.List                  `tfsdk:"ca"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var CryptoIdentCredObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"key":                types.StringType,

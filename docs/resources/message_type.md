@@ -35,6 +35,7 @@ resource "datapower_message_type" "test" {
 - `matching` (List of String) Use the values list (a list of traffic definitions), in conjunction with the Add and Delete buttons, to add one or more traffic definitions to this message type. Click the + button to create a new traffic definition (Message Matching object). Select an object and click ... to edit it.
   - CLI Alias: `message-matching`
   - Reference to: `datapower_message_matching:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

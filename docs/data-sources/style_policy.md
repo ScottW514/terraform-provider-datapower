@@ -29,6 +29,7 @@ data "datapower_style_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `def_x_query_for_json` (String) Identify the default XQuery style sheet used for JSON transformation. The default rejects all JSON documents.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `policy_maps` (Attributes List) A list of processing rules their corresponding matching rule that this policy will evaluate. If a match is found, the corresponding processing rule is run. The policy runs the first processing rule with a successful match. Therefore, the order of rules in this list is important. (see [below for nested schema](#nestedatt--result--policy_maps))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Enter a comment. This appears on the Policy catalog page.
 
 <a id="nestedatt--result--dependency_actions"></a>

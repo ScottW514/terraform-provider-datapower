@@ -125,6 +125,7 @@ type StylePolicyAction struct {
 	MethodType2                types.String                     `tfsdk:"method_type2"`
 	PolicyKey                  types.String                     `tfsdk:"policy_key"`
 	DependencyActions          []*actions.DependencyAction      `tfsdk:"dependency_actions"`
+	ProviderTarget             types.String                     `tfsdk:"provider_target"`
 }
 
 var StylePolicyActionInputCondVal = validators.Evaluation{
@@ -1456,6 +1457,7 @@ var StylePolicyActionMethodType2IgnoreVal = validators.Evaluation{
 }
 
 var StylePolicyActionObjectType = map[string]attr.Type{
+	"provider_target":                types.StringType,
 	"id":                             types.StringType,
 	"app_domain":                     types.StringType,
 	"user_summary":                   types.StringType,

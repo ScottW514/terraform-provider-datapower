@@ -43,9 +43,11 @@ type GatewayPeeringManager struct {
 	Subscription             types.String                `tfsdk:"subscription"`
 	RatelimitModule          types.String                `tfsdk:"ratelimit_module"`
 	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget           types.String                `tfsdk:"provider_target"`
 }
 
 var GatewayPeeringManagerObjectType = map[string]attr.Type{
+	"provider_target":             types.StringType,
 	"app_domain":                  types.StringType,
 	"enabled":                     types.BoolType,
 	"user_summary":                types.StringType,

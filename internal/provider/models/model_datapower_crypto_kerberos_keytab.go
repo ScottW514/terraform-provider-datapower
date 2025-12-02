@@ -43,6 +43,7 @@ type CryptoKerberosKeytab struct {
 	GenerateGssChecksum types.Bool                  `tfsdk:"generate_gss_checksum"`
 	GssChecksumFlags    *DmGssChecksumFlags         `tfsdk:"gss_checksum_flags"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var CryptoKerberosKeytabGssChecksumFlagsIgnoreVal = validators.Evaluation{
@@ -54,6 +55,7 @@ var CryptoKerberosKeytabGssChecksumFlagsIgnoreVal = validators.Evaluation{
 }
 
 var CryptoKerberosKeytabObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"id":                    types.StringType,
 	"app_domain":            types.StringType,
 	"user_summary":          types.StringType,

@@ -37,6 +37,7 @@ resource "datapower_slm_action" "test" {
   - CLI Alias: `log-priority`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `debug`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `type` (String) Specify the administrative sanction to trigger for transactions in excess of the threshold. This action is beyond the generation of a log message.
   - CLI Alias: `type`
   - Choices: `log-only`, `reject`, `shape`

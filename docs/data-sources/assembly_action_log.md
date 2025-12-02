@@ -29,6 +29,7 @@ data "datapower_assembly_action_log" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `log_level` (String) Specify the type of content to log. The value can be one of none, activity, header, payload, default, or an inline parameter in the format $(value) to retrieve a value from the API context.
 - `mode` (String) Specify how to manage transaction data. <p>Analytics data must strictly conform to the format required by your analytics server. If you modify the format, you must use gather only mode.</p><p>When you use the IBM API Connect analytics server without offloading data to a third-party log server, the format is correct. If you redact the input and output payloads, ensure that you do not modify the format.</p><p>When you offload data to a third-party analytics server, you can redact any aspect of the event data. When you use API Connect analytics, you can redact only the input and output payloads.</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `recount_bytes_sent` (Boolean) <p>Specify whether to recount the bytes of the response payload. By default, the bytes is the value of the <tt>Content-Length</tt> header. When enabled, the bytes in the response payload are calculated. Recalculation can impact performance.</p>
 - `title` (String) Title
 - `user_summary` (String) Comments

@@ -29,6 +29,7 @@ data "datapower_assembly_action_jwt_generate" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -59,6 +60,7 @@ Read-Only:
 - `jwt_id_claims` (Boolean) Specify whether to add a JWT ID (jti) claim to the JWT. When enabled, a UUID is generated and set as the value of the JWT ID claim.
 - `key_encrypt_algorithm` (String) Specify the key encryption algorithm to use. Use one of the following values. <ul><li><tt>RSA1_5</tt> - RSAES-PKCS1-V1_5</li><li><tt>RSA-OAEP</tt> - RSAES OAEP using default parameters</li><li><tt>RSA-OAEP-256</tt> - RSAES OAEP using SHA-256 and MGF1 with SHA-256</li><li><tt>A128KW</tt> - AES Key Wrap with default initial value using 128 bit key</li><li><tt>A192KW</tt> - AES Key Wrap with default initial value using 192 bit key</li><li><tt>A256KW</tt> - AES Key Wrap with default initial value using 256 bit key</li><li><tt>dir</tt> - Direct use of a shared symmetric key as the CEK</li><li>An inline parameter to read at runtime</li></ul>
 - `private_claim` (String) Specify the variable from which to retrieve a valid set of JSON claims. These claims are added to any set of claims that are specified previously.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `sign_crypto` (String) Specify the crypto object (a shared secret key or certificate) to use to sign the JWT.
 - `sign_jwk` (String) JWK for JWT signature
 - `subject_claim` (String) Specify the variable from which to retrieve the subject (sub) claim value. The maximum value length is 256 characters.

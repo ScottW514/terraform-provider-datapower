@@ -44,6 +44,7 @@ type B2BPersistence struct {
 	HaLocalPort       types.Int64                 `tfsdk:"ha_local_port"`
 	HaVirtualIp       types.String                `tfsdk:"ha_virtual_ip"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var B2BPersistenceHAOtherHostsCondVal = validators.Evaluation{
@@ -111,6 +112,7 @@ var B2BPersistenceHAVirtualIPIgnoreVal = validators.Evaluation{
 }
 
 var B2BPersistenceObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,
 	"raid_volume":        types.StringType,

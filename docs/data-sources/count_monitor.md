@@ -29,6 +29,7 @@ data "datapower_count_monitor" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `max_source_s` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
 - `measure` (String) Select the action that advances the counter. The default is Requests.
 - `message_type` (String) Select the message type monitored by this message-count monitor.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `source` (String) Select how monitoring is applied to IP addresses. This setting is meaningful only if an associated traffic definition contains and inclusive or exclusive IP address criterion. The default is All.
 - `user_summary` (String) A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).
 

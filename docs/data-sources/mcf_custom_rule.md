@@ -29,6 +29,7 @@ data "datapower_mcf_custom_rule" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `custom_rule_name` (String) Rule
 - `custom_rule_value` (String) <p>Enter the value to match against the value that is retrieved from the named processing rule. Enter either a string that must match the outcome of the rule or enter an asterisk (*) to match any value.</p><p>When the value is a string, an identical literal string comparison result is a match. When the value is an asterisk, any value other than NULL or an empty string results in a match.</p>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

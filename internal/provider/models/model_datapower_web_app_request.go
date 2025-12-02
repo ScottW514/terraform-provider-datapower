@@ -71,6 +71,7 @@ type WebAppRequest struct {
 	CookieNameVector         types.List                  `tfsdk:"cookie_name_vector"`
 	SqlInjectionPatternsFile types.String                `tfsdk:"sql_injection_patterns_file"`
 	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget           types.String                `tfsdk:"provider_target"`
 }
 
 var WebAppRequestXMLRuleCondVal = validators.Evaluation{
@@ -146,6 +147,7 @@ var WebAppRequestSQLInjectionPatternsFileIgnoreVal = validators.Evaluation{
 }
 
 var WebAppRequestObjectType = map[string]attr.Type{
+	"provider_target":             types.StringType,
 	"id":                          types.StringType,
 	"app_domain":                  types.StringType,
 	"user_summary":                types.StringType,

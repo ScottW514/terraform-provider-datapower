@@ -29,6 +29,7 @@ data "datapower_policy_attachments" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `ignored_policy_attachment_points` (Attributes List) Disable all policies attached by policy references at a configured attachment point leaving other policy references intact. (see [below for nested schema](#nestedatt--result--ignored_policy_attachment_points))
 - `policy_references` (Boolean) Enable policies attached to WSDL using PolicyURI attributes and PolicyReference elements. These attachments are sometimes called XML element attachments. If 'off', all PolicyURI attributes and PolicyReference elements are ignored and only external policies are enforced.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `sla_enforcement_mode` (String) SLA Enforcement Mode controls the application of SLA Policies to transactions. Transactions are either allowed or rejected based on whether an SLA rule is applied to the transaction.
 - `user_summary` (String) Comments
 

@@ -42,6 +42,7 @@ resource "datapower_web_app_session_policy" "test" {
   - CLI Alias: `auto-renew`
   - Default value: `true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `timeout` (Number) The login cookie is only good for the amount of time specified by this property. It may be automatically renewed during activity depending on the value of the Auto Renew property.
   - CLI Alias: `lifetime`
   - Range: `1`-`864000`

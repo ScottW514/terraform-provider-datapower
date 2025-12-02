@@ -29,6 +29,7 @@ data "datapower_crypto_kerberos_kdc" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `max_cache_d_tickets` (Number) Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.
 - `min_cache_d_ticket_validity` (Number) Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `realm` (String) The name of the Kerberos realm that the KDC is serving.
 - `server` (String) Specify the host name or IP address of the remote Kerberos KDC server. Click Ping verify network connectivity.
 - `server_port` (Number) Specify the UDP or TCP listening port on the Kerberos KDC server. Use a value in the range 1 - 65535. The default value is 88.

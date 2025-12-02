@@ -29,6 +29,7 @@ data "datapower_amqp_broker" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `maximum_frame_size` (Number) Specify the maximum frame size in bytes to allow. Frames Frames that are larger are rejected. When rejected, the connection is closed. Enter a value in the range 512 - 104857600. The default value is 104857600.
 - `password_alias` (String) Password alias
 - `port` (Number) Port
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `reporting_interval` (Number) Specify the interval in seconds between the writing of identical log message. Enter a value in the range 1 - 65535. The default value is 10.
 - `retry_attempts` (Number) Specify the number of attempts for a failed connection to the remote AMQP server. After the number of attempts is reached, the long retry interval is used. Enter a value in the range 0 - 65535. The default value is 6. The special value of 0 disables the long interval, where the retry interval is used forever.
 - `retry_interval` (Number) Specify the interval in seconds to wait before attempting to reestablish a failed connection. After the number of attempts is reached, attempts to reestablish a failed connection use the interval that is defined by the long retry interval. Enter a value in the range 1 - 65535. The default value is 10. <p>This setting does not affect attempts over an established connection.</p>

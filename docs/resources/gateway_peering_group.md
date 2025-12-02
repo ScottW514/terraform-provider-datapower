@@ -72,6 +72,7 @@ resource "datapower_gateway_peering_group" "test" {
   - CLI Alias: `peer-node`
   - Required When: `mode`=`peer`
   - Not Valid When: `mode`!=`peer` (see [below for nested schema](#nestedatt--peer_nodes))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `valcred` (String) Validation credentials

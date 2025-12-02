@@ -52,6 +52,7 @@ resource "datapower_ssh_server_profile" "test" {
 - `pre_auth_msg` (String) Specify the banner message to display to users before the login prompt. White space characters ( <tt>\n</tt> , <tt>\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.
   - CLI Alias: `preauth-msg`
   - Not Valid When: `send_pre_auth_msg`=`false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `send_pre_auth_msg` (Boolean) Specify whether to include a banner message during SSH preauthentication. The banner message contains the text to display to users before the login prompt.
   - CLI Alias: `send-preauth-msg`
   - Default value: `false`

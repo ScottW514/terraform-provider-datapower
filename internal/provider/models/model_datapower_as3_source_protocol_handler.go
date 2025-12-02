@@ -78,6 +78,7 @@ type AS3SourceProtocolHandler struct {
 	SslServer                   types.String                `tfsdk:"ssl_server"`
 	SslSniServer                types.String                `tfsdk:"ssl_sni_server"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget              types.String                `tfsdk:"provider_target"`
 }
 
 var AS3SourceProtocolHandlerPersistentFilesystemTimeoutIgnoreVal = validators.Evaluation{
@@ -420,6 +421,7 @@ var AS3SourceProtocolHandlerSSLSNIServerIgnoreVal = validators.Evaluation{
 }
 
 var AS3SourceProtocolHandlerObjectType = map[string]attr.Type{
+	"provider_target":               types.StringType,
 	"id":                            types.StringType,
 	"app_domain":                    types.StringType,
 	"user_summary":                  types.StringType,

@@ -56,6 +56,7 @@ type SSHServerSourceProtocolHandler struct {
 	PersistentFilesystemTimeout types.Int64                     `tfsdk:"persistent_filesystem_timeout"`
 	VirtualDirectories          types.List                      `tfsdk:"virtual_directories"`
 	DependencyActions           []*actions.DependencyAction     `tfsdk:"dependency_actions"`
+	ProviderTarget              types.String                    `tfsdk:"provider_target"`
 }
 
 var SSHServerSourceProtocolHandlerAllowBackendListingsIgnoreVal = validators.Evaluation{
@@ -123,6 +124,7 @@ var SSHServerSourceProtocolHandlerVirtualDirectoriesIgnoreVal = validators.Evalu
 }
 
 var SSHServerSourceProtocolHandlerObjectType = map[string]attr.Type{
+	"provider_target":               types.StringType,
 	"id":                            types.StringType,
 	"app_domain":                    types.StringType,
 	"user_summary":                  types.StringType,

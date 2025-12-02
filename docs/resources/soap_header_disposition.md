@@ -36,6 +36,7 @@ resource "datapower_soap_header_disposition" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `refine` (Attributes List) Customer specifically asks this transformation to simply remove/keep/fault a SOAP header; or indicates whether a header was processed or not by the prior action, then this action will take the default behaviors.
   - CLI Alias: `refine` (see [below for nested schema](#nestedatt--refine))
 - `user_summary` (String) Comments

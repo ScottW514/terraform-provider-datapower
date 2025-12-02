@@ -29,6 +29,7 @@ data "datapower_b2b_xpath_routing_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `date_time_xpath` (String) Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.
 - `document_id_xpath` (String) Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `receiver_xpath` (String) Receiver XPath
 - `sender_xpath` (String) Sender XPath
 - `user_summary` (String) Comments

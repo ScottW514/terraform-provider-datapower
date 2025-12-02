@@ -44,6 +44,7 @@ resource "datapower_api_rule" "test" {
 - `dynamic_actions_mode` (Boolean) Specify whether to use dynamic actions instead of explicit actions. Dynamic actions take configuration values at run time and override the default properties in API actions. API rules that contain dynamic actions can be included in user-defined policies that API Connect advertises and makes available in the API Connect assembly editor.
   - CLI Alias: `dynamic-actions-mode`
   - Default value: `false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

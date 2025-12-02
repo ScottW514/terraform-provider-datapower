@@ -45,6 +45,7 @@ resource "datapower_mgmt_interface" "test" {
   - Default value: `5550`
 - `mode` (Attributes) Specify which service endpoints to enable. For each enabled endpoint, the interface listens for requests from those services.
   - CLI Alias: `mode` (see [below for nested schema](#nestedatt--mode))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `slm_peering` (Number) SLM update interval
   - CLI Alias: `slm-peering`
   - Default value: `10`

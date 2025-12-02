@@ -46,9 +46,11 @@ type MQv9PlusMFTSourceProtocolHandler struct {
 	IgnoreBackoutErrors     types.Bool                  `tfsdk:"ignore_backout_errors"`
 	UseQmNameInUrl          types.Bool                  `tfsdk:"use_qm_name_in_url"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget          types.String                `tfsdk:"provider_target"`
 }
 
 var MQv9PlusMFTSourceProtocolHandlerObjectType = map[string]attr.Type{
+	"provider_target":           types.StringType,
 	"id":                        types.StringType,
 	"app_domain":                types.StringType,
 	"user_summary":              types.StringType,

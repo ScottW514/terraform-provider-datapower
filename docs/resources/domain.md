@@ -88,6 +88,7 @@ resource "datapower_domain" "test" {
 - `neighbor_domain` (List of String) Specify which domains have their <tt>local:</tt> directory visible to this domain. <p>References to visible domains are explicit, not bidirectional. If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following conditions apply.</p><ul><li>Domain <tt>domainA</tt> has read-only access to the <tt>local:</tt> directory of domain <tt>domainB</tt> .</li><li>Domain <tt>domainB</tt> cannot see domain <tt>domainA</tt> .</li></ul><p>In this case, you cannot make domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible domains cannot be circular.</p>
   - CLI Alias: `visible-domain`
   - Reference to: `datapower_domain:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

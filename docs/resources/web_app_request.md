@@ -91,6 +91,7 @@ resource "datapower_web_app_request" "test" {
 - `process_all_cookie` (Boolean) The process will sign or encrypt all cookies when enabled. The default is enabled.
   - CLI Alias: `process-all-cookie`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `query_string_gnvc` (String) The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.
   - CLI Alias: `request-qs-profile`
   - Reference to: `datapower_name_value_profile:id`

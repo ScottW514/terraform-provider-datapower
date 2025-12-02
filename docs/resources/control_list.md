@@ -34,6 +34,7 @@ resource "datapower_control_list" "test" {
   - CLI Alias: `case-insensitive`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `type` (String) Specifies whether values are accepted or rejected.
   - CLI Alias: `type`
   - Choices: `blocklist`, `allowlist`

@@ -29,6 +29,7 @@ data "datapower_web_app_error_handling_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `error_monitor` (String) Monitor
 - `error_style_policy_rule` (String) Error rule
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `type` (String) Specify the mode for error handling. The default value is standard.
 - `url` (String) URL
 - `user_summary` (String) Comments

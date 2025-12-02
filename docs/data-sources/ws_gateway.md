@@ -29,6 +29,7 @@ data "datapower_ws_gateway" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -113,6 +114,7 @@ Read-Only:
 - `process_http_errors` (Boolean) <p>In some cases, the backend server returns a response code that indicates an error.</p><p>When enabled, the default, the service ignores the error condition and processes the response rule. If successful, returns the successful response to the client.</p><p>When disabled, the DataPower service notices the error condition and processes the error rule. If successful, propagates the response code from the backend server to the client.</p>
 - `process_resp_rules_on_one_way_mep` (Boolean)
 - `propagate_uri` (Boolean) <p>URI propagation is meaningful only when:</p><ul><li>The service uses a static backend.</li><li>The service uses a dynamic backend and routing is set with a route with stylesheet (route-action) action. In this case, use dp:set-target() to define the backend server. <p>For the other routing options that are available with route-action and route-set, the URI is absolute.</p></li></ul><p>When set to <b>on</b>, the service rewrites the URI of the backend URL to the URI in the client request. If the client submits http://host/service and the backend URL is http://server/listener, the URL is rewritten to http://server/service.</p><p>If the backend URL employs AMQP, IBM MQ, Kafka, TIBCO EMS, or WebSphere JMS, set to <b>off</b>.</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `query_param_namespace` (String) The namespace in which to put all parameters that are specified in the URL query string.
 - `reliable_messaging` (Attributes List) Reliable Messaging (see [below for nested schema](#nestedatt--result--reliable_messaging))
 - `remote_endpoint_rewrite` (String) <p>Specify a URL Rewrite Policy used to modify the wsdl:port address specified in the source WSDL when the service is loaded. If no URL Rewrite Policy is specified, the default remote address is exactly the same wsdl:port address used in the source WSDL.</p><p>For example, the WSDL may specify <tt>http://api.beagle.com:2100/search/find"</tt> and this URL Rewrite Policy might rewrite it to <tt>http://192.168.2.21:2000/search/find"</tt> .</p>

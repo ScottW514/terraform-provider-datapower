@@ -26,18 +26,24 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
-var _ resource.Resource = &ODRResource{}
-var _ resource.ResourceWithImportState = &ODRResource{}
+var (
+	_ resource.Resource                = &ODRResource{}
+	_ resource.ResourceWithImportState = &ODRResource{}
+)
 
 func NewODRResource() resource.Resource {
 	return &ODRResource{}
@@ -55,6 +61,17 @@ func (r *ODRResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies an on demand router (ODR). The ODR feature acts as a collection of load balancer groups that distribute traffic to various clusters within a WebSphere cell or Liberty Collective. If multiple ODR connector groups are defined, the ODR distributes traffic to any of the clusters.</p><p>The ODR feature on the DataPower Gateway supports a subset of On Demand Router in Intelligent Management.</p>", "odr", "").String,
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host for this resource. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Computed:            true,
@@ -104,16 +121,21 @@ func (r *ODRResource) Create(ctx context.Context, req resource.CreateRequest, re
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Create, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Create, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	body := data.ToBody(ctx, `ODR`)
-	_, err := r.pData.Client.Put(data.GetPath(), body)
+	_, err := r.pData.Client.Put(data.GetPath(), body, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
-			_, err := r.pData.Client.Put(data.GetPath(), body)
+			_, err := r.pData.Client.Put(data.GetPath(), body, data.ProviderTarget)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
 				return
@@ -124,10 +146,13 @@ func (r *ODRResource) Create(ctx context.Context, req resource.CreateRequest, re
 			return
 		}
 	}
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -140,7 +165,12 @@ func (r *ODRResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.pData.Client.Get(data.GetPath())
+
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+	res, err := r.pData.Client.Get(data.GetPath(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400") {
 			resp.State.RemoveResource(ctx)
@@ -166,20 +196,28 @@ func (r *ODRResource) Update(ctx context.Context, req resource.UpdateRequest, re
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Update, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Update, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `ODR`))
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `ODR`), data.ProviderTarget)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -193,21 +231,28 @@ func (r *ODRResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Delete, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Delete, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 	data.ToDefault()
-	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `ODR`))
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `ODR`), data.ProviderTarget)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to restore singleton to default, got error: %s", err))
 		return
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
 
 	resp.State.RemoveResource(ctx)
 }
@@ -226,7 +271,7 @@ func (r *ODRResource) ImportState(ctx context.Context, req resource.ImportStateR
 	}
 
 	var data models.ODR
-	res, err := r.pData.Client.Get(data.GetPath())
+	res, err := r.pData.Client.Get(data.GetPath(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
@@ -239,15 +284,4 @@ func (r *ODRResource) ImportState(ctx context.Context, req resource.ImportStateR
 	data.FromBody(ctx, `ODR`, res)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
-}
-
-func (r *ODRResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
-	var data models.ODR
-
-	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

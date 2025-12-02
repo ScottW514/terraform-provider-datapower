@@ -42,6 +42,7 @@ type APIRule struct {
 	DynamicActions     types.List                  `tfsdk:"dynamic_actions"`
 	UserSummary        types.String                `tfsdk:"user_summary"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget     types.String                `tfsdk:"provider_target"`
 }
 
 var APIRuleActionsIgnoreVal = validators.Evaluation{
@@ -69,6 +70,7 @@ var APIRuleDynamicActionsIgnoreVal = validators.Evaluation{
 }
 
 var APIRuleObjectType = map[string]attr.Type{
+	"provider_target":      types.StringType,
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"dynamic_actions_mode": types.BoolType,

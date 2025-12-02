@@ -22,9 +22,12 @@ package provider
 
 import (
 	"context"
+	"regexp"
 	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
@@ -36,18 +39,28 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/datasources"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/resources"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
 type DatapowerProvider struct {
 	version string
 }
 
-type DatapowerProviderModel struct {
+type DatapowerProviderTargetsModel struct {
 	Hostname types.String `tfsdk:"hostname"`
 	Port     types.Int32  `tfsdk:"port"`
 	Username types.String `tfsdk:"username"`
 	Password types.String `tfsdk:"password"`
 	Insecure types.Bool   `tfsdk:"insecure"`
+}
+
+type DatapowerProviderModel struct {
+	Hostname types.String                              `tfsdk:"hostname"`
+	Port     types.Int32                               `tfsdk:"port"`
+	Username types.String                              `tfsdk:"username"`
+	Password types.String                              `tfsdk:"password"`
+	Insecure types.Bool                                `tfsdk:"insecure"`
+	Targets  map[string]*DatapowerProviderTargetsModel `tfsdk:"targets"`
 }
 
 func (p *DatapowerProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -81,6 +94,48 @@ func (p *DatapowerProvider) Schema(ctx context.Context, req provider.SchemaReque
 			"insecure": schema.BoolAttribute{
 				MarkdownDescription: "Allow insecure HTTPS client. Can be set via DP_INSECURE evnvironment variable. Defaults to `false`.",
 				Optional:            true,
+			},
+			"targets": schema.MapNestedAttribute{
+				Description: "Map of available target hosts. The map key value is assigned to `provider_target` on `resource` or `datasource` blocks. Top levels values will be used for any unset attributes on the target.",
+				Optional:    true,
+				Validators: []validator.Map{
+					validators.NoReservedTargetName(),
+					mapvalidator.KeysAre(
+						stringvalidator.LengthAtLeast(1),
+						stringvalidator.RegexMatches(
+							regexp.MustCompile(`^[a-zA-Z0-9_-]+$`),
+							"Target names must contain only letters, numbers, hyphens, and underscores",
+						),
+					),
+				},
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"hostname": schema.StringAttribute{
+							MarkdownDescription: "Hostname or IP address of the target.",
+							Required:            true,
+						},
+						"port": schema.Int32Attribute{
+							MarkdownDescription: "Port for REST API calls. Defaults to `5554`.",
+							Optional:            true,
+							Validators: []validator.Int32{
+								int32validator.Between(1024, 65535),
+							},
+						},
+						"username": schema.StringAttribute{
+							MarkdownDescription: "Username for the target. If unset, will use the top level `username` or evnvironment variable.",
+							Optional:            true,
+						},
+						"password": schema.StringAttribute{
+							MarkdownDescription: "Password for the target. If unset, will use the top level `password` or evnvironment variable.",
+							Optional:            true,
+							Sensitive:           true,
+						},
+						"insecure": schema.BoolAttribute{
+							MarkdownDescription: "Allow insecure HTTPS client. If unset, will use the top level `insecure` or evnvironment variable.",
+							Optional:            true,
+						},
+					},
+				},
 			},
 		},
 	}

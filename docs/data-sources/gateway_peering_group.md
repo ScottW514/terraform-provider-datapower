@@ -29,6 +29,7 @@ data "datapower_gateway_peering_group" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -52,6 +53,7 @@ Read-Only:
 - `idcred` (String) Specify the identification credentials that contains the credentials that the current member uses to identify itself to other peers. Client authentication uses mutual TLS.
 - `mode` (String) Mode
 - `peer_nodes` (Attributes List) Specify peers for the the group. To add a peer, enter its local IP address or host alias and its priority. (see [below for nested schema](#nestedatt--result--peer_nodes))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 - `valcred` (String) Validation credentials
 

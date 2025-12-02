@@ -48,6 +48,7 @@ resource "datapower_api_security_http_scheme" "test" {
   - Reference to: `datapower_ssl_client_profile:id`
   - Not Valid When: (`scheme`!=`bearer` OR `bearer_validation_method`!=`external-url`)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `scheme` (String) Specify the HTTP authentication security scheme. The only supported value is <tt>bearer</tt> .
   - CLI Alias: `http-scheme`
   - Choices: `bearer`

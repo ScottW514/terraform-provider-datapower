@@ -29,6 +29,7 @@ data "datapower_mqv9_plus_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -58,6 +59,7 @@ Read-Only:
 - `message_selector` (String) Specify the selector that filters the messages from a queue or a subscription by their properties. The selector uses the SQL92 conditional expression syntax. The selector enables the handler to filter messages from a queue or a subscription.
 - `parse_properties` (Boolean) Specify whether to parse the properties of the incoming messages from a queue or a subscription. By default, properties are not parsed.
 - `polling_interval` (Number) Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `publish_topic_string` (String) Specify the publish topic string associated with the queue manager. The topic string describes the subject of the information that is published in a publish or subscribe message. The handler publishes messages to this topic string. If the put queue is specified, this property is ignored.
 - `put_queue` (String) Specify the the name of the put queue associated with the queue manager. The handler puts server-originated reply messages to this queue.
 - `queue_manager` (String) Specify the name of the queue manager that provides messaging services for communicating applications by periodically monitoring or polling queues and by ensuring that messages are directed to the correct receive queue or routed to another queue manager. The local queue manager corresponds to a queue manager running on another host on the network.

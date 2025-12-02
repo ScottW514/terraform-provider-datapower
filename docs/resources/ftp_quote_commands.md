@@ -37,6 +37,7 @@ resource "datapower_ftp_quote_commands" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `ftp_quoted_commands` (Attributes List) The list of commands to send to the remote FTP server.
   - CLI Alias: `quoted-command` (see [below for nested schema](#nestedatt--ftp_quoted_commands))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

@@ -42,9 +42,11 @@ type Assembly struct {
 	DefaultCatch      types.String                `tfsdk:"default_catch"`
 	Finally           types.String                `tfsdk:"finally"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var AssemblyObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

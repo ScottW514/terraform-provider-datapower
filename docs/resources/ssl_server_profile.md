@@ -98,6 +98,7 @@ resource "datapower_ssl_server_profile" "test" {
   - Not Valid When: (`ssl_options`=`max-renegotiation` AND `number_of_renegotiation_allowed`=`0`)
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--protocols))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `request_client_auth` (Boolean) Request client authentication
   - CLI Alias: `request-client-auth`
   - Default value: `false`

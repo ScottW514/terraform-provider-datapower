@@ -29,6 +29,7 @@ data "datapower_mq_manager" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -70,6 +71,7 @@ Read-Only:
 - `ocsp_check_extensions` (Boolean) Check OCSP extensions
 - `outbound_sni` (String) Specify the Outbound SNI settings.
 - `permit_insecure_servers` (Boolean) When the configuration uses the TLS key repository, specify whether to permit connections to IBM MQ servers that do not support RFC 5746. Such servers are vulnerable to MITM attacks as documented in CVE-2009-3555. By default, insecure connections are rejected during the handshake.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `q_mname` (String) Specify the name of the queue manager when the queue manager is not the default on the identified host.
 - `reporting_interval` (Number) Specify the interval in seconds between error messages for failed connection attempts. This setting filters the generation of identical error messages to IBM MQ logging targets. The default value is 10.
 - `retry_attempts` (Number) Specify the number of failed connection attempts. After the number is reached, the long interval is used. The default value is 6. When 0, the long retry interval is not used. The retry interval is used forever.

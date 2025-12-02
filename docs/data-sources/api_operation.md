@@ -29,6 +29,7 @@ data "datapower_api_operation" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `operation_id` (String) Operation ID
 - `parameter` (Attributes List) Specify applicable parameters for the API operation. This setting overrides the setting in the API path configuration for the same parameter. (see [below for nested schema](#nestedatt--result--parameter))
 - `produce` (List of String) Specify MIME types that the operation can produce. This setting overrides the API-level produce declaration that is defined in the API definition.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `remove_consume` (Boolean) Specify whether to remove the API-level consume declaration. By default, the API-level consume declaration is applied to the operation. When removed, the operation can always be performed regardless of the content type.
 - `remove_security` (Boolean) Specify whether to remove the API-level security declaration that is defined for the API. By default, the API-level security declaration is applied to the operation. When removed, the operation can be performed without security check.
 - `request_schema` (String) Request schema

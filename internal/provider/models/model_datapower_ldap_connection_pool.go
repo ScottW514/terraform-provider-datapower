@@ -41,9 +41,11 @@ type LDAPConnectionPool struct {
 	MaxPoolSize       types.Int64                 `tfsdk:"max_pool_size"`
 	RejectOnPoolLimit types.Bool                  `tfsdk:"reject_on_pool_limit"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var LDAPConnectionPoolObjectType = map[string]attr.Type{
+	"provider_target":      types.StringType,
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"user_summary":         types.StringType,

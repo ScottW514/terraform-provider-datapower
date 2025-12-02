@@ -109,6 +109,7 @@ type B2BProfile struct {
 	Ebms3DuplicateDetectionNotification types.Bool                  `tfsdk:"ebms3_duplicate_detection_notification"`
 	EbmsMessageProperties               types.List                  `tfsdk:"ebms_message_properties"`
 	DependencyActions                   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                      types.String                `tfsdk:"provider_target"`
 }
 
 var B2BProfileInboundVerifyValCredIgnoreVal = validators.Evaluation{
@@ -1061,6 +1062,7 @@ var B2BProfileEBMSMessagePropertiesIgnoreVal = validators.Evaluation{
 }
 
 var B2BProfileObjectType = map[string]attr.Type{
+	"provider_target":                          types.StringType,
 	"id":                                       types.StringType,
 	"app_domain":                               types.StringType,
 	"user_summary":                             types.StringType,

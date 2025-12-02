@@ -37,9 +37,11 @@ type GitOpsVariables struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	Variables         types.List                  `tfsdk:"variables"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var GitOpsVariablesObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,
 	"variables":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmGitOpsVariableEntryObjectType}},

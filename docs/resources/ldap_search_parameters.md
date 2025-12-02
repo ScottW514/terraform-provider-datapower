@@ -45,6 +45,7 @@ resource "datapower_ldap_search_parameters" "test" {
   - CLI Alias: `scope`
   - Choices: `subtree`, `one-level`, `base`
   - Default value: `subtree`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

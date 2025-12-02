@@ -37,9 +37,11 @@ type UserGroup struct {
 	AccessPolicies    types.List                  `tfsdk:"access_policies"`
 	CommandGroup      types.List                  `tfsdk:"command_group"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var UserGroupObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"user_summary":       types.StringType,
 	"access_policies":    types.ListType{ElemType: types.StringType},

@@ -46,6 +46,7 @@ resource "datapower_web_b2b_viewer" "test" {
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `9091`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_server` (String) Custom TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`

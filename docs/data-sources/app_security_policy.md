@@ -29,6 +29,7 @@ data "datapower_app_security_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `error_maps` (Attributes List) A list of Error Policy objects (Processing Rules) and their matching criteria. If an error meets the matching criteria, its Error Policy runs. (see [below for nested schema](#nestedatt--result--error_maps))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `request_maps` (Attributes List) A list of Web Request Profile objects and their matching criteria. If the client request meets the matching criteria, its Web Request Profile runs. (see [below for nested schema](#nestedatt--result--request_maps))
 - `response_maps` (Attributes List) A list of Web Response Profile objects and their matching criteria. If the server response meets the matching criteria, its Web Response Profile runs. (see [below for nested schema](#nestedatt--result--response_maps))
 - `user_summary` (String) Comments

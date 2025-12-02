@@ -42,6 +42,7 @@ type DomainSettings struct {
 	PassphraseWo        types.String                `tfsdk:"passphrase_wo"`
 	PassphraseWoVersion types.Int64                 `tfsdk:"passphrase_wo_version"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 type DomainSettingsWO struct {
 	AppDomain         types.String                `tfsdk:"app_domain"`
@@ -49,9 +50,11 @@ type DomainSettingsWO struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	PasswordTreatment types.String                `tfsdk:"password_treatment"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var DomainSettingsObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"app_domain":            types.StringType,
 	"enabled":               types.BoolType,
 	"user_summary":          types.StringType,
@@ -61,6 +64,7 @@ var DomainSettingsObjectType = map[string]attr.Type{
 	"dependency_actions":    actions.ActionsListType,
 }
 var DomainSettingsObjectTypeWO = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"app_domain":         types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,

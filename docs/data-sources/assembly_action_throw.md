@@ -29,6 +29,7 @@ data "datapower_assembly_action_throw" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `error_status_reason` (String) Specify the HTTP reason phrase to return to the client for the error. You can reference a variable in the API context with the <tt>$( <i>variable</i> )</tt> format, such as <tt>$(message.status.reason)</tt> .
 - `error_text` (String) Specify the text for the error message. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$( <i>property_name</i> )</tt> when the assembly action does not have a property with the same name.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `title` (String) Title
 - `user_summary` (String) Comments
 

@@ -29,6 +29,7 @@ data "datapower_assembly_action_json2xml" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `input` (String) Specify the variable in the API context that contains the input message. The content of the <tt>body</tt> field is the input. With the default variable of <tt>message</tt> , the input is <tt>message.body</tt> .
 - `output` (String) Specify the variable in the API context to store the converted output message. The results are written to the <tt>body</tt> field of the specified variable. The output variable cannot be a read-only variable. <p>When you want the converted output to be returned to the client, you must use <tt>message</tt> as the output variable.</p><ul><li>Without an output variable, the output variable matches the input variable. For example, if the input variable is <tt>message</tt> , the output variable is <tt>message</tt> . Therefore, if the input variable is <tt>foo</tt> , the output variable is <tt>foo</tt> .</li><li>When the output variable is not <tt>message</tt> , the content is converted but not returned to the client.</li></ul>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `root_element_name` (String) Specify the name of the root element that wraps the resultant XML document. The default value is <tt>json</tt> . <p>The root element is generated with the specified name when one of the following conditions is met.</p><ul><li>The output include the root element.</li><li>The input has no root object.</li></ul>
 - `title` (String) Title
 - `unnamed_element_name` (String) Specify the XML element that is the result of converting JSON arrays to XML. The default value is <tt>element</tt> .

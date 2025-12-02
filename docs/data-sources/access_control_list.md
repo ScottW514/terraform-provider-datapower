@@ -29,6 +29,7 @@ data "datapower_access_control_list" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `access_control_entry` (Attributes List) Specify allow and deny clauses. (see [below for nested schema](#nestedatt--result--access_control_entry))
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

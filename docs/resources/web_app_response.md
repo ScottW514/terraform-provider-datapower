@@ -68,6 +68,7 @@ resource "datapower_web_app_response" "test" {
   - CLI Alias: `policy-type`
   - Choices: `pre-requisite`, `admission`
   - Default value: `admission`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `xml_policy` (String) Specify how the device handles responses that contain an XML MIME type.

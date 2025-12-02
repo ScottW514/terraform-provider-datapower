@@ -81,6 +81,7 @@ resource "datapower_aaa_jwt_generator" "test" {
   - Range: `0`-`480`
   - Required When: `additional_claims`=`nbf`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `sign_algorithm` (String) Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.
   - CLI Alias: `sign-alg`
   - Choices: `HS256`, `HS384`, `HS512`, `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, `PS512`

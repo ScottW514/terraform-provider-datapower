@@ -29,6 +29,7 @@ data "datapower_mtom_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `include_content_type` (Boolean) <p>Select whether to include the xmlmine:contentType declaration in output messages when the input message does not contain this declaration. If the input message contains this declaration, the MTOM policy passes through the attribute regardless of the setting for this property.</p><ul><li>Select "on", the default value, to add the contentType declaration to the output message.</li><li>Select "off" to not add the contentType declaration to the output message.</li></ul>
 - `mode` (String) Specify the optimization mode. <p>The encode option optimizes (serializes) input messages. For serialization, provide an XPath expression or a list of XPath expressions to identify the content to extract. Optionally, per XPath expression, exercise control over the Content Type and Content ID values. These two values can be determined automatically using the xmlmime:contentType declaration and namespace declaration.</p><p>The decode option decodes (deserializes) attachment parts of an optimized message. Deserialization, by default, reassembles the original infoset, which results in either a SOAP document or MIME document depending on whether all attachments were referenced by &lt;Include/> elements. Optionally, you can specify a Content ID to select individual attachment parts to reassemble.</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rule` (Attributes List) Each MTOM rule describes which message elements to optimize. A single XPath expression selects one or more elements for optimization. (see [below for nested schema](#nestedatt--result--rule))
 - `user_summary` (String) Comments
 

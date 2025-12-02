@@ -37,9 +37,11 @@ type NFSClientSettings struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	MountRefreshTime  types.Int64                 `tfsdk:"mount_refresh_time"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var NFSClientSettingsObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,
 	"mount_refresh_time": types.Int64Type,

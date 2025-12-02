@@ -55,6 +55,7 @@ type APILDAPRegistry struct {
 	LdapGroupFilterSuffix  types.String                `tfsdk:"ldap_group_filter_suffix"`
 	LdapGroupDynamicFilter types.String                `tfsdk:"ldap_group_dynamic_filter"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var APILDAPRegistryLDAPGroupAuthTypeCondVal = validators.Evaluation{
@@ -298,6 +299,7 @@ var APILDAPRegistryLDAPGroupDynamicFilterIgnoreVal = validators.Evaluation{
 }
 
 var APILDAPRegistryObjectType = map[string]attr.Type{
+	"provider_target":           types.StringType,
 	"id":                        types.StringType,
 	"app_domain":                types.StringType,
 	"user_summary":              types.StringType,

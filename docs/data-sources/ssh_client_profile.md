@@ -29,6 +29,7 @@ data "datapower_ssh_client_profile" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -52,6 +53,7 @@ Read-Only:
 - `persistent_connection_timeout` (Number) Specify the idle duration in seconds for a persistent connection. When the connection remains idle for the specified duration, the connection is closed. Enter any value in the range 1 - 86000. The default value is 120.
 - `persistent_connections` (Boolean) Specify whether to support persistent connections. By default, persistent connections are enabled. <ul><li>When enabled, new requests reuse the connection of a previous session without reauthentication.</li><li>When not enabled, new request must reauthenticate.</li></ul>
 - `profile_usage` (String) Specify the usage of the profile. Only SFTP is supported.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssh_user_authentication` (Attributes) Specify the available types of SSH user authentication for the SSH client. Authentication can be public key or password or both public key and password. When both methods are defined, public key authentication is attempted first.
   - CLI Alias: `user-auth` (see [below for nested schema](#nestedatt--result--ssh_user_authentication))
 - `strict_host_key_checking` (Boolean) Specify how to check host keys during the connection and authentication phases. By default strict host key checking is not enabled. <ul><li>When enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are rejected.</li><li>When not enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are added to the known hosts list and accepted.</li></ul>

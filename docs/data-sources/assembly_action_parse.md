@@ -29,6 +29,7 @@ data "datapower_assembly_action_parse" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `output` (String) Specify the variable in the API context to store the results. The content of the <tt>body</tt> field represents the results. The metrics of the parsed message can be stored in different parts of the message. The default variable is the same as that of the variable for the input message. Therefore, by default, the input message is overwritten by the output message.
 - `parse_settings_reference` (Attributes) Specify the parse settings configuration. A parse settings configuration defines the constraints on the documents to parse. You can configure the constraints by specifying a URL reference from which to retrieve the constraints definition. You can also specify a literal configuration string in XML management interface or REST management interface format that contains the constraints definition. You can also select a parse settings configuration from the list in Object reference to retrieve constraints definition. Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method.
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--result--parse_settings_reference))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `title` (String) Title
 - `use_content_type` (Boolean) Specify whether to attempt a parse with the specified content type. This property is only applicable when the expected content type is either JSON or XML. When enabled, the action fails when the content type does not match the parse-settings. For example, <tt>Content-Type: application/json</tt> and the setting is configured for XML. If configured to detect, forced to the specified content type.
 - `user_summary` (String) Comments

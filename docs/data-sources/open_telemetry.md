@@ -29,6 +29,7 @@ data "datapower_open_telemetry" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `exporter` (String) Exporter
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `resource_attribute` (Attributes List) Resource attributes (see [below for nested schema](#nestedatt--result--resource_attribute))
 - `sampler` (String) Sampler
 - `user_summary` (String) Comments

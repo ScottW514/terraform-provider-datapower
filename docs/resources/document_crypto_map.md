@@ -43,6 +43,7 @@ resource "datapower_document_crypto_map" "test" {
   - CLI Alias: `operation`
   - Choices: `encrypt`, `encrypt-wssec`, `decrypt`, `sign-wssec`
   - Default value: `encrypt`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

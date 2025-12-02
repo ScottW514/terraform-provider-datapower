@@ -29,6 +29,7 @@ data "datapower_url_rewrite_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `direction` (String) Restricts the URL Rewrite Policy to a specified direction. Direction is applied at the service object level and has no effect on policies used from multistep or elsewhere.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `url_rewrite_rule` (Attributes List) Add, edit, or delete a URL rewrite rule (see [below for nested schema](#nestedatt--result--url_rewrite_rule))
 
 <a id="nestedatt--result--dependency_actions"></a>

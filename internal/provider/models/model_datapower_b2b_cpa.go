@@ -39,9 +39,11 @@ type B2BCPA struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	CpaId             types.String                `tfsdk:"cpa_id"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var B2BCPAObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

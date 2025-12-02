@@ -42,9 +42,11 @@ type SSHDomainClientProfile struct {
 	KexAlg            types.List                  `tfsdk:"kex_alg"`
 	MacAlg            types.List                  `tfsdk:"mac_alg"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var SSHDomainClientProfileObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"app_domain":         types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,

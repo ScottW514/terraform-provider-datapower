@@ -111,6 +111,7 @@ type OAuthProviderSettings struct {
 	ThirdPartyCustomHeaderNameFormat      types.String                `tfsdk:"third_party_custom_header_name_format"`
 	ThirdPartyIntrospectSslProfile        types.String                `tfsdk:"third_party_introspect_ssl_profile"`
 	DependencyActions                     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                        types.String                `tfsdk:"provider_target"`
 }
 
 var OAuthProviderSettingsDefaultScopesIgnoreVal = validators.Evaluation{
@@ -1450,6 +1451,7 @@ var OAuthProviderSettingsThirdPartyIntrospectSSLProfileIgnoreVal = validators.Ev
 }
 
 var OAuthProviderSettingsObjectType = map[string]attr.Type{
+	"provider_target":                             types.StringType,
 	"id":                                          types.StringType,
 	"app_domain":                                  types.StringType,
 	"user_summary":                                types.StringType,

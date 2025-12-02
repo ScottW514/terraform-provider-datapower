@@ -29,6 +29,7 @@ data "datapower_xml_firewall_service" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -94,6 +95,7 @@ Read-Only:
 - `parser_limits_max_node_size` (Number) Defines the maximum size any one node may consume. The default is 32 MB. Sizes which are powers of two result in the best performance. If any of the parser limits are set in the XML Firewall, they will override those on the XML Manager. Although you set an explicit value, the DataPower Gateway uses a value that is the rounded-down, largest power of two that is smaller than the defined value.
 - `parser_limits_max_prefixes` (Number) Enter an integer that defines the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the rage 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.
 - `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `query_param_namespace` (String) The namespace in which to put all parameters that are specified in the URL query string.
 - `remote_address` (String) Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.
 - `remote_port` (Number) Specify the port number to monitor. Used only when Type is static-backend.

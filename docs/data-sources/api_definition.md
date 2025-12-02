@@ -29,6 +29,7 @@ data "datapower_api_definition" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -76,6 +77,7 @@ Read-Only:
 - `preserved_response_header` (List of String) Response header to preserve
 - `produce` (List of String) Specify the MIME types that the API can produce. These MIME types apply to all API operations. You can override the setting for specific operations in the API operation.
 - `properties` (Attributes List) Specify custom entries for API properties. An API property is a type of context variable whose value is dependent on the collection that the API is provisioned in. Collection-specific API properties allow you to use the same API definition in different collections when a property in a collection requires a unique or different value. A custom property entry defines a property and its value for one collection. For each custom property or property that needs a different value for another collection, add another entry. (see [below for nested schema](#nestedatt--result--properties))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `require_api_mutual_tls` (Boolean) API protection
 - `return_v5responses` (Boolean) Specify whether to return v5-compatible responses, such as OAuth and client security error responses.
 - `schemas` (Attributes List) Specify the API schemas that define data types for request or message validation. An API data type consists of a name and its API schema. (see [below for nested schema](#nestedatt--result--schemas))

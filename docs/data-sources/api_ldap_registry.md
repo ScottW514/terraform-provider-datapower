@@ -29,6 +29,7 @@ data "datapower_api_ldap_registry" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -60,6 +61,7 @@ Read-Only:
 - `ldap_read_timeout` (Number) Specify the time to wait for a response from the LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
 - `ldap_search_parameters` (String) LDAP search parameters
 - `ldap_version` (String) Specify the LDAP protocol version for bind operation. The default value is v3.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_client_profile` (String) TLS client profile
 - `user_summary` (String) Comments
 

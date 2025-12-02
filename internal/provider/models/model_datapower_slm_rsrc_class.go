@@ -47,6 +47,7 @@ type SLMRsrcClass struct {
 	WsrrSubscription            types.String                `tfsdk:"wsrr_subscription"`
 	WsrrSavedSearchSubscription types.String                `tfsdk:"wsrr_saved_search_subscription"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget              types.String                `tfsdk:"provider_target"`
 }
 
 var SLMRsrcClassRsrcMatchTypeCondVal = validators.Evaluation{
@@ -156,6 +157,7 @@ var SLMRsrcClassWSRRSavedSearchSubscriptionIgnoreVal = validators.Evaluation{
 }
 
 var SLMRsrcClassObjectType = map[string]attr.Type{
+	"provider_target":                types.StringType,
 	"id":                             types.StringType,
 	"app_domain":                     types.StringType,
 	"user_summary":                   types.StringType,

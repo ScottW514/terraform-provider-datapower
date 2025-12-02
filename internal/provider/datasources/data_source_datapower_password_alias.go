@@ -23,11 +23,14 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -35,9 +38,10 @@ import (
 )
 
 type PasswordAliasWOList struct {
-	Id        types.String `tfsdk:"id"`
-	AppDomain types.String `tfsdk:"app_domain"`
-	Result    types.List   `tfsdk:"result"`
+	ProviderTarget types.String `tfsdk:"provider_target"`
+	Id             types.String `tfsdk:"id"`
+	AppDomain      types.String `tfsdk:"app_domain"`
+	Result         types.List   `tfsdk:"result"`
 }
 
 var (
@@ -61,6 +65,14 @@ func (d *PasswordAliasDataSource) Schema(ctx context.Context, req datasource.Sch
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "The password map alias provides the mapping of an alias to a plaintext password. The alias is a publicly known reference that is included in configuration files and exports. With an alias you keep the real password secret because the plaintext value for the password is stored in an encrypted file. The password for the alias cannot be viewed or accessed by anyone. Only the system can extract the password that it uses internally. <p>No aliased passwords are written to configuration files. The mapping is not part of a backup or export operation. The mapping is part of the secure backup-restore operations.</p>",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,
@@ -87,6 +99,10 @@ func (d *PasswordAliasDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,
+						"provider_target": schema.StringAttribute{
+							MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -111,6 +127,11 @@ func (d *PasswordAliasDataSource) Read(ctx context.Context, req datasource.ReadR
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
 	o := models.PasswordAliasWO{
 		AppDomain: data.AppDomain,
 	}
@@ -120,11 +141,11 @@ func (d *PasswordAliasDataSource) Read(ctx context.Context, req datasource.ReadR
 		path = path + "/" + data.Id.ValueString()
 	}
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}

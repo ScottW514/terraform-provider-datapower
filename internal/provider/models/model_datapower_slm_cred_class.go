@@ -44,6 +44,7 @@ type SLMCredClass struct {
 	Stylesheet        types.String                `tfsdk:"stylesheet"`
 	Header            types.String                `tfsdk:"header"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var SLMCredClassCredMatchTypeCondVal = validators.Evaluation{
@@ -103,6 +104,7 @@ var SLMCredClassHeaderIgnoreVal = validators.Evaluation{
 }
 
 var SLMCredClassObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

@@ -29,6 +29,7 @@ data "datapower_oauth_provider_settings" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -103,6 +104,7 @@ Read-Only:
 - `metadata_ssl_profile` (String) TLS profile to access metadata URL
 - `metadata_url` (String) Specify the URL to a remote server where the custom metadata is stored. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
 - `owner_revocation_endpoint` (String) Resource owner revocation endpoint
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `provider_type` (String) Provider type
 - `scopes_allowed` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. Scopes ensure that the granted access token is valid to access only specific protected resources.
 - `supported_client_types` (Attributes) Supported client types

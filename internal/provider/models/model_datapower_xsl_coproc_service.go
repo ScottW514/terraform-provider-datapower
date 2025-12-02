@@ -57,6 +57,7 @@ type XSLCoprocService struct {
 	SslSniServer              types.String                `tfsdk:"ssl_sni_server"`
 	LocalAddress              types.String                `tfsdk:"local_address"`
 	DependencyActions         []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget            types.String                `tfsdk:"provider_target"`
 }
 
 var XSLCoprocServiceDebugHistoryCondVal = validators.Evaluation{
@@ -96,6 +97,7 @@ var XSLCoprocServiceSSLSNIServerIgnoreVal = validators.Evaluation{
 }
 
 var XSLCoprocServiceObjectType = map[string]attr.Type{
+	"provider_target":             types.StringType,
 	"id":                          types.StringType,
 	"app_domain":                  types.StringType,
 	"user_summary":                types.StringType,

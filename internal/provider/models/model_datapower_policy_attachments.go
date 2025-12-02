@@ -44,6 +44,7 @@ type PolicyAttachments struct {
 	ExternalPolicy                types.List                  `tfsdk:"external_policy"`
 	SlaEnforcementMode            types.String                `tfsdk:"sla_enforcement_mode"`
 	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                types.String                `tfsdk:"provider_target"`
 }
 
 var PolicyAttachmentsIgnoredPolicyAttachmentPointsIgnoreVal = validators.Evaluation{
@@ -55,6 +56,7 @@ var PolicyAttachmentsIgnoredPolicyAttachmentPointsIgnoreVal = validators.Evaluat
 }
 
 var PolicyAttachmentsObjectType = map[string]attr.Type{
+	"provider_target":                  types.StringType,
 	"id":                               types.StringType,
 	"app_domain":                       types.StringType,
 	"user_summary":                     types.StringType,

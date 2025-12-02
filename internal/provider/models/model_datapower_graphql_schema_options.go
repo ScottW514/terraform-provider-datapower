@@ -39,9 +39,11 @@ type GraphQLSchemaOptions struct {
 	VisibilityList    types.String                `tfsdk:"visibility_list"`
 	Api               types.String                `tfsdk:"api"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var GraphQLSchemaOptionsObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"visibility_list":    types.StringType,

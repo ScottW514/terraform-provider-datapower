@@ -43,9 +43,11 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
-var _ resource.Resource = &AS1PollerSourceProtocolHandlerResource{}
-var _ resource.ResourceWithValidateConfig = &AS1PollerSourceProtocolHandlerResource{}
-var _ resource.ResourceWithImportState = &AS1PollerSourceProtocolHandlerResource{}
+var (
+	_ resource.Resource                   = &AS1PollerSourceProtocolHandlerResource{}
+	_ resource.ResourceWithValidateConfig = &AS1PollerSourceProtocolHandlerResource{}
+	_ resource.ResourceWithImportState    = &AS1PollerSourceProtocolHandlerResource{}
+)
 
 func NewAS1PollerSourceProtocolHandlerResource() resource.Resource {
 	return &AS1PollerSourceProtocolHandlerResource{}
@@ -63,6 +65,17 @@ func (r *AS1PollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("The AS1 handler is a Post Office Protocol (POP) handler. The handler manages the polling of a mailbox on a mail server. The mailbox receives mail messages from external partners. The handler retrieves and deletes mail messages on each polling cycle. Each mail message that the handler retrieves results in one transaction.", "source-as1-poller", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host for this resource. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
 				Required:            true,
@@ -184,23 +197,28 @@ func (r *AS1PollerSourceProtocolHandlerResource) Create(ctx context.Context, req
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	body := data.ToBody(ctx, `AS1PollerSourceProtocolHandler`)
-	_, err := r.pData.Client.Post(data.GetPath(), body)
+	_, err := r.pData.Client.Post(data.GetPath(), body, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
-			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
+			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body, data.ProviderTarget)
 			if err != nil {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
 				return
 			}
 			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -210,10 +228,13 @@ func (r *AS1PollerSourceProtocolHandlerResource) Create(ctx context.Context, req
 			return
 		}
 	}
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -226,13 +247,18 @@ func (r *AS1PollerSourceProtocolHandlerResource) Read(ctx context.Context, req r
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400") {
 			resp.State.RemoveResource(ctx)
 			return
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.State.RemoveResource(ctx)
 			}
@@ -258,14 +284,19 @@ func (r *AS1PollerSourceProtocolHandlerResource) Update(ctx context.Context, req
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `AS1PollerSourceProtocolHandler`))
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `AS1PollerSourceProtocolHandler`), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -276,10 +307,13 @@ func (r *AS1PollerSourceProtocolHandlerResource) Update(ctx context.Context, req
 		}
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -293,16 +327,21 @@ func (r *AS1PollerSourceProtocolHandlerResource) Delete(ctx context.Context, req
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	_, err := r.pData.Client.Delete(data.GetPath() + "/" + data.Id.ValueString())
+	_, err := r.pData.Client.Delete(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
 			resp.Diagnostics.AddWarning("Resource Conflict", fmt.Sprintf("Resource is no longer tracked by Terraform, but may need to be manually deleted on DataPower host. Got error: %s", err))
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -313,10 +352,12 @@ func (r *AS1PollerSourceProtocolHandlerResource) Delete(ctx context.Context, req
 		}
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
 
 	resp.State.RemoveResource(ctx)
 }
@@ -345,12 +386,12 @@ func (r *AS1PollerSourceProtocolHandlerResource) ImportState(ctx context.Context
 	var data models.AS1PollerSourceProtocolHandler
 	data.AppDomain = types.StringValue(appDomain)
 	data.Id = types.StringValue(id)
-	res, err := r.pData.Client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -364,7 +405,6 @@ func (r *AS1PollerSourceProtocolHandlerResource) ImportState(ctx context.Context
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
-
 func (r *AS1PollerSourceProtocolHandlerResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
 	var data models.AS1PollerSourceProtocolHandler
 

@@ -42,6 +42,7 @@ type IncludeConfig struct {
 	OnStartup          types.Bool                  `tfsdk:"on_startup"`
 	InterfaceDetection types.Bool                  `tfsdk:"interface_detection"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget     types.String                `tfsdk:"provider_target"`
 }
 
 var IncludeConfigInterfaceDetectionCondVal = validators.Evaluation{
@@ -57,6 +58,7 @@ var IncludeConfigInterfaceDetectionIgnoreVal = validators.Evaluation{
 }
 
 var IncludeConfigObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,

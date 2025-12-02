@@ -62,6 +62,7 @@ type SQLDataSource struct {
 	ValidateHostName           types.Bool                  `tfsdk:"validate_host_name"`
 	KeystoreRef                types.String                `tfsdk:"keystore_ref"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget             types.String                `tfsdk:"provider_target"`
 }
 
 var SQLDataSourcePasswordAliasCondVal = validators.Evaluation{
@@ -551,6 +552,7 @@ var SQLDataSourceKeystoreRefIgnoreVal = validators.Evaluation{
 }
 
 var SQLDataSourceObjectType = map[string]attr.Type{
+	"provider_target":                 types.StringType,
 	"id":                              types.StringType,
 	"app_domain":                      types.StringType,
 	"user_summary":                    types.StringType,

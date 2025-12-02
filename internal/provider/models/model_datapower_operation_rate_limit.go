@@ -43,6 +43,7 @@ type OperationRateLimit struct {
 	RateLimit         types.List                  `tfsdk:"rate_limit"`
 	RateLimitGroup    types.String                `tfsdk:"rate_limit_group"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var OperationRateLimitRateLimitCondVal = validators.Evaluation{
@@ -70,6 +71,7 @@ var OperationRateLimitRateLimitGroupIgnoreVal = validators.Evaluation{
 }
 
 var OperationRateLimitObjectType = map[string]attr.Type{
+	"provider_target":      types.StringType,
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"user_summary":         types.StringType,

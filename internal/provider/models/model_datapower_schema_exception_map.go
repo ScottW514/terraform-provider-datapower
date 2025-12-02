@@ -40,9 +40,11 @@ type SchemaExceptionMap struct {
 	SchemaExceptionRules types.List                  `tfsdk:"schema_exception_rules"`
 	UserSummary          types.String                `tfsdk:"user_summary"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget       types.String                `tfsdk:"provider_target"`
 }
 
 var SchemaExceptionMapObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"id":                     types.StringType,
 	"app_domain":             types.StringType,
 	"original_schema_url":    types.StringType,

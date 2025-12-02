@@ -44,6 +44,7 @@ resource "datapower_domain_settings" "test" {
   - CLI Alias: `password-treatment`
   - Choices: `none`, `masked`
   - Default value: `masked`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

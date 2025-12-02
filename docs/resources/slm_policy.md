@@ -45,6 +45,7 @@ resource "datapower_slm_policy" "test" {
 - `peer_group` (String) Specify the peer group that share in load distribution of traffic that is destined for the same resources. A peer group establishes a data-sharing protocol among members where each member has the data to determine whether a threshold is reached.
   - CLI Alias: `peer-group`
   - Reference to: `datapower_peer_group:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `statement` (Attributes List) Specify the policy statement that establishes criteria to select messages, to set a measurement interval, to set thresholds, and to determine the action to take when the threshold is met. A policy can have multiple statements that run in the sequence defined by the statement identifier.
   - CLI Alias: `statement` (see [below for nested schema](#nestedatt--statement))
 - `user_summary` (String) Comments

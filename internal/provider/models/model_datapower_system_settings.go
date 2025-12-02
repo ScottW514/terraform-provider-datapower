@@ -54,9 +54,11 @@ type SystemSettings struct {
 	SystemLogFixedFormat types.Bool                  `tfsdk:"system_log_fixed_format"`
 	Uuid                 types.String                `tfsdk:"uuid"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget       types.String                `tfsdk:"provider_target"`
 }
 
 var SystemSettingsObjectType = map[string]attr.Type{
+	"provider_target":         types.StringType,
 	"enabled":                 types.BoolType,
 	"user_summary":            types.StringType,
 	"product_oid":             types.StringType,

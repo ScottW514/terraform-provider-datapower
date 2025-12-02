@@ -86,6 +86,7 @@ type LogTarget struct {
 	LogPrecision            types.String                `tfsdk:"log_precision"`
 	EventBufferSize         types.String                `tfsdk:"event_buffer_size"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget          types.String                `tfsdk:"provider_target"`
 }
 type LogTargetWO struct {
 	Id                  types.String                `tfsdk:"id"`
@@ -137,6 +138,7 @@ type LogTargetWO struct {
 	LogPrecision        types.String                `tfsdk:"log_precision"`
 	EventBufferSize     types.String                `tfsdk:"event_buffer_size"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var LogTargetBackupIgnoreVal = validators.Evaluation{
@@ -821,6 +823,7 @@ var LogTargetEventBufferSizeIgnoreVal = validators.Evaluation{
 }
 
 var LogTargetObjectType = map[string]attr.Type{
+	"provider_target":            types.StringType,
 	"id":                         types.StringType,
 	"app_domain":                 types.StringType,
 	"backup":                     types.StringType,
@@ -874,6 +877,7 @@ var LogTargetObjectType = map[string]attr.Type{
 	"dependency_actions":         actions.ActionsListType,
 }
 var LogTargetObjectTypeWO = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"id":                     types.StringType,
 	"app_domain":             types.StringType,
 	"backup":                 types.StringType,

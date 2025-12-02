@@ -49,6 +49,7 @@ type APISchema struct {
 	WsdlMessageDirectionOrName types.String                `tfsdk:"wsdl_message_direction_or_name"`
 	WsdlAttachmentPart         types.String                `tfsdk:"wsdl_attachment_part"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget             types.String                `tfsdk:"provider_target"`
 }
 
 var APISchemaXMLValidationModeIgnoreVal = validators.Evaluation{
@@ -108,6 +109,7 @@ var APISchemaWSDLAttachmentPartIgnoreVal = validators.Evaluation{
 }
 
 var APISchemaObjectType = map[string]attr.Type{
+	"provider_target":                types.StringType,
 	"id":                             types.StringType,
 	"app_domain":                     types.StringType,
 	"user_summary":                   types.StringType,

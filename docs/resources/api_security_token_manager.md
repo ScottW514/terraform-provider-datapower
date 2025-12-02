@@ -42,6 +42,7 @@ resource "datapower_api_security_token_manager" "test" {
 - `gateway_peering_external` (String) Specify the gateway-peering instance to store and manage responses from external OAuth token management services in this domain. This gateway-peering instance does not require that data persist across a restart.
   - CLI Alias: `gateway-peering-external`
   - Reference to: `datapower_gateway_peering:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

@@ -29,6 +29,7 @@ data "datapower_api_plan" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -61,6 +62,7 @@ Read-Only:
 - `product_name` (String) Product name
 - `product_title` (String) Product title
 - `product_version` (String) Product version
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rate_limit` (Attributes List) Specify the rate limit scheme to enforce. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded. (see [below for nested schema](#nestedatt--result--rate_limit))
 - `rate_limit_group` (String) Rate limit group
 - `rate_limit_scope` (String) Specify the scope to apply the rate limit schemes to. You can apply schemes against the application or client ID. For example, <tt>application1</tt> has <tt>client1</tt> and <tt>client2</tt> , and the rate limit is 10 calls per hour. <ul><li>When against the application, <tt>application1</tt> limits 10 calls per hour from either <tt>client1</tt> or <tt>client2.</tt></li><li>When against the client ID, <tt>application1</tt> limits 10 calls per hour from each <tt>client1</tt> and <tt>client2</tt> .</li></ul>

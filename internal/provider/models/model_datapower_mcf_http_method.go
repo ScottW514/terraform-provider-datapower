@@ -39,9 +39,11 @@ type MCFHttpMethod struct {
 	HttpMethod        types.String                `tfsdk:"http_method"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var MCFHttpMethodObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"http_method":        types.StringType,

@@ -40,6 +40,7 @@ resource "datapower_ldap_connection_pool" "test" {
   - CLI Alias: `max-pool-size`
   - Range: `1`-`2000`
   - Default value: `35`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `reject_on_pool_limit` (Boolean) Specify whether to reject an incoming LDAP connection when the LDAP connection pool reaches the maximum pool size for a server:port:BindDN combination.
   - CLI Alias: `reject-on-pool-limit`
   - Default value: `false`

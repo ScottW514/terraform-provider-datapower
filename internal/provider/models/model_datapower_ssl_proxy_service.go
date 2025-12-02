@@ -52,6 +52,7 @@ type SSLProxyService struct {
 	SslClient         types.String                `tfsdk:"ssl_client"`
 	LocalAddress      types.String                `tfsdk:"local_address"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var SSLProxyServiceSSLServerIgnoreVal = validators.Evaluation{
@@ -79,6 +80,7 @@ var SSLProxyServiceSSLClientIgnoreVal = validators.Evaluation{
 }
 
 var SSLProxyServiceObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

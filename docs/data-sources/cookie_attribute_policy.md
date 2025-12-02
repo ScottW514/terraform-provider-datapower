@@ -29,6 +29,7 @@ data "datapower_cookie_attribute_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `interval` (Number) <p>Sets the cookie's maximum age and/or the cookie's expiration date as an interval of seconds, relative to the time the transaction occurred on the object. For example, if this value is set to 3600 and the transaction on this object occurred on Feb 10, 2014 12:00:00 GMT, then the maximum age of the cookie is 3600 seconds and the expiration date is Feb 10, 2014 13:00:00 GMT, depending on whether the Max-Age and the Expires attribute are included.</p><p>When the maximum age or the expiration date is reached, the cookie is deleted. Enter a value in the range 1 - 2678400. The default value is 3600. Note that the Max-Age attribute in this policy overrides Inactivity Timeout and Session Lifetime attributes in HTML Forms Login policy.</p>
 - `path` (String) Identifies path attribute of a cookie. A browser accepts cookies only when the current path matches the value you enter there. If this policy object is attached to HTML Forms Login Policy, this property overrides Form POST Action URL property. The maximum length of the path is 256 characters.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>

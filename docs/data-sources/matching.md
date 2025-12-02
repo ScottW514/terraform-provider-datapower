@@ -29,6 +29,7 @@ data "datapower_matching" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `match_rules` (Attributes List) The rules in the matching rule. (see [below for nested schema](#nestedatt--result--match_rules))
 - `match_with_pcre` (Boolean) Whether the evaluation uses shell style expressions or PCREs. This setting does not apply to XPath or HTTP method evaluations.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>

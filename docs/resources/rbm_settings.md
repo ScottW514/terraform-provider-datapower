@@ -267,6 +267,7 @@ resource "datapower_rbm_settings" "test" {
   - CLI Alias: `password-hash-algorithm`
   - Choices: `md5crypt`, `sha256crypt`
   - Default value: `md5crypt`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `require_digit` (Boolean) Require number
   - CLI Alias: `pwd-digit`
   - Default value: `false`

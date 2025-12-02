@@ -47,6 +47,7 @@ type WebSphereJMSSourceProtocolHandler struct {
 	Selector               types.String                `tfsdk:"selector"`
 	AsyncMessageProcessing types.Bool                  `tfsdk:"async_message_processing"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var WebSphereJMSSourceProtocolHandlerStrictMessageOrderIgnoreVal = validators.Evaluation{
@@ -58,6 +59,7 @@ var WebSphereJMSSourceProtocolHandlerStrictMessageOrderIgnoreVal = validators.Ev
 }
 
 var WebSphereJMSSourceProtocolHandlerObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"id":                       types.StringType,
 	"app_domain":               types.StringType,
 	"server":                   types.StringType,

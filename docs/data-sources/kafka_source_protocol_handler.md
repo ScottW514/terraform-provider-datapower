@@ -29,6 +29,7 @@ data "datapower_kafka_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `cluster` (String) Kafka cluster
 - `consumer_group` (String) Consumer group
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `request_topic` (String) Specify the name of the request topic to monitor for incoming client requests. On receipt, the handler forwards the extracted message to the DataPower service for processing.
 - `response_topic` (String) Specify the name of the response topic to send responses after processing by the DataPower service. When the Kafka server does not expect responses, leave blank. When blank, responses are dropped.
 - `user_summary` (String) Comments

@@ -49,6 +49,7 @@ type GatewayPeering struct {
 	LocalDirectory      types.String                `tfsdk:"local_directory"`
 	MaxMemory           types.Int64                 `tfsdk:"max_memory"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var GatewayPeeringLocalAddressCondVal = validators.Evaluation{
@@ -122,6 +123,7 @@ var GatewayPeeringMaxMemoryIgnoreVal = validators.Evaluation{
 }
 
 var GatewayPeeringObjectType = map[string]attr.Type{
+	"provider_target":      types.StringType,
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"user_summary":         types.StringType,

@@ -29,6 +29,7 @@ data "datapower_assembly_action_graphql_execute" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `input` (String) Specify the variable in the API context that contains the input to process. The content of the <tt>body</tt> field is the input and is the GraphQL query to process. The default variable is <tt>message</tt> .
 - `output` (String) Specify the variable in the API context to contain the results. The content of the <tt>body</tt> field contains the results. By default, the variable is the same as the variable for the input message. Therefore, by default, the input message is overwritten by the output message.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `target_map_rule` (Attributes List) Target rules (see [below for nested schema](#nestedatt--result--target_map_rule))
 - `title` (String) Title
 - `user_summary` (String) Comments

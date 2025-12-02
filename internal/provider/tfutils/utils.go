@@ -19,6 +19,7 @@
 package tfutils
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"sync"
@@ -232,11 +233,23 @@ func ToTfName(s string) string {
 }
 
 // Test if credentials are good and domain exists
-func DomainCredentialTest(c *client.DatapowerClient, diag *diag.Diagnostics, domain string) bool {
-	res, err := c.Get("/mgmt/domains/config//")
+func DomainCredentialTest(c *client.DatapowerClient, diag *diag.Diagnostics, domain string, target types.String) bool {
+	res, err := c.Get("/mgmt/domains/config//", target)
 	if err != nil {
 		diag.AddError("Client Error", fmt.Sprintf("Failed to retrieve domain list, got error: %s", err))
 		return false
 	}
 	return res.Get(`domain.#(name=="` + domain + `")`).Exists()
+}
+
+// Save domain on target
+func SaveDomain(ctx context.Context, diag *diag.Diagnostics, c *client.DatapowerClient, domain, target types.String) {
+	res, err := c.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain.ValueString()), `{"SaveConfig": 0}`, target)
+	if err == nil {
+		if res.StatusCode() != 200 {
+			diag.AddError("Client Error", fmt.Sprintf("Failed to save domain %s on target %s. %s", domain.ValueString(), target.ValueString(), err))
+		}
+	} else if !strings.Contains(err.Error(), "status 401") {
+		diag.AddError("Client Error", fmt.Sprintf("Failed to save domain %s on target %s. %s", domain.ValueString(), target.ValueString(), err))
+	}
 }

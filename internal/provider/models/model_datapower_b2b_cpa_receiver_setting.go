@@ -50,6 +50,7 @@ type B2BCPAReceiverSetting struct {
 	VerifyValCred         types.String                `tfsdk:"verify_val_cred"`
 	DefaultSignerCert     types.String                `tfsdk:"default_signer_cert"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget        types.String                `tfsdk:"provider_target"`
 }
 
 var B2BCPAReceiverSettingDecryptIdCredCondVal = validators.Evaluation{
@@ -77,6 +78,7 @@ var B2BCPAReceiverSettingDefaultSignerCertCondVal = validators.Evaluation{
 }
 
 var B2BCPAReceiverSettingObjectType = map[string]attr.Type{
+	"provider_target":         types.StringType,
 	"id":                      types.StringType,
 	"app_domain":              types.StringType,
 	"user_summary":            types.StringType,

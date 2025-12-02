@@ -41,9 +41,11 @@ type JWEHeader struct {
 	JweSharedUnprotectedHeader types.List                  `tfsdk:"jwe_shared_unprotected_header"`
 	Recipient                  types.String                `tfsdk:"recipient"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget             types.String                `tfsdk:"provider_target"`
 }
 
 var JWEHeaderObjectType = map[string]attr.Type{
+	"provider_target":               types.StringType,
 	"id":                            types.StringType,
 	"app_domain":                    types.StringType,
 	"user_summary":                  types.StringType,

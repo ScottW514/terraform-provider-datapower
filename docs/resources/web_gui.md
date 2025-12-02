@@ -50,6 +50,7 @@ resource "datapower_web_gui" "test" {
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `9090`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `save_config_overwrites` (Boolean) Specify whether saving the configuration overwrites the startup configuration. <ul><li>When enable, saving the configuration overwrites the startup configuration with the running configuration.</li><li>When not enabled, a manual step is required that prevents overwriting the manually edited startup configuration.</li></ul>
   - CLI Alias: `save-config-overwrite`
   - Default value: `true`

@@ -47,6 +47,7 @@ resource "datapower_amqp_source_protocol_handler" "test" {
 - `ignore_reply_to` (Boolean) <p>Specify whether to ignore the AMQP <tt>reply-to</tt> property. The default behavior is to ignore the property. <ul><li>When enabled, ignore the <tt>reply-to</tt> address when sending an AMQP response message.</li><li>When disabled, use the <tt>reply-to</tt> address instead of the address of the target terminus.</li></ul></p>
   - CLI Alias: `ignore-reply-to`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `to` (String) Target terminus
   - CLI Alias: `to`
 - `user_summary` (String) Comments

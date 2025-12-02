@@ -29,6 +29,7 @@ data "datapower_xsl_proxy_service" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -76,6 +77,7 @@ Read-Only:
 - `local_port` (Number) Specify the local port to monitor for incoming client requests.
 - `monitor_processing_policy` (String) Select the way that the system behaves when more than one monitor is attached to a service.
 - `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `query_param_namespace` (String) The namespace in which to put all parameters that are specified in the URL query string.
 - `remote_address` (String) Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.
 - `remote_port` (Number) Specify the port number to monitor. Used only when Type is static-backend.

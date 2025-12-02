@@ -46,6 +46,7 @@ type CryptoValCred struct {
 	ExplicitPolicy     types.Bool                  `tfsdk:"explicit_policy"`
 	CheckDates         types.Bool                  `tfsdk:"check_dates"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget     types.String                `tfsdk:"provider_target"`
 }
 
 var CryptoValCredRequireCRLIgnoreVal = validators.Evaluation{
@@ -81,6 +82,7 @@ var CryptoValCredExplicitPolicyIgnoreVal = validators.Evaluation{
 }
 
 var CryptoValCredObjectType = map[string]attr.Type{
+	"provider_target":      types.StringType,
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"certificate":          types.ListType{ElemType: types.StringType},

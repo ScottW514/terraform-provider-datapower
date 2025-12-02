@@ -54,9 +54,11 @@ type HTTPUserAgent struct {
 	SmtpPolicies             types.List                  `tfsdk:"smtp_policies"`
 	SftpPolicies             types.List                  `tfsdk:"sftp_policies"`
 	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget           types.String                `tfsdk:"provider_target"`
 }
 
 var HTTPUserAgentObjectType = map[string]attr.Type{
+	"provider_target":            types.StringType,
 	"id":                         types.StringType,
 	"app_domain":                 types.StringType,
 	"user_summary":               types.StringType,

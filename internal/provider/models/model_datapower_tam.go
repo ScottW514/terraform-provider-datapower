@@ -69,6 +69,7 @@ type TAM struct {
 	RetryAttempts               types.Int64                 `tfsdk:"retry_attempts"`
 	LongRetryInterval           types.Int64                 `tfsdk:"long_retry_interval"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget              types.String                `tfsdk:"provider_target"`
 }
 
 var TAMADUseADCondVal = validators.Evaluation{
@@ -472,6 +473,7 @@ var TAMLongRetryIntervalIgnoreVal = validators.Evaluation{
 }
 
 var TAMObjectType = map[string]attr.Type{
+	"provider_target":                  types.StringType,
 	"id":                               types.StringType,
 	"app_domain":                       types.StringType,
 	"user_summary":                     types.StringType,

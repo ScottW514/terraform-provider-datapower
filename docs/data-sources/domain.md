@@ -25,6 +25,10 @@ data "datapower_domain" "test" {
 
 - `app_domain` (String) The name of the application domain to retrieve.
 
+### Optional
+
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
+
 ### Read-Only
 
 - `result` (Attributes List) List of objects. If `id` was provided and it exists, it will be the only item in the list. (see [below for nested schema](#nestedatt--result))
@@ -54,6 +58,7 @@ Read-Only:
 - `monitoring_map` (Attributes) File-monitoring of the local: directory
   - CLI Alias: `file-monitoring` (see [below for nested schema](#nestedatt--result--monitoring_map))
 - `neighbor_domain` (List of String) Specify which domains have their <tt>local:</tt> directory visible to this domain. <p>References to visible domains are explicit, not bidirectional. If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following conditions apply.</p><ul><li>Domain <tt>domainA</tt> has read-only access to the <tt>local:</tt> directory of domain <tt>domainB</tt> .</li><li>Domain <tt>domainB</tt> cannot see domain <tt>domainA</tt> .</li></ul><p>In this case, you cannot make domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible domains cannot be circular.</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

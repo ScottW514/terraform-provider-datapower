@@ -38,9 +38,11 @@ type Luna struct {
 	ServerCert        types.String                `tfsdk:"server_cert"`
 	SecurityOption    types.String                `tfsdk:"security_option"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var LunaObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"user_summary":       types.StringType,
 	"remote_address":     types.StringType,

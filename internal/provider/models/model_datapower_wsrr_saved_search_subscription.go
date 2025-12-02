@@ -45,6 +45,7 @@ type WSRRSavedSearchSubscription struct {
 	FetchPolicyAttachments types.Bool                  `tfsdk:"fetch_policy_attachments"`
 	UserSummary            types.String                `tfsdk:"user_summary"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var WSRRSavedSearchSubscriptionRefreshIntervalIgnoreVal = validators.Evaluation{
@@ -56,6 +57,7 @@ var WSRRSavedSearchSubscriptionRefreshIntervalIgnoreVal = validators.Evaluation{
 }
 
 var WSRRSavedSearchSubscriptionObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"id":                       types.StringType,
 	"app_domain":               types.StringType,
 	"server":                   types.StringType,

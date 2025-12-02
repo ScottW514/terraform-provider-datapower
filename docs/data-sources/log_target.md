@@ -29,6 +29,7 @@ data "datapower_log_target" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -70,6 +71,7 @@ Read-Only:
 - `nf_sm_ount` (String) NFS static mount
 - `nfs_file` (String) Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).
 - `priority` (String) Specify the priority to control the scheduling of logs. When system resources are in high demand, high priority operations are favored over lower priority operations.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rate_limit` (Number) Specify the maximum number of events to log per second. Enter a value in the range 1 - 1000. The default value is 100. <ul><li>Remote log targets might receive more than this number of events within a second, depending on network latency and buffering. syslog over TCP log targets are exclusive, because only a single TCP connection is made to the server.</li><li>In the case of syslog over TCP log targets, the rate limit is the maximum number of events transmitted over the connection within one second. A value of 0 disables rate-limiting by the logging target.</li></ul>
 - `remote_address` (String) Specify the host name or IP address of the remote server. To establish a secure TLS connection to the server, set this value to the value of the remote host of a TLS proxy service. The local TLS proxy service then securely forwards the log entries to its configured remote server.
 - `remote_directory` (String) Specify an existing writable directory on the remote server to upload files. <ul><li>To denote an absolute directory from the root directory, specify a single forward slash character (/) or equivalent encoded character (%2F) before the fully qualified path. <ul><li>For SCP or SFTP, enter / to resolve to //.</li><li>For FTP, enter %2F to resolve to /%2F.</li></ul></li><li>To denote a directory that is relative to the home directory of a user, do not specify a forward slash character or encoded character before the fully qualified file name.</li></ul>

@@ -29,6 +29,7 @@ data "datapower_json_settings" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `json_max_nesting_depth` (Number) Specify the maximum nesting depth in levels of label-value pairs. Enter a value in the range 64 - 256. The default value is 64.
 - `json_max_number_length` (Number) Specify the maximum number in bytes for number values of label-value pairs. The number must be a contiguous string of bytes that contain no white space. The number can include a minus sign and a positive or negative exponent. Enter a value in the range 128 - 256. The default value is 128.
 - `json_max_value_length` (Number) Specify the maximum number in bytes for string values of label-value pairs. The length includes any white space between quotation marks. Enter a value in the range 8192 - 5368709121. The default value is 8192.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

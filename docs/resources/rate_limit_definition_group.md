@@ -33,6 +33,7 @@ resource "datapower_rate_limit_definition_group" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `rate_limit_definitions` (List of String) Rate limit definitions
   - CLI Alias: `rate-limit-definition`
   - Reference to: `datapower_rate_limit_definition:id`

@@ -29,6 +29,7 @@ data "datapower_b2b_profile" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -114,6 +115,7 @@ Read-Only:
 - `override_asid` (String) Specify the override the identifiers in AS message headers. <ul><li>For outbound messages, the value to use for the <tt>AS*-From</tt> or <tt>AS*-To</tt> header, where * is 1, 2, or 3. If blank, the transaction retains the identifiers that were extracted from the message payload.</li><li>For inbound messages, the value becomes another valid identifier for the partner in addition to those already defined for the partner.</li></ul>
 - `preserve_filename` (Boolean) Specify whether to expose the <tt>Content-Disposition</tt> header of inbound AS messages for file name preservation. According to RFC 2183, the file name information is optional in <tt>Content-Disposition</tt> header. When enabled, the <tt>Content-Disposition</tt> header of the inbound AS message is exposed if the inbound AS message is in S/MIME format. Then, the receiving partner can retrieve the original file name that is contained in the header and transfer the received file to its backend system with the received file name.
 - `profile_type` (String) Specify whether the profile is for an internal or external partner. The default value is internal.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `response_type` (String) Characterize the traffic that originates from <tt>To</tt> partners. For inbound transaction, this is the traffic type that originates from internal partner. For outbound transaction, this is the traffic type that originates from external partner. The default value is Non-XML.
 - `user_summary` (String) Comments
 

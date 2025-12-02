@@ -37,9 +37,11 @@ type SecureBackupMode struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	Mode              types.String                `tfsdk:"mode"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var SecureBackupModeObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,
 	"mode":               types.StringType,

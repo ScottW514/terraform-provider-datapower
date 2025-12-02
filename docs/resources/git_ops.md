@@ -82,6 +82,7 @@ resource "datapower_git_ops" "test" {
   - Reference to: `datapower_password_alias:id`
   - Required When: `connection_type`=`https`
   - Not Valid When: `connection_type`=`ssh`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssh_authorized_keys_file` (String) Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.
   - CLI Alias: `ssh-authorized-keyfile`
   - Required When: `connection_type`=`ssh`

@@ -47,6 +47,7 @@ resource "datapower_luna_partition" "test" {
   - CLI Alias: `login-role`
   - Choices: `co`, `cu`
   - Default value: `co`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

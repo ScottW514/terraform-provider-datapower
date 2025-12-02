@@ -29,6 +29,7 @@ data "datapower_ebms3_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -59,6 +60,7 @@ Read-Only:
 - `max_url_len` (Number) Specify the maximum URL length in bytes to accept from clients. Enter a value in the range 1 - 128000. The default value is 16384. The length includes any query string or fragment identifier.
 - `max_value_hdr_len` (Number) Specify the maximum length to accept for any header value. A header is expressed as a name-value pair. The default value is 0, which means unlimited.
 - `persistent_connections` (Boolean) Specify whether to enable persistent connections with clients. By default, persistent connections are enabled.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_server` (String) TLS server profile
 - `ssl_server_config_type` (String) Specify the type of TLS profile to secure client connections.
 - `ssl_sni_server` (String) TLS SNI server profile

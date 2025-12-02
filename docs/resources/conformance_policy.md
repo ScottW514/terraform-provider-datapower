@@ -48,6 +48,7 @@ resource "datapower_conformance_policy" "test" {
   - Not Valid When: attribute is not conditionally required
 - `profiles` (Attributes) Profiles against which to check conformance
   - CLI Alias: `profiles` (see [below for nested schema](#nestedatt--profiles))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `reject_include_summary` (Boolean) Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found.
   - CLI Alias: `reject-include-summary`
   - Default value: `false`

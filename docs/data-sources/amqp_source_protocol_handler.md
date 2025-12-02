@@ -29,6 +29,7 @@ data "datapower_amqp_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `from` (String) Source terminus
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `ignore_reply_to` (Boolean) <p>Specify whether to ignore the AMQP <tt>reply-to</tt> property. The default behavior is to ignore the property. <ul><li>When enabled, ignore the <tt>reply-to</tt> address when sending an AMQP response message.</li><li>When disabled, use the <tt>reply-to</tt> address instead of the address of the target terminus.</li></ul></p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `to` (String) Target terminus
 - `user_summary` (String) Comments
 

@@ -43,9 +43,11 @@ type AssemblyFunction struct {
 	Parameter         types.List                  `tfsdk:"parameter"`
 	Assembly          types.String                `tfsdk:"assembly"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var AssemblyFunctionObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

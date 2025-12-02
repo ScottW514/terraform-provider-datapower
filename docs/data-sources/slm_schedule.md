@@ -29,6 +29,7 @@ data "datapower_slm_schedule" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
   - CLI Alias: `days` (see [below for nested schema](#nestedatt--result--days_of_week))
 - `duration` (Number) Specify the duration in minutes to enforce the schedule. Enter any value of 1 - 1440. The default value is 1440.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `start_date` (String) Start date
 - `start_time` (String) Start Time
 - `stop_date` (String) Specify the stop date to enforce the schedule. The enforcement period does not include the stop date.

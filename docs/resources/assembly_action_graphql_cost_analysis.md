@@ -45,6 +45,7 @@ resource "datapower_assembly_action_graphql_cost_analysis" "test" {
   - Default value: `message`
 - `output` (String) Output message
   - CLI Alias: `output`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

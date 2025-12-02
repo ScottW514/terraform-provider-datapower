@@ -65,6 +65,7 @@ resource "datapower_as1_poller_source_protocol_handler" "test" {
   - CLI Alias: `max-messages-per-poll`
   - Range: `1`-`100`
   - Default value: `5`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`

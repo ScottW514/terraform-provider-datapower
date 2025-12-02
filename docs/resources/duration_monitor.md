@@ -48,6 +48,7 @@ resource "datapower_duration_monitor" "test" {
   - CLI Alias: `measure`
   - Choices: `messages`, `requests`, `server`, `responses`
   - Default value: `messages`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).
   - CLI Alias: `summary`
 

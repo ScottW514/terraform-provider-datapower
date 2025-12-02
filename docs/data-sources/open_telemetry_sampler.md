@@ -29,6 +29,7 @@ data "datapower_open_telemetry_sampler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `parent_based` (Boolean) Parent based
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ratio` (Number) Ratio
 - `type` (String) Sampler type
 - `user_summary` (String) Comments

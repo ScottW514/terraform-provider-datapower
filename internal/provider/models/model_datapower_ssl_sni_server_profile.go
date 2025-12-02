@@ -45,6 +45,7 @@ type SSLSNIServerProfile struct {
 	MaxSslDuration               types.Int64                 `tfsdk:"max_ssl_duration"`
 	NumberOfRenegotiationAllowed types.Int64                 `tfsdk:"number_of_renegotiation_allowed"`
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget               types.String                `tfsdk:"provider_target"`
 }
 
 var SSLSNIServerProfileMaxSSLDurationIgnoreVal = validators.Evaluation{
@@ -64,6 +65,7 @@ var SSLSNIServerProfileNumberOfRenegotiationAllowedIgnoreVal = validators.Evalua
 }
 
 var SSLSNIServerProfileObjectType = map[string]attr.Type{
+	"provider_target":                 types.StringType,
 	"id":                              types.StringType,
 	"app_domain":                      types.StringType,
 	"user_summary":                    types.StringType,

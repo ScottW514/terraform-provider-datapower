@@ -47,14 +47,15 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/validators"
 )
 
-var _ resource.Resource = &{{.Name}}Resource{}
+var(
+	_ resource.Resource = &{{.Name}}Resource{}
 {{- if len .Actions}}
-var _ resource.ResourceWithValidateConfig = &{{.Name}}Resource{}
+	_ resource.ResourceWithValidateConfig = &{{.Name}}Resource{}
 {{- end}}
-var _ resource.ResourceWithImportState = &{{.Name}}Resource{}
+	_ resource.ResourceWithImportState = &{{.Name}}Resource{}
+)
 
 func New{{.Name}}Resource() resource.Resource {
 	return &{{.Name}}Resource{}
@@ -76,6 +77,17 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 		{{- end -}}
 					.String,
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host for this resource. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
 {{- $root := . }}
 {{- range  .Attributes}}
     {{- template "renderSchemaAttribute" (dict "Attr" . "SchemaPrefix" "schema." "ValidatorPrefix" "models." "DmTypeCallPrefix" "models." "DmTypeCallSuffix" "ResourceSchema" "IsList" (isList .) "IsDataSource" false "IsResource" true "IncludeWriteOnly" true "Root" $root)}}
@@ -103,7 +115,12 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Create, {{if eq .Name "Domain"}}true{{else}}false{{end}})
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Create, {{if eq .Name "Domain"}}true{{else}}false{{end}}, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -117,16 +134,16 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 
 	body := data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}})
 {{- if or (eq .Name "Domain") .Singleton}}
-	_, err := r.pData.Client.Put(data.GetPath(), body)
+	_, err := r.pData.Client.Put(data.GetPath(), body, data.ProviderTarget)
 {{- else}}
-	_, err := r.pData.Client.Post(data.GetPath(), body)
+	_, err := r.pData.Client.Post(data.GetPath(), body, data.ProviderTarget)
 {{- end}}
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
 {{- if or (eq .Name "Domain") .Singleton}}
-			_, err := r.pData.Client.Put(data.GetPath(), body)
+			_, err := r.pData.Client.Put(data.GetPath(), body, data.ProviderTarget)
 {{- else}}
-			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body)
+			_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), body, data.ProviderTarget)
 {{- end}}
 			if err != nil{{if eq .Name "User"}} && !strings.Contains(err.Error(), "password matches the current password"){{end}} {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Resource already exists. Failed to update resource, got error: %s", err))
@@ -135,7 +152,7 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 			resp.Diagnostics.AddWarning("Warning", "Resource already exists. Existing resource was updated.")
 {{- if hasDomainAttribute .Attributes}}
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -149,9 +166,9 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 {{- if updateComputed .Attributes}}
 
 	{{- if or (eq .Name "Domain") .Singleton}}
-	getRes, getErr := r.pData.Client.Get(data.GetPath())
+	getRes, getErr := r.pData.Client.Get(data.GetPath(), data.ProviderTarget)
 	{{- else}}
-	getRes, getErr := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString())
+	getRes, getErr := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	{{- end}}
 	if getErr != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object after creation (GET), got error: %s", getErr))
@@ -160,10 +177,18 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 	data.UpdateUnknownFromBody(ctx, `{{.Name}}`, getRes)
 
 {{- end}}
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, {{if hasDomainAttribute .Attributes}}data.AppDomain{{else}}types.StringValue("default"){{end}}, data.ProviderTarget)
+{{- if eq .Name "Domain"}}
+	if data.AppDomain.ValueString() != "default" {
+		tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
+	}
+{{- end}}
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -177,10 +202,15 @@ func (r *{{.Name}}Resource) Read(ctx context.Context, req resource.ReadRequest, 
 		return
 	}
 
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
 {{- if or (eq .Name "Domain") .Singleton}}
-	res, err := r.pData.Client.Get(data.GetPath())
+	res, err := r.pData.Client.Get(data.GetPath(), data.ProviderTarget)
 {{- else}}
-	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString())
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 {{- end}}
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400") {
@@ -188,7 +218,7 @@ func (r *{{.Name}}Resource) Read(ctx context.Context, req resource.ReadRequest, 
 			return
 {{- if hasDomainAttribute .Attributes}}
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.State.RemoveResource(ctx)
 			}
@@ -215,7 +245,12 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Update, {{if eq .Name "Domain"}}true{{else}}false{{end}})
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Update, {{if eq .Name "Domain"}}true{{else}}false{{end}}, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -228,14 +263,14 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 {{- end}}
 
 {{- if or (eq .Name "Domain") .Singleton}}
-	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}), data.ProviderTarget)
 {{- else}}
-	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}), data.ProviderTarget)
 {{- end}}
 {{- if hasDomainAttribute .Attributes}}
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -251,10 +286,18 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 	}
 {{- end}}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, {{if hasDomainAttribute .Attributes}}data.AppDomain{{else}}types.StringValue("default"){{end}}, data.ProviderTarget)
+{{- if eq .Name "Domain"}}
+	if data.AppDomain.ValueString() != "default" {
+		tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
+	}
+{{- end}}
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -268,7 +311,12 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Delete, {{if eq .Name "Domain"}}true{{else}}false{{end}})
+	if data.ProviderTarget.ValueString() != "" && !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()))
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Delete, {{if eq .Name "Domain"}}true{{else}}false{{end}}, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -276,7 +324,7 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 	{{- if eq .Name "Domain"}}
 
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
-	auRes, auErr := r.pData.Client.Get("/mgmt/status/default/ActiveUsers")
+	auRes, auErr := r.pData.Client.Get("/mgmt/status/default/ActiveUsers", data.ProviderTarget)
 	if auErr != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Active Users, got error: %s", auErr))
 		return
@@ -285,7 +333,7 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 		for _, session := range userList.Array() {
 			if d := session.Get("domain"); d.Exists() && d.Str == data.AppDomain.ValueString() {
 				if id := session.Get("session"); id.Exists() {
-					r.pData.Client.Post("/mgmt/actionqueue/default", fmt.Sprintf("{\"Disconnect\": {\"id\": %d}}", id.Int()))
+					r.pData.Client.Post("/mgmt/actionqueue/default", fmt.Sprintf("{\"Disconnect\": {\"id\": %d}}", id.Int()), data.ProviderTarget)
 				}
 			}
 		}
@@ -293,16 +341,16 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 	{{- end}}
 
 	{{- if eq .Name "Domain"}}
-	_, err := r.pData.Client.Delete(data.GetPath())
+	_, err := r.pData.Client.Delete(data.GetPath(), data.ProviderTarget)
 	{{- else}}
-	_, err := r.pData.Client.Delete(data.GetPath()+"/"+data.Id.ValueString())
+	_, err := r.pData.Client.Delete(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 	{{- end}}
 	if err != nil {
 		if strings.Contains(err.Error(), "status 409") {
 			resp.Diagnostics.AddWarning("Resource Conflict", fmt.Sprintf("Resource is no longer tracked by Terraform, but may need to be manually deleted on DataPower host. Got error: %s", err))
 {{- if hasDomainAttribute .Attributes}}
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -318,17 +366,24 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 	config := models.{{.Name}}{}
 	{{- end}}
 	data.ToDefault()
-	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}))
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`{{if .WriteOnlyAttrs}}, &config{{end}}), data.ProviderTarget)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to restore singleton to default, got error: %s", err))
 		return
 	}
 {{- end}}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, {{if hasDomainAttribute .Attributes}}data.AppDomain{{else}}types.StringValue("default"){{end}}, data.ProviderTarget)
+{{- if eq .Name "Domain"}}
+	if data.AppDomain.ValueString() != "default" {
+		tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, types.StringValue("default"), data.ProviderTarget)
+	}
+{{- end}}
 
 	resp.State.RemoveResource(ctx)
 }
@@ -374,16 +429,16 @@ func (r *{{.Name}}Resource) ImportState(ctx context.Context, req resource.Import
 {{- end}}
 
 {{- if or (eq .Name "Domain") .Singleton}}
-	res, err := r.pData.Client.Get(data.GetPath())
+	res, err := r.pData.Client.Get(data.GetPath(), data.ProviderTarget)
 {{- else}}
-	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString())
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString(), data.ProviderTarget)
 {{- end}}
 	if err != nil {
 		if strings.Contains(err.Error(), "status 404") {
 			resp.Diagnostics.AddError("Resource Not Found", fmt.Sprintf("Resource was not found, got error: %s", err))
 {{- if hasDomainAttribute .Attributes}}
 		} else if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -399,6 +454,7 @@ func (r *{{.Name}}Resource) ImportState(ctx context.Context, req resource.Import
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
+{{- if len .Actions}}
 func (r *{{.Name}}Resource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
 	var data models.{{.Name}}
 
@@ -409,3 +465,4 @@ func (r *{{.Name}}Resource) ValidateConfig(ctx context.Context, req resource.Val
 
 	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }
+{{- end}}

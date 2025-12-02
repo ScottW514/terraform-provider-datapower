@@ -29,6 +29,7 @@ data "datapower_compile_options_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -52,6 +53,7 @@ Read-Only:
 - `minimum_escaping` (String) Select a URL Map from the list. Output produced from stylesheets that meet the URL map criteria are not escaped during processing. Escaping is enabled by default. Minimal escaping is particularly useful when handling non-English character sets.
 - `prefer_xg4` (String) <p>Designates a set of stylesheets or schemas that must use XML hardware acceleration when possible. XML hardware acceleration will be used only if the first action in a processing policy is a schema validation against a fixed schema. Any schemas specified here will use XML hardware acceleration if hardware resources are available. Schemas not specified here may also use XML hardware acceleration, but those schemas will be displaced in favor of schemas specified here.</p><p>When XML hardware acceleration is disabled in the Systems Settings, the XML Hardware Acceleration Preferred Rule has no effect.</p>
 - `profile` (String) Designates a set of stylesheets to be profiled based on their URL. This should not be used in production environments.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `stack_size` (Number) Indicates the maximum number of bytes the stack is allowed to use while executing a stylesheet or other compiled content. This blocks infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The default is half a megabyte, or 524,288 bytes.
 - `stream` (String) Designates a set of stylesheets which must be run in streaming mode. Transformation of the document begins before the input is fully parsed. Not all stylesheets can be streamed; if a stylesheet cannot be streamed, an error will be issued and the input will not be processed. See the DataPower manual for suggestions on producing streamable stylesheets.
 - `strict` (Boolean) Enable strict XSLT error-checking; non-strict operation attempts to recover from certain errors such as use of undeclared variables, calling undeclared templates, and so forth.

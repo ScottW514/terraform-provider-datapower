@@ -73,6 +73,7 @@ resource "datapower_ssh_client_profile" "test" {
   - CLI Alias: `profile-usage`
   - Choices: `sftp`, `scc`
   - Default value: `sftp`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssh_user_authentication` (Attributes) Specify the available types of SSH user authentication for the SSH client. Authentication can be public key or password or both public key and password. When both methods are defined, public key authentication is attempted first.
   - CLI Alias: `user-auth` (see [below for nested schema](#nestedatt--ssh_user_authentication))
 - `strict_host_key_checking` (Boolean) Specify how to check host keys during the connection and authentication phases. By default strict host key checking is not enabled. <ul><li>When enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are rejected.</li><li>When not enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are added to the known hosts list and accepted.</li></ul>

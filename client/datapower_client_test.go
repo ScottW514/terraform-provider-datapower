@@ -59,16 +59,16 @@ func TestNewClient(t *testing.T) {
 			expectedErr: "",
 			validate: func(t *testing.T, client *DatapowerClient) {
 				assert.NotNil(t, client)
-				assert.Equal(t, "https://example.com:8443", client.client.BaseURL)
+				assert.Equal(t, "https://example.com:8443", client.client["_base_"].BaseURL)
 				// Verify TLS config with a test request
 				server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 					w.WriteHeader(http.StatusOK)
 				}))
 				defer server.Close()
-				originalBaseURL := client.client.BaseURL
-				client.client.SetBaseURL(server.URL)
-				defer client.client.SetBaseURL(originalBaseURL)
-				_, err := client.client.R().Get("/")
+				originalBaseURL := client.client["_base_"].BaseURL
+				client.client["_base_"].SetBaseURL(server.URL)
+				defer client.client["_base_"].SetBaseURL(originalBaseURL)
+				_, err := client.client["_base_"].R().Get("/")
 				assert.NoError(t, err, "Request should succeed with InsecureSkipVerify")
 			},
 		},
@@ -85,10 +85,10 @@ func TestNewClient(t *testing.T) {
 			validate: func(t *testing.T, client *DatapowerClient) {
 				server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
 				defer server.Close()
-				originalBaseURL := client.client.BaseURL
-				client.client.SetBaseURL(server.URL)
-				defer client.client.SetBaseURL(originalBaseURL)
-				_, err := client.client.R().Get("/")
+				originalBaseURL := client.client["_base_"].BaseURL
+				client.client["_base_"].SetBaseURL(server.URL)
+				defer client.client["_base_"].SetBaseURL(originalBaseURL)
+				_, err := client.client["_base_"].R().Get("/")
 				assert.Error(t, err)
 				if assert.Error(t, err) {
 					assert.Contains(t, err.Error(), "certificate signed by unknown authority")
@@ -110,7 +110,7 @@ func TestNewClient(t *testing.T) {
 			expectedErr: "",
 			validate: func(t *testing.T, client *DatapowerClient) {
 				assert.NotNil(t, client)
-				assert.Equal(t, "https://envhost.com:8080", client.client.BaseURL)
+				assert.Equal(t, "https://envhost.com:8080", client.client["_base_"].BaseURL)
 			},
 		},
 		{
@@ -153,10 +153,10 @@ func TestNewClient(t *testing.T) {
 					w.WriteHeader(http.StatusOK)
 				}))
 				defer server.Close()
-				originalBaseURL := client.client.BaseURL
-				client.client.SetBaseURL(server.URL)
-				defer client.client.SetBaseURL(originalBaseURL)
-				_, err := client.client.R().Get("/")
+				originalBaseURL := client.client["_base_"].BaseURL
+				client.client["_base_"].SetBaseURL(server.URL)
+				defer client.client["_base_"].SetBaseURL(originalBaseURL)
+				_, err := client.client["_base_"].R().Get("/")
 				assert.NoError(t, err, "Request should succeed due to DP_INSECURE=true")
 			},
 		},
@@ -178,10 +178,10 @@ func TestNewClient(t *testing.T) {
 					w.WriteHeader(http.StatusOK)
 				}))
 				defer server.Close()
-				originalBaseURL := client.client.BaseURL
-				client.client.SetBaseURL(server.URL)
-				defer client.client.SetBaseURL(originalBaseURL)
-				_, err := client.client.R().Get("/")
+				originalBaseURL := client.client["_base_"].BaseURL
+				client.client["_base_"].SetBaseURL(server.URL)
+				defer client.client["_base_"].SetBaseURL(originalBaseURL)
+				_, err := client.client["_base_"].R().Get("/")
 				assert.NoError(t, err, "Request should succeed due to config Insecure=true")
 			},
 		},
@@ -211,7 +211,7 @@ func TestNewClient(t *testing.T) {
 			expectedErr: "",
 			validate: func(t *testing.T, client *DatapowerClient) {
 				assert.NotNil(t, client)
-				assert.Equal(t, "https://localhost:5554", client.client.BaseURL)
+				assert.Equal(t, "https://localhost:5554", client.client["_base_"].BaseURL)
 			},
 		},
 	}
@@ -446,9 +446,9 @@ func TestHTTPMethods(t *testing.T) {
 			server := httptest.NewTLSServer(mux)
 			defer server.Close()
 
-			originalBaseURL := client.client.BaseURL
-			client.client.SetBaseURL(server.URL)
-			defer client.client.SetBaseURL(originalBaseURL)
+			originalBaseURL := client.client["_base_"].BaseURL
+			client.client["_base_"].SetBaseURL(server.URL)
+			defer client.client["_base_"].SetBaseURL(originalBaseURL)
 
 			if tt.setupServer != nil {
 				tt.setupServer(t, mux)
@@ -460,23 +460,23 @@ func TestHTTPMethods(t *testing.T) {
 			switch tt.method {
 			case "Get":
 				var gjsonResult gjson.Result
-				gjsonResult, err = client.Get(tt.path)
+				gjsonResult, err = client.Get(tt.path, types.StringValue("_base_"))
 				result = gjsonResult
 			case "Post":
 				var resp *resty.Response
-				resp, err = client.Post(tt.path, tt.body)
+				resp, err = client.Post(tt.path, tt.body, types.StringValue("_base_"))
 				if resp != nil {
 					result = resp.StatusCode()
 				}
 			case "Put":
 				var resp *resty.Response
-				resp, err = client.Put(tt.path, tt.body)
+				resp, err = client.Put(tt.path, tt.body, types.StringValue("_base_"))
 				if resp != nil {
 					result = resp.StatusCode()
 				}
 			case "Delete":
 				var resp *resty.Response
-				resp, err = client.Delete(tt.path)
+				resp, err = client.Delete(tt.path, types.StringValue("_base_"))
 				if resp != nil {
 					result = resp.StatusCode()
 				}

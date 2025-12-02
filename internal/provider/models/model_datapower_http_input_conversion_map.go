@@ -40,9 +40,11 @@ type HTTPInputConversionMap struct {
 	DefaultInputEncoding types.String                `tfsdk:"default_input_encoding"`
 	InputEncoding        types.List                  `tfsdk:"input_encoding"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget       types.String                `tfsdk:"provider_target"`
 }
 
 var HTTPInputConversionMapObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"id":                     types.StringType,
 	"app_domain":             types.StringType,
 	"user_summary":           types.StringType,

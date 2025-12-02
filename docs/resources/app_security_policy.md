@@ -50,6 +50,7 @@ resource "datapower_app_security_policy" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `error_maps` (Attributes List) A list of Error Policy objects (Processing Rules) and their matching criteria. If an error meets the matching criteria, its Error Policy runs.
   - CLI Alias: `error-match` (see [below for nested schema](#nestedatt--error_maps))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

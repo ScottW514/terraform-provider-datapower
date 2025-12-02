@@ -29,6 +29,7 @@ data "datapower_assembly_action_extract" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
 - `extract` (Attributes List) Specify fields in the API context and how to transform the content of the fields. You use a subset of JSONata notation to specify the fields and how to transform the content. For more information, see "JSONata and assembly actions" in IBM Documentation. (see [below for nested schema](#nestedatt--result--extract))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `root` (String) Root
 - `title` (String) Title
 - `user_summary` (String) Comments

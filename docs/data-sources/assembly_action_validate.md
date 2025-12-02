@@ -29,6 +29,7 @@ data "datapower_assembly_action_validate" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -52,6 +53,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `input` (String) Specify the variable in the API context that contains the data to validate. The content of the <tt>body</tt> field is the input to validate. The default variable is <tt>message</tt> .
 - `output` (String) <p>Specify the variable in the API context to store the results. For a JSON schema, adds any default values that are missing from the payload.</p><p>Without an output variable, the results are not stored. By default, no output variable is specified.</p><p>If the validation fails, no output is stored.</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `schema` (String) Schema
 - `title` (String) Title
 - `user_summary` (String) Comments

@@ -32,6 +32,7 @@ resource "datapower_nfs_client_settings" "test" {
   - CLI Alias: `mount-refresh-time`
   - Range: `1`-`1000`
   - Default value: `10`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

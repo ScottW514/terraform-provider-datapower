@@ -51,6 +51,7 @@ type KafkaCluster struct {
 	RetryInterval      types.Int64                 `tfsdk:"retry_interval"`
 	Property           types.List                  `tfsdk:"property"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget     types.String                `tfsdk:"provider_target"`
 }
 
 var KafkaClusterSASLMechanismCondVal = validators.Evaluation{
@@ -214,6 +215,7 @@ var KafkaClusterSSLClientIgnoreVal = validators.Evaluation{
 }
 
 var KafkaClusterObjectType = map[string]attr.Type{
+	"provider_target":      types.StringType,
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"user_summary":         types.StringType,

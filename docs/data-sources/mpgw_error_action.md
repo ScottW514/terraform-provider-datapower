@@ -29,6 +29,7 @@ data "datapower_mpgw_error_action" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `header_injection` (Attributes List) Specify the name and the value for the HTTP header that the appliance injects. (see [below for nested schema](#nestedatt--result--header_injection))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `local_url` (String) Specify the URL of the local error page.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `reason_phrase` (String) Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.
 - `remote_url` (String) Specify the URL of the remote error page.
 - `status_code` (Number) Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.

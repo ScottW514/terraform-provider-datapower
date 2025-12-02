@@ -29,6 +29,7 @@ data "datapower_assembly_action_gateway_script" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `source` (String) Specify the name and location of the GatewayScript file to process. <p>You can specify the location with a URL or by referencing the variable in the API context with the <tt>$(variable)</tt> format, such as <tt>$(request.headers.URL)</tt> .</p><p>The URL must start with <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> . For example, <tt>local:///test.js</tt> .</p>
 - `title` (String) Title
 - `user_summary` (String) Comments

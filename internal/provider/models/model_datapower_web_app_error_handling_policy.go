@@ -43,6 +43,7 @@ type WebAppErrorHandlingPolicy struct {
 	ErrorStylePolicyRule types.String                `tfsdk:"error_style_policy_rule"`
 	ErrorMonitor         types.String                `tfsdk:"error_monitor"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget       types.String                `tfsdk:"provider_target"`
 }
 
 var WebAppErrorHandlingPolicyURLCondVal = validators.Evaluation{
@@ -70,6 +71,7 @@ var WebAppErrorHandlingPolicyErrorStylePolicyRuleIgnoreVal = validators.Evaluati
 }
 
 var WebAppErrorHandlingPolicyObjectType = map[string]attr.Type{
+	"provider_target":         types.StringType,
 	"id":                      types.StringType,
 	"app_domain":              types.StringType,
 	"user_summary":            types.StringType,

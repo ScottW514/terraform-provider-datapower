@@ -44,6 +44,7 @@ type CookieAttributePolicy struct {
 	Interval          types.Int64                 `tfsdk:"interval"`
 	CustomAttribute   types.String                `tfsdk:"custom_attribute"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var CookieAttributePolicyDomainCondVal = validators.Evaluation{
@@ -95,6 +96,7 @@ var CookieAttributePolicyCustomAttributeIgnoreVal = validators.Evaluation{
 }
 
 var CookieAttributePolicyObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

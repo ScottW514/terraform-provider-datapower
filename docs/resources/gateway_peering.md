@@ -70,6 +70,7 @@ resource "datapower_gateway_peering" "test" {
   - CLI Alias: `persistence`
   - Choices: `memory`, `local`, `raid`
   - Default value: `memory`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

@@ -76,6 +76,7 @@ type MQManager struct {
 	CdpCheckExtensions     types.Bool                  `tfsdk:"cdp_check_extensions"`
 	ClientRevocationChecks types.String                `tfsdk:"client_revocation_checks"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var MQManagerCSPUserIdCondVal = validators.Evaluation{
@@ -183,6 +184,7 @@ var MQManagerReportingIntervalIgnoreVal = validators.Evaluation{
 }
 
 var MQManagerObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"id":                       types.StringType,
 	"app_domain":               types.StringType,
 	"user_summary":             types.StringType,

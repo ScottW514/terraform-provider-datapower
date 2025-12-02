@@ -50,6 +50,7 @@ resource "datapower_slm_cred_class" "test" {
   - CLI Alias: `header`
   - Required When: `cred_type`=`ip-from-header`|`request-header`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `stylesheet` (String) Custom stylesheet
   - CLI Alias: `stylesheet`
   - Required When: `cred_type`=`custom-stylesheet`

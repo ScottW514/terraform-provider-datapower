@@ -42,6 +42,7 @@ resource "datapower_b2b_xpath_routing_policy" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `document_id_xpath` (String) Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.
   - CLI Alias: `document-id-xpath`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

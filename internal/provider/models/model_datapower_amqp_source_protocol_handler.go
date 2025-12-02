@@ -43,9 +43,11 @@ type AMQPSourceProtocolHandler struct {
 	Credit            types.Int64                 `tfsdk:"credit"`
 	IgnoreReplyTo     types.Bool                  `tfsdk:"ignore_reply_to"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var AMQPSourceProtocolHandlerObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

@@ -29,6 +29,7 @@ data "datapower_assembly_action_map" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `location` (String) Specify the location of the map file. The file must be in the DataPower <tt>local:</tt> or <tt>temporary:</tt> directory or to one of their subdirectories.
 - `parse_settings_reference` (Attributes) Specify the configuration that defines constraints on documents to parse. You can use one or more of the following methods to specify a configuration. Precedence rules apply when you configure the same aspect of the input document through multiple methods. If you do not specify, the configuration of the default object reference is applied.
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--result--parse_settings_reference))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `title` (String) Title
 - `user_summary` (String) Comments
 

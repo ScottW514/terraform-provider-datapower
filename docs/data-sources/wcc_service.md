@@ -29,6 +29,7 @@ data "datapower_wcc_service" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `odc_info_hostname` (String) Host name or IP address of the Deployment Manager. It is used to communicate with the ODCInfo servlet. The ODCInfo servlet must be installed in a WebSphere Application Server environment.
 - `odc_info_port` (Number) Specifies the listening port of the ODCInfo servlet on the deployment manager. To determine the listening port number, log in to the WebSphere Application Server administrative console and click System Administration > Deployment Manager > ports. From the list, use the port associated with WC_adminhost for HTTP or the port associated with WC_adminhost_secure for HTTPS.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 - `time_interval` (Number) <p>If the update method is poll, the time interval specifies the amount of time in seconds between poll requests.</p><p>If the update method is subscribe, the time interval specifies the maximum duration of the request in seconds.</p><p>Use any value of 1 - 86400. The default is 10.</p>

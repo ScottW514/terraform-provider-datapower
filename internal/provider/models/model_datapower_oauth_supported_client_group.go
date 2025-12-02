@@ -45,6 +45,7 @@ type OAuthSupportedClientGroup struct {
 	TemplateProcessUrl types.String                `tfsdk:"template_process_url"`
 	ClientTemplate     types.String                `tfsdk:"client_template"`
 	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget     types.String                `tfsdk:"provider_target"`
 }
 
 var OAuthSupportedClientGroupCustomizedTypeIgnoreVal = validators.Evaluation{
@@ -154,6 +155,7 @@ var OAuthSupportedClientGroupClientTemplateIgnoreVal = validators.Evaluation{
 }
 
 var OAuthSupportedClientGroupObjectType = map[string]attr.Type{
+	"provider_target":      types.StringType,
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"user_summary":         types.StringType,

@@ -46,6 +46,7 @@ resource "datapower_assembly_action_xml2json" "test" {
   - Default value: `message`
 - `output` (String) Specify the variable in the API context to store the converted output message. The results are written to the <tt>body</tt> field of the specified variable. The output variable cannot be a read-only variable. <p>When you want the converted output to be returned to the client, you must use <tt>message</tt> as the output variable.</p><ul><li>Without an output variable, the output variable matches the input variable. For example, if the input variable is <tt>message</tt> , the output variable is <tt>message</tt> . Therefore, if the input variable is <tt>foo</tt> , the output variable is <tt>foo</tt> .</li><li>When the output variable is not <tt>message</tt> , the content is converted but not returned to the client.</li></ul>
   - CLI Alias: `output`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

@@ -42,9 +42,11 @@ type APISecurityTokenManager struct {
 	GatewayPeeringExternal      types.String                `tfsdk:"gateway_peering_external"`
 	ExpiredTokenCleanupInterval types.Int64                 `tfsdk:"expired_token_cleanup_interval"`
 	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget              types.String                `tfsdk:"provider_target"`
 }
 
 var APISecurityTokenManagerObjectType = map[string]attr.Type{
+	"provider_target":                types.StringType,
 	"app_domain":                     types.StringType,
 	"enabled":                        types.BoolType,
 	"user_summary":                   types.StringType,

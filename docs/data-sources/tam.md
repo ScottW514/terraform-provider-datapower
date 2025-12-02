@@ -29,6 +29,7 @@ data "datapower_tam" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -58,6 +59,7 @@ Read-Only:
 - `listen_port` (Number) Enter the listening port on the DataPower Gateway to receive update notifications from the remote policy server.
 - `long_retry_interval` (Number) Specifies the number of seconds to wait after reaching the number of retry attempts. Enter a value in the range 1 - 65535. The default value is 900.
 - `poll_interval` (String) Enter the interval between requests to update the local policy database from the remote policy server. <ul><li><b>default</b> - Uses the default value, which is 600 seconds.</li><li><b>disable</b> - Disables requests to the policy database for requests.</li><li><i>seconds</i> - Specifies the time interval in seconds.</li></ul>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `retry_attempts` (Number) Enter the number of attempts to perform for the Access Manager client. After performing these attempts and the client did not start, each additional attempt waits the number of seconds defined by the long interval. Enter a value in the range 0 - 65535. A value of 0 disables the long interval. The default value is 3.
 - `retry_interval` (Number) <p>Enter the number of seconds to wait between attempts to start the Access Manager client. Enter a value in the range 1 - 65535. The default value is 180.</p>
 - `returning_user_attributes` (Boolean) Select whether the registry returns users attributes for successful authorization requests. When set, the registry returns user attributes.

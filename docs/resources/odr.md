@@ -40,6 +40,7 @@ resource "datapower_odr" "test" {
 - `odr_server_name` (String) <p>Enter the name of the ODR routing rules server that is used to determine whether routing rules are delivered to the DataPower Gateway. If the DataPower Gateway is not using routing rules, you can use any server name.</p><p>You must define the <tt>RoutingRulesConnectorClusterName</tt> custom property to set the name of the ODR connector group from which routing rules are accepted.</p><p>The web server name is configured in on one of the following ways. <ul><li>In a Liberty Collective, defined as an attribute of the <tt>routingRules</tt> element.</li><li>In a WebSphere cell as the value of the <tt>serverName</tt> parameter of <tt>WebServerRoutingRule</tt> command.</li></ul></p>
   - CLI Alias: `odr-server-name`
   - Default value: `dp_set`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Enter a descriptive summary for the configuration.
   - CLI Alias: `summary`
 

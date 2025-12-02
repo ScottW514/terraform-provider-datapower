@@ -48,6 +48,7 @@ resource "datapower_tcp_proxy_service" "test" {
 - `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `timeout` (Number) Specify the maximum idle time that is allowed for the front side connection and the server side connection. After the time is reached, the idle connections are terminated. Enter a value in the range 0 - 86400. The default value is 360. A value of 0 disables the idle timer.
   - Range: `0`-`86400`
   - Default value: `360`

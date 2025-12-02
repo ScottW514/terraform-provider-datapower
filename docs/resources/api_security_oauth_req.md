@@ -38,6 +38,7 @@ resource "datapower_api_security_oauth_req" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `oauth_allowed_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
   - CLI Alias: `allowed-scopes`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

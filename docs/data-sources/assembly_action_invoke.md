@@ -29,6 +29,7 @@ data "datapower_assembly_action_invoke" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -70,6 +71,7 @@ Read-Only:
 - `parameter_control_list` (String) Specify the control list that uses URL parameters to accept or reject requests. By default, rejects all requests with URL parameters.
 - `password` (String) Password
 - `persistent_connection` (Boolean) Persistent connection
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_client` (String) TLS client profile
 - `stop_on_error` (Boolean) Stop on error
 - `time_to_live` (Number) Specify the validity period in seconds for documents in the cache. The default value is 900.

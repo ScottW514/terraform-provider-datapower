@@ -44,9 +44,11 @@ type MessageMatching struct {
 	HttpHeaderExclude types.List                  `tfsdk:"http_header_exclude"`
 	RequestUrl        types.String                `tfsdk:"request_url"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var MessageMatchingObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,

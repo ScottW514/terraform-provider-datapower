@@ -38,6 +38,7 @@ resource "datapower_policy_parameters" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `policy_parameter` (Attributes List) A key-value pair. The key specifies a policy parameter in a policy mapping stylesheet formatted {policy-domain-ns}key.
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--policy_parameter))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

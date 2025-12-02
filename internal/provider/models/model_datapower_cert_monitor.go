@@ -40,9 +40,11 @@ type CertMonitor struct {
 	LogLevel            types.String                `tfsdk:"log_level"`
 	DisableExpiredCerts types.Bool                  `tfsdk:"disable_expired_certs"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var CertMonitorObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"enabled":               types.BoolType,
 	"user_summary":          types.StringType,
 	"polling_interval":      types.Int64Type,

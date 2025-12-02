@@ -29,6 +29,7 @@ data "datapower_ssh_server_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -60,6 +61,7 @@ Read-Only:
 - `local_address` (String) Specifies the address on which the SFTP server service listens. The default of 0.0.0.0 indicates that the service is active on all addresses. An alias name can be used to specify the address. Local host aliases can help ease migration tasks among machines.
 - `local_port` (Number) Specifies the port that is monitored by the SFTP server service. This port is the port on which SFTP connections can be established. This port does not control the TCP port that is used for the data connections. Enter a value in the range 1 - 65535. The default value is 22.
 - `persistent_filesystem_timeout` (Number) Specify the duration in seconds that a connection to a virtual persistent file system is retained after all SFTP control connections from user identities are disconnected. When the timeout expires, the virtual file system object is destroyed. Enter a value in the range 1- 43200. The default value is 600.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssh_user_authentication` (Attributes) Specifies the type(s) of SSH user authentication available for use by the client.
   - CLI Alias: `user-auth` (see [below for nested schema](#nestedatt--result--ssh_user_authentication))
 - `user_summary` (String) Comments

@@ -52,6 +52,7 @@ resource "datapower_zos_nss_client" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and the NSS server.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`

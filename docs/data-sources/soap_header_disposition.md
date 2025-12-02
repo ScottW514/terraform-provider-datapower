@@ -29,6 +29,7 @@ data "datapower_soap_header_disposition" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -45,6 +46,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Identifier
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `refine` (Attributes List) Customer specifically asks this transformation to simply remove/keep/fault a SOAP header; or indicates whether a header was processed or not by the prior action, then this action will take the default behaviors. (see [below for nested schema](#nestedatt--result--refine))
 - `user_summary` (String) Comments
 

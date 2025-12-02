@@ -29,6 +29,7 @@ data "datapower_social_login_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -54,6 +55,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `jwt_validator` (String) Specify the JWT Validator configuration that defines how to validate and verify the ID token.
 - `provider_az_endpoint` (String) Specify the provider's endpoint URL that accepts an authorization request from a client to perform social login with the provider. When the provider is Google, you can retrieve the authorization endpoint URL from the Discovery document for Google's OpenID Connect service.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `provider_token_endpoint` (String) Specify the provider's endpoint URL that accepts an authorization grant, or code, from a client in exchange for an access token from the social login provider. When the provider is Google, you can retrieve the token endpoint URL from the Discovery document for Google's OpenID Connect service.
 - `social_provider` (String) Controls which social login provider to use.
 - `user_summary` (String) Enter a descriptive summary for the configuration.

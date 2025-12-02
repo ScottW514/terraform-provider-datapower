@@ -47,6 +47,7 @@ resource "datapower_compile_settings" "test" {
 - `profile` (Boolean) Specifies whether to enable stylesheet profiling. This option should not be used in production environments. By default, stylesheet profiling is disabled.
   - CLI Alias: `profile`
   - Default value: `false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `stack_size` (Number) Indicates the maximum number of bytes that the stack is allowed to use while executing a stylesheet or other compiled content. This setting is used to block infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The maximum value is 100 megabytes, or 104,857,600 bytes. The default value is 1 megabyte, or 1,048,576 bytes.
   - CLI Alias: `stack-size`
   - Range: `10240`-`104857600`

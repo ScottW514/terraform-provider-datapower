@@ -37,6 +37,7 @@ resource "datapower_gws_remote_debug" "test" {
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `9229`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Specifies a brief descriptive summary for the configuration.
   - CLI Alias: `summary`
 

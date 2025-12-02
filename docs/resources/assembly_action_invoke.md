@@ -120,6 +120,7 @@ resource "datapower_assembly_action_invoke" "test" {
 - `persistent_connection` (Boolean) Persistent connection
   - CLI Alias: `persistent-connection`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
 - `stop_on_error` (Boolean) Stop on error

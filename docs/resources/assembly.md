@@ -48,6 +48,7 @@ resource "datapower_assembly" "test" {
 - `finally` (String) Specifies the final API rule to apply to the API call after the main rule, catch rule, or both have finished executing. The final API rule comprises only assembly actions.
   - CLI Alias: `finally`
   - Reference to: `datapower_api_rule:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the assembly configuration.
   - CLI Alias: `summary`
 

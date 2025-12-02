@@ -62,6 +62,7 @@ type APICollection struct {
 	ApplicationType              types.List                       `tfsdk:"application_type"`
 	ParseSettingsReference       *DmDynamicParseSettingsReference `tfsdk:"parse_settings_reference"`
 	DependencyActions            []*actions.DependencyAction      `tfsdk:"dependency_actions"`
+	ProviderTarget               types.String                     `tfsdk:"provider_target"`
 }
 
 var APICollectionDefaultRateLimitIgnoreVal = validators.Evaluation{
@@ -81,6 +82,7 @@ var APICollectionRateLimitGroupIgnoreVal = validators.Evaluation{
 }
 
 var APICollectionObjectType = map[string]attr.Type{
+	"provider_target":                  types.StringType,
 	"id":                               types.StringType,
 	"app_domain":                       types.StringType,
 	"user_summary":                     types.StringType,

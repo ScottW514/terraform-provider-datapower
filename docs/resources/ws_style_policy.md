@@ -45,6 +45,7 @@ resource "datapower_ws_style_policy" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `policy_maps` (Attributes List) A list of Policy Rules and corresponding Matching Rules that this policy will execute. If a Match is found, the corresponding Rule runs. The policy executes the first Rule with a successful Match. The order in this list is therefore important.
   - CLI Alias: `match` (see [below for nested schema](#nestedatt--policy_maps))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Enter a comment. This appears on the Policy catalog page.
   - CLI Alias: `summary`
 

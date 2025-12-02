@@ -29,6 +29,7 @@ data "datapower_forms_login_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -60,6 +61,7 @@ Read-Only:
 - `login_form` (String) Specify the URL fragment of the login page on the application server. This page collects username and password information. The default value is <tt>/LoginPage.htm</tt> .
 - `logout_page` (String) Specify the URL fragment of the logout page on the application server. This fragment is relative to the root directory. With the address of the service, the URL fragment forms the complete URL of the logout page on the application server. An empty string disables logout. The default value is <tt>/LogoutPage.htm</tt> .
 - `password_field` (String) Specify the attribute value of the password field. The default value is <tt>j_password</tt> .
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `redirect_field` (String) Specify the attribute value for the hidden field that contains the target URL. If an unauthenticated user attempts to access a secured page, the application server displays the login page. The login form contains a hidden field to collect the URL of the secured page that the user attempted to access. After authentication, the application server displays the secured page. The default value is <tt>originalUrl</tt> .
 - `redirect_url_type` (String) Specify how to retrieve host information for URL redirects. By default, uses the variable value.
 - `session_lifetime` (Number) Specify the maximum duration in seconds before the user must reauthentication. The default value is 10800. The minimum value is 1. The special value of 0 sets the value to the default value of 10800.

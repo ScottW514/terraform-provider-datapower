@@ -43,6 +43,7 @@ resource "datapower_open_telemetry" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `resource_attribute` (Attributes List) Resource attributes
   - CLI Alias: `resource-attribute` (see [below for nested schema](#nestedatt--resource_attribute))
 - `user_summary` (String) Comments

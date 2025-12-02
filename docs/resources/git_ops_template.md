@@ -39,6 +39,7 @@ resource "datapower_git_ops_template" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `templates` (Attributes List) Specify the GitOps templates to modify the DataPower configuration. Template processing is in the order of the read or write GitOps operation.
   - CLI Alias: `template` (see [below for nested schema](#nestedatt--templates))
 - `user_summary` (String) Comments

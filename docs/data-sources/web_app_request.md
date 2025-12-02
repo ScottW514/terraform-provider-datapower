@@ -29,6 +29,7 @@ data "datapower_web_app_request" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -66,6 +67,7 @@ Read-Only:
   - CLI Alias: `request-versions` (see [below for nested schema](#nestedatt--result--ok_versions))
 - `policy_type` (String) Select the satisfaction policy for the profile. The default value is Admission.
 - `process_all_cookie` (Boolean) The process will sign or encrypt all cookies when enabled. The default is enabled.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `query_string_gnvc` (String) The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.
 - `query_string_policy` (String) Select how the client URL handles query strings. The default is Allow.
 - `rate_limiter` (String) A rate limiting policy restricts identities (as determined by AAA or the client IP address if AAA is not available) to a specific number of transactions per second.

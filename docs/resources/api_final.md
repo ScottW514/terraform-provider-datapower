@@ -37,6 +37,7 @@ resource "datapower_api_final" "test" {
 - `output` (String) Specify the destination context that receives variables from the API context. The final API action uses the variables in the destination context to prepare the final response to the client. The default value of <tt>OUTPUT</tt> indicates to transmit the context variables to the destination context. When the value is changed or removed, the context variables are not transmitted to the destination context, and therefore, no response is returned to the client.
   - CLI Alias: `output`
   - Default value: `OUTPUT`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

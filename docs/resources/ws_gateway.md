@@ -315,6 +315,7 @@ resource "datapower_ws_gateway" "test" {
 - `propagate_uri` (Boolean) <p>URI propagation is meaningful only when:</p><ul><li>The service uses a static backend.</li><li>The service uses a dynamic backend and routing is set with a route with stylesheet (route-action) action. In this case, use dp:set-target() to define the backend server. <p>For the other routing options that are available with route-action and route-set, the URI is absolute.</p></li></ul><p>When set to <b>on</b>, the service rewrites the URI of the backend URL to the URI in the client request. If the client submits http://host/service and the backend URL is http://server/listener, the URL is rewritten to http://server/service.</p><p>If the backend URL employs AMQP, IBM MQ, Kafka, TIBCO EMS, or WebSphere JMS, set to <b>off</b>.</p>
   - CLI Alias: `propagate-uri`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `query_param_namespace` (String) The namespace in which to put all parameters that are specified in the URL query string.
   - CLI Alias: `query-param-namespace`
   - Default value: `http://www.datapower.com/param/query`

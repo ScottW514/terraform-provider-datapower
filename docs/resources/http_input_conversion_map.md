@@ -38,6 +38,7 @@ resource "datapower_http_input_conversion_map" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `input_encoding` (Attributes List) This allows selecting the Encoding for values based on their name. The names are matched by PCREs. Each PCRE is associated with an Encoding that controls how the value is mapped to the contents of an &lt;arg> element in the resulting XML. This is an ordered list, comparision of the name proceeds until the first match. If there is no match, the Encoding will be selected by the Default Encoding of this HTTP Input Conversion Map.
   - CLI Alias: `rule` (see [below for nested schema](#nestedatt--input_encoding))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

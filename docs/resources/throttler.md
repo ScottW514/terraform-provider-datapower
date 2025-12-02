@@ -49,6 +49,7 @@ resource "datapower_throttler" "test" {
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `debug`
   - Not Valid When: `statistics`!=`true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `qname_warn_at` (Number) <p>Specify the threshold as a percentage of available XML names and JSON keys before the system writes an alert to the logs. This threshold is when the number of available XML names or JSON keys in any pool is less than the threshold. Enter a value in the range 5 - 100. The default value is 10.</p><p>As this threshold is approached, the system attempts to free unused resources to prevent this threshold from being reached. If you receive this alert, schedule a reload as soon as possible to prevent an unscheduled restart. If the percentage for any resource pool is less than 5%, the system reboots.</p>
   - CLI Alias: `qcode-warn`
   - Range: `5`-`100`

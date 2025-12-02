@@ -39,6 +39,7 @@ resource "datapower_file" "acc_test" {
 - `local_path` (String) Path to local file, which will be uploaded. Not valid if `content` is set.
   - Required When: `content`==`null`
   - Not Valid When: `content`!=`null`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

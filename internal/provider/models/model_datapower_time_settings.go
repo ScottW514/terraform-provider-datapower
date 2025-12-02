@@ -53,6 +53,7 @@ type TimeSettings struct {
 	DaylightStopTimeHours    types.Int64                 `tfsdk:"daylight_stop_time_hours"`
 	DaylightStopTimeMinutes  types.Int64                 `tfsdk:"daylight_stop_time_minutes"`
 	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget           types.String                `tfsdk:"provider_target"`
 }
 
 var TimeSettingsCustomTZNameCondVal = validators.Evaluation{
@@ -340,6 +341,7 @@ var TimeSettingsDaylightStopTimeMinutesIgnoreVal = validators.Evaluation{
 }
 
 var TimeSettingsObjectType = map[string]attr.Type{
+	"provider_target":             types.StringType,
 	"enabled":                     types.BoolType,
 	"local_time_zone":             types.StringType,
 	"custom_tz_name":              types.StringType,

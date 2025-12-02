@@ -41,9 +41,11 @@ type OpenTelemetrySampler struct {
 	Type              types.String                `tfsdk:"type"`
 	Ratio             types.Int64                 `tfsdk:"ratio"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var OpenTelemetrySamplerObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

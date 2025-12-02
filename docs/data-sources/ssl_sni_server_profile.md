@@ -29,6 +29,7 @@ data "datapower_ssl_sni_server_profile" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `number_of_renegotiation_allowed` (Number) Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--result--protocols))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `sni_server_default` (String) Specify the TLS server profile to process requests when the client does not send a <tt>ClientHello</tt> SNI extension. <p>The request is rejected when either of the following conditions apply. <ul><li>The client sends a <tt>ClientHello</tt> SNI extension that does not match a hostname in the map.</li><li>The client does not send a <tt>ClientHello</tt> SNI extension</li></ul></p>
 - `sni_server_mapping` (String) TLS hostname map
 - `ssl_options` (Attributes) Specify the options to apply to the TLS connection that override settings in the TLS server profiles. These options have negative impact on the performance.

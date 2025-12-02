@@ -53,6 +53,7 @@ type FTPFilePollerSourceProtocolHandler struct {
 	XmlManager              types.String                `tfsdk:"xml_manager"`
 	MaxTransfersPerPoll     types.Int64                 `tfsdk:"max_transfers_per_poll"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget          types.String                `tfsdk:"provider_target"`
 }
 
 var FTPFilePollerSourceProtocolHandlerSuccessRenamePatternIgnoreVal = validators.Evaluation{
@@ -100,6 +101,7 @@ var FTPFilePollerSourceProtocolHandlerProcessingSeizePatternIgnoreVal = validato
 }
 
 var FTPFilePollerSourceProtocolHandlerObjectType = map[string]attr.Type{
+	"provider_target":           types.StringType,
 	"id":                        types.StringType,
 	"app_domain":                types.StringType,
 	"user_summary":              types.StringType,

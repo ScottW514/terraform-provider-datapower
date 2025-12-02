@@ -48,6 +48,7 @@ type Throttler struct {
 	BacklogSize       types.Int64                 `tfsdk:"backlog_size"`
 	BacklogTimeout    types.Int64                 `tfsdk:"backlog_timeout"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var ThrottlerLogLevelIgnoreVal = validators.Evaluation{
@@ -59,6 +60,7 @@ var ThrottlerLogLevelIgnoreVal = validators.Evaluation{
 }
 
 var ThrottlerObjectType = map[string]attr.Type{
+	"provider_target":      types.StringType,
 	"enabled":              types.BoolType,
 	"user_summary":         types.StringType,
 	"throttle_at":          types.Int64Type,

@@ -23,10 +23,13 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -54,6 +57,14 @@ func (d *QuotaEnforcementServerDataSource) Schema(ctx context.Context, req datas
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>On each DataPower Gateway, you configure the quota enforcement server to store the thresholds and associated metadata in memory or persist them on the RAID volume.</p><p>The quota enforcement server can work in standalone mode or peer group mode.</p><p>A peer group is collection of at least three nodes across which quota enforcement is implemented. In each peer group, one DataPower Gateway is the primary node and others are replicas. Failover might occur when the primary node becomes unavailable.</p><p>When you enable the peer group mode, the appropriate configuration properties are displayed. You must configure the connection among peers.</p><p>Based on your requirements for quota enforcement, you can enable or disable strict mode. Strict mode affects data-consistency across the peer group.</p><p>When strict mode is enabled, the following effects are caused: <ul><li>When the primary node is operational and when strict mode of all nodes in a peer group is enabled, threshold synchronization is more frequent to ensure data-consistency across the peer group. However, more network bandwidth is used. Therefore, strict mode is suitable for peers in the same data center.</li><li>When the primary node becomes unavailable, before failover occurs, the replica with enabled strict mode cannot process the request. <p>If service performance and availability are more important than data-consistency, you can disable strict mode for the replica so that this replica can process the request. The replica with disabled strict mode writes the threshold and associated metadata to the local data storage. After failover occurs, the connection is resumed between the replica and the new primary node. The threshold and associated metadata stored by the replica might be overwritten by the new primary node when the new primay node synchronizes the data to all replicas. Data-consistency might be affected across the peer group.</p></li></ul></p><p>By default, data is stored in memory and quota enforcement server works in standalone mode.</p>",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
@@ -134,9 +145,14 @@ func (d *QuotaEnforcementServerDataSource) Read(ctx context.Context, req datasou
 		return
 	}
 
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
+
 	path := data.GetPath()
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if !strings.Contains(err.Error(), "status 404") {

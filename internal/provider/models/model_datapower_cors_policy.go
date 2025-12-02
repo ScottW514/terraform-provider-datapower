@@ -39,9 +39,11 @@ type CORSPolicy struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	Rule              types.List                  `tfsdk:"rule"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var CORSPolicyObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

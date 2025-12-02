@@ -39,9 +39,11 @@ type VisibilityList struct {
 	Type              types.String                `tfsdk:"type"`
 	Value             types.List                  `tfsdk:"value"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var VisibilityListObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"type":               types.StringType,

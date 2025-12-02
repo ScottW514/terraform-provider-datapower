@@ -44,6 +44,7 @@ resource "datapower_matching" "test" {
 - `match_with_pcre` (Boolean) Whether the evaluation uses shell style expressions or PCREs. This setting does not apply to XPath or HTTP method evaluations.
   - CLI Alias: `match-with-pcre`
   - Default value: `false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 

@@ -176,6 +176,7 @@ type WSGateway struct {
 	DelayErrors                              types.Bool                  `tfsdk:"delay_errors"`
 	DelayErrorsDuration                      types.Int64                 `tfsdk:"delay_errors_duration"`
 	DependencyActions                        []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                           types.String                `tfsdk:"provider_target"`
 }
 
 var WSGatewaySSLServerConfigTypeIgnoreVal = validators.Evaluation{
@@ -1319,6 +1320,7 @@ var WSGatewayDelayErrorsDurationIgnoreVal = validators.Evaluation{
 }
 
 var WSGatewayObjectType = map[string]attr.Type{
+	"provider_target":                                 types.StringType,
 	"id":                                              types.StringType,
 	"app_domain":                                      types.StringType,
 	"back_http_version":                               types.StringType,

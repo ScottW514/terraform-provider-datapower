@@ -70,6 +70,7 @@ resource "datapower_wxs_grid" "test" {
   - Default value: `sha256`
   - Required When: `key_obfuscation`=`true`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`

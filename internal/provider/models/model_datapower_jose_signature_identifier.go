@@ -44,6 +44,7 @@ type JOSESignatureIdentifier struct {
 	ValidAlgorithms   types.List                  `tfsdk:"valid_algorithms"`
 	HeaderParam       types.List                  `tfsdk:"header_param"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var JOSESignatureIdentifierSSKeyCondVal = validators.Evaluation{
@@ -71,6 +72,7 @@ var JOSESignatureIdentifierCertificateIgnoreVal = validators.Evaluation{
 }
 
 var JOSESignatureIdentifierObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

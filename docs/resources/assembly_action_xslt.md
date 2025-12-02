@@ -43,6 +43,7 @@ resource "datapower_assembly_action_xslt" "test" {
 - `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `serialize_output` (Boolean) Specify whether to serialize the output into binary data. The serialized output is not accessible as XML unless it is re-parsed. To access the output as XML after serialization, the API rule must contain a parse assembly action after the XSLT assembly action.
   - CLI Alias: `serialize-output`
   - Default value: `false`

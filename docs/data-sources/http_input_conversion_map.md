@@ -29,6 +29,7 @@ data "datapower_http_input_conversion_map" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `default_input_encoding` (String) Select the default encoding to use for any name-value pair in an HTTP form where the name does not match any of the patterns in the Encoding Map.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `input_encoding` (Attributes List) This allows selecting the Encoding for values based on their name. The names are matched by PCREs. Each PCRE is associated with an Encoding that controls how the value is mapped to the contents of an &lt;arg> element in the resulting XML. This is an ordered list, comparision of the name proceeds until the first match. If there is no match, the Encoding will be selected by the Default Encoding of this HTTP Input Conversion Map. (see [below for nested schema](#nestedatt--result--input_encoding))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

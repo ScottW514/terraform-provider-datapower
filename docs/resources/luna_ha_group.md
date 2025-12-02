@@ -39,6 +39,7 @@ resource "datapower_luna_ha_group" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `standby` (List of String) Specify the standby HSM partition. Standby members are not active for load balancing until all non-standby members fail. You must add the HSM partition as a member of the HA group before you can specify the partition as standby.
   - CLI Alias: `standby`
   - Reference to: `datapower_luna_partition:id`

@@ -45,6 +45,7 @@ type WebB2BViewer struct {
 	SslSniServer        types.String                `tfsdk:"ssl_sni_server"`
 	LocalAddress        types.String                `tfsdk:"local_address"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var WebB2BViewerSSLServerIgnoreVal = validators.Evaluation{
@@ -68,6 +69,7 @@ var WebB2BViewerSSLSNIServerIgnoreVal = validators.Evaluation{
 }
 
 var WebB2BViewerObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"enabled":                types.BoolType,
 	"user_summary":           types.StringType,
 	"local_port":             types.Int64Type,

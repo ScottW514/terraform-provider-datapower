@@ -36,6 +36,7 @@ resource "datapower_luna_ha_settings" "test" {
   - CLI Alias: `recovery-mode`
   - Choices: `activeBasic`, `activeEnhanced`
   - Default value: `activeBasic`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `recovery_count` (Number) Specify the number of recovery attempts for failed members in the HA group. Enter a value in the range 0 - 500. The default value is 0, which disables automatic recovery.
   - CLI Alias: `recovery-count`
   - Range: `-1`-`500`

@@ -55,6 +55,7 @@ resource "datapower_smtp_server_connection" "test" {
   - Default value: `25`
 - `options` (Attributes) The SMTP options to enable for the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.
   - CLI Alias: `options` (see [below for nested schema](#nestedatt--options))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`

@@ -29,6 +29,7 @@ data "datapower_style_policy_action" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -97,6 +98,7 @@ Read-Only:
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--result--parse_settings_reference))
 - `policy` (String) URL rewrite policy
 - `policy_key` (String) <b>Do not modify this value.</b> The DataPower Gateway uses this identifier to store the output from the action. The output can be used for external monitoring.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `recipient_identifier` (List of String) Recipient Identifiers
 - `results_mode` (String) Specify the processing mode for multiple targets. The default behavior, is first available.
 - `retry_count` (Number) Specify the number of connection attempts. The default value is 0, which indicates that the operation fails immediately if the connection fails.

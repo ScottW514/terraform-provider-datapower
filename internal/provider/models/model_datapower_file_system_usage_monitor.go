@@ -42,6 +42,7 @@ type FileSystemUsageMonitor struct {
 	AllSystemCriticalThreshold types.Int64                 `tfsdk:"all_system_critical_threshold"`
 	System                     types.List                  `tfsdk:"system"`
 	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget             types.String                `tfsdk:"provider_target"`
 }
 
 var FileSystemUsageMonitorAllSystemWarningThresholdCondVal = validators.Evaluation{
@@ -77,6 +78,7 @@ var FileSystemUsageMonitorAllSystemCriticalThresholdIgnoreVal = validators.Evalu
 }
 
 var FileSystemUsageMonitorObjectType = map[string]attr.Type{
+	"provider_target":               types.StringType,
 	"enabled":                       types.BoolType,
 	"user_summary":                  types.StringType,
 	"polling_interval":              types.Int64Type,

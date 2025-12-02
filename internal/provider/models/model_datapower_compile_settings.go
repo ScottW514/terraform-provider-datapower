@@ -57,9 +57,11 @@ type CompileSettings struct {
 	XacmlDebug             types.Bool                  `tfsdk:"xacml_debug"`
 	AllowXopInclude        types.Bool                  `tfsdk:"allow_xop_include"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var CompileSettingsObjectType = map[string]attr.Type{
+	"provider_target":           types.StringType,
 	"id":                        types.StringType,
 	"app_domain":                types.StringType,
 	"user_summary":              types.StringType,

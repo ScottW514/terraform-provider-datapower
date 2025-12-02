@@ -68,6 +68,7 @@ resource "datapower_kafka_cluster" "test" {
   - CLI Alias: `protocol`
   - Choices: `plaintext`, `ssl`, `sasl_plaintext`, `sasl_ssl`
   - Default value: `plaintext`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `retry_interval` (Number) Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 10.
   - CLI Alias: `retry-interval`
   - Range: `1`-`65535`

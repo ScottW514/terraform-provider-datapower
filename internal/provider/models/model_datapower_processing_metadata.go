@@ -39,9 +39,11 @@ type ProcessingMetadata struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	MetaItem          types.List                  `tfsdk:"meta_item"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var ProcessingMetadataObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

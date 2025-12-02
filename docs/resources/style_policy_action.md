@@ -260,6 +260,7 @@ resource "datapower_style_policy_action" "test" {
   - Not Valid When: `type`!=`validate`|`xformpi`|`xformbin`|`xformng`|`xform`
 - `policy_key` (String) <b>Do not modify this value.</b> The DataPower Gateway uses this identifier to store the output from the action. The output can be used for external monitoring.
   - CLI Alias: `policy-key`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `recipient_identifier` (List of String) Recipient Identifiers
   - CLI Alias: `recipient-identifier`
   - Reference to: `datapower_jose_recipient_identifier:id`

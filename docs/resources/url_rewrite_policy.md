@@ -41,6 +41,7 @@ resource "datapower_url_rewrite_policy" "test" {
   - CLI Alias: `direction`
   - Choices: `all`, `request`, `response`
   - Default value: `all`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `url_rewrite_rule` (Attributes List) Add, edit, or delete a URL rewrite rule
   - CLI Alias: `rule` (see [below for nested schema](#nestedatt--url_rewrite_rule))
 

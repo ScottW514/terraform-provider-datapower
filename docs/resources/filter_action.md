@@ -40,6 +40,7 @@ resource "datapower_filter_action" "test" {
   - CLI Alias: `log-priority`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `debug`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `type` (String) Select the action to take The default is notify.
   - CLI Alias: `type`
   - Choices: `notify`, `reject`, `shape`

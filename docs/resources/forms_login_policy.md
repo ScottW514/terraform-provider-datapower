@@ -103,6 +103,7 @@ resource "datapower_forms_login_policy" "test" {
 - `password_field` (String) Specify the attribute value of the password field. The default value is <tt>j_password</tt> .
   - CLI Alias: `password-field`
   - Default value: `j_password`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `redirect_field` (String) Specify the attribute value for the hidden field that contains the target URL. If an unauthenticated user attempts to access a secured page, the application server displays the login page. The login form contains a hidden field to collect the URL of the secured page that the user attempted to access. After authentication, the application server displays the secured page. The default value is <tt>originalUrl</tt> .
   - CLI Alias: `redirect-field`
   - Default value: `originalUrl`

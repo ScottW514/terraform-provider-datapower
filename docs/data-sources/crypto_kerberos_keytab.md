@@ -29,6 +29,7 @@ data "datapower_crypto_kerberos_keytab" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `gss_checksum_flags` (Attributes) Which flags to set in GSS-API checksums when generating AP-REQ tokens with this keytab. Refer to RFC 4121 for the flag definitions.
   - CLI Alias: `gss-checksum-flags` (see [below for nested schema](#nestedatt--result--gss_checksum_flags))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `use_replay_cache` (Boolean) Whether to cache authenticator values from AP-REQ tokens that were verified with this keytab. Caching prevents replay attacks.
 - `user_summary` (String) Comments
 

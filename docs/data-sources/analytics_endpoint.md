@@ -29,6 +29,7 @@ data "datapower_analytics_endpoint" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -59,6 +60,7 @@ Read-Only:
 - `max_records_memory_kb` (Number) Specify the maximum size for each record in KB. Enter a value in the range 4 - 1024. The default value is 512.
 - `persistent_connection` (Boolean) Specify whether to negotiate persistent connections. By default, persistent connections are enabled. The HTTP/2 protocol controls persistent connections and reuse. Therefore, these settings are ignored.
 - `persistent_timeout` (Number) Specify the inter-transaction timeout for connections, which is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 60.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `request_topic` (String) Request topic
 - `scope` (String) Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.
 - `ssl_client` (String) TLS client profile

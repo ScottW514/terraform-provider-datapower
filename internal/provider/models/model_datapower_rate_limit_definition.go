@@ -58,6 +58,7 @@ type RateLimitDefinition struct {
 	UseCache            types.Bool                  `tfsdk:"use_cache"`
 	Parameters          types.List                  `tfsdk:"parameters"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var RateLimitDefinitionIntervalIgnoreVal = validators.Evaluation{
@@ -193,6 +194,7 @@ var RateLimitDefinitionUseIntervalOffsetIgnoreVal = validators.Evaluation{
 }
 
 var RateLimitDefinitionObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"id":                    types.StringType,
 	"app_domain":            types.StringType,
 	"short_name":            types.StringType,

@@ -67,6 +67,7 @@ resource "datapower_web_sphere_jms_server" "test" {
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `retry_interval` (Number) Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 1.
   - CLI Alias: `retry-interval`
   - Range: `1`-`65535`

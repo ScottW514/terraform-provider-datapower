@@ -39,9 +39,11 @@ type DomainAvailability struct {
 	Enabled           types.Bool                  `tfsdk:"enabled"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var DomainAvailabilityObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"app_domain":         types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,

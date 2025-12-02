@@ -52,6 +52,7 @@ resource "datapower_assembly_action_jwt_validate" "test" {
 - `output_claims` (String) Specify a context variable to store all claims that the JWT contains when the validation of the JWT succeeds. The default value is <tt>decoded.claims</tt> .
   - CLI Alias: `output-claims`
   - Default value: `decoded.claims`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

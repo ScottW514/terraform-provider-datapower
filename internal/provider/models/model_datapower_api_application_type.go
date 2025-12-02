@@ -40,9 +40,11 @@ type APIApplicationType struct {
 	Title               types.String                `tfsdk:"title"`
 	SupportedOauthTypes types.List                  `tfsdk:"supported_oauth_types"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var APIApplicationTypeObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"id":                    types.StringType,
 	"app_domain":            types.StringType,
 	"user_summary":          types.StringType,

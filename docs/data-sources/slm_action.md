@@ -29,6 +29,7 @@ data "datapower_slm_action" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `log_level` (String) Log priority
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `type` (String) Specify the administrative sanction to trigger for transactions in excess of the threshold. This action is beyond the generation of a log message.
 - `user_summary` (String) Comments
 

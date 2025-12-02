@@ -29,6 +29,7 @@ data "datapower_mpgw_error_handling_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `policy_maps` (Attributes List) The policy maps contain a list of error response action rules and their corresponding matching rules. When the policy evaluates the matching rules and finds a match, it runs the corresponding error response action. The policy runs the first error response action with a successful match. (see [below for nested schema](#nestedatt--result--policy_maps))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -66,6 +66,7 @@ resource "datapower_assembly_action_jwt_generate" "test" {
   - CLI Alias: `jwe-alg`
 - `private_claim` (String) Specify the variable from which to retrieve a valid set of JSON claims. These claims are added to any set of claims that are specified previously.
   - CLI Alias: `private-claims`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `sign_crypto` (String) Specify the crypto object (a shared secret key or certificate) to use to sign the JWT.
   - CLI Alias: `jws-crypto`
 - `sign_jwk` (String) JWK for JWT signature

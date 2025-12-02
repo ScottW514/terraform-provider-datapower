@@ -48,6 +48,7 @@ resource "datapower_api_security_oauth" "test" {
   - Reference to: `datapower_oauth_provider_settings:id`
 - `oauth_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <ul><li>The allowed scopes for this configuration must be a subset of the allowed scopes set for the API OAuth security definition.</li><li>The allowed scopes for the API OAuth security definition must be a subset of the allowed scopes set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
   - CLI Alias: `oauth-scope`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

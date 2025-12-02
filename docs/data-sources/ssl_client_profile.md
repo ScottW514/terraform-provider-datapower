@@ -29,6 +29,7 @@ data "datapower_ssl_client_profile" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -59,6 +60,7 @@ Read-Only:
 - `idcred` (String) Identification credentials
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--result--protocols))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `require_closure_notification` (Boolean) Require closure notification
 - `sig_algs` (List of String) Specify the list of signature algorithms to advertise and support. An empty list implies the use of all of the default algorithms.
 - `ssl_client_features` (Attributes) Features

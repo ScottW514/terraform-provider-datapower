@@ -98,6 +98,7 @@ resource "datapower_time_settings" "test" {
   - CLI Alias: `offset-minutes`
   - Range: `0`-`59`
   - Not Valid When: `local_time_zone`!=`Custom`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `tz_name_dst` (String) Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.
   - CLI Alias: `daylight-name`
   - Default value: `DST`

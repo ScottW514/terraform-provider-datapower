@@ -29,6 +29,7 @@ data "datapower_ssl_server_profile" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -61,6 +62,7 @@ Read-Only:
 - `prohibit_resume_on_reneg` (Boolean) Prohibit session resumption on renegotiation
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--result--protocols))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `request_client_auth` (Boolean) Request client authentication
 - `require_client_auth` (Boolean) Specify whether to require client authentication during the TLS handshake. When enabled, the handshake is aborted if the client certificate is not provided. Otherwise, the request does not fail when there is no client certificate.
 - `require_closure_notification` (Boolean) Require closure notification

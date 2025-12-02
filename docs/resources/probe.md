@@ -46,6 +46,7 @@ resource "datapower_probe" "test" {
   - CLI Alias: `max-records`
   - Range: `1`-`10000`
   - Default value: `1000`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

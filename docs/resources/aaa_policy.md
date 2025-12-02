@@ -154,6 +154,7 @@ resource "datapower_aaa_policy" "test" {
   - Default value: `false`
 - `post_process` (Attributes) Specify postprocessing activities. For some methods, you must define more properties.
   - CLI Alias: `post-process` (see [below for nested schema](#nestedatt--post_process))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `rejected_counter` (String) Specify the monitor for rejected messages. Ensure that this count monitor is configured with an XPath as the measure.
   - CLI Alias: `rejected-counter`
   - Reference to: `datapower_count_monitor:id`

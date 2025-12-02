@@ -50,6 +50,7 @@ type InteropService struct {
 	SslServer           types.String                `tfsdk:"ssl_server"`
 	SslSniServer        types.String                `tfsdk:"ssl_sni_server"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var InteropServiceLocalAddressCondVal = validators.Evaluation{
@@ -193,6 +194,7 @@ var InteropServiceSSLSNIServerIgnoreVal = validators.Evaluation{
 }
 
 var InteropServiceObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"enabled":                types.BoolType,
 	"user_summary":           types.StringType,
 	"xml_manager":            types.StringType,

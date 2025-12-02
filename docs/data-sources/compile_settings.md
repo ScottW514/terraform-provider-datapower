@@ -29,6 +29,7 @@ data "datapower_compile_settings" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `minimum_escaping` (Boolean) Specifies whether to escape output produced from the stylesheet during processing. Minimal escaping is particularly useful when handling non-English character sets. By default, minimum escaping is disabled.
 - `profile` (Boolean) Specifies whether to enable stylesheet profiling. This option should not be used in production environments. By default, stylesheet profiling is disabled.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `stack_size` (Number) Indicates the maximum number of bytes that the stack is allowed to use while executing a stylesheet or other compiled content. This setting is used to block infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The maximum value is 100 megabytes, or 104,857,600 bytes. The default value is 1 megabyte, or 1,048,576 bytes.
 - `stream` (Boolean) Specifies whether the stylesheet must be run in streaming mode. Transformation of the document begins before the input is fully parsed. Not all stylesheets can be streamed. If the stylesheet cannot be streamed, an error is generated and the input is not processed. By default, streaming mode is disabled.
 - `strict` (Boolean) Specifies whether to enable strict XSLT error checking. Non-strict operations attempt to recover from certain errors, such as use of undeclared variables, calling undeclared templates, and so forth. By default, strict XSLT error checking is enabled.

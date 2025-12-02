@@ -29,6 +29,7 @@ data "datapower_saml_attributes" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -45,6 +46,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `saml_attribute` (Attributes List) Define an attribute by selecting the source type and specifying the data source and SAML attribute name. (see [below for nested schema](#nestedatt--result--saml_attribute))
 - `user_summary` (String) Comments
 

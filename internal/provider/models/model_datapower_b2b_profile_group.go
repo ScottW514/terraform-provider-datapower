@@ -39,9 +39,11 @@ type B2BProfileGroup struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	B2bProfiles       types.List                  `tfsdk:"b2b_profiles"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var B2BProfileGroupObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

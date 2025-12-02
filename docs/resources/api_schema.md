@@ -37,6 +37,7 @@ resource "datapower_api_schema" "test" {
   - CLI Alias: `graphql-schema`
 - `json_schema` (String) Specify the schema URL for JSON message validation. For example, <tt>local:///petstore.json#/definitions/Pet</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `json-schema`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `wsdl_attachment_part` (String) Specify the mime:content to validate in the format <tt>mime:content/@part</tt> . The value must be the unqualified name of the message part. The name is the same as the part attribute on the corresponding <tt>mime:content</tt> component in the WSDL file. When not specified or <tt>*</tt> , the root MIME part is validated. The root MIME part is bound to a <tt>soap:Body</tt> .

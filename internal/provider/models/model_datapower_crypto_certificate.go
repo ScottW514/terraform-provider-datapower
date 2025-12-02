@@ -40,9 +40,11 @@ type CryptoCertificate struct {
 	Alias             types.String                `tfsdk:"alias"`
 	IgnoreExpiration  types.Bool                  `tfsdk:"ignore_expiration"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var CryptoCertificateObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"filename":           types.StringType,

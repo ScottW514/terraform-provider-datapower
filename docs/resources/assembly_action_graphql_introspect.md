@@ -44,6 +44,7 @@ resource "datapower_assembly_action_graphql_introspect" "test" {
   - Default value: `message`
 - `output` (String) Specify the variable in the API context to store the introspection results. The content of the <tt>body</tt> field represents the results. The default variable is the same as the variable for the input message. Therefore, by default, the input message is overwritten by the output message.
   - CLI Alias: `output`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

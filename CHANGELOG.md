@@ -5,6 +5,7 @@
 - Bump actions/checkout from 5.0.0 to 5.0.1 in the github-actions group (PR23)
 - Bump golang.org/x/crypto from 0.44.0 to 0.45.0 (PR24)
 - Improved handling of 401 errors from DataPower when an application domain does not exist
+- Added provider targets to permit resource/datasource management on multiple hosts
 
 ## v0.12.0
 

@@ -44,9 +44,11 @@ type SLMSchedule struct {
 	StopDate          types.String                `tfsdk:"stop_date"`
 	TimeZone          types.String                `tfsdk:"time_zone"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var SLMScheduleObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

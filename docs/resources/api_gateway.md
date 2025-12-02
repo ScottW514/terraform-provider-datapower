@@ -111,6 +111,7 @@ resource "datapower_api_gateway" "test" {
   - Reference to: `datapower_open_telemetry:id`
 - `open_telemetry_resource_attribute` (Attributes List) OpenTelemetry resource attributes
   - CLI Alias: `otel-resource-attribute` (see [below for nested schema](#nestedatt--open_telemetry_resource_attribute))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `proxy_policies` (Attributes List) Specify the proxy policies to associate a set of URLs with a specific HTTP proxy. When multiple proxy policies are defined, URLs are evaluated against each policy in order.
   - CLI Alias: `proxy` (see [below for nested schema](#nestedatt--proxy_policies))
 - `scheduled_rule` (Attributes List) Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.

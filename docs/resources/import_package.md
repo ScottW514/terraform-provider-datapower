@@ -60,6 +60,7 @@ resource "datapower_import_package" "test" {
 - `overwrite_objects` (Boolean) Specify whether to overwrite existing objects. When enabled, objects in the package overwrite any object of the same class and name that already exist. The default behavior is to overwrite objects.
   - CLI Alias: `overwrite-objects`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

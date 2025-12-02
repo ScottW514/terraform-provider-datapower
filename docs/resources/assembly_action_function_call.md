@@ -46,6 +46,7 @@ resource "datapower_assembly_action_function_call" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `parameter` (Attributes List) Parameters
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameter))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

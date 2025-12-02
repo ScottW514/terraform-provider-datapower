@@ -50,6 +50,7 @@ type WXSGrid struct {
 	KeyObfuscation    types.Bool                  `tfsdk:"key_obfuscation"`
 	KeyObfuscationAlg types.String                `tfsdk:"key_obfuscation_alg"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var WXSGridEncryptSSKeyCondVal = validators.Evaluation{
@@ -89,6 +90,7 @@ var WXSGridKeyObfuscationAlgIgnoreVal = validators.Evaluation{
 }
 
 var WXSGridObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,

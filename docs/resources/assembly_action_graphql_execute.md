@@ -51,6 +51,7 @@ resource "datapower_assembly_action_graphql_execute" "test" {
   - Default value: `message`
 - `output` (String) Specify the variable in the API context to contain the results. The content of the <tt>body</tt> field contains the results. By default, the variable is the same as the variable for the input message. Therefore, by default, the input message is overwritten by the output message.
   - CLI Alias: `output`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `target_map_rule` (Attributes List) Target rules
   - CLI Alias: `targets` (see [below for nested schema](#nestedatt--target_map_rule))
 - `title` (String) Title

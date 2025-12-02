@@ -54,6 +54,7 @@ resource "datapower_style_policy_rule" "test" {
   - CLI Alias: `output-filter`
   - Choices: `none`, `gzip`, `pkzip`
   - Default value: `none`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `unprocessed` (Boolean) Permit rule to pass-through data unprocessed
   - CLI Alias: `unprocessed`
   - Default value: `false`

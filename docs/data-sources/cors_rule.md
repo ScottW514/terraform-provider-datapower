@@ -29,6 +29,7 @@ data "datapower_cors_rule" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `expose_headers` (Attributes) Specify the values to append to the value of the <tt>Access-Control-Expose-Headers</tt> response header. When undefined, appends the gateway-predefined value.
   - CLI Alias: `expose-headers` (see [below for nested schema](#nestedatt--result--expose_headers))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

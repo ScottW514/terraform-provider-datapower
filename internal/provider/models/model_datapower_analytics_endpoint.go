@@ -57,6 +57,7 @@ type AnalyticsEndpoint struct {
 	Timeout                types.Int64                 `tfsdk:"timeout"`
 	PersistentTimeout      types.Int64                 `tfsdk:"persistent_timeout"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var AnalyticsEndpointSSLClientCondVal = validators.Evaluation{
@@ -390,6 +391,7 @@ var AnalyticsEndpointPersistentTimeoutIgnoreVal = validators.Evaluation{
 }
 
 var AnalyticsEndpointObjectType = map[string]attr.Type{
+	"provider_target":           types.StringType,
 	"id":                        types.StringType,
 	"app_domain":                types.StringType,
 	"user_summary":              types.StringType,

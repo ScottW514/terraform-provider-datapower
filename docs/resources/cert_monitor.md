@@ -43,6 +43,7 @@ resource "datapower_cert_monitor" "test" {
   - CLI Alias: `poll`
   - Range: `1`-`65535`
   - Default value: `1`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `reminder_time` (Number) Specify the notification window before certificate expiration to start the logging of certificate expiration messages. For example, the value 21 specifies that all certificates to expire in three weeks or less generate a log message at the defined priority. Enter a value in the range 1 - 65535. The default value is 30.
   - CLI Alias: `reminder`
   - Range: `1`-`65535`

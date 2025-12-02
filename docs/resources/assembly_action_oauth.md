@@ -42,6 +42,7 @@ resource "datapower_assembly_action_oauth" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `oauth_provider_settings_reference` (Attributes) Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.
   - CLI Alias: `oauth-provider-settings-ref` (see [below for nested schema](#nestedatt--oauth_provider_settings_reference))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `supported_oauth_components` (Attributes) Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.
   - CLI Alias: `supported-oauth-components` (see [below for nested schema](#nestedatt--supported_oauth_components))
 - `title` (String) Title

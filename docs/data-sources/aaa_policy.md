@@ -29,6 +29,7 @@ data "datapower_aaa_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -76,6 +77,7 @@ Read-Only:
 - `ping_identity_compatibility` (Boolean) Control compatibility with a PingFederate identity server. By default, compatibility is disabled. Enable compatibility for SAML authentication or authorization.
 - `post_process` (Attributes) Specify postprocessing activities. For some methods, you must define more properties.
   - CLI Alias: `post-process` (see [below for nested schema](#nestedatt--result--post_process))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rejected_counter` (String) Specify the monitor for rejected messages. Ensure that this count monitor is configured with an XPath as the measure.
 - `saml2_metadata_file` (String) Specify the location of the SAML 2.0 metadata file for SAML 2.0 protocol message exchanges. The metadata in this file identifies identity provider endpoints and certificates to secure message exchanges. The file must have a root-level &lt;md:EntitiesDescriptor> element with an &lt;EntityDescriptor> child element for each identity provider.
 - `saml_attribute` (Attributes List) Specify SAML attributes. Each attribute consists of its namespace URI, local name, and expected value. (see [below for nested schema](#nestedatt--result--saml_attribute))

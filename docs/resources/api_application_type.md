@@ -36,6 +36,7 @@ resource "datapower_api_application_type" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `supported_oauth_types` (Attributes List) Supported OAuth types
   - CLI Alias: `supported-oauth-types` (see [below for nested schema](#nestedatt--supported_oauth_types))
 - `title` (String) Title

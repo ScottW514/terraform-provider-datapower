@@ -47,6 +47,7 @@ resource "datapower_stateless_tcp_source_protocol_handler" "test" {
 - `persistent_connections` (Boolean) Enable or disable persistent connections where appropriate the front end.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_server` (String) The TLS server profile to secure connections between clients and the DataPower Gateway.
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`

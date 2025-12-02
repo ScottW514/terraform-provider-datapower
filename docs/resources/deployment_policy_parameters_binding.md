@@ -38,6 +38,7 @@ resource "datapower_deployment_policy_parameters_binding" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `deployment_policy_parameter` (Attributes List) A list of name-value pairs. The name specifies a variable in a deployment policy, which will be replaced by its associated value before applying the policy to a configuration import.
   - CLI Alias: `variable` (see [below for nested schema](#nestedatt--deployment_policy_parameter))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

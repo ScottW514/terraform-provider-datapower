@@ -29,6 +29,7 @@ data "datapower_assembly_action_jwt_validate" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `issuer_claim` (String) Specify the PCRE to validate the issuer claim. When specified, the "iss" claim in the JWT is validated. If this claim fails, validation fails. The maximum value length is 256 characters.
 - `jwt` (String) Specify the context variable that contains the JSON Web Token (JWT) to validate. The default value is <tt>request.headers.authorization</tt> . The format of the authorization header must be <tt>Authorization: Bearer jwt-token</tt> , where <tt>jwt-token</tt> indicates the encoded JWT.
 - `output_claims` (String) Specify a context variable to store all claims that the JWT contains when the validation of the JWT succeeds. The default value is <tt>decoded.claims</tt> .
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `title` (String) Title
 - `user_summary` (String) Comments
 - `verify_crypto` (String) Crypto object for JWT verification

@@ -29,6 +29,7 @@ data "datapower_gateway_peering" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -55,6 +56,7 @@ Read-Only:
 - `password_alias` (String) Specify the password alias to secure the data store. If not specified, a system default is used. The use of the system default is classified as a security vulnerability (CVE-2022-31776).
 - `peer_group` (String) Gateway-peering group
 - `persistence_location` (String) Specify where to store data. Ensure that all peers in the group store data in the same location.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -129,6 +129,7 @@ resource "datapower_ftp_server_source_protocol_handler" "test" {
   - Range: `1`-`43200`
   - Default value: `600`
   - Not Valid When: `filesystem_type`!=`virtual-persistent`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `require_tls` (String) Specify whether FTP control connections require TLS encryption. For implicit or explicit FTP, you must complete the configuration by specifying the TLS profile to secure connections.
   - CLI Alias: `require-tls`
   - Choices: `off`, `explicit`, `implicit`

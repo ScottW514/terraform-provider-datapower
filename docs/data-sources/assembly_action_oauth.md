@@ -29,6 +29,7 @@ data "datapower_assembly_action_oauth" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `oauth_provider_settings_reference` (Attributes) Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.
   - CLI Alias: `oauth-provider-settings-ref` (see [below for nested schema](#nestedatt--result--oauth_provider_settings_reference))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `supported_oauth_components` (Attributes) Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.
   - CLI Alias: `supported-oauth-components` (see [below for nested schema](#nestedatt--result--supported_oauth_components))
 - `title` (String) Title

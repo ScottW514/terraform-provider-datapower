@@ -71,6 +71,7 @@ type AssemblyActionUserSecurity struct {
 	CorrelationPath                   types.String                `tfsdk:"correlation_path"`
 	ActionDebug                       types.Bool                  `tfsdk:"action_debug"`
 	DependencyActions                 []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                    types.String                `tfsdk:"provider_target"`
 }
 
 var AssemblyActionUserSecurityEIStopOnErrorCondVal = validators.Evaluation{
@@ -421,6 +422,7 @@ var AssemblyActionUserSecurityHostnameIgnoreVal = validators.Evaluation{
 }
 
 var AssemblyActionUserSecurityObjectType = map[string]attr.Type{
+	"provider_target":                        types.StringType,
 	"id":                                     types.StringType,
 	"app_domain":                             types.StringType,
 	"factor_id":                              types.StringType,

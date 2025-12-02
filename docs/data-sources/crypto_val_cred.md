@@ -29,6 +29,7 @@ data "datapower_crypto_val_cred" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `explicit_policy` (Boolean) Specify support for the initial explicit policy variable as defined by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty policy tree. Otherwise, the algorithm can end with an empty policy tree unless policy constraint extensions in the chain require an explicit policy.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `initial_policy_set` (List of String) Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `require_crl` (Boolean) Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.
 - `use_crl` (Boolean) Specify whether to check certificate revocation lists (CRLs) during certificate validation. When enabled, CRLs are checked. Otherwise, CRLs are not checked.
 

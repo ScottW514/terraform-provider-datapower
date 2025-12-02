@@ -152,6 +152,7 @@ resource "datapower_xsl_proxy_service" "test" {
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `query_param_namespace` (String) The namespace in which to put all parameters that are specified in the URL query string.
   - CLI Alias: `query-param-namespace`
   - Default value: `http://www.datapower.com/param/query`

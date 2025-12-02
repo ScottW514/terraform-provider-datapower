@@ -57,6 +57,7 @@ resource "datapower_wsrr_subscription" "test" {
 - `object_version` (String) Object version
   - CLI Alias: `version`
   - Not Valid When: `use_version`=`false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.
   - CLI Alias: `refresh-interval`
   - Range: `60`-`4294967`

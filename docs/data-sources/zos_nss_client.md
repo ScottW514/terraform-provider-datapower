@@ -29,6 +29,7 @@ data "datapower_zos_nss_client" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `client_id` (String) <p>Specifies the client ID to be used for registration with the NSS server. Minimum length is 1. Maximum length is 24.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Client ID identifies the client ID to register the appliance with the NSS server. The NSS client ID is a unique string used by the NSS Server to track clients.</p><p>The Client ID does not have to correspond to any preexisting object. It is provided to the server at the time of registration. If another client attempts to register with the same client ID to the same NSS Server, the NSS server will send a heartbeat to the first client. If the first client responds to the heartbeat, the second client's registration will be rejected. If the first client does not respond, the connect to the first client will be severed and the second client will be registered.</p>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `password_alias` (String) <p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `remote_address` (String) Specifies IP address or host name of the NSS server. In conjunction with the Remote Port, identifies the host and listening port of the NSS server. The NSS server must have the XMLAppliance discipline support enabled.
 - `remote_port` (Number) Specifies NSS server port. In conjunction with the Remote Address, identifies the host and listening port of the NSS server.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and the NSS server.

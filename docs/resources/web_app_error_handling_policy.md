@@ -40,6 +40,7 @@ resource "datapower_web_app_error_handling_policy" "test" {
   - Reference to: `datapower_style_policy_rule:id`
   - Required When: `type`=`error-rule`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `type` (String) Specify the mode for error handling. The default value is standard.
   - CLI Alias: `type`
   - Choices: `standard`, `redirect`, `proxy`, `error-rule`

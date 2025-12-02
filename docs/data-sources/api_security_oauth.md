@@ -29,6 +29,7 @@ data "datapower_api_security_oauth" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `oauth_flow` (String) Specify the OAuth flow to enforce to protect the target. The value must be among the supported grant types that are defined by the referenced OAuth provider.
 - `oauth_provider` (String) OAuth provider
 - `oauth_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <ul><li>The allowed scopes for this configuration must be a subset of the allowed scopes set for the API OAuth security definition.</li><li>The allowed scopes for the API OAuth security definition must be a subset of the allowed scopes set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -29,6 +29,7 @@ data "datapower_wxs_grid" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `key_obfuscation` (Boolean) Indicate whether to apply a hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.
 - `key_obfuscation_alg` (String) Specify the hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.
 - `password_alias` (String) Specify the password alias to use to look up the password of the eXtreme Scale user who connects to the eXtreme Scale collective.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
 - `timeout` (Number) Specify the maximum time to wait to establish a connection to an eXtreme Scale. If unable to establish a connection, the operation fails. Enter a value in the range 10 - 86400000. The default value is 1000.
 - `user_name` (String) <p>Specify the user account of the eXtreme Scale user who connects to the eXtreme Scale collective. The value can be up to 64 characters in length and cannot be blank. You can use all alphanumeric characters and most special characters. You cannot use spaces or the following special characters: <tt># &lt;</tt> .</p><p>The user must have sufficient eXtreme Scale permissions to access the grid.</p>

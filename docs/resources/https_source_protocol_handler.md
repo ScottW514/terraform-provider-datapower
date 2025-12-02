@@ -107,6 +107,7 @@ resource "datapower_https_source_protocol_handler" "test" {
 - `persistent_connections` (Boolean) Specify whether to negotiate persistent connections with clients. The HTTP/2 protocol controls persistent connections and reuse. Therefore, this setting is ignored for the HTTP/2 protocol.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_server` (String) Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`

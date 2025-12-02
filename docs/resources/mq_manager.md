@@ -124,6 +124,7 @@ resource "datapower_mq_manager" "test" {
   - CLI Alias: `permit-insecure-servers`
   - Default value: `false`
   - Not Valid When: `ssl_key`=``
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `q_mname` (String) Specify the name of the queue manager when the queue manager is not the default on the identified host.
   - CLI Alias: `queue-manager`
 - `reporting_interval` (Number) Specify the interval in seconds between error messages for failed connection attempts. This setting filters the generation of identical error messages to IBM MQ logging targets. The default value is 10.

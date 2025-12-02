@@ -29,6 +29,7 @@ data "datapower_assembly_action_html_page" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `description` (String) Description
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `output` (String) Specify the variable in the API context to store the results. The content of the <tt>body</tt> field of the variable is the results of the action. The default variable is <tt>message</tt> .
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `title` (String) Title
 - `user_summary` (String) Comments
 

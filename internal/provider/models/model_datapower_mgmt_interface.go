@@ -46,6 +46,7 @@ type MgmtInterface struct {
 	SslSniServer      types.String                `tfsdk:"ssl_sni_server"`
 	LocalAddress      types.String                `tfsdk:"local_address"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var MgmtInterfaceSLMPeeringCondVal = validators.Evaluation{
@@ -81,6 +82,7 @@ var MgmtInterfaceSSLSNIServerIgnoreVal = validators.Evaluation{
 }
 
 var MgmtInterfaceObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,
 	"local_port":         types.Int64Type,

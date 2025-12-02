@@ -39,6 +39,7 @@ resource "datapower_peer_group" "test" {
   - Reference to: `datapower_ip_multicast:id`
   - Required When: `type`=`slm-multicast`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `type` (String) Type
   - CLI Alias: `type`
   - Choices: `slm`, `slm-multicast`

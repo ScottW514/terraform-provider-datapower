@@ -42,9 +42,11 @@ type APIPath struct {
 	RequestSchema     types.String                `tfsdk:"request_schema"`
 	Parameter         types.List                  `tfsdk:"parameter"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var APIPathObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

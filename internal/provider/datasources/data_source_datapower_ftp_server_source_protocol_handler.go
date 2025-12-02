@@ -23,11 +23,14 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -35,9 +38,10 @@ import (
 )
 
 type FTPServerSourceProtocolHandlerList struct {
-	Id        types.String `tfsdk:"id"`
-	AppDomain types.String `tfsdk:"app_domain"`
-	Result    types.List   `tfsdk:"result"`
+	ProviderTarget types.String `tfsdk:"provider_target"`
+	Id             types.String `tfsdk:"id"`
+	AppDomain      types.String `tfsdk:"app_domain"`
+	Result         types.List   `tfsdk:"result"`
 }
 
 var (
@@ -61,6 +65,14 @@ func (d *FTPServerSourceProtocolHandlerDataSource) Schema(ctx context.Context, r
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>The FTP server handler provides an FTP server that can be used to submit files for processing by the system. Each file that is written results in one transaction.</p><p>There can be multiple FTP servers, but only one server can listen on the default port 21 on a given IP address. There can be multiple simultaneous connections from FTP clients to the same FTP server.</p><p><b>Notes:</b></p><ul><li>The 226 FTP response code at the end of an FTP <tt>STOR</tt> or <tt>STOU</tt> command is conditional on successful completion of the internal steps and backside operation of the transaction.</li><li>Changes in the configuration affect only new connections to this FTP server. Existing connections continue to use their current configuration until they disconnect.</li></ul>",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The name of the object to retrieve.",
 				Optional:            true,
@@ -240,6 +252,10 @@ func (d *FTPServerSourceProtocolHandlerDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,
+						"provider_target": schema.StringAttribute{
+							MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -264,6 +280,11 @@ func (d *FTPServerSourceProtocolHandlerDataSource) Read(ctx context.Context, req
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
 	o := models.FTPServerSourceProtocolHandler{
 		AppDomain: data.AppDomain,
 	}
@@ -273,11 +294,11 @@ func (d *FTPServerSourceProtocolHandlerDataSource) Read(ctx context.Context, req
 		path = path + "/" + data.Id.ValueString()
 	}
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(d.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}

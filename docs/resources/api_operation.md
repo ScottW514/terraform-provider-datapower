@@ -55,6 +55,7 @@ resource "datapower_api_operation" "test" {
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameter))
 - `produce` (List of String) Specify MIME types that the operation can produce. This setting overrides the API-level produce declaration that is defined in the API definition.
   - CLI Alias: `produce`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `remove_consume` (Boolean) Specify whether to remove the API-level consume declaration. By default, the API-level consume declaration is applied to the operation. When removed, the operation can always be performed regardless of the content type.
   - CLI Alias: `remove-consume`
   - Default value: `false`

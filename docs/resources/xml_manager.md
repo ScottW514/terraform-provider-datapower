@@ -103,6 +103,7 @@ resource "datapower_xml_manager" "test" {
   - CLI Alias: `max-prefixes`
   - Range: `0`-`262143`
   - Default value: `1024`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `scheduled_rule` (Attributes List) Certain applications might require the running of a scheduled processing rule. Integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.
   - CLI Alias: `schedule-rule` (see [below for nested schema](#nestedatt--scheduled_rule))
 - `schema_validation` (Attributes List) - CLI Alias: `validate` (see [below for nested schema](#nestedatt--schema_validation))

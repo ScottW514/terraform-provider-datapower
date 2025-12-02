@@ -42,6 +42,7 @@ type FilterAction struct {
 	LogLevel          types.String                `tfsdk:"log_level"`
 	BlockInterval     types.Int64                 `tfsdk:"block_interval"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var FilterActionBlockIntervalIgnoreVal = validators.Evaluation{
@@ -53,6 +54,7 @@ var FilterActionBlockIntervalIgnoreVal = validators.Evaluation{
 }
 
 var FilterActionObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

@@ -96,6 +96,7 @@ resource "datapower_ssh_server_source_protocol_handler" "test" {
   - Range: `1`-`43200`
   - Default value: `600`
   - Not Valid When: `filesystem_type`!=`virtual-persistent`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssh_user_authentication` (Attributes) Specifies the type(s) of SSH user authentication available for use by the client.
   - CLI Alias: `user-auth` (see [below for nested schema](#nestedatt--ssh_user_authentication))
 - `user_summary` (String) Comments

@@ -39,9 +39,11 @@ type PolicyParameters struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	PolicyParameter   types.List                  `tfsdk:"policy_parameter"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var PolicyParametersObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

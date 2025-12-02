@@ -66,6 +66,7 @@ resource "datapower_xsl_coproc_service" "test" {
 - `priority` (String) - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_server` (String) - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`
   - Not Valid When: `ssl_server_config_type`!=`server`

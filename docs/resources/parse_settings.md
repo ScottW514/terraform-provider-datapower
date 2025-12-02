@@ -52,6 +52,7 @@ resource "datapower_parse_settings" "test" {
   - CLI Alias: `number-length`
   - Range: `0`-`256`
   - Default value: `128`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `strict_utf8encoding` (Boolean) Specify whether to enforce strict UTF-8 encoding throughout the entire JSON document. When enabled, the entire document is checked for valid UTF-8 encoding. When disabled, only the first few bytes are checked for proper encoding and the rest of the document is assumed to be in the same encoding.
   - CLI Alias: `strict-utf8-encoding`
   - Default value: `false`

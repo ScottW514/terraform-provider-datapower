@@ -99,6 +99,7 @@ type RBMSettings struct {
 	McLdapSslClientConfigType         types.String                `tfsdk:"mc_ldap_ssl_client_config_type"`
 	McLdapSslClientProfile            types.String                `tfsdk:"mc_ldap_ssl_client_profile"`
 	DependencyActions                 []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                    types.String                `tfsdk:"provider_target"`
 }
 
 var RBMSettingsCAPubKeyFileCondVal = validators.Evaluation{
@@ -782,6 +783,7 @@ var RBMSettingsMCLDAPSSLClientProfileIgnoreVal = validators.Evaluation{
 }
 
 var RBMSettingsObjectType = map[string]attr.Type{
+	"provider_target":                         types.StringType,
 	"enabled":                                 types.BoolType,
 	"user_summary":                            types.StringType,
 	"au_method":                               types.StringType,

@@ -29,6 +29,7 @@ data "datapower_assembly_action_graphql_introspect" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `input` (String) Specify the variable in the API context that contains the GraphQL query to introspect the GraphQL schema. The content of the <tt>body</tt> field is the input. The default variable is <tt>message</tt> .
 - `output` (String) Specify the variable in the API context to store the introspection results. The content of the <tt>body</tt> field represents the results. The default variable is the same as the variable for the input message. Therefore, by default, the input message is overwritten by the output message.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `title` (String) Title
 - `user_summary` (String) Comments
 

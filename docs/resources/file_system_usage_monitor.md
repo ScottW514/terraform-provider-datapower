@@ -54,6 +54,7 @@ resource "datapower_file_system_usage_monitor" "test" {
   - CLI Alias: `poll`
   - Range: `15`-`65535`
   - Default value: `60`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `system` (Attributes List) Specify the system file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all system file systems.
   - CLI Alias: `system` (see [below for nested schema](#nestedatt--system))
 - `user_summary` (String) Comments

@@ -29,6 +29,7 @@ data "datapower_b2b_cpa_receiver_setting" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `local_endpoint_uri` (String) Local URI
 - `persist_duration` (Number) Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `signature_required` (Boolean) Require signature
 - `sync_reply_mode` (String) Sync reply mode
 - `user_summary` (String) Comments

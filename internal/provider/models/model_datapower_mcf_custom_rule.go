@@ -40,9 +40,11 @@ type MCFCustomRule struct {
 	CustomRuleValue   types.String                `tfsdk:"custom_rule_value"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var MCFCustomRuleObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"custom_rule_name":   types.StringType,

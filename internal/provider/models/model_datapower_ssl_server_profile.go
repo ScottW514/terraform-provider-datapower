@@ -62,6 +62,7 @@ type SSLServerProfile struct {
 	SigAlgs                      types.List                  `tfsdk:"sig_algs"`
 	RequireClosureNotification   types.Bool                  `tfsdk:"require_closure_notification"`
 	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget               types.String                `tfsdk:"provider_target"`
 }
 
 var SSLServerProfileRequireClientAuthIgnoreVal = validators.Evaluation{
@@ -205,6 +206,7 @@ var SSLServerProfilePrioritizeChaChaIgnoreVal = validators.Evaluation{
 }
 
 var SSLServerProfileObjectType = map[string]attr.Type{
+	"provider_target":                 types.StringType,
 	"id":                              types.StringType,
 	"app_domain":                      types.StringType,
 	"user_summary":                    types.StringType,

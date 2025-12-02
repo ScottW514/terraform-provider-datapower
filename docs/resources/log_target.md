@@ -145,6 +145,7 @@ resource "datapower_log_target" "test" {
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
   - Not Valid When: `type`!=`syslog-tcp`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `rate_limit` (Number) Specify the maximum number of events to log per second. Enter a value in the range 1 - 1000. The default value is 100. <ul><li>Remote log targets might receive more than this number of events within a second, depending on network latency and buffering. syslog over TCP log targets are exclusive, because only a single TCP connection is made to the server.</li><li>In the case of syslog over TCP log targets, the rate limit is the maximum number of events transmitted over the connection within one second. A value of 0 disables rate-limiting by the logging target.</li></ul>
   - CLI Alias: `rate-limit`
   - Range: `0`-`1000`

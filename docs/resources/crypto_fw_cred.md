@@ -39,6 +39,7 @@ resource "datapower_crypto_fw_cred" "test" {
 - `private_key` (List of String) Private key
   - CLI Alias: `key`
   - Reference to: `datapower_crypto_key:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `shared_secret_key` (List of String) Shared secret key
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`

@@ -29,6 +29,7 @@ data "datapower_http_user_agent" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `identifier` (String) Specify the string that the user agent includes as the <tt>request-header</tt> field. This field contains information about the user agent that initiates the request. By default, the system does not include a <tt>request-header</tt> field.
 - `max_redirects` (Number) Specify the maximum number of HTTP redirect messages received before the target URL is declared unreachable. Enter a value in the range 0 - 128. The default value is 8.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `proxy_policies` (Attributes List) Specify the proxy policy that associates a set of URLs with a specific HTTP proxy. (see [below for nested schema](#nestedatt--result--proxy_policies))
 - `pubkey_auth_policies` (Attributes List) Specify the policy that associates a set of URLs with a specific private key for public key authentication. The remote host must possess and reference the corresponding public key (certificate) to connect successfully. (see [below for nested schema](#nestedatt--result--pubkey_auth_policies))
 - `sftp_policies` (Attributes List) Specify the policy that associate a set of URLs to control SSH client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that initiates the file transfer. (see [below for nested schema](#nestedatt--result--sftp_policies))

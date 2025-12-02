@@ -269,6 +269,7 @@ resource "datapower_oauth_provider_settings" "test" {
   - Default value: `/oauth2/issued`
   - Required When: (`enable_owner_revocation`=`true` AND `enable_token_management`=`true` AND `token_manager_type`=`native` AND `provider_type`=`native`)
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `provider_type` (String) Provider type
   - CLI Alias: `provider-type`
   - Choices: `native`, `third_party`

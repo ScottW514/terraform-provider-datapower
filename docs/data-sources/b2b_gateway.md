@@ -29,6 +29,7 @@ data "datapower_b2b_gateway" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -72,6 +73,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `max_document_disk_use` (Number) Specify the maximum size in KB for document storage. When storage exceeds this value, documents are purged. The default value is 25165824.
 - `priority` (String) Specify the priority of service-scheduling. When system resources are in high demand, high priority services are favored over lower priority services.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `shaping_threshold` (Number) Specify the maximum TPS to allow during archival. When the threshold is reached, the service queues transactions. When the queue is full, the service rejects transactions and generates a log message. Enter a value in the range 10 - 10000. The default value is 200.
 - `sql_data_source` (String) SQL data source
 - `user_summary` (String) Comments

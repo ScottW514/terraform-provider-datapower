@@ -37,6 +37,7 @@ resource "datapower_radius_settings" "test" {
   - CLI Alias: `admin-state`
   - Default value: `false`
 - `id` (String)
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `retries` (Number) Specify the maximum number of times that the RADIUS client can retransmit an unacknowledged request to a server. Enter a value in the range 1 - 10. The default value is 3.
   - CLI Alias: `retries`
   - Range: `1`-`10`

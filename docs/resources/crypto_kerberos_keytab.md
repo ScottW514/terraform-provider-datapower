@@ -42,6 +42,7 @@ resource "datapower_crypto_kerberos_keytab" "test" {
   - Default value: `false`
 - `gss_checksum_flags` (Attributes) Which flags to set in GSS-API checksums when generating AP-REQ tokens with this keytab. Refer to RFC 4121 for the flag definitions.
   - CLI Alias: `gss-checksum-flags` (see [below for nested schema](#nestedatt--gss_checksum_flags))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `use_replay_cache` (Boolean) Whether to cache authenticator values from AP-REQ tokens that were verified with this keytab. Caching prevents replay attacks.
   - CLI Alias: `use-replay-cache`
   - Default value: `true`

@@ -40,9 +40,11 @@ type DistributedVariable struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	GatewayPeering    types.String                `tfsdk:"gateway_peering"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var DistributedVariableObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"app_domain":         types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,

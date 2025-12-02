@@ -29,6 +29,7 @@ data "datapower_slm_policy" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -48,6 +49,7 @@ Read-Only:
 - `execution_policy` (String) Specify the operational behavior of the policy. The default behavior is to process all policy statements.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `peer_group` (String) Specify the peer group that share in load distribution of traffic that is destined for the same resources. A peer group establishes a data-sharing protocol among members where each member has the data to determine whether a threshold is reached.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `statement` (Attributes List) Specify the policy statement that establishes criteria to select messages, to set a measurement interval, to set thresholds, and to determine the action to take when the threshold is met. A policy can have multiple statements that run in the sequence defined by the statement identifier. (see [below for nested schema](#nestedatt--result--statement))
 - `user_summary` (String) Comments
 

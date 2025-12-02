@@ -111,6 +111,7 @@ resource "datapower_http_user_agent" "test" {
   - CLI Alias: `max-redirects`
   - Range: `0`-`128`
   - Default value: `8`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `proxy_policies` (Attributes List) Specify the proxy policy that associates a set of URLs with a specific HTTP proxy.
   - CLI Alias: `proxy` (see [below for nested schema](#nestedatt--proxy_policies))
 - `pubkey_auth_policies` (Attributes List) Specify the policy that associates a set of URLs with a specific private key for public key authentication. The remote host must possess and reference the corresponding public key (certificate) to connect successfully.

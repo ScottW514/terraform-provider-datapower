@@ -29,6 +29,7 @@ data "datapower_multi_protocol_gateway" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -102,6 +103,7 @@ Read-Only:
 - `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
 - `process_http_errors` (Boolean) <p>In some cases, the backend server returns a response code that indicates an error.</p><p>When enabled, the default, the service ignores the error condition and processes the response rule. If successful, returns the successful response to the client.</p><p>When disabled, the DataPower service notices the error condition and processes the error rule. If successful, propagates the response code from the backend server to the client.</p>
 - `propagate_uri` (Boolean) <p>URI propagation is meaningful only when:</p><ul><li>The service uses a static backend.</li><li>The service uses a dynamic backend and routing is set with a route with stylesheet (route-action) action. In this case, use dp:set-target() to define the backend server. <p>For the other routing options that are available with route-action and route-set, the URI is absolute.</p></li></ul><p>When set to <b>on</b>, the service rewrites the URI of the backend URL to the URI in the client request. If the client submits http://host/service and the backend URL is http://server/listener, the URL is rewritten to http://server/service.</p><p>If the backend URL employs AMQP, IBM MQ, Kafka, TIBCO EMS, or WebSphere JMS, set to <b>off</b>.</p>
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `proxy_http_response` (Boolean) When you enable this setting, the service passes the response code from the server to the client without modification. If an error occurs when the service runs the response rule, the service does not pass the response code but returns the default error code, which is an HTTP 500. If you require the service to pass the response code in this error condition, set the <tt>var://service/mpgw/proxy-http-response</tt> variable to 1 in the request or response rule. However, when you set a custom response code in the error rule with the <tt>var://service/error-protocol-response</tt> variable, the service passes this custom response code instead.
 - `query_param_namespace` (String) The namespace in which to put all parameters that are specified in the URL query string.
 - `request_attachments` (String) Select how to treat client requests with attachments. The default is strip.

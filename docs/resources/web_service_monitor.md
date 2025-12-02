@@ -51,6 +51,7 @@ resource "datapower_web_service_monitor" "test" {
   - CLI Alias: `endpoint-name`
 - `operations` (Attributes List) Operations to monitor
   - CLI Alias: `operation` (see [below for nested schema](#nestedatt--operations))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `transport` (String) Specify the transport type for the endpoint. The transport type must agree with the transport type in the WSDL file.
   - CLI Alias: `transport`
   - Choices: `http-get`, `http-post`, `soap-doc`, `soap-rpc`

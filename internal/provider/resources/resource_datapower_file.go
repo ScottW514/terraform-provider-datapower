@@ -29,6 +29,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -48,6 +49,7 @@ type File struct {
 	Content           types.String                `tfsdk:"content"`
 	Hash              types.String                `tfsdk:"hash"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var _ resource.ResourceWithModifyPlan = &FileResource{}
@@ -93,6 +95,17 @@ func (r *FileResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("The `datapower_file` resource manages files on an IBM DataPower Gateway, allowing practitioners to upload files to a specified remote path within an application domain. The resource supports uploading file content either by referencing a local file path or by providing the file content directly as a string. It tracks file changes using a computed hash, which is updated based on the local file or provided content. If the remote file is readable (e.g. not in a `cert` folder), the hash attribute is updated during the plan phase to reflect changes in the remote file. This resource is useful for managing stylesheets, gateway scripts, certificates, or other file based assets on the DataPower Gateway.", "", "").String,
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host for this resource. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
 				Required:            true,
@@ -160,7 +173,7 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -183,10 +196,10 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 
 	// Create directory, if needed
 	if len(dpDirs) > 0 {
-		_, err := r.pData.Client.Post(baseUrl+"/"+dpStore, fmt.Sprintf(`{"directory": {"name": "%s"}}`, dpDirPath))
+		_, err := r.pData.Client.Post(baseUrl+"/"+dpStore, fmt.Sprintf(`{"directory": {"name": "%s"}}`, dpDirPath), data.ProviderTarget)
 		if err != nil {
 			if strings.Contains(err.Error(), "status 401") {
-				_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+				_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 				if !resp.Diagnostics.HasError() {
 					resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 				}
@@ -199,10 +212,10 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 	}
 
 	body := fmt.Sprintf(`{"file": {"name": "%s", "content": "%s"}}`, dpFileName, fileData)
-	_, err := r.pData.Client.Post(fmt.Sprintf("%s/%s/%s", baseUrl, dpStore, dpDirPath), body)
+	_, err := r.pData.Client.Post(fmt.Sprintf("%s/%s/%s", baseUrl, dpStore, dpDirPath), body, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -211,7 +224,7 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
 			return
 		} else {
-			_, err = r.pData.Client.Put(baseUrl+dpFullPath, body)
+			_, err = r.pData.Client.Put(baseUrl+dpFullPath, body, data.ProviderTarget)
 			if err != nil && !strings.Contains(err.Error(), "status 409") {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload (overwrite) remote file (%s%s), got error: %s", baseUrl, dpFullPath, err))
 				return
@@ -221,10 +234,13 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 
 	data.Hash = types.StringValue(r.generateHash(fileData))
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -240,10 +256,10 @@ func (r *FileResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 
 	baseUrl, _, dpFullPath, _, _, _ := data.getPathAttrs()
 
-	remoteFileData, err := r.loadRemoteFile(baseUrl + dpFullPath)
+	remoteFileData, err := r.loadRemoteFile(baseUrl+dpFullPath, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.State.RemoveResource(ctx)
 			}
@@ -274,7 +290,7 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -296,10 +312,10 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	baseUrl, dpFileName, dpFullPath, _, _, _ := data.getPathAttrs()
 
 	body := fmt.Sprintf(`{"file": {"name": "%s", "content": "%s"}}`, dpFileName, fileData)
-	_, err := r.pData.Client.Put(baseUrl+dpFullPath, body)
+	_, err := r.pData.Client.Put(baseUrl+dpFullPath, body, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -311,10 +327,13 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 
 	data.Hash = types.StringValue(r.generateHash(fileData))
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -328,17 +347,17 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	baseUrl, _, dpFullPath, dpStore, _, dpDirs := data.getPathAttrs()
 
-	_, err := r.pData.Client.Delete(baseUrl + dpFullPath)
+	_, err := r.pData.Client.Delete(baseUrl+dpFullPath, data.ProviderTarget)
 	if err != nil {
 		if strings.Contains(err.Error(), "status 401") {
-			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString())
+			_ = tfutils.DomainCredentialTest(r.pData.Client, &resp.Diagnostics, data.AppDomain.ValueString(), data.ProviderTarget)
 			if !resp.Diagnostics.HasError() {
 				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Application Domain '%s' does not exist", data.AppDomain.ValueString()))
 			}
@@ -354,7 +373,7 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 			break
 		}
 		dPath := fmt.Sprintf("%s/%s/%s", baseUrl, dpStore, strings.Join(dpDirs[0:dirCount], "/"))
-		res, err := r.pData.Client.Get(dPath)
+		res, err := r.pData.Client.Get(dPath, data.ProviderTarget)
 		if err != nil {
 			if strings.Contains(err.Error(), "status 404") {
 				break
@@ -367,7 +386,7 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		} else if directories := res.Get("filestore.location.directory"); directories.Exists() {
 			break
 		}
-		_, err = r.pData.Client.Delete(dPath)
+		_, err = r.pData.Client.Delete(dPath, data.ProviderTarget)
 		if err != nil {
 			if strings.Contains(err.Error(), "status 404") {
 				break
@@ -378,10 +397,13 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		dirCount = dirCount - 1
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete, data.ProviderTarget)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	tfutils.SaveDomain(ctx, &resp.Diagnostics, r.pData.Client, data.AppDomain, data.ProviderTarget)
+
 	resp.State.RemoveResource(ctx)
 }
 
@@ -400,8 +422,8 @@ func (r *FileResource) loadLocalFile(path string) (string, error) {
 	return base64.StdEncoding.EncodeToString(data), nil
 }
 
-func (r *FileResource) loadRemoteFile(path string) (string, error) {
-	res, err := r.pData.Client.Get(path)
+func (r *FileResource) loadRemoteFile(path string, target types.String) (string, error) {
+	res, err := r.pData.Client.Get(path, target)
 	if err != nil {
 		return "", fmt.Errorf("failed to download remote file (%s), got error: %s", path, err)
 	}
@@ -459,6 +481,16 @@ func (r *FileResource) ValidateConfig(ctx context.Context, req resource.Validate
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	if !(data.ProviderTarget.IsNull() || data.ProviderTarget.IsUnknown() || data.ProviderTarget.ValueString() == "") {
+		if !r.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+			resp.Diagnostics.AddAttributeError(
+				path.Root("provider_target"),
+				"Invalid provider_target",
+				fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), r.pData.Client.GetTargetNames()),
+			)
+		}
 	}
 
 	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)

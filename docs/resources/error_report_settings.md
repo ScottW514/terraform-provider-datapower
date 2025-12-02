@@ -84,6 +84,7 @@ resource "datapower_error_report_settings" "test" {
   - Choices: `ftp`, `nfs`, `raid`, `smtp`, `temporary`, `mqdiag`
   - Required When: `upload_report`=`true`
   - Not Valid When: `upload_report`=`false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `raid_path` (String) Specify the directory on the RAID volume to which to upload the error report.
   - CLI Alias: `raid-path`
   - Not Valid When: (`upload_report`=`false` OR `protocol`!=`raid`)

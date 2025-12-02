@@ -29,6 +29,7 @@ data "datapower_wsrr_subscription" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -51,6 +52,7 @@ Read-Only:
 - `object_name` (String) Specify the object name to unambiguously identify the WSRR resource. This property is used with the namespace.
 - `object_type` (String) Subscription object
 - `object_version` (String) Object version
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.
 - `server` (String) WSRR server
 - `use_version` (Boolean) Specify whether to query the registry for a specific object version. Set this property when the registry contains more than one version of an object.

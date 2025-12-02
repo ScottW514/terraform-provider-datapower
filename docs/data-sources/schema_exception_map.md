@@ -29,6 +29,7 @@ data "datapower_schema_exception_map" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `original_schema_url` (String) This is the location of the full original schema document. This is required. This may reside on or off the device.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `schema_exception_rules` (Attributes List) Rules describe what elements may be excepted from the schema validation when the Original Schema is used for Schema Validation. (see [below for nested schema](#nestedatt--result--schema_exception_rules))
 - `user_summary` (String) Comments
 

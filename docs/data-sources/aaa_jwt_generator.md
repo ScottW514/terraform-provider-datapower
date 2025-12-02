@@ -29,6 +29,7 @@ data "datapower_aaa_jwt_generator" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -58,6 +59,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `issuer` (String) The issuer claim, "iss", identifies the principal that issues the JWT. The maximum length is 256 characters. The default value is <tt>idg</tt> .
 - `not_before` (Number) The not before claim, "nbf", indicates the time before which the JWT must not be accepted for processing. Enter a value in the range 0 - 480. The default value is 0.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `sign_algorithm` (String) Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.
 - `sign_key` (String) The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.
 - `sign_sskey` (String) The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.

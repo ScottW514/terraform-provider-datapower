@@ -46,6 +46,7 @@ resource "datapower_jwe_header" "test" {
   - CLI Alias: `protected-header` (see [below for nested schema](#nestedatt--jwe_protected_header))
 - `jwe_shared_unprotected_header` (Attributes List) Add a JWE shared unprotected header to a JWE encrypt action.
   - CLI Alias: `shared-unprotected-header` (see [below for nested schema](#nestedatt--jwe_shared_unprotected_header))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 

@@ -26,6 +26,7 @@ resource "datapower_raid_volume" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `directory` (String) The subdirectory where the files on the storage volume are available. The name can be up to 64 characters long. The name cannot start with a period. The name can use all alphanumeric characters and the following special characters: . - _.
   - CLI Alias: `directory`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `read_only` (Boolean) <p>The access permission to files on the storage volume.</p><ul><li>When enabled, access permission is read-only. With the B2B feature, access permission must be read/write. B2B storage requires write access to the RAID volume. Setting to read-only is ignored but generates a warning.</li><li>When disabled, the default value, access permission is read/write.</li></ul>
   - CLI Alias: `read-only`
   - Default value: `false`

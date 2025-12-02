@@ -37,9 +37,11 @@ type RaidVolume struct {
 	ReadOnly          types.Bool                  `tfsdk:"read_only"`
 	Directory         types.String                `tfsdk:"directory"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var RaidVolumeObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"user_summary":       types.StringType,
 	"read_only":          types.BoolType,
 	"directory":          types.StringType,

@@ -29,6 +29,7 @@ data "datapower_assembly_action_rate_limit_info" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `input` (String) Specify the API context variable for the input. The input variable is a variable in the API context that contains the GraphQL query to return rate limit details. The content of the <tt>body</tt> field is the input. By default, the variable name is <tt>message</tt> .
 - `output` (String) Specify the API context variable for the output. The output variable is a variable in the API context to store the rate limit details. The content of the <tt>body</tt> field is the results. The default variable is the same as the input variable. Therefore, by default, the output overwrites the input.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `title` (String) Title
 - `user_summary` (String) Comments
 

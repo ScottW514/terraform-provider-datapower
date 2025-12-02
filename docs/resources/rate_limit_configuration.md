@@ -39,6 +39,7 @@ resource "datapower_rate_limit_configuration" "test" {
   - Default value: `true`
 - `parameters` (Attributes List) Parameters
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameters))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

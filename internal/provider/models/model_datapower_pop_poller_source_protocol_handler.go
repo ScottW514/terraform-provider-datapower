@@ -49,6 +49,7 @@ type POPPollerSourceProtocolHandler struct {
 	SslClientConfigType types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient           types.String                `tfsdk:"ssl_client"`
 	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                `tfsdk:"provider_target"`
 }
 
 var POPPollerSourceProtocolHandlerSSLClientConfigTypeCondVal = validators.Evaluation{
@@ -92,6 +93,7 @@ var POPPollerSourceProtocolHandlerSSLClientIgnoreVal = validators.Evaluation{
 }
 
 var POPPollerSourceProtocolHandlerObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"id":                     types.StringType,
 	"app_domain":             types.StringType,
 	"user_summary":           types.StringType,

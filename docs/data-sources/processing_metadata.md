@@ -29,6 +29,7 @@ data "datapower_processing_metadata" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `meta_item` (Attributes List) Define a metadata item by selecting one from the predefined items for a Processing Metadata Category, or configure a custom metadata item for a "customizable" category to retrieve value from any arbitrary headers or variables. (see [below for nested schema](#nestedatt--result--meta_item))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

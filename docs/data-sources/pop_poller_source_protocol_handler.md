@@ -29,6 +29,7 @@ data "datapower_pop_poller_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `max_messages_per_poll` (Number) Specify the maximum number of messages to retrieve in each polling cycle. Enter a value in the range 1 - 100. The default value is 5.
 - `password_alias` (String) The password alias of the password for the account that accesses the mailbox on the server.
 - `port` (Number) The listening port on the mail server. STARTTLS negotiation and an unsecured connection generally use port 110. An implicit, secured connection generally uses port 995.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 - `user_summary` (String) Comments

@@ -29,6 +29,7 @@ data "datapower_assembly_action_rate_limit" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `count_limit` (Attributes List) Count limits (see [below for nested schema](#nestedatt--result--count_limit))
 - `group_action` (String) Specify the action to take for rate limits in the group. Each rate limit definition that the group references is consumed or replenished based on this setting. The default value is consume.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rate_limit` (Attributes List) Rate limits (see [below for nested schema](#nestedatt--result--rate_limit))
 - `rate_limit_definition` (Attributes List) Rate limit definitions (see [below for nested schema](#nestedatt--result--rate_limit_definition))
 - `rate_limit_group` (String) Rate limit group

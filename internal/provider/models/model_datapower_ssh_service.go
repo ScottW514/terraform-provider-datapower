@@ -39,9 +39,11 @@ type SSHService struct {
 	ConnectionLimit   types.Int64                 `tfsdk:"connection_limit"`
 	LocalAddress      types.String                `tfsdk:"local_address"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var SSHServiceObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"local_port":         types.Int64Type,
 	"acl":                types.StringType,

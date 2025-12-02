@@ -38,9 +38,11 @@ type AuditLog struct {
 	Rotate            types.Int64                 `tfsdk:"rotate"`
 	AuditLevel        types.String                `tfsdk:"audit_level"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var AuditLogObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"size":               types.Int64Type,
 	"rotate":             types.Int64Type,

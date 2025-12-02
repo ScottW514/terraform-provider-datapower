@@ -29,6 +29,7 @@ data "datapower_jose_signature_identifier" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `certificate` (String) Use the certificate to verify the signature.
 - `header_param` (Attributes List) The JOSE header parameters used to identify the signature. (see [below for nested schema](#nestedatt--result--header_param))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `sskey` (String) Use the shared secret key to verify the signature.
 - `type` (String) Key material type used to verify the signature.
 - `user_summary` (String) A descriptive summary for the configuration.

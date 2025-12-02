@@ -44,9 +44,11 @@ type WebServicesAgent struct {
 	MediationMetrics  types.Bool                  `tfsdk:"mediation_metrics"`
 	MaxPayloadSizeKb  types.Int64                 `tfsdk:"max_payload_size_kb"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var WebServicesAgentObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"app_domain":          types.StringType,
 	"enabled":             types.BoolType,
 	"user_summary":        types.StringType,

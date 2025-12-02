@@ -29,6 +29,7 @@ data "datapower_assembly_action_user_security" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -69,6 +70,7 @@ Read-Only:
 - `hostname` (String) Hostname
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `pass_context_variable` (String) Password context variable
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `query_parameters` (String) Query parameters
 - `redirect_time_limit` (Number) Specify the duration in seconds for a transaction to complete before the redirect fails. Enter a value in the range 10 - 6000. The default value is 300.
 - `redirect_url` (String) Specify the URL fragment to redirect the request to obtain user credentials. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.

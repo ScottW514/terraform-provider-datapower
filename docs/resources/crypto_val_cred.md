@@ -54,6 +54,7 @@ resource "datapower_crypto_val_cred" "test" {
 - `initial_policy_set` (List of String) Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>
   - CLI Alias: `initial-policy-set`
   - Not Valid When: `cert_validation_mode`!=`pkix`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `require_crl` (Boolean) Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.
   - CLI Alias: `require-crl`
   - Default value: `false`

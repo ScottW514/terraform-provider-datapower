@@ -89,6 +89,7 @@ resource "datapower_api_ldap_registry" "test" {
   - CLI Alias: `ldap-version`
   - Choices: `v2`, `v3`
   - Default value: `v3`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client_profile` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`

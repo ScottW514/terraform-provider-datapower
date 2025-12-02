@@ -40,9 +40,11 @@ type CryptoFWCred struct {
 	SharedSecretKey   types.List                  `tfsdk:"shared_secret_key"`
 	Certificate       types.List                  `tfsdk:"certificate"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var CryptoFWCredObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"private_key":        types.ListType{ElemType: types.StringType},

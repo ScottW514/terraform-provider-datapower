@@ -44,6 +44,7 @@ resource "datapower_nfs_dynamic_mounts" "test" {
   - CLI Alias: `mount-type`
   - Choices: `hard`, `soft`
   - Default value: `hard`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `read_only` (Boolean) Specify whether the mount is read-only. By default, the mount is not read-only.
   - CLI Alias: `read-only`
   - Default value: `false`

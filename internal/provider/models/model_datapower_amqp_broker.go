@@ -53,6 +53,7 @@ type AMQPBroker struct {
 	ReportingInterval types.Int64                 `tfsdk:"reporting_interval"`
 	SslClient         types.String                `tfsdk:"ssl_client"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var AMQPBrokerUserNameCondVal = validators.Evaluation{
@@ -120,6 +121,7 @@ var AMQPBrokerReportingIntervalIgnoreVal = validators.Evaluation{
 }
 
 var AMQPBrokerObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,

@@ -29,6 +29,7 @@ data "datapower_open_telemetry_exporter" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -53,6 +54,7 @@ Read-Only:
 - `max_queue_size` (Number) Max queue size
 - `port` (Number) Port
 - `processor` (String) Processor
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `proxy_policies` (Attributes List) Proxy policies (see [below for nested schema](#nestedatt--result--proxy_policies))
 - `ssl_client` (String) TLS client profile
 - `timeout` (Number) Timeout

@@ -29,6 +29,7 @@ data "datapower_config_sequence" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `locations` (Attributes List) Specify the locations to watch for changes and the permissions for each location. Each entry specifies a directory where the configuration files to match are stored. The DataPower Gateway watches the location and reloads the configuration when a change is detected that match the PCRE match pattern. The entries are processed in the listed order. The assess profile indicates the permissions for processing. (see [below for nested schema](#nestedatt--result--locations))
 - `match_pattern` (String) Specify the PCRE pattern to determine whether a file is considered part of the location match. For example, when the configuration files to match are <tt>NNNNNN.input</tt> , the PCRE pattern is <tt>"([0-9]{6})\.input$"</tt> .
 - `output_location` (String) Specify the directory to store the output files that processing generates. When not specified, the input file location is used.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `result_name_pattern` (String) Specify the PCRE pattern to name the result file. This pattern normally has a back-reference to the base input file name. For example, when input files are <tt>NNNNNN.input</tt> and the wanted result file name is <tt>NNNNNN.result</tt> , the pattern is <tt>"$1.result"</tt> .
 - `run_sequence_interval` (Number) Specify the interval in milliseconds between the processing of changes. This delay enables multiple file events to be aggregated and handled within the same sequence run. Enter a value in the range 100 - 60000. The default value is 100.
 - `status_name_pattern` (String) Specify the PCRE pattern to name the status file. This pattern normally has a back-reference to the base input file name. For example, when the input files are <tt>NNNNNN.input</tt> and the wanted status file name is <tt>NNNNNN.json</tt> , the pattern is <tt>"$1.json"</tt> .

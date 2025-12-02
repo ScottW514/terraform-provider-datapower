@@ -86,6 +86,7 @@ resource "datapower_ebms3_source_protocol_handler" "test" {
 - `persistent_connections` (Boolean) Specify whether to enable persistent connections with clients. By default, persistent connections are enabled.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`

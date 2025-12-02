@@ -43,6 +43,7 @@ type PeerGroup struct {
 	IpMulticast       types.String                `tfsdk:"ip_multicast"`
 	UpdateInterval    types.Int64                 `tfsdk:"update_interval"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var PeerGroupIPMulticastCondVal = validators.Evaluation{
@@ -70,6 +71,7 @@ var PeerGroupUpdateIntervalIgnoreVal = validators.Evaluation{
 }
 
 var PeerGroupObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

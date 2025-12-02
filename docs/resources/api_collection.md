@@ -115,6 +115,7 @@ resource "datapower_api_collection" "test" {
   - Default value: `true`
 - `parse_settings_reference` (Attributes) Specify the constraints to parse documents. Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method. <ul><li>You can specify a URL reference from which to retrieve the constraints definition.</li><li>You can specify a literal configuration string in XML management interface or REST management interface format that contains the constraints definition.</li><li>You can specify a parse settings configuration object to retrieve the constraints definition.</li></ul>
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--parse_settings_reference))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `rate_limit_group` (String) Specify the default rate limit group for API requests without API keys for client identification. When not defined, requests without API keys are rejected.
   - CLI Alias: `rate-limit-group`
   - Reference to: `datapower_rate_limit_definition_group:id`

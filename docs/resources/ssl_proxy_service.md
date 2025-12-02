@@ -68,6 +68,7 @@ resource "datapower_ssl_proxy_service" "test" {
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`

@@ -62,9 +62,11 @@ type APIGateway struct {
 	OpenTelemetry                  types.String                `tfsdk:"open_telemetry"`
 	OpenTelemetryResourceAttribute types.List                  `tfsdk:"open_telemetry_resource_attribute"`
 	DependencyActions              []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                 types.String                `tfsdk:"provider_target"`
 }
 
 var APIGatewayObjectType = map[string]attr.Type{
+	"provider_target":                   types.StringType,
 	"id":                                types.StringType,
 	"app_domain":                        types.StringType,
 	"user_summary":                      types.StringType,

@@ -29,6 +29,7 @@ data "datapower_ftp_server_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -69,6 +70,7 @@ Read-Only:
 - `pasv_max_port` (Number) Specify the highest port in the passive port range for data connections. This value must be greater than the value of the minimum passive port. Enter a value in the range 1024 - 65534.
 - `pasv_min_port` (Number) Specify the lowest port in the passive port range for data connections. This value must be less than the value of the maximum passive port. Enter a value in the range 1024 - 65534.
 - `persistent_filesystem_timeout` (Number) Specify the duration in seconds to retain a connection to a virtual file system after all FTP control connections from user identities are disconnected. When the timer expires, the virtual file system is destroyed. All response files that were not deleted by the FTP client are deleted from their storage area. Enter a value in the range 1 - 43200. The default value is 600.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `require_tls` (String) Specify whether FTP control connections require TLS encryption. For implicit or explicit FTP, you must complete the configuration by specifying the TLS profile to secure connections.
 - `response_nf_sm_ount` (String) When the response type is virtual file system and response storage is NFS, specify the NFS static mount to store response files. Each response file has a unique file name in the NFS directory. The name of the response file is not related to the file name that the virtual file system presents to the FTP client. Generally, this NFS directory is not made available through the FTP server. Do not use this directory for any other purpose.
 - `response_storage` (String) Response storage

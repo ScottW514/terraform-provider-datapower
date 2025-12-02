@@ -36,9 +36,11 @@ type HostAlias struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	IpAddress         types.String                `tfsdk:"ip_address"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var HostAliasObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"user_summary":       types.StringType,
 	"ip_address":         types.StringType,

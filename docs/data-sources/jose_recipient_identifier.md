@@ -29,6 +29,7 @@ data "datapower_jose_recipient_identifier" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `header_param` (Attributes List) The JOSE header parameters used to identify the recipient. (see [below for nested schema](#nestedatt--result--header_param))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `key` (String) Use the private key to verify the recipient.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `sskey` (String) Use the shared secret key to verify the recipient.
 - `type` (String) Key material type used to verify the recipient.
 - `user_summary` (String) Brief summary for user annotation.

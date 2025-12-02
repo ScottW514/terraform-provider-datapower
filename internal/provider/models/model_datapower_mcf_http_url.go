@@ -39,9 +39,11 @@ type MCFHttpURL struct {
 	HttpUrlExpression types.String                `tfsdk:"http_url_expression"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var MCFHttpURLObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"http_url_expression": types.StringType,

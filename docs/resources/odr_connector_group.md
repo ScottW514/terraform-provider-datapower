@@ -47,6 +47,7 @@ resource "datapower_odr_connector_group" "test" {
   - CLI Alias: `odr-conn-group-properties` (see [below for nested schema](#nestedatt--odr_conn_group_properties))
 - `odr_group_connectors` (Attributes List) The ODR connectors that are used to retrieve ODR information. An ODR connector defines a connection to the Intelligent Management service. The DataPower Gateway retrieves topology, weights, session affinity, and other information from the WebSphere cell over the connection. If multiple connectors are configured, the top most connection is tried first, followed by the second, and so on. After a connection is established, other endpoints might be retrieved and used if the configured connector endpoint is down. You must define at least one connector in an ODR connector group but cannot define more than 16 connectors.
   - CLI Alias: `odr-connector` (see [below for nested schema](#nestedatt--odr_group_connectors))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_ssl_client_profile:id`

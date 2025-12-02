@@ -29,6 +29,7 @@ data "datapower_style_policy_rule" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -50,6 +51,7 @@ Read-Only:
 - `input_format` (String) Select a decompression algorithm to apply to all messages before any other processing occurs (a preprocess step). All messages are decompressed using the selected algorithm. If the message is not compressed with this algorithm, an error is raised. This setting is independent of transport-level decompression. The default is None.
 - `non_xml_processing` (Boolean) Normally, processing is only performed on XML content. This option allows processing actions to be performed on Non-XML content as well.
 - `output_format` (String) Select a compression algorithm to apply to all messages after any other processing occurs (a post-process step). All messages are compressed using the selected algorithm. The resulting archive contains only one file. This setting is independent of transport-level compression. The default is None.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `unprocessed` (Boolean) Permit rule to pass-through data unprocessed
 - `user_summary` (String) Comments
 

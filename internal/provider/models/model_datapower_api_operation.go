@@ -51,6 +51,7 @@ type APIOperation struct {
 	SoapAction        types.String                `tfsdk:"soap_action"`
 	SoapElementName   types.String                `tfsdk:"soap_element_name"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var APIOperationConsumeIgnoreVal = validators.Evaluation{
@@ -70,6 +71,7 @@ var APIOperationSecurityIgnoreVal = validators.Evaluation{
 }
 
 var APIOperationObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

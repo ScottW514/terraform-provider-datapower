@@ -110,6 +110,7 @@ resource "datapower_as2_proxy_source_protocol_handler" "test" {
 - `persistent_connections` (Boolean) Specify whether to negotiate persistent connections with clients. The default value is enabled.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `remote_connection_timeout` (Number) Specify the duration in seconds to wait to establish a connection with the server. Enter a value in the range 1 - 86400. The default value is 60.
   - CLI Alias: `remote-connect-timeout`
   - Range: `1`-`86400`

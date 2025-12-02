@@ -136,6 +136,7 @@ resource "datapower_api_definition" "test" {
   - CLI Alias: `produce`
 - `properties` (Attributes List) Specify custom entries for API properties. An API property is a type of context variable whose value is dependent on the collection that the API is provisioned in. Collection-specific API properties allow you to use the same API definition in different collections when a property in a collection requires a unique or different value. A custom property entry defines a property and its value for one collection. For each custom property or property that needs a different value for another collection, add another entry.
   - CLI Alias: `property` (see [below for nested schema](#nestedatt--properties))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `require_api_mutual_tls` (Boolean) API protection
   - CLI Alias: `require-api-mutual-tls`
   - Default value: `false`

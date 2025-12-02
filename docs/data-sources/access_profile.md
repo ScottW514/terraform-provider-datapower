@@ -29,6 +29,7 @@ data "datapower_access_profile" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `access_policies` (List of String) Specify the access policies that define privileges for the access profile. When more than one policy applies to a resource, the most specific policy is used. To create access policies, enter a policy statement in the following format. <p><tt><i>address</i> / <i>domain</i> / <i>resource</i> ?Access= <i>privileges</i> &amp; <i>field</i> = <i>value</i></tt></p><dl><dt><i>address</i></dt><dd>The complete local IP address or host alias. Use the * character to designate all addresses.</dd><dt><i>domain</i></dt><dd>The complete domain name. Use the * character to designate all domains.</dd><dt>resource</dt><dd>The complete value for the resource type. Use the * character to designate all resource types.</dd><dt><i>privileges</i></dt><dd>The privileges to apply. Separate permissions with the + character. For example, <tt>a+d+x+r+w</tt> defines add, delete, execute, read, and write privileges.</dd><dt><i>field</i></dt><dd>The complete name of a specific property in the configuration; for example, <tt>Name</tt> .</dd><dt><i>value</i></dt><dd>The PCRE match for the property value; For example, <tt>foo(.*)bar</tt> .</dd></dl>
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

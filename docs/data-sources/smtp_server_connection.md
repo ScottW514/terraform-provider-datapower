@@ -29,6 +29,7 @@ data "datapower_smtp_server_connection" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -52,6 +53,7 @@ Read-Only:
 - `mail_server_port` (Number) The listening port on the SMTP server to send outgoing e-mail messages.
 - `options` (Attributes) The SMTP options to enable for the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.
   - CLI Alias: `options` (see [below for nested schema](#nestedatt--result--options))
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
 - `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 - `user_summary` (String) Comments

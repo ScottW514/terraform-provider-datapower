@@ -29,6 +29,7 @@ data "datapower_api_security_api_key" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -46,6 +47,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `key_name` (String) Key name
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `type` (String) Type
 - `user_summary` (String) Comments
 - `where` (String) Specify the location of the client credentials. An API call fails if the credentials are not included in the specified location. <b>Note:</b> Regardless of where the client credentials are sent, you must specify the same location for the client ID and client secret.

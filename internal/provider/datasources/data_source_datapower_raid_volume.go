@@ -23,10 +23,13 @@ package datasources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -53,6 +56,14 @@ func (d *RaidVolumeDataSource) Schema(ctx context.Context, req datasource.Schema
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "<p>Configure a RAID volume for data storage.</p><ol><li>The access permission to files on the storage volume. With the B2B feature, access permission must be read/write. B2B storage requires write access. Setting to read-only is ignored but generates a warning.</li><li>The subdirectory where files on the storage volume are available in the <tt>local:</tt> and <tt>logstore:</tt> directories. Each domain contains these subdirectories, and these subdirectories are not shared across domains.</li></ol>",
 		Attributes: map[string]schema.Attribute{
+			"provider_target": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Target host to retrieve this data from. If not set, provider will use the top level settings.", "", "").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
+				},
+			},
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: "A descriptive summary for the configuration.",
 				Computed:            true,
@@ -88,9 +99,14 @@ func (d *RaidVolumeDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		return
 	}
 
+	if data.ProviderTarget.ValueString() != "" && !d.pData.Client.ValidTarget(data.ProviderTarget.ValueString()) {
+		resp.Diagnostics.AddError("Invalid provider_target", fmt.Sprintf(`Target %q is not defined in the provider's 'targets' block. Available targets: %v`, data.ProviderTarget.ValueString(), d.pData.Client.GetTargetNames()))
+		return
+	}
+
 	path := data.GetPath()
 
-	res, err := d.pData.Client.Get(path)
+	res, err := d.pData.Client.Get(path, data.ProviderTarget)
 	resFound := true
 	if err != nil {
 		if !strings.Contains(err.Error(), "status 404") {

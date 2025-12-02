@@ -109,6 +109,7 @@ resource "datapower_tam" "test" {
   - Default value: `default`
   - Required When: `use_local_mode`=`true`
   - Not Valid When: `use_local_mode`=`false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `retry_attempts` (Number) Enter the number of attempts to perform for the Access Manager client. After performing these attempts and the client did not start, each additional attempt waits the number of seconds defined by the long interval. Enter a value in the range 0 - 65535. A value of 0 disables the long interval. The default value is 3.
   - CLI Alias: `retry-attempts`
   - Default value: `3`

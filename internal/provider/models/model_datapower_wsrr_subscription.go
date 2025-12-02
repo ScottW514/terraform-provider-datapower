@@ -48,6 +48,7 @@ type WSRRSubscription struct {
 	FetchPolicyAttachments types.Bool                  `tfsdk:"fetch_policy_attachments"`
 	UserSummary            types.String                `tfsdk:"user_summary"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var WSRRSubscriptionNamespaceCondVal = validators.Evaluation{
@@ -75,6 +76,7 @@ var WSRRSubscriptionObjectVersionIgnoreVal = validators.Evaluation{
 }
 
 var WSRRSubscriptionObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"id":                       types.StringType,
 	"app_domain":               types.StringType,
 	"server":                   types.StringType,

@@ -44,6 +44,7 @@ resource "datapower_jose_recipient_identifier" "test" {
   - Reference to: `datapower_crypto_key:id`
   - Required When: `type`=`key`
   - Not Valid When: attribute is not conditionally required
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `sskey` (String) Use the shared secret key to verify the recipient.
   - CLI Alias: `sskey`
   - Reference to: `datapower_crypto_sskey:id`

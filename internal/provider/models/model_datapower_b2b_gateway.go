@@ -69,6 +69,7 @@ type B2BGateway struct {
 	SqlDataSource                    types.String                `tfsdk:"sql_data_source"`
 	FrontSideTimeout                 types.Int64                 `tfsdk:"front_side_timeout"`
 	DependencyActions                []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget                   types.String                `tfsdk:"provider_target"`
 }
 
 var B2BGatewayB2BProfilesCondVal = validators.Evaluation{
@@ -156,6 +157,7 @@ var B2BGatewayDebugHistoryIgnoreVal = validators.Evaluation{
 }
 
 var B2BGatewayObjectType = map[string]attr.Type{
+	"provider_target":                     types.StringType,
 	"id":                                  types.StringType,
 	"app_domain":                          types.StringType,
 	"user_summary":                        types.StringType,

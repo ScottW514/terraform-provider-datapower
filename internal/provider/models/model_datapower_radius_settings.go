@@ -40,6 +40,7 @@ type RADIUSSettings struct {
 	Retries           types.Int64                 `tfsdk:"retries"`
 	AaaServers        types.List                  `tfsdk:"aaa_servers"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 type RADIUSSettingsWO struct {
 	Enabled           types.Bool                  `tfsdk:"enabled"`
@@ -49,9 +50,11 @@ type RADIUSSettingsWO struct {
 	Retries           types.Int64                 `tfsdk:"retries"`
 	AaaServers        types.List                  `tfsdk:"aaa_servers"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var RADIUSSettingsObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,
 	"id":                 types.StringType,
@@ -61,6 +64,7 @@ var RADIUSSettingsObjectType = map[string]attr.Type{
 	"dependency_actions": actions.ActionsListType,
 }
 var RADIUSSettingsObjectTypeWO = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,
 	"id":                 types.StringType,

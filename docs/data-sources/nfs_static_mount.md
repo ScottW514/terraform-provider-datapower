@@ -29,6 +29,7 @@ data "datapower_nfs_static_mount" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `local_filesystem_access` (Boolean) Specify whether to allow local file system access through the <tt>nfs-&lt;name></tt> directory. By default, local access is not enabled. When enabled, the NFS mount is available for file system access through the CLI in the <tt>nfs-&lt;name></tt> directory, where <tt>&lt;name></tt> is the name of the mount.
 - `mount_type` (String) Specify the type of NFS mount. The default mount type is a hard mount.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `read_only` (Boolean) Specify whether the mount is read-only. By default, the mount is not read-only.
 - `read_size` (Number) Specify the size in bytes for NFS read operations. Enter a value in the range 1024 - 32768. The default value is 4096.
 - `remote` (String) Specify the remote NFS file system to mount. Use the form <tt>host:/path</tt> , where <tt>host</tt> is the DNS name or IP address of the NFS server, and <tt>path</tt> is the path exported by the host to mount.

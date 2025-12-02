@@ -45,6 +45,7 @@ resource "datapower_assembly_action_map" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `parse_settings_reference` (Attributes) Specify the configuration that defines constraints on documents to parse. You can use one or more of the following methods to specify a configuration. Precedence rules apply when you configure the same aspect of the input document through multiple methods. If you do not specify, the configuration of the default object reference is applied.
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--parse_settings_reference))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `title` (String) Title
   - CLI Alias: `title`
 - `user_summary` (String) Comments

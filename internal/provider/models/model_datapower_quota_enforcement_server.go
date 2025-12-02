@@ -49,6 +49,7 @@ type QuotaEnforcementServer struct {
 	Priority             types.Int64                 `tfsdk:"priority"`
 	StrictMode           types.Bool                  `tfsdk:"strict_mode"`
 	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget       types.String                `tfsdk:"provider_target"`
 }
 
 var QuotaEnforcementServerEnableSSLIgnoreVal = validators.Evaluation{
@@ -188,6 +189,7 @@ var QuotaEnforcementServerStrictModeIgnoreVal = validators.Evaluation{
 }
 
 var QuotaEnforcementServerObjectType = map[string]attr.Type{
+	"provider_target":        types.StringType,
 	"enabled":                types.BoolType,
 	"user_summary":           types.StringType,
 	"password_alias":         types.StringType,

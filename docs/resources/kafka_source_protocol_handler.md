@@ -47,6 +47,7 @@ resource "datapower_kafka_source_protocol_handler" "test" {
   - Range: `1`-`65535`
   - Default value: `1`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `response_topic` (String) Specify the name of the response topic to send responses after processing by the DataPower service. When the Kafka server does not expect responses, leave blank. When blank, responses are dropped.
   - CLI Alias: `response-topic`
 - `user_summary` (String) Comments

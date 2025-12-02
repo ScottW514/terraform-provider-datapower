@@ -55,6 +55,7 @@ resource "datapower_quota_enforcement_server" "test" {
   - Default value: `100`
   - Required When: `enable_peer_group`=`true`
   - Not Valid When: `enable_peer_group`=`false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `raid_volume` (String) <p>Specifies whether data storage is persistent or in-memory. <ul><li>For persistent storage, select the RAID volume that must be <tt>raid0</tt> .</li><li>For in-memory storage, do not select the RAID volume.</li></ul></p>
   - CLI Alias: `raid-volume`
   - Reference to: `datapower_raid_volume:id`

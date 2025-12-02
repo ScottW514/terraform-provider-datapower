@@ -35,6 +35,7 @@ resource "datapower_saml_attributes" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `saml_attribute` (Attributes List) Define an attribute by selecting the source type and specifying the data source and SAML attribute name.
   - CLI Alias: `attribute` (see [below for nested schema](#nestedatt--saml_attribute))
 - `user_summary` (String) Comments

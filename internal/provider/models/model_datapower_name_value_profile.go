@@ -48,6 +48,7 @@ type NameValueProfile struct {
 	DefaultXss             types.Bool                  `tfsdk:"default_xss"`
 	NoMatchXssPatternsFile types.String                `tfsdk:"no_match_xss_patterns_file"`
 	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget         types.String                `tfsdk:"provider_target"`
 }
 
 var NameValueProfileDefaultMapValueIgnoreVal = validators.Evaluation{
@@ -75,6 +76,7 @@ var NameValueProfileNoMatchXSSPatternsFileIgnoreVal = validators.Evaluation{
 }
 
 var NameValueProfileObjectType = map[string]attr.Type{
+	"provider_target":            types.StringType,
 	"id":                         types.StringType,
 	"app_domain":                 types.StringType,
 	"user_summary":               types.StringType,

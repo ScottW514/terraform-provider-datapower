@@ -74,6 +74,7 @@ type WebAppFW struct {
 	SslSniServer            types.String                `tfsdk:"ssl_sni_server"`
 	SslClient               types.String                `tfsdk:"ssl_client"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget          types.String                `tfsdk:"provider_target"`
 }
 
 var WebAppFWDelayErrorsIgnoreVal = validators.Evaluation{
@@ -153,6 +154,7 @@ var WebAppFWSSLClientIgnoreVal = validators.Evaluation{
 }
 
 var WebAppFWObjectType = map[string]attr.Type{
+	"provider_target":            types.StringType,
 	"id":                         types.StringType,
 	"app_domain":                 types.StringType,
 	"user_summary":               types.StringType,

@@ -44,6 +44,7 @@ type JWSSignature struct {
 	ProtectedHeader   types.List                  `tfsdk:"protected_header"`
 	UnprotectedHeader types.List                  `tfsdk:"unprotected_header"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var JWSSignatureKeyCondVal = validators.Evaluation{
@@ -79,6 +80,7 @@ var JWSSignatureSSKeyIgnoreVal = validators.Evaluation{
 }
 
 var JWSSignatureObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"user_summary":       types.StringType,

@@ -42,6 +42,7 @@ resource "datapower_mtom_policy" "test" {
   - CLI Alias: `mode`
   - Choices: `encode`, `decode`
   - Default value: `encode`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `rule` (Attributes List) Each MTOM rule describes which message elements to optimize. A single XPath expression selects one or more elements for optimization.
   - CLI Alias: `rule` (see [below for nested schema](#nestedatt--rule))
 - `user_summary` (String) Comments

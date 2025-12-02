@@ -320,6 +320,7 @@ resource "datapower_b2b_profile" "test" {
   - CLI Alias: `profile-type`
   - Choices: `internal`, `external`
   - Default value: `internal`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `response_type` (String) Characterize the traffic that originates from <tt>To</tt> partners. For inbound transaction, this is the traffic type that originates from internal partner. For outbound transaction, this is the traffic type that originates from external partner. The default value is Non-XML.
   - CLI Alias: `response-type`
   - Choices: `soap`, `xml`, `unprocessed`, `preprocessed`

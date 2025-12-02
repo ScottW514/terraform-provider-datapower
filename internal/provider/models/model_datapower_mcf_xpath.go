@@ -40,9 +40,11 @@ type MCFXPath struct {
 	XpathValue        types.String                `tfsdk:"xpath_value"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var MCFXPathObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"xpath_expression":   types.StringType,

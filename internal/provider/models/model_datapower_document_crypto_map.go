@@ -41,9 +41,11 @@ type DocumentCryptoMap struct {
 	NameSpaceMappings types.List                  `tfsdk:"name_space_mappings"`
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var DocumentCryptoMapObjectType = map[string]attr.Type{
+	"provider_target":     types.StringType,
 	"id":                  types.StringType,
 	"app_domain":          types.StringType,
 	"operation":           types.StringType,

@@ -49,6 +49,7 @@ type ConfigSequence struct {
 	RunSequenceInterval types.Int64                   `tfsdk:"run_sequence_interval"`
 	Capabilities        *DmConfigSequenceCapabilities `tfsdk:"capabilities"`
 	DependencyActions   []*actions.DependencyAction   `tfsdk:"dependency_actions"`
+	ProviderTarget      types.String                  `tfsdk:"provider_target"`
 }
 
 var ConfigSequenceOutputLocationCondVal = validators.Evaluation{
@@ -68,6 +69,7 @@ var ConfigSequenceOutputLocationIgnoreVal = validators.Evaluation{
 }
 
 var ConfigSequenceObjectType = map[string]attr.Type{
+	"provider_target":       types.StringType,
 	"id":                    types.StringType,
 	"app_domain":            types.StringType,
 	"user_summary":          types.StringType,

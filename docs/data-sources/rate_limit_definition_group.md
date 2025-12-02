@@ -29,6 +29,7 @@ data "datapower_rate_limit_definition_group" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -45,6 +46,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `rate_limit_definitions` (List of String) Rate limit definitions
 - `update_on_exceed` (String) Update on exceed
 - `user_summary` (String) Comments

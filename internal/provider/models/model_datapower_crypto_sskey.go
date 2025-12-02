@@ -38,9 +38,11 @@ type CryptoSSKey struct {
 	AppDomain         types.String                `tfsdk:"app_domain"`
 	Filename          types.String                `tfsdk:"filename"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget    types.String                `tfsdk:"provider_target"`
 }
 
 var CryptoSSKeyObjectType = map[string]attr.Type{
+	"provider_target":    types.StringType,
 	"id":                 types.StringType,
 	"app_domain":         types.StringType,
 	"filename":           types.StringType,

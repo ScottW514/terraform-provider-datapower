@@ -29,6 +29,7 @@ data "datapower_stateless_tcp_source_protocol_handler" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -49,6 +50,7 @@ Read-Only:
 - `local_address` (String) The address on which the service listens. The default of 0.0.0.0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines. See Local Host Alias under Networking for more.
 - `local_port` (Number) An integer (within the range 1 through 65535, with a default of 4000) that specifies the port monitored by the service.
 - `persistent_connections` (Boolean) Enable or disable persistent connections where appropriate the front end.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `ssl_server` (String) The TLS server profile to secure connections between clients and the DataPower Gateway.
 - `ssl_server_config_type` (String) The TLS profile type to secure connections between clients and the DataPower Gateway.
 - `ssl_sni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.

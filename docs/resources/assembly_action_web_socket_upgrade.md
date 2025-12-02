@@ -72,6 +72,7 @@ resource "datapower_assembly_action_web_socket_upgrade" "test" {
 - `password` (String) Password alias
   - CLI Alias: `password`
   - Reference to: `datapower_password_alias:id`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
 - `timeout` (Number) Specify the duration in seconds to wait for a reply from the target. The default value is 60.

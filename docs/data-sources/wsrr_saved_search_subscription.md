@@ -29,6 +29,7 @@ data "datapower_wsrr_saved_search_subscription" "test" {
 ### Optional
 
 - `id` (String) The name of the object to retrieve.
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 
 ### Read-Only
 
@@ -47,6 +48,7 @@ Read-Only:
 - `fetch_policy_attachments` (Boolean) Specify whether to fetch external policy attachments. When enabled, the registry is queried for external policy attachments for retrieved resources. These policies are processed when the service allow external policy attachments.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `method` (String) Synchronization method
+- `provider_target` (String) Target host to retrieve this data from. If not set, provider will use the top level settings.
 - `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.
 - `saved_search_name` (String) Saved search or named query
 - `saved_search_parameters` (List of String) Specify the parameters to include in the query. The query to the registry uses these parameters. A parameter can be up to 255 characters in length. You can define a maximum of 9 parameters. <p>If you define parameters and they are not require parameters, an error is logged.</p><p><b>Note:</b> In WSRR, a named query and a saved search can have the same name. WSRR matches named queries before saved searches. Therefore, WSRR never finds a saved search with the same name as a named query.</p>

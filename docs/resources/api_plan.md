@@ -110,6 +110,7 @@ resource "datapower_api_plan" "test" {
 - `product_version` (String) Product version
   - CLI Alias: `product-version`
   - Default value: `1.0.0`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `rate_limit` (Attributes List) Specify the rate limit scheme to enforce. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.
   - CLI Alias: `rate-limit`
   - Not Valid When: `use_rate_limit_group`=`true` (see [below for nested schema](#nestedatt--rate_limit))

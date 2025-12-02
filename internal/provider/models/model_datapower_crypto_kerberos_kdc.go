@@ -47,6 +47,7 @@ type CryptoKerberosKDC struct {
 	MaxCacheDTickets        types.Int64                 `tfsdk:"max_cache_d_tickets"`
 	MinCacheDTicketValidity types.Int64                 `tfsdk:"min_cache_d_ticket_validity"`
 	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget          types.String                `tfsdk:"provider_target"`
 }
 
 var CryptoKerberosKDCUDPTimeoutIgnoreVal = validators.Evaluation{
@@ -74,6 +75,7 @@ var CryptoKerberosKDCMinCachedTicketValidityIgnoreVal = validators.Evaluation{
 }
 
 var CryptoKerberosKDCObjectType = map[string]attr.Type{
+	"provider_target":             types.StringType,
 	"id":                          types.StringType,
 	"app_domain":                  types.StringType,
 	"user_summary":                types.StringType,

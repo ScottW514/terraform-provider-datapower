@@ -37,6 +37,7 @@ resource "datapower_open_telemetry_sampler" "test" {
 - `parent_based` (Boolean) Parent based
   - CLI Alias: `parent-based`
   - Default value: `true`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ratio` (Number) Ratio
   - CLI Alias: `ratio`
   - Range: `0`-`100`

@@ -67,6 +67,7 @@ resource "datapower_interop_service" "test" {
   - Default value: `9990`
   - Required When: `http_service`=`true`
   - Not Valid When: `http_service`=`false`
+- `provider_target` (String) Target host for this resource. If not set, provider will use the top level settings.
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_ssl_server_profile:id`

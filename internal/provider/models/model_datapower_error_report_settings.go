@@ -58,6 +58,7 @@ type ErrorReportSettings struct {
 	RaidPath              types.String                `tfsdk:"raid_path"`
 	ReportHistoryKept     types.Int64                 `tfsdk:"report_history_kept"`
 	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
+	ProviderTarget        types.String                `tfsdk:"provider_target"`
 }
 
 var ErrorReportSettingsUploadReportIgnoreVal = validators.Evaluation{
@@ -425,6 +426,7 @@ var ErrorReportSettingsReportHistoryKeptIgnoreVal = validators.Evaluation{
 }
 
 var ErrorReportSettingsObjectType = map[string]attr.Type{
+	"provider_target":          types.StringType,
 	"enabled":                  types.BoolType,
 	"user_summary":             types.StringType,
 	"upload_report":            types.BoolType,
