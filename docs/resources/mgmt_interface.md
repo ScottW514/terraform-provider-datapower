@@ -28,10 +28,6 @@ resource "datapower_mgmt_interface" "test" {
 
 ### Optional
 
-- `acl` (String) Edit the <tt>xml-mgmt</tt> access control list to define the client IP addresses to allow or deny.
-  - CLI Alias: `acl`
-  - Reference to: `datapower_access_control_list:id`
-  - Default value: `xml-mgmt`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`

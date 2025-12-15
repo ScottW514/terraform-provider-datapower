@@ -80,10 +80,6 @@ func (d *MgmtInterfaceDataSource) Schema(ctx context.Context, req datasource.Sch
 				MarkdownDescription: "Custom user agent",
 				Computed:            true,
 			},
-			"acl": schema.StringAttribute{
-				MarkdownDescription: "Edit the <tt>xml-mgmt</tt> access control list to define the client IP addresses to allow or deny.",
-				Computed:            true,
-			},
 			"slm_peering": schema.Int64Attribute{
 				MarkdownDescription: "SLM update interval",
 				Computed:            true,

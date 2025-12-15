@@ -27,7 +27,6 @@ data "datapower_mgmt_interface" "test" {
 
 ### Read-Only
 
-- `acl` (String) Edit the <tt>xml-mgmt</tt> access control list to define the client IP addresses to allow or deny.
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
 - `local_port` (Number) Specify the TCP port that the interface monitors. The default value is 5550.

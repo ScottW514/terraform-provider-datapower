@@ -38,7 +38,6 @@ type MgmtInterface struct {
 	UserSummary       types.String                `tfsdk:"user_summary"`
 	LocalPort         types.Int64                 `tfsdk:"local_port"`
 	UserAgent         types.String                `tfsdk:"user_agent"`
-	Acl               types.String                `tfsdk:"acl"`
 	SlmPeering        types.Int64                 `tfsdk:"slm_peering"`
 	Mode              *DmXMLMgmtModes             `tfsdk:"mode"`
 	SslConfigType     types.String                `tfsdk:"ssl_config_type"`
@@ -87,7 +86,6 @@ var MgmtInterfaceObjectType = map[string]attr.Type{
 	"user_summary":       types.StringType,
 	"local_port":         types.Int64Type,
 	"user_agent":         types.StringType,
-	"acl":                types.StringType,
 	"slm_peering":        types.Int64Type,
 	"mode":               types.ObjectType{AttrTypes: DmXMLMgmtModesObjectType},
 	"ssl_config_type":    types.StringType,
@@ -113,9 +111,6 @@ func (data MgmtInterface) IsNull() bool {
 		return false
 	}
 	if !data.UserAgent.IsNull() {
-		return false
-	}
-	if !data.Acl.IsNull() {
 		return false
 	}
 	if !data.SlmPeering.IsNull() {
@@ -145,7 +140,6 @@ func (data *MgmtInterface) ToDefault() {
 	data.UserSummary = types.StringNull()
 	data.LocalPort = types.Int64Value(5550)
 	data.UserAgent = types.StringNull()
-	data.Acl = types.StringValue("xml-mgmt")
 	data.SlmPeering = types.Int64Value(10)
 	data.Mode = &DmXMLMgmtModes{}
 	data.Mode.ToDefault()
@@ -173,9 +167,6 @@ func (data MgmtInterface) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.UserAgent.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserAgent`, data.UserAgent.ValueString())
-	}
-	if !data.Acl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ACL`, data.Acl.ValueString())
 	}
 	if !data.SlmPeering.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SLMPeering`, data.SlmPeering.ValueInt64())
@@ -223,11 +214,6 @@ func (data *MgmtInterface) FromBody(ctx context.Context, pathRoot string, res gj
 		data.UserAgent = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserAgent = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `ACL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Acl = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Acl = types.StringValue("xml-mgmt")
 	}
 	if value := res.Get(pathRoot + `SLMPeering`); value.Exists() {
 		data.SlmPeering = types.Int64Value(value.Int())
@@ -285,11 +271,6 @@ func (data *MgmtInterface) UpdateFromBody(ctx context.Context, pathRoot string, 
 		data.UserAgent = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserAgent = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `ACL`); value.Exists() && !data.Acl.IsNull() {
-		data.Acl = tfutils.ParseStringFromGJSON(value)
-	} else if data.Acl.ValueString() != "xml-mgmt" {
-		data.Acl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SLMPeering`); value.Exists() && !data.SlmPeering.IsNull() {
 		data.SlmPeering = types.Int64Value(value.Int())

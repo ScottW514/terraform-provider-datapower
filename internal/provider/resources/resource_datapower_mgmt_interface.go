@@ -98,12 +98,6 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				MarkdownDescription: tfutils.NewAttributeDescription("Custom user agent", "user-agent", "http_user_agent").String,
 				Optional:            true,
 			},
-			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>xml-mgmt</tt> access control list to define the client IP addresses to allow or deny.", "acl", "access_control_list").AddDefaultValue("xml-mgmt").String,
-				Computed:            true,
-				Optional:            true,
-				Default:             stringdefault.StaticString("xml-mgmt"),
-			},
 			"slm_peering": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("SLM update interval", "slm-peering", "").AddDefaultValue("10").AddRequiredWhen(models.MgmtInterfaceSLMPeeringCondVal.String()).AddNotValidWhen(models.MgmtInterfaceSLMPeeringIgnoreVal.String()).String,
 				Computed:            true,

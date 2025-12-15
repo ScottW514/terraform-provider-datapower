@@ -35,13 +35,6 @@ attributes:
   reference_to: HTTPUserAgent
   description: Custom user agent
   cli_alias: user-agent
-- name: ACL
-  type: String
-  reference_to: AccessControlList
-  default: xml-mgmt
-  description: Edit the <tt>xml-mgmt</tt> access control list to define the client
-    IP addresses to allow or deny.
-  cli_alias: acl
 - name: SLMPeering
   type: Int64
   default: 10

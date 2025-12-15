@@ -4,6 +4,7 @@
 - BREAKING CHANGE: Removed fixed setting `AAAPolicy` from `InteropService`
 - BREAKING CHANGE: Removed fixed setting `ACL` from `SSHService`
 - BREAKING CHANGE: Removed fixed setting `ACL` from `WebGUI`
+- BREAKING CHANGE: Removed fixed setting `ACL` from `MgmtInterface`
 
 ## v0.15.0
 

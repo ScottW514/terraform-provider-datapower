@@ -41,7 +41,6 @@ func TestAccDataSourceMgmtInterface(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_mgmt_interface.test", "enabled", "false"),
 					resource.TestCheckResourceAttr("data.datapower_mgmt_interface.test", "local_port", "5550"),
-					resource.TestCheckResourceAttr("data.datapower_mgmt_interface.test", "acl", "xml-mgmt"),
 					resource.TestCheckResourceAttr("data.datapower_mgmt_interface.test", "slm_peering", "10"),
 					resource.TestCheckResourceAttr("data.datapower_mgmt_interface.test", "ssl_config_type", "server"),
 					resource.TestCheckResourceAttr("data.datapower_mgmt_interface.test", "local_address", "0.0.0.0"),
