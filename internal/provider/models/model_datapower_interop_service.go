@@ -37,7 +37,6 @@ type InteropService struct {
 	Enabled             types.Bool                  `tfsdk:"enabled"`
 	UserSummary         types.String                `tfsdk:"user_summary"`
 	XmlManager          types.String                `tfsdk:"xml_manager"`
-	AaaPolicy           types.String                `tfsdk:"aaa_policy"`
 	HttpService         types.Bool                  `tfsdk:"http_service"`
 	LocalAddress        types.String                `tfsdk:"local_address"`
 	LocalPort           types.Int64                 `tfsdk:"local_port"`
@@ -198,7 +197,6 @@ var InteropServiceObjectType = map[string]attr.Type{
 	"enabled":                types.BoolType,
 	"user_summary":           types.StringType,
 	"xml_manager":            types.StringType,
-	"aaa_policy":             types.StringType,
 	"http_service":           types.BoolType,
 	"local_address":          types.StringType,
 	"local_port":             types.Int64Type,
@@ -226,9 +224,6 @@ func (data InteropService) IsNull() bool {
 		return false
 	}
 	if !data.XmlManager.IsNull() {
-		return false
-	}
-	if !data.AaaPolicy.IsNull() {
 		return false
 	}
 	if !data.HttpService.IsNull() {
@@ -270,7 +265,6 @@ func (data *InteropService) ToDefault() {
 	data.Enabled = types.BoolValue(false)
 	data.UserSummary = types.StringNull()
 	data.XmlManager = types.StringNull()
-	data.AaaPolicy = types.StringNull()
 	data.HttpService = types.BoolValue(true)
 	data.LocalAddress = types.StringValue("0.0.0.0")
 	data.LocalPort = types.Int64Value(9990)
@@ -299,9 +293,6 @@ func (data InteropService) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.XmlManager.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`XMLManager`, data.XmlManager.ValueString())
-	}
-	if !data.AaaPolicy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AAAPolicy`, data.AaaPolicy.ValueString())
 	}
 	if !data.HttpService.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HttpService`, tfutils.StringFromBool(data.HttpService, ""))
@@ -357,11 +348,6 @@ func (data *InteropService) FromBody(ctx context.Context, pathRoot string, res g
 		data.XmlManager = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.XmlManager = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AAAPolicy`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AaaPolicy = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AaaPolicy = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `HttpService`); value.Exists() {
 		data.HttpService = tfutils.BoolFromString(value.String())
@@ -438,11 +424,6 @@ func (data *InteropService) UpdateFromBody(ctx context.Context, pathRoot string,
 		data.XmlManager = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.XmlManager = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AAAPolicy`); value.Exists() && !data.AaaPolicy.IsNull() {
-		data.AaaPolicy = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AaaPolicy = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `HttpService`); value.Exists() && !data.HttpService.IsNull() {
 		data.HttpService = tfutils.BoolFromString(value.String())

@@ -24,9 +24,6 @@ resource "datapower_interop_service" "test" {
 
 ### Optional
 
-- `aaa_policy` (String) AAA policy
-  - CLI Alias: `aaa-policy`
-  - Reference to: `datapower_aaa_policy:id`
 - `acl` (String) Access control list
   - CLI Alias: `http-acl`
   - Reference to: `datapower_access_control_list:id`

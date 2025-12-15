@@ -24,11 +24,6 @@ attributes:
   reference_to: XMLManager
   description: XML manager
   cli_alias: xml-manager
-- name: AAAPolicy
-  type: String
-  reference_to: AAAPolicy
-  description: AAA policy
-  cli_alias: aaa-policy
 - name: HttpService
   type: Bool
   default: true

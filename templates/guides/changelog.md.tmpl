@@ -10,6 +10,7 @@ description: |-
 ## UNRELEASED
 
 - Added `RestMgmtInterface` endpoint
+- BREAKING CHANGE: Removed fixed setting `AAAPolicy` from `InteropService`
 
 ## v0.15.0
 

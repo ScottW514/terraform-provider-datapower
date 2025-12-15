@@ -89,10 +89,6 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: tfutils.NewAttributeDescription("XML manager", "xml-manager", "xml_manager").String,
 				Optional:            true,
 			},
-			"aaa_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("AAA policy", "aaa-policy", "aaa_policy").String,
-				Optional:            true,
-			},
 			"http_service": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enable over HTTP", "http-service", "").AddDefaultValue("true").String,
 				Computed:            true,

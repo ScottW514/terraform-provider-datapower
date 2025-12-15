@@ -76,10 +76,6 @@ func (d *InteropServiceDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "XML manager",
 				Computed:            true,
 			},
-			"aaa_policy": schema.StringAttribute{
-				MarkdownDescription: "AAA policy",
-				Computed:            true,
-			},
 			"http_service": schema.BoolAttribute{
 				MarkdownDescription: "Enable over HTTP",
 				Computed:            true,

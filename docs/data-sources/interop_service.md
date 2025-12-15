@@ -27,7 +27,6 @@ data "datapower_interop_service" "test" {
 
 ### Read-Only
 
-- `aaa_policy` (String) AAA policy
 - `acl` (String) Access control list
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `http_service` (Boolean) Enable over HTTP
