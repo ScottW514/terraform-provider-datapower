@@ -113,12 +113,6 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				},
 				Default: int64default.StaticInt64(0),
 			},
-			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>web-mgmt</tt> access control list to define the client IP addresses to allow or deny.", "acl", "access_control_list").AddDefaultValue("web-mgmt").String,
-				Computed:            true,
-				Optional:            true,
-				Default:             stringdefault.StaticString("web-mgmt"),
-			},
 			"ssl_server_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 				Computed:            true,

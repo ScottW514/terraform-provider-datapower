@@ -40,7 +40,6 @@ func TestAccResourceWebGUI(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_web_gui.test", "local_port", "9090"),
 			resource.TestCheckResourceAttr("datapower_web_gui.test", "save_config_overwrites", "true"),
 			resource.TestCheckResourceAttr("datapower_web_gui.test", "idle_timeout", "0"),
-			resource.TestCheckResourceAttr("datapower_web_gui.test", "acl", "web-mgmt"),
 			resource.TestCheckResourceAttr("datapower_web_gui.test", "ssl_server_config_type", "server"),
 			resource.TestCheckResourceAttr("datapower_web_gui.test", "enable_sts", "true"),
 			resource.TestCheckResourceAttr("datapower_web_gui.test", "local_address", "0.0.0.0"),

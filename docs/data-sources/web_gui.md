@@ -27,7 +27,6 @@ data "datapower_web_gui" "test" {
 
 ### Read-Only
 
-- `acl` (String) Edit the <tt>web-mgmt</tt> access control list to define the client IP addresses to allow or deny.
 - `enable_sts` (Boolean) Specify whether to enable HTTP Strict Transport Security headers. When enabled, responses inject HTTP Strict Transport Security headers.
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `idle_timeout` (Number) Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535, in seconds. A value of 0 disables the timer.

@@ -28,10 +28,6 @@ resource "datapower_web_gui" "test" {
 
 ### Optional
 
-- `acl` (String) Edit the <tt>web-mgmt</tt> access control list to define the client IP addresses to allow or deny.
-  - CLI Alias: `acl`
-  - Reference to: `datapower_access_control_list:id`
-  - Default value: `web-mgmt`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enable_sts` (Boolean) Specify whether to enable HTTP Strict Transport Security headers. When enabled, responses inject HTTP Strict Transport Security headers.
   - CLI Alias: `enable-sts`

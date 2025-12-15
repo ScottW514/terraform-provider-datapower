@@ -40,7 +40,6 @@ type WebGUI struct {
 	UserAgent            types.String                `tfsdk:"user_agent"`
 	SaveConfigOverwrites types.Bool                  `tfsdk:"save_config_overwrites"`
 	IdleTimeout          types.Int64                 `tfsdk:"idle_timeout"`
-	Acl                  types.String                `tfsdk:"acl"`
 	SslServerConfigType  types.String                `tfsdk:"ssl_server_config_type"`
 	SslServer            types.String                `tfsdk:"ssl_server"`
 	SslSniServer         types.String                `tfsdk:"ssl_sni_server"`
@@ -78,7 +77,6 @@ var WebGUIObjectType = map[string]attr.Type{
 	"user_agent":             types.StringType,
 	"save_config_overwrites": types.BoolType,
 	"idle_timeout":           types.Int64Type,
-	"acl":                    types.StringType,
 	"ssl_server_config_type": types.StringType,
 	"ssl_server":             types.StringType,
 	"ssl_sni_server":         types.StringType,
@@ -111,9 +109,6 @@ func (data WebGUI) IsNull() bool {
 	if !data.IdleTimeout.IsNull() {
 		return false
 	}
-	if !data.Acl.IsNull() {
-		return false
-	}
 	if !data.SslServerConfigType.IsNull() {
 		return false
 	}
@@ -138,7 +133,6 @@ func (data *WebGUI) ToDefault() {
 	data.UserAgent = types.StringNull()
 	data.SaveConfigOverwrites = types.BoolValue(true)
 	data.IdleTimeout = types.Int64Value(0)
-	data.Acl = types.StringValue("web-mgmt")
 	data.SslServerConfigType = types.StringValue("server")
 	data.SslServer = types.StringNull()
 	data.SslSniServer = types.StringNull()
@@ -170,9 +164,6 @@ func (data WebGUI) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.IdleTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`IdleTimeout`, data.IdleTimeout.ValueInt64())
-	}
-	if !data.Acl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ACL`, data.Acl.ValueString())
 	}
 	if !data.SslServerConfigType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLServerConfigType`, data.SslServerConfigType.ValueString())
@@ -225,11 +216,6 @@ func (data *WebGUI) FromBody(ctx context.Context, pathRoot string, res gjson.Res
 		data.IdleTimeout = types.Int64Value(value.Int())
 	} else {
 		data.IdleTimeout = types.Int64Value(0)
-	}
-	if value := res.Get(pathRoot + `ACL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Acl = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Acl = types.StringValue("web-mgmt")
 	}
 	if value := res.Get(pathRoot + `SSLServerConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslServerConfigType = tfutils.ParseStringFromGJSON(value)
@@ -291,11 +277,6 @@ func (data *WebGUI) UpdateFromBody(ctx context.Context, pathRoot string, res gjs
 		data.IdleTimeout = types.Int64Value(value.Int())
 	} else if data.IdleTimeout.ValueInt64() != 0 {
 		data.IdleTimeout = types.Int64Null()
-	}
-	if value := res.Get(pathRoot + `ACL`); value.Exists() && !data.Acl.IsNull() {
-		data.Acl = tfutils.ParseStringFromGJSON(value)
-	} else if data.Acl.ValueString() != "web-mgmt" {
-		data.Acl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLServerConfigType`); value.Exists() && !data.SslServerConfigType.IsNull() {
 		data.SslServerConfigType = tfutils.ParseStringFromGJSON(value)

@@ -88,10 +88,6 @@ func (d *WebGUIDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				MarkdownDescription: "Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535, in seconds. A value of 0 disables the timer.",
 				Computed:            true,
 			},
-			"acl": schema.StringAttribute{
-				MarkdownDescription: "Edit the <tt>web-mgmt</tt> access control list to define the client IP addresses to allow or deny.",
-				Computed:            true,
-			},
 			"ssl_server_config_type": schema.StringAttribute{
 				MarkdownDescription: "Custom TLS server type",
 				Computed:            true,
