@@ -1,0 +1,71 @@
+name: RestMgmtInterface
+description: Configure the REST management interface. <p>If you do not assign a TLS 
+  profile, the service uses a profile with a self-signed certificate.</p>
+cli_alias: xml-mgmt
+cmd_group: device-management
+rest_endpoint: /mgmt/config/default/RestMgmtInterface/RestMgmt-Settings
+singleton: true
+default_domain_only: true
+attributes:
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 5554
+  description: Specify the TCP port that the interface monitors. The default value
+    is 5554.
+  cli_alias: port
+- name: SSLConfigType
+  type: String
+  enum:
+  - server
+  - sni
+  default: server
+  description: Custom TLS server type
+  cli_alias: ssl-config-type
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: Custom TLS server profile
+  cli_alias: ssl-server
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: SSLConfigType
+    value:
+    - server
+- name: SSLSNIServer
+  type: String
+  reference_to: SSLSNIServerProfile
+  description: Custom TLS SNI server profile
+  cli_alias: ssl-sni-server
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: SSLConfigType
+    value:
+    - sni
+  ignored_when:
+  - evaluation: logical-true
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: '<p>Enter a host alias or the IP address that the service listens on.
+    Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0
+    indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4
+    and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the
+    value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate
+    management traffic from application data traffic.</p>'
+  cli_alias: ip-address

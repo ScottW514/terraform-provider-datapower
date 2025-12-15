@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## UNRELEASED
+
+- Added `RestMgmtInterface` endpoint
+
 ## v0.15.0
 
 - Bump github.com/hashicorp/terraform-plugin-docs from 0.23.0 to 0.24.0 in the terraform-plugin group (PR20)

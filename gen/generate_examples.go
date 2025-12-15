@@ -228,6 +228,7 @@ var endPoints = map[string]testutils.ModelTestConfig{
 	"rate_limit_configuration": testutils.RateLimitConfigurationTestConfig,
 	"rate_limit_definition": testutils.RateLimitDefinitionTestConfig,
 	"rate_limit_definition_group": testutils.RateLimitDefinitionGroupTestConfig,
+	"rest_mgmt_interface": testutils.RestMgmtInterfaceTestConfig,
 	"saml_attributes": testutils.SAMLAttributesTestConfig,
 	"sftp_file_poller_source_protocol_handler": testutils.SFTPFilePollerSourceProtocolHandlerTestConfig,
 	"slm_action": testutils.SLMActionTestConfig,

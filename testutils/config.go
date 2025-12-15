@@ -6957,6 +6957,18 @@ resource "datapower_rate_limit_definition_group" "acc_test" {
 }`,
     ModelOnly:    false,
 }
+var RestMgmtInterfaceTestConfig = ModelTestConfig{
+    Name:         "RestMgmtInterface",
+    Resource: `
+resource "datapower_rest_mgmt_interface" "test" {
+  local_port = 5554
+  local_address = "0.0.0.0"
+}`,
+    Data: `
+data "datapower_rest_mgmt_interface" "test" {
+}`,
+    ModelOnly:    false,
+}
 var SAMLAttributesTestConfig = ModelTestConfig{
     Name:         "SAMLAttributes",
     Resource: `
