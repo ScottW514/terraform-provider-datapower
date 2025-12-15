@@ -14,6 +14,11 @@ description: |-
 - BREAKING CHANGE: Removed fixed setting `ACL` from `SSHService`
 - BREAKING CHANGE: Removed fixed setting `ACL` from `WebGUI`
 - BREAKING CHANGE: Removed fixed setting `ACL` from `MgmtInterface`
+- Bump the terraform-plugin group with 2 updates (PR27)
+- Bump golang.org/x/crypto from 0.45.0 to 0.46.0 (PR28)
+- Bump golang.org/x/tools from 0.39.0 to 0.40.0 (PR29)
+- Bump actions/checkout from 6.0.0 to 6.0.1 in the github-actions group (PR30)
+- Bump github.com/go-resty/resty/v2 from 2.17.0 to 2.17.1 (PR31)
 
 ## v0.15.0
 
