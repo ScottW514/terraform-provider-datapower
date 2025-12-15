@@ -1,4 +1,4 @@
-## UNRELEASED
+## v0.16.0
 
 - Added `RestMgmtInterface` endpoint
 - BREAKING CHANGE: Removed fixed setting `AAAPolicy` from `InteropService`
