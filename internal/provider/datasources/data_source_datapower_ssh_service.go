@@ -72,10 +72,6 @@ func (d *SSHServiceDataSource) Schema(ctx context.Context, req datasource.Schema
 				MarkdownDescription: "Specify the TCP port that the service monitors. The default value is 22.",
 				Computed:            true,
 			},
-			"acl": schema.StringAttribute{
-				MarkdownDescription: "Edit the <tt>ssh</tt> access control list to define IP addresses to allow or deny.",
-				Computed:            true,
-			},
 			"connection_limit": schema.Int64Attribute{
 				MarkdownDescription: "Specify the maximum number of concurrent SSH CLI connections. Enter a value in the range 0 - 1000. The default value is 0, which means no limit.",
 				Computed:            true,

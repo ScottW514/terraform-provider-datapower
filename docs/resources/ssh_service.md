@@ -26,10 +26,6 @@ resource "datapower_ssh_service" "test" {
 
 ### Optional
 
-- `acl` (String) Edit the <tt>ssh</tt> access control list to define IP addresses to allow or deny.
-  - CLI Alias: `acl`
-  - Reference to: `datapower_access_control_list:id`
-  - Default value: `ssh`
 - `connection_limit` (Number) Specify the maximum number of concurrent SSH CLI connections. Enter a value in the range 0 - 1000. The default value is 0, which means no limit.
   - CLI Alias: `maximum-connections`
   - Range: `0`-`1000`

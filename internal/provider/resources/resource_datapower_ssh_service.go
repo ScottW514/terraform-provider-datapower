@@ -89,12 +89,6 @@ func (r *SSHServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 				Default: int64default.StaticInt64(22),
 			},
-			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>ssh</tt> access control list to define IP addresses to allow or deny.", "acl", "access_control_list").AddDefaultValue("ssh").String,
-				Computed:            true,
-				Optional:            true,
-				Default:             stringdefault.StaticString("ssh"),
-			},
 			"connection_limit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent SSH CLI connections. Enter a value in the range 0 - 1000. The default value is 0, which means no limit.", "maximum-connections", "").AddIntegerRange(0, 1000).AddDefaultValue("0").String,
 				Computed:            true,

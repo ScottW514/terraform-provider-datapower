@@ -41,7 +41,6 @@ func TestAccDataSourceSSHService(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_ssh_service.test", "enabled", "false"),
 					resource.TestCheckResourceAttr("data.datapower_ssh_service.test", "local_port", "22"),
-					resource.TestCheckResourceAttr("data.datapower_ssh_service.test", "acl", "ssh"),
 					resource.TestCheckResourceAttr("data.datapower_ssh_service.test", "connection_limit", "0"),
 					resource.TestCheckResourceAttr("data.datapower_ssh_service.test", "local_address", "0.0.0.0"),
 				}...),

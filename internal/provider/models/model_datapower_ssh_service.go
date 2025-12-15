@@ -35,7 +35,6 @@ import (
 type SSHService struct {
 	Enabled           types.Bool                  `tfsdk:"enabled"`
 	LocalPort         types.Int64                 `tfsdk:"local_port"`
-	Acl               types.String                `tfsdk:"acl"`
 	ConnectionLimit   types.Int64                 `tfsdk:"connection_limit"`
 	LocalAddress      types.String                `tfsdk:"local_address"`
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
@@ -46,7 +45,6 @@ var SSHServiceObjectType = map[string]attr.Type{
 	"provider_target":    types.StringType,
 	"enabled":            types.BoolType,
 	"local_port":         types.Int64Type,
-	"acl":                types.StringType,
 	"connection_limit":   types.Int64Type,
 	"local_address":      types.StringType,
 	"dependency_actions": actions.ActionsListType,
@@ -64,9 +62,6 @@ func (data SSHService) IsNull() bool {
 	if !data.LocalPort.IsNull() {
 		return false
 	}
-	if !data.Acl.IsNull() {
-		return false
-	}
 	if !data.ConnectionLimit.IsNull() {
 		return false
 	}
@@ -78,7 +73,6 @@ func (data SSHService) IsNull() bool {
 func (data *SSHService) ToDefault() {
 	data.Enabled = types.BoolValue(false)
 	data.LocalPort = types.Int64Value(22)
-	data.Acl = types.StringValue("ssh")
 	data.ConnectionLimit = types.Int64Value(0)
 	data.LocalAddress = types.StringValue("0.0.0.0")
 }
@@ -95,9 +89,6 @@ func (data SSHService) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.LocalPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LocalPort`, data.LocalPort.ValueInt64())
-	}
-	if !data.Acl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ACL`, data.Acl.ValueString())
 	}
 	if !data.ConnectionLimit.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ConnectionLimit`, data.ConnectionLimit.ValueInt64())
@@ -121,11 +112,6 @@ func (data *SSHService) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.LocalPort = types.Int64Value(value.Int())
 	} else {
 		data.LocalPort = types.Int64Value(22)
-	}
-	if value := res.Get(pathRoot + `ACL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Acl = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Acl = types.StringValue("ssh")
 	}
 	if value := res.Get(pathRoot + `ConnectionLimit`); value.Exists() {
 		data.ConnectionLimit = types.Int64Value(value.Int())
@@ -152,11 +138,6 @@ func (data *SSHService) UpdateFromBody(ctx context.Context, pathRoot string, res
 		data.LocalPort = types.Int64Value(value.Int())
 	} else if data.LocalPort.ValueInt64() != 22 {
 		data.LocalPort = types.Int64Null()
-	}
-	if value := res.Get(pathRoot + `ACL`); value.Exists() && !data.Acl.IsNull() {
-		data.Acl = tfutils.ParseStringFromGJSON(value)
-	} else if data.Acl.ValueString() != "ssh" {
-		data.Acl = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `ConnectionLimit`); value.Exists() && !data.ConnectionLimit.IsNull() {
 		data.ConnectionLimit = types.Int64Value(value.Int())

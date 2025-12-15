@@ -2,6 +2,7 @@
 
 - Added `RestMgmtInterface` endpoint
 - BREAKING CHANGE: Removed fixed setting `AAAPolicy` from `InteropService`
+- BREAKING CHANGE: Removed fixed setting `ACL` from `SSHService`
 
 ## v0.15.0
 

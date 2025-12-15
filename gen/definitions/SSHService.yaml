@@ -23,13 +23,6 @@ attributes:
   description: Specify the TCP port that the service monitors. The default value is
     22.
   cli_alias: port
-- name: ACL
-  type: String
-  reference_to: AccessControlList
-  default: ssh
-  description: Edit the <tt>ssh</tt> access control list to define IP addresses to
-    allow or deny.
-  cli_alias: acl
 - name: ConnectionLimit
   type: Int64
   maximum: 1000
