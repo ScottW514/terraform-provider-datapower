@@ -1,4 +1,5 @@
-## UNRELEASED
+## v0.17.0
+
 - Bump github.com/go-resty/resty/v2 from 2.17.1 to 2.17.2 (PR38)
 - Bump the github-actions group across 1 directory with 4 updates (PR42)
 - Bump the terraform-plugin group across 1 directory with 3 updates (PR43)
