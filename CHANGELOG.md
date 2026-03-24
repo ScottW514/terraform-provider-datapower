@@ -1,3 +1,11 @@
+## UNRELEASED
+- Bump github.com/go-resty/resty/v2 from 2.17.1 to 2.17.2 (PR38)
+- Bump the github-actions group across 1 directory with 4 updates (PR42)
+- Bump the terraform-plugin group across 1 directory with 3 updates (PR43)
+- Bump golang.org/x/crypto from 0.46.0 to 0.49.0 (PR44)
+- Bump golang.org/x/tools from 0.40.0 to 0.43.0 (PR45)
+- Bump devcontainer go version from 1.24 to 1.25
+
 ## v0.16.0
 
 - Added `RestMgmtInterface` endpoint
