@@ -1,3 +1,10 @@
+## v0.18.0
+- Bump golang.org/x/tools from 0.47.0 to 0.48.0 (PR59)
+- Bump golang.org/x/crypto from 0.50.0 to 0.54.0 (PR57)
+- Bump the github-actions group across 1 directory with 3 updates (PR56)
+- Bump github.com/tidwall/gjson from 1.18.0 to 1.19.0 (PR54)
+- Bump the terraform-plugin group across 1 directory with 2 updates (PR51)
+
 ## v0.17.0
 
 - Bump github.com/go-resty/resty/v2 from 2.17.1 to 2.17.2 (PR38)
