@@ -7,6 +7,14 @@ description: |-
 
 # Changelog
 
+## v0.19.0
+- Updated devcontainer to Go 1.26
+- Bump golang.org/x/crypto from 0.57.0 to 0.58.0 (PR71)
+- Bump github.com/tidwall/gjson from 1.19.0 to 1.20.0 (PR70)
+- Bump golang.org/x/tools from 0.48.0 to 0.51.0 (PR69)
+- Bump github.com/stretchr/testify from 1.11.1 to 1.12.1 (PR64)
+- Bump the github-actions group with 3 updates (PR60)
+
 ## v0.18.0
 - Bump golang.org/x/tools from 0.47.0 to 0.48.0 (PR59)
 - Bump golang.org/x/crypto from 0.50.0 to 0.54.0 (PR57)

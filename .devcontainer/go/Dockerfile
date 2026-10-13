@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/go:1.25-trixie
+FROM mcr.microsoft.com/devcontainers/go:1.26
 
 COPY certs/* /usr/local/share/ca-certificates/
 RUN update-ca-certificates
