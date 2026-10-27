@@ -28,7 +28,7 @@ import (
 //go:generate go run gen/generator.go
 
 var (
-	version string = "0.19.0"
+	version string = "0.20.0"
 )
 
 func main() {

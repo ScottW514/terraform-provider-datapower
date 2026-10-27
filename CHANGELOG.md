@@ -1,3 +1,8 @@
+## v0.20.0
+- Bump golang.org/x/tools from 0.51.0 to 0.52.0 (PR72)
+- Bump goreleaser/goreleaser-action from 7.2.3 to 7.3.0 in the github-actions group (PR73)
+- Bump golang.org/grpc from 1.79.3 to 1.85.0
+
 ## v0.19.0
 - Updated devcontainer to Go 1.26
 - Bump golang.org/x/crypto from 0.57.0 to 0.58.0 (PR71)
