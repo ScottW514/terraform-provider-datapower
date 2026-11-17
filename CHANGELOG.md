@@ -1,9 +1,17 @@
+## v0.20.1
+
+- Bump github.com/tidwall/gjson from 1.20.2 to 1.20.3 (PR79)
+- Bump golang.org/x/crypto from 0.58.0 to 0.59.0 (PR78)
+- Bump github.com/tidwall/sjson from 1.2.5 to 1.2.9 (PR77)
+
 ## v0.20.0
+
 - Bump golang.org/x/tools from 0.51.0 to 0.52.0 (PR72)
 - Bump goreleaser/goreleaser-action from 7.2.3 to 7.3.0 in the github-actions group (PR73)
 - Bump golang.org/grpc from 1.79.3 to 1.85.0
 
 ## v0.19.0
+
 - Updated devcontainer to Go 1.26
 - Bump golang.org/x/crypto from 0.57.0 to 0.58.0 (PR71)
 - Bump github.com/tidwall/gjson from 1.19.0 to 1.20.0 (PR70)
@@ -12,6 +20,7 @@
 - Bump the github-actions group with 3 updates (PR60)
 
 ## v0.18.0
+
 - Bump golang.org/x/tools from 0.47.0 to 0.48.0 (PR59)
 - Bump golang.org/x/crypto from 0.50.0 to 0.54.0 (PR57)
 - Bump the github-actions group across 1 directory with 3 updates (PR56)
