@@ -10,8 +10,8 @@ require (
 	github.com/hashicorp/terraform-plugin-go v0.31.0
 	github.com/hashicorp/terraform-plugin-testing v1.16.0
 	github.com/stretchr/testify v1.12.1
-	github.com/tidwall/gjson v1.20.3
-	github.com/tidwall/sjson v1.2.9
+	github.com/tidwall/gjson v1.20.5
+	github.com/tidwall/sjson v1.2.11
 	golang.org/x/crypto v0.59.0
 	golang.org/x/tools v0.52.0
 	gopkg.in/yaml.v3 v3.0.1
